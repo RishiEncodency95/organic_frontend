@@ -3,6 +3,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import Link from "next/link";
 import footerLogo from "../../assets/logos/footerlogo.png";
+import footerBottomImg from "../../assets/logos/footerimg.png";
 
 // Removed missing image imports (foot1, foot2, etc.) to fix build errors. Using lucide icons instead.
 
@@ -393,6 +394,11 @@ const Footer = () => {
                                     <span className="text-[12px] font-semibold text-white">App Store</span>
                                 </div>
                             </button>
+                        </div>
+                        
+                        {/* Footer Bottom Image */}
+                        <div className="mt-4 mb-2 flex justify-start xl:justify-center">
+                            <img src={footerBottomImg.src} alt="Footer Details" className="w-full max-w-[200px] h-auto object-contain opacity-90" />
                         </div>
                     </div>
 
