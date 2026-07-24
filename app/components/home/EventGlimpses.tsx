@@ -238,35 +238,35 @@ const EventGlimpses = () => {
         </div>
 
         {/* Stats Footer Bar */}
-        <div className="px-0 mt-3">
-          <div className="w-full bg-[#041a0a] rounded-[24px] md:rounded-full p-2.5 flex flex-col md:flex-row items-stretch border border-white/10 shadow-2xl overflow-hidden gap-5 md:gap-0">
-            <div className="flex-1 w-full grid grid-cols-2 sm:grid-cols-3 md:flex md:items-center md:justify-start px-2 py-3 md:py-0 gap-y-6 md:gap-0">
+        <div className="px-0 py-2 mt-2">
+          <div className="w-full bg-white rounded-[24px] md:rounded-2xl p-1.5 flex flex-col md:flex-row items-stretch border border-[#3b8c2a]/10 shadow-[0_15px_40px_rgba(59,140,42,0.06)] gap-5 md:gap-0">
+            <div className="flex-1 w-full grid grid-cols-2 sm:grid-cols-3 md:flex md:items-center md:justify-around px-2 py-2 md:py-0 gap-y-4 md:gap-0">
               {stats.map((stat: any, idx: number) => (
-                <div key={idx} className="flex flex-col md:flex-row items-start md:items-center gap-2.5 md:gap-3 px-3 md:px-4 border-white/10 md:border-r last:border-r-0 flex-1">
-                  <div className="w-9 h-9 rounded-full bg-white flex items-center justify-center text-[#0b4d17] flex-shrink-0 shadow-inner">
-                    {ICON_MAP[stat.icon] || <Users size={16} />}
+                <div key={idx} className="flex flex-col md:flex-row items-center gap-2.5 px-3 md:px-5 md:border-r border-gray-100 last:border-r-0 flex-1 justify-center group">
+                  <div className="w-9 h-9 md:w-10 md:h-10 rounded-full bg-[#f3f9f4] border border-[#e8f5ec] flex items-center justify-center text-[#3b8c2a] flex-shrink-0 group-hover:bg-[#3b8c2a] group-hover:text-white transition-colors duration-300">
+                    {ICON_MAP[stat.icon] || <Users size={18} />}
                   </div>
-                  <div className="flex flex-col items-start text-left">
-                    <span className="text-[#2f8f3a] font-black text-[13px] md:text-[14px] leading-tight mb-0.5">
+                  <div className="flex flex-col items-center md:items-start text-center md:text-left">
+                    <span className="text-[#1e293b] font-black text-[16px] md:text-[20px] leading-tight mb-0.5">
                       {/^[\d,]+/.test(stat.number) ? <StatCounter value={stat.number} /> : stat.number}
                     </span>
-                    <span className="text-white/70 text-[8px] md:text-[9px] uppercase tracking-[0.1em] font-bold leading-tight">{stat.label}</span>
+                    <span className="text-[#64748b] text-[9px] md:text-[10px] uppercase tracking-widest font-bold leading-tight">{stat.label}</span>
                   </div>
                 </div>
               ))}
             </div>
 
-            {/* CTA White Pill */}
-            <div className="bg-white rounded-[18px] md:rounded-full p-3 md:p-1.5 md:pr-6 flex items-center gap-3 w-full md:w-[280px] shadow-xl flex-shrink-0 hover:bg-slate-50 transition-colors cursor-pointer group">
-              <div className="w-11 h-11 rounded-full bg-[#0b4d17] flex items-center justify-center text-white shadow-lg flex-shrink-0 group-hover:scale-110 transition-transform">
-                <Camera size={22} />
+            {/* CTA Pill */}
+            <div className="bg-[#3b8c2a] rounded-[18px] md:rounded-full p-1.5 md:pr-5 flex items-center gap-2.5 w-full md:w-auto shadow-lg flex-shrink-0 hover:bg-[#2c6e1f] hover:shadow-xl transition-all duration-300 cursor-pointer group">
+              <div className="w-9 h-9 md:w-10 md:h-10 rounded-full bg-white flex items-center justify-center text-[#3b8c2a] shadow-sm flex-shrink-0 group-hover:scale-110 transition-transform duration-300">
+                <Camera size={18} />
               </div>
-              <div className="flex flex-col">
+              <div className="flex flex-col py-0.5 justify-center">
                 <div className="flex items-center gap-1.5 mb-0.5">
-                  <span className="text-[#0b4d17] font-black text-[12px] md:text-[11px] uppercase tracking-tight leading-none">Endless</span>
-                  <span className="text-[#0b4d17]/60 text-[9px] font-bold uppercase tracking-widest leading-none">Opportunities</span>
+                  <span className="text-white font-black text-[12px] md:text-[13px] uppercase tracking-tight leading-none">Endless</span>
+                  <span className="text-white/80 text-[9px] font-bold uppercase tracking-widest leading-none">Opportunities</span>
                 </div>
-                <p className="text-[#0b2912] text-[10px] md:text-[10px] leading-[1.2] font-semibold tracking-wide">
+                <p className="text-white/90 text-[9px] md:text-[10px] leading-[1.2] font-semibold tracking-wide hidden md:block max-w-[180px]">
                   {glimpseData.counterText}
                 </p>
               </div>
