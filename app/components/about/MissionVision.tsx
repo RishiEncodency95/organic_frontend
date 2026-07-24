@@ -41,19 +41,19 @@ const MissionVision: React.FC = () => {
         <div className="mb-7 text-center">
 
           <p
-            className="mb-2 flex items-center justify-center gap-3 text-[11px] font-bold uppercase tracking-[0.22em] text-[#D6A84F]"
-            style={{ fontFamily: "'Inter', sans-serif" }}
+            className="mb-2 flex items-center justify-center gap-3 text-[11px] font-bold uppercase tracking-[0.22em] text-white"
+            
           >
-            <span className="h-px w-7 bg-[#D6A84F]" />
+            <span className="h-px w-7 bg-white" />
 
             Our Purpose & Direction
 
-            <span className="h-px w-7 bg-[#D6A84F]" />
+            <span className="h-px w-7 bg-white" />
           </p>
 
           <h2
             className="text-2xl font-semibold leading-tight text-[#F3F1E8] md:text-3xl"
-            style={{ fontFamily: "'Playfair Display', serif" }}
+            
           >
             Growing a Greener, Healthier Future
           </h2>
@@ -86,7 +86,7 @@ const MissionVision: React.FC = () => {
 
                 <p
                   className="text-[11px] font-bold uppercase tracking-[0.18em] text-[#D6A84F]"
-                  style={{ fontFamily: "'Inter', sans-serif" }}
+                  
                 >
                   {dummyData.vision.title}
                 </p>
@@ -96,7 +96,7 @@ const MissionVision: React.FC = () => {
 
               <h3
                 className="mb-3 text-xl font-semibold text-[#F3F1E8] md:text-2xl"
-                style={{ fontFamily: "'Playfair Display', serif" }}
+                
               >
                 {dummyData.vision.heading}
               </h3>
@@ -104,7 +104,7 @@ const MissionVision: React.FC = () => {
 
               <p
                 className="text-xs leading-[1.5] text-[#C1CEC1] md:text-[15px]"
-                style={{ fontFamily: "'Inter', sans-serif" }}
+                
               >
                 {dummyData.vision.description}
               </p>
@@ -133,7 +133,7 @@ const MissionVision: React.FC = () => {
 
                 <p
                   className="text-[11px] font-bold uppercase tracking-[0.18em] text-[#D6A84F]"
-                  style={{ fontFamily: "'Inter', sans-serif" }}
+                  
                 >
                   {dummyData.mission.title}
                 </p>
@@ -143,7 +143,7 @@ const MissionVision: React.FC = () => {
 
               <h3
                 className="mb-3 text-xl font-semibold leading-[1.25] text-[#F3F1E8] md:text-2xl"
-                style={{ fontFamily: "'Playfair Display', serif" }}
+                
               >
                 {dummyData.mission.heading}
               </h3>
@@ -151,7 +151,7 @@ const MissionVision: React.FC = () => {
 
               <p
                className="text-xs leading-[1.5] text-[#C1CEC1] md:text-[15px]"
-                style={{ fontFamily: "'Inter', sans-serif" }}
+                
               >
                 {dummyData.mission.description}
               </p>
@@ -166,7 +166,7 @@ const MissionVision: React.FC = () => {
 
             <p
               className="text-[11px] font-bold uppercase tracking-[0.16em] text-[#9DBB72]"
-              style={{ fontFamily: "'Inter', sans-serif" }}
+              
             >
               Organic Growth
               <span className="mx-2 text-[#D6A84F]">•</span>

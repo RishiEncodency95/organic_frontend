@@ -75,7 +75,7 @@ const ExhibitorLogos = () => {
 
             <h2
               className="text-[9px] font-bold uppercase tracking-[0.25em] text-[#F5F3E8] md:text-[10px]"
-              style={{ fontFamily: "'Inter', sans-serif" }}
+              
             >
               {subheading || "Our Exhibitors & Partners"}
             </h2>

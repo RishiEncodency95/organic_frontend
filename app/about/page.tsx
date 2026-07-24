@@ -170,7 +170,7 @@ const About = () => {
         {/* Eyebrow */}
         <p
           className="mb-3 flex items-center gap-2 text-[11px] font-semibold uppercase tracking-[0.22em] text-[#3b8c2a]"
-          style={{ fontFamily: "'Inter', sans-serif" }}
+          
         >
           <span className="inline-block h-[1.5px] w-7 bg-[#3b8c2a]" />
 
@@ -180,7 +180,7 @@ const About = () => {
         {/* Title */}
         <h2
           className="mb-4 text-2xl font-black leading-[1.25] text-[#3b8c2a] md:text-3xl"
-          style={{ fontFamily: "'Inter', sans-serif" }}
+          
         >
           Where India's Organic Future Meets the World
         </h2>
@@ -188,7 +188,7 @@ const About = () => {
         {/* Description */}
         <div
           className="mb-5 space-y-3 text-justify text-[13px] leading-[1.75] text-[#53675A]"
-          style={{ fontFamily: "'Inter', sans-serif" }}
+          
         >
 
           <p>
@@ -216,7 +216,7 @@ const About = () => {
         {/* Core Focus */}
         <p
           className="mb-3 text-[10px] font-semibold uppercase tracking-[0.2em] text-[#3b8c2a]"
-          style={{ fontFamily: "'Inter', sans-serif" }}
+          
         >
           Expo Focus Areas
         </p>
@@ -257,7 +257,7 @@ const About = () => {
 
               <span
                 className="text-[12px] font-medium leading-[1.5] text-[#405448]"
-                style={{ fontFamily: "'Inter', sans-serif" }}
+                
               >
                 {item}
               </span>
@@ -318,14 +318,14 @@ const About = () => {
 
                 <p
                   className="mb-1 text-[10px] font-bold uppercase tracking-[0.2em] text-[#D6A84F]"
-                  style={{ fontFamily: "'Inter', sans-serif" }}
+                  
                 >
                   India's Organic Ecosystem
                 </p>
 
                 <p
                   className="text-xl font-black text-white"
-                  style={{ fontFamily: "'Inter', sans-serif" }}
+                  
                 >
                   Connecting Nature, Business & Opportunity
                 </p>
@@ -344,14 +344,14 @@ const About = () => {
 
             <span
               className="text-2xl font-black leading-none text-[#D6A84F]"
-              style={{ fontFamily: "'Inter', sans-serif" }}
+              
             >
               9th
             </span>
 
             <span
               className="mt-1 text-[8px] font-bold uppercase tracking-[0.12em] text-white"
-              style={{ fontFamily: "'Inter', sans-serif" }}
+              
             >
               Edition
             </span>
@@ -383,7 +383,7 @@ const About = () => {
 
       <p
         className="mb-2 flex items-center gap-2 text-[11px] font-semibold uppercase tracking-[0.22em] text-[#3b8c2a]"
-        style={{ fontFamily: "'Inter', sans-serif" }}
+        
       >
         <span className="inline-block h-[1.5px] w-6 bg-[#3b8c2a]" />
 
@@ -392,14 +392,14 @@ const About = () => {
 
       <h2
         className="mb-1 text-2xl font-black leading-[1.3] text-[#3b8c2a]"
-        style={{ fontFamily: "'Inter', sans-serif" }}
+        
       >
         Growing India's Organic Future
       </h2>
 
       <p
         className="mt-1 text-[13px] leading-[1.7] text-[#405448]"
-        style={{ fontFamily: "'Inter', sans-serif" }}
+        
       >
         From supporting India's organic ecosystem to creating powerful
         platforms for business and collaboration, Bharat Organic Expo
@@ -447,7 +447,7 @@ const About = () => {
 
             <p
               className="text-[12px] font-bold uppercase tracking-[0.12em] text-[#3b8c2a]"
-              style={{ fontFamily: "'Inter', sans-serif" }}
+              
             >
               Our Journey: Growing the Organic Movement
             </p>
@@ -456,21 +456,21 @@ const About = () => {
 
 
           {/* Timeline */}
-          <div className="flex flex-col gap-4 border-l-2 border-[#3b8c2a]/40 pl-3">
+          <div className="flex flex-col gap-4  pl-3">
 
             {/* 2016 */}
             <div className="flex gap-3">
 
               <span
-                className="mt-[2px] w-12 shrink-0 text-[11px] font-black text-[#B58A3A]"
-                style={{ fontFamily: "'Inter', sans-serif" }}
+                className="mt-[2px] w-16 shrink-0 text-[11px] font-black text-[#B58A3A]"
+                
               >
                 2016
               </span>
 
               <p
                 className="text-[12px] leading-[1.6] text-[#53675A]"
-                style={{ fontFamily: "'Inter', sans-serif" }}
+                
               >
                 The journey began with a vision to promote organic
                 agriculture, sustainable farming, and healthier choices
@@ -484,15 +484,15 @@ const About = () => {
             <div className="flex gap-3">
 
               <span
-                className="mt-[2px] w-12 shrink-0 text-[11px] font-black text-[#B58A3A]"
-                style={{ fontFamily: "'Inter', sans-serif" }}
+                className="mt-[2px] w-16 shrink-0 text-[11px] font-black text-[#B58A3A]"
+                
               >
                 2016–25
               </span>
 
               <p
                 className="text-[12px] leading-[1.6] text-[#53675A]"
-                style={{ fontFamily: "'Inter', sans-serif" }}
+                
               >
                 Built meaningful connections between farmers, organic
                 producers, brands, buyers, retailers, and industry
@@ -507,15 +507,15 @@ const About = () => {
             <div className="flex gap-3">
 
               <span
-                className="mt-[2px] w-12 shrink-0 text-[11px] font-black text-[#B58A3A]"
-                style={{ fontFamily: "'Inter', sans-serif" }}
+                className="mt-[2px] w-16 shrink-0 text-[11px] font-black text-[#B58A3A]"
+                
               >
                 2026
               </span>
 
               <p
                 className="text-[12px] leading-[1.6] text-[#53675A]"
-                style={{ fontFamily: "'Inter', sans-serif" }}
+                
               >
                 Bharat Organic Expo enters its 9th Edition, bringing
                 India's organic ecosystem closer to global markets,
@@ -563,7 +563,7 @@ const About = () => {
 
             <p
               className="text-[12px] font-bold uppercase tracking-[0.12em] text-[#3b8c2a]"
-              style={{ fontFamily: "'Inter', sans-serif" }}
+              
             >
               Driving Growth Across the Organic Ecosystem
             </p>
@@ -580,7 +580,7 @@ const About = () => {
 
               <p
                 className="text-[12px] leading-[1.55] text-[#53675A]"
-                style={{ fontFamily: "'Inter', sans-serif" }}
+                
               >
                 <span className="font-semibold text-[#3b8c2a]">
                   Organic Agriculture:
@@ -598,7 +598,7 @@ const About = () => {
 
               <p
                 className="text-[12px] leading-[1.55] text-[#53675A]"
-                style={{ fontFamily: "'Inter', sans-serif" }}
+                
               >
                 <span className="font-semibold text-[#3b8c2a]">
                   Organic Products:
@@ -617,7 +617,7 @@ const About = () => {
 
               <p
                 className="text-[12px] leading-[1.55] text-[#53675A]"
-                style={{ fontFamily: "'Inter', sans-serif" }}
+                
               >
                 <span className="font-semibold text-[#3b8c2a]">
                   Natural Wellness:
@@ -636,7 +636,7 @@ const About = () => {
 
               <p
                 className="text-[12px] leading-[1.55] text-[#53675A]"
-                style={{ fontFamily: "'Inter', sans-serif" }}
+                
               >
                 <span className="font-semibold text-[#3b8c2a]">
                   Global Trade:
@@ -688,7 +688,7 @@ const About = () => {
 
             <p
               className="text-[12px] font-bold uppercase tracking-[0.12em] text-[#3b8c2a]"
-              style={{ fontFamily: "'Inter', sans-serif" }}
+              
             >
               A Platform Built for Organic Growth
             </p>
@@ -699,7 +699,7 @@ const About = () => {
           {/* Description */}
           <p
             className="mb-3 text-[11px] leading-[1.5] text-[#68776D]"
-            style={{ fontFamily: "'Inter', sans-serif" }}
+            
           >
             Bharat Organic Expo brings together a diverse ecosystem
             focused on organic agriculture, sustainable living, natural
@@ -769,15 +769,15 @@ const About = () => {
     <div className="mb-6 text-center">
 
       <p
-        className="mb-2 text-[10px] font-bold uppercase tracking-[0.3em] text-[#9A7430]"
-        style={{ fontFamily: "'Inter', sans-serif" }}
+        className="mb-2 text-xs font-bold uppercase  text-[#3b8c2a]"
+        
       >
         The Bharat Organic Expo Experience
       </p>
 
       <h2
-        className="text-[18px] font-black uppercase tracking-[0.18em] text-[#3b8c2a]"
-        style={{ fontFamily: "'Inter', sans-serif" }}
+        className="text-[18px] font-semibold uppercase  "
+        
       >
         ONE EXPO. FOUR POWERFUL EXPERIENCES.
       </h2>
@@ -872,7 +872,7 @@ const About = () => {
 
             <p
               className="text-justify text-[11px] font-medium leading-[1.7] text-[#C8D6BE]"
-              style={{ fontFamily: "'Inter', sans-serif" }}
+              
             >
               {pillar.desc}
             </p>
@@ -910,12 +910,12 @@ const About = () => {
       <div className="group relative">
 
         {/* Decorative Frame */}
-        <div className="absolute -bottom-4 -left-4 h-24 w-24 border-b border-l border-[#D6A84F]/60" />
-        <div className="absolute -right-4 -top-4 h-24 w-24 border-r border-t border-[#3b8c2a]/50" />
+        {/* <div className="absolute -bottom-4 -left-4 h-24 w-24 border-b border-l border-[#D6A84F]/60" />
+        <div className="absolute -right-4 -top-4 h-24 w-24 border-r border-t border-[#3b8c2a]/50" /> */}
 
-        <div className="relative overflow-hidden border border-[#C8D6BE] bg-[#EAF1E2] p-2 shadow-[0_18px_40px_rgba(23,61,43,0.14)]">
+        <div className="relative overflow-hidden">
 
-          <div className="relative h-[250px] overflow-hidden md:h-[350px]">
+          <div className="relative h-[250px] overflow-hidden md:h-[350px] rounded-2xl">
 
             <img
               loading="lazy"
@@ -931,7 +931,7 @@ const About = () => {
             {/* Venue Tag */}
             <span
               className="absolute right-4 top-4 border border-[#D6A84F]/60 bg-[#3b8c2a]/90 px-3 py-1.5 text-[9px] font-bold uppercase tracking-[0.15em] text-[#fff]"
-              style={{ fontFamily: "'Inter', sans-serif" }}
+              
             >
               India's Organic Marketplace
             </span>
@@ -954,7 +954,7 @@ const About = () => {
 
               <p
                 className="text-[10px] font-bold uppercase tracking-[0.1em] text-[#3b8c2a]"
-                style={{ fontFamily: "'Inter', sans-serif" }}
+                
               >
                 Pragati Maidan, New Delhi
               </p>
@@ -964,7 +964,7 @@ const About = () => {
           </div>
 
           {/* Bottom Accent */}
-          <div className="h-1 w-full bg-gradient-to-r from-[#3b8c2a] via-[#D6A84F] to-[#3b8c2a]" />
+          {/* <div className="h-1 w-full bg-gradient-to-r from-[#3b8c2a] via-[#D6A84F] to-[#3b8c2a]" /> */}
 
         </div>
 
@@ -976,24 +976,23 @@ const About = () => {
 
         {/* Eyebrow */}
         <p
-          className="mb-3 flex items-center gap-2 text-[11px] font-bold uppercase tracking-[0.22em] text-[#9A7430] md:text-[12px]"
-          style={{ fontFamily: "'Inter', sans-serif" }}
+          className="mb-3 flex items-center gap-2 text-[11px] font-bold uppercase tracking-[0.22em] text-[#3b8c2a] md:text-[12px]"
+          
         >
-          <span className="inline-block h-[1.5px] w-7 bg-[#D6A84F]" />
           The Expo Destination
         </p>
 
         {/* Heading */}
         <h2
-          className="mb-3 text-[25px] font-black leading-[1.25] text-[#3b8c2a] md:text-[34px]"
-          style={{ fontFamily: "'Inter', sans-serif" }}
+          className="mb-3 text-[25px] font-black leading-[1.25]  md:text-[34px]"
+          
         >
           Where India's Organic Ecosystem Comes Together
         </h2>
 
         <p
           className="max-w-xl text-[13px] leading-[1.75] text-[#53675A]"
-          style={{ fontFamily: "'Inter', sans-serif" }}
+          
         >
           Set in the heart of New Delhi, Bharat Organic Expo creates a
           powerful meeting ground for India's organic producers, sustainable
@@ -1079,7 +1078,7 @@ const About = () => {
               {/* Text */}
               <p
                 className="text-[12px] font-medium leading-[1.55] text-[#405448]"
-                style={{ fontFamily: "'Inter', sans-serif" }}
+                
               >
                 {item.text}
               </p>
@@ -1165,7 +1164,7 @@ const About = () => {
 
           <span
             className="text-[10px] font-bold uppercase tracking-[0.24em] text-[#8C3F2B]"
-            style={{ fontFamily: "'Inter', sans-serif" }}
+            
           >
             Be Part Of The Movement
           </span>
@@ -1174,14 +1173,14 @@ const About = () => {
 
         <h3
           className="mb-2 px-4 text-xl font-bold leading-tight text-[#34231D] md:text-2xl xl:px-0"
-          style={{ fontFamily: "'Inter', sans-serif" }}
+          
         >
           Bring Your Organic Brand to the Right Audience
         </h3>
 
         <p
           className="mx-auto max-w-xl px-4 text-[13px] leading-[1.55] text-[#624D43] xl:mx-0 xl:px-0"
-          style={{ fontFamily: "'Inter', sans-serif" }}
+          
         >
           Meet buyers, discover new opportunities, and become part of India's
           rapidly growing organic and sustainable products ecosystem.
@@ -1232,7 +1231,7 @@ const About = () => {
                   : "border border-[#9D725F] bg-[#F4E7D9] text-[#6F3426] hover:bg-[#8C3F2B] hover:text-white"
               }
             `}
-            style={{ fontFamily: "'Inter', sans-serif" }}
+            
           >
             {btn.label}
           </Link>
@@ -1278,14 +1277,14 @@ const About = () => {
 
         <p
           className="text-xs font-bold uppercase tracking-[0.22em] text-[#B85C38]"
-          style={{ fontFamily: "'Inter', sans-serif" }}
+          
         >
           India's Organic Marketplace
         </p>
 
         <p
           className="mt-1 text-xs font-medium text-[#62584D]"
-          style={{ fontFamily: "'Inter', sans-serif" }}
+          
         >
           Connecting India's organic producers with buyers, brands and global opportunities.
         </p>
@@ -1326,14 +1325,14 @@ const About = () => {
 
             <p
               className="text-[25px] font-black leading-none text-[#292522] md:text-[29px]"
-              style={{ fontFamily: "'Inter', sans-serif" }}
+              
             >
               {stat.value}
             </p>
 
             <p
               className="mt-2 text-[8px] font-bold uppercase tracking-[0.13em] text-[#8C3F2B] md:text-[9px]"
-              style={{ fontFamily: "'Inter', sans-serif" }}
+              
             >
               {stat.label}
             </p>

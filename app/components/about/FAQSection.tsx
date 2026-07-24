@@ -103,7 +103,7 @@ const FAQSection = () => {
 
               <span
                 className="text-[9px] font-bold uppercase tracking-[0.25em] text-[#8A6330]"
-                style={{ fontFamily: "'Inter', sans-serif" }}
+                
               >
                 {faqData?.subheading}
               </span>
@@ -112,10 +112,10 @@ const FAQSection = () => {
 
             <h2
               className="text-2xl font-black leading-tight text-[#263C2B] md:text-3xl"
-              style={{ fontFamily: "'Inter', sans-serif" }}
+              
             >
               {faqData?.heading}{" "}
-              <span className="text-[#541a1a]">
+              <span className="text-[#3b8c2a]">
                 {faqData?.highlightText}
               </span>
             </h2>
@@ -124,7 +124,7 @@ const FAQSection = () => {
 
           <p
             className="max-w-md text-[11px] leading-[1.65] text-[#62675C] md:text-right"
-            style={{ fontFamily: "'Inter', sans-serif" }}
+            
           >
             {faqData?.description}
           </p>
@@ -161,7 +161,7 @@ const FAQSection = () => {
 
               <span
                 className="text-[8px] font-bold uppercase tracking-[0.15em] text-[#263C2B]"
-                style={{ fontFamily: "'Inter', sans-serif" }}
+                
               >
                 Organic Marketplace
               </span>
@@ -172,14 +172,14 @@ const FAQSection = () => {
 
               <p
                 className="mb-1 text-[9px] font-bold uppercase tracking-[0.2em] text-[#D6A84F]"
-                style={{ fontFamily: "'Inter', sans-serif" }}
+                
               >
                 Bharat Organic Expo
               </p>
 
               <p
                 className="text-xl font-black leading-tight text-white md:text-2xl"
-                style={{ fontFamily: "'Inter', sans-serif" }}
+                
               >
                 India’s Organic Ecosystem.
                 <br />
@@ -223,7 +223,7 @@ const FAQSection = () => {
                     <span
                       className={`flex h-7 w-7 shrink-0 items-center justify-center rounded-full text-[9px] font-bold ${
                         isActive
-                          ? "bg-[#541a1a] text-white"
+                          ? "bg-[#3b8c2a] text-white"
                           : "bg-[#DDE5D4] text-[#61774F]"
                       }`}
                     >
@@ -246,7 +246,7 @@ const FAQSection = () => {
                     <span
                       className={`flex h-6 w-6 shrink-0 items-center justify-center rounded-full ${
                         isActive
-                          ? "bg-[#263C2B] text-white"
+                          ? "bg-[#3b8c2a] text-white"
                           : "bg-[#E3DCCF] text-[#77786D]"
                       }`}
                     >
@@ -325,7 +325,7 @@ const FAQSection = () => {
 
             <p
               className="text-xs font-medium text-[#62675C]"
-              style={{ fontFamily: "'Inter', sans-serif" }}
+              
             >
               Still have questions about participating in Bharat Organic Expo?
             </p>
@@ -336,7 +336,7 @@ const FAQSection = () => {
             href="/contact"
             target="_blank"
             rel="noopener noreferrer"
-            className="group flex items-center gap-1.5 rounded-full bg-[#263C2B] px-4 py-2 text-[8px] font-bold uppercase tracking-[0.15em] text-white transition-all hover:bg-[#A86542]"
+            className="group flex items-center gap-1.5 rounded-full bg-[#3b8c2a] px-4 py-2 text-[8px] font-bold uppercase tracking-[0.15em] text-white transition-all hover:bg-[#A86542]"
           >
             Contact Expo Team
 

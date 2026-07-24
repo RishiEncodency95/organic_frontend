@@ -392,7 +392,7 @@ const Hero = () => {
 
                     className="text-[8px] font-bold uppercase leading-tight tracking-wide text-[#173D2B]"
 
-                    style={{ fontFamily: "'Inter', sans-serif" }}
+                    
 
                   >
 
@@ -430,7 +430,7 @@ const Hero = () => {
 
                     className="text-[8px] font-bold uppercase leading-tight tracking-wide text-[#173D2B]"
 
-                    style={{ fontFamily: "'Inter', sans-serif" }}
+                    
 
                   >
 
@@ -468,7 +468,7 @@ const Hero = () => {
 
                     className="text-[8px] font-bold uppercase leading-tight tracking-wide text-[#173D2B]"
 
-                    style={{ fontFamily: "'Inter', sans-serif" }}
+                    
 
                   >
 
@@ -506,7 +506,7 @@ const Hero = () => {
 
                     className="text-[8px] font-bold uppercase leading-tight tracking-wide text-[#173D2B]"
 
-                    style={{ fontFamily: "'Inter', sans-serif" }}
+                    
 
                   >
 
