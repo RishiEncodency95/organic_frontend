@@ -244,7 +244,7 @@ const About = () => {
     <img
       loading="lazy"
       decoding="async"
-      src={About12}
+      src={About12.src}
       alt="Organic Expo Background"
       className="w-full h-full object-cover object-[80%] md:object-right"
     />
@@ -257,7 +257,7 @@ const About = () => {
   <img
     loading="lazy"
     decoding="async"
-    src={LeafImg}
+    src={LeafImg.src}
     alt="Organic Expo Decoration"
     className="absolute -top-10 -left-10 w-40 h-40 opacity-10 pointer-events-none rotate-45"
   />
@@ -1395,7 +1395,7 @@ const About = () => {
             <img
               loading="lazy"
               decoding="async"
-              src={PragatiMaidanImg}
+              src={PragatiMaidanImg.src}
               alt="Bharat Organic Expo venue at Bharat Mandapam, New Delhi"
               className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"
             />
@@ -1649,7 +1649,6 @@ const About = () => {
 
         <h3
           className="mb-2 px-4 text-xl font-bold leading-tight text-[#34231D] md:text-2xl xl:px-0"
-          style={{ fontFamily: "'Playfair Display', serif" }}
         >
           Bring Your Organic Brand to the Right Audience
         </h3>
@@ -1696,7 +1695,7 @@ const About = () => {
             href={btn.link}
             className={`
               flex items-center justify-center rounded-md
-              px-3 py-3 text-center text-[10px]
+              px-3 py-2 text-center text-[10px]
               font-bold uppercase tracking-[0.05em]
               transition-all duration-300 hover:-translate-y-1
               xl:min-w-[145px]

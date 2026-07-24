@@ -115,7 +115,7 @@ const FAQSection = () => {
               style={{ fontFamily: "'Inter', sans-serif" }}
             >
               {faqData?.heading}{" "}
-              <span className="text-[#A86542]">
+              <span className="text-[#541a1a]">
                 {faqData?.highlightText}
               </span>
             </h2>
@@ -223,7 +223,7 @@ const FAQSection = () => {
                     <span
                       className={`flex h-7 w-7 shrink-0 items-center justify-center rounded-full text-[9px] font-bold ${
                         isActive
-                          ? "bg-[#A86542] text-white"
+                          ? "bg-[#541a1a] text-white"
                           : "bg-[#DDE5D4] text-[#61774F]"
                       }`}
                     >
