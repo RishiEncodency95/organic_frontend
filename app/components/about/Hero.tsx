@@ -5,7 +5,7 @@ import About12 from "@/app/assets/about/bg.png";
 import LeafImg from "@/app/assets/leaf.png";
 const Hero = () => {
   return (
-    <>
+    <div>
       <style>{`
 
         @keyframes goldShift {
@@ -587,7 +587,7 @@ const Hero = () => {
 
 
       </section>
-    </>
+    </div>
 
   )
 }

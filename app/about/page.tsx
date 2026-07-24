@@ -169,10 +169,10 @@ const About = () => {
 
         {/* Eyebrow */}
         <p
-          className="mb-3 flex items-center gap-2 text-[11px] font-semibold uppercase tracking-[0.22em] text-[#B58A3A]"
+          className="mb-3 flex items-center gap-2 text-[11px] font-semibold uppercase tracking-[0.22em] text-[#3b8c2a]"
           style={{ fontFamily: "'Inter', sans-serif" }}
         >
-          <span className="inline-block h-[1.5px] w-7 bg-[#D6A84F]" />
+          <span className="inline-block h-[1.5px] w-7 bg-[#3b8c2a]" />
 
           About Bharat Organic Expo
         </p>
@@ -930,7 +930,7 @@ const About = () => {
 
             {/* Venue Tag */}
             <span
-              className="absolute right-4 top-4 border border-[#D6A84F]/60 bg-[#3b8c2a]/90 px-3 py-1.5 text-[9px] font-bold uppercase tracking-[0.15em] text-[#D6A84F]"
+              className="absolute right-4 top-4 border border-[#D6A84F]/60 bg-[#3b8c2a]/90 px-3 py-1.5 text-[9px] font-bold uppercase tracking-[0.15em] text-[#fff]"
               style={{ fontFamily: "'Inter', sans-serif" }}
             >
               India's Organic Marketplace
