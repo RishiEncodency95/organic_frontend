@@ -56,22 +56,7 @@ const HomeAbout = () => {
                             />
                         </div>
 
-                        {/* Overlapping Green Box */}
-                        <motion.div
-                            initial={{ opacity: 0, x: -20 }}
-                            whileInView={{ opacity: 1, x: 0 }}
-                            viewport={{ once: true }}
-                            transition={{ duration: 0.6, delay: 0.2 }}
-                            className="absolute -bottom-4 -right-4 lg:-bottom-6 lg:-right-6 bg-[#3B8D2A] text-white p-5 md:p-6 rounded-[1.25rem] shadow-2xl w-[240px] md:w-[260px] z-20"
-                        >
-                            <Globe className="w-6 h-6 text-[#f1c40f] mb-3" strokeWidth={1.5} />
-                            <h3 className="text-[17px] md:text-[19px] font-semibold leading-[1.2] tracking-tight">
-                                A Global<br />
-                                Platform for<br />
-                                Health, Wellness<br />
-                                & Organic Solutions
-                            </h3>
-                        </motion.div>
+                
 
                         {/* Decorative Leaves (Bottom Left) */}
                         <div className="absolute -bottom-10 -left-10 w-32 h-32 bg-[url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxMDAgMTAwIj48cGF0aCBkPSJNMTAgOTBDMzAgOTAgNTAgNzAgNTAgNTBDNTAgMzAgMzAgMTAgMTAgMTBDMTAgMzAgMzAgNTAgNTAgNzBDNTAgOTAgMzAgMTAwIDEwIDkwWiIgZmlsbD0iIzNiOGMyYSIgZmlsbC1vcGFjaXR5PSIwLjEiLz48L3N2Zz4=')] bg-no-repeat bg-contain -z-10" />
@@ -121,7 +106,7 @@ const HomeAbout = () => {
 
                         {/* CTA Button */}
                         <div>
-                            <button className="inline-flex items-center gap-2 px-6 py-2 rounded-full border-2 border-[#e63946] bg-[#3b8c2a] text-white font-bold text-[11px] uppercase tracking-wide hover:bg-[#1a3a14] transition-colors duration-300 group">
+                            <button className="inline-flex items-center gap-2 px-6 py-2.5 rounded-full border-2 border-[#F2B40E] bg-[#3b8c2a] text-white font-bold text-[11px] uppercase tracking-wide hover:bg-[#F2B40E] hover:text-[#0b2912] transition-colors duration-300 group shadow-md hover:shadow-lg">
                                 KNOW MORE ABOUT US
                                 <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" strokeWidth={2.5} />
                             </button>

@@ -1,7 +1,7 @@
 "use client";
-import home1 from "../../assets/home/home1.png";
-import home2 from "../../assets/home/home2.png";
-import home3 from "../../assets/home/home3.png";
+import home1 from "../../assets/home/home11.png";
+import home2 from "../../assets/home/home22.png";
+import home3 from "../../assets/home/home33.png";
 
 
 import { useState, useEffect } from "react";

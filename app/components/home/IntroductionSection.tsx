@@ -86,7 +86,7 @@ const IntroductionSection = () => {
 
             {/* Action Buttons (Optional) */}
             <div className="flex items-center gap-4">
-              <button className="px-8 py-2.5 bg-[#3b8c2a] border-2 border-[#e63946] hover:bg-[#1a3a14] text-white text-[12px] font-bold uppercase tracking-wider rounded-full shadow-[0_10px_20px_rgba(59,140,42,0.2)] hover:shadow-[0_15px_30px_rgba(59,140,42,0.3)] hover:-translate-y-0.5 transition-all duration-300">
+              <button className="px-8 py-2.5 bg-[#3b8c2a] border-2 border-[#F2B40E] hover:bg-[#F2B40E] hover:text-[#0b2912] text-white text-[12px] font-bold uppercase tracking-wider rounded-full shadow-[0_10px_20px_rgba(59,140,42,0.2)] hover:shadow-[0_15px_30px_rgba(59,140,42,0.3)] hover:-translate-y-0.5 transition-all duration-300">
                 Explore Exhibition
               </button>
             </div>
