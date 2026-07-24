@@ -1,5 +1,5 @@
 "use client";
-import bannerImg from "../../assets/home/home3.png";
+import bannerImg from "../../assets/home/home33.png";
 
 
 import React from "react";
@@ -43,7 +43,7 @@ const MovementBanner = () => {
           WebkitMaskImage: 'linear-gradient(to right, rgba(0,0,0,1) 0%, rgba(0,0,0,0) 40%)'
         }}
       />
-      <div className="absolute inset-0 bg-gradient-to-r from-[#0a230e]/60 via-[#0a230e]/95 to-[#0a230e] z-0" />
+      {/* <div className="absolute inset-0 bg-gradient-to-r from-[#0a230e]/60 via-[#0a230e]/95 to-[#0a230e] z-0" /> */}
 
       {/* Main Content Container */}
       <div className="w-full max-w-full px-4 lg:px-8 xl:px-11 relative z-10 py-6 md:py-8 lg:py-8">

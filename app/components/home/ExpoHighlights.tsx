@@ -1,6 +1,6 @@
 "use client";
-import img1 from "../../assets/home/home1.png";
-import img2 from "../../assets/home/home2.png";
+import img1 from "../../assets/home/home11.png";
+import img2 from "../../assets/home/home22.png";
 
 
 import { ArrowRight, CheckCircle, Users, Mic, Store, Globe, Clock } from "lucide-react";
@@ -36,7 +36,7 @@ const ExpoHighlights = () => {
               </ul>
               
               <div className="mt-auto">
-                <button className="inline-flex items-center gap-1.5 px-5 py-1.5 rounded-full border-2 border-[#e63946] bg-[#3b8c2a] text-white text-[10px] font-bold uppercase tracking-wider hover:bg-[#1a3a14] transition-all duration-300 hover:shadow-lg hover:-translate-y-0.5">
+                <button className="inline-flex items-center gap-1.5 px-5 py-1.5 rounded-full border-2 border-[#F2B40E] bg-[#3b8c2a] text-white text-[10px] font-bold uppercase tracking-wider hover:bg-[#F2B40E] hover:text-[#0b2912] transition-all duration-300 hover:shadow-lg hover:-translate-y-0.5">
                   REGISTER AS BUYER
                   <ArrowRight size={12} strokeWidth={2.5} className="group-hover:translate-x-1 transition-transform" />
                 </button>
@@ -73,7 +73,7 @@ const ExpoHighlights = () => {
               </ul>
               
               <div className="mt-auto">
-                <button className="inline-flex items-center gap-1.5 px-5 py-1.5 rounded-full border-2 border-[#e63946] bg-[#3b8c2a] text-white text-[10px] font-bold uppercase tracking-wider hover:bg-[#1a3a14] transition-all duration-300 hover:shadow-lg hover:-translate-y-0.5">
+                <button className="inline-flex items-center gap-1.5 px-5 py-1.5 rounded-full border-2 border-[#F2B40E] bg-[#3b8c2a] text-white text-[10px] font-bold uppercase tracking-wider hover:bg-[#F2B40E] hover:text-[#0b2912] transition-all duration-300 hover:shadow-lg hover:-translate-y-0.5">
                   VIEW CONFERENCE AGENDA
                   <ArrowRight size={12} strokeWidth={2.5} className="group-hover:translate-x-1 transition-transform" />
                 </button>

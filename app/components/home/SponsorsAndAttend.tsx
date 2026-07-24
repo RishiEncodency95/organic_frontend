@@ -98,7 +98,7 @@ const SponsorsAndAttend = () => {
             </div>
 
             <div className="flex justify-center mt-6">
-              <button className="inline-flex items-center gap-1.5 px-5 py-1.5 rounded-full border-2 border-[#e63946] bg-[#3b8c2a] text-white text-[10px] font-bold uppercase tracking-wider hover:bg-[#1a3a14] transition-all duration-300 hover:shadow-lg hover:-translate-y-0.5">
+              <button className="inline-flex items-center gap-1.5 px-5 py-1.5 rounded-full border-2 border-[#F2B40E] bg-[#3b8c2a] text-white text-[10px] font-bold uppercase tracking-wider hover:bg-[#F2B40E] hover:text-[#0b2912] transition-all duration-300 hover:shadow-lg hover:-translate-y-0.5">
                 VIEW ALL PARTNERS
                 <ArrowRight size={12} strokeWidth={2.5} className="group-hover:translate-x-1 transition-transform" />
               </button>
@@ -124,7 +124,7 @@ const SponsorsAndAttend = () => {
                   <CalendarDays className="w-9 h-9 text-[#3b8c2a]" strokeWidth={1.5} />
                 </div>
                 
-                <button className="w-full flex items-center justify-center gap-1.5 px-5 py-2.5 rounded-full border-2 border-[#e63946] bg-[#3b8c2a] text-white text-[11px] font-bold uppercase tracking-wider hover:bg-[#1a3a14] transition-all duration-300 hover:shadow-lg hover:-translate-y-0.5 shadow-md">
+                <button className="w-full flex items-center justify-center gap-1.5 px-5 py-2.5 rounded-full border-2 border-[#F2B40E] bg-[#3b8c2a] text-white text-[11px] font-bold uppercase tracking-wider hover:bg-[#F2B40E] hover:text-[#0b2912] transition-all duration-300 hover:shadow-lg hover:-translate-y-0.5 shadow-md">
                   BOOK YOUR SPACE
                   <ArrowRight size={13} strokeWidth={2.5} className="group-hover:translate-x-1 transition-transform" />
                 </button>

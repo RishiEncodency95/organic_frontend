@@ -76,7 +76,7 @@ const ExpoCategories = () => {
 
         {/* Button */}
         <div className="flex justify-center mt-6">
-          <button className="group flex items-center justify-center gap-2 px-6 py-2 rounded-full border-2 border-[#e63946] bg-[#3b8c2a] text-white text-[11px] font-bold uppercase tracking-wider hover:bg-[#1a3a14] hover:shadow-lg transition-all duration-300">
+          <button className="group flex items-center justify-center gap-2 px-6 py-2 rounded-full border-2 border-[#F2B40E] bg-[#3b8c2a] text-white text-[11px] font-bold uppercase tracking-wider hover:bg-[#F2B40E] hover:text-[#0b2912] hover:shadow-lg transition-all duration-300">
             VIEW ALL CATEGORIES
             <ArrowRight size={14} strokeWidth={2.5} className="group-hover:translate-x-1 transition-transform" />
           </button>

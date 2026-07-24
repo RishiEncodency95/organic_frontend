@@ -44,20 +44,20 @@ const AudienceStrip = () => {
   ];
 
   return (
-    <div className="bg-[#3B8D2A] w-full py-1.5 border-t border-b border-white/10 shadow-inner overflow-x-auto hide-scrollbar">
+    <div className="bg-[#3B8D2A] w-full py-1.5 md:py-3 border-t border-b border-white/10 shadow-inner overflow-x-auto hide-scrollbar">
       <div className="max-w-[1600px] mx-auto px-4 md:px-11">
         <div className="flex items-center justify-between min-w-[1000px]">
           {items.map((item, index) => (
             <React.Fragment key={index}>
               <div className="flex items-center gap-2 md:gap-3 group cursor-pointer hover:scale-105 transition-transform duration-300">
-                <div className="w-6 h-6 md:w-7 md:h-7 bg-white rounded-full flex items-center justify-center shadow-lg group-hover:shadow-xl transition-shadow">
-                  <item.icon className={`w-3.5 h-3.5 md:w-4 md:h-4 ${item.color}`} />
+                <div className="w-6 h-6 md:w-8 md:h-8 bg-white rounded-full flex items-center justify-center shadow-lg group-hover:shadow-xl transition-shadow">
+                  <item.icon className={`w-3.5 h-3.5 md:w-6 md:h-6 ${item.color}`} />
                 </div>
                 <div className="flex flex-col">
-                  <span className="text-white font-bold text-[9px] md:text-[10px] leading-[1.1] tracking-wider uppercase">
+                  <span className="text-white font-bold text-[9px] md:text-[12px] leading-[1.1] tracking-wider uppercase">
                     {item.title}
                   </span>
-                  <span className="text-slate-300 font-medium text-[8px] md:text-[9px] leading-[1.1] tracking-wide uppercase">
+                  <span className="text-slate-300 font-medium text-[8px] md:text-[11px] leading-[1.1] tracking-wide uppercase">
                     {item.subtitle}
                   </span>
                 </div>
