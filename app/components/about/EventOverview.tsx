@@ -6,32 +6,32 @@ const EventOverview: React.FC = () => {
   const sectors = [
     {
       label: "Organic Food & Beverages",
-      color: "#6F9638",
+      color: "#3b8c2a",
       iconName: "Apple",
     },
     {
       label: "Organic Agriculture & Farming",
-      color: "#8BAE45",
+      color: "#3b8c2a",
       iconName: "Sprout",
     },
     {
       label: "Natural Health & Wellness",
-      color: "#D6A84F",
+      color: "#3b8c2a",
       iconName: "HeartPulse",
     },
     {
       label: "Organic Beauty & Personal Care",
-      color: "#7A9E45",
+      color: "#3b8c2a",
       iconName: "Sparkles",
     },
     {
       label: "Sustainable Living & Eco Products",
-      color: "#4F7D45",
+      color: "#3b8c2a",
       iconName: "Recycle",
     },
     {
       label: "Organic Retail & Global Trade",
-      color: "#B58A3A",
+      color: "#3b8c2a",
       iconName: "Globe2",
     },
   ];
@@ -54,10 +54,10 @@ const EventOverview: React.FC = () => {
             {/* Eyebrow */}
             <div className="mb-4 flex items-center gap-3">
 
-              <div className="h-[2px] w-8 bg-[#D6A84F]" />
+              <div className="h-[2px] w-8 bg-[#3b8c2a]" />
 
               <p
-                className="text-[12px] font-bold uppercase tracking-[0.22em] text-[#6F9638]"
+                className="text-[12px] font-bold uppercase tracking-[0.22em] text-[#3b8c2a]"
                 style={{
                   fontFamily: "'Inter', sans-serif",
                 }}
@@ -75,7 +75,7 @@ const EventOverview: React.FC = () => {
               }}
             >
               INDIA'S GATEWAY TO THE{" "}
-              <span className="text-[#8BAE45]">
+              <span className="text-[#3b8c2a]">
                 ORGANIC WORLD
               </span>
             </h2>
@@ -83,11 +83,7 @@ const EventOverview: React.FC = () => {
             {/* Decorative Divider */}
             <div className="mb-5 flex items-center gap-2">
 
-              <div className="h-[3px] w-14 bg-[#8BAE45]" />
-
-              <div className="h-[3px] w-4 bg-[#D6A84F]" />
-
-              <div className="h-[3px] w-2 bg-[#173D2B]" />
+              <div className="h-[3px] w-14 bg-[#3b8c2a]" />
 
             </div>
 
@@ -139,10 +135,10 @@ const EventOverview: React.FC = () => {
             {/* Section Heading */}
             <div className="mb-6 flex items-center gap-3">
 
-              <div className="h-[2px] w-8 bg-[#D6A84F]" />
+              <div className="h-[2px] w-8 bg-[]" />
 
               <p
-                className="text-[12px] font-bold uppercase tracking-[0.22em] text-[#6F9638]"
+                className="text-[12px] font-bold uppercase tracking-[0.22em] text-[#3b8c2a]"
                 style={{
                   fontFamily: "'Inter', sans-serif",
                 }}

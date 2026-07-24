@@ -1,15 +1,14 @@
 "use client"
 import React, { useRef, useEffect, useState } from "react";
 import SectionContainer from "@/app/components/layout/SectionContainer";
-import { cloneElement } from "react";
 import { ArrowRight, Calendar, MapPin, Globe, HeartPulse, Sprout, User, MonitorDot, Plane, Leaf, GraduationCap, Trophy, Handshake, CheckCircle2, Users, Landmark, TrendingUp, Award } from "lucide-react";
-import StatsCounter from "@/app/components/home/StatsCounter";
-import ExhibitorLogos from "@/app/components/home/ExhibitorLogos";
-import FAQSection from "@/app/components/home/FAQSection";
-import GlobalPlatform from "@/app/components/home/GlobalPlatform";
-import MissionVision from "@/app/components/home/MissionVision";
+import StatsCounter from "@/app/components/about/StatsCounter";
+import ExhibitorLogos from "@/app/components/about/ExhibitorLogos";
+import FAQSection from "@/app/components/about/FAQSection";
+import GlobalPlatform from "@/app/components/about/GlobalPlatform";
+import MissionVision from "@/app/components/about/MissionVision";
 import WhyAttend from "@/app/components/home/WhyAttend";
-import WhoShouldAttend from "@/app/components/home/WhoShouldAttend";
+import WhoShouldAttend from "@/app/components/about/WhoShouldAttend";
 import OrganizedBy from "@/app/components/home/OrganizedBy";
 import { heroBackgroundApi, eventOverviewApi, SERVER_URL, visionMissionApi, aboutOrganizerApi, ourJourneyApi } from "@/app/lib/api";
 
@@ -19,24 +18,20 @@ import InternationalImg from "@/assets/international.png";
 import ConferenceImg from "@/assets/conference.png";
 import B2BImg from "@/assets/b2b.png";
 import AwardImg from "@/assets/global.png";
-import About12 from "@/app/assets/about/bg.png";
-import LeafImg from "@/app/assets/leaf.png";
 import G1 from "@/assets/G1.png";
 import G2 from "@/assets/G2.png";
 import G3 from "@/assets/G3.png";
 import G4 from "@/assets/G4.png";
 import AOS from "aos";
 import "aos/dist/aos.css";
-import { Store } from "lucide-react";
 
-import Sparkle from "@/app/components/about/sparkle";
 import EventOverview from "@/app/components/about/EventOverview";
+import Hero from "@/app/components/about/Hero";
 
 import { VenueStats } from "@/app/components/about/AboutStats";
 import Link from "next/link";
 
 const About = () => {
-  const [heroData, setHeroData] = useState<any>(null);
   const [eventOverviewData, setEventOverviewData] = useState<any>(null);
   const [visionMission, setVisionMission] = useState<any>(null);
   const [organizerData, setOrganizerData] = useState<any>(null);
@@ -112,18 +107,6 @@ const About = () => {
   }, []);
 
   useEffect(() => {
-    const fetchHero = async () => {
-      try {
-        const data = await heroBackgroundApi.getByPage("Overview / About ORGANIC EXPO");
-        if (data) {
-          setHeroData(data);
-          setTimeout(() => AOS.refresh(), 100);
-        }
-      } catch (error) {
-        console.error("Error fetching hero background:", error);
-      }
-    };
-
     const fetchEventOverview = async () => {
       try {
         const data = await eventOverviewApi.get();
@@ -138,14 +121,13 @@ const About = () => {
 
         const jData = await ourJourneyApi.get();
         if (jData) setJourneyData(jData);
-        
+
         setTimeout(() => AOS.refresh(), 500);
       } catch (error) {
         console.error("Error fetching event overview:", error);
       }
     };
 
-    fetchHero();
     fetchEventOverview();
     AOS.init({
       duration: 1000,
@@ -154,471 +136,20 @@ const About = () => {
     });
   }, []);
 
-  // Use dynamic data if available
-  const heroStyles = {
-    backgroundImage: heroData?.backgroundImage
-      ? `url(${SERVER_URL}${heroData.backgroundImage})`
-      : `none`
-  };
-
-  const heroSubtitle = heroData?.subtitle || "";
-  const subtitleFontSize = heroData?.subtitleFontSize || "12";
-  const heroTitle = heroData?.title || "";
-  const titleFontSize = heroData?.titleFontSize || "45";
-  const heroTitle2 = heroData?.title2 || "";
-  const title2FontSize = heroData?.title2FontSize || "45";
-  const heroDesc = heroData?.shortDescription || "";
-  const descriptionFontSize = heroData?.descriptionFontSize || "16";
-  const heroAlt = heroData?.imageAltText || "";
-  const button1Text = heroData?.button1Text || "";
-  const button1Link = heroData?.button1Link || "";
-  const button2Text = heroData?.button2Text || "";
-  const button2Link = heroData?.button2Link || "";
-  const infoBar1 = heroData?.infoBar1 || "";
-  const infoBar2 = heroData?.infoBar2 || "";
-  const infoBar3 = heroData?.infoBar3 || "";
-  const heroHeading = heroData?.heading || "";
-
   return (
     <div className="bg-white font-inter overflow-x-hidden">
-      <style>{`
-        @keyframes goldShift {
-          0%   { background-position: 0% 50%; }
-          50%  { background-position: 100% 50%; }
-          100% { background-position: 0% 50%; }
-        }
-        @keyframes shimmer {
-          0%   { left: -75%; }
-          100% { left: 150%; }
-        }
-        @keyframes sparkleAnim {
-          0%   { opacity: 0; transform: scale(0.5) translateY(0); }
-          50%  { opacity: 1; transform: scale(1.5) translateY(-15px); }
-          100% { opacity: 0; transform: scale(0.8) translateY(-30px); }
-        }
-        .golden-btn-about {
-          background: linear-gradient(135deg, #f5c842 0%, #ffdd00 30%, #ffa500 60%, #f5c842 100%);
-          background-size: 200% 200%;
-          animation: goldShift 2.5s ease infinite;
-          box-shadow: 0 10px 30px -5px rgba(0,0,0,0.5), 0 0 20px rgba(255,200,0,0.2);
-          position: relative;
-          overflow: hidden;
-        }
-        .golden-btn-about::before {
-          content: '';
-          position: absolute;
-          top: -50%;
-          left: -75%;
-          width: 50%;
-          height: 200%;
-          background: linear-gradient(to right, transparent, rgba(255,255,255,0.4), transparent);
-          transform: skewX(-20deg);
-          animation: shimmer 2s infinite;
-        }
-        .teal-btn-about {
-          background: linear-gradient(135deg, #123524 0%, #3b8c2a 40%, #123524 100%);
-          background-size: 200% 200%;
-          animation: goldShift 2.5s ease infinite;
-          box-shadow: 0 10px 30px -5px rgba(0,0,0,0.5), 0 0 20px rgba(18,53,36,0.3);
-          position: relative;
-          overflow: hidden;
-        }
-        .teal-btn-about::before {
-          content: '';
-          position: absolute;
-          top: -50%;
-          left: -75%;
-          width: 50%;
-          height: 200%;
-          background: linear-gradient(to right, transparent, rgba(255,255,255,0.45), transparent);
-          transform: skewX(-20deg);
-          animation: shimmer 2s infinite;
-        }
-      `}</style>
-      {/* PROFESSIONAL HERO SECTION - REPLICATING IMAGE DESIGN */}
-      {/* PROFESSIONAL HERO SECTION - REPLICATING IMAGE DESIGN */}
-    <section className="relative flex items-center pt-24 md:pt-12 pb-10 md:pb-6 overflow-hidden bg-white aspect-[0.75/1] sm:aspect-[16/9] md:aspect-[21/9] lg:aspect-[16/7] min-h-[380px] md:min-h-[420px] lg:min-h-[480px]">
-
-  {/* Full Width Background Image */}
-  <div className="absolute inset-0 z-0">
-    <img
-      loading="lazy"
-      decoding="async"
-      src={About12.src}
-      alt="Organic Expo Background"
-      className="w-full h-full object-cover object-[80%] md:object-right"
-    />
-
-    {/* Enhanced Mobile Overlay for Readability */}
-    <div className="absolute inset-0 bg-gradient-to-r from-white/95 via-white/70 to-white/10 md:from-transparent md:via-transparent md:to-transparent md:bg-transparent" />
-  </div>
-
-  {/* Decorative Leaf Element */}
-  <img
-    loading="lazy"
-    decoding="async"
-    src={LeafImg.src}
-    alt="Organic Expo Decoration"
-    className="absolute -top-10 -left-10 w-40 h-40 opacity-10 pointer-events-none rotate-45"
-  />
-
-  <div className="container mx-auto px-6 max-w-[1400px] relative z-10">
-
-    <div className="grid grid-cols-1 md:grid-cols-2 gap-20 items-center">
-
-      {/* Left Content */}
-      <div
-        data-aos="fade-right"
-        className="relative z-20 bg-white/40 md:bg-transparent backdrop-blur-[4px] md:backdrop-blur-none p-6 md:p-0 rounded-3xl md:rounded-none border border-white/50 md:border-none shadow-2xl shadow-black/5 md:shadow-none -mt-6 md:-mt-12 max-w-[520px]"
-      >
-
-        {/* Top Label */}
-        <div className="flex items-center gap-3 mb-4">
-          <div className="h-[2px] w-8 bg-[#E2932A]" />
-
-          <p
-            className="font-extrabold text-[9px] md:text-[11px] uppercase tracking-[0.15em] md:tracking-[0.25em]"
-            style={{
-              color: "#3b8c2a",
-              textShadow: "0 0 15px rgba(255,255,255,0.9)",
-            }}
-          >
-            INDIA'S PREMIER GLOBAL PLATFORM FOR
-          </p>
-        </div>
-
-        {/* Main Heading */}
-        <h1
-          className="text-[#123524] font-black text-2xl md:text-3xl lg:text-[38px] leading-[1.1] mb-5 uppercase tracking-tight"
-          style={{
-            textShadow: "0 2px 10px rgba(255,255,255,0.8)",
-          }}
-        >
-          ORGANIC PRODUCTS, <br />
-
-          <span
-            className="block mt-2"
-            style={{ color: "#0b471c" }}
-          >
-            HEALTH & WELLNESS
-          </span>
-        </h1>
-
-        {/* Event Details */}
-        <div
-          className="flex flex-wrap items-center gap-x-6 gap-y-3 mb-6 text-black font-extrabold text-[10px] md:text-[11px] uppercase tracking-[0.1em] md:tracking-[0.15em]"
-          style={{
-            textShadow: "0 0 8px rgba(255,255,255,1)",
-          }}
-        >
-
-          <div className="flex items-center gap-2">
-            <Calendar
-              size={14}
-              className="text-[#E2932A]"
-              strokeWidth={2.5}
-            />
-
-            <span>
-              21-23 August 2026
-            </span>
-          </div>
-
-          <div className="flex items-center gap-2">
-            <MapPin
-              size={14}
-              className="text-[#E2932A]"
-              strokeWidth={2.5}
-            />
-
-            <span>
-              Pragati Maidan, New Delhi
-            </span>
-          </div>
-
-        </div>
-
-        {/* About Section Heading */}
-        <div className="flex items-center gap-4 mb-4 md:mb-6">
-
-          <div className="h-[2px] w-12 bg-[#E2932A]" />
-
-          <p
-            className="font-extrabold text-[11px] md:text-sm uppercase tracking-[0.1em] md:tracking-[0.15em]"
-            style={{
-              color: "#123524",
-              textShadow: "none",
-            }}
-          >
-            ABOUT ORGANIC EXPO - GLOBAL EDITION
-          </p>
-
-        </div>
-
-        {/* Description */}
-        <p className="text-black/80 text-[13px] md:text-sm leading-relaxed mb-2 max-w-xl font-medium">
-          Bringing together the world's leading organic brands, farmers,
-          innovators, buyers, and industry professionals to discover,
-          showcase, and shape the future of sustainable living.
-        </p>
-
-        {/* Feature Icons Row */}
-   <div className="grid grid-cols-2 items-center gap-x-3 gap-y-3 md:flex md:flex-wrap md:gap-x-4 md:gap-y-2 mb-3 mt-1 border-t border-[#DCE5D2] py-2">
-
-  {/* Global Market Access */}
-  <div className="flex items-center gap-2 md:pr-4 md:border-r border-[#B8C7B5]">
-
-    <LucideIcons.Globe
-      className="h-6 w-6 shrink-0 text-[#6F9638]"
-      strokeWidth={1.8}
-    />
-
-    <span
-      className="text-[8px] font-bold uppercase leading-tight tracking-wide text-[#173D2B]"
-      style={{ fontFamily: "'Inter', sans-serif" }}
-    >
-      GLOBAL
-      <br />
-      MARKET ACCESS
-    </span>
-
-  </div>
-
-  {/* Organic Connections */}
-  <div className="flex items-center gap-2 md:pr-4 md:border-r border-[#B8C7B5]">
-
-    <Handshake
-      className="h-6 w-6 shrink-0 text-[#B58A3A]"
-      strokeWidth={1.8}
-    />
-
-    <span
-      className="text-[8px] font-bold uppercase leading-tight tracking-wide text-[#173D2B]"
-      style={{ fontFamily: "'Inter', sans-serif" }}
-    >
-      ORGANIC
-      <br />
-      CONNECTIONS
-    </span>
-
-  </div>
-
-  {/* Sustainable Growth */}
-  <div className="flex items-center gap-2 md:pr-4 md:border-r border-[#B8C7B5]">
-
-    <Sprout
-      className="h-6 w-6 shrink-0 text-[#6F9638]"
-      strokeWidth={1.8}
-    />
-
-    <span
-      className="text-[8px] font-bold uppercase leading-tight tracking-wide text-[#173D2B]"
-      style={{ fontFamily: "'Inter', sans-serif" }}
-    >
-      SUSTAINABLE
-      <br />
-      GROWTH
-    </span>
-
-  </div>
-
-  {/* Brand Visibility */}
-  <div className="flex items-center gap-2">
-
-    <LucideIcons.BadgeCheck
-      className="h-6 w-6 shrink-0 text-[#B58A3A]"
-      strokeWidth={1.8}
-    />
-
-    <span
-      className="text-[8px] font-bold uppercase leading-tight tracking-wide text-[#173D2B]"
-      style={{ fontFamily: "'Inter', sans-serif" }}
-    >
-      BRAND
-      <br />
-      VISIBILITY
-    </span>
-
-  </div>
-
-</div>
-
-        {/* Buttons */}
-        <div className="flex flex-wrap gap-4">
-
-          {/* Book Your Stall */}
-          <div className="relative group/btn">
-
-            <div className="hidden md:block">
-
-              <Sparkle
-                style={{
-                  top: "-8px",
-                  left: "10%",
-                  animationDelay: "0s",
-                }}
-              />
-
-              <Sparkle
-                style={{
-                  top: "-10px",
-                  left: "40%",
-                  animationDelay: "0.4s",
-                }}
-              />
-
-              <Sparkle
-                style={{
-                  top: "-6px",
-                  right: "15%",
-                  animationDelay: "0.8s",
-                }}
-              />
-
-              <Sparkle
-                style={{
-                  bottom: "-8px",
-                  left: "25%",
-                  animationDelay: "0.2s",
-                }}
-              />
-
-              <Sparkle
-                style={{
-                  bottom: "-10px",
-                  right: "30%",
-                  animationDelay: "0.6s",
-                }}
-              />
-
-            </div>
-
-            <Link
-              href="/book-a-stand"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="golden-btn-about flex items-center gap-2 px-5 py-2 rounded-md transition-all relative z-10 hover:scale-[1.02]"
-            >
-
-              <Store
-                className="w-4 h-4 text-[#2b1a05]"
-              />
-
-              <span className="text-[#2b1a05] font-black text-[10px] uppercase tracking-wider">
-                BOOK YOUR STALL
-              </span>
-
-              <ArrowRight
-                size={13}
-                className="text-[#2b1a05] ml-2"
-              />
-
-            </Link>
-
-          </div>
-
-          {/* Register As Buyer */}
-          <div className="relative group/btn">
-
-            <div className="hidden md:block">
-
-              <Sparkle
-                style={{
-                  top: "-8px",
-                  left: "10%",
-                  animationDelay: "0s",
-                }}
-              />
-
-              <Sparkle
-                style={{
-                  top: "-10px",
-                  left: "40%",
-                  animationDelay: "0.4s",
-                }}
-              />
-
-              <Sparkle
-                style={{
-                  top: "-6px",
-                  right: "15%",
-                  animationDelay: "0.8s",
-                }}
-              />
-
-              <Sparkle
-                style={{
-                  bottom: "-8px",
-                  left: "25%",
-                  animationDelay: "0.2s",
-                }}
-              />
-
-              <Sparkle
-                style={{
-                  bottom: "-10px",
-                  right: "30%",
-                  animationDelay: "0.6s",
-                }}
-              />
-
-            </div>
-
-            <Link
-              href="/buyer-registration"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="teal-btn-about flex items-center gap-2 px-5 py-2 rounded-md transition-all relative z-10 hover:scale-[1.02]"
-            >
-
-              <Users
-                className="w-4 h-4 text-white"
-              />
-
-              <span className="text-white font-black text-[10px] uppercase tracking-wider">
-                REGISTER AS BUYER
-              </span>
-
-              <div className="w-4 h-4 bg-white rounded-full flex items-center justify-center ml-2">
-
-                <ArrowRight
-                  size={12}
-                  className="text-[#123524]"
-                />
-
-              </div>
-
-            </Link>
-
-          </div>
-
-        </div>
-
-      </div>
-
-      {/* Right Side */}
-      <div className="relative hidden md:block">
-      </div>
-
-    </div>
-
-  </div>
-
-</section>
+      {/* HERO SECTION */}
+      <Hero/>
 
       {/* STATS COUNTER BAR - OVERLAPPING */}
       <div className="relative z-20">
         <StatsCounter variant="hero" />
       </div>
 
-      {/* EVENT OVERVIEW + KEY SECTORS */}
-
-
       {/* DYNAMIC GLOBAL PLATFORM SECTION */}
       <GlobalPlatform />
 
       {/* EVENT OVERVIEW + KEY SECTORS */}
-      {/* <EventOverview eventOverviewData={eventOverviewData} /> */}
       <EventOverview />
 
 
@@ -626,7 +157,7 @@ const About = () => {
 <section className="relative overflow-hidden border-t border-[#DCE5D2] bg-[#F5F3E8] pt-10 pb-8">
 
   {/* Organic Background Glow */}
-  <div className="pointer-events-none absolute -left-32 top-10 h-72 w-72 rounded-full bg-[#8BAE45]/10 blur-3xl" />
+  <div className="pointer-events-none absolute -left-32 top-10 h-72 w-72 rounded-full bg-[#3b8c2a]/10 blur-3xl" />
   <div className="pointer-events-none absolute -right-32 bottom-0 h-80 w-80 rounded-full bg-[#D6A84F]/10 blur-3xl" />
 
   <SectionContainer>
@@ -648,7 +179,7 @@ const About = () => {
 
         {/* Title */}
         <h2
-          className="mb-4 text-2xl font-black leading-[1.25] text-[#173D2B] md:text-3xl"
+          className="mb-4 text-2xl font-black leading-[1.25] text-[#3b8c2a] md:text-3xl"
           style={{ fontFamily: "'Inter', sans-serif" }}
         >
           Where India's Organic Future Meets the World
@@ -684,7 +215,7 @@ const About = () => {
 
         {/* Core Focus */}
         <p
-          className="mb-3 text-[10px] font-bold uppercase tracking-[0.2em] text-[#6F9638]"
+          className="mb-3 text-[10px] font-semibold uppercase tracking-[0.2em] text-[#3b8c2a]"
           style={{ fontFamily: "'Inter', sans-serif" }}
         >
           Expo Focus Areas
@@ -706,7 +237,7 @@ const About = () => {
               className="flex items-start gap-2.5"
             >
 
-              <div className="mt-[2px] flex h-[18px] w-[18px] shrink-0 items-center justify-center rounded-full border border-[#8BAE45]/30 bg-[#EAF1E2]">
+              <div className="mt-[2px] flex h-[18px] w-[18px] shrink-0 items-center justify-center rounded-full border border-[#3b8c2a]/30 bg-[#EAF1E2]">
 
                 <svg
                   viewBox="0 0 12 12"
@@ -715,7 +246,7 @@ const About = () => {
                 >
                   <path
                     d="M2 6l3 3 5-5"
-                    stroke="#6F9638"
+                    stroke="#3b8c2a"
                     strokeWidth="2"
                     strokeLinecap="round"
                     strokeLinejoin="round"
@@ -745,7 +276,7 @@ const About = () => {
         <div className="relative h-[380px] w-full max-w-md">
 
           {/* Decorative Dot Pattern - Top Right */}
-          <div
+          {/* <div
             className="pointer-events-none absolute -right-5 -top-5 z-0 h-24 w-24"
             style={{
               backgroundImage:
@@ -753,34 +284,34 @@ const About = () => {
               backgroundSize: "9px 9px",
               opacity: 0.35,
             }}
-          />
+          /> */}
 
           {/* Decorative Dot Pattern - Bottom Left */}
-          <div
+          {/* <div
             className="pointer-events-none absolute -bottom-5 -left-5 z-0 h-24 w-24"
             style={{
               backgroundImage:
-                "radial-gradient(circle, #6F9638 1.2px, transparent 1.2px)",
+                "radial-gradient(circle, #3b8c2a 1.2px, transparent 1.2px)",
               backgroundSize: "9px 9px",
               opacity: 0.25,
             }}
-          />
+          /> */}
 
           {/* Image Frame */}
-          <div className="group relative z-10 h-full w-full overflow-hidden rounded-2xl border border-[#C8D6BE] bg-[#EAF1E2] p-2 shadow-[0_18px_45px_rgba(35,75,42,0.15)]">
+          <div className="group relative z-10 h-full w-full overflow-hidden rounded-2xl">
 
             <div className="relative h-full w-full overflow-hidden rounded-xl">
 
               <img
                 loading="lazy"
                 decoding="async"
-                src="https://images.unsplash.com/photo-1498837167922-ddd27525d352?w=1000&q=85"
+                src="https://api.ihwe.in/uploads/about/organizer-1778836542941.webp"
                 alt="Organic products and sustainable food ecosystem"
                 className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"
               />
 
               {/* Image Overlay */}
-              <div className="absolute inset-0 bg-gradient-to-t from-[#173D2B]/80 via-transparent to-transparent" />
+              <div className="absolute inset-0 bg-gradient-to-t from-[#3b8c2a]/80 via-transparent to-transparent" />
 
               {/* Bottom Image Text */}
               <div className="absolute bottom-5 left-5 right-5">
@@ -804,12 +335,12 @@ const About = () => {
             </div>
 
             {/* Organic Accent Bars */}
-            <div className="absolute bottom-0 left-0 h-1 w-full bg-gradient-to-r from-[#6F9638] via-[#D6A84F] to-[#173D2B]" />
+            <div className="absolute bottom-0 left-0 h-1 w-full bg-gradient-to-r from-[#3b8c2a] via-[#D6A84F] to-[#3b8c2a]" />
 
           </div>
 
           {/* Edition Badge */}
-          <div className="absolute -bottom-4 -right-4 z-20 flex h-[88px] w-[88px] flex-col items-center justify-center rounded-full border-4 border-[#F5F3E8] bg-gradient-to-br from-[#173D2B] to-[#315D38] text-center shadow-[0_10px_25px_rgba(23,61,43,0.3)]">
+          <div className="absolute -bottom-4 -right-4 z-20 flex h-[88px] w-[88px] flex-col items-center justify-center rounded-full border-4 border-[#F5F3E8] bg-gradient-to-br from-[#3b8c2a] to-[#2c6e1f] text-center shadow-[0_10px_25px_rgba(23,61,43,0.3)]">
 
             <span
               className="text-2xl font-black leading-none text-[#D6A84F]"
@@ -841,7 +372,7 @@ const About = () => {
   <section className="relative overflow-hidden bg-[#F5F3E8] pt-2 pb-8 border-t border-[#DCE5D2]">
 
   {/* Background Decorative Elements */}
-  <div className="pointer-events-none absolute -left-32 top-20 h-72 w-72 rounded-full bg-[#8BAE45]/10 blur-3xl" />
+  <div className="pointer-events-none absolute -left-32 top-20 h-72 w-72 rounded-full bg-[#3b8c2a]/10 blur-3xl" />
 
   <div className="pointer-events-none absolute -right-32 bottom-0 h-80 w-80 rounded-full bg-[#D6A84F]/10 blur-3xl" />
 
@@ -851,16 +382,16 @@ const About = () => {
     <div className="relative z-10 mb-5">
 
       <p
-        className="mb-2 flex items-center gap-2 text-[11px] font-semibold uppercase tracking-[0.22em] text-[#6F9638]"
+        className="mb-2 flex items-center gap-2 text-[11px] font-semibold uppercase tracking-[0.22em] text-[#3b8c2a]"
         style={{ fontFamily: "'Inter', sans-serif" }}
       >
-        <span className="inline-block h-[1.5px] w-6 bg-[#D6A84F]" />
+        <span className="inline-block h-[1.5px] w-6 bg-[#3b8c2a]" />
 
         Our Journey & Organic Legacy
       </p>
 
       <h2
-        className="mb-1 text-2xl font-black leading-[1.3] text-[#173D2B]"
+        className="mb-1 text-2xl font-black leading-[1.3] text-[#3b8c2a]"
         style={{ fontFamily: "'Inter', sans-serif" }}
       >
         Growing India's Organic Future
@@ -883,28 +414,26 @@ const About = () => {
     <div className="relative z-10 grid grid-cols-1 gap-5 md:grid-cols-3">
 
 
-      {/* ─────────────────────────
-          CARD 1 - JOURNEY
-      ───────────────────────── */}
-      <div className="group relative overflow-hidden rounded-2xl border border-[#D8E2D0] bg-gradient-to-br from-white via-[#F8FAF2] to-[#EEF4E8] p-5 shadow-[0_10px_30px_rgba(35,75,42,0.07)] transition-all duration-300 hover:-translate-y-1 hover:border-[#9DBB72] hover:shadow-[0_16px_38px_rgba(35,75,42,0.13)]">
+      {/* CARD 1 - JOURNEY */}
+      <div className="group relative overflow-hidden rounded-2xl border border-[#D8E2D0] bg-gradient-to-br from-white via-[#F8FAF2] to-[#EEF4E8] p-5 shadow-[0_10px_30px_rgba(35,75,42,0.07)] transition-all duration-300 hover:-translate-y-1 hover:border-[#3b8c2a] hover:shadow-[0_16px_38px_rgba(35,75,42,0.13)]">
 
         {/* Top Accent */}
-        <div className="absolute left-0 right-0 top-0 h-1 bg-gradient-to-r from-[#6F9638] via-[#D6A84F] to-[#173D2B]" />
+        <div className="absolute left-0 right-0 top-0 h-1 bg-gradient-to-r from-[#3b8c2a] via-[#D6A84F] to-[#3b8c2a]" />
 
         {/* Organic Glow */}
-        <div className="pointer-events-none absolute -right-10 -top-10 h-28 w-28 rounded-full bg-[#8BAE45]/10 blur-2xl transition-all duration-300 group-hover:bg-[#8BAE45]/20" />
+        <div className="pointer-events-none absolute -right-10 -top-10 h-28 w-28 rounded-full bg-[#3b8c2a]/10 blur-2xl transition-all duration-300 group-hover:bg-[#3b8c2a]/20" />
 
         <div className="relative z-10">
 
           {/* Card Header */}
           <div className="mb-4 flex items-center gap-3">
 
-            <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl border border-[#D6A84F]/30 bg-gradient-to-br from-[#173D2B] to-[#315D38] shadow-[0_5px_12px_rgba(23,61,43,0.18)]">
+            <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl border border-[#D6A84F]/30 bg-gradient-to-br from-[#3b8c2a] to-[#2c6e1f] shadow-[0_5px_12px_rgba(23,61,43,0.18)]">
 
               <svg
                 viewBox="0 0 24 24"
                 fill="none"
-                stroke="#D6A84F"
+                stroke="#fff"
                 strokeWidth="1.6"
                 strokeLinecap="round"
                 strokeLinejoin="round"
@@ -917,7 +446,7 @@ const About = () => {
             </div>
 
             <p
-              className="text-[12px] font-bold uppercase tracking-[0.12em] text-[#173D2B]"
+              className="text-[12px] font-bold uppercase tracking-[0.12em] text-[#3b8c2a]"
               style={{ fontFamily: "'Inter', sans-serif" }}
             >
               Our Journey: Growing the Organic Movement
@@ -927,7 +456,7 @@ const About = () => {
 
 
           {/* Timeline */}
-          <div className="flex flex-col gap-4 border-l-2 border-[#8BAE45]/40 pl-3">
+          <div className="flex flex-col gap-4 border-l-2 border-[#3b8c2a]/40 pl-3">
 
             {/* 2016 */}
             <div className="flex gap-3">
@@ -1002,28 +531,26 @@ const About = () => {
       </div>
 
 
-      {/* ─────────────────────────
-          CARD 2 - CORE SECTORS
-      ───────────────────────── */}
-      <div className="group relative overflow-hidden rounded-2xl border border-[#D8E2D0] bg-gradient-to-br from-white via-[#F8FAF2] to-[#EEF4E8] p-5 shadow-[0_10px_30px_rgba(35,75,42,0.07)] transition-all duration-300 hover:-translate-y-1 hover:border-[#9DBB72] hover:shadow-[0_16px_38px_rgba(35,75,42,0.13)]">
+      {/* CARD 2 - CORE SECTORS */}
+      <div className="group relative overflow-hidden rounded-2xl border border-[#D8E2D0] bg-gradient-to-br from-white via-[#F8FAF2] to-[#EEF4E8] p-5 shadow-[0_10px_30px_rgba(35,75,42,0.07)] transition-all duration-300 hover:-translate-y-1 hover:border-[#3b8c2a] hover:shadow-[0_16px_38px_rgba(35,75,42,0.13)]">
 
         {/* Top Accent */}
-        <div className="absolute left-0 right-0 top-0 h-1 bg-gradient-to-r from-[#6F9638] via-[#D6A84F] to-[#173D2B]" />
+        <div className="absolute left-0 right-0 top-0 h-1 bg-gradient-to-r from-[#3b8c2a] via-[#D6A84F] to-[#3b8c2a]" />
 
         {/* Organic Glow */}
-        <div className="pointer-events-none absolute -right-10 -top-10 h-28 w-28 rounded-full bg-[#8BAE45]/10 blur-2xl transition-all duration-300 group-hover:bg-[#8BAE45]/20" />
+        <div className="pointer-events-none absolute -right-10 -top-10 h-28 w-28 rounded-full bg-[#3b8c2a]/10 blur-2xl transition-all duration-300 group-hover:bg-[#3b8c2a]/20" />
 
         <div className="relative z-10">
 
           {/* Card Header */}
           <div className="mb-4 flex items-center gap-3">
 
-            <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl border border-[#D6A84F]/30 bg-gradient-to-br from-[#173D2B] to-[#315D38] shadow-[0_5px_12px_rgba(23,61,43,0.18)]">
+            <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl border border-[#D6A84F]/30 bg-gradient-to-br from-[#3b8c2a] to-[#2c6e1f] shadow-[0_5px_12px_rgba(23,61,43,0.18)]">
 
               <svg
                 viewBox="0 0 24 24"
                 fill="none"
-                stroke="#D6A84F"
+                stroke="#fff"
                 strokeWidth="1.6"
                 strokeLinecap="round"
                 strokeLinejoin="round"
@@ -1035,7 +562,7 @@ const About = () => {
             </div>
 
             <p
-              className="text-[12px] font-bold uppercase tracking-[0.12em] text-[#173D2B]"
+              className="text-[12px] font-bold uppercase tracking-[0.12em] text-[#3b8c2a]"
               style={{ fontFamily: "'Inter', sans-serif" }}
             >
               Driving Growth Across the Organic Ecosystem
@@ -1055,7 +582,7 @@ const About = () => {
                 className="text-[12px] leading-[1.55] text-[#53675A]"
                 style={{ fontFamily: "'Inter', sans-serif" }}
               >
-                <span className="font-semibold text-[#173D2B]">
+                <span className="font-semibold text-[#3b8c2a]">
                   Organic Agriculture:
                 </span>{" "}
                 Supporting natural farming practices, soil health,
@@ -1073,7 +600,7 @@ const About = () => {
                 className="text-[12px] leading-[1.55] text-[#53675A]"
                 style={{ fontFamily: "'Inter', sans-serif" }}
               >
-                <span className="font-semibold text-[#173D2B]">
+                <span className="font-semibold text-[#3b8c2a]">
                   Organic Products:
                 </span>{" "}
                 Connecting consumers and businesses with trusted
@@ -1092,7 +619,7 @@ const About = () => {
                 className="text-[12px] leading-[1.55] text-[#53675A]"
                 style={{ fontFamily: "'Inter', sans-serif" }}
               >
-                <span className="font-semibold text-[#173D2B]">
+                <span className="font-semibold text-[#3b8c2a]">
                   Natural Wellness:
                 </span>{" "}
                 Bringing together Ayurveda, herbal products,
@@ -1111,7 +638,7 @@ const About = () => {
                 className="text-[12px] leading-[1.55] text-[#53675A]"
                 style={{ fontFamily: "'Inter', sans-serif" }}
               >
-                <span className="font-semibold text-[#173D2B]">
+                <span className="font-semibold text-[#3b8c2a]">
                   Global Trade:
                 </span>{" "}
                 Creating new opportunities for Indian organic brands
@@ -1128,28 +655,26 @@ const About = () => {
       </div>
 
 
-      {/* ─────────────────────────
-          CARD 3 - ORGANIC PLATFORM
-      ───────────────────────── */}
-      <div className="group relative overflow-hidden rounded-2xl border border-[#D8E2D0] bg-gradient-to-br from-white via-[#F8FAF2] to-[#EEF4E8] p-5 shadow-[0_10px_30px_rgba(35,75,42,0.07)] transition-all duration-300 hover:-translate-y-1 hover:border-[#9DBB72] hover:shadow-[0_16px_38px_rgba(35,75,42,0.13)]">
+      {/* CARD 3 - ORGANIC PLATFORM */}
+      <div className="group relative overflow-hidden rounded-2xl border border-[#D8E2D0] bg-gradient-to-br from-white via-[#F8FAF2] to-[#EEF4E8] p-5 shadow-[0_10px_30px_rgba(35,75,42,0.07)] transition-all duration-300 hover:-translate-y-1 hover:border-[#3b8c2a] hover:shadow-[0_16px_38px_rgba(35,75,42,0.13)]">
 
         {/* Top Accent */}
-        <div className="absolute left-0 right-0 top-0 h-1 bg-gradient-to-r from-[#6F9638] via-[#D6A84F] to-[#173D2B]" />
+        <div className="absolute left-0 right-0 top-0 h-1 bg-gradient-to-r from-[#3b8c2a] via-[#D6A84F] to-[#3b8c2a]" />
 
         {/* Organic Glow */}
-        <div className="pointer-events-none absolute -right-10 -top-10 h-28 w-28 rounded-full bg-[#8BAE45]/10 blur-2xl transition-all duration-300 group-hover:bg-[#8BAE45]/20" />
+        <div className="pointer-events-none absolute -right-10 -top-10 h-28 w-28 rounded-full bg-[#3b8c2a]/10 blur-2xl transition-all duration-300 group-hover:bg-[#3b8c2a]/20" />
 
         <div className="relative z-10">
 
           {/* Card Header */}
           <div className="mb-4 flex items-center gap-3">
 
-            <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl border border-[#D6A84F]/30 bg-gradient-to-br from-[#173D2B] to-[#315D38] shadow-[0_5px_12px_rgba(23,61,43,0.18)]">
+            <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl border border-[#D6A84F]/30 bg-gradient-to-br from-[#3b8c2a] to-[#2c6e1f] shadow-[0_5px_12px_rgba(23,61,43,0.18)]">
 
               <svg
                 viewBox="0 0 24 24"
                 fill="none"
-                stroke="#D6A84F"
+                stroke="#fff"
                 strokeWidth="1.6"
                 strokeLinecap="round"
                 strokeLinejoin="round"
@@ -1162,7 +687,7 @@ const About = () => {
             </div>
 
             <p
-              className="text-[12px] font-bold uppercase tracking-[0.12em] text-[#173D2B]"
+              className="text-[12px] font-bold uppercase tracking-[0.12em] text-[#3b8c2a]"
               style={{ fontFamily: "'Inter', sans-serif" }}
             >
               A Platform Built for Organic Growth
@@ -1235,7 +760,7 @@ const About = () => {
    <section className="relative overflow-hidden border-t border-[#D8CFAE] bg-[#F3EFE2] py-8">
 
   {/* Subtle Organic Background Details */}
-  <div className="pointer-events-none absolute -left-32 top-0 h-72 w-72 rounded-full bg-[#8BAE45]/10 blur-3xl" />
+  <div className="pointer-events-none absolute -left-32 top-0 h-72 w-72 rounded-full bg-[#3b8c2a]/10 blur-3xl" />
   <div className="pointer-events-none absolute -right-32 bottom-0 h-80 w-80 rounded-full bg-[#D6A84F]/10 blur-3xl" />
 
   <div className="relative mx-auto max-w-[1400px] px-6">
@@ -1251,7 +776,7 @@ const About = () => {
       </p>
 
       <h2
-        className="text-[18px] font-black uppercase tracking-[0.18em] text-[#173D2B]"
+        className="text-[18px] font-black uppercase tracking-[0.18em] text-[#3b8c2a]"
         style={{ fontFamily: "'Inter', sans-serif" }}
       >
         ONE EXPO. FOUR POWERFUL EXPERIENCES.
@@ -1265,14 +790,14 @@ const About = () => {
     {[
   {
     title: ["ORGANIC", "EXHIBITION"],
-    themeColor: "#6F9638",
+    themeColor: "#3b8c2a",
     desc: "Explore a curated showcase of organic food, beverages, natural wellness, Ayurveda, herbal products, sustainable agriculture, and eco-friendly innovations from India's leading producers and emerging brands.",
     icon: <Globe className="h-5 w-5 text-white" />,
     img: "https://images.unsplash.com/photo-1498837167922-ddd27525d352?w=1000&q=85",
   },
   {
     title: ["KNOWLEDGE &", "INNOVATION"],
-    themeColor: "#8BAE45",
+    themeColor: "#3b8c2a",
     desc: "Gain insights from industry leaders, farmers, entrepreneurs, policymakers, and sustainability experts through meaningful conversations focused on organic growth, responsible production, and the future of sustainable living.",
     icon: <GraduationCap className="h-5 w-5 text-white" />,
     img: "https://images.unsplash.com/photo-1540575467063-178a50c2df87?w=1000&q=85",
@@ -1286,7 +811,7 @@ const About = () => {
   },
   {
     title: ["B2B BUSINESS", "CONNECT"],
-    themeColor: "#315D38",
+    themeColor: "#3b8c2a",
     desc: "Build meaningful business relationships through focused buyer-seller meetings, curated networking opportunities, and connections between producers, retailers, distributors, exporters, investors, and global buyers.",
     icon: <Handshake className="h-5 w-5 text-white" />,
     img: "https://images.unsplash.com/photo-1551836022-d5d88e9218df?w=1000&q=85",
@@ -1295,7 +820,7 @@ const About = () => {
 
         <div
           key={i}
-          className="group relative flex min-h-[330px] flex-col overflow-hidden rounded-xl border border-[#315D38]/30 bg-[#173D2B] shadow-[0_12px_30px_rgba(23,61,43,0.15)] transition-all duration-500 hover:-translate-y-1 hover:shadow-[0_20px_40px_rgba(23,61,43,0.25)]"
+          className="group relative flex min-h-[330px] flex-col overflow-hidden rounded-xl border border-[#3b8c2a]/30 bg-[#173D2B] shadow-[0_12px_30px_rgba(23,61,43,0.15)] transition-all duration-500 hover:-translate-y-1 hover:shadow-[0_20px_40px_rgba(23,61,43,0.25)]"
         >
 
           {/* Image */}
@@ -1374,7 +899,7 @@ const About = () => {
      <section className="relative overflow-hidden border-t border-[#D8CFAE] bg-[#F3EFE2] py-8">
 
   {/* Organic Background Details */}
-  <div className="pointer-events-none absolute -right-32 top-0 h-72 w-72 rounded-full bg-[#8BAE45]/10 blur-3xl" />
+  <div className="pointer-events-none absolute -right-32 top-0 h-72 w-72 rounded-full bg-[#3b8c2a]/10 blur-3xl" />
   <div className="pointer-events-none absolute -left-32 bottom-0 h-80 w-80 rounded-full bg-[#D6A84F]/10 blur-3xl" />
 
   <SectionContainer>
@@ -1386,7 +911,7 @@ const About = () => {
 
         {/* Decorative Frame */}
         <div className="absolute -bottom-4 -left-4 h-24 w-24 border-b border-l border-[#D6A84F]/60" />
-        <div className="absolute -right-4 -top-4 h-24 w-24 border-r border-t border-[#6F9638]/50" />
+        <div className="absolute -right-4 -top-4 h-24 w-24 border-r border-t border-[#3b8c2a]/50" />
 
         <div className="relative overflow-hidden border border-[#C8D6BE] bg-[#EAF1E2] p-2 shadow-[0_18px_40px_rgba(23,61,43,0.14)]">
 
@@ -1401,11 +926,11 @@ const About = () => {
             />
 
             {/* Organic Overlay */}
-            <div className="absolute inset-0 bg-gradient-to-t from-[#173D2B]/80 via-[#173D2B]/10 to-transparent" />
+            <div className="absolute inset-0 bg-gradient-to-t from-[#3b8c2a]/80 via-[#3b8c2a]/10 to-transparent" />
 
             {/* Venue Tag */}
             <span
-              className="absolute right-4 top-4 border border-[#D6A84F]/60 bg-[#173D2B]/90 px-3 py-1.5 text-[9px] font-bold uppercase tracking-[0.15em] text-[#D6A84F]"
+              className="absolute right-4 top-4 border border-[#D6A84F]/60 bg-[#3b8c2a]/90 px-3 py-1.5 text-[9px] font-bold uppercase tracking-[0.15em] text-[#D6A84F]"
               style={{ fontFamily: "'Inter', sans-serif" }}
             >
               India's Organic Marketplace
@@ -1417,7 +942,7 @@ const About = () => {
               <svg
                 viewBox="0 0 24 24"
                 fill="none"
-                stroke="#6F9638"
+                stroke="#3b8c2a"
                 strokeWidth="1.8"
                 strokeLinecap="round"
                 strokeLinejoin="round"
@@ -1428,7 +953,7 @@ const About = () => {
               </svg>
 
               <p
-                className="text-[10px] font-bold uppercase tracking-[0.1em] text-[#173D2B]"
+                className="text-[10px] font-bold uppercase tracking-[0.1em] text-[#3b8c2a]"
                 style={{ fontFamily: "'Inter', sans-serif" }}
               >
                 Pragati Maidan, New Delhi
@@ -1439,7 +964,7 @@ const About = () => {
           </div>
 
           {/* Bottom Accent */}
-          <div className="h-1 w-full bg-gradient-to-r from-[#6F9638] via-[#D6A84F] to-[#173D2B]" />
+          <div className="h-1 w-full bg-gradient-to-r from-[#3b8c2a] via-[#D6A84F] to-[#3b8c2a]" />
 
         </div>
 
@@ -1460,7 +985,7 @@ const About = () => {
 
         {/* Heading */}
         <h2
-          className="mb-3 text-[25px] font-black leading-[1.25] text-[#173D2B] md:text-[34px]"
+          className="mb-3 text-[25px] font-black leading-[1.25] text-[#3b8c2a] md:text-[34px]"
           style={{ fontFamily: "'Inter', sans-serif" }}
         >
           Where India's Organic Ecosystem Comes Together
@@ -1481,7 +1006,7 @@ const About = () => {
 
           {[
             {
-              color: "#6F9638",
+              color: "#3b8c2a",
               bg: "#EAF1E2",
               text: "A premium platform for organic brands, producers, farmers, and sustainable businesses",
               icon: (
@@ -1497,7 +1022,7 @@ const About = () => {
               ),
             },
             {
-              color: "#6F9638",
+              color: "#3b8c2a",
               bg: "#EAF1E2",
               text: "Discover innovations across organic food, wellness, Ayurveda, agriculture, and lifestyle",
               icon: (
@@ -1513,7 +1038,7 @@ const About = () => {
               ),
             },
             {
-              color: "#6F9638",
+              color: "#3b8c2a",
               bg: "#EAF1E2",
               text: "Bring India's sustainable innovations closer to domestic and international markets",
               icon: (
@@ -1649,6 +1174,7 @@ const About = () => {
 
         <h3
           className="mb-2 px-4 text-xl font-bold leading-tight text-[#34231D] md:text-2xl xl:px-0"
+          style={{ fontFamily: "'Inter', sans-serif" }}
         >
           Bring Your Organic Brand to the Right Audience
         </h3>
@@ -1726,23 +1252,6 @@ const About = () => {
 
 {/* THE SCALE. THE IMPACT. */}
 <div className="">
-
-  {/* Heading */}
-  {/* <div className="mb-4 flex items-center justify-center gap-3">
-
-    <span className="h-px w-8 bg-[#B85C38]" />
-
-    <p
-      className="text-center text-[13px] font-bold uppercase tracking-[0.24em] text-[#8C3F2B] md:text-[14px]"
-      style={{ fontFamily: "'Inter', sans-serif" }}
-    >
-      The Scale. The Impact.
-    </p>
-
-    <span className="h-px w-8 bg-[#B85C38]" />
-
-  </div> */}
-
 
   {/* Impact Panel */}
   <div className="relative overflow-hidden border border-[#D8C9B8] bg-[#EDE5D8] px-5 py-5 shadow-[0_12px_30px_rgba(75,55,38,0.08)] md:px-8">
@@ -1840,46 +1349,8 @@ const About = () => {
   </div>
 
 </div>
-    
- 
-
-      {/* WHY ATTEND SECTION */}
-      {/* <WhyAttend /> */}
-
-
-
-      {/* <StatsCounter /> */}
-
-
-
-      {/* WHO SHOULD ATTEND */}
-      {/* <WhoShouldAttend /> */}
-      {/* <OrganizedBy /> */}
 
       <ExhibitorLogos />
-
-      {/* FINAL CALL TO ACTION */}
-      {/* <section className="py-24 bg-[#FFFDF1] border-t border-slate-100">
-        <div className="container mx-auto px-4 text-center">
-          <div className="max-w-3xl mx-auto p-12 rounded-3xl bg-white shadow-2xl overflow-hidden relative group">
-            <div className="absolute top-0 left-0 w-2 h-full bg-[#3b8c2a]" />
-            <h2 className="text-3xl font-inter text-slate-900 mb-6">Want to be part of ORGANIC EXPO 2026?</h2>
-            <p className="text-slate-600 mb-10">Join thousands of healthcare leaders and pioneers in building the future of wellness.</p>
-            <div className="flex flex-col sm:flex-row justify-center gap-4">
-              <Link to="/contact">
-                <button className="px-10 py-4 bg-[#3b8c2a] text-white rounded-xl font-bold uppercase tracking-widest text-sm hover:bg-[#E2932A] transition-all shadow-lg hover:-translate-y-1">
-                  Contact Us
-                </button>
-              </Link>
-              <Link to="/exhibition">
-                <button className="px-10 py-4 border-2 border-[#3b8c2a] text-[#3b8c2a] rounded-xl font-bold uppercase tracking-widest text-sm hover:bg-[#3b8c2a] hover:text-white transition-all shadow-lg hover:-translate-y-1">
-                  Explore Expo
-                </button>
-              </Link>
-            </div>
-          </div>
-        </div>
-      </section> */}
     </div>
   );
 };

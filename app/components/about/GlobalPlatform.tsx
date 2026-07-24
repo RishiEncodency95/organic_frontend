@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { globalPlatformApi, SERVER_URL } from '@/app/lib/api';
 import SectionContainer from '../layout/SectionContainer';
-
+import aboutImage from "@/app/assets/about/who_we_are.png"
+import { StaticImageData } from 'next/image';
 interface PlatformData {
   subheading: string;
   title: string;
@@ -9,7 +10,7 @@ interface PlatformData {
   descriptionHtml: string;
   points: string[];
   tagline: string;
-  images: { url: string; altText: string }[];
+  images: { url: string|StaticImageData; altText: string }[];
 }
 
 const organicExpoDummyData: PlatformData = {
@@ -45,7 +46,7 @@ const organicExpoDummyData: PlatformData = {
 
 images: [
   {
-    url: 'https://images.unsplash.com/photo-1556761175-b413da4baf72?w=1200&q=85',
+    url: aboutImage,
     altText:
       'Business networking and professional exhibition meeting at Bharat Organic Expo',
   },
@@ -107,7 +108,7 @@ const GlobalPlatform: React.FC = () => {
           highlight.toLowerCase() ? (
             <span
               key={i}
-              className="text-[#8BAE45]"
+              className="text-[#3b8c2a]"
             >
               {part}
             </span>
@@ -176,9 +177,10 @@ const GlobalPlatform: React.FC = () => {
                   <img
                     loading="lazy"
                     decoding="async"
-                    src={getImageUrl(
-                      data.images[0].url
-                    )}
+                    // src={getImageUrl(
+                    //   data.images[0].url.src
+                    // )}
+                    src={aboutImage.src}
                     alt={
                       data.images[0]?.altText ||
                       'Organic Expo'
@@ -258,10 +260,10 @@ const GlobalPlatform: React.FC = () => {
             {/* Eyebrow */}
             <div className="mb-4 flex items-center gap-3">
 
-              <div className="h-[2px] w-8 bg-[#D6A84F]" />
+              <div className="h-[2px] w-8 bg-[#3b8c2a]" />
 
               <span
-                className="text-[11px] font-bold uppercase tracking-[0.3em] text-[#6F9638]"
+                className="text-[11px] font-bold uppercase tracking-[0.3em] text-[#3b8c2a]"
                 style={{
                   fontFamily:
                     "'Inter', sans-serif",
@@ -275,7 +277,7 @@ const GlobalPlatform: React.FC = () => {
 
             {/* Title */}
             <h2
-              className="mb-4 text-[28px] font-bold leading-tight text-[#173D2B] md:text-[34px]"
+              className="mb-4 text-[24px] font-bold leading-tight text-[#173D2B] md:text-[28px]"
               style={{
                 fontFamily:
                   "'Inter', sans-serif",
