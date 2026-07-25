@@ -43,7 +43,8 @@ const departments = [
 
 const ContactDepartments = () => {
   return (
-    <section className="w-full max-w-[1536px] mx-auto px-4 sm:px-6 lg:px-11 pb-10">
+    <div className="w-full bg-[#f8fdf9] py-10 border-y border-[#e8f5ec]">
+      <section className="w-full max-w-[1536px] mx-auto px-4 sm:px-6 lg:px-11">
       
       {/* Title */}
       <div className="flex flex-col items-center justify-center mb-6">
@@ -86,7 +87,8 @@ const ContactDepartments = () => {
         })}
       </div>
 
-    </section>
+      </section>
+    </div>
   );
 };
 
