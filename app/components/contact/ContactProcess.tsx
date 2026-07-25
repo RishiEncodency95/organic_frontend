@@ -43,7 +43,7 @@ const steps = [
 
 const ContactProcess = () => {
   return (
-    <section className="w-full max-w-[1536px] mx-auto px-4 sm:px-6 lg:px-11 pb-10">
+    <section className="w-full max-w-[1536px] mx-auto px-4 sm:px-6 lg:px-11 pb-2">
       
       {/* Title */}
       <div className="flex flex-col items-center justify-center mb-10">
@@ -55,35 +55,30 @@ const ContactProcess = () => {
       </div>
 
       {/* Process Stepper */}
-      <div className="relative">
-        
-        {/* Dotted Line (Desktop only) */}
-        <div className="hidden lg:block absolute top-[24px] left-[8%] right-[8%] h-[2px] border-t-2 border-dashed border-[#3b8c2a]/30 -z-10"></div>
-
-        <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-6 gap-8 lg:gap-4 relative z-10">
-          {steps.map((step, index) => {
-            const Icon = step.icon;
-            return (
-              <div key={index} className="flex flex-col items-center text-center relative group">
-                
-                {/* Dotted connecting line for Mobile/Tablet */}
-                {index !== steps.length - 1 && (
-                  <div className="lg:hidden absolute top-[24px] left-[50%] right-[-50%] h-[2px] border-t-2 border-dashed border-[#3b8c2a]/30 -z-10"></div>
-                )}
-
-                <div className="w-12 h-12 rounded-full bg-white border-2 border-[#3b8c2a] flex items-center justify-center mb-4 shadow-[0_4px_15px_rgba(59,140,42,0.15)] group-hover:bg-[#3b8c2a] transition-colors duration-300">
-                  <Icon size={20} className="text-[#3b8c2a] group-hover:text-white transition-colors duration-300" />
-                </div>
-                
-                <span className="text-[#3b8c2a] text-[10px] font-bold mb-1">{step.num}</span>
-                <h4 className="text-[#111827] text-[13px] font-bold mb-1">{step.title}</h4>
-                <p className="text-[#64748b] text-[10px] leading-relaxed max-w-[140px]">
-                  {step.desc}
-                </p>
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-6 gap-2 relative z-10">
+        {steps.map((step, index) => {
+          const Icon = step.icon;
+          return (
+            <div 
+              key={index} 
+              className="bg-white rounded-2xl border border-gray-100 p-3 pt-4 shadow-sm hover:shadow-lg hover:shadow-[#3b8c2a]/15 hover:bg-[#3b8c2a] hover:-translate-y-1 transition-all duration-1000 ease-in-out flex flex-col items-center text-center relative group cursor-pointer mt-2"
+            >
+              
+              <div className="absolute -top-2.5 left-1/2 -translate-x-1/2 w-6 h-6 rounded-full bg-[#154726] text-white text-[10px] font-bold flex items-center justify-center shadow-md z-10 group-hover:bg-white group-hover:text-[#154726] transition-colors duration-1000 ease-in-out">
+                {step.num}
               </div>
-            );
-          })}
-        </div>
+
+              <div className="w-10 h-10 rounded-full bg-[#f8fdf9] border border-[#e8f5ec] flex items-center justify-center mb-2 mt-1 group-hover:bg-white/20 group-hover:border-transparent transition-colors duration-1000 ease-in-out">
+                <Icon size={18} className="text-[#3b8c2a] group-hover:text-white transition-colors duration-1000 ease-in-out" />
+              </div>
+              
+              <h4 className="text-[#111827] text-[12px] font-bold mb-1 group-hover:text-white transition-colors duration-1000 ease-in-out">{step.title}</h4>
+              <p className="text-[#64748b] text-[10px] leading-relaxed group-hover:text-white/90 transition-colors duration-1000 ease-in-out">
+                {step.desc}
+              </p>
+            </div>
+          );
+        })}
       </div>
 
     </section>

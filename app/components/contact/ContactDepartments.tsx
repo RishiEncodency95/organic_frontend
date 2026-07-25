@@ -55,21 +55,32 @@ const ContactDepartments = () => {
       </div>
 
       {/* Grid */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-6 gap-4">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-6 gap-2">
         {departments.map((dept, index) => {
           const Icon = dept.icon;
           return (
-            <div key={index} className="bg-white rounded-xl border border-gray-100 p-5 shadow-sm hover:shadow-md transition-shadow flex flex-col items-center text-center group cursor-pointer">
-              <div className="w-10 h-10 rounded-full bg-[#f8fdf9] border border-[#e8f5ec] flex items-center justify-center mb-3 group-hover:bg-[#3b8c2a] transition-colors duration-300">
-                <Icon size={18} className="text-[#3b8c2a] group-hover:text-white transition-colors duration-300" />
+            <div 
+              key={index} 
+              className="bg-white rounded-2xl border border-gray-100 p-3 shadow-sm hover:shadow-lg hover:shadow-[#3b8c2a]/15 hover:bg-[#3b8c2a] hover:-translate-y-1 transition-all duration-1000 ease-in-out flex flex-col items-center text-center group cursor-pointer"
+            >
+              <div className="w-10 h-10 rounded-full bg-[#f8fdf9] border border-[#e8f5ec] flex items-center justify-center mb-2 group-hover:bg-white/20 group-hover:border-transparent transition-colors duration-1000 ease-in-out">
+                <Icon size={18} className="text-[#3b8c2a] group-hover:text-white transition-colors duration-1000 ease-in-out" />
               </div>
-              <h4 className="text-[#111827] text-[13px] font-bold mb-2">{dept.title}</h4>
-              <a href={`mailto:${dept.email}`} className="text-[#64748b] text-[10px] hover:text-[#3b8c2a] transition-colors mb-1 break-all w-full">
+              <h4 className="text-[#111827] text-[13px] font-bold mb-1.5 group-hover:text-white transition-colors duration-1000 ease-in-out">{dept.title}</h4>
+              <a 
+                href={`mailto:${dept.email}`} 
+                className="text-[#64748b] text-[10px] hover:underline mb-0.5 break-all w-full group-hover:text-white/90 transition-colors duration-1000 ease-in-out"
+              >
                 {dept.email}
               </a>
-              <a href={`tel:${dept.phone.replace(/\s+/g, '')}`} className="text-[#64748b] text-[11px] font-medium hover:text-[#3b8c2a] transition-colors">
-                {dept.phone}
-              </a>
+              {dept.phone && (
+                <a 
+                  href={`tel:${dept.phone.replace(/[^0-9+]/g, '')}`} 
+                  className="text-[#64748b] text-[10px] hover:underline group-hover:text-white/90 transition-colors duration-1000 ease-in-out"
+                >
+                  {dept.phone}
+                </a>
+              )}
             </div>
           );
         })}

@@ -37,10 +37,10 @@ const reasons = [
 
 const ContactWhy = () => {
   return (
-    <section className="w-full max-w-[1536px] mx-auto px-4 sm:px-6 lg:px-11 pb-10">
+    <section className="w-full max-w-[1536px] mx-auto px-4 sm:px-6 lg:px-11 pb-4">
       
       {/* Title */}
-      <div className="flex flex-col items-center justify-center mb-6">
+      <div className="flex flex-col items-center justify-center mb-2">
         <div className="flex items-center gap-2 mb-1">
           <Leaf size={16} className="text-[#3b8c2a]" />
           <h2 className="text-[#154726] text-[22px] font-bold">Why Contact Bharat Organic Expo?</h2>
@@ -49,16 +49,19 @@ const ContactWhy = () => {
       </div>
 
       {/* Grid */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-6 md:gap-4">
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-2">
         {reasons.map((reason, index) => {
           const Icon = reason.icon;
           return (
-            <div key={index} className="flex flex-col items-center text-center">
-              <div className="w-12 h-12 rounded-full border border-dashed border-[#3b8c2a]/40 bg-[#f8fdf9] flex items-center justify-center mb-3">
-                <Icon size={20} className="text-[#3b8c2a]" strokeWidth={1.5} />
+            <div 
+              key={index} 
+              className="bg-white rounded-2xl border border-gray-100 p-3 shadow-sm hover:shadow-lg hover:shadow-[#3b8c2a]/15 hover:bg-[#3b8c2a] hover:-translate-y-1 transition-all duration-1000 ease-in-out flex flex-col items-center text-center group cursor-pointer"
+            >
+              <div className="w-10 h-10 rounded-full bg-[#f8fdf9] border border-[#e8f5ec] flex items-center justify-center mb-2 group-hover:bg-white/20 group-hover:border-transparent transition-colors duration-1000 ease-in-out">
+                <Icon size={18} className="text-[#3b8c2a] group-hover:text-white transition-colors duration-1000 ease-in-out" strokeWidth={1.5} />
               </div>
-              <h4 className="text-[#111827] text-[13px] font-bold mb-1.5">{reason.title}</h4>
-              <p className="text-[#64748b] text-[11px] leading-relaxed max-w-[150px]">
+              <h4 className="text-[#111827] text-[13px] font-bold mb-1.5 group-hover:text-white transition-colors duration-1000 ease-in-out">{reason.title}</h4>
+              <p className="text-[#64748b] text-[10px] leading-relaxed group-hover:text-white/90 transition-colors duration-1000 ease-in-out">
                 {reason.description}
               </p>
             </div>

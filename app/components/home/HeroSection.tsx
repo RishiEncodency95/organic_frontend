@@ -1,5 +1,5 @@
 "use client";
-import home1 from "../../assets/home/home11.png";
+import home1 from "../../assets/home/home1.jpg";
 import home2 from "../../assets/home/home22.png";
 import home3 from "../../assets/home/home33.png";
 
@@ -100,7 +100,7 @@ const HeroSection = () => {
             className="w-full h-full object-cover"
           />
           {/* Subtle gradient overlay to make text readable */}
-          <div className="absolute inset-0 bg-gradient-to-r from-white/80 via-white/30 to-transparent z-10 pointer-events-none" />
+          {/* <div className="absolute inset-0 bg-gradient-to-r from-white/80 via-white/30 to-transparent z-10 pointer-events-none" /> */}
         </motion.div>
       </AnimatePresence>
 

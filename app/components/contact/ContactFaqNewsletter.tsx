@@ -41,102 +41,46 @@ const ContactFaqNewsletter = () => {
   };
 
   return (
-    <section className="w-full max-w-[1536px] mx-auto px-4 sm:px-6 lg:px-11 pb-12">
-      <div className="flex flex-col lg:flex-row gap-10">
+    <section className="w-full max-w-[1536px] mx-auto px-4 sm:px-6 lg:px-11 pb-10">
+      <div className="w-full flex flex-col items-center">
         
-        {/* Left Side: FAQs */}
-        <div className="w-full lg:w-3/5">
-          <h2 className="text-[#111827] text-[20px] font-bold mb-6">Frequently Asked Questions</h2>
-          
-          <div className="flex flex-col gap-3 mb-6">
-            {faqs.map((faq, index) => (
-              <div 
-                key={index} 
-                className="bg-white border border-gray-100 rounded-xl shadow-sm overflow-hidden"
+        <h2 className="text-[#3b8c2a] text-[16px] md:text-[18px] font-semibold mb-6 text-center">Frequently Asked Questions</h2>
+        
+        <div className="w-full flex flex-col gap-2.5 mb-4">
+          {faqs.map((faq, index) => (
+            <div 
+              key={index} 
+              className={`bg-white border transition-all duration-300 rounded-xl shadow-sm overflow-hidden ${openIndex === index ? 'border-[#3b8c2a]/50 shadow-md' : 'border-gray-100 hover:border-[#e8f5ec]'}`}
+            >
+              <button 
+                onClick={() => toggleFaq(index)}
+                className="w-full px-5 py-4 md:py-3 flex items-center justify-between text-left group"
               >
-                <button 
-                  onClick={() => toggleFaq(index)}
-                  className="w-full px-5 py-4 flex items-center justify-between text-left hover:bg-gray-50/50 transition-colors"
-                >
-                  <span className="text-[#111827] text-[13px] font-semibold">{faq.question}</span>
+                <span className={`text-[15px] md:text-[16px] font-medium transition-colors ${openIndex === index ? 'text-[#3b8c2a]' : 'text-[#111827] group-hover:text-[#3b8c2a]'}`}>{faq.question}</span>
+                <div className={`w-8 h-8 rounded-full flex items-center justify-center shrink-0 transition-colors ${openIndex === index ? 'bg-[#3b8c2a] text-white' : 'bg-[#f8fdf9] text-[#3b8c2a] group-hover:bg-[#e8f5ec]'}`}>
                   <ChevronDown 
                     size={18} 
-                    className={`text-gray-400 transition-transform duration-300 ${openIndex === index ? 'rotate-180' : ''}`} 
+                    className={`transition-transform duration-300 ${openIndex === index ? 'rotate-180' : ''}`} 
                   />
-                </button>
-                
-                <div 
-                  className={`px-5 overflow-hidden transition-all duration-300 ease-in-out ${
-                    openIndex === index ? 'max-h-40 py-4 border-t border-gray-100 opacity-100' : 'max-h-0 py-0 opacity-0'
-                  }`}
-                >
-                  <p className="text-[#64748b] text-[12px] leading-relaxed">
-                    {faq.answer}
-                  </p>
                 </div>
-              </div>
-            ))}
-          </div>
-
-          <a href="#" className="inline-flex items-center gap-1.5 text-[#3b8c2a] text-[13px] font-bold hover:underline">
-            View All FAQs <ArrowRight size={14} />
-          </a>
-        </div>
-
-        {/* Right Side: Newsletter & Social */}
-        <div className="w-full lg:w-2/5 flex flex-col gap-6">
-          
-          {/* Newsletter Box */}
-          <div className="bg-[#f8fdf9] border border-[#e8f5ec] rounded-3xl p-6 md:p-8 relative overflow-hidden h-full flex flex-col justify-center">
-            
-            {/* Decorative Leaves Image placeholder */}
-            <div className="absolute -right-4 -bottom-4 w-32 h-32 opacity-20 pointer-events-none bg-[url('https://images.unsplash.com/photo-1542601906990-b4d3fb778b09?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80')] bg-cover bg-center rounded-tl-[100px]"></div>
-
-            <div className="relative z-10">
-              <h3 className="text-[#111827] text-[18px] font-bold mb-2">Stay Updated with Organic Expo</h3>
-              <p className="text-[#64748b] text-[12px] leading-relaxed mb-6">
-                Subscribe to our newsletter and never miss any update about events, offers and announcements.
-              </p>
+              </button>
               
-              <div className="flex items-center gap-2 bg-white rounded-lg p-1.5 border border-gray-200 shadow-sm">
-                <input 
-                  type="email" 
-                  placeholder="Enter your email address" 
-                  className="flex-1 px-3 py-2 text-[12px] bg-transparent focus:outline-none"
-                />
-                <button className="bg-[#3b8c2a] hover:bg-[#2b6b1e] text-white px-5 py-2.5 rounded-md text-[11px] font-bold uppercase tracking-wider transition-colors">
-                  SUBSCRIBE
-                </button>
+              <div 
+                className={`px-5 overflow-hidden transition-all duration-300 ease-in-out ${
+                  openIndex === index ? 'max-h-40 pb-5 opacity-100' : 'max-h-0 pb-0 opacity-0'
+                }`}
+              >
+                <p className="text-[#64748b] text-[14px] md:text-[15px] leading-relaxed">
+                  {faq.answer}
+                </p>
               </div>
             </div>
-          </div>
-
-          {/* Social Media */}
-          <div className="bg-white border border-gray-100 rounded-3xl p-6 shadow-sm">
-            <h3 className="text-[#111827] text-[14px] font-bold mb-4">Follow Us On Social Media</h3>
-            <div className="flex gap-3">
-              {[
-                { icon: Facebook, color: "bg-[#1877F2]" },
-                { icon: Instagram, color: "bg-gradient-to-tr from-[#FFDC80] via-[#F56040] to-[#C13584]" },
-                { icon: Linkedin, color: "bg-[#0A66C2]" },
-                { icon: Twitter, color: "bg-[#1DA1F2]" },
-                { icon: Youtube, color: "bg-[#FF0000]" }
-              ].map((social, i) => {
-                const Icon = social.icon;
-                return (
-                  <a 
-                    key={i} 
-                    href="#" 
-                    className={`w-9 h-9 rounded-full ${social.color} flex items-center justify-center text-white hover:-translate-y-1 transition-transform shadow-md`}
-                  >
-                    <Icon size={16} />
-                  </a>
-                );
-              })}
-            </div>
-          </div>
-
+          ))}
         </div>
+
+        <a href="#" className="inline-flex items-center gap-2 text-white bg-[#154726] hover:bg-[#0b2912] px-6 py-2.5 rounded-md text-[13px] md:text-[14px] font-bold transition-colors shadow-sm">
+          View All FAQs <ArrowRight size={16} />
+        </a>
 
       </div>
     </section>
