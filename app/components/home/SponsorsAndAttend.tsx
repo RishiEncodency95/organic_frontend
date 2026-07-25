@@ -1,6 +1,7 @@
 "use client";
 
 import { ArrowRight, CheckCircle2, CalendarDays, Handshake } from "lucide-react";
+import bookYourImg from "../../assets/home/book_your.png";
 
 const SponsorsAndAttend = () => {
   return (
@@ -28,7 +29,7 @@ const SponsorsAndAttend = () => {
               ].map((item, i) => (
                 <li key={i} className="flex items-start gap-2">
                   <CheckCircle2 className="w-3.5 h-3.5 text-[#3b8c2a] flex-shrink-0 mt-0.5" strokeWidth={2.5} />
-                  <span className="text-[#475569] text-[9.5px] font-medium leading-[1.3]">{item}</span>
+                  <span className="text-[#475569] text-[12px] font-medium leading-[1.3]">{item}</span>
                 </li>
               ))}
             </ul>
@@ -106,35 +107,57 @@ const SponsorsAndAttend = () => {
           </div>
 
           {/* Column 3: Book Your Space */}
-          <div className="lg:col-span-1 bg-[#11381d] rounded-xl shadow-xl p-5 flex flex-col h-full relative overflow-hidden group">
-            {/* Background Decorative Pattern */}
-            <div className="absolute top-0 right-0 w-32 h-32 bg-[#3b8c2a] opacity-10 rounded-full blur-[30px] -translate-y-1/2 translate-x-1/4"></div>
-            <div className="absolute bottom-0 left-0 w-32 h-32 bg-[#aae639] opacity-10 rounded-full blur-[30px] translate-y-1/2 -translate-x-1/4"></div>
+          <div className="lg:col-span-1 rounded-xl shadow-[0_10px_30px_rgba(0,0,0,0.15)] flex flex-col h-full relative overflow-hidden group">
+            
+            {/* Background Image using img tag for reliable rendering */}
+            <img 
+              src={bookYourImg.src} 
+              alt="Book Your Space" 
+              className="absolute inset-0 w-full h-full object-cover z-0"
+            />
+            
+            {/* Vertical Gradient Overlay */}
+            {/* <div className="absolute inset-0 bg-gradient-to-b from-[#11381d]/10 via-[#11381d]/80 to-[#11381d] z-0"></div> */}
 
-            <div className="relative z-10 flex flex-col h-full">
-              <h3 className="text-white text-[16px] font-bold leading-[1.2] mb-1.5">
-                Book Your Space Now!
+            {/* Background Decorative Pattern */}
+            <div className="absolute top-0 right-0 w-32 h-32 bg-[#3b8c2a] opacity-20 rounded-full blur-[40px] -translate-y-1/2 translate-x-1/4 z-0"></div>
+
+            <div className="relative z-10 flex flex-col items-center text-center h-full p-6 pt-8 drop-shadow-[0_5px_15px_rgba(0,0,0,0.6)]">
+              <h3 
+                className="text-white text-[22px] font-black leading-[1.2] mb-2"
+                style={{ textShadow: '2px 2px 5px rgba(0,0,0,0.9), 0px 0px 20px rgba(0,0,0,1)' }}
+              >
+                Book Your Space <span className="text-[#aae639]">Now!</span>
               </h3>
-              <p className="text-[#a3d8b2] text-[11.5px] font-medium leading-[1.4] mb-6">
-                Be Part of India's Biggest Organic & Wellness Platform
+              <p 
+                className="text-white/95 text-[12px] font-bold leading-[1.4] mb-8 max-w-[200px]"
+                style={{ textShadow: '1px 1px 3px rgba(0,0,0,0.9), 0px 0px 12px rgba(0,0,0,1)' }}
+              >
+                Be Part of India's Biggest <span className="text-[#aae639]">Organic & Wellness</span> Platform
               </p>
 
-              <div className="flex flex-col items-center justify-center flex-grow mb-6">
-                <div className="w-20 h-20 bg-white rounded-full border-4 border-[#3b8c2a] flex items-center justify-center mb-4 shadow-[0_0_20px_rgba(59,140,42,0.3)] group-hover:scale-105 transition-transform duration-300">
-                  <CalendarDays className="w-9 h-9 text-[#3b8c2a]" strokeWidth={1.5} />
+              <div className="flex flex-col items-center justify-center flex-grow mb-6 w-full">
+                <div className="w-16 h-16 bg-white rounded-full flex items-center justify-center mb-6 shadow-[0_5px_25px_rgba(0,0,0,0.5)] group-hover:scale-110 transition-transform duration-300">
+                  <CalendarDays className="w-8 h-8 text-[#3b8c2a]" strokeWidth={2} />
                 </div>
                 
-                <button className="w-full flex items-center justify-center gap-1.5 px-5 py-2.5 rounded-full border-2 border-[#F2B40E] bg-[#3b8c2a] text-white text-[11px] font-bold uppercase tracking-wider hover:bg-[#F2B40E] hover:text-[#0b2912] transition-all duration-300 hover:shadow-lg hover:-translate-y-0.5 shadow-md">
+                <button className="w-[90%] flex items-center justify-center gap-2 px-5 py-3 rounded-full border border-[#aae639] bg-[#3b8c2a] text-white text-[12px] font-bold uppercase tracking-widest hover:bg-[#aae639] hover:text-[#0b2912] transition-all duration-300 shadow-[0_5px_20px_rgba(0,0,0,0.5)] hover:shadow-[0_8px_25px_rgba(170,230,57,0.4)] hover:-translate-y-0.5">
                   BOOK YOUR SPACE
-                  <ArrowRight size={13} strokeWidth={2.5} className="group-hover:translate-x-1 transition-transform" />
+                  <ArrowRight size={14} strokeWidth={2.5} className="group-hover:translate-x-1 transition-transform" />
                 </button>
               </div>
 
-              <div className="text-center mt-auto">
-                <p className="text-white text-[10px] font-bold mb-0.5">
+              <div className="text-center mt-auto flex flex-col items-center">
+                <p 
+                  className="text-white text-[11px] font-extrabold mb-1"
+                  style={{ textShadow: '1px 1px 3px rgba(0,0,0,0.9), 0px 0px 10px rgba(0,0,0,1)' }}
+                >
                   Limited Stalls Available
                 </p>
-                <p className="text-[#d1e8d8] text-[9px] font-medium">
+                <p 
+                  className="text-[#aae639] text-[10px] font-bold"
+                  style={{ textShadow: '1px 1px 3px rgba(0,0,0,0.9)' }}
+                >
                   Secure your spot today!
                 </p>
               </div>

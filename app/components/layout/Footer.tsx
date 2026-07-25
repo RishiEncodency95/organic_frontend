@@ -216,8 +216,8 @@ const Footer = () => {
       `}</style>
 
             {/* Top Grid Section */}
-            <div className="max-w-[1536px] mx-auto px-4 md:px-8 xl:px-12 pt-8 pb-8 relative z-10">
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-[1.25fr_0.85fr_0.95fr_0.95fr_0.95fr] gap-8 lg:gap-2 xl:gap-2 pb-4">
+            <div className="max-w-[1536px] mx-auto px-4 md:px-8 xl:px-12 pt-8 relative z-10">
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-[1.25fr_0.85fr_0.95fr_0.95fr_0.95fr] gap-8 lg:gap-2 xl:gap-2 ">
 
                     {/* Column 1: Logo & Stats */}
                     <div className="flex flex-col gap-6 lg:pr-0 xl:pr-2">
@@ -395,7 +395,7 @@ const Footer = () => {
                                 </div>
                             </button>
                         </div>
-                        
+
                         {/* Footer Bottom Image */}
                         <div className="mt-4 mb-2 flex justify-start xl:justify-center">
                             <img src={footerBottomImg.src} alt="Footer Details" className="w-full max-w-[200px] h-auto object-contain opacity-90" />
@@ -405,73 +405,7 @@ const Footer = () => {
                 </div>
             </div>
 
-            {/* Middle Banner: Newsletter & Brochure */}
-            <div className="max-w-[1536px] mx-auto px-4 md:px-8 xl:px-12 pb-4 relative z-10 -mt-8">
-                <div className="relative w-full flex items-center">
-
-                    {/* Parlia Image placeholder */}
-                    <div className="absolute -right-6 md:-right-12 lg:-right-20 xl:-right-32 top-1/2 -translate-y-1/2 -mt-2 md:-mt-4 h-24 md:h-32 lg:h-40 w-24 object-contain z-0 pointer-events-none opacity-10 bg-white rounded-full blur-xl" />
-
-                    {/* Banner Band with gradient fading out on the right to overlap Parlia */}
-                    <div className="bg-gradient-to-r from-[#f5f0e1] via-[#e8dfc8] to-transparent rounded-l-[2rem] rounded-r-none xl:rounded-l-full xl:rounded-r-none flex flex-col xl:flex-row items-center justify-start pl-4 md:pl-6 pr-8 border-y border-l border-r-0 border-white/20 gap-2 xl:gap-0 w-full lg:w-[92%] xl:w-[85%] relative z-10 py-0">
-
-                        <div className="flex flex-col md:flex-row items-center w-full xl:w-auto py-0">
-                            {/* Newsletter Info */}
-                            <div className="flex items-center gap-3 pr-2 xl:pr-4">
-                                <Mail className="h-9 w-9 text-[#541A1A] shrink-0" />
-                                <div>
-                                    <h4 className="text-[#001810] font-medium text-[13px] leading-tight -mt-0.5">STAY CONNECTED. STAY INFORMED.</h4>
-                                    <p className="text-black text-[10px] leading-tight -mt-1 whitespace-nowrap">Subscribe to get the latest updates, speaker announcements,<br />agenda highlights and exclusive offers.</p>
-                                </div>
-                            </div>
-
-                            {/* Sub-divider */}
-                            <div className="hidden md:block w-[1px] h-12 bg-black/20 shrink-0 ml-0 mr-4"></div>
-
-                            {/* Input & Button */}
-                            <div className="flex w-full md:w-[350px] h-9 bg-[#001810] rounded-lg overflow-hidden shrink-0">
-                                <div className="flex-1 flex items-center px-4 gap-2">
-                                    <Mail size={14} className="text-gray-400" />
-                                    <input
-                                        type="email"
-                                        placeholder="Enter your email address"
-                                        className="bg-transparent text-white text-[11px] w-full focus:outline-none placeholder:text-gray-400"
-                                    />
-                                </div>
-                                <button className="bg-[#cba344] hover:bg-[#b58c35] text-[#001810] font-bold text-[11px] px-5 transition-colors flex items-center gap-2 uppercase">
-                                    Subscribe <ChevronRight size={14} />
-                                </button>
-                            </div>
-                            {/* Main Divider */}
-                            <div className="hidden xl:block w-[1px] h-12 bg-black/20 ml-2 mr-6 shrink-0" />
-                        </div>
-
-                        {/* Brochure */}
-                        <div className="flex items-center gap-3 w-full xl:w-auto justify-start xl:justify-end py-1 xl:py-0 border-t xl:border-t-0 border-black/10 mt-1 xl:mt-0 pt-1 xl:pt-0">
-                            <FileText className="h-9 w-9 text-[#541A1A] shrink-0" />
-                            <div className="flex flex-col items-start mr-2">
-                                <h4 className="text-[#F6A003] font-medium text-[12px] whitespace-nowrap mb-0.5">DOWNLOAD BROCHURE</h4>
-                                <div style={{ position: 'relative', display: 'inline-block' }} className="shrink-0 -mt-0.5">
-                                    <Sparkle color="#541A1A" style={{ top: '-12px', left: '10%', animationDelay: '0s' }} />
-                                    <Sparkle color="#541A1A" style={{ top: '-8px', left: '45%', animationDelay: '0.4s' }} />
-                                    <Sparkle color="#541A1A" style={{ top: '-14px', right: '15%', animationDelay: '0.8s' }} />
-                                    <Sparkle color="#541A1A" style={{ bottom: '-12px', left: '20%', animationDelay: '0.2s' }} />
-                                    <Sparkle color="#541A1A" style={{ bottom: '-8px', right: '25%', animationDelay: '0.6s' }} />
-                                    <Sparkle color="#541A1A" style={{ top: '20%', left: '-8px', animationDelay: '0.3s' }} />
-                                    <Sparkle color="#541A1A" style={{ top: '60%', right: '-8px', animationDelay: '0.7s' }} />
-
-                                    <button className="bg-[#541A1A] hover:bg-[#3b1212] border border-white shadow-md group rounded-full px-2.5 py-1 text-white font-bold text-[9px] uppercase tracking-[0.05em] transition-all duration-300 flex items-center gap-1 relative z-10">
-                                        Download PDF <svg className="w-2.5 h-2.5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path></svg>
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
-
-                    </div>
-                </div>
-            </div>
-
-            {/* Bottom Bar */}
+            {/* Middle Banner (Removed) */}
             <div className="border-t border-white/20 py-2.5 bg-[#00100a] relative z-10">
                 <div className="max-w-[1536px] mx-auto px-4 md:px-8 xl:px-12 flex flex-col lg:flex-row items-center justify-between gap-4 text-[11px] text-gray-400">
 
@@ -499,10 +433,6 @@ const Footer = () => {
 
                 </div>
             </div>
-
-            {/* Decorative Right Corner (Removed missing image) */}
-
-            {/* Decorative Left Corner (Removed missing image) */}
         </footer>
     );
 };

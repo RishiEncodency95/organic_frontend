@@ -31,7 +31,7 @@ const MovementBanner = () => {
   return (
     <section className="relative w-full bg-[#0a230e] overflow-hidden">
       {/* Background Image */}
-      <div 
+      <div
         className="absolute inset-0 z-0"
         style={{
           backgroundImage: `url(${bannerImg.src})`,
@@ -44,7 +44,7 @@ const MovementBanner = () => {
       {/* Main Content Container */}
       <div className="w-full px-4 sm:px-6 lg:px-11 relative z-10 py-8 md:py-12">
         <div className="flex flex-col lg:flex-row items-center justify-between gap-8 lg:gap-4">
-          
+
           {/* Left Side: CTA (45%) */}
           <div className="w-full lg:w-[45%] flex flex-col items-center lg:items-start text-center lg:text-left">
             <h2 className="text-[22px] md:text-[26px] lg:text-[28px] font-bold text-white leading-[1.2] mb-2 tracking-tight">
@@ -52,7 +52,7 @@ const MovementBanner = () => {
               Organic Movement!
             </h2>
             <p className="text-white text-[13px] md:text-[14px] mb-5 font-medium leading-snug">
-              Register now as a visitor or book your stall<br className="hidden md:block" /> 
+              Register now as a visitor or book your stall<br className="hidden md:block" />
               and grow your business with us.
             </p>
 
@@ -61,7 +61,7 @@ const MovementBanner = () => {
                 Register as Visitor
                 <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
               </button>
-              
+
               <button className="w-full sm:w-auto px-6 py-2 border-2 border-[#F2B40E] bg-[#3b8c2a] text-white font-bold text-[13px] rounded hover:bg-[#F2B40E] hover:text-[#0b2912] transition-colors flex items-center justify-center gap-2 group shadow-md hover:shadow-lg">
                 Book Your Stall
                 <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />

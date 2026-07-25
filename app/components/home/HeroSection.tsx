@@ -100,7 +100,7 @@ const HeroSection = () => {
             className="w-full h-full object-cover"
           />
           {/* Subtle gradient overlay to make text readable */}
-          {/* <div className="absolute inset-0 bg-gradient-to-r from-black/5 via-black/5 to-transparent z-10" /> */}
+          <div className="absolute inset-0 bg-gradient-to-r from-white/80 via-white/30 to-transparent z-10 pointer-events-none" />
         </motion.div>
       </AnimatePresence>
 
@@ -109,11 +109,12 @@ const HeroSection = () => {
           <AnimatePresence mode="wait">
             <motion.div
               key={current}
-              initial={{ opacity: 0, y: 30 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -20 }}
+              initial={{ opacity: 0, x: -30 }}
+              animate={{ opacity: 1, x: 0 }}
+              exit={{ opacity: 0, x: 20 }}
               transition={{ duration: 0.6 }}
-              className="space-y-3"
+              className="space-y-3 w-full max-w-xl"
+              style={{ textShadow: '0px 2px 15px rgba(255,255,255,1), 0px 4px 30px rgba(255,255,255,0.8)' }}
             >
               {/* Tagline */}
               <div className="flex items-center gap-2">
@@ -124,10 +125,10 @@ const HeroSection = () => {
 
               {/* Title */}
               <h1 className="leading-tight font-black -mt-1">
-                <div className="text-[#3b8c2a] text-xl md:text-4xl lg:text-4xl">
+                <div className="text-[#3b8c2a] text-2xl md:text-5xl lg:text-5xl mb-1">
                   {slides[current].titlePrimary}
                 </div>
-                <div className="text-[#e63946] text-xl md:text-4xl lg:text-4xl">
+                <div className="text-[#F08902] text-2xl md:text-5xl lg:text-5xl">
                   {slides[current].titleSecondary}
                 </div>
               </h1>
@@ -135,36 +136,36 @@ const HeroSection = () => {
               {/* Subtitle */}
               <div className="flex items-center gap-3">
                 <div className="w-8 h-0.5 bg-[#3b8c2a]"></div>
-                <span className="text-slate-800 font-bold text-base md:text-lg tracking-wide">
+                <span className="text-slate-800 font-bold text-base md:text-lg tracking-wide uppercase">
                   {slides[current].subtitle}
                 </span>
               </div>
 
               {/* Description */}
-              <p className="text-slate-700 font-medium text-xs md:text-sm leading-snug max-w-lg">
+              <p className="text-slate-800 font-semibold text-xs md:text-sm leading-snug max-w-lg">
                 {slides[current].description}
               </p>
 
               {/* Details (Date & Location) */}
-              <div className="flex flex-col sm:flex-row gap-4 sm:gap-8 pt-2">
+              <div className="flex flex-col sm:flex-row gap-5 sm:gap-8 pt-3 mt-4">
                 <div className="flex items-start gap-2">
                   <CalendarDays className="w-5 h-5 text-[#3b8c2a]" />
-                  <div>
+                  <div className="flex flex-col justify-center">
                     <div className="text-slate-900 font-bold text-xs md:text-sm">
                       {slides[current].date}
                     </div>
-                    <div className="text-slate-600 font-semibold text-[10px] md:text-xs">
+                    <div className="text-slate-800 font-semibold text-[10px] md:text-xs">
                       {slides[current].dateSub}
                     </div>
                   </div>
                 </div>
                 <div className="flex items-start gap-2">
                   <MapPin className="w-5 h-5 text-[#3b8c2a]" />
-                  <div>
+                  <div className="flex flex-col justify-center">
                     <div className="text-slate-900 font-bold text-xs md:text-sm">
                       {slides[current].location}
                     </div>
-                    <div className="text-slate-600 font-semibold text-[10px] md:text-xs">
+                    <div className="text-slate-800 font-semibold text-[10px] md:text-xs">
                       {slides[current].locationSub}
                     </div>
                   </div>

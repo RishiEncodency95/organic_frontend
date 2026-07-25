@@ -1,6 +1,6 @@
 "use client";
-import img1 from "../../assets/home/home11.png";
-import img2 from "../../assets/home/home22.png";
+import img1 from "../../assets/home/bs_meet.png";
+import img2 from "../../assets/home/seminars.png";
 
 
 import { ArrowRight, CheckCircle, Users, Mic, Store, Globe, Clock } from "lucide-react";

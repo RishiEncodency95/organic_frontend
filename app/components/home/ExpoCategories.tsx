@@ -31,6 +31,38 @@ const LeafDecoration = ({ className }: { className?: string }) => (
 const ExpoCategories = () => {
   return (
     <section className="py-2 md:py-6 bg-[#f8fdf9] border-t border-b border-gray-100 relative overflow-hidden">
+      <style>{`
+        @keyframes marquee-left {
+          0% { transform: translateX(0); }
+          100% { transform: translateX(-50%); }
+        }
+        @keyframes marquee-right {
+          0% { transform: translateX(-50%); }
+          100% { transform: translateX(0); }
+        }
+        .animate-marquee-left {
+          display: flex;
+          width: max-content;
+          animation: marquee-left 40s linear infinite;
+        }
+        .animate-marquee-right {
+          display: flex;
+          width: max-content;
+          animation: marquee-right 40s linear infinite;
+        }
+        .animate-marquee-left:hover, .animate-marquee-right:hover {
+          animation-play-state: paused;
+        }
+        .category-card {
+          width: 260px;
+          flex-shrink: 0;
+        }
+        .mask-image-linear {
+          mask-image: linear-gradient(to right, transparent, black 5%, black 95%, transparent);
+          -webkit-mask-image: linear-gradient(to right, transparent, black 5%, black 95%, transparent);
+        }
+      `}</style>
+
       {/* Decorative Leaves */}
       <LeafDecoration className="absolute top-0 left-0 h-full pointer-events-none" />
       <LeafDecoration className="absolute top-0 right-0 h-full pointer-events-none scale-x-[-1]" />
@@ -54,13 +86,23 @@ const ExpoCategories = () => {
           </p>
         </div>
 
-        {/* Categories Grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-3 py-2 max-w-[1500px] mx-auto">
+        {/* Categories Grid with Animation */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-3 py-2 max-w-[1500px] mx-auto overflow-hidden">
           {categories.map((item, index) => {
             const Icon = item.icon;
+            
             return (
-              <div 
-                key={index} 
+              <motion.div 
+                key={index}
+                initial={{ opacity: 0, y: 40, scale: 0.85 }}
+                whileInView={{ opacity: 1, y: 0, scale: 1 }}
+                viewport={{ once: true, margin: "-20px" }}
+                transition={{ 
+                  type: "spring", 
+                  stiffness: 120, 
+                  damping: 14,
+                  delay: index * 0.08 
+                }}
                 className="group flex items-center gap-3 px-3 py-3.5 bg-white border border-gray-100 rounded-xl shadow-[0_2px_10px_rgba(0,0,0,0.02)] hover:bg-[#f3f9f4] hover:shadow-[0_8px_20px_rgba(36,107,56,0.08)] hover:-translate-y-0.5 hover:border-[#3b8c2a]/30 transition-all duration-300 cursor-pointer"
               >
                 <div className="w-10 h-10 rounded-full bg-[#f8fdf9] border border-[#e8f5ec] flex items-center justify-center flex-shrink-0 group-hover:bg-[#3b8c2a] group-hover:border-[#3b8c2a] transition-colors duration-300 shadow-sm relative overflow-hidden">
@@ -69,7 +111,7 @@ const ExpoCategories = () => {
                 <h3 className="text-[#1e293b] text-[11px] font-bold leading-tight group-hover:text-[#3b8c2a] transition-colors duration-300 whitespace-pre-line">
                   {item.title}
                 </h3>
-              </div>
+              </motion.div>
             );
           })}
         </div>
