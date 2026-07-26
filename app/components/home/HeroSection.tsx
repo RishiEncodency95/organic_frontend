@@ -1,9 +1,9 @@
 "use client";
 import home1 from "../../assets/home/home1.jpg";
-import home2 from "../../assets/home/home22.png";
-import home3 from "../../assets/home/home33.png";
-
-
+import home2 from "../../assets/home/home2.png";
+import home3 from "../../assets/home/home3.png";
+import home4 from "../../assets/home/home4.jpg";
+import home5 from "../../assets/home/home5.png";
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import Link from "next/link";
@@ -48,6 +48,32 @@ const slides = [
     location: "BOMBAY EXHIBITION CENTRE",
     locationSub: "Mumbai, India",
     eventDate: "2027-10-25T00:00:00"
+  },
+  {
+    bgImage: home4,
+    tagline: "SUSTAINABLE FUTURE",
+    titlePrimary: "ORGANIC",
+    titleSecondary: "EXPO 2027",
+    subtitle: "Innovate. Inspire. Impact.",
+    description: "Experience the finest organic agriculture, eco-friendly technologies, and natural health products from around the world.",
+    date: "10 – 12 NOVEMBER 2027",
+    dateSub: "Wednesday – Friday",
+    location: "BIEC",
+    locationSub: "Bengaluru, India",
+    eventDate: "2027-11-10T00:00:00"
+  },
+  {
+    bgImage: home5,
+    tagline: "HEALTH & WELLNESS",
+    titlePrimary: "ORGANIC",
+    titleSecondary: "EXPO 2027",
+    subtitle: "Pure. Natural. Authentic.",
+    description: "Your gateway to the booming organic market. Discover the latest trends in organic food, ayurveda, and holistic wellness.",
+    date: "05 – 07 DECEMBER 2027",
+    dateSub: "Sunday – Tuesday",
+    location: "CHENNAI TRADE CENTRE",
+    locationSub: "Chennai, India",
+    eventDate: "2027-12-05T00:00:00"
   }
 ];
 
@@ -65,21 +91,20 @@ const HeroSection = () => {
 
   const slideVariants = {
     enter: (direction: number) => ({
-      x: direction > 0 ? 100 : -100,
-      opacity: 0
+      x: direction > 0 ? "100%" : "-100%",
     }),
     center: {
       x: 0,
-      opacity: 1
+      zIndex: 1,
     },
     exit: (direction: number) => ({
-      x: direction > 0 ? -100 : 100,
-      opacity: 0
+      x: direction > 0 ? "-100%" : "100%",
+      zIndex: 0,
     }),
   };
 
   return (
-    <section className="relative w-full overflow-hidden bg-black h-[580px] sm:h-[480px] md:h-[555px] lg:h-[610px]  flex items-center">
+    <section className="relative w-full overflow-hidden bg-white h-[580px] sm:h-[480px] md:h-[555px] lg:h-[610px]  flex items-center">
       <AnimatePresence initial={false} custom={direction}>
         <motion.div
           key={current}
@@ -89,8 +114,7 @@ const HeroSection = () => {
           animate="center"
           exit="exit"
           transition={{
-            x: { type: "spring", stiffness: 300, damping: 30 },
-            opacity: { duration: 0.5 }
+            x: { type: "tween", ease: "easeInOut", duration: 0.8 }
           }}
           className="absolute inset-0 z-0"
         >
