@@ -8,105 +8,118 @@ const EventGlimpses = () => {
   const [selectedImg, setSelectedImg] = useState<string | null>(null);
 
   const images = [
-    "https://images.unsplash.com/photo-1542601906990-b4d3fb778b09?w=800&q=80",
-    "https://images.unsplash.com/photo-1531058020387-3be344556be6?w=800&q=80",
-    "https://images.unsplash.com/photo-1523580494863-6f3031224c94?w=800&q=80",
-    "https://images.unsplash.com/photo-1540575467063-178a50c2df87?w=800&q=80",
-    "https://images.unsplash.com/photo-1511578314322-379afb476865?w=800&q=80",
-    "https://images.unsplash.com/photo-1505373877841-8d25f7d46678?w=800&q=80",
-    "https://images.unsplash.com/photo-1527529482837-4698179dc6ce?w=800&q=80",
-    "https://images.unsplash.com/photo-1523580494863-6f3031224c94?w=800&q=80",
+    // Top Row
+    { src: "https://images.unsplash.com/photo-1542601906990-b4d3fb778b09?w=800&q=80", span: 4 },
+    { src: "https://images.unsplash.com/photo-1531058020387-3be344556be6?w=800&q=80", span: 7 },
+    { src: "https://images.unsplash.com/photo-1552664730-d307ca884978?w=800&q=80", span: 4 },
+    { src: "https://images.unsplash.com/photo-1540575467063-178a50c2df87?w=800&q=80", span: 5 },
+    // Bottom Row
+    { src: "https://images.unsplash.com/photo-1511578314322-379afb476865?w=800&q=80", span: 5 },
+    { src: "https://images.unsplash.com/photo-1505373877841-8d25f7d46678?w=800&q=80", span: 6 },
+    { src: "https://images.unsplash.com/photo-1527529482837-4698179dc6ce?w=800&q=80", span: 4 },
+    { src: "https://images.unsplash.com/photo-1523580494863-6f3031224c94?w=800&q=80", span: 5 },
   ];
 
   return (
-    <section className="relative w-full bg-[#fcfdfc] py-20 md:py-28 overflow-hidden font-inter border-y border-[#3b8c2a]/10">
-      
-      {/* Premium Background Gradient */}
-      <div className="absolute inset-0 bg-gradient-to-br from-white via-[#f4fbf5]/50 to-white pointer-events-none" />
-
-      {/* Top Left Leaf SVG Decoration */}
-      <svg className="absolute -top-10 -left-10 w-64 h-64 md:w-96 md:h-96 text-[#3b8c2a] opacity-[0.04] pointer-events-none transform -rotate-12" viewBox="0 0 100 100" fill="currentColor">
-        <path d="M50 0 C70 30, 90 50, 100 80 C80 90, 50 100, 20 80 C0 50, 20 30, 50 0 Z" />
-        <path d="M50 0 C40 40, 20 70, 0 100" stroke="currentColor" strokeWidth="2" fill="none" opacity="0.3"/>
-      </svg>
-      
-      {/* Top Right Leaf SVG Decoration */}
-      <svg className="absolute -top-10 -right-10 w-64 h-64 md:w-96 md:h-96 text-[#3b8c2a] opacity-[0.04] pointer-events-none transform rotate-12 scale-x-[-1]" viewBox="0 0 100 100" fill="currentColor">
-        <path d="M50 0 C70 30, 90 50, 100 80 C80 90, 50 100, 20 80 C0 50, 20 30, 50 0 Z" />
-        <path d="M50 0 C40 40, 20 70, 0 100" stroke="currentColor" strokeWidth="2" fill="none" opacity="0.3"/>
-      </svg>
+    <section className="relative w-full bg-white py-2 md:py-4 overflow-hidden font-inter">
+      {/* Top Left Leaf Decoration */}
+      <img 
+        src="https://images.unsplash.com/photo-1536882240095-0379873feb4e?q=80&w=2000&auto=format&fit=crop" 
+        alt="" 
+        className="absolute -top-32 -left-32 w-96 h-96 object-cover opacity-10 rounded-full blur-sm pointer-events-none mix-blend-multiply" 
+        style={{ clipPath: 'polygon(0 0, 100% 0, 100% 100%, 0 100%)' }}
+      />
+      {/* Top Right Leaf Decoration */}
+      <img 
+        src="https://images.unsplash.com/photo-1536882240095-0379873feb4e?q=80&w=2000&auto=format&fit=crop" 
+        alt="" 
+        className="absolute -top-32 -right-32 w-96 h-96 object-cover opacity-10 rounded-full blur-sm pointer-events-none mix-blend-multiply scale-x-[-1]" 
+      />
 
       <div className="w-full max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-12 relative z-10">
         
         {/* Title Section */}
         <div className="flex flex-col items-center justify-center text-center mb-2">
-          <div className="inline-flex items-center gap-2.5 px-4 py-1 rounded-full bg-[#3b8c2a]/10 border border-[#3b8c2a]/20 mb-4 shadow-sm backdrop-blur-sm">
-            <span className="text-[#3b8c2a] text-lg">🌿</span>
-            <span className="text-[#154726] font-bold tracking-[0.15em] uppercase text-[11px] md:text-[13px]">
-              Moments That Inspire, Connections That Grow
-            </span>
-            <span className="text-[#3b8c2a] text-lg">🌿</span>
-          </div>
+          <p className="text-[#3b8c2a] text-[13px] md:text-[15px] font-bold tracking-wide flex items-center justify-center gap-2 mb-3">
+            <span className="text-lg">🌿</span>
+            Moments That Inspire, Connections That Grow
+            <span className="text-lg">🌿</span>
+          </p>
           
-          <h2 className="text-[16px] md:text-[26px] font-semibold uppercase tracking-tight leading-tight mb-4 drop-shadow-sm">
-            <span className="text-[#0d2a1b]">EVENT</span> <span className="bg-clip-text text-transparent bg-gradient-to-r from-[#3b8c2a] to-[#245e19]">GALLERY</span>
+          <h2 className="text-[16px] md:text-[26px] font-semibold uppercase tracking-tight leading-tight mb-4">
+            <span className="text-[#0d2a1b]">EVENT</span> <span className="text-[#3b8c2a]">GALLERY</span>
           </h2>
 
           <div className="flex items-center justify-center gap-2 mb-2">
-            <div className="h-[2px] w-12 bg-gradient-to-r from-transparent to-[#3b8c2a] opacity-60 rounded-full"></div>
-            <span className="text-[#3b8c2a] text-xl leading-none transform hover:rotate-180 transition-transform duration-700">🌿</span>
-            <div className="h-[2px] w-12 bg-gradient-to-l from-transparent to-[#3b8c2a] opacity-60 rounded-full"></div>
+            <div className="h-[1px] w-12 bg-[#3b8c2a] opacity-40"></div>
+            <span className="text-[#3b8c2a] text-lg leading-none">🌿</span>
+            <div className="h-[1px] w-12 bg-[#3b8c2a] opacity-40"></div>
           </div>
 
-          <p className="text-[#4b5563] text-[14px] md:text-[16px] max-w-2xl font-medium leading-relaxed">
-            Glimpses from past events that reflect innovation, collaboration and growth in the organic industry.
+          <p className="text-[#4b5563] text-[14px] md:text-[16px] max-w-2xl font-medium">
+            Glimpses from past events that reflect innovation, collaboration and growth.
           </p>
         </div>
 
         {/* Gallery Grid Wrapper with Slider UI */}
-        <div className="relative w-full px-2 md:px-14">
+        <div className="relative w-full px-4 md:px-14">
           
           {/* Left Arrow */}
-          <button className="absolute left-0 top-1/2 -translate-y-1/2 -ml-2 md:ml-0 w-12 h-12 bg-white rounded-full flex items-center justify-center shadow-[0_8px_30px_rgba(0,0,0,0.12)] border border-gray-100 text-[#3b8c2a] hover:bg-[#3b8c2a] hover:text-white hover:scale-110 transition-all duration-300 z-20 cursor-pointer group">
-            <ChevronLeft size={24} strokeWidth={2.5} className="group-hover:-translate-x-0.5 transition-transform" />
+          <button className="absolute left-0 top-1/2 -translate-y-1/2 w-12 h-12 bg-white rounded-full flex items-center justify-center shadow-[0_4px_20px_rgba(0,0,0,0.08)] border border-gray-100 text-[#3b8c2a] hover:bg-[#3b8c2a] hover:text-white transition-all z-20 cursor-pointer">
+            <ChevronLeft size={24} strokeWidth={2.5} />
           </button>
 
           {/* Right Arrow */}
-          <button className="absolute right-0 top-1/2 -translate-y-1/2 -mr-2 md:mr-0 w-12 h-12 bg-white rounded-full flex items-center justify-center shadow-[0_8px_30px_rgba(0,0,0,0.12)] border border-gray-100 text-[#3b8c2a] hover:bg-[#3b8c2a] hover:text-white hover:scale-110 transition-all duration-300 z-20 cursor-pointer group">
-            <ChevronRight size={24} strokeWidth={2.5} className="group-hover:translate-x-0.5 transition-transform" />
+          <button className="absolute right-0 top-1/2 -translate-y-1/2 w-12 h-12 bg-white rounded-full flex items-center justify-center shadow-[0_4px_20px_rgba(0,0,0,0.08)] border border-gray-100 text-[#3b8c2a] hover:bg-[#3b8c2a] hover:text-white transition-all z-20 cursor-pointer">
+            <ChevronRight size={24} strokeWidth={2.5} />
           </button>
 
-          {/* Image Grid */}
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-5">
-            {images.map((src, idx) => (
+          {/* Custom CSS for Exact 20-Column Proportions */}
+          <style dangerouslySetInnerHTML={{__html: `
+            @media (min-width: 768px) {
+              .gallery-exact-grid {
+                display: grid;
+                grid-template-columns: repeat(20, minmax(0, 1fr));
+              }
+              .g-span-4 { grid-column: span 4 / span 4; }
+              .g-span-5 { grid-column: span 5 / span 5; }
+              .g-span-6 { grid-column: span 6 / span 6; }
+              .g-span-7 { grid-column: span 7 / span 7; }
+            }
+          `}} />
+
+          {/* Exact Proportion Grid */}
+          <div className="grid grid-cols-1 gap-3 md:gap-5 gallery-exact-grid">
+            {images.map((img, idx) => (
               <motion.div 
                 key={idx}
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.5, delay: idx * 0.05 }}
-                className="w-full aspect-[4/3] rounded-lg md:rounded-xl overflow-hidden group cursor-pointer shadow-sm hover:shadow-xl transition-all"
-                onClick={() => setSelectedImg(src)}
+                className={`w-full h-[220px] sm:h-[260px] lg:h-[300px] xl:h-[320px] rounded-2xl md:rounded-[16px] overflow-hidden group cursor-pointer shadow-sm hover:shadow-xl transition-all g-span-${img.span}`}
+                onClick={() => setSelectedImg(img.src)}
               >
                 <img 
-                  src={src} 
+                  src={img.src} 
                   alt={`Gallery ${idx + 1}`} 
-                  className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                  className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
                   loading="lazy"
                 />
-                <div className="absolute inset-0 bg-[#0d2a1b]/0 transition-colors duration-300" />
+                <div className="absolute inset-0 bg-[#0d2a1b]/0  transition-colors duration-300" />
               </motion.div>
             ))}
           </div>
+
         </div>
 
         {/* Pagination Dots */}
-        <div className="flex items-center justify-center gap-3 mt-14">
-          <div className="w-8 h-2.5 rounded-full bg-[#3b8c2a] cursor-pointer shadow-[0_0_10px_rgba(59,140,42,0.4)]"></div>
-          <div className="w-2.5 h-2.5 rounded-full bg-[#e2e8f0] hover:bg-[#cbd5e1] transition-colors cursor-pointer"></div>
-          <div className="w-2.5 h-2.5 rounded-full bg-[#e2e8f0] hover:bg-[#cbd5e1] transition-colors cursor-pointer"></div>
-          <div className="w-2.5 h-2.5 rounded-full bg-[#e2e8f0] hover:bg-[#cbd5e1] transition-colors cursor-pointer"></div>
-          <div className="w-2.5 h-2.5 rounded-full bg-[#e2e8f0] hover:bg-[#cbd5e1] transition-colors cursor-pointer"></div>
+        <div className="flex items-center justify-center gap-2.5 mt-10">
+          <div className="w-2.5 h-2.5 rounded-full bg-[#3b8c2a] cursor-pointer"></div>
+          <div className="w-2.5 h-2.5 rounded-full bg-[#e5e7eb] hover:bg-[#d1d5db] transition-colors cursor-pointer"></div>
+          <div className="w-2.5 h-2.5 rounded-full bg-[#e5e7eb] hover:bg-[#d1d5db] transition-colors cursor-pointer"></div>
+          <div className="w-2.5 h-2.5 rounded-full bg-[#e5e7eb] hover:bg-[#d1d5db] transition-colors cursor-pointer"></div>
+          <div className="w-2.5 h-2.5 rounded-full bg-[#e5e7eb] hover:bg-[#d1d5db] transition-colors cursor-pointer"></div>
         </div>
       </div>
 
