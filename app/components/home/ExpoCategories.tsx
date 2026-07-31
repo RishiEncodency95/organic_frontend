@@ -4,139 +4,193 @@ import { motion } from "framer-motion";
 import { ArrowRight, Leaf, HeartPulse, Sparkles, Apple, Shirt, Recycle, Dumbbell, Stethoscope, Beaker, Brain, Activity, Pill } from "lucide-react";
 
 const categories = [
-  { icon: Apple, title: "Organic Food\n& Beverages" },
-  { icon: Leaf, title: "Ayurveda &\nHerbal Products" },
-  { icon: HeartPulse, title: "Healthcare &\nWellness" },
-  { icon: Sparkles, title: "Beauty, Personal\nCare & Cosmetics" },
-  { icon: Pill, title: "Nutrition &\nSupplements" },
-  { icon: Shirt, title: "Natural & Organic\nTextiles" },
-  { icon: Recycle, title: "Eco-friendly\nProducts" },
-  { icon: Dumbbell, title: "Fitness &\nLifestyle" },
-  { icon: Stethoscope, title: "Medical Devices &\nEquipment" },
-  { icon: Beaker, title: "Pharma &\nBiotechnology" },
-  { icon: Brain, title: "Mental Health &\nWell-being" },
-  { icon: Activity, title: "Health Tech &\nDigital Solutions" },
+  { icon: Apple, title: "Mental Health &\nWell-being", desc: "Therapy, meditation, yoga and wellness programs for a balanced mind and body.", color: "#14b8a6", image: "https://images.unsplash.com/photo-1542838132-92c53300491e?w=800&q=80" },
+  { icon: Activity, title: "Health Tech &\nDigital Solutions", desc: "Innovative digital healthcare solutions for smarter and faster care.", color: "#60a5fa", image: "https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?w=800&q=80" },
+  { icon: Leaf, title: "Organic Food &\nBeverages", desc: "Pure, natural and organic food & drinks for a healthier lifestyle.", color: "#4ade80", image: "https://images.unsplash.com/photo-1608686207856-001b95cf60ca?w=800&q=80" },
+  { icon: Sparkles, title: "Ayurveda &\nHerbal Products", desc: "Ancient healing wisdom and herbal products for natural wellness.", color: "#fb923c", image: "https://images.unsplash.com/photo-1596462502278-27bfdc403348?w=800&q=80" },
+  { icon: HeartPulse, title: "Healthcare &\nWellness Services", desc: "Comprehensive healthcare services for you and your family.", color: "#a78bfa", image: "https://images.unsplash.com/photo-1579684385127-1ef15d508118?w=800&q=80" },
+  { icon: Shirt, title: "Natural & Organic\nTextiles", desc: "Sustainable fabrics and textiles for a greener lifestyle.", color: "#14b8a6", image: "https://images.unsplash.com/photo-1584916201218-f4242ceb4809?w=800&q=80" },
+  { icon: Recycle, title: "Eco-friendly\nProducts", desc: "Environmentally friendly products for daily use.", color: "#60a5fa", image: "https://images.unsplash.com/photo-1542601906990-b4d3fb778b09?w=800&q=80" },
+  { icon: Dumbbell, title: "Fitness &\nLifestyle", desc: "Stay active and healthy with our fitness and lifestyle solutions.", color: "#4ade80", image: "https://images.unsplash.com/photo-1517836357463-d25dfeac3438?w=800&q=80" },
+  { icon: Stethoscope, title: "Medical Devices &\nEquipment", desc: "Advanced medical tools for better healthcare delivery.", color: "#fb923c", image: "https://images.unsplash.com/photo-1516549655169-df83a0774514?w=800&q=80" },
+  { icon: Beaker, title: "Pharma &\nBiotechnology", desc: "Innovations in pharmaceuticals and biotechnology.", color: "#a78bfa", image: "https://images.unsplash.com/photo-1532187863486-abf9db090b5c?w=800&q=80" },
 ];
 
-const LeafDecoration = ({ className }: { className?: string }) => (
-  <svg width="150" height="300" viewBox="0 0 100 200" fill="none" xmlns="http://www.w3.org/2000/svg" className={className}>
-    <path d="M-20 50C20 50 60 20 80 0C80 40 60 80 20 100C60 120 80 160 80 200C40 200 0 160 -20 120Z" fill="#3b8c2a" fillOpacity="0.04" />
-    <path d="M-20 100C10 100 40 70 60 50C60 80 40 110 10 130C40 150 60 180 60 210C20 210 -10 180 -20 150Z" fill="#3b8c2a" fillOpacity="0.06" />
-    <circle cx="90" cy="40" r="2" fill="#3b8c2a" fillOpacity="0.2" />
-    <circle cx="80" cy="70" r="3" fill="#3b8c2a" fillOpacity="0.1" />
-    <circle cx="95" cy="90" r="1.5" fill="#3b8c2a" fillOpacity="0.15" />
+const FlowerDecoration = ({ className, style }: { className?: string; style?: React.CSSProperties }) => (
+  <svg viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg" className={className} style={style}>
+    {/* Center Petal */}
+    <path d="M60 10 C70 30 75 60 60 90 C45 60 50 30 60 10 Z" fill="#ffffff" />
+    {/* Inner Left Petal */}
+    <path d="M60 90 C30 75 20 40 30 25 C45 35 55 60 60 90 Z" fill="#ffffff" />
+    {/* Inner Right Petal */}
+    <path d="M60 90 C90 75 100 40 90 25 C75 35 65 60 60 90 Z" fill="#ffffff" />
+    {/* Outer Left Petal */}
+    <path d="M55 90 C20 85 5 60 10 45 C30 55 45 75 55 90 Z" fill="#ffffff" />
+    {/* Outer Right Petal */}
+    <path d="M65 90 C100 85 115 60 110 45 C90 55 75 75 65 90 Z" fill="#ffffff" />
   </svg>
 );
 
 const ExpoCategories = () => {
   return (
-    <section className="py-2 md:py-6 bg-[#f8fdf9] border-t border-b border-gray-100 relative overflow-hidden">
+    <section className="py-6 md:py-8 bg-gradient-to-br from-[#EAF4E8] via-[#F4FAF3] to-[#E3EFE0] border-t border-b border-[#CDE3C9] relative overflow-hidden">
       <style>{`
-        @keyframes marquee-left {
-          0% { transform: translateX(0); }
-          100% { transform: translateX(-50%); }
+        @keyframes float-flower {
+          0% { transform: translateY(0px) rotate(0deg); }
+          50% { transform: translateY(-15px) rotate(2deg); }
+          100% { transform: translateY(0px) rotate(0deg); }
         }
-        @keyframes marquee-right {
-          0% { transform: translateX(-50%); }
-          100% { transform: translateX(0); }
-        }
-        .animate-marquee-left {
-          display: flex;
-          width: max-content;
-          animation: marquee-left 40s linear infinite;
-        }
-        .animate-marquee-right {
-          display: flex;
-          width: max-content;
-          animation: marquee-right 40s linear infinite;
-        }
-        .animate-marquee-left:hover, .animate-marquee-right:hover {
-          animation-play-state: paused;
-        }
-        .category-card {
-          width: 260px;
-          flex-shrink: 0;
-        }
-        .mask-image-linear {
-          mask-image: linear-gradient(to right, transparent, black 5%, black 95%, transparent);
-          -webkit-mask-image: linear-gradient(to right, transparent, black 5%, black 95%, transparent);
+        .animate-float-flower {
+          animation: float-flower 10s ease-in-out infinite;
         }
       `}</style>
 
-      {/* Decorative Leaves */}
-      <LeafDecoration className="absolute top-0 left-0 h-full pointer-events-none" />
-      <LeafDecoration className="absolute top-0 right-0 h-full pointer-events-none scale-x-[-1]" />
+      {/* Decorative White Flowers */}
+      <FlowerDecoration className="absolute -top-[100px] -left-[100px] w-[500px] h-[500px] pointer-events-none opacity-[0.9] -rotate-12 animate-float-flower" />
+      <FlowerDecoration className="absolute top-[30%] -right-[150px] w-[600px] h-[600px] pointer-events-none opacity-[0.7] rotate-[15deg] animate-float-flower" style={{ animationDelay: '2s' }} />
+      <FlowerDecoration className="absolute -bottom-[150px] left-[15%] w-[450px] h-[450px] pointer-events-none opacity-[0.8] -rotate-[25deg] animate-float-flower" style={{ animationDelay: '4s' }} />
 
-      <div className="w-full px-4 sm:px-6 lg:px-11 relative z-10">
+      <div className="w-full px-0 relative z-10">
 
         {/* Header */}
-        <div className="flex flex-col xl:flex-row items-center justify-between mb-2 bg-white py-3 px-4 md:px-8 rounded-full shadow-[0_4px_20px_rgba(0,0,0,0.03)] border border-gray-100 gap-4 xl:gap-6">
+        <div className="px-4 sm:px-6 lg:px-11 w-full ">
+          <div className="flex flex-col xl:flex-row items-center justify-between mb-6 bg-white py-3 px-4 md:px-8 rounded-full shadow-[0_4px_20px_rgba(0,0,0,0.03)] border border-gray-100 gap-4 xl:gap-6">
 
-          {/* Pill */}
-          <div className="flex items-center gap-3 shrink-0">
-            <div className="flex items-center gap-1 hidden md:flex">
-              <span className="w-1.5 h-1.5 rounded-full bg-[#3b8c2a]"></span>
-              <span className="w-8 h-[1px] bg-[#3b8c2a]"></span>
+            {/* Pill */}
+            <div className="flex items-center gap-3 shrink-0">
+              <div className="flex items-center gap-1 hidden md:flex">
+                <span className="w-1.5 h-1.5 rounded-full bg-[#3b8c2a]"></span>
+                <span className="w-8 h-[1px] bg-[#3b8c2a]"></span>
+              </div>
+              <div className="px-5 py-1.5 rounded-full border border-[#3b8c2a] bg-[#f8fdf9]">
+                <span className="text-[#3b8c2a] text-[12px] font-bold tracking-[0.1em] uppercase whitespace-nowrap">
+                  EXPO CATEGORIES
+                </span>
+              </div>
+              <div className="flex items-center gap-1 hidden md:flex">
+                <span className="w-8 h-[1px] bg-[#3b8c2a]"></span>
+                <span className="w-1.5 h-1.5 rounded-full bg-[#3b8c2a]"></span>
+              </div>
             </div>
-            <div className="px-5 py-1.5 rounded-full border border-[#3b8c2a] bg-[#f8fdf9]">
-              <span className="text-[#3b8c2a] text-[12px] font-bold tracking-[0.1em] uppercase whitespace-nowrap">
-                EXPO CATEGORIES
-              </span>
+
+            {/* Title */}
+            <h2 className="text-[16px] md:text-[22px] font-bold text-[#111827] tracking-tight shrink-0 text-center uppercase">
+              Explore Diverse <span className="text-[#3b8c2a]">Healthcare Sectors</span>
+            </h2>
+
+            {/* Description */}
+            <div className="flex items-center gap-4 hidden xl:flex shrink-0">
+              <div className="w-[1px] h-8 bg-gray-200"></div>
+              <p className="text-[#64748b] text-[14px] md:text-[15px] font-medium whitespace-nowrap">
+                One Platform. Every Healthcare Solution.
+              </p>
             </div>
-            <div className="flex items-center gap-1 hidden md:flex">
-              <span className="w-8 h-[1px] bg-[#3b8c2a]"></span>
-              <span className="w-1.5 h-1.5 rounded-full bg-[#3b8c2a]"></span>
-
-            </div>
-          </div>
-
-          {/* Title */}
-          <h2 className="text-[16px] md:text-[22px] font-bold text-[#111827] tracking-tight shrink-0 text-center">
-            Explore Diverse <span className="text-[#3b8c2a]">Healthcare Sectors</span>
-          </h2>
-
-          {/* Description */}
-          <div className="flex items-center gap-4 hidden xl:flex shrink-0">
-            <div className="w-[1px] h-8 bg-gray-200"></div>
-            <p className="text-[#64748b] text-[15px] font-medium whitespace-nowrap">
-              One Platform. Every Healthcare Solution.
-            </p>
           </div>
         </div>
 
-        {/* Categories Grid with Animation */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-3 py-2 max-w-[1500px] mx-auto overflow-hidden">
+        {/* Static Grid Layout (No Slider) */}
+        <div className="w-full  mb-8 py-2 flex flex-wrap justify-center gap-4 lg:gap-5">
           {categories.map((item, index) => {
             const Icon = item.icon;
+            const displayIndex = index + 1; // Numbering 1 to 10
 
             return (
-              <motion.div
+              <div
                 key={index}
-                initial={{ opacity: 0, y: 40, scale: 0.85 }}
-                whileInView={{ opacity: 1, y: 0, scale: 1 }}
-                viewport={{ once: true, margin: "-20px" }}
-                transition={{
-                  type: "spring",
-                  stiffness: 120,
-                  damping: 14,
-                  delay: index * 0.08
-                }}
-                className="group flex items-center gap-3 px-3 py-3.5 bg-white border border-gray-100 rounded-xl shadow-[0_2px_10px_rgba(0,0,0,0.02)] hover:bg-[#f3f9f4] hover:shadow-[0_8px_20px_rgba(36,107,56,0.08)] hover:-translate-y-0.5 hover:border-[#3b8c2a]/30 transition-all duration-300 cursor-pointer"
+                className="group flex flex-col w-[240px] h-auto bg-white rounded-xl overflow-hidden cursor-pointer shadow-[0px_1px_3px_0px_rgba(0,0,0,0.02),0px_0px_0px_1px_rgba(27,31,35,0.15)] border-none hover:shadow-[0_10px_25px_rgba(0,0,0,0.08)] transition-all duration-300 p-3.5 relative"
               >
-                <div className="w-10 h-10 rounded-full bg-[#f8fdf9] border border-[#e8f5ec] flex items-center justify-center flex-shrink-0 group-hover:bg-[#3b8c2a] group-hover:border-[#3b8c2a] transition-colors duration-300 shadow-sm relative overflow-hidden">
-                  <Icon size={18} className="text-[#3b8c2a] group-hover:text-white transition-colors duration-300 relative z-10" strokeWidth={1.5} />
+                {/* Angled Background Fill */}
+                <div
+                  className="absolute top-0 left-0 w-full h-[70%] opacity-[0.05] pointer-events-none"
+                  style={{
+                    backgroundColor: item.color,
+                    clipPath: 'polygon(0 0, 100% 0, 100% 55%, 0 85%)'
+                  }}
+                />
+
+                {/* Dot Pattern in the faint area */}
+                <div className="absolute inset-0 opacity-[0.03] pointer-events-none" style={{ backgroundImage: 'radial-gradient(circle at 1px 1px, black 1px, transparent 0)', backgroundSize: '14px 14px' }} />
+
+                {/* Hexagon Image Container */}
+                <div className="w-full flex justify-center py-1.5 relative z-10">
+                  <div className="relative w-[160px] h-[184px] drop-shadow-[0_6px_12px_rgba(0,0,0,0.06)] group-hover:-translate-y-1 transition-transform duration-500">
+
+                    {/* Outer Border Hexagon */}
+                    <div
+                      className="absolute inset-0"
+                      style={{
+                        backgroundColor: item.color,
+                        clipPath: 'polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%)',
+                      }}
+                    />
+
+                    {/* Inner Image Hexagon */}
+                    <div
+                      className="absolute inset-[3px]"
+                      style={{
+                        clipPath: 'polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%)',
+                      }}
+                    >
+                      <img src={item.image} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" alt="" />
+                    </div>
+
+                    {/* The floating Hexagon Icon */}
+                    <div
+                      className="absolute -bottom-[18px] left-1/2 -translate-x-1/2 w-[48px] h-[56px] bg-white flex items-center justify-center drop-shadow-sm"
+                      style={{
+                        clipPath: 'polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%)',
+                      }}
+                    >
+                      <div
+                        className="absolute inset-[2.5px] flex items-center justify-center"
+                        style={{
+                          backgroundColor: item.color,
+                          clipPath: 'polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%)',
+                        }}
+                      >
+                        <Icon size={18} color="white" strokeWidth={2.5} />
+                      </div>
+                    </div>
+                  </div>
                 </div>
-                <h3 className="text-[#1e293b] text-[11px] font-bold leading-tight group-hover:text-[#3b8c2a] transition-colors duration-300 whitespace-pre-line">
-                  {item.title}
-                </h3>
-              </motion.div>
+
+                {/* Number & Line */}
+                <div className="flex items-center gap-2 mb-2 z-10 w-full px-1">
+                  <span className="text-[16px] font-bold" style={{ color: item.color }}>
+                    {String(displayIndex).padStart(2, '0')}
+                  </span>
+                  <div className="h-[1.5px] w-4 opacity-30" style={{ backgroundColor: item.color }} />
+                </div>
+
+                {/* Title & Description */}
+                <div className="flex flex-col items-start text-left z-10 w-full px-1">
+                  <h3 className="text-[14px] font-bold text-gray-900 leading-[1.3] mb-1.5 whitespace-pre-line group-hover:text-opacity-80 transition-opacity">
+                    {item.title}
+                  </h3>
+                  <p className="text-[11px] text-gray-500 leading-[1.4] line-clamp-3 font-normal">
+                    {item.desc}
+                  </p>
+                </div>
+
+                {/* <div className="flex-grow" /> */}
+
+                {/* View More Button */}
+                <div className="flex items-center gap-1.5 z-10 mt-2 px-1 group/btn cursor-pointer">
+                  <span className="text-[12px] font-bold transition-opacity group-hover/btn:opacity-70" style={{ color: item.color }}>
+                    View More
+                  </span>
+                  <div className="w-[20px] h-[20px] rounded-full border-[1.5px] flex items-center justify-center transition-transform group-hover/btn:translate-x-1" style={{ borderColor: item.color }}>
+                    <ArrowRight size={10} style={{ color: item.color }} strokeWidth={2.5} />
+                  </div>
+                </div>
+              </div>
             );
           })}
         </div>
 
         {/* Button */}
-        <div className="flex justify-center mt-2">
-          <button className="group flex items-center justify-center gap-2 px-6 py-2 rounded-full border-2 border-[#F2B40E] bg-[#3b8c2a] text-white text-[11px] font-bold uppercase tracking-wider hover:bg-[#F2B40E] hover:text-[#0b2912] hover:shadow-lg transition-all duration-300">
+        <div className="flex justify-center mt-2 px-4">
+          <button className="group flex items-center justify-center gap-2 px-6 py-2.5 rounded-full border-2 border-[#F2B40E] bg-[#3b8c2a] text-white text-[11px] md:text-[12px] font-bold uppercase tracking-wider hover:bg-[#F2B40E] hover:text-[#0b2912] hover:shadow-lg transition-all duration-300">
             VIEW ALL CATEGORIES
             <ArrowRight size={14} strokeWidth={2.5} className="group-hover:translate-x-1 transition-transform" />
           </button>

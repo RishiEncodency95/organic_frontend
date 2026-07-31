@@ -1,243 +1,113 @@
 "use client";
 
-import React, { useState, useEffect, useCallback, useRef } from 'react';
-import { motion, useInView, animate } from 'framer-motion';
-import {
-  Users, Globe2, Store, Mic2, Handshake, Package, Camera, ChevronLeft, ChevronRight, Leaf,
-  Building2, Mic, Sparkles, Globe, X, ZoomIn
-} from 'lucide-react';
-import { AnimatePresence } from 'framer-motion';
-
-const ICON_MAP: Record<string, React.ReactNode> = {
-  Users: <Users className="w-5 h-5" />,
-  Globe: <Globe className="w-5 h-5" />,
-  Globe2: <Globe2 className="w-5 h-5" />,
-  Building2: <Building2 className="w-5 h-5" />,
-  Store: <Store className="w-5 h-5" />,
-  Mic: <Mic className="w-5 h-5" />,
-  Mic2: <Mic2 className="w-5 h-5" />,
-  Handshake: <Handshake className="w-5 h-5" />,
-  Package: <Package className="w-5 h-5" />,
-  Sparkles: <Sparkles className="w-5 h-5" />,
-  Camera: <Camera className="w-5 h-5" />,
-};
-
-// ── Animated counter — counts up when scrolled into view ──
-const StatCounter = ({ value }: { value: string }) => {
-  const [displayValue, setDisplayValue] = useState(0);
-  const ref = useRef(null);
-  const isInView = useInView(ref, { once: true, margin: '-50px' });
-
-  const numericValue = parseInt(value.replace(/,/g, '')) || 0;
-  const suffix = value.replace(/[0-9,]/g, '');
-
-  useEffect(() => {
-    if (isInView) {
-      const controls = animate(0, numericValue, {
-        duration: 2.5,
-        ease: 'easeOut',
-        onUpdate(v) {
-          setDisplayValue(Math.floor(v));
-        },
-      });
-      return () => controls.stop();
-    }
-  }, [isInView, numericValue]);
-
-  return (
-    <span ref={ref}>
-      {displayValue.toLocaleString()}{suffix}
-    </span>
-  );
-};
+import React, { useState } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { ChevronLeft, ChevronRight, X } from 'lucide-react';
 
 const EventGlimpses = () => {
-  const [selectedImg, setSelectedImg] = useState<any>(null);
+  const [selectedImg, setSelectedImg] = useState<string | null>(null);
 
-  const glimpseData = {
-    subheading: "EVENT GLIMPSES",
-    heading: "GLIMPSES OF THE EVENT",
-    description: "Experience the vibrant energy and impactful moments from our past events. Witness a confluence of ideas, organic innovations, and sustainable practices.",
-    images: [
-      { url: "https://images.unsplash.com/photo-1542601906990-b4d3fb778b09?w=800&q=80", title: "Inauguration" },
-      { url: "https://images.unsplash.com/photo-1531058020387-3be344556be6?w=800&q=80", title: "Panel Discussion" },
-      { url: "https://images.unsplash.com/photo-1505373877841-8d25f7d46678?w=800&q=80", title: "Exhibition" },
-      { url: "https://images.unsplash.com/photo-1527529482837-4698179dc6ce?w=800&q=80", title: "Networking" },
-      { url: "https://images.unsplash.com/photo-1523580494863-6f3031224c94?w=800&q=80", title: "Workshops" },
-    ],
-    counters: [
-      { icon: "Users", number: "15,000+", label: "Attendees" },
-      { icon: "Store", number: "500+", label: "Exhibitors" },
-      { icon: "Mic", number: "120+", label: "Speakers" },
-      { icon: "Globe", number: "30+", label: "Countries" },
-    ],
-    counterText: "Join thousands of experts and professionals shaping the organic future."
-  };
-
-  const images = glimpseData.images || [];
-  const stats = glimpseData.counters || [];
-
-
+  const images = [
+    "https://images.unsplash.com/photo-1542601906990-b4d3fb778b09?w=800&q=80",
+    "https://images.unsplash.com/photo-1531058020387-3be344556be6?w=800&q=80",
+    "https://images.unsplash.com/photo-1523580494863-6f3031224c94?w=800&q=80",
+    "https://images.unsplash.com/photo-1540575467063-178a50c2df87?w=800&q=80",
+    "https://images.unsplash.com/photo-1511578314322-379afb476865?w=800&q=80",
+    "https://images.unsplash.com/photo-1505373877841-8d25f7d46678?w=800&q=80",
+    "https://images.unsplash.com/photo-1527529482837-4698179dc6ce?w=800&q=80",
+    "https://images.unsplash.com/photo-1523580494863-6f3031224c94?w=800&q=80",
+  ];
 
   return (
-    <section
-      className="relative py-2 overflow-hidden font-inter"
-      style={{ background: '#f5fdf6' }}
-    >
-      {/* ── BG DECORATIVE ELEMENTS ── */}
-      <svg
-        className="absolute top-0 left-0 pointer-events-none"
-        width="220" height="210"
-        viewBox="0 0 220 210"
-        xmlns="http://www.w3.org/2000/svg"
-        style={{ opacity: 0.18, zIndex: 0 }}
-      >
-        <g fill="#2f8f3a">
-          <path d="M10 170 Q70 15 210 8 Q130 85 80 195 Z" opacity="0.75" />
-          <path d="M0 105 Q45 38 140 28 Q75 85 28 160 Z" opacity="0.45" />
-          <ellipse cx="42" cy="178" rx="32" ry="13" opacity="0.3" transform="rotate(-22 42 178)" />
-        </g>
+    <section className="relative w-full bg-[#fcfdfc] py-20 md:py-28 overflow-hidden font-inter border-y border-[#3b8c2a]/10">
+      
+      {/* Premium Background Gradient */}
+      <div className="absolute inset-0 bg-gradient-to-br from-white via-[#f4fbf5]/50 to-white pointer-events-none" />
+
+      {/* Top Left Leaf SVG Decoration */}
+      <svg className="absolute -top-10 -left-10 w-64 h-64 md:w-96 md:h-96 text-[#3b8c2a] opacity-[0.04] pointer-events-none transform -rotate-12" viewBox="0 0 100 100" fill="currentColor">
+        <path d="M50 0 C70 30, 90 50, 100 80 C80 90, 50 100, 20 80 C0 50, 20 30, 50 0 Z" />
+        <path d="M50 0 C40 40, 20 70, 0 100" stroke="currentColor" strokeWidth="2" fill="none" opacity="0.3"/>
       </svg>
-      <svg
-        className="absolute pointer-events-none"
-        style={{ top: '-30px', right: '-30px', width: '170px', opacity: 0.13, zIndex: 0 }}
-        viewBox="0 0 180 180"
-        xmlns="http://www.w3.org/2000/svg"
-      >
-        <circle cx="160" cy="20" r="120" fill="none" stroke="#2f8f3a" strokeWidth="18" />
-        <circle cx="160" cy="20" r="90" fill="none" stroke="#2f8f3a" strokeWidth="8" />
-      </svg>
-      <svg
-        className="absolute pointer-events-none"
-        style={{ bottom: '80px', right: '24px', opacity: 0.13, zIndex: 0 }}
-        width="90" height="70"
-        viewBox="0 0 90 70"
-        xmlns="http://www.w3.org/2000/svg"
-      >
-        {[10, 30, 50, 70, 90].map(x =>
-          [10, 30, 50, 70].map(y => (
-            <circle key={`${x}-${y}`} cx={x} cy={y} r="3" fill="#2f8f3a" />
-          ))
-        )}
+      
+      {/* Top Right Leaf SVG Decoration */}
+      <svg className="absolute -top-10 -right-10 w-64 h-64 md:w-96 md:h-96 text-[#3b8c2a] opacity-[0.04] pointer-events-none transform rotate-12 scale-x-[-1]" viewBox="0 0 100 100" fill="currentColor">
+        <path d="M50 0 C70 30, 90 50, 100 80 C80 90, 50 100, 20 80 C0 50, 20 30, 50 0 Z" />
+        <path d="M50 0 C40 40, 20 70, 0 100" stroke="currentColor" strokeWidth="2" fill="none" opacity="0.3"/>
       </svg>
 
-      {/* ── CONTENT ── */}
-      <div className="w-full  px-2 lg:px-11 relative z-10">
+      <div className="w-full max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-12 relative z-10">
+        
+        {/* Title Section */}
+        <div className="flex flex-col items-center justify-center text-center mb-2">
+          <div className="inline-flex items-center gap-2.5 px-4 py-1 rounded-full bg-[#3b8c2a]/10 border border-[#3b8c2a]/20 mb-4 shadow-sm backdrop-blur-sm">
+            <span className="text-[#3b8c2a] text-lg">🌿</span>
+            <span className="text-[#154726] font-bold tracking-[0.15em] uppercase text-[11px] md:text-[13px]">
+              Moments That Inspire, Connections That Grow
+            </span>
+            <span className="text-[#3b8c2a] text-lg">🌿</span>
+          </div>
+          
+          <h2 className="text-[16px] md:text-[26px] font-semibold uppercase tracking-tight leading-tight mb-4 drop-shadow-sm">
+            <span className="text-[#0d2a1b]">EVENT</span> <span className="bg-clip-text text-transparent bg-gradient-to-r from-[#3b8c2a] to-[#245e19]">GALLERY</span>
+          </h2>
 
-        {/* Header - Side by Side (1 Row on Desktop) */}
-        <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-6 md:gap-10 mb-4 ">
-          <div className="flex-1">
-            <div className="inline-flex items-center gap-2.5 px-4 py-1.5 rounded-full bg-[#2f8f3a]/10 border border-[#2f8f3a]/20 mb-2 shadow-sm">
-              <Leaf size={16} className="text-[#2f8f3a]" />
-              <span className="text-[#0b4d17] font-bold tracking-[0.2em] uppercase text-[11px] md:text-[12px]">
-                {glimpseData.subheading}
-              </span>
-            </div>
-
-            <h2 className="text-[18px] md:text-[26px] lg:text-[26px] font-semibold text-[#0b2912] uppercase tracking-tight leading-[1.1] flex flex-wrap md:flex-nowrap items-center gap-x-2 gap-y-1">
-              {glimpseData.heading?.toUpperCase().includes("OF THE") ? (
-                <>
-                  <span className="text-slate-800 whitespace-nowrap">{glimpseData.heading.substring(0, glimpseData.heading.toUpperCase().indexOf("OF THE") + 6)}</span>
-                  <span className="relative text-[#2f8f3a] inline-block whitespace-nowrap">
-                    {glimpseData.heading.substring(glimpseData.heading.toUpperCase().indexOf("OF THE") + 6).trim()}
-                    <svg className="absolute -bottom-1.5 left-0 w-full h-3" viewBox="0 0 100 12" preserveAspectRatio="none">
-                      <path d="M0,8 Q50,12 100,2" fill="none" stroke="#2f8f3a" strokeWidth="4" strokeLinecap="round" opacity="0.3" />
-                    </svg>
-                  </span>
-                </>
-              ) : (
-                <span dangerouslySetInnerHTML={{ __html: glimpseData.heading }} />
-              )}
-            </h2>
+          <div className="flex items-center justify-center gap-2 mb-2">
+            <div className="h-[2px] w-12 bg-gradient-to-r from-transparent to-[#3b8c2a] opacity-60 rounded-full"></div>
+            <span className="text-[#3b8c2a] text-xl leading-none transform hover:rotate-180 transition-transform duration-700">🌿</span>
+            <div className="h-[2px] w-12 bg-gradient-to-l from-transparent to-[#3b8c2a] opacity-60 rounded-full"></div>
           </div>
 
-          <div className="flex-1 md:border-l-2 border-[#2f8f3a]/20 md:pl-8">
-            <p className="text-slate-600 text-[14px] md:text-[15px] leading-relaxed max-w-lg font-medium">
-              {glimpseData.description}
-            </p>
-          </div>
+          <p className="text-[#4b5563] text-[14px] md:text-[16px] max-w-2xl font-medium leading-relaxed">
+            Glimpses from past events that reflect innovation, collaboration and growth in the organic industry.
+          </p>
         </div>
 
-        {/* Premium Gallery Cards Grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mb-12 px-4 md:px-0">
-          {images.map((img: any, idx: number) => (
-            <motion.div
-              key={idx}
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6, delay: idx * 0.1, ease: "easeOut" }}
-              className="group relative w-full h-[280px] md:h-[320px] rounded-[24px] overflow-hidden cursor-pointer shadow-lg hover:shadow-2xl transition-shadow duration-500"
-              onClick={() => setSelectedImg(img)}
-            >
-              <img
-                loading="lazy"
-                decoding="async"
-                src={img.url}
-                alt={img.title || 'Event Glimpse'}
-                className="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110"
-              />
+        {/* Gallery Grid Wrapper with Slider UI */}
+        <div className="relative w-full px-2 md:px-14">
+          
+          {/* Left Arrow */}
+          <button className="absolute left-0 top-1/2 -translate-y-1/2 -ml-2 md:ml-0 w-12 h-12 bg-white rounded-full flex items-center justify-center shadow-[0_8px_30px_rgba(0,0,0,0.12)] border border-gray-100 text-[#3b8c2a] hover:bg-[#3b8c2a] hover:text-white hover:scale-110 transition-all duration-300 z-20 cursor-pointer group">
+            <ChevronLeft size={24} strokeWidth={2.5} className="group-hover:-translate-x-0.5 transition-transform" />
+          </button>
 
-              {/* Overlay Gradient */}
-              <div className="absolute inset-0 bg-gradient-to-t from-[#0b2912]/90 via-[#0b2912]/20 to-transparent opacity-70 group-hover:opacity-90 transition-opacity duration-500" />
+          {/* Right Arrow */}
+          <button className="absolute right-0 top-1/2 -translate-y-1/2 -mr-2 md:mr-0 w-12 h-12 bg-white rounded-full flex items-center justify-center shadow-[0_8px_30px_rgba(0,0,0,0.12)] border border-gray-100 text-[#3b8c2a] hover:bg-[#3b8c2a] hover:text-white hover:scale-110 transition-all duration-300 z-20 cursor-pointer group">
+            <ChevronRight size={24} strokeWidth={2.5} className="group-hover:translate-x-0.5 transition-transform" />
+          </button>
 
-              {/* Hover Zoom Icon */}
-              <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-500">
-                <div className="w-14 h-14 rounded-full bg-white/20 backdrop-blur-md flex items-center justify-center transform scale-50 group-hover:scale-100 transition-transform duration-500 ease-out">
-                  <ZoomIn className="text-white w-6 h-6" />
-                </div>
-              </div>
-
-              {/* Title Container */}
-              <div className="absolute bottom-5 left-5 right-5">
-                <div className="bg-white/10 backdrop-blur-md border border-white/20 rounded-[16px] px-5 py-1.5 flex items-center justify-between transform translate-y-2 group-hover:translate-y-0 transition-transform duration-500">
-                  <h3 className="text-white font-bold text-[12px] md:text-[16px] uppercase tracking-wider drop-shadow-md">{img.title}</h3>
-                  <div className="w-8 h-8 rounded-full bg-white/20 flex items-center justify-center text-white group-hover:bg-[#2f8f3a] transition-colors duration-300">
-                    <Camera size={14} />
-                  </div>
-                </div>
-              </div>
-            </motion.div>
-          ))}
-        </div>
-
-        {/* Stats Footer Bar (Original exactly) */}
-        <div className="px-0 py-2 mt-2">
-          <div className="w-full bg-white rounded-[24px] md:rounded-2xl p-1.5 flex flex-col md:flex-row items-stretch border border-[#3b8c2a]/10 shadow-[0_15px_40px_rgba(59,140,42,0.06)] gap-5 md:gap-0">
-            <div className="flex-1 w-full grid grid-cols-2 sm:grid-cols-3 md:flex md:items-center md:justify-around px-2 py-2 md:py-0 gap-y-4 md:gap-0">
-              {stats.map((stat: any, idx: number) => (
-                <div key={idx} className="flex flex-col md:flex-row items-center gap-2.5 px-3 md:px-5 md:border-r border-gray-100 last:border-r-0 flex-1 justify-center group">
-                  <div className="w-9 h-9 md:w-10 md:h-10 rounded-full bg-[#f3f9f4] border border-[#e8f5ec] flex items-center justify-center text-[#3b8c2a] flex-shrink-0 group-hover:bg-[#3b8c2a] group-hover:text-white transition-colors duration-300">
-                    {ICON_MAP[stat.icon] || <Users size={18} />}
-                  </div>
-                  <div className="flex flex-col items-center md:items-start text-center md:text-left">
-                    <span className="text-[#1e293b] font-black text-[16px] md:text-[20px] leading-tight mb-0.5">
-                      {/^[\d,]+/.test(stat.number) ? <StatCounter value={stat.number} /> : stat.number}
-                    </span>
-                    <span className="text-[#64748b] text-[9px] md:text-[10px] uppercase tracking-widest font-bold leading-tight">{stat.label}</span>
-                  </div>
-                </div>
-              ))}
-            </div>
-
-            {/* CTA Pill */}
-            <div className="bg-[#3b8c2a] rounded-[18px] md:rounded-full p-1.5 md:pr-5 flex items-center gap-2.5 w-full md:w-auto shadow-lg flex-shrink-0 hover:bg-[#2c6e1f] hover:shadow-xl transition-all duration-300 cursor-pointer group">
-              <div className="w-9 h-9 md:w-10 md:h-10 rounded-full bg-white flex items-center justify-center text-[#3b8c2a] shadow-sm flex-shrink-0 group-hover:scale-110 transition-transform duration-300">
-                <Camera size={18} />
-              </div>
-              <div className="flex flex-col py-0.5 justify-center">
-                <div className="flex items-center gap-1.5 mb-0.5">
-                  <span className="text-white font-black text-[12px] md:text-[13px] uppercase tracking-tight leading-none">Endless</span>
-                  <span className="text-white/80 text-[9px] font-bold uppercase tracking-widest leading-none">Opportunities</span>
-                </div>
-                <p className="text-white/90 text-[9px] md:text-[10px] leading-[1.2] font-semibold tracking-wide hidden md:block max-w-[180px]">
-                  {glimpseData.counterText}
-                </p>
-              </div>
-            </div>
+          {/* Image Grid */}
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-5">
+            {images.map((src, idx) => (
+              <motion.div 
+                key={idx}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.5, delay: idx * 0.05 }}
+                className="w-full aspect-[4/3] rounded-lg md:rounded-xl overflow-hidden group cursor-pointer shadow-sm hover:shadow-xl transition-all"
+                onClick={() => setSelectedImg(src)}
+              >
+                <img 
+                  src={src} 
+                  alt={`Gallery ${idx + 1}`} 
+                  className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                  loading="lazy"
+                />
+                <div className="absolute inset-0 bg-[#0d2a1b]/0 transition-colors duration-300" />
+              </motion.div>
+            ))}
           </div>
         </div>
 
+        {/* Pagination Dots */}
+        <div className="flex items-center justify-center gap-3 mt-14">
+          <div className="w-8 h-2.5 rounded-full bg-[#3b8c2a] cursor-pointer shadow-[0_0_10px_rgba(59,140,42,0.4)]"></div>
+          <div className="w-2.5 h-2.5 rounded-full bg-[#e2e8f0] hover:bg-[#cbd5e1] transition-colors cursor-pointer"></div>
+          <div className="w-2.5 h-2.5 rounded-full bg-[#e2e8f0] hover:bg-[#cbd5e1] transition-colors cursor-pointer"></div>
+          <div className="w-2.5 h-2.5 rounded-full bg-[#e2e8f0] hover:bg-[#cbd5e1] transition-colors cursor-pointer"></div>
+          <div className="w-2.5 h-2.5 rounded-full bg-[#e2e8f0] hover:bg-[#cbd5e1] transition-colors cursor-pointer"></div>
+        </div>
       </div>
 
       {/* Lightbox / Zoom Modal */}
@@ -268,20 +138,10 @@ const EventGlimpses = () => {
               onClick={(e) => e.stopPropagation()}
             >
               <img
-                loading="lazy"
-                decoding="async"
-                src={selectedImg.url}
-                alt={selectedImg.title}
+                src={selectedImg}
+                alt="Zoomed Event Glimpse"
                 className="w-full h-full max-h-[75vh] object-contain rounded-xl shadow-2xl"
               />
-              <motion.div
-                initial={{ opacity: 0, y: 10 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.2 }}
-                className="mt-6 text-center px-4 bg-black/50 py-3 px-8 rounded-full backdrop-blur-md border border-white/10"
-              >
-                <h3 className="text-white font-black text-xl uppercase tracking-widest">{selectedImg.title}</h3>
-              </motion.div>
             </motion.div>
           </motion.div>
         )}
