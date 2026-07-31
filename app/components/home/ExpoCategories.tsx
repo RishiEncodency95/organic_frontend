@@ -68,40 +68,58 @@ const ExpoCategories = () => {
       <LeafDecoration className="absolute top-0 right-0 h-full pointer-events-none scale-x-[-1]" />
 
       <div className="w-full px-4 sm:px-6 lg:px-11 relative z-10">
-        
+
         {/* Header */}
-        <div className="text-center mb-6">
-          <div className="flex items-center justify-center gap-3 mb-2">
-            <span className="w-2 h-[1px] bg-[#3b8c2a]"></span>
-            <span className="text-[#3b8c2a] text-[11px] font-bold tracking-[0.2em] uppercase">
-              EXPO CATEGORIES
-            </span>
-            <span className="w-2 h-[1px] bg-[#3b8c2a]"></span>
+        <div className="flex flex-col xl:flex-row items-center justify-between mb-2 bg-white py-3 px-4 md:px-8 rounded-full shadow-[0_4px_20px_rgba(0,0,0,0.03)] border border-gray-100 gap-4 xl:gap-6">
+
+          {/* Pill */}
+          <div className="flex items-center gap-3 shrink-0">
+            <div className="flex items-center gap-1 hidden md:flex">
+              <span className="w-1.5 h-1.5 rounded-full bg-[#3b8c2a]"></span>
+              <span className="w-8 h-[1px] bg-[#3b8c2a]"></span>
+            </div>
+            <div className="px-5 py-1.5 rounded-full border border-[#3b8c2a] bg-[#f8fdf9]">
+              <span className="text-[#3b8c2a] text-[12px] font-bold tracking-[0.1em] uppercase whitespace-nowrap">
+                EXPO CATEGORIES
+              </span>
+            </div>
+            <div className="flex items-center gap-1 hidden md:flex">
+              <span className="w-8 h-[1px] bg-[#3b8c2a]"></span>
+              <span className="w-1.5 h-1.5 rounded-full bg-[#3b8c2a]"></span>
+
+            </div>
           </div>
-          <h2 className="text-[24px] md:text-[28px] font-bold text-[#111827] tracking-tight mb-1.5">
+
+          {/* Title */}
+          <h2 className="text-[16px] md:text-[22px] font-bold text-[#111827] tracking-tight shrink-0 text-center">
             Explore Diverse <span className="text-[#3b8c2a]">Healthcare Sectors</span>
           </h2>
-          <p className="text-[#64748b] text-[12px] font-medium tracking-wide">
-            One Platform. Every Healthcare Solution.
-          </p>
+
+          {/* Description */}
+          <div className="flex items-center gap-4 hidden xl:flex shrink-0">
+            <div className="w-[1px] h-8 bg-gray-200"></div>
+            <p className="text-[#64748b] text-[15px] font-medium whitespace-nowrap">
+              One Platform. Every Healthcare Solution.
+            </p>
+          </div>
         </div>
 
         {/* Categories Grid with Animation */}
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-3 py-2 max-w-[1500px] mx-auto overflow-hidden">
           {categories.map((item, index) => {
             const Icon = item.icon;
-            
+
             return (
-              <motion.div 
+              <motion.div
                 key={index}
                 initial={{ opacity: 0, y: 40, scale: 0.85 }}
                 whileInView={{ opacity: 1, y: 0, scale: 1 }}
                 viewport={{ once: true, margin: "-20px" }}
-                transition={{ 
-                  type: "spring", 
-                  stiffness: 120, 
+                transition={{
+                  type: "spring",
+                  stiffness: 120,
                   damping: 14,
-                  delay: index * 0.08 
+                  delay: index * 0.08
                 }}
                 className="group flex items-center gap-3 px-3 py-3.5 bg-white border border-gray-100 rounded-xl shadow-[0_2px_10px_rgba(0,0,0,0.02)] hover:bg-[#f3f9f4] hover:shadow-[0_8px_20px_rgba(36,107,56,0.08)] hover:-translate-y-0.5 hover:border-[#3b8c2a]/30 transition-all duration-300 cursor-pointer"
               >
@@ -117,7 +135,7 @@ const ExpoCategories = () => {
         </div>
 
         {/* Button */}
-        <div className="flex justify-center mt-6">
+        <div className="flex justify-center mt-2">
           <button className="group flex items-center justify-center gap-2 px-6 py-2 rounded-full border-2 border-[#F2B40E] bg-[#3b8c2a] text-white text-[11px] font-bold uppercase tracking-wider hover:bg-[#F2B40E] hover:text-[#0b2912] hover:shadow-lg transition-all duration-300">
             VIEW ALL CATEGORIES
             <ArrowRight size={14} strokeWidth={2.5} className="group-hover:translate-x-1 transition-transform" />

@@ -14,6 +14,7 @@ const ExpoHighlights = lazy(() => import("./components/home/ExpoHighlights"));
 const SponsorsAndAttend = lazy(() => import("./components/home/SponsorsAndAttend"));
 const VoicesThatInspire = lazy(() => import("./components/home/VoicesThatInspire"));
 const MovementBanner = lazy(() => import("./components/home/MovementBanner"));
+const BuyerSellerMeet = lazy(() => import("./components/home/BuyerSellerMeet"));
 
 
 const Index = () => {
@@ -27,6 +28,7 @@ const Index = () => {
         <WhyParticipate />
         <ExpoCategories />
         <ExpoHighlights />
+        <BuyerSellerMeet />
         <SponsorsAndAttend />
         <VoicesThatInspire />
         <EventGlimpses />

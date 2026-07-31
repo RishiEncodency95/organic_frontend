@@ -12,7 +12,7 @@ import {
     LayoutGrid, Building2, ExternalLink, Star, Mic, Trophy,
     Store, UserPlus, Globe, Award
 } from "lucide-react";
-import navbarLogo from "../../assets/logos/navbarlogo.png";
+import navbarLogo from "../../assets/logos/navbarlogo1.png";
 
 // Local cn utility since @/lib/utils is missing
 const cn = (...classes: (string | undefined | null | false)[]) => classes.filter(Boolean).join(" ");
@@ -128,11 +128,11 @@ const Navbar = () => {
                     {/* ─── DESKTOP NAV (unchanged) ─── */}
                     <div className="hidden xl:flex items-center justify-between py-0 relative h-14">
                         <div className="relative z-[150] h-full flex items-center gap-2">
-                            <div className="relative h-full flex items-center min-w-[130px] md:min-w-[160px] mr-2">
-                                <Link href="/" className="absolute top-[-10px] left-0 bg-white p-3 rounded-2xl shadow-[0_10px_25px_rgba(0,0,0,0.1)] z-[200] flex items-center justify-center border border-gray-100">
+                            <div className="relative h-full flex items-center min-w-[110px] xl:min-w-[140px] mr-4">
+                                <Link href="/" className="absolute top-1 xl:top-1.5 left-0 flex items-center justify-center transition-opacity hover:opacity-90 z-[200]">
                                     <img loading="lazy" decoding="async" src={navbarLogo.src}
                                         alt="Organic Expo Logo"
-                                        className="h-20 md:h-28 w-auto object-contain"
+                                        className="h-[65px] xl:h-[85px] w-auto object-contain drop-shadow-md"
                                     />
                                 </Link>
                             </div>
@@ -142,73 +142,73 @@ const Navbar = () => {
                             <div className="flex-1 flex items-center justify-center gap-1 xl:gap-2">
                                 {navLinks.map((link) => (
                                     <div
-                                    key={link.label}
-                                    className="relative flex items-center"
-                                    onMouseEnter={() => link.dropdown && setActiveDropdown(link.label)}
-                                    onMouseLeave={() => link.dropdown && setActiveDropdown(null)}
-                                >
-                                    <Link
-                                        href={link.path || "#"}
-                                        style={{ fontFamily: "'Roboto', sans-serif" }}
-                                        className={`px-3 py-2 text-[12.5px] font-bold tracking-[0.05em] uppercase transition-all duration-300 flex items-center gap-1 relative group whitespace-nowrap ${pathname === link.path ? "text-[#276F27]" : "text-slate-900"
-                                            }`}
+                                        key={link.label}
+                                        className="relative flex items-center"
+                                        onMouseEnter={() => link.dropdown && setActiveDropdown(link.label)}
+                                        onMouseLeave={() => link.dropdown && setActiveDropdown(null)}
                                     >
-                                        {link.label}
-                                        {link.dropdown && (
-                                            <ChevronDown className={`w-3 h-3 transition-transform duration-300 ${activeDropdown === link.label ? "rotate-180" : ""}`} />
-                                        )}
-                                        <span className={`absolute -bottom-1 left-2 right-2 h-[2px] bg-[#276F27] transition-transform duration-300 origin-left ${pathname === link.path ? "scale-x-100" : "scale-x-0 group-hover:scale-x-100"}`} />
-                                    </Link>
-
-                                    {link.dropdown && (
-                                        <AnimatePresence>
-                                            {activeDropdown === link.label && (
-                                                <div className="absolute top-[calc(100%-10px)] left-1/2 -translate-x-1/2 pt-4 w-[240px]">
-                                                    <div className="absolute top-2 left-1/2 -translate-x-1/2 w-4 h-4 bg-white border-t border-l border-slate-100 rotate-45 z-10" />
-                                                    <motion.div
-                                                        initial={{ opacity: 0, scale: 0.95, y: 10 }}
-                                                        animate={{ opacity: 1, scale: 1, y: 0 }}
-                                                        exit={{ opacity: 0, scale: 0.95, y: 10 }}
-                                                        transition={{ duration: 0.2, ease: "easeOut" }}
-                                                        className="relative bg-white/95 backdrop-blur-2xl rounded-2xl shadow-[0_20px_60px_rgba(0,0,0,0.12)] border border-slate-100 py-2 overflow-hidden z-20"
-                                                    >
-                                                        {link.dropdown
-                                                            .map((item, idx) => {
-                                                                const isEven = idx % 2 === 0;
-                                                                return (
-                                                                    <Link
-                                                                        key={item.label}
-                                                                        href={item.path}
-                                                                        onClick={() => setActiveDropdown(null)}
-                                                                        className="flex items-start gap-4 px-4 py-2.5 hover:bg-slate-50 group transition-all border-b border-slate-200 last:border-b-0"
-                                                                    >
-                                                                        <div className={cn(
-                                                                            "w-7 h-7 mt-0.5 flex-shrink-0 rounded-xl flex items-center justify-center transition-all duration-300 group-hover:text-white group-hover:shadow-md",
-                                                                            isEven
-                                                                                ? "bg-[#3b8c2a]/10 text-[#3b8c2a] group-hover:bg-[#3b8c2a]"
-                                                                                : "bg-[#f59e0b]/10 text-[#f59e0b] group-hover:bg-[#f59e0b]"
-                                                                        )}>
-                                                                            <item.icon className="w-3.5 h-3.5" />
-                                                                        </div>
-                                                                        <div className="flex flex-col gap-0.5">
-                                                                            <span className={cn(
-                                                                                "text-[12px] font-semibold text-slate-800 transition-colors",
-                                                                                isEven ? "group-hover:text-[#3b8c2a]" : "group-hover:text-[#f59e0b]"
-                                                                            )}>
-                                                                                {item.label}
-                                                                            </span>
-                                                                            <span className="text-[10px] text-slate-500 leading-normal">{item.description}</span>
-                                                                        </div>
-                                                                    </Link>
-                                                                );
-                                                            })}
-                                                    </motion.div>
-                                                </div>
+                                        <Link
+                                            href={link.path || "#"}
+                                            style={{ fontFamily: "'Roboto', sans-serif" }}
+                                            className={`px-3 py-2 text-[12.5px] font-bold tracking-[0.05em] uppercase transition-all duration-300 flex items-center gap-1 relative group whitespace-nowrap ${pathname === link.path ? "text-[#276F27]" : "text-slate-900"
+                                                }`}
+                                        >
+                                            {link.label}
+                                            {link.dropdown && (
+                                                <ChevronDown className={`w-3 h-3 transition-transform duration-300 ${activeDropdown === link.label ? "rotate-180" : ""}`} />
                                             )}
-                                        </AnimatePresence>
-                                    )}
-                                </div>
-                            ))}
+                                            <span className={`absolute -bottom-1 left-2 right-2 h-[2px] bg-[#276F27] transition-transform duration-300 origin-left ${pathname === link.path ? "scale-x-100" : "scale-x-0 group-hover:scale-x-100"}`} />
+                                        </Link>
+
+                                        {link.dropdown && (
+                                            <AnimatePresence>
+                                                {activeDropdown === link.label && (
+                                                    <div className="absolute top-[calc(100%-10px)] left-1/2 -translate-x-1/2 pt-4 w-[240px]">
+                                                        <div className="absolute top-2 left-1/2 -translate-x-1/2 w-4 h-4 bg-white border-t border-l border-slate-100 rotate-45 z-10" />
+                                                        <motion.div
+                                                            initial={{ opacity: 0, scale: 0.95, y: 10 }}
+                                                            animate={{ opacity: 1, scale: 1, y: 0 }}
+                                                            exit={{ opacity: 0, scale: 0.95, y: 10 }}
+                                                            transition={{ duration: 0.2, ease: "easeOut" }}
+                                                            className="relative bg-white/95 backdrop-blur-2xl rounded-2xl shadow-[0_20px_60px_rgba(0,0,0,0.12)] border border-slate-100 py-2 overflow-hidden z-20"
+                                                        >
+                                                            {link.dropdown
+                                                                .map((item, idx) => {
+                                                                    const isEven = idx % 2 === 0;
+                                                                    return (
+                                                                        <Link
+                                                                            key={item.label}
+                                                                            href={item.path}
+                                                                            onClick={() => setActiveDropdown(null)}
+                                                                            className="flex items-start gap-4 px-4 py-2.5 hover:bg-slate-50 group transition-all border-b border-slate-200 last:border-b-0"
+                                                                        >
+                                                                            <div className={cn(
+                                                                                "w-7 h-7 mt-0.5 flex-shrink-0 rounded-xl flex items-center justify-center transition-all duration-300 group-hover:text-white group-hover:shadow-md",
+                                                                                isEven
+                                                                                    ? "bg-[#3b8c2a]/10 text-[#3b8c2a] group-hover:bg-[#3b8c2a]"
+                                                                                    : "bg-[#f59e0b]/10 text-[#f59e0b] group-hover:bg-[#f59e0b]"
+                                                                            )}>
+                                                                                <item.icon className="w-3.5 h-3.5" />
+                                                                            </div>
+                                                                            <div className="flex flex-col gap-0.5">
+                                                                                <span className={cn(
+                                                                                    "text-[12px] font-semibold text-slate-800 transition-colors",
+                                                                                    isEven ? "group-hover:text-[#3b8c2a]" : "group-hover:text-[#f59e0b]"
+                                                                                )}>
+                                                                                    {item.label}
+                                                                                </span>
+                                                                                <span className="text-[10px] text-slate-500 leading-normal">{item.description}</span>
+                                                                            </div>
+                                                                        </Link>
+                                                                    );
+                                                                })}
+                                                        </motion.div>
+                                                    </div>
+                                                )}
+                                            </AnimatePresence>
+                                        )}
+                                    </div>
+                                ))}
                             </div>
 
                             <div className="flex items-center gap-2 flex-shrink-0">
@@ -290,11 +290,11 @@ const Navbar = () => {
 
                     {/* ─── MOBILE TOP NAV ─── */}
                     <div className="flex xl:hidden items-center justify-between h-[60px] relative">
-                        <div className="relative z-[150] h-full flex items-center min-w-[100px]">
-                            <Link href="/" className="absolute top-[-5px] left-0 bg-white p-2 rounded-2xl shadow-[0_8px_20px_rgba(0,0,0,0.1)] flex items-center justify-center border border-gray-100">
+                        <div className="relative z-[150] h-full flex items-center min-w-[90px]">
+                            <Link href="/" className="absolute top-1 left-0 flex items-center justify-center transition-opacity active:opacity-75 z-[200]">
                                 <img loading="lazy" decoding="async" src={navbarLogo.src}
                                     alt="Organic Expo Logo"
-                                    className="h-16 w-auto object-contain"
+                                    className="h-[55px] w-auto object-contain drop-shadow-sm"
                                 />
                             </Link>
                         </div>

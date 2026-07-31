@@ -6,6 +6,7 @@ import Head from "next/head";
 
 // Synchronous load for above the fold
 import AboutHero from "@/app/components/about/AboutHero";
+import AboutStrip from "@/app/components/about/AboutStrip";
 
 // Lazy load below the fold components
 const AboutIntro = lazy(() => import("@/app/components/about/AboutIntro"));
@@ -37,6 +38,7 @@ const AboutPage = () => {
 
       <div className="bg-[#ffffff] min-h-screen">
         <AboutHero />
+        <AboutStrip />
         
         <Suspense fallback={<LoadingFallback />}>
           <div className="w-full bg-white">

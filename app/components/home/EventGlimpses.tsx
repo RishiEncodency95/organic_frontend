@@ -3,7 +3,7 @@
 import React, { useState, useEffect, useCallback, useRef } from 'react';
 import { motion, useInView, animate } from 'framer-motion';
 import {
-  Users, Globe2, Store, Mic2, Handshake, Package, Camera, ChevronLeft, ChevronRight, Leaf, 
+  Users, Globe2, Store, Mic2, Handshake, Package, Camera, ChevronLeft, ChevronRight, Leaf,
   Building2, Mic, Sparkles, Globe, X, ZoomIn
 } from 'lucide-react';
 import { AnimatePresence } from 'framer-motion';
@@ -81,12 +81,10 @@ const EventGlimpses = () => {
 
   return (
     <section
-      className="relative pt-4 pb-3 overflow-hidden font-inter"
+      className="relative py-2 overflow-hidden font-inter"
       style={{ background: '#f5fdf6' }}
     >
       {/* ── BG DECORATIVE ELEMENTS ── */}
-
-      {/* Top-left leaf cluster */}
       <svg
         className="absolute top-0 left-0 pointer-events-none"
         width="220" height="210"
@@ -100,8 +98,6 @@ const EventGlimpses = () => {
           <ellipse cx="42" cy="178" rx="32" ry="13" opacity="0.3" transform="rotate(-22 42 178)" />
         </g>
       </svg>
-
-      {/* Top-right circle arc */}
       <svg
         className="absolute pointer-events-none"
         style={{ top: '-30px', right: '-30px', width: '170px', opacity: 0.13, zIndex: 0 }}
@@ -109,10 +105,8 @@ const EventGlimpses = () => {
         xmlns="http://www.w3.org/2000/svg"
       >
         <circle cx="160" cy="20" r="120" fill="none" stroke="#2f8f3a" strokeWidth="18" />
-        <circle cx="160" cy="20" r="90"  fill="none" stroke="#2f8f3a" strokeWidth="8"  />
+        <circle cx="160" cy="20" r="90" fill="none" stroke="#2f8f3a" strokeWidth="8" />
       </svg>
-
-      {/* Bottom-right dot grid */}
       <svg
         className="absolute pointer-events-none"
         style={{ bottom: '80px', right: '24px', opacity: 0.13, zIndex: 0 }}
@@ -120,124 +114,94 @@ const EventGlimpses = () => {
         viewBox="0 0 90 70"
         xmlns="http://www.w3.org/2000/svg"
       >
-        {[10,30,50,70,90].map(x =>
-          [10,30,50,70].map(y => (
+        {[10, 30, 50, 70, 90].map(x =>
+          [10, 30, 50, 70].map(y => (
             <circle key={`${x}-${y}`} cx={x} cy={y} r="3" fill="#2f8f3a" />
           ))
         )}
       </svg>
 
       {/* ── CONTENT ── */}
-      <div className="w-full px-2 lg:px-11 relative z-10">
+      <div className="w-full  px-2 lg:px-11 relative z-10">
 
-        {/* Header */}
-        <div className="text-left md:text-center mb-4 px-4">
-          <div className="flex items-center justify-start md:justify-center gap-2 mb-2.5">
-            <Leaf size={20} className="text-[#2f8f3a]" />
-            <span className="text-[#0b4d17] font-bold tracking-[0.25em] uppercase text-[12px] md:text-[14px]">
-              {glimpseData.subheading || 'Event Glimpses'}
-            </span>
-            <Leaf size={20} className="text-[#2f8f3a] scale-x-[-1] hidden md:block" />
+        {/* Header - Side by Side (1 Row on Desktop) */}
+        <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-6 md:gap-10 mb-4 ">
+          <div className="flex-1">
+            <div className="inline-flex items-center gap-2.5 px-4 py-1.5 rounded-full bg-[#2f8f3a]/10 border border-[#2f8f3a]/20 mb-2 shadow-sm">
+              <Leaf size={16} className="text-[#2f8f3a]" />
+              <span className="text-[#0b4d17] font-bold tracking-[0.2em] uppercase text-[11px] md:text-[12px]">
+                {glimpseData.subheading}
+              </span>
+            </div>
+
+            <h2 className="text-[18px] md:text-[26px] lg:text-[26px] font-semibold text-[#0b2912] uppercase tracking-tight leading-[1.1] flex flex-wrap md:flex-nowrap items-center gap-x-2 gap-y-1">
+              {glimpseData.heading?.toUpperCase().includes("OF THE") ? (
+                <>
+                  <span className="text-slate-800 whitespace-nowrap">{glimpseData.heading.substring(0, glimpseData.heading.toUpperCase().indexOf("OF THE") + 6)}</span>
+                  <span className="relative text-[#2f8f3a] inline-block whitespace-nowrap">
+                    {glimpseData.heading.substring(glimpseData.heading.toUpperCase().indexOf("OF THE") + 6).trim()}
+                    <svg className="absolute -bottom-1.5 left-0 w-full h-3" viewBox="0 0 100 12" preserveAspectRatio="none">
+                      <path d="M0,8 Q50,12 100,2" fill="none" stroke="#2f8f3a" strokeWidth="4" strokeLinecap="round" opacity="0.3" />
+                    </svg>
+                  </span>
+                </>
+              ) : (
+                <span dangerouslySetInnerHTML={{ __html: glimpseData.heading }} />
+              )}
+            </h2>
           </div>
-          <h2 
-            className="text-[16px] md:text-[29px] font-black text-[#0b2912] mb-2 uppercase tracking-tight flex flex-col justify-start md:justify-center items-center text-left md:text-center leading-[1.1] max-w-4xl mx-auto px-4"
-          >
-            {glimpseData.heading?.toUpperCase().includes("OF THE") ? (
-              <>
-                <span className="opacity-90 block text-[13px] md:text-[22px]">{glimpseData.heading.substring(0, glimpseData.heading.toUpperCase().indexOf("OF THE") + 6)}</span>
-                <span className="text-[#2f8f3a] mt-0 block">{glimpseData.heading.substring(glimpseData.heading.toUpperCase().indexOf("OF THE") + 6)}</span>
-              </>
-            ) : (
-              <span dangerouslySetInnerHTML={{ __html: glimpseData.heading }} />
-            )}
-          </h2>
-          <div className="flex items-center justify-start md:justify-center gap-4 max-w-2xl md:mx-auto">
-            <div className="hidden md:block h-[1px] w-12 bg-[#b6d9bb]" />
-            <div 
-              className="text-slate-700 text-sm md:text-base tracking-wide prose prose-sm max-w-none text-left md:text-center"
-              dangerouslySetInnerHTML={{ __html: glimpseData.description }}
-            />
-            <div className="hidden md:block h-[1px] w-12 bg-[#b6d9bb]" />
+
+          <div className="flex-1 md:border-l-2 border-[#2f8f3a]/20 md:pl-8">
+            <p className="text-slate-600 text-[14px] md:text-[15px] leading-relaxed max-w-lg font-medium">
+              {glimpseData.description}
+            </p>
           </div>
         </div>
 
-        {/* Marquee Area */}
-        <div className="relative mb-0 overflow-hidden rounded-2xl shadow-xl bg-white/40 backdrop-blur-sm">
-          <style>{`
-            .glimpse-marquee-container {
-              display: flex;
-              width: max-content;
-              animation: scroll-glimpse 50s linear infinite;
-            }
-            @keyframes scroll-glimpse {
-              from { transform: translateX(0); }
-              to { transform: translateX(-50%); }
-            }
-            .glimpse-marquee-container:hover {
-              animation-play-state: paused;
-            }
-            .glimpse-card {
-              width: 280px;
-              height: 260px;
-              flex-shrink: 0;
-              margin-left: -40px;
-              clip-path: polygon(15% 0%, 100% 0%, 85% 100%, 0% 100%);
-              cursor: pointer;
-              position: relative;
-              transition: all 0.5s ease;
-            }
-            .glimpse-card:first-child {
-              margin-left: 0;
-            }
-            @media (max-width: 768px) {
-              .glimpse-card {
-                width: 220px;
-                height: 200px;
-                margin-left: -30px;
-              }
-              @keyframes scroll-glimpse {
-                from { transform: translateX(0); }
-                to { transform: translateX(-50%); }
-              }
-            }
-          `}</style>
-          
-          <div className="glimpse-marquee-container">
-            {/* Double images for seamless loop */}
-            {[...images, ...images, ...images].map((img: any, idx: number) => (
-              <div
-                key={idx}
-                className="glimpse-card group/card"
-                onClick={() => setSelectedImg(img)}
-              >
-                <img loading="lazy" decoding="async" src={img.url}
-                  alt={img.title || 'Event Glimpse'}
-                  className="w-full h-full object-cover transition-transform duration-700 group-hover/card:scale-110"
-                />
-                
-                {/* Overlay with Zoom Icon */}
-                <div className="absolute inset-0 bg-black/30 opacity-0 group-hover/card:opacity-100 transition-opacity flex flex-col items-center justify-center p-4">
-                    <ZoomIn className="text-white w-10 h-10 mb-2 transform scale-50 group-hover/card:scale-100 transition-transform duration-500" />
-                    <span className="text-white font-bold text-center text-[12px] uppercase tracking-wider">{img.title}</span>
+        {/* Premium Gallery Cards Grid */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mb-12 px-4 md:px-0">
+          {images.map((img: any, idx: number) => (
+            <motion.div
+              key={idx}
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6, delay: idx * 0.1, ease: "easeOut" }}
+              className="group relative w-full h-[280px] md:h-[320px] rounded-[24px] overflow-hidden cursor-pointer shadow-lg hover:shadow-2xl transition-shadow duration-500"
+              onClick={() => setSelectedImg(img)}
+            >
+              <img
+                loading="lazy"
+                decoding="async"
+                src={img.url}
+                alt={img.title || 'Event Glimpse'}
+                className="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110"
+              />
+
+              {/* Overlay Gradient */}
+              <div className="absolute inset-0 bg-gradient-to-t from-[#0b2912]/90 via-[#0b2912]/20 to-transparent opacity-70 group-hover:opacity-90 transition-opacity duration-500" />
+
+              {/* Hover Zoom Icon */}
+              <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-500">
+                <div className="w-14 h-14 rounded-full bg-white/20 backdrop-blur-md flex items-center justify-center transform scale-50 group-hover:scale-100 transition-transform duration-500 ease-out">
+                  <ZoomIn className="text-white w-6 h-6" />
                 </div>
+              </div>
 
-                {/* Bottom Green Gradient Overlay */}
-                <div className="absolute inset-x-0 bottom-0 h-1/3 bg-gradient-to-t from-[#0b4d17]/80 to-transparent opacity-60" />
-
-                {/* Decorative Dots */}
-                <div className="absolute bottom-6 right-8 opacity-40">
-                  <div className="grid grid-cols-3 gap-1">
-                    {[...Array(9)].map((_, i) => (
-                      <div key={i} className="w-0.5 h-0.5 bg-white rounded-full" />
-                    ))}
+              {/* Title Container */}
+              <div className="absolute bottom-5 left-5 right-5">
+                <div className="bg-white/10 backdrop-blur-md border border-white/20 rounded-[16px] px-5 py-1.5 flex items-center justify-between transform translate-y-2 group-hover:translate-y-0 transition-transform duration-500">
+                  <h3 className="text-white font-bold text-[12px] md:text-[16px] uppercase tracking-wider drop-shadow-md">{img.title}</h3>
+                  <div className="w-8 h-8 rounded-full bg-white/20 flex items-center justify-center text-white group-hover:bg-[#2f8f3a] transition-colors duration-300">
+                    <Camera size={14} />
                   </div>
                 </div>
               </div>
-            ))}
-          </div>
+            </motion.div>
+          ))}
         </div>
 
-        {/* Stats Footer Bar */}
+        {/* Stats Footer Bar (Original exactly) */}
         <div className="px-0 py-2 mt-2">
           <div className="w-full bg-white rounded-[24px] md:rounded-2xl p-1.5 flex flex-col md:flex-row items-stretch border border-[#3b8c2a]/10 shadow-[0_15px_40px_rgba(59,140,42,0.06)] gap-5 md:gap-0">
             <div className="flex-1 w-full grid grid-cols-2 sm:grid-cols-3 md:flex md:items-center md:justify-around px-2 py-2 md:py-0 gap-y-4 md:gap-0">
@@ -283,32 +247,41 @@ const EventGlimpses = () => {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="fixed inset-0 z-[9999] flex items-center justify-center bg-black/90 p-4 md:p-10"
+            className="fixed inset-0 z-[9999] flex items-center justify-center bg-black/95 p-4 md:p-10 backdrop-blur-sm"
             onClick={() => setSelectedImg(null)}
           >
             <motion.button
-              initial={{ scale: 0 }}
-              animate={{ scale: 1 }}
-              className="absolute top-6 right-6 text-white bg-white/10 p-2 rounded-full hover:bg-white/20 transition-colors"
+              initial={{ scale: 0, rotate: -90 }}
+              animate={{ scale: 1, rotate: 0 }}
+              exit={{ scale: 0, rotate: 90 }}
+              className="absolute top-6 right-6 text-white bg-white/10 hover:bg-white/20 p-3 rounded-full transition-colors z-50 backdrop-blur-md"
             >
-              <X size={32} />
+              <X size={28} />
             </motion.button>
-            
+
             <motion.div
-              initial={{ scale: 0.8, y: 50 }}
-              animate={{ scale: 1, y: 0 }}
-              exit={{ scale: 0.8, y: 50 }}
-              className="relative max-w-5xl w-full max-h-[80vh] flex flex-col items-center"
+              initial={{ scale: 0.9, y: 20, opacity: 0 }}
+              animate={{ scale: 1, y: 0, opacity: 1 }}
+              exit={{ scale: 0.9, y: 20, opacity: 0 }}
+              transition={{ type: "spring", damping: 25, stiffness: 300 }}
+              className="relative max-w-6xl w-full max-h-[85vh] flex flex-col items-center"
               onClick={(e) => e.stopPropagation()}
             >
-              <img loading="lazy" decoding="async" src={selectedImg.url}
+              <img
+                loading="lazy"
+                decoding="async"
+                src={selectedImg.url}
                 alt={selectedImg.title}
-                className="w-full h-full object-contain rounded-xl shadow-2xl border border-white/10"
+                className="w-full h-full max-h-[75vh] object-contain rounded-xl shadow-2xl"
               />
-              <div className="mt-6 text-center px-4">
-                <h3 className="text-white font-black text-2xl uppercase tracking-widest">{selectedImg.title}</h3>
-                <p className="text-white/60 text-sm mt-2">{glimpseData.counterText}</p>
-              </div>
+              <motion.div
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.2 }}
+                className="mt-6 text-center px-4 bg-black/50 py-3 px-8 rounded-full backdrop-blur-md border border-white/10"
+              >
+                <h3 className="text-white font-black text-xl uppercase tracking-widest">{selectedImg.title}</h3>
+              </motion.div>
             </motion.div>
           </motion.div>
         )}
