@@ -97,7 +97,7 @@ const EventGlimpses = () => {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.5, delay: idx * 0.05 }}
-                className={`w-full h-[220px] sm:h-[260px] lg:h-[300px] xl:h-[320px] rounded-2xl md:rounded-[16px] overflow-hidden group cursor-pointer shadow-sm hover:shadow-xl transition-all g-span-${img.span}`}
+                className={`w-full h-[180px] sm:h-[200px] lg:h-[240px] xl:h-[260px] rounded-2xl md:rounded-[16px] overflow-hidden group cursor-pointer shadow-sm hover:shadow-xl transition-all g-span-${img.span}`}
                 onClick={() => setSelectedImg(img.src)}
               >
                 <img 

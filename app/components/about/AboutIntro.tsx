@@ -2,8 +2,9 @@
 
 import React from "react";
 import Link from "next/link";
-import { ArrowRight, Star, Globe, Leaf } from "lucide-react";
+import { ArrowRight, Star, Globe, Leaf, Users, Sprout, Award } from "lucide-react";
 import { motion } from "framer-motion";
+
 const badges = [
   {
     icon: Star,
@@ -19,18 +20,33 @@ const badges = [
     icon: Leaf,
     title: "Sustainable",
     text: "Future Together",
+  },
+  {
+    icon: Users,
+    title: "Networking",
+    text: "Industry Leaders",
+  },
+  {
+    icon: Sprout,
+    title: "100% Organic",
+    text: "Certified Products",
+  },
+  {
+    icon: Award,
+    title: "Quality Assured",
+    text: "Trusted Brands",
   }
 ];
 
 const AboutIntro = () => {
   return (
-    <section className="relative w-full bg-[#fdfefd] py-2 lg:py-4 overflow-hidden font-inter border-y border-[#3b8c2a]/10">
+    <section className="relative w-full bg-[#fdfefd] py-2 lg:py-4 px-2 lg:px-11 overflow-hidden font-inter border-y border-[#3b8c2a]/10">
 
       {/* Super Subtle Background Leaf Vector */}
       <Leaf className="absolute -top-20 -right-20 w-[600px] h-[600px] text-[#3b8c2a] opacity-[0.02] transform rotate-[-45deg] pointer-events-none" />
 
-      <div className="w-full max-w-[1500px] mx-auto px-4 sm:px-6 lg:px-12 relative z-10">
-        <div className="flex flex-col lg:flex-row items-center gap-8 lg:gap-12">
+      <div className="w-full  relative z-10">
+        <div className="flex flex-col lg:flex-row justify-between items-center gap-8 lg:gap-12">
 
           {/* Left Side: Content */}
           <div className="w-full lg:w-[50%] flex flex-col items-start">
@@ -38,7 +54,7 @@ const AboutIntro = () => {
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              className="inline-flex items-center gap-2.5 px-4 py-2 rounded-full bg-[#3b8c2a]/10 mb-4"
+              className="inline-flex items-center gap-2.5 px-4 py-2 rounded-full bg-[#3b8c2a]/10 mb-2"
             >
               <span className="text-[#3b8c2a] text-sm">🌿</span>
               <span className="text-[#154726] text-[12px] font-bold tracking-[0.2em] uppercase">
@@ -51,32 +67,32 @@ const AboutIntro = () => {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: 0.1 }}
-              className="text-[#0d2a1b] text-[32px] md:text-[42px] lg:text-[48px] font-black leading-[1.1] mb-4 tracking-tight"
+              className="text-[#0d2a1b] text-[12px] md:text-[26px] lg:text-[26px] font-black leading-[1.1] mb-2 tracking-tight"
             >
-              Welcome to <br />
+              Welcome to{" "}
               <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#3b8c2a] to-[#154726]">
                 Bharat Organic Expo
               </span>
             </motion.h2>
 
-            <motion.p
+            <motion.p 
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: 0.2 }}
-              className="text-[#4b5563] text-[15px] md:text-[16px] leading-relaxed mb-3 font-medium"
+              className="text-[#4b5563] text-[13px] md:text-[14px] leading-relaxed mb-3 font-medium text-justify"
             >
-              India's leading platform dedicated to organic agriculture, sustainable living, natural healthcare, Ayurveda, eco-friendly innovations and responsible networking.
+              Bharat Organic Expo is India's leading and most comprehensive platform dedicated entirely to organic agriculture, sustainable living, natural healthcare, and Ayurveda. We bring together a diverse community of eco-friendly innovators, traditional farmers, and modern enterprises to foster responsible networking and showcase the incredible potential of organic products on a global stage. Our mission is to promote wellness through nature while ensuring economic growth for grassroot producers.
             </motion.p>
 
-            <motion.p
+            <motion.p 
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: 0.3 }}
-              className="text-[#64748b] text-[14px] md:text-[15px] leading-relaxed mb-6"
+              className="text-[#64748b] text-[13px] md:text-[14px] leading-relaxed mb-5 text-justify"
             >
-              Every year thousands of visitors, buyers, manufacturers, investors, exporters and policymakers participate to build the future of sustainable India.
+              Every year, thousands of passionate visitors, wholesale buyers, manufacturers, visionary investors, international exporters, and key policymakers converge at our event. Together, they participate in groundbreaking discussions, discover new market trends, and form lasting partnerships to actively build a cleaner, greener, and more sustainable future for India and the world.
             </motion.p>
 
             {/* Badges Layout - Structured neatly under text */}
@@ -85,12 +101,12 @@ const AboutIntro = () => {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: 0.4 }}
-              className="grid grid-cols-1 sm:grid-cols-2 gap-3 w-full mb-6"
+              className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-2 w-full mb-4"
             >
               {badges.map((badge, index) => {
                 const Icon = badge.icon;
                 return (
-                  <div key={index} className="flex items-start gap-3 p-3 rounded-2xl bg-white border border-gray-100 shadow-[0_4px_15px_rgba(0,0,0,0.03)] hover:border-[#3b8c2a]/30 transition-colors">
+                  <div key={index} className="flex items-start gap-2 px-3 py-1.5 rounded-2xl bg-white border border-gray-100 shadow-[0_4px_15px_rgba(0,0,0,0.03)] hover:border-[#3b8c2a]/30 transition-colors">
                     <div className="w-10 h-10 shrink-0 rounded-full bg-[#f4fbf5] flex items-center justify-center text-[#3b8c2a]">
                       <Icon size={18} strokeWidth={2} />
                     </div>
@@ -108,12 +124,13 @@ const AboutIntro = () => {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: 0.5 }}
+              className="w-full flex justify-center mt-1"
             >
-              <Link
+              <Link 
                 href="#our-story"
-                className="group relative inline-flex items-center justify-center gap-2 bg-[#154726] text-white px-6 py-3 rounded-full font-bold text-[14px] transition-all shadow-[0_8px_20px_rgba(21,71,38,0.2)] hover:shadow-[0_12px_25px_rgba(21,71,38,0.3)] hover:-translate-y-0.5"
+                className="bg-[#3b8c2a] hover:bg-[#2c6e1f] text-white px-6 py-2.5 rounded-lg font-bold text-xs tracking-wider uppercase flex items-center justify-center gap-2 transition-all duration-300 shadow-lg hover:shadow-xl hover:-translate-y-0.5"
               >
-                Discover Our Journey <ArrowRight size={16} className="group-hover:translate-x-1 transition-transform" />
+                OUR JOURNEY <ArrowRight className="w-4 h-4" />
               </Link>
             </motion.div>
           </div>
@@ -131,8 +148,8 @@ const AboutIntro = () => {
                 className="row-span-2 rounded-[24px] overflow-hidden shadow-md group relative"
               >
                 <img
-                  src="https://images.unsplash.com/photo-1542601906990-b4d3fb778b09?q=80&w=2000&auto=format&fit=crop"
-                  alt="Organic Expo Main"
+                  src="https://images.unsplash.com/photo-1559223607-a43c990c692c?q=80&w=2000&auto=format&fit=crop"
+                  alt="Organic Expo Main Event"
                   className="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-105"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-[#154726]/40 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
@@ -147,8 +164,8 @@ const AboutIntro = () => {
                 className="rounded-[24px] overflow-hidden shadow-md group relative"
               >
                 <img
-                  src="https://images.unsplash.com/photo-1542838132-92c53300491e?w=800&q=80"
-                  alt="Expo Stalls"
+                  src="https://images.unsplash.com/photo-1542838132-92c53300491e?q=80&w=1600&auto=format&fit=crop"
+                  alt="Organic Products Display"
                   className="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-105"
                 />
                 <div className="absolute inset-0 bg-[#3b8c2a]/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500 mix-blend-overlay" />
@@ -163,8 +180,8 @@ const AboutIntro = () => {
                 className="rounded-[24px] overflow-hidden shadow-md group relative"
               >
                 <img
-                  src="https://images.unsplash.com/photo-1531058020387-3be344556be6?q=80&w=1600&auto=format&fit=crop"
-                  alt="People Networking"
+                  src="https://images.unsplash.com/photo-1528605248644-14dd04022da1?q=80&w=1600&auto=format&fit=crop"
+                  alt="People Networking at Expo"
                   className="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-105"
                 />
                 <div className="absolute inset-0 bg-[#154726]/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500 mix-blend-overlay" />

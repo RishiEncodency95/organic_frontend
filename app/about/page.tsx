@@ -11,8 +11,6 @@ import AboutStrip from "@/app/components/about/AboutStrip";
 // Lazy load below the fold components
 const AboutIntro = lazy(() => import("@/app/components/about/AboutIntro"));
 const AboutTimeline = lazy(() => import("@/app/components/about/AboutTimeline"));
-const AboutMissionVision = lazy(() => import("@/app/components/about/AboutMissionVision"));
-const AboutStatsBar = lazy(() => import("@/app/components/about/AboutStatsBar"));
 const AboutWhy = lazy(() => import("@/app/components/about/AboutWhy"));
 const AboutFeatures = lazy(() => import("@/app/components/about/AboutFeatures"));
 const AboutHighlights = lazy(() => import("@/app/components/about/AboutHighlights"));
@@ -48,12 +46,6 @@ const AboutPage = () => {
           <div className="w-full bg-[#f8fdf9]">
             <AboutTimeline />
           </div>
-
-          <div className="w-full bg-white">
-            <AboutMissionVision />
-          </div>
-
-          <AboutStatsBar />
 
           <div className="w-full bg-white">
             <AboutWhy />
