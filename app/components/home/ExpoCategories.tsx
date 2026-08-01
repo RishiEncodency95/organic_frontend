@@ -13,7 +13,7 @@ const categories = [
   { icon: Recycle, title: "Eco-friendly\nProducts", desc: "Environmentally friendly products for daily use.", color: "#60a5fa", image: "https://images.unsplash.com/photo-1542601906990-b4d3fb778b09?w=800&q=80" },
   { icon: Dumbbell, title: "Fitness &\nLifestyle", desc: "Stay active and healthy with our fitness and lifestyle solutions.", color: "#4ade80", image: "https://images.unsplash.com/photo-1517836357463-d25dfeac3438?w=800&q=80" },
   { icon: Stethoscope, title: "Medical Devices &\nEquipment", desc: "Advanced medical tools for better healthcare delivery.", color: "#fb923c", image: "https://images.unsplash.com/photo-1516549655169-df83a0774514?w=800&q=80" },
-  { icon: Beaker, title: "Pharma &\nBiotechnology", desc: "Innovations in pharmaceuticals and biotechnology.", color: "#a78bfa", image: "https://images.unsplash.com/photo-1532187863486-abf9db090b5c?w=800&q=80" },
+  { icon: Beaker, title: "Pharma &\nBiotechnology", desc: "Innovations in pharmaceuticals and biotechnology.", color: "#a78bfa", image: "https://images.unsplash.com/photo-1542838132-92c53300491e?w=800&q=80" },
 ];
 
 const FlowerDecoration = ({ className, style }: { className?: string; style?: React.CSSProperties }) => (

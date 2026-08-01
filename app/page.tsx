@@ -28,10 +28,10 @@ const Index = () => {
         <WhyParticipate />
         <ExpoCategories />
         <ExpoHighlights />
-        <BuyerSellerMeet />
         <SponsorsAndAttend />
         <VoicesThatInspire />
         <EventGlimpses />
+        <BuyerSellerMeet />
         <MovementBanner />
       </Suspense>
     </>
