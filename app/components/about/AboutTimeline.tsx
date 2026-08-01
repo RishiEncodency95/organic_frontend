@@ -38,21 +38,21 @@ const AboutTimeline = () => {
             </div>
 
             {/* Main Title */}
-            <h2 className="text-[#111827] text-4xl md:text-5xl lg:text-[52px] leading-[1.2] font-serif font-bold mb-6">
+            <h2 className="text-[#111827] text-4xl md:text-5xl lg:text-[52px] leading-[1.2] font-serif font-bold mb-2">
               Our Journey Towards <br />
               <span className="text-[#154726]">A Healthier Planet</span>
             </h2>
 
             {/* Decorative separator */}
-            <div className="flex items-center gap-3 mb-6 opacity-70">
+            <div className="flex items-center gap-3 mb-2 opacity-70">
               <div className="w-8 h-[1.5px] bg-[#154726]"></div>
               <Leaf size={14} className="text-[#154726] fill-[#154726] rotate-90" />
               <div className="w-8 h-[1.5px] bg-[#154726]"></div>
             </div>
 
             {/* Paragraph */}
-            <p className="text-[#4b5563] text-[15px] md:text-[16px] leading-relaxed mb-10 max-w-[480px]">
-              Organic Expo was born out of a simple yet powerful idea - to create a global platform that connects people, promotes natural living, and inspires a sustainable future. From a small beginning to becoming the world's leading organic trade show, our journey has been driven by passion, purpose, and a deep commitment to the planet. We bring together farmers, innovators, and conscious consumers under one roof to champion eco-friendly practices and build a thriving, green economy for generations to come.
+            <p className="text-[#4b5563] text-[15px] md:text-[16px] leading-relaxed mb-10 max-w-[580px]">
+              Organic Expo was born out of a simple yet powerful idea - to create a global platform that connects people, promotes natural living, and inspires a sustainable future. From a small beginning to becoming the world's leading organic trade show, our journey has been driven by passion, purpose, and a deep commitment to the planet. We bring together farmers, innovators, and conscious consumers under one roof to champion eco-friendly practices and build a thriving, green economy for generations to come. Every year, thousands of buyers, health experts, and policymakers join us to explore the latest trends in organic farming, natural healthcare, and Ayurveda. Our goal is to ignite a global movement that empowers local communities, preserves biodiversity, and ensures a healthier, toxin-free lifestyle for everyone.
             </p>
 
             {/* Button */}
@@ -72,9 +72,9 @@ const AboutTimeline = () => {
             </div>
 
             {/* Main Image with large curve on left */}
-            <div className="w-full h-[450px] lg:h-[600px] relative overflow-hidden z-20 shadow-xl" style={{ borderRadius: '250px 20px 20px 250px' }}>
+            <div className="w-full h-[450px] lg:h-[550px] relative overflow-hidden z-20 shadow-xl" style={{ borderRadius: '250px 20px 20px 250px' }}>
               <img
-                src="https://images.unsplash.com/photo-1542838132-92c53300491e?q=80&w=1600&auto=format&fit=crop"
+                src="https://images.unsplash.com/photo-1566755272146-d8ebc6bdcdc7?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NzJ8fGNvbmZlcmVuY2V8ZW58MHx8MHx8fDA%3D"
                 alt="Organic Expo Event Stall"
                 className="w-full h-full object-cover"
               />
@@ -83,39 +83,32 @@ const AboutTimeline = () => {
         </div>
 
         {/* Bottom Section */}
-        <div className="bg-[#f3f7f0] rounded-[40px] p-8 md:p-12 lg:p-16 flex flex-col lg:flex-row gap-12 lg:gap-16 relative shadow-sm border border-gray-50">
+        <div className="bg-[#f3f7f0] rounded-xl p-2 md:p-4 lg:p-4 flex flex-col lg:flex-row gap-12 lg:gap-16 relative shadow-sm border border-gray-50">
 
           {/* Left Image (Landscape) */}
           <div className="w-full lg:w-[45%] relative shrink-0">
             <div className="w-full h-[350px] lg:h-[420px] rounded-[32px] overflow-hidden relative shadow-lg">
               <img
-                src="https://images.unsplash.com/photo-1540575467063-178a50c2df87?q=80&w=1600&auto=format&fit=crop"
+                src="https://plus.unsplash.com/premium_photo-1679547202369-e17a3a2fbb30?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTEzfHxjb25mZXJlbmNlfGVufDB8fDB8fHww"
                 alt="Organic Expo Exhibition Hall"
                 className="w-full h-full object-cover"
               />
             </div>
-            {/* Play button */}
-            <div className="absolute -bottom-8 right-8 lg:right-12 w-[88px] h-[88px] bg-white rounded-full flex items-center justify-center shadow-[0_10px_30px_rgba(0,0,0,0.1)] cursor-pointer hover:scale-105 transition-transform z-30 group">
-              <div className="w-16 h-16 bg-[#f3f7f0] group-hover:bg-[#e6f0e0] rounded-full flex items-center justify-center transition-colors">
-                <Play size={24} className="text-[#3b8c2a] fill-[#3b8c2a] ml-1" />
-              </div>
-            </div>
           </div>
 
           {/* Right Content */}
-          <div className="flex-1 w-full pt-4">
+          <div className="flex-1 w-full pt-2">
             <div className="flex items-center gap-2 mb-4">
               <span className="text-[#2c6e1f] font-black text-xs tracking-widest uppercase">OUR STORY</span>
               <Leaf size={14} className="text-[#2c6e1f] fill-[#2c6e1f] -mt-0.5" />
             </div>
 
-            <h3 className="text-[#111827] text-3xl md:text-[40px] font-serif font-bold mb-6 leading-[1.2]">
-              From A Small Idea <br />
-              <span className="text-[#154726]">To A Global Movement</span>
+            <h3 className="text-[#111827] text-xl md:text-[30px] font-serif font-semibold mb-2 leading-[1.2]">
+              From A Small Idea <span className="text-[#154726]">To A Global Movement</span>
             </h3>
 
-            <p className="text-[#4b5563] text-[15px] leading-relaxed mb-12 max-w-[480px]">
-              What started as a small exhibition with a vision to support organic farmers and eco-friendly brands has grown into the world's largest organic trade platform.
+            <p className="text-[#4b5563] text-[15px] leading-relaxed mb-2">
+              What started as a small exhibition with a vision to support organic farmers and eco-friendly brands has grown into the world's largest organic trade platform. Today, we bring together industry leaders, innovators, and conscious consumers to celebrate sustainable living, natural wellness, and green technologies on a global scale.
             </p>
 
             {/* Features Grid */}
@@ -126,34 +119,40 @@ const AboutTimeline = () => {
 
               {/* Vision */}
               <div className="pr-2">
-                <div className="w-14 h-14 rounded-full border border-[#3b8c2a]/40 flex items-center justify-center mb-5 text-[#3b8c2a] bg-white">
-                  <Sprout size={24} strokeWidth={1.5} />
+                <div className="flex flex-row items-center justify-between border-b border-gray-200 pb-3 mb-3">
+                  <h4 className="text-[#154726] font-bold text-[16px]">Our Vision</h4>
+                  <div className="w-10 h-10 rounded-full border border-[#3b8c2a]/40 flex items-center justify-center text-[#3b8c2a] bg-white">
+                    <Sprout size={22} strokeWidth={1.5} />
+                  </div>
                 </div>
-                <h4 className="text-[#154726] font-bold text-[16px] mb-2">Our Vision</h4>
                 <p className="text-gray-500 text-[13px] leading-relaxed">
-                  A world where organic living is accessible, affordable & sustainable.
+                  A world where organic living is accessible, affordable & sustainable. We envision a future where natural practices are the standard, empowering individuals to make choices that benefit both their health and the environment.
                 </p>
               </div>
 
               {/* Mission */}
               <div className="md:px-4">
-                <div className="w-14 h-14 rounded-full border border-[#3b8c2a]/40 flex items-center justify-center mb-5 text-[#3b8c2a] bg-white">
-                  <Target size={24} strokeWidth={1.5} />
+                <div className="flex flex-row items-center justify-between border-b border-gray-200 pb-3 mb-3">
+                  <h4 className="text-[#154726] font-bold text-[16px]">Our Mission</h4>
+                  <div className="w-10 h-10 rounded-full border border-[#3b8c2a]/40 flex items-center justify-center text-[#3b8c2a] bg-white">
+                    <Target size={22} strokeWidth={1.5} />
+                  </div>
                 </div>
-                <h4 className="text-[#154726] font-bold text-[16px] mb-2">Our Mission</h4>
                 <p className="text-gray-500 text-[13px] leading-relaxed">
-                  To connect, promote & empower the organic community globally.
+                  To connect, promote & empower the organic community globally. We strive to provide a dynamic platform that bridges the gap between ethical producers and conscious consumers.
                 </p>
               </div>
 
               {/* Values */}
               <div className="md:pl-4">
-                <div className="w-14 h-14 rounded-full border border-[#3b8c2a]/40 flex items-center justify-center mb-5 text-[#3b8c2a] bg-white">
-                  <HandHeart size={24} strokeWidth={1.5} />
+                <div className="flex flex-row items-center justify-between border-b border-gray-200 pb-3 mb-3">
+                  <h4 className="text-[#154726] font-bold text-[16px]">Our Values</h4>
+                  <div className="w-10 h-10 rounded-full border border-[#3b8c2a]/40 flex items-center justify-center text-[#3b8c2a] bg-white">
+                    <HandHeart size={22} strokeWidth={1.5} />
+                  </div>
                 </div>
-                <h4 className="text-[#154726] font-bold text-[16px] mb-2">Our Values</h4>
                 <p className="text-gray-500 text-[13px] leading-relaxed">
-                  Sustainability, Integrity, Health, Education & Community.
+                  Sustainability, Integrity, Health, Education & Community. These principles guide our every step, ensuring we build a transparent, supportive network that uplifts local farmers and promotes holistic well-being for all.
                 </p>
               </div>
 

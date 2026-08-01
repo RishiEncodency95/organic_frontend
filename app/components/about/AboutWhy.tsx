@@ -38,22 +38,22 @@ const reasons = [
 
 const AboutWhy = () => {
   return (
-    <section className="w-full max-w-[1536px] mx-auto px-4 sm:px-6 lg:px-11 py-16">
-      
+    <section className="w-full  px-4 sm:px-6 lg:px-11 py-2">
+
       {/* Title */}
-      <div className="flex flex-col items-center justify-center mb-10">
+      <div className="flex flex-col items-center justify-center mb-4">
         <h2 className="text-[#3b8c2a] text-[16px] md:text-[18px] font-bold uppercase tracking-widest text-center">
           WHY BHARAT ORGANIC EXPO?
         </h2>
       </div>
 
       {/* Grid */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4 mb-4">
         {reasons.map((reason, index) => {
           const Icon = reason.icon;
           return (
-            <div 
-              key={index} 
+            <div
+              key={index}
               className="bg-white rounded-t-[32px] rounded-b-xl border border-gray-100 border-t-[6px] border-t-[#3b8c2a] p-5 shadow-sm hover:shadow-xl hover:shadow-[#3b8c2a]/20 hover:-translate-y-2 transition-all duration-700 ease-in-out flex flex-col items-center text-center group cursor-default"
             >
               <div className="w-14 h-14 rounded-full border border-dashed border-[#3b8c2a]/40 bg-[#f8fdf9] flex items-center justify-center mb-4 group-hover:bg-[#3b8c2a] transition-colors duration-700">

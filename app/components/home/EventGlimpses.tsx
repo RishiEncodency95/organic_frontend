@@ -103,7 +103,7 @@ const EventGlimpses = () => {
                 <img 
                   src={img.src} 
                   alt={`Gallery ${idx + 1}`} 
-                  className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                  className="w-full h-full object-contain bg-[#f8f9f5] transition-transform duration-700 group-hover:scale-105"
                   loading="lazy"
                 />
                 <div className="absolute inset-0 bg-[#0d2a1b]/0  transition-colors duration-300" />
