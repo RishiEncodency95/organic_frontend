@@ -26,6 +26,8 @@ const sustainability = [
   "Digital Badges",
   "Green Logistics",
   "Eco-friendly Stalls",
+  "Carbon Neutral",
+  "Water Conservation",
 ];
 
 const AboutHighlights = () => {
@@ -76,7 +78,7 @@ const AboutHighlights = () => {
             <div className="w-full aspect-[16/9] rounded-xl overflow-hidden relative shadow-sm">
               <div
                 className="absolute inset-0 bg-cover bg-center"
-                style={{ backgroundImage: "url('https://images.unsplash.com/photo-1540575467063-178a50c2df87?q=80&w=1000&auto=format&fit=crop')" }}
+                style={{ backgroundImage: "url('https://plus.unsplash.com/premium_photo-1725408026461-1a0f59502542?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTI5fHxjb25mZXJlbmNlfGVufDB8fDB8fHww')" }}
               />
               <div className="absolute bottom-3 left-1/2 -translate-x-1/2 w-8 h-8 bg-[#3b8c2a] rounded-[8px] flex items-center justify-center shadow-lg">
                 <Calendar size={16} className="text-white" strokeWidth={2} />
@@ -118,9 +120,9 @@ const AboutHighlights = () => {
             </div>
 
             {/* Flags */}
-            <div className="flex flex-wrap items-center justify-center gap-2 z-20 w-full px-2 max-w-[220px]">
+            <div className="flex flex-wrap items-center justify-center gap-3 z-20 w-full px-2">
               {['🇮🇳', '🇺🇸', '🇩🇪', '🇯🇵', '🇦🇺', '🇫🇷', '🇮🇹', '🇨🇦', '🇦🇪', '🇿🇦'].map((flag, i) => (
-                <div key={i} className="w-[28px] h-[20px] bg-white rounded-[3px] flex items-center justify-center text-[14px] shadow-sm border border-gray-100">
+                <div key={i} className="w-[52px] h-[46px] bg-white rounded-[6px] flex items-center justify-center text-[20px] shadow-md border border-gray-50 hover:-translate-y-1 hover:shadow-lg transition-all cursor-default">
                   {flag}
                 </div>
               ))}
@@ -170,7 +172,7 @@ const AboutHighlights = () => {
             <div className="w-full aspect-[16/9] rounded-xl overflow-hidden relative shadow-sm">
               <div
                 className="absolute inset-0 bg-cover bg-center"
-                style={{ backgroundImage: "url('https://images.unsplash.com/photo-1466692476868-aef1dfb1e735?q=80&w=1000&auto=format&fit=crop')" }}
+                style={{ backgroundImage: "url('https://plus.unsplash.com/premium_photo-1679547202307-8b85b1b29748?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MjE3fHxjb25mZXJlbmNlfGVufDB8fDB8fHww')" }}
               />
               <div className="absolute bottom-3 left-1/2 -translate-x-1/2 w-8 h-8 bg-[#165a28] rounded-[8px] flex items-center justify-center shadow-lg">
                 <Sprout size={16} className="text-white" strokeWidth={2} />
@@ -188,18 +190,18 @@ const AboutHighlights = () => {
       </div>
 
       {/* Bottom Banner */}
-      <div className="w-full max-w-5xl mx-auto bg-[#f3f7f2] rounded-full p-3 lg:p-4 pr-3 lg:pr-4 flex flex-col md:flex-row items-center justify-between gap-4 border border-[#e8f1e6] shadow-[0_8px_30px_rgba(59,140,42,0.06)]">
+      <div className="w-full  bg-[#f3f7f2] rounded-full p-3 lg:p-3 pr-3 lg:pr-4 flex flex-col md:flex-row items-center justify-between gap-4 border border-[#e8f1e6] shadow-[0_8px_30px_rgba(59,140,42,0.06)]">
         <div className="flex items-center gap-4">
-          <div className="w-[52px] h-[52px] bg-white rounded-full flex items-center justify-center shrink-0 shadow-sm border border-gray-50">
-            <Leaf size={24} className="text-[#3b8c2a]" strokeWidth={1.5} />
+          <div className="w-[44px] h-[44px] bg-white rounded-full flex items-center justify-center shrink-0 shadow-sm border border-gray-50">
+            <Leaf size={20} className="text-[#3b8c2a]" strokeWidth={1.5} />
           </div>
           <div className="hidden md:block text-left">
-            <p className="text-[#3b8c2a] font-bold text-[15px] mb-0.5">Knowledge. Collaboration. Sustainability.</p>
+            <p className="text-[#3b8c2a] font-semibold text-[15px] mb-0.5">Knowledge. Collaboration. Sustainability.</p>
             <p className="text-gray-500 text-[13px] font-medium">Uniting People. Empowering Change. Building a Better Tomorrow.</p>
           </div>
         </div>
 
-        <button className="bg-[#469e36] hover:bg-[#38852a] transition-colors text-white text-[12px] font-bold uppercase tracking-wide px-8 py-4 rounded-full flex items-center gap-2 shadow-md">
+        <button className="bg-[#469e36] hover:bg-[#38852a] transition-colors text-white text-[12px] font-semibold uppercase tracking-wide px-8 py-2 rounded-full flex items-center gap-2 shadow-md">
           BE A PART OF THE CHANGE <ArrowRight size={16} strokeWidth={2.5} />
         </button>
       </div>
