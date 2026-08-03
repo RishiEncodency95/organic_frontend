@@ -13,67 +13,67 @@ const slides = [
   {
     bgImage: home1,
     tagline: "India's Largest",
-    titlePrimary: "ORGANIC",
+    titlePrimary: "BHARAT ORGANIC",
     titleSecondary: "EXPO 2027",
     subtitle: "Connect. Collaborate. Grow.",
     description: "India's largest platform bringing together the global wellness, organic & healthcare community to build a healthier, sustainable future.",
-    date: "21 – 25 AUGUST 2027",
+    date: "19-21 FEBRUARY 2027",
     dateSub: "Friday – Sunday",
     location: "PRAGATI MAIDAN",
     locationSub: "New Delhi, India",
-    eventDate: "2027-08-21T00:00:00"
+    eventDate: "2027-02-19T00:00:00"
   },
   {
     bgImage: home2,
     tagline: "INDIA'S LARGEST",
-    titlePrimary: "ORGANIC",
+    titlePrimary: "BHARAT ORGANIC",
     titleSecondary: "EXPO 2027",
     subtitle: "Connect. Collaborate. Grow.",
     description: "A global platform uniting organic brands, wellness innovators, and health-conscious communities to build a sustainable future together.",
-    date: "18 – 20 SEPTEMBER 2027",
+     date: "19-21 FEBRUARY 2027",
     dateSub: "Friday – Sunday",
-    location: "IICC, YASHOBHOOMI",
-    locationSub: "Dwarka, New Delhi, India",
-    eventDate: "2027-09-18T00:00:00"
+     location: "PRAGATI MAIDAN",
+    locationSub: "New Delhi, India",
+    eventDate: "2027-02-19T00:00:00"
   },
   {
     bgImage: home3,
     tagline: "GLOBAL WELLNESS FESTIVAL",
-    titlePrimary: "ORGANIC",
+    titlePrimary: "BHARAT ORGANIC",
     titleSecondary: "EXPO 2027",
     subtitle: "Discover. Source. Network.",
     description: "Join thousands of industry experts, buyers, and exhibitors to explore the latest innovations in natural and organic products.",
-    date: "25 – 27 OCTOBER 2027",
+  date: "19-21 FEBRUARY 2027",
     dateSub: "Friday – Sunday",
-    location: "BOMBAY EXHIBITION CENTRE",
-    locationSub: "Mumbai, India",
-    eventDate: "2027-10-25T00:00:00"
+  location: "PRAGATI MAIDAN",
+    locationSub: "New Delhi, India",
+    eventDate: "2027-02-19T00:00:00"
   },
   {
     bgImage: home4,
     tagline: "SUSTAINABLE FUTURE",
-    titlePrimary: "ORGANIC",
+    titlePrimary: "BHARAT ORGANIC",
     titleSecondary: "EXPO 2027",
     subtitle: "Innovate. Inspire. Impact.",
     description: "Experience the finest organic agriculture, eco-friendly technologies, and natural health products from around the world.",
-    date: "10 – 12 NOVEMBER 2027",
-    dateSub: "Wednesday – Friday",
-    location: "BIEC",
-    locationSub: "Bengaluru, India",
-    eventDate: "2027-11-10T00:00:00"
+  date: "19-21 FEBRUARY 2027",
+    dateSub: "Friday – Sunday",
+   location: "PRAGATI MAIDAN",
+    locationSub: "New Delhi, India",
+    eventDate: "2027-02-19T00:00:00"
   },
   {
     bgImage: home5,
     tagline: "HEALTH & WELLNESS",
-    titlePrimary: "ORGANIC",
+    titlePrimary: "BHARAT ORGANIC",
     titleSecondary: "EXPO 2027",
     subtitle: "Pure. Natural. Authentic.",
     description: "Your gateway to the booming organic market. Discover the latest trends in organic food, ayurveda, and holistic wellness.",
-    date: "05 – 07 DECEMBER 2027",
-    dateSub: "Sunday – Tuesday",
-    location: "CHENNAI TRADE CENTRE",
-    locationSub: "Chennai, India",
-    eventDate: "2027-12-05T00:00:00"
+    date: "19-21 FEBRUARY 2027",
+    dateSub: "Friday – Sunday",
+    location: "PRAGATI MAIDAN",
+    locationSub: "New Delhi, India",
+    eventDate: "2027-02-19T00:00:00"
   }
 ];
 

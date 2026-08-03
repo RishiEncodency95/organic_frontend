@@ -3,7 +3,6 @@ import HeroSection from "./components/home/HeroSection";
 // import BrochureDownloadPopup from "./components/home/BrochureDownloadPopup";
 
 import AudienceStrip from "./components/home/AudienceStrip";
-import HomeAbout from "./components/home/HomeAbout";
 import EventGlimpses from "./components/home/EventGlimpses";
 
 // Lazy load below-the-fold components
@@ -15,6 +14,7 @@ const SponsorsAndAttend = lazy(() => import("./components/home/SponsorsAndAttend
 const VoicesThatInspire = lazy(() => import("./components/home/VoicesThatInspire"));
 const MovementBanner = lazy(() => import("./components/home/MovementBanner"));
 const BuyerSellerMeet = lazy(() => import("./components/home/BuyerSellerMeet"));
+const GlobalPlatform = lazy(() => import("./components/home/GlobalPlatform"));
 
 
 const Index = () => {
@@ -22,9 +22,9 @@ const Index = () => {
     <>
       <HeroSection />
       <AudienceStrip />
-      <HomeAbout />
       <Suspense fallback={<div className="min-h-[200px] flex items-center justify-center"><div className="w-8 h-8 border-4 border-[#3b8c2a] border-t-transparent rounded-full animate-spin"></div></div>}>
         <IntroductionSection />
+        <GlobalPlatform />
         <WhyParticipate />
         <ExpoCategories />
         <ExpoHighlights />

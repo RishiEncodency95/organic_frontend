@@ -76,7 +76,7 @@ const HomeAbout = () => {
                             </h2>
 
                             <p className="text-[#4b5563] text-[14px] md:text-[15px] leading-[1.6] max-w-[660px]">
-                                Organic Expo 2027 is India's most influential international exhibition & conference
+                                Bharat Organic Expo 2027 is India's most influential international exhibition & conference
                                 dedicated to organic products, healthcare, wellness, Ayurveda, and sustainable living.
                                 Bringing together global brands, innovators, buyers, investors, policymakers, and
                                 healthcare leaders to build connections, share knowledge, and create

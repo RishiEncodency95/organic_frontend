@@ -19,6 +19,7 @@ const AboutTeamPartners = lazy(() => import("@/app/components/about/AboutTeamPar
 const AboutTestimonials = lazy(() => import("@/app/components/about/AboutTestimonials"));
 const AboutRoadmapPresence = lazy(() => import("@/app/components/about/AboutRoadmapPresence"));
 const AboutCTA = lazy(() => import("@/app/components/about/AboutCTA"));
+import HomeAbout from "@/app/components/home/HomeAbout";
 
 const LoadingFallback = () => (
   <div className="w-full min-h-[300px] flex items-center justify-center">
@@ -37,12 +38,13 @@ const AboutPage = () => {
       <div className="bg-[#ffffff] min-h-screen">
         <AboutHero />
         <AboutStrip />
-        
+
         <Suspense fallback={<LoadingFallback />}>
+          <HomeAbout />
           <div className="w-full bg-white">
             <AboutIntro />
           </div>
-          
+
           <div className="w-full bg-[#f8fdf9]">
             <AboutTimeline />
           </div>
@@ -59,21 +61,21 @@ const AboutPage = () => {
             <AboutHighlights />
           </div>
 
-          <div className="w-full bg-[#f8fdf9]">
+          {/* <div className="w-full bg-[#f8fdf9]">
             <AboutImpact />
-          </div>
+          </div> */}
 
-          <div className="w-full bg-white">
+          {/* <div className="w-full bg-white">
             <AboutTeamPartners />
-          </div>
+          </div> */}
 
-          <div className="w-full bg-[#f8fdf9]">
+          {/* <div className="w-full bg-[#f8fdf9]">
             <AboutTestimonials />
-          </div>
-
+          </div> */}
+          {/* 
           <div className="w-full bg-white">
             <AboutRoadmapPresence />
-          </div>
+          </div> */}
 
           <AboutCTA />
         </Suspense>
