@@ -105,7 +105,7 @@ const GlobalPlatform = () => {
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 w-full">
             {cards.map((card, index) => (
               <div key={index} className="bg-white/60 backdrop-blur-xl rounded-[32px] px-4 py-2 shadow-[inset_0_2px_4px_rgba(255,255,255,0.8),_0_20px_40px_rgba(59,140,42,0.08)] border border-white/80 flex flex-col items-center text-center transition-all hover:-translate-y-3 hover:shadow-[inset_0_2px_4px_rgba(255,255,255,0.9),_0_30px_50px_rgba(59,140,42,0.12)] duration-500 relative overflow-hidden group">
-                
+
                 {/* 3D Glass Inner Highlight */}
                 <div className="absolute inset-0 rounded-[32px] border-2 border-white/30 pointer-events-none"></div>
                 <div className="absolute top-0 left-0 w-full h-1/2 bg-gradient-to-b from-white/60 to-transparent pointer-events-none"></div>
@@ -113,7 +113,7 @@ const GlobalPlatform = () => {
                 <div className="my-2 flex items-center justify-center relative z-10 transform group-hover:scale-105 transition-transform duration-500">
                   {card.icon}
                 </div>
-                
+
                 <h3 className="text-[#154726] font-extrabold text-[14px] leading-snug tracking-wide whitespace-pre-line mb-3 h-10 flex items-center justify-center relative z-10">
                   {card.title}
                 </h3>
