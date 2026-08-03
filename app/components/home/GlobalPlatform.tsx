@@ -102,28 +102,34 @@ const GlobalPlatform = () => {
             </div>
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-2 w-full">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 w-full">
             {cards.map((card, index) => (
-              <div key={index} className="bg-white rounded-2xl px-3 py-2 shadow-[0_8px_30px_rgba(59,140,42,0.06)] border border-[#eef5f0] flex flex-col items-center text-center transition-transform hover:-translate-y-2 duration-300 relative overflow-hidden group">
-                <div className="h-20 flex items-center justify-center mb-2">
+              <div key={index} className="bg-white/60 backdrop-blur-xl rounded-[32px] px-4 py-2 shadow-[inset_0_2px_4px_rgba(255,255,255,0.8),_0_20px_40px_rgba(59,140,42,0.08)] border border-white/80 flex flex-col items-center text-center transition-all hover:-translate-y-3 hover:shadow-[inset_0_2px_4px_rgba(255,255,255,0.9),_0_30px_50px_rgba(59,140,42,0.12)] duration-500 relative overflow-hidden group">
+                
+                {/* 3D Glass Inner Highlight */}
+                <div className="absolute inset-0 rounded-[32px] border-2 border-white/30 pointer-events-none"></div>
+                <div className="absolute top-0 left-0 w-full h-1/2 bg-gradient-to-b from-white/60 to-transparent pointer-events-none"></div>
+
+                <div className="my-2 flex items-center justify-center relative z-10 transform group-hover:scale-105 transition-transform duration-500">
                   {card.icon}
                 </div>
-                <h3 className="text-[#154726] font-bold text-[13px] leading-snug tracking-wide whitespace-pre-line mb-3 h-10 flex items-center justify-center">
+                
+                <h3 className="text-[#154726] font-extrabold text-[14px] leading-snug tracking-wide whitespace-pre-line mb-3 h-10 flex items-center justify-center relative z-10">
                   {card.title}
                 </h3>
 
-                <div className="flex items-center justify-center w-full mb-4">
-                  <div className="w-12 h-1 bg-[#3b8c2a] rounded-full relative">
-                    <div className="absolute right-0 top-1/2 -translate-y-1/2 w-2 h-2 rounded-full bg-[#a3d289]"></div>
+                <div className="flex items-center justify-center w-full mb-4 relative z-10">
+                  <div className="w-12 h-1 bg-gradient-to-r from-[#3b8c2a] to-[#a3d289] rounded-full relative shadow-sm">
+                    <div className="absolute right-0 top-1/2 -translate-y-1/2 w-2 h-2 rounded-full bg-white shadow-sm border border-[#a3d289]"></div>
                   </div>
                 </div>
 
-                <p className="text-[#64748b] text-[12px] leading-[1.6] font-medium px-1">
+                <p className="text-[#475569] text-[12px] leading-[1.7] font-semibold px-2 relative z-10">
                   {card.desc}
                 </p>
 
                 {/* Subtle hover gradient */}
-                <div className="absolute inset-0 bg-gradient-to-b from-transparent to-[#f7faf6] opacity-0 group-hover:opacity-100 transition-opacity -z-10"></div>
+                <div className="absolute inset-0 bg-gradient-to-br from-green-50/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 -z-10"></div>
               </div>
             ))}
           </div>
