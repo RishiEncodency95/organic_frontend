@@ -102,43 +102,49 @@ const IntegratedFormat = () => {
         </div>
 
         {/* Right Cards Grid */}
-        <div className="w-full xl:w-[65%] grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-5 lg:gap-4 mt-12 xl:mt-0 relative z-20">
+        <div className="w-full xl:w-[65%] grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-4 lg:gap-3 mt-10 xl:mt-0 relative z-20">
           {cards.map((card, index) => (
-            <div key={index} className="relative flex flex-col mt-8">
+            <div key={index} className="relative flex flex-col mt-6">
               {/* Floating Top Icon */}
-              <div className="absolute -top-10 left-1/2 -translate-x-1/2 w-16 h-16 rounded-full flex items-center justify-center border-4 border-white shadow-md z-30" style={{ backgroundColor: card.color }}>
-                {card.icon}
+              <div className="absolute -top-8 left-1/2 -translate-x-1/2 w-12 h-12 rounded-full flex items-center justify-center border-2 border-white/80 shadow-[inset_0_2px_4px_rgba(255,255,255,0.6),_0_6px_15px_rgba(0,0,0,0.15)] z-30 transition-transform duration-500 group-hover:scale-110" style={{ backgroundColor: card.color }}>
+                <div className="scale-75">{card.icon}</div>
               </div>
 
               {/* Card Body */}
-              <div className="bg-white rounded-[24px] rounded-t-[40px] pt-12 pb-6 px-4 shadow-[0_10px_40px_rgba(0,0,0,0.06)] border border-gray-100 flex flex-col h-full relative overflow-hidden group">
+              <div className="bg-white/60 backdrop-blur-xl rounded-[28px] rounded-t-[40px] pt-8 pb-5 px-3 shadow-[inset_0_2px_4px_rgba(255,255,255,0.8),_0_15px_35px_rgba(0,0,0,0.06)] border border-white/80 flex flex-col h-full relative overflow-hidden group transition-all duration-500 hover:-translate-y-2 hover:shadow-[inset_0_2px_4px_rgba(255,255,255,0.9),_0_20px_40px_rgba(0,0,0,0.1)]">
+                
+                {/* 3D Glass Inner Highlight */}
+                <div className="absolute inset-0 rounded-[28px] rounded-t-[40px] border-2 border-white/30 pointer-events-none"></div>
 
                 {/* Subtle top color gradient background */}
-                <div className="absolute top-0 left-0 w-full h-32 opacity-10" style={{ background: `linear-gradient(to bottom, ${card.color}, transparent)` }}></div>
+                <div className="absolute top-0 left-0 w-full h-24 opacity-[0.15]" style={{ background: `linear-gradient(to bottom, ${card.color}, transparent)` }}></div>
 
-                <h3 className="text-[#154726] font-bold text-[13px] leading-snug tracking-wider uppercase whitespace-pre-line text-center mb-3 h-10 flex items-center justify-center" style={{ color: card.color }}>
+                <h3 className="text-[#154726] font-extrabold text-[12px] leading-snug tracking-wider uppercase whitespace-pre-line text-center mb-2 h-10 flex items-center justify-center relative z-10" style={{ color: card.color }}>
                   {card.title}
                 </h3>
 
-                <div className="flex items-center justify-center w-full mb-4">
-                  <div className="flex items-center gap-1">
-                    <div className="w-2 h-[2px]" style={{ backgroundColor: card.color }}></div>
-                    <div className="w-2 h-2 rounded-full" style={{ backgroundColor: card.color }}></div>
-                    <div className="w-8 h-[2px]" style={{ backgroundColor: card.color }}></div>
+                <div className="flex items-center justify-center w-full mb-3 relative z-10">
+                  <div className="flex items-center gap-1 shadow-sm px-2 py-0.5 rounded-full bg-white/50 border border-white/40">
+                    <div className="w-1.5 h-[2px] rounded-full" style={{ backgroundColor: card.color }}></div>
+                    <div className="w-1.5 h-1.5 rounded-full" style={{ backgroundColor: card.color }}></div>
+                    <div className="w-6 h-[2px] rounded-full" style={{ backgroundColor: card.color }}></div>
                   </div>
                 </div>
 
-                <div className="text-[#475569] text-[11px] leading-[1.7] text-center font-medium px-1 flex-1 whitespace-pre-line">
+                <div className="text-[#475569] text-[11px] leading-[1.6] text-center font-bold px-1 flex-1 whitespace-pre-line relative z-10">
                   {card.desc}
                 </div>
 
                 {/* Bottom Number Strip */}
-                <div className="mt-6 mx-auto px-8 py-1 rounded-full text-white font-bold text-[14px] shadow-sm" style={{ backgroundColor: card.color }}>
+                <div className="mt-4 mx-auto px-6 py-1 rounded-full text-white font-extrabold text-[13px] shadow-[inset_0_2px_4px_rgba(255,255,255,0.3),_0_4px_10px_rgba(0,0,0,0.15)] relative z-10" style={{ backgroundColor: card.color }}>
                   {card.num}
                 </div>
 
                 {/* Decorative bottom corner leaf vectors */}
-                <Leaf className="absolute -bottom-2 -right-2 opacity-[0.03] rotate-45" size={80} />
+                <Leaf className="absolute -bottom-2 -right-2 opacity-30 rotate-45 pointer-events-none text-[#3b8c2a] fill-[#a3d289] transition-transform duration-500 group-hover:scale-110 group-hover:opacity-50" size={60} />
+                
+                {/* Subtle hover gradient */}
+                <div className="absolute inset-0 bg-gradient-to-br from-white/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 -z-10"></div>
               </div>
             </div>
           ))}
@@ -147,10 +153,10 @@ const IntegratedFormat = () => {
       </div>
 
       {/* Bottom Wave Strip */}
-      <div className="absolute bottom-0 left-0 w-full z-30">
-        <div className="w-full bg-[#469e36] text-white py-6 lg:py-8 px-4 sm:px-6 lg:px-8 xl:px-12 relative" style={{ borderTopLeftRadius: '100% 30px', borderTopRightRadius: '100% 30px' }}>
+      <div className="relative w-full z-30 mt-2 lg:mt-4">
+        <div className="w-full bg-[#469e36] text-white py-2 lg:py- px-4 sm:px-6 lg:px-8 xl:px-12 relative" style={{ borderTopLeftRadius: '100% 30px', borderTopRightRadius: '100% 30px' }}>
 
-          <div className="max-w-[1600px] mx-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-4 relative z-40">
+          <div className="w-full grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-4 relative z-40">
             {bottomItems.map((item, index) => (
               <div key={index} className="flex items-start gap-4">
                 <div className="w-14 h-14 bg-white rounded-full flex items-center justify-center shrink-0 shadow-lg mt-1">
