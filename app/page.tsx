@@ -15,6 +15,7 @@ const VoicesThatInspire = lazy(() => import("./components/home/VoicesThatInspire
 const MovementBanner = lazy(() => import("./components/home/MovementBanner"));
 const BuyerSellerMeet = lazy(() => import("./components/home/BuyerSellerMeet"));
 const GlobalPlatform = lazy(() => import("./components/home/GlobalPlatform"));
+const IntegratedFormat = lazy(() => import("./components/home/IntegratedFormat"));
 
 
 const Index = () => {
@@ -25,6 +26,7 @@ const Index = () => {
       <Suspense fallback={<div className="min-h-[200px] flex items-center justify-center"><div className="w-8 h-8 border-4 border-[#3b8c2a] border-t-transparent rounded-full animate-spin"></div></div>}>
         <IntroductionSection />
         <GlobalPlatform />
+        <IntegratedFormat />
         <WhyParticipate />
         <ExpoCategories />
         <ExpoHighlights />
