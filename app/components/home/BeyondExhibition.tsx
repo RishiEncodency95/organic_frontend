@@ -53,7 +53,7 @@ const extras = [
 
 const BeyondExhibition = () => {
   return (
-    <section className="bg-white pt-0 pb-4 overflow-hidden">
+    <section className="bg-white  overflow-hidden">
       <div className="w-full px-4 md:px-11 lg:px-11 py-2">
         <div className="bg-white rounded-[1.2rem] p-4 md:p-6 lg:p-2.5 grid grid-cols-1 xl:grid-cols-[minmax(0,1fr)_minmax(0,4fr)] items-center gap-4 lg:gap-3 border border-gray-200 shadow-sm overflow-hidden">
           

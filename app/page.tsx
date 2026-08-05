@@ -32,9 +32,9 @@ const Index = () => {
         <WhyParticipate />
         <ConferenceSection />
         <ExpoCategories />
-         <BeyondExhibition/>
-        <ExpoHighlights />
+        <BeyondExhibition />
         <SponsorsAndAttend />
+        <ExpoHighlights />
         <VoicesThatInspire />
         <EventGlimpses />
         <BuyerSellerMeet />

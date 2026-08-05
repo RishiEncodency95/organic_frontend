@@ -1,111 +1,279 @@
 "use client";
 
-import { ArrowRight, CheckCircle2, Handshake } from "lucide-react";
+import React from 'react';
+import { motion } from 'framer-motion';
+import {
+  Lightbulb, Handshake, TrendingUp, BookOpen, PackageSearch, Zap,
+  Users, Target, Star, Leaf, ShoppingCart, Globe, Hospital,
+  Stethoscope, Dumbbell, Flower2, Sprout, Heart
+} from 'lucide-react';
+
+const WhyAttendItemsLeft = [
+  {
+    title: "DISCOVER",
+    desc: "Explore the latest organic products and eco-friendly services driving a sustainable future.",
+    icon: <Lightbulb className="w-5 h-5 text-[#f58220]" />
+  },
+  {
+    title: "CONNECT",
+    desc: "Meet leading organic brands, manufacturers and sustainable suppliers under one roof.",
+    icon: <Handshake className="w-5 h-5 text-[#f58220]" />
+  },
+  {
+    title: "GROW",
+    desc: "Unlock new green business opportunities, partnerships and eco-investment possibilities.",
+    icon: <TrendingUp className="w-5 h-5 text-[#f58220]" />
+  }
+];
+
+const WhyAttendItemsRight = [
+  {
+    title: "LEARN",
+    desc: "Attend seminars, workshops and live demos by organic agriculture and sustainability experts.",
+    icon: <BookOpen className="w-5 h-5 text-[#f58220]" />
+  },
+  {
+    title: "SOURCE",
+    desc: "Find trusted organic suppliers, distributors and eco-franchise opportunities.",
+    icon: <PackageSearch className="w-5 h-5 text-[#f58220]" />
+  },
+  {
+    title: "STAY AHEAD",
+    desc: "Stay updated with market trends, conscious consumer insights and future organic industry developments.",
+    icon: <Zap className="w-5 h-5 text-[#f58220]" />
+  }
+];
+
+const WhoShouldAttendItems = [
+  { label: "Organic Distributors, Wholesalers & Retailers", icon: <ShoppingCart className="w-4 h-4" /> },
+  { label: "Eco-Importers & Exporters", icon: <Globe className="w-4 h-4" /> },
+  { label: "Ayurvedic Institutions & Wellness Centers", icon: <Hospital className="w-4 h-4" /> },
+  { label: "Nutritionists, Farmers & Wellness Experts", icon: <Stethoscope className="w-4 h-4" /> },
+  { label: "Gym Owners, Spa & Eco-Fitness Professionals", icon: <Dumbbell className="w-4 h-4" /> },
+  { label: "Organic Farming & Natural Product Buyers", icon: <Sprout className="w-4 h-4" /> },
+  { label: "Sustainable Packaging & Eco-friendly Brands", icon: <Flower2 className="w-4 h-4" /> },
+  { label: "Investors, Franchise Seekers & Green Business", icon: <Handshake className="w-4 h-4" /> },
+  { label: "Supermarkets & Organic Grocery Chains", icon: <Users className="w-4 h-4" /> },
+  { label: "Health-Conscious Consumers & Eco-Enthusiasts", icon: <Heart className="w-4 h-4" /> },
+];
 
 const SponsorsAndAttend = () => {
   return (
-    <section className="py-2 bg-white overflow-hidden">
-      <div className="w-full px-4 sm:px-6 lg:px-11">
+    <section className="w-full px-2 lg:px-11 relative z-10 py-2 overflow-hidden">
+      <div className="grid grid-cols-1 xl:grid-cols-12 gap-6 xl:gap-8 items-start">
 
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-3">
+        {/* LEFT: WHY ATTEND */}
+        <motion.div 
+          initial={{ opacity: 0, x: -30 }}
+          whileInView={{ opacity: 1, x: 0 }}
+          viewport={{ once: true, margin: "-50px" }}
+          transition={{ duration: 0.7, delay: 0.1 }}
+          className="xl:col-span-5"
+        >
+          <div className="flex flex-col md:flex-row items-start gap-1 mb-1 text-left">
+            <div className="flex items-center gap-1.5">
+              <h2 className="text-[24px] md:text-[32px] font-black text-[#1a1a1a] tracking-tight">
+                WHY <span className="bg-gradient-to-r from-[#00643b] to-[#f58220] bg-clip-text text-transparent">ATTEND?</span>
+              </h2>
+              <Leaf className="w-6 h-6 md:w-8 md:h-8 text-[#f58220] fill-[#f58220]" />
+            </div>
+          </div>
+          <p className="text-[12px] md:text-[12.5px] text-gray-700 font-medium mb-2 leading-snug max-w-full md:max-w-[350px] text-left">
+            Explore innovations, build connections and gain insights that drive better health and stronger businesses.
+          </p>
 
-          {/* Column 1: Who Should Attend */}
-          <div className="lg:col-span-1 bg-white rounded-xl shadow-[0_2px_15px_rgba(0,0,0,0.06)] border border-gray-100 p-4 md:p-5 flex flex-col h-full">
-            <h3 className="text-[#154726] text-[11px] font-bold uppercase tracking-wider mb-4">
-              WHO SHOULD ATTEND?
-            </h3>
+          {/* Divider with Leaf */}
+          <div className="flex items-center gap-4 mb-2 md:mb-1">
+            <div className="h-[1px] flex-grow bg-gray-200" />
+            <Leaf className="w-3.5 h-3.5 text-[#00643b] fill-[#00643b]" />
+            <div className="h-[1px] flex-grow bg-gray-200" />
+          </div>
 
-            <ul className="space-y-2 mb-4 flex-grow">
-              {[
-                "Distributors, Wholesalers & Retailers",
-                "Importers & Exporters",
-                "Hospitals, Clinics & Healthcare Institutions",
-                "Doctors, Nutritionists & Wellness Experts",
-                "Ayurveda, Organics & Natural Product Businesses",
-                "Investors, Franchise Seekers & Business Owners",
-                "Corporate Buyers & Procurement Teams",
-                "Media, Associations & Lifestyle Enthusiasts"
-              ].map((item, i) => (
-                <li key={i} className="flex items-start gap-2">
-                  <CheckCircle2 className="w-3.5 h-3.5 text-[#3b8c2a] flex-shrink-0 mt-0.5" strokeWidth={2.5} />
-                  <span className="text-[#475569] text-[12px] font-medium leading-[1.3]">{item}</span>
-                </li>
+          <div className="grid grid-cols-1 md:grid-cols-2 relative border-l-0 md:border-l border-gray-100 gap-y-2 md:gap-y-0">
+            {/* Vertical Divider - Hidden on mobile */}
+            <div className="hidden md:block absolute top-0 bottom-0 left-1/2 w-[1px] border-r border-dashed border-gray-300 z-0" />
+
+            {/* Row 1 */}
+            <div className="py-1 px-0 md:px-3 border-b-0 md:border-b border-dashed border-gray-300 relative">
+              {WhyAttendItemsLeft.slice(0, 1).map((item, index) => (
+                <div key={index} className="flex gap-4 group">
+                  <div className="w-10 h-10 rounded-full flex items-center justify-center bg-[#fff8f2] shrink-0 mt-0.5 border border-[#feeddf]">
+                    {React.cloneElement(item.icon as React.ReactElement<{ className?: string }>, { className: 'w-5 h-5 text-[#f58220]' })}
+                  </div>
+                  <div className="flex-1">
+                    <h3 className="text-[13px] font-bold text-[#00643b] mb-1 leading-none pt-1.5">{item.title}</h3>
+                    <p className="text-[10px] text-gray-600 font-semibold leading-snug">{item.desc}</p>
+                  </div>
+                </div>
               ))}
-            </ul>
+            </div>
+            <div className="py-2 px-0 md:px-3 border-b-0 md:border-b border-dashed border-gray-300 relative">
+              {WhyAttendItemsRight.slice(0, 1).map((item, index) => (
+                <div key={index} className="flex gap-4 group">
+                  <div className="w-10 h-10 rounded-full flex items-center justify-center bg-[#fff8f2] shrink-0 mt-0.5 border border-[#feeddf]">
+                    {React.cloneElement(item.icon as React.ReactElement<{ className?: string }>, { className: 'w-5 h-5 text-[#f58220]' })}
+                  </div>
+                  <div className="flex-1">
+                    <h3 className="text-[13px] font-bold text-[#00643b] mb-1 leading-none pt-1.5">{item.title}</h3>
+                    <p className="text-[10px] text-gray-600 font-semibold leading-snug">{item.desc}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
 
-            <div className="flex items-start gap-2.5 bg-[#f8fdf9] p-3 rounded-lg border border-[#e8f5ec] mt-auto">
-              <Handshake className="w-5 h-5 text-[#3b8c2a] flex-shrink-0 mt-0.5" strokeWidth={2} />
-              <p className="text-[#111827] text-[10px] font-bold leading-[1.4]">
+            {/* Row 2 */}
+            <div className="py-2 px-0 md:px-3 border-b-0 md:border-b border-dashed border-gray-300 relative">
+              {WhyAttendItemsLeft.slice(1, 2).map((item, index) => (
+                <div key={index} className="flex gap-4 group">
+                  <div className="w-10 h-10 rounded-full flex items-center justify-center bg-[#fff8f2] shrink-0 mt-0.5 border border-[#feeddf]">
+                    {React.cloneElement(item.icon as React.ReactElement<{ className?: string }>, { className: 'w-5 h-5 text-[#f58220]' })}
+                  </div>
+                  <div className="flex-1">
+                    <h3 className="text-[13px] font-bold text-[#00643b] mb-1 leading-none pt-1.5">{item.title}</h3>
+                    <p className="text-[10px] text-gray-600 font-semibold leading-snug">{item.desc}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
+            <div className="py-2 px-0 md:px-3 border-b-0 md:border-b border-dashed border-gray-300 relative">
+              {WhyAttendItemsRight.slice(1, 2).map((item, index) => (
+                <div key={index} className="flex gap-4 group">
+                  <div className="w-10 h-10 rounded-full flex items-center justify-center bg-[#fff8f2] shrink-0 mt-0.5 border border-[#feeddf]">
+                    {React.cloneElement(item.icon as React.ReactElement<{ className?: string }>, { className: 'w-5 h-5 text-[#f58220]' })}
+                  </div>
+                  <div className="flex-1">
+                    <h3 className="text-[13px] font-bold text-[#00643b] mb-1 leading-none pt-1.5">{item.title}</h3>
+                    <p className="text-[10px] text-gray-600 font-semibold leading-snug">{item.desc}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
+
+            {/* Row 3 */}
+            <div className="py-2 px-0 md:px-3 relative">
+              {WhyAttendItemsLeft.slice(2, 3).map((item, index) => (
+                <div key={index} className="flex gap-4 group">
+                  <div className="w-10 h-10 rounded-full flex items-center justify-center bg-[#fff8f2] shrink-0 mt-0.5 border border-[#feeddf]">
+                    {React.cloneElement(item.icon as React.ReactElement<{ className?: string }>, { className: 'w-5 h-5 text-[#f58220]' })}
+                  </div>
+                  <div className="flex-1">
+                    <h3 className="text-[13px] font-bold text-[#00643b] mb-1 leading-none pt-1.5">{item.title}</h3>
+                    <p className="text-[10px] text-gray-600 font-semibold leading-snug">{item.desc}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
+            <div className="py-2 px-0 md:px-3 relative">
+              {WhyAttendItemsRight.slice(2, 3).map((item, index) => (
+                <div key={index} className="flex gap-4 group">
+                  <div className="w-10 h-10 rounded-full flex items-center justify-center bg-[#fff8f2] shrink-0 mt-0.5 border border-[#feeddf]">
+                    {React.cloneElement(item.icon as React.ReactElement<{ className?: string }>, { className: 'w-5 h-5 text-[#f58220]' })}
+                  </div>
+                  <div className="flex-1">
+                    <h3 className="text-[13px] font-bold text-[#00643b] mb-1 leading-none pt-1.5">{item.title}</h3>
+                    <p className="text-[10px] text-gray-600 font-semibold leading-snug">{item.desc}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </motion.div>
+
+        {/* CENTER: CIRCULAR INFOGRAPHIC */}
+        <motion.div 
+          initial={{ opacity: 0, scale: 0.9 }}
+          whileInView={{ opacity: 1, scale: 1 }}
+          viewport={{ once: true, margin: "-50px" }}
+          transition={{ duration: 0.7, delay: 0.3 }}
+          className="xl:col-span-4 flex justify-center items-center relative py-2 md:py-4"
+        >
+          <div className="relative w-[250px] h-[250px] md:w-[320px] md:h-[320px] aspect-square">
+
+            {/* Image Circle Container */}
+            <div className="absolute inset-0 rounded-full border-[5px] md:border-[8px] border-white shadow-xl overflow-hidden grid grid-cols-2 grid-rows-2 gap-1 bg-white">
+              <div className="overflow-hidden bg-gray-50 border-r border-b border-white group">
+                <img loading="lazy" decoding="async" src="https://images.unsplash.com/photo-1542838132-92c53300491e?w=800&q=80" className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" alt="1" />
+              </div>
+              <div className="overflow-hidden bg-gray-50 border-l border-b border-white group">
+                <img loading="lazy" decoding="async" src="https://images.unsplash.com/photo-1552664730-d307ca884978?w=800&q=80" className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" alt="2" />
+              </div>
+              <div className="overflow-hidden bg-gray-50 border-r border-t border-white group">
+                <img loading="lazy" decoding="async" src="https://images.unsplash.com/photo-1540555700478-4be289fbecef?w=800&q=80" className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" alt="3" />
+              </div>
+              <div className="overflow-hidden bg-gray-50 border-l border-t border-white group">
+                <img loading="lazy" decoding="async" src="https://images.unsplash.com/photo-1515187029135-18ee286d815b?w=800&q=80" className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" alt="4" />
+              </div>
+            </div>
+
+            {/* Center Overlay Circle */}
+            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-20 w-[110px] h-[110px] md:w-[130px] md:h-[130px] bg-white rounded-full flex flex-col items-center justify-center text-center shadow-lg p-3 border-[4px] border-white">
+              <Leaf className="w-5 h-5 md:w-6 md:h-6 text-[#00643b] mb-1" />
+              <p className="text-[10px] md:text-[11.5px] font-black text-[#00643b] leading-tight uppercase">ONE PLATFORM.</p>
+              <p className="text-[10px] md:text-[11.5px] font-black text-[#f58220] leading-tight uppercase tracking-tight">ORGANIC</p>
+              <p className="text-[10px] md:text-[11.5px] font-black text-[#00643b] leading-tight uppercase tracking-tight">OPPORTUNITIES.</p>
+            </div>
+
+            {/* Rotating Ring & Dots Container */}
+            <div className="absolute inset-[-5px] md:inset-[-6px] pointer-events-none z-0 animate-[spin_20s_linear_infinite]">
+              {/* Outer Decorative Gradient Ring */}
+              <svg viewBox="0 0 332 332" className="w-full h-full overflow-visible">
+                <defs>
+                  <linearGradient id="ringGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+                    <stop offset="0%" stopColor="#f58220" />
+                    <stop offset="100%" stopColor="#00643b" />
+                  </linearGradient>
+                </defs>
+                <circle cx="166" cy="166" r="164.5" fill="none" stroke="url(#ringGradient)" strokeWidth="3" />
+              </svg>
+
+              {/* Dots perfectly centered on the ring */}
+              <div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 w-3 h-3 bg-[#00643b] rounded-full border-[2px] border-white shadow-md z-30" />
+              <div className="absolute bottom-0 left-1/2 -translate-x-1/2 translate-y-1/2 w-3 h-3 bg-[#00643b] rounded-full border-[2px] border-white shadow-md z-30" />
+              <div className="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-1/2 w-3 h-3 bg-[#f58220] rounded-full border-[2px] border-white shadow-md z-30" />
+              <div className="absolute right-0 top-1/2 -translate-y-1/2 translate-x-1/2 w-3 h-3 bg-[#00643b] rounded-full border-[2px] border-white shadow-md z-30" />
+            </div>
+          </div>
+        </motion.div>
+
+        {/* RIGHT: WHO SHOULD ATTEND */}
+        <motion.div 
+          initial={{ opacity: 0, x: 30 }}
+          whileInView={{ opacity: 1, x: 0 }}
+          viewport={{ once: true, margin: "-50px" }}
+          transition={{ duration: 0.7, delay: 0.5 }}
+          className="xl:col-span-3 relative z-20 xl:mt-0 mt-4"
+        >
+          <div className="bg-white border border-gray-200 rounded-[1rem] overflow-hidden shadow-lg">
+            <div className="bg-[#00643b] text-white p-2 flex items-center justify-center relative">
+              <div className="flex items-center gap-2">
+                <Users className="w-4 h-4 text-[#f58220]" />
+                <span className="text-[14px] font-black uppercase tracking-wider">WHO SHOULD ATTEND?</span>
+              </div>
+            </div>
+
+            <div className="px-3 py-0 md:py-0">
+              {WhoShouldAttendItems.map((item, index) => (
+                <div key={index} className="flex items-center gap-3 py-[3px] border-b border-gray-100 last:border-0 group cursor-default">
+                  <div className="w-5 h-5 rounded bg-[#fff8f2] flex items-center justify-center text-[#f58220] group-hover:bg-[#f58220] group-hover:text-white transition-all duration-300 border border-[#feeddf] shrink-0">
+                    {React.cloneElement(item.icon as React.ReactElement<{ className?: string }>, { className: 'w-3 h-3' })}
+                  </div>
+                  <span className="text-[9.5px] md:text-[9px] text-gray-700 font-bold group-hover:text-[#00643b] transition-colors leading-tight">{item.label}</span>
+                </div>
+              ))}
+            </div>
+
+            {/* Bottom Right CTA Card */}
+            <div className="p-2.5 bg-[#f5fdf7] border-t border-gray-100 flex items-center gap-2.5">
+              <div className="w-6 h-6 bg-[#f58220] rounded-full flex items-center justify-center shrink-0 shadow-sm">
+                <Star className="w-3.5 h-3.5 text-white" />
+              </div>
+              <p className="text-[10px] text-[#00643b] font-black leading-tight">
                 Whether you're sourcing, learning or networking — this is the place to be!
               </p>
             </div>
           </div>
+        </motion.div>
 
-          {/* Column 2: Our Proud Sponsors */}
-          <div className="lg:col-span-2 bg-white rounded-xl shadow-[0_2px_15px_rgba(0,0,0,0.04)] border border-gray-50 p-4 md:p-5 flex flex-col h-full relative overflow-hidden">
-            <div className="text-center mb-6">
-              <h3 className="text-[#154726] text-[13px] font-bold uppercase tracking-widest inline-flex items-center gap-2">
-                <span className="text-[#aae639]">🌿</span>
-                - OUR PROUD SPONSORS -
-                <span className="text-[#aae639]">🌿</span>
-              </h3>
-            </div>
-
-            <div className="flex flex-col gap-5 flex-grow">
-              {/* Top Row: Platinum, Gold, Silver */}
-              <div className="grid grid-cols-3 gap-4">
-                {/* Platinum */}
-                <div className="flex flex-col items-center">
-                  <span className="text-gray-400 text-[8px] font-bold uppercase tracking-wider mb-2">PLATINUM PARTNER</span>
-                  <div className="w-full h-12 bg-gray-50 rounded border border-gray-100 flex items-center justify-center">
-                    <span className="text-red-500 font-bold text-[14px]">PATANJALI</span>
-                  </div>
-                </div>
-                {/* Gold */}
-                <div className="flex flex-col items-center">
-                  <span className="text-gray-400 text-[8px] font-bold uppercase tracking-wider mb-2">GOLD PARTNER</span>
-                  <div className="w-full h-12 bg-gray-50 rounded border border-gray-100 flex items-center justify-center">
-                    <span className="text-blue-600 font-bold text-[14px]">Apollo</span>
-                  </div>
-                </div>
-                {/* Silver */}
-                <div className="flex flex-col items-center">
-                  <span className="text-gray-400 text-[8px] font-bold uppercase tracking-wider mb-2">SILVER PARTNER</span>
-                  <div className="w-full h-12 bg-gray-50 rounded border border-gray-100 flex items-center justify-center text-center">
-                    <span className="text-red-600 font-bold text-[10px]">SHEKH BROTHERS</span>
-                  </div>
-                </div>
-              </div>
-
-              {/* Bottom Row: Associate Partners */}
-              <div className="flex flex-col items-center mt-2">
-                <span className="text-gray-400 text-[8px] font-bold uppercase tracking-wider mb-2">ASSOCIATE PARTNER</span>
-                <div className="w-full grid grid-cols-4 gap-3">
-                  <div className="h-10 bg-gray-50 rounded border border-gray-100 flex items-center justify-center">
-                    <span className="text-teal-600 font-bold text-[11px]">Himalaya</span>
-                  </div>
-                  <div className="h-10 bg-gray-50 rounded border border-gray-100 flex items-center justify-center">
-                    <span className="text-green-600 font-bold text-[11px]">Fortis</span>
-                  </div>
-                  <div className="h-10 bg-gray-50 rounded border border-gray-100 flex items-center justify-center">
-                    <span className="text-blue-500 font-bold text-[11px]">ENSIS</span>
-                  </div>
-                  <div className="h-10 bg-gray-50 rounded border border-gray-100 flex items-center justify-center">
-                    <div className="w-6 h-6 rounded-full bg-red-100 border border-red-200"></div>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <div className="flex justify-center mt-6">
-              <button className="inline-flex items-center gap-1.5 px-5 py-1.5 rounded-full border-2 border-[#F2B40E] bg-[#3b8c2a] text-white text-[10px] font-bold uppercase tracking-wider hover:bg-[#F2B40E] hover:text-[#0b2912] transition-all duration-300 hover:shadow-lg hover:-translate-y-0.5">
-                VIEW ALL PARTNERS
-                <ArrowRight size={12} strokeWidth={2.5} className="group-hover:translate-x-1 transition-transform" />
-              </button>
-            </div>
-          </div>
-
-        </div>
       </div>
     </section>
   );
