@@ -128,11 +128,11 @@ const Navbar = () => {
                     {/* ─── DESKTOP NAV (unchanged) ─── */}
                     <div className="hidden xl:flex items-center justify-between py-0 relative h-14">
                         <div className="relative z-[150] h-full flex items-center gap-2">
-                            <div className="relative h-full flex items-center min-w-[110px] xl:min-w-[140px] mr-4">
+                            <div className="relative h-full flex items-center min-w-[140px] xl:min-w-[180px] mr-4">
                                 <Link href="/" className="absolute top-1 xl:top-1.5 left-0 flex items-center justify-center transition-opacity hover:opacity-90 z-[200]">
                                     <img loading="lazy" decoding="async" src={navbarLogo.src}
                                         alt="Organic Expo Logo"
-                                        className="h-[65px] xl:h-[85px] w-auto object-contain drop-shadow-md"
+                                        className="h-[80px] xl:h-[105px] w-auto object-contain drop-shadow-md"
                                     />
                                 </Link>
                             </div>
@@ -290,11 +290,11 @@ const Navbar = () => {
 
                     {/* ─── MOBILE TOP NAV ─── */}
                     <div className="flex xl:hidden items-center justify-between h-[60px] relative">
-                        <div className="relative z-[150] h-full flex items-center min-w-[90px]">
+                        <div className="relative z-[150] h-full flex items-center min-w-[110px]">
                             <Link href="/" className="absolute top-1 left-0 flex items-center justify-center transition-opacity active:opacity-75 z-[200]">
                                 <img loading="lazy" decoding="async" src={navbarLogo.src}
                                     alt="Organic Expo Logo"
-                                    className="h-[55px] w-auto object-contain drop-shadow-sm"
+                                    className="h-[70px] w-auto object-contain drop-shadow-sm"
                                 />
                             </Link>
                         </div>

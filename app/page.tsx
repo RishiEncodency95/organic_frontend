@@ -8,7 +8,9 @@ import EventGlimpses from "./components/home/EventGlimpses";
 // Lazy load below-the-fold components
 const IntroductionSection = lazy(() => import("./components/home/IntroductionSection"));
 const WhyParticipate = lazy(() => import("./components/home/WhyParticipate"));
+const BeyondExhibition = lazy(() => import("./components/home/BeyondExhibition"));
 const ExpoCategories = lazy(() => import("./components/home/ExpoCategories"));
+const ConferenceSection = lazy(() => import("./components/home/ConferenceSection"));
 const ExpoHighlights = lazy(() => import("./components/home/ExpoHighlights"));
 const SponsorsAndAttend = lazy(() => import("./components/home/SponsorsAndAttend"));
 const VoicesThatInspire = lazy(() => import("./components/home/VoicesThatInspire"));
@@ -28,7 +30,9 @@ const Index = () => {
         <GlobalPlatform />
         <IntegratedFormat />
         <WhyParticipate />
+        <ConferenceSection />
         <ExpoCategories />
+         <BeyondExhibition/>
         <ExpoHighlights />
         <SponsorsAndAttend />
         <VoicesThatInspire />

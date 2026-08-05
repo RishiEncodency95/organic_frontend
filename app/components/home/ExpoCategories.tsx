@@ -4,16 +4,16 @@ import { motion } from "framer-motion";
 import { ArrowRight, Leaf, HeartPulse, Sparkles, Apple, Shirt, Recycle, Dumbbell, Stethoscope, Beaker, Brain, Activity, Pill } from "lucide-react";
 
 const categories = [
-  { icon: Apple, title: "Mental Health &\nWell-being", desc: "Therapy, meditation, yoga and wellness programs for a balanced mind and body.", color: "#14b8a6", image: "https://images.unsplash.com/photo-1542838132-92c53300491e?w=800&q=80" },
-  { icon: Activity, title: "Health Tech &\nDigital Solutions", desc: "Innovative digital healthcare solutions for smarter and faster care.", color: "#60a5fa", image: "https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?w=800&q=80" },
-  { icon: Leaf, title: "Organic Food &\nBeverages", desc: "Pure, natural and organic food & drinks for a healthier lifestyle.", color: "#4ade80", image: "https://images.unsplash.com/photo-1608686207856-001b95cf60ca?w=800&q=80" },
-  { icon: Sparkles, title: "Ayurveda &\nHerbal Products", desc: "Ancient healing wisdom and herbal products for natural wellness.", color: "#fb923c", image: "https://images.unsplash.com/photo-1596462502278-27bfdc403348?w=800&q=80" },
-  { icon: HeartPulse, title: "Healthcare &\nWellness Services", desc: "Comprehensive healthcare services for you and your family.", color: "#a78bfa", image: "https://images.unsplash.com/photo-1579684385127-1ef15d508118?w=800&q=80" },
-  { icon: Shirt, title: "Natural & Organic\nTextiles", desc: "Sustainable fabrics and textiles for a greener lifestyle.", color: "#14b8a6", image: "https://images.unsplash.com/photo-1584916201218-f4242ceb4809?w=800&q=80" },
-  { icon: Recycle, title: "Eco-friendly\nProducts", desc: "Environmentally friendly products for daily use.", color: "#60a5fa", image: "https://images.unsplash.com/photo-1542601906990-b4d3fb778b09?w=800&q=80" },
-  { icon: Dumbbell, title: "Fitness &\nLifestyle", desc: "Stay active and healthy with our fitness and lifestyle solutions.", color: "#4ade80", image: "https://images.unsplash.com/photo-1517836357463-d25dfeac3438?w=800&q=80" },
-  { icon: Stethoscope, title: "Medical Devices &\nEquipment", desc: "Advanced medical tools for better healthcare delivery.", color: "#fb923c", image: "https://images.unsplash.com/photo-1516549655169-df83a0774514?w=800&q=80" },
-  { icon: Beaker, title: "Pharma &\nBiotechnology", desc: "Innovations in pharmaceuticals and biotechnology.", color: "#a78bfa", image: "https://images.unsplash.com/photo-1542838132-92c53300491e?w=800&q=80" },
+  { icon: Apple, title: "Organic Food &\nBeverages", desc: "Certified organic staples, fruits, dairy, healthy snacks, and plant-based drinks.", color: "#4ade80", image: "https://images.unsplash.com/photo-1542838132-92c53300491e?w=800&q=80" },
+  { icon: Pill, title: "Nutritional Supplements\n& Superfoods", desc: "Natural dietary supplements, organic protein powders, and immunity boosters.", color: "#14b8a6", image: "https://images.unsplash.com/photo-1584362917165-526a968579e8?w=800&q=80" },
+  { icon: Leaf, title: "Smart &\nSustainable Farming", desc: "Organic seeds, bio-fertilizers, agri-tech innovations, and vertical farming tools.", color: "#22c55e", image: "https://images.unsplash.com/photo-1625246333195-78d9c38ad449?w=800&q=80" },
+  { icon: Sparkles, title: "Herbal Wellness\n& Ayurveda", desc: "Ayurvedic therapies, herbal supplements, essential oils, and detox solutions.", color: "#fb923c", image: "https://images.unsplash.com/photo-1540555700478-4be289fbecef?w=800&q=80" },
+  { icon: HeartPulse, title: "Natural Beauty\n& Clean Cosmetics", desc: "Organic skincare, cruelty-free vegan cosmetics, and non-toxic hygiene products.", color: "#f472b6", image: "https://images.unsplash.com/photo-1556228578-0d85b1a4d571?w=800&q=80" },
+  { icon: Shirt, title: "Organic Apparel\n& Ethical Textiles", desc: "Organic cotton garments, natural dyes, and fair-trade upcycled fashion.", color: "#60a5fa", image: "https://images.unsplash.com/photo-1584916201218-f4242ceb4809?w=800&q=80" },
+  { icon: Recycle, title: "Eco Lifestyle\n& Green Living", desc: "Eco-friendly home products, sustainable furniture, and zero-waste tools.", color: "#34d399", image: "https://images.unsplash.com/photo-1542601906990-b4d3fb778b09?w=800&q=80" },
+  { icon: Activity, title: "Green Technology\n& Startups", desc: "Clean energy, green packaging, and IoT solutions for sustainable living.", color: "#3b82f6", image: "https://images.unsplash.com/photo-1497435334941-8c899ee9e8e9?w=800&q=80" },
+  { icon: Leaf, title: "Organic Gardening\n& Urban Farming", desc: "Kitchen gardening kits, indoor plants, vertical gardens, and seed bombs.", color: "#10b981", image: "https://images.unsplash.com/photo-1592841200221-a6898f307baa?w=800&q=80" },
+  { icon: HeartPulse, title: "Eco Tourism\n& Sustainable Travel", desc: "Eco-resorts, wellness tourism, and nature retreats for conscious travelers.", color: "#f59e0b", image: "https://images.unsplash.com/photo-1501785888041-af3ef285b470?w=800&q=80" },
 ];
 
 const FlowerDecoration = ({ className, style }: { className?: string; style?: React.CSSProperties }) => (
@@ -33,7 +33,7 @@ const FlowerDecoration = ({ className, style }: { className?: string; style?: Re
 
 const ExpoCategories = () => {
   return (
-    <section className="py-6 md:py-8 bg-gradient-to-br from-[#EAF4E8] via-[#F4FAF3] to-[#E3EFE0] border-t border-b border-[#CDE3C9] relative overflow-hidden">
+    <section className="py-2 md:py-4 lg:py-4 bg-gradient-to-br from-[#EAF4E8] via-[#F4FAF3] to-[#E3EFE0] border-t border-b border-[#CDE3C9] relative overflow-hidden">
       <style>{`
         @keyframes float-flower {
           0% { transform: translateY(0px) rotate(0deg); }
@@ -54,7 +54,7 @@ const ExpoCategories = () => {
 
         {/* Header */}
         <div className="px-4 sm:px-6 lg:px-11 w-full ">
-          <div className="flex flex-col xl:flex-row items-center justify-between mb-6 bg-white py-3 px-4 md:px-8 rounded-full shadow-[0_4px_20px_rgba(0,0,0,0.03)] border border-gray-100 gap-4 xl:gap-6">
+          <div className="flex flex-col xl:flex-row items-center justify-between mb-4 bg-white py-3 px-4 md:px-8 rounded-full shadow-[0_4px_20px_rgba(0,0,0,0.03)] border border-gray-100 gap-4 xl:gap-6">
 
             {/* Pill */}
             <div className="flex items-center gap-3 shrink-0">
@@ -89,7 +89,7 @@ const ExpoCategories = () => {
         </div>
 
         {/* Static Grid Layout (No Slider) */}
-        <div className="w-full  mb-8 py-2 flex flex-wrap justify-center gap-4 lg:gap-5">
+        <div className="w-full  mb-2 py-2 flex flex-wrap justify-center gap-2 lg:gap-3">
           {categories.map((item, index) => {
             const Icon = item.icon;
             const displayIndex = index + 1; // Numbering 1 to 10
@@ -97,99 +97,65 @@ const ExpoCategories = () => {
             return (
               <div
                 key={index}
-                className="group flex flex-col w-[240px] h-auto bg-white rounded-xl overflow-hidden cursor-pointer shadow-[0px_1px_3px_0px_rgba(0,0,0,0.02),0px_0px_0px_1px_rgba(27,31,35,0.15)] border-none hover:shadow-[0_10px_25px_rgba(0,0,0,0.08)] transition-all duration-300 p-3.5 relative"
+                className="group flex flex-col w-[240px] h-auto bg-white/60 backdrop-blur-xl rounded-xl overflow-hidden cursor-pointer border-[1.5px] border-white/90 shadow-[0_8px_30px_rgba(0,0,0,0.04),inset_0_1px_2px_rgba(255,255,255,0.8)] hover:shadow-[0_15px_40px_rgba(0,0,0,0.12),inset_0_1px_2px_rgba(255,255,255,0.9)] hover:-translate-y-1.5 hover:bg-white/80 transition-all duration-500 relative"
               >
-                {/* Angled Background Fill */}
-                <div
-                  className="absolute top-0 left-0 w-full h-[70%] opacity-[0.05] pointer-events-none"
-                  style={{
-                    backgroundColor: item.color,
-                    clipPath: 'polygon(0 0, 100% 0, 100% 55%, 0 85%)'
-                  }}
-                />
+                {/* Full Width Image at the Top */}
+                <div className="relative w-full h-[150px] shrink-0 overflow-hidden bg-gray-100">
+                  <img src={item.image} className="absolute inset-0 w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" alt={item.title} />
 
-                {/* Dot Pattern in the faint area */}
-                <div className="absolute inset-0 opacity-[0.03] pointer-events-none" style={{ backgroundImage: 'radial-gradient(circle at 1px 1px, black 1px, transparent 0)', backgroundSize: '14px 14px' }} />
-
-                {/* Hexagon Image Container */}
-                <div className="w-full flex justify-center py-1.5 relative z-10">
-                  <div className="relative w-[160px] h-[184px] drop-shadow-[0_6px_12px_rgba(0,0,0,0.06)] group-hover:-translate-y-1 transition-transform duration-500">
-
-                    {/* Outer Border Hexagon */}
+                  {/* Floating Icon overlaid on the image */}
+                  {/* <div
+                    className="absolute -bottom-4 right-4 w-10 h-10 rounded-full bg-white flex items-center justify-center shadow-md z-20"
+                  >
                     <div
-                      className="absolute inset-0"
-                      style={{
-                        backgroundColor: item.color,
-                        clipPath: 'polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%)',
-                      }}
-                    />
-
-                    {/* Inner Image Hexagon */}
-                    <div
-                      className="absolute inset-[3px]"
-                      style={{
-                        clipPath: 'polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%)',
-                      }}
+                      className="absolute inset-1 rounded-full flex items-center justify-center"
+                      style={{ backgroundColor: item.color }}
                     >
-                      <img src={item.image} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" alt="" />
+                      <Icon size={16} color="white" strokeWidth={2.5} />
                     </div>
+                  </div> */}
+                </div>
 
-                    {/* The floating Hexagon Icon */}
-                    <div
-                      className="absolute -bottom-[18px] left-1/2 -translate-x-1/2 w-[48px] h-[56px] bg-white flex items-center justify-center drop-shadow-sm"
-                      style={{
-                        clipPath: 'polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%)',
-                      }}
-                    >
-                      <div
-                        className="absolute inset-[2.5px] flex items-center justify-center"
-                        style={{
-                          backgroundColor: item.color,
-                          clipPath: 'polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%)',
-                        }}
-                      >
-                        <Icon size={18} color="white" strokeWidth={2.5} />
-                      </div>
-                    </div>
+                {/* Content Area */}
+                <div className="px-3 py-2 relative z-10 flex flex-col flex-grow">
+                  {/* Angled Background Fill (subtle) */}
+                  <div
+                    className="absolute inset-0 opacity-[0.03] pointer-events-none"
+                    style={{
+                      backgroundColor: item.color,
+                    }}
+                  />
+                  {/* Dot Pattern in the faint area */}
+                  <div className="absolute inset-0 opacity-[0.03] pointer-events-none" style={{ backgroundImage: 'radial-gradient(circle at 1px 1px, black 1px, transparent 0)', backgroundSize: '14px 14px' }} />
+
+                  {/* Number & Line */}
+                  {/* <div className="flex items-center gap-2 mb-1 w-full">
+                    <span className="text-[16px] font-bold" style={{ color: item.color }}>
+                      {String(displayIndex).padStart(2, '0')}
+                    </span>
+                    <div className="h-[1.5px] w-4 opacity-30" style={{ backgroundColor: item.color }} />
+                  </div> */}
+
+                  {/* Title & Description */}
+                  <div className="flex flex-col items-start text-left w-full">
+                    <h3 className="text-[14px] font-bold text-gray-900 leading-[1.3] mb-1.5  group-hover:text-opacity-80 transition-opacity">
+                      {item.title}
+                    </h3>
+                    <p className="text-[11px] text-gray-500 leading-[1.4] line-clamp-3 font-normal">
+                      {item.desc}
+                    </p>
                   </div>
-                </div>
-
-                {/* Number & Line */}
-                <div className="flex items-center gap-2 mb-2 z-10 w-full px-1">
-                  <span className="text-[16px] font-bold" style={{ color: item.color }}>
-                    {String(displayIndex).padStart(2, '0')}
-                  </span>
-                  <div className="h-[1.5px] w-4 opacity-30" style={{ backgroundColor: item.color }} />
-                </div>
-
-                {/* Title & Description */}
-                <div className="flex flex-col items-start text-left z-10 w-full px-1">
-                  <h3 className="text-[14px] font-bold text-gray-900 leading-[1.3] mb-1.5 whitespace-pre-line group-hover:text-opacity-80 transition-opacity">
-                    {item.title}
-                  </h3>
-                  <p className="text-[11px] text-gray-500 leading-[1.4] line-clamp-3 font-normal">
-                    {item.desc}
-                  </p>
                 </div>
 
                 {/* <div className="flex-grow" /> */}
 
-                {/* View More Button */}
-                <div className="flex items-center gap-1.5 z-10 mt-2 px-1 group/btn cursor-pointer">
-                  <span className="text-[12px] font-bold transition-opacity group-hover/btn:opacity-70" style={{ color: item.color }}>
-                    View More
-                  </span>
-                  <div className="w-[20px] h-[20px] rounded-full border-[1.5px] flex items-center justify-center transition-transform group-hover/btn:translate-x-1" style={{ borderColor: item.color }}>
-                    <ArrowRight size={10} style={{ color: item.color }} strokeWidth={2.5} />
-                  </div>
-                </div>
               </div>
             );
           })}
         </div>
 
         {/* Button */}
-        <div className="flex justify-center mt-2 px-4">
+        <div className="flex justify-center  px-4">
           <button className="group flex items-center justify-center gap-2 px-6 py-2.5 rounded-full border-2 border-[#F2B40E] bg-[#3b8c2a] text-white text-[11px] md:text-[12px] font-bold uppercase tracking-wider hover:bg-[#F2B40E] hover:text-[#0b2912] hover:shadow-lg transition-all duration-300">
             VIEW ALL CATEGORIES
             <ArrowRight size={14} strokeWidth={2.5} className="group-hover:translate-x-1 transition-transform" />

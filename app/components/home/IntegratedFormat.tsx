@@ -163,7 +163,7 @@ const IntegratedFormat = () => {
                   {item.icon}
                 </div>
                 <div className="flex flex-col">
-                  <h4 className="text-white font-bold text-[13px] tracking-wide whitespace-pre-line leading-tight mb-1">
+                  <h4 className="text-white font-bold text-[13px] tracking-wide  leading-tight mb-1">
                     {item.title} <Leaf className="inline-block w-3 h-3 text-[#a3d289] fill-[#a3d289]" />
                   </h4>
                   <p className="text-green-50 text-[11px] leading-relaxed font-medium pr-4">

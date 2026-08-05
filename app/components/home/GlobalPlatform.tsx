@@ -22,24 +22,24 @@ const listItems = [
 
 const cards = [
   {
-    icon: <Image src={form1} alt="Global Connections" width={110} height={110} className="object-contain" />,
+    icon: <Image src={form1} alt="Global Connections" width={110} height={110} className="object-contain drop-shadow-md" />,
     title: "GLOBAL\nCONNECTIONS",
-    desc: "Connect with global leaders in organic trade & sustainable business."
+    desc: "Connect with global leaders in organic trade and sustainable business. Expand your network across international markets to build long-term, profitable relationships."
   },
   {
-    icon: <Image src={form2} alt="International Alliances" width={160} height={160} className="object-contain" />,
+    icon: <Image src={form2} alt="International Alliances" width={160} height={160} className="object-contain drop-shadow-md" />,
     title: "INTERNATIONAL\nALLIANCES",
-    desc: "Build strategic alliances with international organizations."
+    desc: "Forge strategic alliances with prominent international organizations, trade bodies, and embassies to unlock massive cross-border trade opportunities."
   },
   {
-    icon: <Image src={form3} alt="Policy & Knowledge" width={160} height={160} className="object-contain" />,
+    icon: <Image src={form3} alt="Policy & Knowledge" width={160} height={160} className="object-contain drop-shadow-md" />,
     title: "POLICY &\nKNOWLEDGE",
-    desc: "Engage with policy makers & knowledge leaders driving change."
+    desc: "Engage directly with global policy makers, researchers, and leaders driving regulatory changes and sustainability standards in the organic ecosystem."
   },
   {
-    icon: <Image src={form4} alt="Investment & Innovation" width={160} height={160} className="object-contain" />,
+    icon: <Image src={form4} alt="Investment & Innovation" width={160} height={160} className="object-contain drop-shadow-md" />,
     title: "INVESTMENT &\nINNOVATION",
-    desc: "Explore investment opportunities & promote innovative solutions."
+    desc: "Discover high-growth investment opportunities and explore cutting-edge, innovative solutions presented by dynamic startups in the wellness industry."
   }
 ];
 
@@ -52,84 +52,73 @@ const GlobalPlatform = () => {
           src={fromIndiaBg}
           alt="Background map pattern"
           fill
-          className="w-full h-full object-fill opacity-80 mix-blend-multiply"
+          className="w-full h-full object-fill opacity-20 mix-blend-multiply"
           priority
         />
       </div>
 
-      <div className=" w-full px-4 sm:px-6 lg:px-8 xl:px-12 relative z-10 flex flex-col xl:flex-row justify-between gap-4 lg:gap-8 items-center">
+      <div className=" w-full px-2 sm:px-4 lg:px-11 xl:px-11 relative z-10 flex flex-col xl:flex-row justify-between gap-4 lg:gap-8 items-center">
 
         {/* Left Content */}
-        <div className="w-full xl:w-[40%] flex flex-col items-center xl:items-start text-center xl:text-left">
-          <p className="w-full text-[13px] font-bold text-center tracking-widest uppercase mb-2 text-[#3b8c2a]">
+        <div className="w-full xl:w-[35%] flex flex-col items-center xl:items-start text-center xl:text-left relative z-20">
+          <p className="w-full text-[13px] font-bold text-center tracking-widest uppercase mb-2 text-[#3b8c2a] drop-shadow-sm">
             FROM INDIA TO <span className="text-[#f58634]">THE WORLD</span>
           </p>
 
-          <h2 className="text-[#1a3821] text-4xl lg:text-[46px] leading-[1.1] font-bold mb-2 font-serif">
+          <h2 className="text-[#1a3821] text-4xl lg:text-[40px] leading-[1.1] font-bold mb-3 font-serif drop-shadow-md">
             From a National Expo<br />
             to a <span className="text-[#f58634]">Global Platform</span>
           </h2>
 
-          <p className="text-[#475569] text-[15px] leading-relaxed mb-8 max-w-[450px]">
+          <p className="text-[#475569] text-[15px] leading-relaxed mb-8 max-w-[450px] font-medium">
             Bharat Organic Expo is India's most influential platform connecting organic products, people and possibilities.
           </p>
 
-          <div className="flex flex-col gap-4">
+          <div className="flex flex-col gap-4 w-full">
             {listItems.map((item, index) => (
               <div key={index} className="flex items-center gap-3">
                 <div className="w-6 h-6 rounded-full bg-white flex items-center justify-center shrink-0 shadow-sm border border-[#e2eee4]">
                   <Leaf size={12} className="text-[#3b8c2a] fill-[#3b8c2a]" strokeWidth={1} />
                 </div>
-                <span className="text-[#334155] font-semibold text-[14px]">{item}</span>
+                <span className="text-[#334155] font-bold text-[14px] drop-shadow-sm">{item}</span>
               </div>
             ))}
           </div>
         </div>
 
         {/* Center/Right Content - Cards */}
-        <div className="w-full xl:w-[60%] flex flex-col items-center relative ">
+        <div className="w-full xl:w-[65%] flex flex-col items-center relative ">
 
-          {/* Logo */}
-          <div className="w-full flex justify-center mb-4 z-20">
-            <div className="bg-white/60 backdrop-blur-sm rounded-2xl p-2 shadow-sm border border-white/80">
-              <Image
-                src={logo}
-                alt="Bharat Organic Expo Logo"
-                width={190}
-                height={40}
-                className="object-contain"
-              />
-            </div>
-          </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 w-full">
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-2 w-full">
             {cards.map((card, index) => (
-              <div key={index} className="bg-white/60 backdrop-blur-xl rounded-[32px] px-4 py-2 shadow-[inset_0_2px_4px_rgba(255,255,255,0.8),_0_20px_40px_rgba(59,140,42,0.08)] border border-white/80 flex flex-col items-center text-center transition-all hover:-translate-y-3 hover:shadow-[inset_0_2px_4px_rgba(255,255,255,0.9),_0_30px_50px_rgba(59,140,42,0.12)] duration-500 relative overflow-hidden group">
+              <div key={index} className="bg-white/60 backdrop-blur-xl rounded-2xl px-4 py-2 min-h-[380px] shadow-[inset_0_2px_4px_rgba(255,255,255,0.8),_0_20px_40px_rgba(59,140,42,0.08)] border border-white/80 flex flex-col items-center justify-between text-center transition-all hover:-translate-y-3 hover:shadow-[inset_0_2px_4px_rgba(255,255,255,0.9),_0_30px_50px_rgba(59,140,42,0.12)] duration-500 relative overflow-hidden group">
 
                 {/* 3D Glass Inner Highlight */}
                 <div className="absolute inset-0 rounded-[32px] border-2 border-white/30 pointer-events-none"></div>
                 <div className="absolute top-0 left-0 w-full h-1/2 bg-gradient-to-b from-white/60 to-transparent pointer-events-none"></div>
 
-                <div className="my-2 flex items-center justify-center relative z-10 transform group-hover:scale-105 transition-transform duration-500">
+                <div className="mt-2 mb-3 h-[120px] w-full flex items-center justify-center relative z-10 transform group-hover:scale-105 transition-transform duration-500">
                   {card.icon}
                 </div>
 
-                <h3 className="text-[#154726] font-extrabold text-[14px] leading-snug tracking-wide whitespace-pre-line mb-3 h-10 flex items-center justify-center relative z-10">
+                <h3 className="text-[#154726] font-extrabold text-[14px] leading-snug tracking-wide whitespace-pre-line mb-3 h-10 flex items-center justify-center relative z-10 drop-shadow-sm">
                   {card.title}
                 </h3>
 
-                <div className="flex items-center justify-center w-full mb-4 relative z-10">
+                <div className="flex items-center justify-center w-full mb-3 relative z-10">
                   <div className="w-12 h-1 bg-gradient-to-r from-[#3b8c2a] to-[#a3d289] rounded-full relative shadow-sm">
                     <div className="absolute right-0 top-1/2 -translate-y-1/2 w-2 h-2 rounded-full bg-white shadow-sm border border-[#a3d289]"></div>
                   </div>
                 </div>
 
-                <p className="text-[#475569] text-[12px] leading-[1.7] font-semibold px-2 relative z-10">
+                <p className="text-[#475569] text-[13px] leading-[1.7] font-medium px-1 relative z-10 pb-2">
                   {card.desc}
                 </p>
 
                 {/* Subtle hover gradient */}
-                <div className="absolute inset-0 bg-gradient-to-br from-green-50/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 -z-10"></div>
+                <div className="absolute inset-0 bg-gradient-to-br from-green-50/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 -z-10"></div>
               </div>
             ))}
           </div>
