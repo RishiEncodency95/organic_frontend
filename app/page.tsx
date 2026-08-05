@@ -13,6 +13,8 @@ const ExpoCategories = lazy(() => import("./components/home/ExpoCategories"));
 const ConferenceSection = lazy(() => import("./components/home/ConferenceSection"));
 const ExpoHighlights = lazy(() => import("./components/home/ExpoHighlights"));
 const SponsorsAndAttend = lazy(() => import("./components/home/SponsorsAndAttend"));
+const BecomeSponsor = lazy(() => import("./components/home/BecomeSponsor"));
+const SponsorshipCategories = lazy(() => import("./components/home/SponsorshipCategories"));
 const VoicesThatInspire = lazy(() => import("./components/home/VoicesThatInspire"));
 const MovementBanner = lazy(() => import("./components/home/MovementBanner"));
 const BuyerSellerMeet = lazy(() => import("./components/home/BuyerSellerMeet"));
@@ -34,11 +36,14 @@ const Index = () => {
         <ExpoCategories />
         <BeyondExhibition />
         <SponsorsAndAttend />
-        <ExpoHighlights />
-        <VoicesThatInspire />
-        <EventGlimpses />
-        <BuyerSellerMeet />
-        <MovementBanner />
+        <BecomeSponsor />
+        <SponsorshipCategories />
+        
+        {/* <ExpoHighlights /> */}
+        {/* <VoicesThatInspire /> */}
+        {/* <EventGlimpses /> */}
+        {/* <BuyerSellerMeet /> */}
+        {/* <MovementBanner /> */}
       </Suspense>
     </>
   );
