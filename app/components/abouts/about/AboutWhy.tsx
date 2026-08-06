@@ -3,7 +3,7 @@
 import React from "react";
 import Image from "next/image";
 import { Leaf, Users, Globe2, BookOpen, Star, ShieldCheck, ArrowRight } from "lucide-react";
-import bgImage from "../../assets/about/whybg.png";
+import bgImage from "../../../assets/about/whybg.png";
 
 const reasons = [
   {

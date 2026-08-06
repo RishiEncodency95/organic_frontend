@@ -21,7 +21,17 @@ const cn = (...classes: (string | undefined | null | false)[]) => classes.filter
 
 const navLinks = [
     { label: "Home", path: "/" },
-    { label: "About Us", path: "/about" },
+    { 
+        label: "About Us", 
+        path: "/about",
+        dropdown: [
+            { label: "About Bharat Organic Expo", path: "/about", icon: Info, description: "Learn about the mission and vision of " },
+            { label: "Support & Services", path: "/support", icon: Briefcase, description: "Explore our global network of collaborators" },
+            { label: "Advisory Board Members", path: "/advisory-board", icon: Users, description: "Meet the experts behind the exhibition" },
+            { label: "Blogs", path: "/blog", icon: Layout, description: "Latest news and insights from the wellness industry" },
+            { label: "Glimpses of the Event", path: "/gallery", icon: Camera, description: "Explore opportunities as a domestic or international buyer" },
+        ]
+    },
     {
         label: "Participate",
         dropdown: [

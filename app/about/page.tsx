@@ -5,20 +5,16 @@ import React, { Suspense, lazy } from "react";
 import Head from "next/head";
 
 // Synchronous load for above the fold
-import AboutHero from "@/app/components/about/AboutHero";
-import AboutStrip from "@/app/components/about/AboutStrip";
+import AboutHero from "@/app/components/abouts/about/AboutHero";
+import AboutStrip from "@/app/components/abouts/about/AboutStrip";
 
 // Lazy load below the fold components
-const AboutIntro = lazy(() => import("@/app/components/about/AboutIntro"));
-const AboutTimeline = lazy(() => import("@/app/components/about/AboutTimeline"));
-const AboutWhy = lazy(() => import("@/app/components/about/AboutWhy"));
-const AboutFeatures = lazy(() => import("@/app/components/about/AboutFeatures"));
-const AboutHighlights = lazy(() => import("@/app/components/about/AboutHighlights"));
-const AboutImpact = lazy(() => import("@/app/components/about/AboutImpact"));
-const AboutTeamPartners = lazy(() => import("@/app/components/about/AboutTeamPartners"));
-const AboutTestimonials = lazy(() => import("@/app/components/about/AboutTestimonials"));
-const AboutRoadmapPresence = lazy(() => import("@/app/components/about/AboutRoadmapPresence"));
-const AboutCTA = lazy(() => import("@/app/components/about/AboutCTA"));
+const AboutIntro = lazy(() => import("@/app/components/abouts/about/AboutIntro"));
+const AboutTimeline = lazy(() => import("@/app/components/abouts/about/AboutTimeline"));
+const AboutWhy = lazy(() => import("@/app/components/abouts/about/AboutWhy"));
+const AboutFeatures = lazy(() => import("@/app/components/abouts/about/AboutFeatures"));
+const AboutHighlights = lazy(() => import("@/app/components/abouts/about/AboutHighlights"));
+const AboutCTA = lazy(() => import("@/app/components/abouts/about/AboutCTA"));
 import HomeAbout from "@/app/components/home/HomeAbout";
 
 const LoadingFallback = () => (
@@ -61,21 +57,6 @@ const AboutPage = () => {
             <AboutHighlights />
           </div>
 
-          {/* <div className="w-full bg-[#f8fdf9]">
-            <AboutImpact />
-          </div> */}
-
-          {/* <div className="w-full bg-white">
-            <AboutTeamPartners />
-          </div> */}
-
-          {/* <div className="w-full bg-[#f8fdf9]">
-            <AboutTestimonials />
-          </div> */}
-          {/* 
-          <div className="w-full bg-white">
-            <AboutRoadmapPresence />
-          </div> */}
 
           <AboutCTA />
         </Suspense>

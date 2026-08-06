@@ -19,7 +19,6 @@ const IndustryLeaders = lazy(() => import("./components/home/IndustryLeaders"));
 const VoicesOfImpact = lazy(() => import("./components/home/VoicesOfImpact"));
 const LatestInsights = lazy(() => import("./components/home/LatestInsights"));
 const GlobalPlatform = lazy(() => import("./components/home/GlobalPlatform"));
-// const IntegratedFormat = lazy(() => import("./components/home/IntegratedFormat"));
 
 
 const Index = () => {
@@ -30,7 +29,6 @@ const Index = () => {
       <Suspense fallback={<div className="min-h-[200px] flex items-center justify-center"><div className="w-8 h-8 border-4 border-[#3b8c2a] border-t-transparent rounded-full animate-spin"></div></div>}>
         <IntroductionSection />
         <GlobalPlatform />
-        {/* <IntegratedFormat /> */}
         <WhyParticipate />
         <ConferenceSection />
         <ExpoCategories />

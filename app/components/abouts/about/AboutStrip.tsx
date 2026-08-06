@@ -4,8 +4,8 @@ import { Users, Building2, Map, Award } from "lucide-react";
 
 const AboutStrip = () => {
   return (
-    <div className="w-full px-2 md:px-11 py-2 relative z-20">
-      <div className="bg-gradient-to-r from-[#3b8c2a] to-[#215e12] rounded-xl shadow-[0_10px_30px_rgba(59,140,42,0.3)] border-b-4 border-[#F2B40E] p-1 md:p-1.5">
+    <div className="w-full relative z-20">
+      <div className="bg-gradient-to-r from-[#3b8c2a] to-[#215e12] p-1 md:p-1.5">
         <div className="grid grid-cols-2 md:grid-cols-4 divide-x divide-white/20">
 
           {/* Item 1 */}
