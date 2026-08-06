@@ -1,9 +1,10 @@
 "use client";
 
 import React from 'react';
-import { Leaf, ArrowRight, Calendar, MapPin, Users } from 'lucide-react';
+import { Leaf, ArrowRight, Calendar, MapPin, Users, CheckCircle, Mic, BookOpen } from 'lucide-react';
 import { motion } from 'framer-motion';
 import Link from 'next/link';
+import global1 from '../../assets/home/global1.png';
 
 
 
@@ -118,37 +119,50 @@ const ConferenceSeminars = () => {
         }
       `}</style>
 
-      <div className="flex flex-col lg:flex-row items-center justify-between gap-4">
+      <div className="flex flex-col xl:flex-row items-center justify-between gap-6 lg:gap-10  py-2">
 
         {/* LEFT IMAGE BOX */}
 
-        <div className="flex items-center gap-4 lg:gap-8">
+        <div className="flex flex-col md:flex-row items-center gap-2 lg:gap-4 flex-1 w-full">
           <motion.div
             initial={{ opacity: 0, x: 30 }}
             whileInView={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.6, delay: 0.2 }}
             viewport={{ once: true }}
-            className="flex flex-col items-start"
+            className="flex flex-col items-start w-full md:max-w-[70%]"
           >
-            <div className="flex items-center gap-1 mb-1.5">
-              <span className="text-[12px] font-bold uppercase tracking-[0.2em] text-[#f58220]">
-                Conference &amp; Seminars
+            <div className="flex items-center gap-2 mb-2">
+              <span className="text-[10px] md:text-[12px] font-black uppercase tracking-[0.25em] text-[#f58220] bg-[#fff4eb] px-3 py-1 rounded-sm border border-[#f58220]/20">
+                Global Conference &amp; Seminars
               </span>
-              <Leaf className="w-[20px] h-[20px] text-[#00643b]" fill="currentColor" />
+              <Leaf className="w-[18px] h-[18px] text-[#00643b]" fill="currentColor" />
             </div>
 
-            <h2 className="text-[24px] md:text-[34px] font-extrabold text-[#00643b] leading-tight mb-3">
-              Learn. Connect. Get Inspired.
+            <h2 className="text-[28px] md:text-[36px] font-black text-[#00643b] leading-[1.1] mb-4">
+              Where Knowledge Meets <br className="hidden md:block" />
+              <span className="text-[#3b8c2a]">the Future of Organic</span>
             </h2>
 
-            <p className="text-[13px] md:text-[14px] text-gray-600 leading-relaxed mb-6 max-w-[580px] font-medium">
-              Join expert-led sessions, panel discussions &amp; thought leadership{' '}
-              <br className="hidden md:block" />
-              talks on the latest trends shaping the future of organic, natural and sustainable living.
+            <p className="text-[13px] md:text-[15px] text-gray-600 leading-relaxed mb-6 font-medium">
+              Join expert-led sessions, panel discussions &amp; thought leadership talks on the latest trends shaping the future of organic, natural and sustainable living.
             </p>
 
+            {/* Added Highlight Data */}
+            <div className="flex flex-col gap-3 mb-4 w-full">
+              {[
+                "Expert-led panel discussions & keynotes",
+                "Emerging trends in organic farming & retail",
+                "Sustainable business & growth strategies"
+              ].map((text, idx) => (
+                <div key={idx} className="flex items-center gap-3">
+                  <CheckCircle className="w-5 h-5 text-[#3b8c2a] shrink-0" />
+                  <span className="text-[13px] md:text-[14px] font-bold text-gray-800">{text}</span>
+                </div>
+              ))}
+            </div>
+
             {/* Orange Sparkle Button */}
-            <div className="relative group/btn">
+            <div className="relative group/btn w-max">
               {/* Orange Sparkles — same positions as Footer gold button */}
               <div className="hidden md:block">
                 <OrangeSparkle style={{ top: '-9px', left: '10%', animationDelay: '0s' }} />
@@ -159,33 +173,35 @@ const ConferenceSeminars = () => {
               </div>
 
               <Link href="/conference" target="_blank" className="relative z-10">
-                <button className="orange-btn flex items-center gap-2 px-6 h-9 rounded-xl">
-                  <span className="btn-text">Register For Seminar</span>
-                  <ArrowRight className="btn-arrow w-3.5 h-3.5" />
+                <button className="orange-btn flex items-center gap-2 px-8 py-2 rounded-xl">
+                  <span className="btn-text text-[13px] md:text-[14px]">View Conference Schedule</span>
+                  <ArrowRight className="btn-arrow w-4 h-4" />
                 </button>
               </Link>
             </div>
           </motion.div>
 
           {/* Vertical Divider */}
-          <div className="hidden lg:block w-[1.5px] h-36 bg-gray-200 shrink-0" />
+          <div className="hidden md:block w-[1.5px] h-auto self-stretch my-4 bg-gradient-to-b from-gray-100 via-gray-300 to-gray-100 shrink-0" />
 
           {/* Event Info Stack */}
-          <div className="hidden lg:flex flex-col gap-3 pl-2">
+          <div className="hidden md:flex flex-col gap-5 pl-2 shrink-0">
             {[
               { icon: Calendar, title: '19 – 21', sub: 'FEBRUARY 2027' },
               { icon: MapPin, title: 'PRAGATI MAIDAN', sub: 'NEW DELHI' },
               { icon: Users, title: 'INSIGHTS. IDEAS.', sub: 'IMPACT.' },
+              { icon: Mic, title: '50+ GLOBAL', sub: 'SPEAKERS' },
+              { icon: BookOpen, title: '20+ KEY', sub: 'SESSIONS' },
             ].map((item, i) => (
-              <div key={i} className="flex items-center gap-3.5">
-                <div className="w-9 h-9 rounded-full bg-[#f58220] flex items-center justify-center shadow-md">
-                  <item.icon size={16} className="text-white" />
+              <div key={i} className="flex items-center gap-4 group">
+                <div className="w-12 h-12 rounded-full bg-[#fdf5ed] group-hover:bg-[#f58220] transition-colors duration-300 flex items-center justify-center border border-[#f58220]/30 shadow-sm shrink-0">
+                  <item.icon className="w-5 h-5 text-[#f58220] group-hover:text-white transition-colors duration-300" />
                 </div>
                 <div className="flex flex-col">
-                  <span className="text-[11px] font-bold text-[#00643b] leading-tight uppercase tracking-[0.15em]">
+                  <span className="text-[12px] md:text-[13px] font-black text-[#1a1a1a] leading-tight uppercase tracking-[0.1em]">
                     {item.title}
                   </span>
-                  <span className="text-[11px] font-bold text-[#00643b] leading-tight uppercase tracking-[0.15em]">
+                  <span className="text-[10px] font-bold text-gray-500 leading-tight uppercase tracking-[0.15em] mt-0.5">
                     {item.sub}
                   </span>
                 </div>
@@ -200,13 +216,14 @@ const ConferenceSeminars = () => {
           whileInView={{ opacity: 1, scale: 1 }}
           transition={{ duration: 0.6 }}
           viewport={{ once: true }}
-          className="w-full lg:w-[40%]"
+          className="w-full xl:w-[45%] shrink-0"
         >
-          <div className="relative rounded-[1.2rem] overflow-hidden border-[6px] border-white shadow-2xl group">
-            <img loading="lazy" decoding="async" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTNDlO2FqadHoGJ5ncGWZH9zJmlcKJn9eS9JtUvlriE5g&s=10"
+          <div className="relative rounded-[24px] overflow-hidden border-[8px] border-white shadow-[0_20px_50px_rgba(0,0,0,0.15)] group h-[300px] md:h-[390px]">
+            <img loading="lazy" decoding="async" src={global1.src}
               alt="Conference and Seminars"
-              className="w-full h-[200px] object-cover group-hover:scale-105 transition-transform duration-700"
+              className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
             />
+            <div className="absolute inset-0 bg-[#00643b]/10 group-hover:bg-transparent transition-colors duration-500"></div>
           </div>
         </motion.div>
       </div>

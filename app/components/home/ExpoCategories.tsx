@@ -46,9 +46,9 @@ const ExpoCategories = () => {
       `}</style>
 
       {/* Decorative White Flowers */}
-      <FlowerDecoration className="absolute -top-[100px] -left-[100px] w-[500px] h-[500px] pointer-events-none opacity-[0.9] -rotate-12 animate-float-flower" />
+      {/* <FlowerDecoration className="absolute -top-[100px] -left-[100px] w-[500px] h-[500px] pointer-events-none opacity-[0.9] -rotate-12 animate-float-flower" />
       <FlowerDecoration className="absolute top-[30%] -right-[150px] w-[600px] h-[600px] pointer-events-none opacity-[0.7] rotate-[15deg] animate-float-flower" style={{ animationDelay: '2s' }} />
-      <FlowerDecoration className="absolute -bottom-[150px] left-[15%] w-[450px] h-[450px] pointer-events-none opacity-[0.8] -rotate-[25deg] animate-float-flower" style={{ animationDelay: '4s' }} />
+      <FlowerDecoration className="absolute -bottom-[150px] left-[15%] w-[450px] h-[450px] pointer-events-none opacity-[0.8] -rotate-[25deg] animate-float-flower" style={{ animationDelay: '4s' }} /> */}
 
       <div className="w-full px-0 relative z-10">
 
