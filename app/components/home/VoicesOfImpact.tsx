@@ -96,7 +96,7 @@ const stats = [
 
 const VoicesOfImpact = () => {
   return (
-    <section className="relative w-full bg-[#fcfcf9] py-2 lg:py-4 overflow-hidden">
+    <section className="relative w-full bg-[#EFF7EE] py-2 lg:py-4 overflow-hidden">
       <style>{`
         @keyframes scroll-left {
           0% { transform: translateX(0%); }

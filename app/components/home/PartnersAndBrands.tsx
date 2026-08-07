@@ -123,7 +123,7 @@ const SmallMarquee = ({ items }: { items: any[] }) => {
 
 const PartnersAndBrands = () => {
   return (
-    <section className="bg-gradient-to-b from-[#f2fdf5] to-white py-8 lg:py-10 border-t border-b border-[#3b8c2a]/10 overflow-hidden relative">
+    <section className="bg-white py-8 lg:py-10 border-t border-b border-[#3b8c2a]/10 overflow-hidden relative">
       {/* Nice patterned background matching the theme */}
       <div className="absolute inset-0 opacity-[0.03]" style={{ backgroundImage: 'radial-gradient(#3b8c2a 2px, transparent 2px)', backgroundSize: '30px 30px' }}></div>
       <div className="absolute top-0 left-0 w-full h-[2px] bg-gradient-to-r from-transparent via-[#3b8c2a]/30 to-transparent"></div>

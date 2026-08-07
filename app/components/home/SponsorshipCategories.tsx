@@ -79,7 +79,7 @@ const SponsorTypes = [
 
 const SponsorshipCategories = () => {
   return (
-    <section className="w-full bg-[#f9fdfa] relative px-2 lg:px-11 py-4 lg:py-6 overflow-hidden border-b border-gray-100">
+    <section className="w-full bg-[#EFF7EE] relative px-2 lg:px-11 py-4 lg:py-6 overflow-hidden border-b border-gray-100">
       <div className="max-w-[1500px] mx-auto relative z-10">
 
         {/* HEADER */}

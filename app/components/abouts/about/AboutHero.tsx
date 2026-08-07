@@ -2,7 +2,7 @@
 
 import React from "react";
 import aboutBanner from "../../../assets/about/about1.png";
-import { Sprout, Users, Globe2, Heart, ArrowRight } from "lucide-react";
+import { Sprout, Users, Globe2, Heart, ArrowRight, Sun } from "lucide-react";
 import Link from "next/link";
 
 // Sparkle component for button highlights
@@ -71,15 +71,16 @@ const AboutHero = () => {
         className="absolute inset-0 w-full h-full object-cover z-0"
       />
       {/* Lightened dark gradient overlay so text is readable, just like home */}
-      <div className="absolute inset-0 bg-gradient-to-r from-[#fcfcf0]/70 via-[#fcfcf0]/0 to-transparent z-10 pointer-events-none" />
+      <div className="absolute inset-0 bg-gradient-to-r from-[#fcfcf0]/50 via-[#fcfcf0]/0 to-transparent z-10 pointer-events-none" />
 
       {/* Content Overlay */}
       <div className="relative z-20 container mx-auto max-w-[1400px] px-6 h-full flex flex-col justify-center">
         <div className="max-w-xl text-left mt-16 md:mt-0 space-y-4 w-full max-w-2xl">
 
           {/* Tagline Badge */}
-          <div className="inline-block px-3 py-1 bg-white/70 backdrop-blur-md text-[#2b5825] font-extrabold text-[10px] md:text-[11px] tracking-[0.2em] uppercase rounded-full mb-4 shadow-sm border border-white/50 w-max">
-            ABOUT US
+          <div className="inline-flex items-center gap-2 px-4 py-1.5 bg-gradient-to-r from-[#F2B40E]/10 to-[#f58220]/10 backdrop-blur-md font-extrabold text-[10px] md:text-[13px] tracking-[0.2em] uppercase rounded-full mb-4 shadow-[0_0_20px_rgba(242,180,14,0.4)] border border-[#F2B40E]/40 w-max">
+            <Sun className="w-4 h-4 text-[#f58220] animate-[spin_8s_linear_infinite]" fill="currentColor" />
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#d97706] to-[#b45309]">ABOUT US</span>
           </div>
 
           {/* Title */}

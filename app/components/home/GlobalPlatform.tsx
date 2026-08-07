@@ -45,7 +45,7 @@ const cards = [
 
 const GlobalPlatform = () => {
   return (
-    <section className="relative w-full flex items-center bg-[#f7faf6] py-2 lg:py-4 overflow-hidden font-inter border-y border-green-100">
+    <section className="relative w-full flex items-center bg-white py-2 lg:py-4 overflow-hidden font-inter border-y border-green-100">
       {/* Background Image Map/Design */}
       <div className="absolute inset-0 z-0">
         <Image

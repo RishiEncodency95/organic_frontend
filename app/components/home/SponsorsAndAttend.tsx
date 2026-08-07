@@ -61,7 +61,7 @@ const WhoShouldAttendItems = [
 const SponsorsAndAttend = () => {
   return (
     <>
-      <section className="w-full px-2 lg:px-11 relative z-10 py-2 overflow-hidden">
+      <section className="w-full px-2 lg:px-11 relative z-10 py-2 overflow-hidden bg-[#EFF7EE]">
         <div className="grid grid-cols-1 xl:grid-cols-12 gap-6 xl:gap-8 items-start">
 
           {/* LEFT: WHY ATTEND */}

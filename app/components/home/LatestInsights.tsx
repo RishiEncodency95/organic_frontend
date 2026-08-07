@@ -35,7 +35,7 @@ const articles = [
 
 const LatestInsights = () => {
   return (
-    <section className="relative w-full bg-[#fdfcf8] py-2 lg:py-4 overflow-hidden border-t border-gray-100">
+    <section className="relative w-full bg-white py-2 lg:py-4 overflow-hidden border-t border-gray-100">
 
       <div className="w-full px-4 lg:px-11 relative z-10">
 

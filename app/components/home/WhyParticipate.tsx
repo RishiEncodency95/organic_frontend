@@ -65,7 +65,7 @@ const bottomStats = [
 
 const WhyParticipate = () => {
   return (
-    <section className="relative w-full bg-[#fdfefc] py-2 lg:py-2 overflow-hidden font-inter">
+    <section className="relative w-full bg-[#EFF7EE] py-2 lg:py-2 overflow-hidden font-inter">
 
       {/* Decorative Background Leaves (Top Left, Top Right, Bottom Right) */}
       <Leaf className="absolute -top-10 -left-10 text-[#3b8c2a] opacity-5 -rotate-45" size={200} />

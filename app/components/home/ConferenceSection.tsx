@@ -29,7 +29,10 @@ const OrangeSparkle = ({ style }: { style?: React.CSSProperties }) => (
 
 const ConferenceSeminars = () => {
   return (
-    <section className="bg-white py-2 px-2 lg:px-11 overflow-hidden relative border-y border-gray-100">
+    <section className="bg-white py-2 md:py-4 px-2 lg:px-11 overflow-hidden relative shadow-[0_0_60px_rgba(245,130,32,0.1)] border-y border-[#f58220]/20 z-20">
+      {/* Subtle Glowing Highlights */}
+      <div className="absolute top-0 right-0 w-[600px] h-[600px] bg-[#f58220]/[0.04] rounded-full blur-[80px] -z-10 translate-x-1/3 -translate-y-1/4 pointer-events-none"></div>
+      <div className="absolute bottom-0 left-0 w-[500px] h-[500px] bg-[#3b8c2a]/[0.04] rounded-full blur-[80px] -z-10 -translate-x-1/4 translate-y-1/4 pointer-events-none"></div>
 
       <style>{`
         /* ── Orange shimmer for button bg ── */
@@ -132,31 +135,32 @@ const ConferenceSeminars = () => {
             className="flex flex-col items-start w-full md:max-w-[70%]"
           >
             <div className="flex items-center gap-2 mb-2">
-              <span className="text-[10px] md:text-[12px] font-black uppercase tracking-[0.25em] text-[#f58220] bg-[#fff4eb] px-3 py-1 rounded-sm border border-[#f58220]/20">
-                Global Conference &amp; Seminars
+              <span className="text-[10px] md:text-[11px] font-black uppercase tracking-widest text-[#f58220] bg-[#f58220]/10 px-3 py-1 rounded-full border border-[#f58220]/20">
+                GLOBAL CONFERENCE & SEMINARS
               </span>
-              <Leaf className="w-[18px] h-[18px] text-[#00643b]" fill="currentColor" />
             </div>
 
-            <h2 className="text-[28px] md:text-[36px] font-black text-[#00643b] leading-[1.1] mb-4">
+            <h2 className="text-[26px] md:text-[36px] font-black text-[#1a1a1a] leading-tight mb-3">
               Where Knowledge Meets <br className="hidden md:block" />
-              <span className="text-[#3b8c2a]">the Future of Organic</span>
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#00643b] to-[#3b8c2a]">the Future of Organic</span>
             </h2>
 
-            <p className="text-[13px] md:text-[15px] text-gray-600 leading-relaxed mb-6 font-medium">
+            <p className="text-[13px] md:text-[15px] text-gray-600 leading-relaxed mb-4 font-medium border-l-2 border-[#f58220] pl-3">
               Join expert-led sessions, panel discussions &amp; thought leadership talks on the latest trends shaping the future of organic, natural and sustainable living.
             </p>
 
-            {/* Added Highlight Data */}
-            <div className="flex flex-col gap-3 mb-4 w-full">
+            {/* Elegant Checklist */}
+            <div className="flex flex-col gap-2 mb-5 w-full">
               {[
                 "Expert-led panel discussions & keynotes",
                 "Emerging trends in organic farming & retail",
                 "Sustainable business & growth strategies"
               ].map((text, idx) => (
-                <div key={idx} className="flex items-center gap-3">
-                  <CheckCircle className="w-5 h-5 text-[#3b8c2a] shrink-0" />
-                  <span className="text-[13px] md:text-[14px] font-bold text-gray-800">{text}</span>
+                <div key={idx} className="flex items-start gap-3">
+                  <div className="mt-0.5 bg-[#f58220]/10 p-0.5 rounded-full">
+                    <CheckCircle className="w-4 h-4 text-[#f58220] shrink-0" />
+                  </div>
+                  <span className="text-[13px] md:text-[14px] font-semibold text-gray-700">{text}</span>
                 </div>
               ))}
             </div>

@@ -47,7 +47,7 @@ const StatCounter = ({ value }: { value: string }) => {
 const BuyerSellerMeet = () => {
   return (
     <>
-      <section className="relative w-full bg-[#fafafa] py-2 lg:py-4 px-2 lg:px-11  border-t border-gray-100 overflow-hidden">
+      <section className="relative w-full bg-[#EFF7EE] py-2 lg:py-4 px-2 lg:px-11  border-t border-gray-100 overflow-hidden">
 
         {/* Background Dotted Pattern */}
         <div className="absolute top-[30%] left-[45%] w-64 h-64 opacity-20 pointer-events-none" style={{ backgroundImage: 'radial-gradient(#3b8c2a 2px, transparent 2px)', backgroundSize: '20px 20px' }}></div>

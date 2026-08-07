@@ -33,7 +33,7 @@ const FlowerDecoration = ({ className, style }: { className?: string; style?: Re
 
 const ExpoCategories = () => {
   return (
-    <section className="py-2 md:py-4 lg:py-4 bg-gradient-to-br from-[#EAF4E8] via-[#F4FAF3] to-[#E3EFE0] border-t border-b border-[#CDE3C9] relative overflow-hidden">
+    <section className="py-2 md:py-4 lg:py-4 bg-[#EFF7EE] border-t border-b border-[#CDE3C9] relative overflow-hidden">
       <style>{`
         @keyframes float-flower {
           0% { transform: translateY(0px) rotate(0deg); }
