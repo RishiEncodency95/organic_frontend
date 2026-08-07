@@ -13,7 +13,7 @@ const SponsorsAndAttend = lazy(() => import("./components/home/SponsorsAndAttend
 const BecomeSponsor = lazy(() => import("./components/home/BecomeSponsor"));
 const SponsorshipCategories = lazy(() => import("./components/home/SponsorshipCategories"));
 const PartnersAndBrands = lazy(() => import("./components/home/PartnersAndBrands"));
-const ExploreSectors = lazy(() => import("./components/home/ExploreSectors"));
+// const ExploreSectors = lazy(() => import("./components/home/ExploreSectors"));
 const BuyerSellerMeet = lazy(() => import("./components/home/BuyerSellerMeet"));
 const IndustryLeaders = lazy(() => import("./components/home/IndustryLeaders"));
 const VoicesOfImpact = lazy(() => import("./components/home/VoicesOfImpact"));
@@ -37,7 +37,7 @@ const Index = () => {
         <BecomeSponsor />
         <SponsorshipCategories />
         <PartnersAndBrands />
-        <ExploreSectors />
+        {/* <ExploreSectors /> */}
         <BuyerSellerMeet />
         <IndustryLeaders />
         <VoicesOfImpact />
