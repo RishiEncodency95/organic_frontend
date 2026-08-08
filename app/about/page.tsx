@@ -8,6 +8,7 @@ import Head from "next/head";
 import AboutHero from "@/app/components/abouts/about/AboutHero";
 import AboutStrip from "@/app/components/abouts/about/AboutStrip";
 import EventOverview from "../components/abouts/about/EventOverview";
+import AboutOrganizer from "../components/abouts/about/AboutOrganizer";
 import HomeAbout from "@/app/components/home/HomeAbout";
 
 const LoadingFallback = () => (
@@ -31,6 +32,7 @@ const AboutPage = () => {
         <Suspense fallback={<LoadingFallback />}>
           <HomeAbout />
           <EventOverview />
+          <AboutOrganizer />
         </Suspense>
       </div>
     </>

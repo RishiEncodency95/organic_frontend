@@ -3,7 +3,7 @@ import { Leaf, HeartPulse, Sprout, User, Monitor, Plane } from 'lucide-react';
 
 const EventOverview = () => {
   return (
-    <section className="relative w-full py-2 md:py-4 bg-[#f8faf9] overflow-hidden border-t border-gray-100">
+    <section className="relative w-full py-2 md:py-4 bg-[#EFF7EE] overflow-hidden border-t border-gray-100">
       <div className="absolute top-0 right-0 w-64 h-64 bg-[#3b8c2a] opacity-[0.03] rounded-full blur-3xl"></div>
       <div className="absolute -bottom-10 -left-10 w-48 h-48 bg-[#3b8c2a] opacity-[0.03] rounded-full blur-3xl"></div>
       <div className="absolute -bottom-10 -right-10 w-48 h-48 bg-[#3b8c2a] opacity-[0.03] rounded-full blur-3xl"></div>
@@ -12,7 +12,7 @@ const EventOverview = () => {
 
         {/* LEFT COLUMN: EVENT OVERVIEW */}
         <div className="flex-1 lg:max-w-[55%]">
-          <div className="flex items-center gap-3 mb-6">
+          <div className="flex items-center gap-3 mb-2">
             <h3 className="text-[14px] md:text-[16px] font-bold text-[#f97316] tracking-[0.15em] uppercase">
               EVENT OVERVIEW
             </h3>
@@ -21,14 +21,14 @@ const EventOverview = () => {
           <h2 className="text-[18px] md:text-[16px] lg:text-[28px] font-semibold text-[#111] leading-[1.2] mb-2">
             A Global Platform Connecting Healthcare, Wellness & Business Opportunities
           </h2>
-          
+
           <div className="flex items-center gap-4 mb-2">
             <div className="w-16 h-[2px] bg-[#3b8c2a]"></div>
             <Leaf size={20} className="text-[#3b8c2a] fill-[#3b8c2a]" />
             <div className="w-16 h-[2px] bg-[#3b8c2a]"></div>
           </div>
 
-          <div className="space-y-3 text-[#374151] text-[14px] md:text-[15px]  ">
+          <div className="space-y-3 text-gray-800 text-[14px] md:text-[15px]  ">
             <p>
               <strong className="text-[#1a4731]">Bharat Organic Expo 2027</strong> stands as India's most influential international platform dedicated to organic excellence, wellness innovation, and sustainable living. Entering its prestigious edition, the Expo represents a strategic evolution—from a conventional trade exhibition into a powerful global ecosystem for business growth, policy exchange, knowledge sharing, and international collaboration.
             </p>
