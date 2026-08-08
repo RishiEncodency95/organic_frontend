@@ -8,6 +8,10 @@ import Head from "next/head";
 import AboutHero from "@/app/components/abouts/about/AboutHero";
 import AboutStrip from "@/app/components/abouts/about/AboutStrip";
 import EventOverview from "../components/abouts/about/EventOverview";
+import FourPillars from "../components/abouts/about/FourPillars";
+import AboutVenue from "../components/abouts/about/AboutVenue";
+import AboutFaq from "../components/abouts/about/AboutFaq";
+import VisionMission from "../components/abouts/about/VisionMission";
 import AboutOrganizer from "../components/abouts/about/AboutOrganizer";
 import HomeAbout from "@/app/components/home/HomeAbout";
 
@@ -32,7 +36,12 @@ const AboutPage = () => {
         <Suspense fallback={<LoadingFallback />}>
           <HomeAbout />
           <EventOverview />
+
           <AboutOrganizer />
+          <VisionMission />
+          <FourPillars />
+          <AboutVenue />
+          <AboutFaq />
         </Suspense>
       </div>
     </>
