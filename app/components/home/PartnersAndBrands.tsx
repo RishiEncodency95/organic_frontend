@@ -1,121 +1,43 @@
 "use client";
 
 import React from 'react';
+import {
+  Leaf, BookOpen, User, Handshake,
+  GraduationCap, Sprout, Lightbulb,
+  Plus, HeartPulse, Flower2,
+  Users, Globe, Sun, Droplet
+} from "lucide-react";
 
-// --- FAKE DATA FOR NO COPYRIGHT ISSUES ---
-const leadingBrands = [
-  { name: "ECO FARMS", sub: "SINCE 1998", color: "#3b8c2a", serif: true },
-  { name: "Naturals", color: "#1a5fa8" },
-  { name: "GREEN VEDA", sub: "AYURVEDA", color: "#d97706" },
-  { name: "BioGrow", color: "#2d7a2d" },
-  { name: "FRESH LEAF", color: "#0b2912", serif: true },
-  { name: "NutriLife", color: "#e65c00" },
-];
-
-const upcomingBrands = [
-  { name: "PureEarth", color: "#047857" },
-  { name: "Vedic Roots", color: "#854d0e", serif: true },
-  { name: "SunHarvest", color: "#ea580c" },
-  { name: "AgriNova", color: "#2563eb" },
-  { name: "GREEN BLEND", sub: "ORGANICS", color: "#4d7c0f" },
-  { name: "HerbEssentials", color: "#be123c" },
-];
-
-const knowledgePartners = [
-  { name: "AgriTech", sub: "INSTITUTE", color: "#1e3a8a" },
-  { name: "Bio Research", sub: "COUNCIL", color: "#166534" },
-  { name: "Eco Science", sub: "ACADEMY", color: "#065f46" },
-  { name: "Green Learn", sub: "UNIVERSITY", color: "#047857" },
-];
-
-const wellnessPartners = [
-  { name: "HealthPlus", sub: "HOSPITALS", color: "#0369a1" },
-  { name: "AyurCare", sub: "WELLNESS", color: "#b45309" },
-  { name: "LifeForce", sub: "CLINICS", color: "#ea580c" },
-  { name: "PureHealth", sub: "CENTERS", color: "#b91c1c" },
-];
-
-const supportingPartners = [
-  { name: "OFAI", sub: "FARMERS ASSOC.", color: "#15803d" },
-  { name: "BioTrade", sub: "NETWORK", color: "#4338ca" },
-  { name: "AgriUnion", sub: "FEDERATION", color: "#1d4ed8" },
-  { name: "EarthSave", sub: "FOUNDATION", color: "#0f766e" },
-];
-
-// Helper to render text-based logos
-const RenderLogo = ({ brand }: { brand: any }) => (
-  <div className="flex flex-col items-center justify-center min-w-[120px] px-4 cursor-default">
-    <span 
-      className="font-black text-[18px] md:text-[22px] tracking-tight leading-none text-center" 
-      style={{ color: brand.color, fontFamily: brand.serif ? 'serif' : 'inherit' }}
-    >
-      {brand.name}
-    </span>
-    {brand.sub && (
-      <span className="text-[7.5px] text-gray-500 font-bold uppercase tracking-[0.2em] mt-1.5 text-center">
-        {brand.sub}
-      </span>
-    )}
-  </div>
-);
-
-const SectionHeader = ({ title, small = false }: { title: string, small?: boolean }) => (
-  <div className="flex items-center gap-3 w-full">
-    <div className="flex-1 h-[1px] bg-gradient-to-r from-transparent via-gray-200 to-gray-300"></div>
-    <h3 className={`font-black uppercase text-[#0b2912] ${small ? 'text-[10px] md:text-[11px] tracking-[0.15em]' : 'text-[12px] md:text-[14px] tracking-[0.2em]'} text-center whitespace-nowrap`}>
-      {title}
-    </h3>
-    <div className="flex-1 h-[1px] bg-gradient-to-l from-transparent via-gray-200 to-gray-300"></div>
-  </div>
-);
-
-const Marquee = ({ items, reverse = false }: { items: any[], reverse?: boolean }) => {
-  return (
-    <div className="w-full relative overflow-hidden mt-4 md:mt-5 pb-2">
-      <div className={`flex items-center w-max ${reverse ? 'animate-marquee-reverse' : 'animate-marquee'}`}>
-        {[...items, ...items, ...items, ...items].map((brand, idx) => (
-          <div key={idx} className="flex items-center group">
-            <div className="mx-4 md:mx-8 transition-transform duration-300 group-hover:scale-105">
-              <RenderLogo brand={brand} />
-            </div>
-            {/* Vertical separator */}
-            <div className="w-[1.5px] h-8 bg-gray-200 rounded-full"></div>
-          </div>
-        ))}
-      </div>
+// Helper components for the visual styling
+const Divider = () => (
+  <div className="flex items-center justify-center gap-2 my-4">
+    <div className="w-12 md:w-24 h-[1px] bg-gray-300"></div>
+    <div className="flex items-center gap-1 text-[#2d7a2d]">
+      <Leaf size={12} className="transform -rotate-45 fill-current" />
+      <Leaf size={16} className="fill-current" />
+      <Leaf size={12} className="transform rotate-45 fill-current" />
     </div>
-  );
-};
+    <div className="w-12 md:w-24 h-[1px] bg-gray-300"></div>
+  </div>
+);
 
-const SmallMarquee = ({ items }: { items: any[] }) => {
-  // If 3 or less items, don't use slider to keep it neat as requested, though here we have 4 so it will slide.
-  const shouldSlide = items.length > 3;
+const VerticalSeparator = () => (
+  <div className="w-[1px] h-10 bg-gray-200 mx-4 md:mx-6 shrink-0"></div>
+);
 
-  if (!shouldSlide) {
-    return (
-      <div className="flex items-center justify-center gap-2 mt-5 w-full h-[60px]">
-        {items.map((brand, idx) => (
-          <React.Fragment key={idx}>
-            <div className="hover:scale-105 transition-transform duration-300"><RenderLogo brand={brand} /></div>
-            {idx < items.length - 1 && <div className="w-[1.5px] h-6 bg-gray-200"></div>}
-          </React.Fragment>
-        ))}
-      </div>
-    );
-  }
-
+// Marquee Wrapper for infinite CSS scrolling
+const Marquee = ({ children, reverse = false, speed = "35s" }: { children: React.ReactNode, reverse?: boolean, speed?: string }) => {
   return (
-    <div className="w-full relative overflow-hidden mt-5 pb-2 h-[60px] flex items-center">
-      <div className="flex items-center w-max animate-marquee-small">
-        {[...items, ...items, ...items].map((brand, idx) => (
-          <div key={idx} className="flex items-center group">
-            <div className="mx-4 transition-transform duration-300 group-hover:scale-105">
-              <RenderLogo brand={brand} />
-            </div>
-            {/* Vertical separator */}
-            <div className="w-[1px] h-5 bg-gray-300 rounded-full mx-2"></div>
-          </div>
-        ))}
+    <div className="w-full relative overflow-hidden group">
+      <div
+        className={`flex items-center w-max ${reverse ? 'animate-marquee-reverse' : 'animate-marquee'}`}
+        style={{ animationDuration: speed }}
+      >
+        {/* We duplicate children multiple times to ensure seamless infinite scroll */}
+        {children}
+        {children}
+        {children}
+        {children}
       </div>
     </div>
   );
@@ -123,76 +45,313 @@ const SmallMarquee = ({ items }: { items: any[] }) => {
 
 const PartnersAndBrands = () => {
   return (
-    <section className="bg-white py-8 lg:py-10 border-t border-b border-[#3b8c2a]/10 overflow-hidden relative">
-      {/* Nice patterned background matching the theme */}
-      <div className="absolute inset-0 opacity-[0.03]" style={{ backgroundImage: 'radial-gradient(#3b8c2a 2px, transparent 2px)', backgroundSize: '30px 30px' }}></div>
-      <div className="absolute top-0 left-0 w-full h-[2px] bg-gradient-to-r from-transparent via-[#3b8c2a]/30 to-transparent"></div>
-
+    <section className="bg-[#fafaf9] py-6 md:py-8 overflow-hidden font-sans">
       <style>{`
         @keyframes marquee {
           0% { transform: translateX(0%); }
-          100% { transform: translateX(-25%); }
+          100% { transform: translateX(-50%); } /* Scrolls half the width since we duplicated it */
         }
         @keyframes marquee-reverse {
-          0% { transform: translateX(-25%); }
+          0% { transform: translateX(-50%); }
           100% { transform: translateX(0%); }
         }
-        @keyframes marquee-small {
-          0% { transform: translateX(0%); }
-          100% { transform: translateX(-33.33%); }
-        }
         .animate-marquee {
-          animation: marquee 25s linear infinite;
+          animation: marquee linear infinite;
         }
         .animate-marquee-reverse {
-          animation: marquee-reverse 25s linear infinite;
+          animation: marquee-reverse linear infinite;
         }
-        .animate-marquee-small {
-          animation: marquee-small 15s linear infinite;
-        }
-        .animate-marquee:hover, .animate-marquee-reverse:hover, .animate-marquee-small:hover {
+        .group:hover .animate-marquee, .group:hover .animate-marquee-reverse {
           animation-play-state: paused;
         }
       `}</style>
 
-      {/* Very subtle background watermark */}
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-full opacity-[0.015] pointer-events-none flex items-center justify-center">
-        <div className="w-[600px] h-[600px] rounded-full border-[40px] border-[#0b2912]"></div>
-      </div>
+      <div className="max-w-[1400px] mx-auto px-2 md:px-4">
 
-      <div className="max-w-7xl mx-auto px-4 md:px-6 relative z-10">
-        
-        {/* ROW 1: TRUSTED BY LEADING BRANDS */}
-        <div className="mb-8 md:mb-10">
-          <SectionHeader title="TRUSTED BY INDUSTRY LEADERS" />
-          <Marquee items={leadingBrands} />
+        {/* HEADER */}
+        <div className="text-center mb-2">
+          <p className="text-[10px] md:text-[12px] font-bold text-gray-500 tracking-[0.2em] uppercase mb-0.5">
+            Trusted By
+          </p>
+          <h2 className="text-2xl md:text-3xl font-semibold text-[#1a5a2a] tracking-tight">
+            INDUSTRY LEADERS
+          </h2>
+          <Divider />
         </div>
 
-        {/* ROW 2: PARTNERS GRID (STATIC or MARQUEE based on length) */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-4 mb-8 md:mb-10 px-0 md:px-4">
-          {/* Knowledge Partners */}
-          <div className="flex flex-col items-center bg-white/50 backdrop-blur-sm rounded-xl p-4 shadow-sm border border-[#3b8c2a]/5">
-            <SectionHeader title="KNOWLEDGE PARTNERS" small />
-            <SmallMarquee items={knowledgePartners} />
-          </div>
-
-          {/* Wellness Partners */}
-          <div className="flex flex-col items-center bg-white/50 backdrop-blur-sm rounded-xl p-4 shadow-sm border border-[#3b8c2a]/5">
-            <SectionHeader title="WELLNESS PARTNERS" small />
-            <SmallMarquee items={wellnessPartners} />
-          </div>
-
-          {/* Supporting Associations */}
-          <div className="flex flex-col items-center bg-white/50 backdrop-blur-sm rounded-xl p-4 shadow-sm border border-[#3b8c2a]/5">
-            <SectionHeader title="SUPPORTING ASSOCIATIONS" small />
-            <SmallMarquee items={supportingPartners} />
-          </div>
+        {/* TOP ROW: MARQUEE LOGOS */}
+        <div className="bg-white rounded-2xl shadow-[0_2px_15px_rgba(0,0,0,0.03)] border border-gray-100 py-4 mb-3 w-full overflow-hidden">
+          <Marquee speed="60s">
+            <div className="flex items-center">
+              {/* Logo 1 */}
+              <div className="flex flex-col items-center justify-center min-w-[140px] px-2 hover:scale-105 transition-transform cursor-pointer">
+                <Leaf size={24} className="text-[#3b8c2a] fill-[#3b8c2a] mb-1" />
+                <span className="font-bold text-[#111] text-[18px] leading-none">BIO FARMS</span>
+                <span className="text-[9px] text-gray-500 font-bold uppercase tracking-widest mt-1">SINCE 1998</span>
+              </div>
+              <VerticalSeparator />
+              {/* Logo 2 */}
+              <div className="flex flex-col items-center justify-center min-w-[140px] px-2 hover:scale-105 transition-transform cursor-pointer">
+                <div className="relative">
+                  <span className="font-black text-[#1a5fa8] text-[20px] leading-none">Naturals</span>
+                  <Leaf size={12} className="absolute -top-2 -right-2 text-[#3b8c2a] fill-[#3b8c2a]" />
+                </div>
+              </div>
+              <VerticalSeparator />
+              {/* Logo 3 */}
+              <div className="flex flex-col items-center justify-center min-w-[140px] px-2 hover:scale-105 transition-transform cursor-pointer">
+                <Sprout size={20} className="text-[#d97706] mb-1" />
+                <span className="font-bold text-[#d97706] text-[18px] leading-none">GREEN VEDA</span>
+                <span className="text-[9px] text-gray-500 font-bold uppercase tracking-widest mt-1">AYURVEDA</span>
+              </div>
+              <VerticalSeparator />
+              {/* Logo 4 */}
+              <div className="flex flex-col items-center justify-center min-w-[140px] px-2 hover:scale-105 transition-transform cursor-pointer">
+                <span className="font-bold text-[#2d7a2d] text-[22px] leading-none flex items-center">
+                  Bio<Leaf size={18} className="text-[#3b8c2a] fill-[#3b8c2a] mx-0.5" />Grow
+                </span>
+              </div>
+              <VerticalSeparator />
+              {/* Logo 5 */}
+              <div className="flex flex-col items-center justify-center min-w-[140px] px-2 hover:scale-105 transition-transform cursor-pointer">
+                <Leaf size={20} className="text-[#0b2912] fill-[#0b2912] mb-1" />
+                <span className="font-black text-[#0b2912] text-[16px] leading-none tracking-tight">FRESH LEAF</span>
+              </div>
+              <VerticalSeparator />
+              {/* Logo 6 */}
+              <div className="flex flex-col items-center justify-center min-w-[140px] px-2 hover:scale-105 transition-transform cursor-pointer">
+                <div className="flex items-center">
+                  <Leaf size={20} className="text-[#e65c00] fill-[#e65c00] mr-1" />
+                  <span className="font-bold text-[#e65c00] text-[20px] leading-none">NutriLife</span>
+                </div>
+              </div>
+              <VerticalSeparator />
+              {/* Logo 7 */}
+              <div className="flex flex-col items-center justify-center min-w-[140px] px-2 hover:scale-105 transition-transform cursor-pointer">
+                <span className="font-black text-[#3b8c2a] text-[18px] leading-none">ECO</span>
+                <span className="text-[12px] text-[#3b8c2a] font-bold tracking-widest leading-none mt-0.5">HARVEST</span>
+              </div>
+              <VerticalSeparator />
+            </div>
+          </Marquee>
         </div>
 
-        {/* ROW 3: UPCOMING BRANDS */}
-        <div className="mt-2">
-          <SectionHeader title="EMERGING ORGANIC BRANDS" />
-          <Marquee items={upcomingBrands} reverse />
+        {/* MIDDLE ROW: 3 CARDS */}
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-2 md:gap-3 mb-3">
+
+          {/* Card 1: Knowledge Partners */}
+          <div className="bg-white rounded-xl shadow-[0_2px_15px_rgba(0,0,0,0.03)] border border-gray-100 px-4 py-2 flex flex-col">
+            <div className="flex items-center justify-center gap-2 mb-4">
+              <div className="w-6 h-[1px] bg-gray-300"></div>
+              <div className="w-6 h-6 rounded-full bg-[#1a5a2a] flex items-center justify-center text-white shrink-0">
+                <BookOpen size={12} className="fill-current" />
+              </div>
+              <span className="text-[10px] lg:text-[13px] font-semibold text-[#111] tracking-widest uppercase">KNOWLEDGE PARTNERS</span>
+              <div className="w-6 h-[1px] bg-gray-300"></div>
+            </div>
+
+            <div className="w-full flex-1 relative mt-2">
+              <Marquee speed="20s">
+                <div className="flex items-start">
+                  <div className="flex flex-col items-center w-[90px] shrink-0">
+                    <div className="w-10 h-10 rounded-full border border-gray-200 flex items-center justify-center text-[#2d7a2d] mb-1.5 hover:scale-110 transition-transform cursor-pointer">
+                      <GraduationCap size={20} />
+                    </div>
+                    <span className="font-bold text-[#2d7a2d] text-center text-[12px] leading-tight mb-1">Eco<br />Science</span>
+                    <span className="text-[7px] font-bold text-gray-400 uppercase tracking-wider">ACADEMY</span>
+                  </div>
+                  <div className="w-[1px] h-12 bg-gray-100 mx-3 mt-2 shrink-0"></div>
+
+                  <div className="flex flex-col items-center w-[90px] shrink-0">
+                    <div className="w-10 h-10 rounded-full border border-gray-200 flex items-center justify-center text-[#1a5a2a] mb-1.5 hover:scale-110 transition-transform cursor-pointer">
+                      <Leaf size={20} className="fill-current" />
+                    </div>
+                    <span className="font-bold text-[#1a5a2a] text-center text-[12px] leading-tight mb-1">Green<br />Learn</span>
+                    <span className="text-[7px] font-bold text-gray-400 uppercase tracking-wider">UNIVERSITY</span>
+                  </div>
+                  <div className="w-[1px] h-12 bg-gray-100 mx-3 mt-2 shrink-0"></div>
+
+                  <div className="flex flex-col items-center w-[90px] shrink-0">
+                    <div className="w-10 h-10 rounded-full border border-gray-200 flex items-center justify-center text-[#2d7a2d] mb-1.5 hover:scale-110 transition-transform cursor-pointer">
+                      <Lightbulb size={20} />
+                    </div>
+                    <span className="font-bold text-[#2d7a2d] text-center text-[12px] leading-tight mb-1">Future<br />Insights</span>
+                    <span className="text-[7px] font-bold text-gray-400 uppercase tracking-wider">INSTITUTE</span>
+                  </div>
+                  <div className="w-[1px] h-12 bg-gray-100 mx-3 mt-2 shrink-0"></div>
+                </div>
+              </Marquee>
+            </div>
+          </div>
+
+          {/* Card 2: Wellness Partners */}
+          <div className="bg-white rounded-xl shadow-[0_2px_15px_rgba(0,0,0,0.03)] border border-gray-100 px-4 py-2 flex flex-col">
+            <div className="flex items-center justify-center gap-2 mb-4">
+              <div className="w-6 h-[1px] bg-gray-300"></div>
+              <div className="w-6 h-6 rounded-full bg-[#5a8024] flex items-center justify-center text-white shrink-0">
+                <User size={12} className="fill-current" />
+              </div>
+              <span className="text-[10px] lg:text-[13px] font-semibold text-[#111] tracking-widest uppercase whitespace-nowrap">WELLNESS PARTNERS</span>
+              <div className="w-6 h-[1px] bg-gray-300"></div>
+            </div>
+
+            <div className="w-full flex-1 relative mt-2">
+              <Marquee speed="20s" reverse>
+                <div className="flex items-start">
+                  <div className="flex flex-col items-center w-[90px] shrink-0">
+                    <div className="w-10 h-10 rounded-full border border-gray-200 flex items-center justify-center text-[#dc2626] mb-1.5 hover:scale-110 transition-transform cursor-pointer">
+                      <Plus size={20} strokeWidth={3} />
+                    </div>
+                    <span className="font-bold text-[#dc2626] text-center text-[12px] leading-tight mb-1">PureHealth</span>
+                    <span className="text-[7px] font-bold text-gray-400 uppercase tracking-wider">CENTERS</span>
+                  </div>
+                  <div className="w-[1px] h-12 bg-gray-100 mx-3 mt-2 shrink-0"></div>
+
+                  <div className="flex flex-col items-center w-[90px] shrink-0">
+                    <div className="w-10 h-10 rounded-full border border-gray-200 flex items-center justify-center text-[#0284c7] mb-1.5 hover:scale-110 transition-transform cursor-pointer">
+                      <HeartPulse size={20} />
+                    </div>
+                    <span className="font-bold text-[#0284c7] text-center text-[12px] leading-tight mb-1">HealthPlus</span>
+                    <span className="text-[7px] font-bold text-gray-400 uppercase tracking-wider">HOSPITALS</span>
+                  </div>
+                  <div className="w-[1px] h-12 bg-gray-100 mx-3 mt-2 shrink-0"></div>
+
+                  <div className="flex flex-col items-center w-[90px] shrink-0">
+                    <div className="w-10 h-10 rounded-full border border-gray-200 flex items-center justify-center text-[#7c3aed] mb-1.5 hover:scale-110 transition-transform cursor-pointer">
+                      <Flower2 size={20} />
+                    </div>
+                    <span className="font-bold text-[#7c3aed] text-center text-[12px] leading-tight mb-1">MindCare</span>
+                    <span className="text-[7px] font-bold text-gray-400 uppercase tracking-wider">WELLNESS</span>
+                  </div>
+                  <div className="w-[1px] h-12 bg-gray-100 mx-3 mt-2 shrink-0"></div>
+                </div>
+              </Marquee>
+            </div>
+          </div>
+
+          {/* Card 3: Supporting Associations */}
+          <div className="bg-white rounded-xl shadow-[0_2px_15px_rgba(0,0,0,0.03)] border border-gray-100 px-4 py-2 flex flex-col">
+            <div className="flex items-center justify-center gap-2 mb-4">
+              <div className="w-6 h-[1px] bg-gray-300"></div>
+              <div className="w-6 h-6 rounded-full bg-[#1e4a32] flex items-center justify-center text-white shrink-0">
+                <Handshake size={12} className="fill-current" />
+              </div>
+              <span className="text-[10px] lg:text-[13px] font-semibold text-[#111] tracking-widest uppercase">SUPPORTING ASSOCIATIONS</span>
+              <div className="w-6 h-[1px] bg-gray-300"></div>
+            </div>
+
+            <div className="w-full flex-1 relative mt-2">
+              <Marquee speed="20s">
+                <div className="flex items-start">
+                  <div className="flex flex-col items-center w-[90px] shrink-0">
+                    <div className="w-10 h-10 rounded-full border border-gray-200 flex items-center justify-center text-[#2563eb] mb-1.5 hover:scale-110 transition-transform cursor-pointer">
+                      <Users size={20} />
+                    </div>
+                    <span className="font-bold text-[#2563eb] text-center text-[12px] leading-tight mb-1">AgriUnion</span>
+                    <span className="text-[7px] font-bold text-gray-400 uppercase tracking-wider">FEDERATION</span>
+                  </div>
+                  <div className="w-[1px] h-12 bg-gray-100 mx-3 mt-2 shrink-0"></div>
+
+                  <div className="flex flex-col items-center w-[90px] shrink-0">
+                    <div className="w-10 h-10 rounded-full border border-gray-200 flex items-center justify-center text-[#166534] mb-1.5 hover:scale-110 transition-transform cursor-pointer">
+                      <Globe size={20} />
+                    </div>
+                    <span className="font-bold text-[#166534] text-center text-[12px] leading-tight mb-1">EarthSave</span>
+                    <span className="text-[7px] font-bold text-gray-400 uppercase tracking-wider">FOUNDATION</span>
+                  </div>
+                  <div className="w-[1px] h-12 bg-gray-100 mx-3 mt-2 shrink-0"></div>
+
+                  <div className="flex flex-col items-center w-[90px] shrink-0">
+                    <div className="w-10 h-10 rounded-full border border-gray-200 flex items-center justify-center text-[#ea580c] mb-1.5 hover:scale-110 transition-transform cursor-pointer">
+                      <Sprout size={20} />
+                    </div>
+                    <span className="font-bold text-[#ea580c] text-center text-[12px] leading-tight mb-1">GreenEarth</span>
+                    <span className="text-[7px] font-bold text-gray-400 uppercase tracking-wider">ALLIANCE</span>
+                  </div>
+                  <div className="w-[1px] h-12 bg-gray-100 mx-3 mt-2 shrink-0"></div>
+                </div>
+              </Marquee>
+            </div>
+          </div>
+
+        </div>
+
+        {/* BOTTOM ROW HEADER */}
+        <div className="text-center mb-4">
+          <div className="flex items-center justify-center gap-3">
+            <div className="w-24 md:w-32 h-[1px] bg-gray-300"></div>
+            <h3 className="text-[11px] md:text-[13px] font-bold text-[#333] tracking-[0.2em] uppercase">
+              EMERGING ORGANIC BRANDS
+            </h3>
+            <div className="w-24 md:w-32 h-[1px] bg-gray-300"></div>
+          </div>
+          {/* <div className="flex items-center justify-center gap-1 text-[#2d7a2d] mt-1.5">
+            <Leaf size={10} className="transform -rotate-45 fill-current" />
+            <Leaf size={14} className="fill-current" />
+            <Leaf size={10} className="transform rotate-45 fill-current" />
+          </div> */}
+        </div>
+
+        {/* BOTTOM ROW: MARQUEE */}
+        <div className="w-full">
+          <Marquee speed="70s" reverse>
+            <div className="flex gap-3 px-1.5">
+
+              <div className="bg-white rounded-xl shadow-sm border border-gray-100 flex flex-col items-center justify-center p-3 w-[150px] relative overflow-hidden group hover:shadow-md transition-all cursor-pointer">
+                <Leaf size={28} className="text-[#1a5a2a] fill-[#1a5a2a] mb-2 group-hover:scale-110 transition-transform" />
+                <span className="font-bold text-[#111] text-[13px] text-center">OrgEssentials</span>
+                <div className="absolute bottom-0 left-4 right-4 h-1 bg-[#1a5a2a] rounded-t-md"></div>
+              </div>
+
+              <div className="bg-white rounded-xl shadow-sm border border-gray-100 flex flex-col items-center justify-center p-3 w-[150px] relative overflow-hidden group hover:shadow-md transition-all cursor-pointer">
+                <Globe size={28} className="text-[#2d7a2d] mb-2 group-hover:scale-110 transition-transform" />
+                <span className="font-bold text-[#111] text-[13px] text-center">PureEarth</span>
+                <div className="absolute bottom-0 left-4 right-4 h-1 bg-[#2d7a2d] rounded-t-md"></div>
+              </div>
+
+              <div className="bg-white rounded-xl shadow-sm border border-gray-100 flex flex-col items-center justify-center p-3 w-[150px] relative overflow-hidden group hover:shadow-md transition-all cursor-pointer">
+                <div className="mb-2 group-hover:scale-110 transition-transform">
+                  <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#854d0e" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                    <path d="M12 22v-6" /><path d="M12 16a4 4 0 0 0-4-4H6" /><path d="M12 16a4 4 0 0 1 4-4h2" /><path d="M8 12a4 4 0 0 1-4-4V6" /><path d="M16 12a4 4 0 0 0 4-4V6" /><circle cx="12" cy="5" r="3" />
+                  </svg>
+                </div>
+                <span className="font-bold text-[#854d0e] text-[13px] text-center font-serif">Vedic Roots</span>
+                <div className="absolute bottom-0 left-4 right-4 h-1 bg-[#854d0e] rounded-t-md"></div>
+              </div>
+
+              <div className="bg-white rounded-xl shadow-sm border border-gray-100 flex flex-col items-center justify-center p-3 w-[150px] relative overflow-hidden group hover:shadow-md transition-all cursor-pointer">
+                <Sun size={28} className="text-[#ea580c] mb-2 group-hover:scale-110 transition-transform" />
+                <span className="font-bold text-[#ea580c] text-[13px] text-center">SunHarvest</span>
+                <div className="absolute bottom-0 left-4 right-4 h-1 bg-[#ea580c] rounded-t-md"></div>
+              </div>
+
+              <div className="bg-white rounded-xl shadow-sm border border-gray-100 flex flex-col items-center justify-center p-3 w-[150px] relative overflow-hidden group hover:shadow-md transition-all cursor-pointer">
+                <div className="mb-2 group-hover:scale-110 transition-transform relative">
+                  <Leaf size={22} className="text-[#1a5a2a] fill-[#1a5a2a]" />
+                  <Leaf size={14} className="text-[#3b8c2a] fill-[#3b8c2a] absolute -top-1 -right-2 transform rotate-45" />
+                </div>
+                <span className="font-bold text-[#111] text-[13px] text-center">AgriNova</span>
+                <div className="absolute bottom-0 left-4 right-4 h-1 bg-[#1a5a2a] rounded-t-md"></div>
+              </div>
+
+              <div className="bg-white rounded-xl shadow-sm border border-gray-100 flex flex-col items-center justify-center p-3 w-[150px] relative overflow-hidden group hover:shadow-md transition-all cursor-pointer">
+                <Leaf size={28} className="text-[#4d7c0f] fill-[#4d7c0f] mb-1 group-hover:scale-110 transition-transform" />
+                <span className="font-black text-[#111] text-[12px] text-center uppercase leading-tight">GREEN BLEND</span>
+                <span className="text-[6px] font-bold text-gray-500 uppercase tracking-widest mt-0.5">ORGANICS</span>
+                <div className="absolute bottom-0 left-4 right-4 h-1 bg-[#4d7c0f] rounded-t-md"></div>
+              </div>
+
+              <div className="bg-white rounded-xl shadow-sm border border-gray-100 flex flex-col items-center justify-center p-3 w-[150px] relative overflow-hidden group hover:shadow-md transition-all cursor-pointer">
+                <div className="mb-2 group-hover:scale-110 transition-transform flex gap-1">
+                  <Leaf size={18} className="text-[#1a5a2a] fill-[#1a5a2a] transform -rotate-12" />
+                  <Leaf size={22} className="text-[#1a5a2a] fill-[#1a5a2a] transform rotate-12" />
+                </div>
+                <span className="font-bold text-[#1a5a2a] text-[14px] text-center">Herbaya</span>
+                <div className="absolute bottom-0 left-4 right-4 h-1 bg-[#1a5a2a] rounded-t-md"></div>
+              </div>
+
+            </div>
+          </Marquee>
         </div>
 
       </div>

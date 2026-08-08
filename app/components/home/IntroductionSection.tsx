@@ -1,5 +1,5 @@
 "use client";
-import introImg from "../../assets/home/homeIntroduction.png";
+import introImg from "../../assets/home/homeIntro.png";
 
 
 import { motion, useInView, animate } from "framer-motion";
@@ -137,11 +137,10 @@ const IntroductionSection = () => {
             whileInView={{ opacity: 1, scale: 1 }}
             viewport={{ once: true }}
             transition={{ duration: 1, ease: "easeOut" }}
-            className="w-full lg:w-[40%] flex flex-col items-center lg:items-end gap-2 relative"
+            className="w-full lg:w-[40%] flex flex-col items-center gap-2 relative mt-2 lg:mt-0"
           >
-            {/* Highly Highlighted White Countdown Timer */}
+            {/* Highly Highlighted White Countdown Timer (Top Center) */}
             <div className="w-fit self-center bg-white rounded-xl p-1.5 sm:p-2 shadow-[0_15px_40px_rgba(59,140,42,0.25)] border-2 border-[#3b8c2a] flex flex-col items-center justify-center transform hover:-translate-y-1 transition-all duration-500 group relative z-20 overflow-hidden">
-
               {/* Soft decorative glow inside the card */}
               <div className="absolute top-0 right-0 w-32 h-32 bg-[#F2B40E] opacity-10 blur-2xl rounded-full"></div>
               <div className="absolute bottom-0 left-0 w-32 h-32 bg-[#3b8c2a] opacity-10 blur-2xl rounded-full"></div>

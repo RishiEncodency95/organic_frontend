@@ -1,59 +1,73 @@
 "use client";
 
-import { Users, Building2, Map, Award } from "lucide-react";
+import React from 'react';
+import { Users, Building2, Map, Award } from 'lucide-react';
 
 const AboutStrip = () => {
+  const items = [
+    {
+      title: "500+",
+      subtitle: "TOP EXHIBITORS",
+      icon: Building2,
+      color: "text-orange-500"
+    },
+    {
+      title: "25,000+",
+      subtitle: "TRADE VISITORS",
+      icon: Users,
+      color: "text-[#3b8c2a]"
+    },
+    {
+      title: "15,000 Sqm",
+      subtitle: "EXHIBITION AREA",
+      icon: Map,
+      color: "text-blue-500"
+    },
+    {
+      title: "10+ Years",
+      subtitle: "PROVEN EXPERIENCE",
+      icon: Award,
+      color: "text-green-600"
+    }
+  ];
+
   return (
-    <div className="w-full relative z-20">
-      <div className="bg-gradient-to-r from-[#3b8c2a] to-[#215e12] p-1 md:p-1.5">
-        <div className="grid grid-cols-2 md:grid-cols-4 divide-x divide-white/20">
+    <div className="bg-[#3B8D2A] w-full py-1.5 md:py-3 border-t border-b border-white/10 shadow-inner overflow-x-auto hide-scrollbar relative z-20">
+      <div className="max-w-[1600px] mx-auto px-4 md:px-11">
+        <div className="flex items-center justify-between min-w-[700px] md:min-w-full lg:min-w-full">
+          {items.map((item, index) => (
+            <React.Fragment key={index}>
+              <div className="flex items-center gap-2 md:gap-3 group cursor-pointer hover:scale-105 transition-transform duration-300">
+                <div className="w-6 h-6 md:w-8 md:h-8 bg-white rounded-full flex items-center justify-center shadow-lg group-hover:shadow-xl transition-shadow">
+                  <item.icon className={`w-3.5 h-3.5 md:w-6 md:h-6 ${item.color}`} />
+                </div>
+                <div className="flex flex-col">
+                  <span className="text-white font-bold text-[9px] md:text-[12px] leading-[1.1] tracking-wider uppercase">
+                    {item.title}
+                  </span>
+                  <span className="text-slate-300 font-medium text-[8px] md:text-[11px] leading-[1.1] tracking-wide uppercase">
+                    {item.subtitle}
+                  </span>
+                </div>
+              </div>
 
-          {/* Item 1 */}
-          <div className="flex items-center justify-center md:justify-start gap-3 px-3 py-2.5 hover:bg-black/10 transition-colors rounded-l-lg cursor-pointer group">
-            <div className="w-8 h-8 rounded-full bg-white/20 flex items-center justify-center shrink-0 group-hover:bg-[#F2B40E] group-hover:shadow-md transition-all duration-300">
-              <Building2 size={14} className="text-white group-hover:text-[#0a1f12] transition-colors duration-300" />
-            </div>
-            <div className="flex flex-col">
-              <span className="text-white text-[12px] font-bold leading-tight">500+</span>
-              <span className="text-white/80 text-[10px] md:text-[11px] font-medium leading-tight group-hover:text-white transition-colors">Top Exhibitors</span>
-            </div>
-          </div>
-
-          {/* Item 2 */}
-          <div className="flex items-center justify-center md:justify-start gap-3 px-3 py-2.5 hover:bg-black/10 transition-colors cursor-pointer group">
-            <div className="w-8 h-8 rounded-full bg-white/20 flex items-center justify-center shrink-0 group-hover:bg-[#F2B40E] group-hover:shadow-md transition-all duration-300">
-              <Users size={14} className="text-white group-hover:text-[#0a1f12] transition-colors duration-300" />
-            </div>
-            <div className="flex flex-col">
-              <span className="text-white text-[12px] font-bold leading-tight">25,000+</span>
-              <span className="text-white/80 text-[10px] md:text-[11px] font-medium leading-tight group-hover:text-white transition-colors">Trade Visitors</span>
-            </div>
-          </div>
-
-          {/* Item 3 */}
-          <div className="flex items-center justify-center md:justify-start gap-3 px-3 py-2.5 hover:bg-black/10 transition-colors cursor-pointer group">
-            <div className="w-8 h-8 rounded-full bg-white/20 flex items-center justify-center shrink-0 group-hover:bg-[#F2B40E] group-hover:shadow-md transition-all duration-300">
-              <Map size={14} className="text-white group-hover:text-[#0a1f12] transition-colors duration-300" />
-            </div>
-            <div className="flex flex-col">
-              <span className="text-white text-[12px] font-bold leading-tight">15,000 Sqm</span>
-              <span className="text-white/80 text-[10px] md:text-[11px] font-medium leading-tight group-hover:text-white transition-colors">Exhibition Area</span>
-            </div>
-          </div>
-
-          {/* Item 4 */}
-          <div className="flex items-center justify-center md:justify-start gap-3 px-3 py-2.5 hover:bg-black/10 transition-colors rounded-r-lg cursor-pointer group">
-            <div className="w-8 h-8 rounded-full bg-white/20 flex items-center justify-center shrink-0 group-hover:bg-[#F2B40E] group-hover:shadow-md transition-all duration-300">
-              <Award size={14} className="text-white group-hover:text-[#0a1f12] transition-colors duration-300" />
-            </div>
-            <div className="flex flex-col">
-              <span className="text-white text-[12px] font-bold leading-tight">10+ Years</span>
-              <span className="text-white/80 text-[10px] md:text-[11px] font-medium leading-tight group-hover:text-white transition-colors">Proven Experience</span>
-            </div>
-          </div>
-
+              {/* Separator Line */}
+              {index < items.length - 1 && (
+                <div className="w-px h-6 bg-white/20 mx-2 md:mx-3" />
+              )}
+            </React.Fragment>
+          ))}
         </div>
       </div>
+      <style>{`
+        .hide-scrollbar::-webkit-scrollbar {
+          display: none;
+        }
+        .hide-scrollbar {
+          -ms-overflow-style: none;
+          scrollbar-width: none;
+        }
+      `}</style>
     </div>
   );
 };

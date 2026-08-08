@@ -7,14 +7,6 @@ import Head from "next/head";
 // Synchronous load for above the fold
 import AboutHero from "@/app/components/abouts/about/AboutHero";
 import AboutStrip from "@/app/components/abouts/about/AboutStrip";
-
-// Lazy load below the fold components
-const AboutIntro = lazy(() => import("@/app/components/abouts/about/AboutIntro"));
-const AboutTimeline = lazy(() => import("@/app/components/abouts/about/AboutTimeline"));
-const AboutWhy = lazy(() => import("@/app/components/abouts/about/AboutWhy"));
-const AboutFeatures = lazy(() => import("@/app/components/abouts/about/AboutFeatures"));
-const AboutHighlights = lazy(() => import("@/app/components/abouts/about/AboutHighlights"));
-const AboutCTA = lazy(() => import("@/app/components/abouts/about/AboutCTA"));
 import HomeAbout from "@/app/components/home/HomeAbout";
 
 const LoadingFallback = () => (
@@ -37,28 +29,7 @@ const AboutPage = () => {
 
         <Suspense fallback={<LoadingFallback />}>
           <HomeAbout />
-          <div className="w-full bg-white">
-            <AboutIntro />
-          </div>
 
-          <div className="w-full bg-[#f8fdf9]">
-            <AboutTimeline />
-          </div>
-
-          <div className="w-full bg-white">
-            <AboutWhy />
-          </div>
-
-          <div className="w-full bg-[#f8fdf9]">
-            <AboutFeatures />
-          </div>
-
-          <div className="w-full bg-white">
-            <AboutHighlights />
-          </div>
-
-
-          <AboutCTA />
         </Suspense>
       </div>
     </>

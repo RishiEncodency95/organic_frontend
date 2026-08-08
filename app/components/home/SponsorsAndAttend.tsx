@@ -179,6 +179,11 @@ const SponsorsAndAttend = () => {
                 ))}
               </div>
             </div>
+            <div className="flex items-center gap-4 mb-2 md:mb-1">
+              <div className="h-[1px] flex-grow bg-gray-200" />
+              <Leaf className="w-3.5 h-3.5 text-[#00643b] fill-[#00643b]" />
+              <div className="h-[1px] flex-grow bg-gray-200" />
+            </div>
           </motion.div>
 
           {/* CENTER: CIRCULAR INFOGRAPHIC */}

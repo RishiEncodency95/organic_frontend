@@ -5,7 +5,7 @@ import { ArrowRight, Leaf, HeartPulse, Sparkles, Apple, Shirt, Recycle, Dumbbell
 
 const categories = [
   { icon: Apple, title: "Organic Food &\nBeverages", desc: "Certified organic staples, fruits, dairy, healthy snacks, and plant-based drinks.", color: "#4ade80", image: "https://images.unsplash.com/photo-1542838132-92c53300491e?w=800&q=80" },
-  { icon: Pill, title: "Nutritional Supplements\n& Superfoods", desc: "Natural dietary supplements, organic protein powders, and immunity boosters.", color: "#14b8a6", image: "https://images.unsplash.com/photo-1584362917165-526a968579e8?w=800&q=80" },
+  { icon: Pill, title: "Nutritional Supplements\n& Superfoods", desc: "Natural dietary supplements, organic protein powders, and immunity boosters.", color: "#14b8a6", image: "https://images.unsplash.com/photo-1610832958506-aa56368176cf?w=800&q=80" },
   { icon: Leaf, title: "Smart &\nSustainable Farming", desc: "Organic seeds, bio-fertilizers, agri-tech innovations, and vertical farming tools.", color: "#22c55e", image: "https://images.unsplash.com/photo-1625246333195-78d9c38ad449?w=800&q=80" },
   { icon: Sparkles, title: "Herbal Wellness\n& Ayurveda", desc: "Ayurvedic therapies, herbal supplements, essential oils, and detox solutions.", color: "#fb923c", image: "https://images.unsplash.com/photo-1540555700478-4be289fbecef?w=800&q=80" },
   { icon: HeartPulse, title: "Natural Beauty\n& Clean Cosmetics", desc: "Organic skincare, cruelty-free vegan cosmetics, and non-toxic hygiene products.", color: "#f472b6", image: "https://images.unsplash.com/photo-1556228578-0d85b1a4d571?w=800&q=80" },
@@ -89,7 +89,7 @@ const ExpoCategories = () => {
         </div>
 
         {/* Static Grid Layout (No Slider) */}
-        <div className="w-full  mb-2 py-2 flex flex-wrap justify-center gap-2 lg:gap-3">
+        <div className="w-full mb-2 py-2 px-4 lg:px-11 grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-5 gap-2 lg:gap-3 justify-center">
           {categories.map((item, index) => {
             const Icon = item.icon;
             const displayIndex = index + 1; // Numbering 1 to 10
@@ -97,23 +97,11 @@ const ExpoCategories = () => {
             return (
               <div
                 key={index}
-                className="group flex flex-col w-[240px] h-auto bg-white/60 backdrop-blur-xl rounded-xl overflow-hidden cursor-pointer border-[1.5px] border-white/90 shadow-[0_8px_30px_rgba(0,0,0,0.04),inset_0_1px_2px_rgba(255,255,255,0.8)] hover:shadow-[0_15px_40px_rgba(0,0,0,0.12),inset_0_1px_2px_rgba(255,255,255,0.9)] hover:-translate-y-1.5 hover:bg-white/80 transition-all duration-500 relative"
+                className="group flex flex-col w-full h-auto bg-white/60 backdrop-blur-xl rounded-xl overflow-hidden cursor-pointer border-[1.5px] border-white/90 shadow-[0_8px_30px_rgba(0,0,0,0.04),inset_0_1px_2px_rgba(255,255,255,0.8)] hover:shadow-[0_15px_40px_rgba(0,0,0,0.12),inset_0_1px_2px_rgba(255,255,255,0.9)] hover:-translate-y-1.5 hover:bg-white/80 transition-all duration-500 relative"
               >
                 {/* Full Width Image at the Top */}
-                <div className="relative w-full h-[150px] shrink-0 overflow-hidden bg-gray-100">
+                <div className="relative w-full h-[120px] lg:h-[140px] shrink-0 overflow-hidden bg-gray-100">
                   <img src={item.image} className="absolute inset-0 w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" alt={item.title} />
-
-                  {/* Floating Icon overlaid on the image */}
-                  {/* <div
-                    className="absolute -bottom-4 right-4 w-10 h-10 rounded-full bg-white flex items-center justify-center shadow-md z-20"
-                  >
-                    <div
-                      className="absolute inset-1 rounded-full flex items-center justify-center"
-                      style={{ backgroundColor: item.color }}
-                    >
-                      <Icon size={16} color="white" strokeWidth={2.5} />
-                    </div>
-                  </div> */}
                 </div>
 
                 {/* Content Area */}
@@ -128,14 +116,6 @@ const ExpoCategories = () => {
                   {/* Dot Pattern in the faint area */}
                   <div className="absolute inset-0 opacity-[0.03] pointer-events-none" style={{ backgroundImage: 'radial-gradient(circle at 1px 1px, black 1px, transparent 0)', backgroundSize: '14px 14px' }} />
 
-                  {/* Number & Line */}
-                  {/* <div className="flex items-center gap-2 mb-1 w-full">
-                    <span className="text-[16px] font-bold" style={{ color: item.color }}>
-                      {String(displayIndex).padStart(2, '0')}
-                    </span>
-                    <div className="h-[1.5px] w-4 opacity-30" style={{ backgroundColor: item.color }} />
-                  </div> */}
-
                   {/* Title & Description */}
                   <div className="flex flex-col items-start text-left w-full">
                     <h3 className="text-[14px] font-bold text-gray-900 leading-[1.3] mb-1.5  group-hover:text-opacity-80 transition-opacity">
@@ -147,7 +127,7 @@ const ExpoCategories = () => {
                   </div>
                 </div>
 
-                {/* <div className="flex-grow" /> */}
+
 
               </div>
             );
