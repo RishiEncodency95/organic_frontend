@@ -45,7 +45,7 @@ const Marquee = ({ children, reverse = false, speed = "35s" }: { children: React
 
 const PartnersAndBrands = () => {
   return (
-    <section className="bg-[#fafaf9] py-6 md:py-8 overflow-hidden font-sans">
+    <section className="bg-[#fafaf9] py-2 md:py-4 overflow-hidden font-sans">
       <style>{`
         @keyframes marquee {
           0% { transform: translateX(0%); }
@@ -66,7 +66,7 @@ const PartnersAndBrands = () => {
         }
       `}</style>
 
-      <div className="max-w-[1400px] mx-auto px-2 md:px-4">
+      <div className="w-full px-2 md:px-11">
 
         {/* HEADER */}
         <div className="text-center mb-2">

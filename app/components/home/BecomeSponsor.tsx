@@ -32,23 +32,23 @@ const BecomeSponsor = () => {
             transition={{ duration: 0.7 }}
             className="flex-1 w-full text-center xl:text-left flex flex-col items-center xl:items-start"
           >
-            <div className="inline-flex items-center gap-1.5 px-3 py-1 bg-white border border-[#3b8c2a]/30 rounded-full mb-3 shadow-sm">
-              <Star className="w-3 h-3 text-[#F2B40E]" fill="#F2B40E" />
-              <span className="text-[9.5px] md:text-[10px] font-black text-[#0b2912] tracking-wider uppercase">Sponsorship Opportunities Open</span>
+            <div className="inline-flex items-center gap-1.5 px-3 py-1 bg-white border border-[#3b8c2a]/30 rounded-full mb-2 shadow-sm">
+              <Star className="w-4 h-4 text-[#F2B40E]" fill="#F2B40E" />
+              <span className="text-[12px] md:text-[13px] font-black text-[#0b2912] tracking-wider uppercase">Sponsorship Opportunities Open</span>
             </div>
             
-            <h2 className="text-[32px] md:text-[42px] font-black text-[#0b2912] leading-[1.05] mb-2.5 tracking-tight uppercase">
+            <h2 className="text-[32px] md:text-[40px] font-black text-[#0b2912] leading-[1.05] mb-2 tracking-tight uppercase">
               BECOME A <br className="hidden xl:block" />
               <span className="text-[#3b8c2a]">SPONSOR</span>
             </h2>
             
-            <div className="inline-block bg-[#F2B40E] px-2.5 py-1 mb-3 rounded-sm shadow-sm transform -rotate-1">
-              <p className="text-[10.5px] md:text-[11.5px] font-black text-[#0b2912] uppercase tracking-wide">
+            <div className="inline-block bg-[#F2B40E] px-3 py-1 mb-2 rounded-sm shadow-sm transform -rotate-1">
+              <p className="text-[13px] md:text-[15px] font-black text-[#0b2912] uppercase tracking-wide">
                 POSITION YOUR BRAND AT THE FOREFRONT OF THE ORGANIC INDUSTRY
               </p>
             </div>
             
-            <p className="text-[11.5px] md:text-[12.5px] text-gray-600 font-medium leading-relaxed max-w-[450px]">
+            <p className="text-[16px] md:text-[17px] text-gray-700 font-medium leading-[1.4] max-w-[450px]">
               Partner with <strong className="text-[#3b8c2a]">Bharat Organic Expo 2027</strong> and unlock premium visibility, strategic connections and unmatched business opportunities with industry leaders and decision-makers.
             </p>
           </motion.div>
@@ -76,10 +76,10 @@ const BecomeSponsor = () => {
                
                {/* Overlay Text */}
                <div className="absolute bottom-5 left-5 right-5 text-left transform translate-y-2 group-hover:translate-y-0 transition-transform duration-300">
-                 <div className="inline-block px-2 py-0.5 bg-[#F2B40E] text-[#0b2912] text-[9px] font-black uppercase tracking-wider rounded-sm mb-1.5">
+                 <div className="inline-block px-2 py-0.5 bg-[#F2B40E] text-[#0b2912] text-[12px] font-black uppercase tracking-wider rounded-sm mb-1.5">
                    Premium Booths
                  </div>
-                 <p className="text-white font-black text-[15px] leading-tight drop-shadow-md">
+                 <p className="text-white font-black text-[18px] md:text-[20px] leading-tight drop-shadow-md">
                    STRONGER TOGETHER FOR A HEALTHIER TOMORROW
                  </p>
                </div>
@@ -95,23 +95,23 @@ const BecomeSponsor = () => {
             className="flex-1 w-full max-w-[550px] mx-auto xl:max-w-none bg-white rounded-[1.25rem] shadow-[0_8px_30px_rgba(0,0,0,0.06)] border border-gray-100 overflow-hidden"
           >
             {/* Header */}
-            <div className="bg-[#3b8c2a] text-white p-2.5 text-center relative overflow-hidden">
+            <div className="bg-[#3b8c2a] text-white p-2 text-center relative overflow-hidden">
               <div className="absolute inset-0 opacity-10 bg-[radial-gradient(circle_at_center,_white_1px,_transparent_1px)] bg-[size:10px_10px]"></div>
-              <h3 className="text-[13px] md:text-[14px] font-black uppercase tracking-widest relative z-10 text-[#F2B40E]">
+              <h3 className="text-[16px] md:text-[18px] font-black uppercase tracking-widest relative z-10 text-[#F2B40E]">
                 WHY SPONSOR <span className="text-white">BHARAT ORGANIC EXPO?</span>
               </h3>
             </div>
             
             {/* Grid */}
-            <div className="p-4 grid grid-cols-1 sm:grid-cols-2 gap-x-4 gap-y-4">
+            <div className="p-3 grid grid-cols-1 sm:grid-cols-2 gap-x-3 gap-y-3">
               {SponsorFeatures.map((feature, idx) => (
                 <div key={idx} className="flex items-start gap-2.5 group">
-                  <div className="w-8 h-8 rounded-full bg-[#f4fbf6] border border-[#3b8c2a]/20 flex items-center justify-center shrink-0 group-hover:bg-[#3b8c2a] group-hover:border-[#3b8c2a] transition-colors duration-300 shadow-sm mt-0.5">
-                    <feature.icon className="w-3.5 h-3.5 text-[#3b8c2a] group-hover:text-white transition-colors duration-300" strokeWidth={2.5} />
+                  <div className="w-10 h-10 rounded-full bg-[#f4fbf6] border border-[#3b8c2a]/20 flex items-center justify-center shrink-0 group-hover:bg-[#3b8c2a] group-hover:border-[#3b8c2a] transition-colors duration-300 shadow-sm mt-0.5">
+                    <feature.icon className="w-5 h-5 text-[#3b8c2a] group-hover:text-white transition-colors duration-300" strokeWidth={2} />
                   </div>
                   <div className="flex flex-col">
-                    <span className="text-[10px] md:text-[11px] text-gray-600 font-medium leading-tight mb-0.5">{feature.title}</span>
-                    <span className="text-[10.5px] md:text-[11.5px] text-[#0b2912] font-black leading-tight">{feature.highlight}</span>
+                    <span className="text-[13px] md:text-[14px] text-gray-600 font-medium leading-[1.2] mb-0.5">{feature.title}</span>
+                    <span className="text-[14px] md:text-[16px] text-[#0b2912] font-black leading-[1.15]">{feature.highlight}</span>
                   </div>
                 </div>
               ))}

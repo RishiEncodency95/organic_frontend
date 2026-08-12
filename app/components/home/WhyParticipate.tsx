@@ -16,32 +16,32 @@ const listItems = [
   {
     icon: <Users size={20} className="text-white" />,
     title: "Meet Genuine Buyers",
-    desc: "Connect with buyers, distributors, retailers & industry professionals."
+    desc: "Connect with top organic buyers, health distributors, natural retailers & wellness industry professionals."
   },
   {
     icon: <Target size={20} className="text-white" />,
     title: "Generate Quality Leads",
-    desc: "Generate high-quality B2B & B2C leads with faster business conversions"
+    desc: "Generate high-quality B2B & B2C leads in the organic and wellness sector with faster business conversions."
   },
   {
     icon: <Rocket size={20} className="text-white" />,
     title: "Launch New Products",
-    desc: "Launch new products with maximum visibility & market impact."
+    desc: "Launch your new natural and Ayurvedic products with maximum visibility & market impact."
   },
   {
     icon: <Globe size={20} className="text-white" />,
     title: "Expand Your Network",
-    desc: "Expand your dealer, distributor, franchise & export network."
+    desc: "Expand your dealer, distributor, franchise & export network across the global organic ecosystem."
   },
   {
     icon: <Megaphone size={20} className="text-white" />,
     title: "Strengthen Brand Presence",
-    desc: "Strengthen brand presence through live demos & media exposure"
+    desc: "Strengthen your eco-friendly brand presence through live product demos & targeted media exposure."
   },
   {
     icon: <Handshake size={20} className="text-white" />,
     title: "Connect with Decision Makers",
-    desc: "Connect with investors, CEOs, doctors & key decision-makers."
+    desc: "Connect with health investors, CEOs, holistic doctors & key decision-makers in the wellness industry."
   }
 ];
 
@@ -85,20 +85,22 @@ const WhyParticipate = () => {
               <div className="w-8 h-8 rounded-full bg-[#eef5f0] flex items-center justify-center border border-[#d5ebd9] shadow-sm">
                 <Leaf size={14} className="text-[#3b8c2a] -rotate-12" />
               </div>
-              <p className="text-[#1a3821] font-bold text-[13px] tracking-widest uppercase drop-shadow-sm">
+              <p className="text-[#1a3821] font-bold text-[16px] tracking-widest uppercase drop-shadow-sm">
                 WHY PARTICIPATE
               </p>
-              <div className="h-[1.5px] w-12 bg-gradient-to-r from-[#3b8c2a] to-transparent"></div>
+              <div className="w-8 h-8 rounded-full bg-[#eef5f0] flex items-center justify-center border border-[#d5ebd9] shadow-sm">
+                <Leaf size={14} className="text-[#3b8c2a] -rotate-12" />
+              </div>              <div className="h-[1.5px] w-12 bg-gradient-to-r from-[#3b8c2a] to-transparent"></div>
             </div>
 
             {/* Title */}
-            <h2 className="text-[#154726] text-3xl lg:text-[32px] leading-[1.15] font-extrabold mb-3 drop-shadow-sm" style={{ fontFamily: 'Georgia, serif' }}>
-              Your Gateway to<br />
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#3b8c2a] to-[#F2B40E]">Global Opportunities</span>
+            <h2 className="text-[#154726] text-3xl lg:text-[30px] leading-[1.15] font-extrabold mb-3 drop-shadow-sm" style={{ fontFamily: 'Georgia, serif' }}>
+              Your Gateway to{' '}
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#3b8c2a] to-[#F2B40E]">Global <br /> Opportunities</span>
             </h2>
 
             {/* Description */}
-            <p className="text-[#334155] text-[14px] leading-relaxed max-w-[550px] font-semibold">
+            <p className="text-[#334155] text-[14px] md:text-[16px] leading-[1.6] max-w-[550px] font-medium">
               Bharat Organic Expo is India's most influential platform for organic products, innovation, and sustainable solutions—connecting you with the right people, partnerships, and possibilities.
             </p>
           </div>
@@ -112,8 +114,8 @@ const WhyParticipate = () => {
                     {item.icon}
                   </div>
                   <div className="flex flex-col">
-                    <h4 className="text-[#154726] font-bold text-[13px] leading-tight mb-0.5">{item.title}</h4>
-                    <p className="text-[#64748b] text-[10.5px] leading-snug pr-2">{item.desc}</p>
+                    <h4 className="text-[#154726] font-semibold text-[14px] md:text-[18px] leading-[1.3] mb-1">{item.title}</h4>
+                    <p className="text-[#64748b] text-[12px] md:text-[14px] leading-[1.5] pr-2">{item.desc}</p>
                   </div>
                 </div>
                 <ChevronRight size={16} className="text-gray-400 group-hover:text-[#3b8c2a] transition-colors shrink-0" />
@@ -128,7 +130,7 @@ const WhyParticipate = () => {
         <div className="w-full xl:w-[55%] relative z-10 flex flex-col h-full mt-8 xl:mt-0">
 
           {/* Main Curved Image Container */}
-          <div className="relative w-full h-[300px] lg:h-[400px] overflow-hidden rounded-[24px] rounded-tl-[100px] rounded-br-[100px] shadow-xl mb-2">
+          <div className="relative w-full h-[300px] lg:h-[520px] overflow-hidden rounded-[24px] rounded-tl-[100px] rounded-br-[100px] shadow-xl mb-2">
             <Image
               src={meetingImg}
               alt="Business Meeting at Expo"
@@ -158,10 +160,10 @@ const WhyParticipate = () => {
                   </div>
 
                   <div className="flex flex-col">
-                    <h3 className="text-white font-extrabold text-[13px] tracking-widest mb-0.5 drop-shadow-md">
+                    <h3 className="text-white font-extrabold text-[16px] md:text-[18px] tracking-widest mb-1 drop-shadow-md">
                       {stat.title}
                     </h3>
-                    <p className="text-green-50/90 text-[10px] leading-[1.3] font-semibold drop-shadow-sm pr-1">
+                    <p className="text-green-50/90 text-[14px] leading-[1.5] font-semibold drop-shadow-sm pr-1">
                       {stat.desc}
                     </p>
                   </div>
@@ -174,16 +176,16 @@ const WhyParticipate = () => {
 
           {/* Action Buttons */}
           <div className="flex flex-row items-center justify-center gap-4 overflow-x-auto no-scrollbar mt-2 py-4 w-full px-2">
-            <Link href="#" className="flex shrink-0 items-center gap-1.5 px-6 py-2.5 bg-[#3b8c2a] border-2 border-[#F2B40E] hover:bg-[#F2B40E] hover:text-[#0b2912] text-white text-[11px] font-bold uppercase tracking-wider rounded-full shadow-[0_10px_20px_rgba(59,140,42,0.2)] hover:shadow-[0_15px_30px_rgba(59,140,42,0.3)] hover:-translate-y-0.5 transition-all duration-300">
-              <CalendarDays size={14} />
-              BOOK A STALL <ArrowRight size={14} className="ml-0.5" />
+            <Link href="#" className="flex shrink-0 items-center gap-1.5 px-6 py-3  bg-[#3b8c2a] border-2 border-[#F2B40E] hover:bg-[#F2B40E] hover:text-[#0b2912] text-white text-[10px] md:text-[14px] font-bold uppercase tracking-wider rounded-full shadow-[0_10px_20px_rgba(59,140,42,0.2)] hover:shadow-[0_15px_30px_rgba(59,140,42,0.3)] hover:-translate-y-0.5 transition-all duration-300">
+              <CalendarDays size={16} />
+              BOOK A STALL <ArrowRight size={16} className="ml-0.5" />
             </Link>
-            <Link href="#" className="flex shrink-0 items-center gap-1.5 px-6 py-2.5 bg-white border-2 border-[#3b8c2a] text-[#3b8c2a] hover:bg-[#3b8c2a] hover:text-white text-[11px] font-bold uppercase tracking-wider rounded-full shadow-sm hover:shadow-[0_10px_20px_rgba(59,140,42,0.2)] hover:-translate-y-0.5 transition-all duration-300">
-              <Download size={14} />
+            <Link href="#" className="flex shrink-0 items-center gap-1.5 px-6 py-3  bg-white border-2 border-[#3b8c2a] text-[#3b8c2a] hover:bg-[#3b8c2a] hover:text-white text-[10px] md:text-[14px] font-bold uppercase tracking-wider rounded-full shadow-sm hover:shadow-[0_10px_20px_rgba(59,140,42,0.2)] hover:-translate-y-0.5 transition-all duration-300">
+              <Download size={16} />
               DOWNLOAD BROCHURE
             </Link>
-            <Link href="#" className="flex shrink-0 items-center gap-1.5 px-6 py-2.5 bg-white border-2 border-[#3b8c2a] text-[#3b8c2a] hover:bg-[#3b8c2a] hover:text-white text-[11px] font-bold uppercase tracking-wider rounded-full shadow-sm hover:shadow-[0_10px_20px_rgba(59,140,42,0.2)] hover:-translate-y-0.5 transition-all duration-300">
-              <Info size={14} />
+            <Link href="#" className="flex shrink-0 items-center gap-1.5 px-6 py-3  bg-white border-2 border-[#3b8c2a] text-[#3b8c2a] hover:bg-[#3b8c2a] hover:text-white text-[10px] md:text-[14px] font-bold uppercase tracking-wider rounded-full shadow-sm hover:shadow-[0_10px_20px_rgba(59,140,42,0.2)] hover:-translate-y-0.5 transition-all duration-300">
+              <Info size={16} />
               WHY EXHIBIT?
             </Link>
           </div>

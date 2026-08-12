@@ -209,32 +209,32 @@ const HeroSection = () => {
               <div className="flex items-center gap-2 mb-2">
                 <div className="w-8 h-[2px] bg-[#7ca142]/60"></div>
                 <Leaf className="w-4 h-4 text-[#7ca142] fill-[#7ca142]" />
-                <span className="text-[#1a3617] text-[11px] md:text-xs font-extrabold tracking-widest uppercase">
+                <span className="text-[#1a3617] text-[12px] md:text-[13px] lg:text-[14px] font-extrabold tracking-widest uppercase">
                   {slides[current].tagline}
                 </span>
                 <div className="w-8 h-[2px] bg-[#7ca142]/60"></div>
               </div>
 
               {/* Title */}
-              <h1 className="leading-[1] font-black uppercase pb-1">
-                <div className="text-[#1f471b] text-xl md:text-3xl lg:text-6xl tracking-tight">
+              <h1 className="leading-[1.1] font-black uppercase pb-1">
+                <div className="text-[#1f471b] text-[34px] md:text-[48px] lg:text-[60px] tracking-tight">
                   {slides[current].titlePrimary}
                 </div>
-                <div className="text-[#7ca142] text-xl md:text-3xl lg:text-6xl tracking-tight mt-1">
+                <div className="text-[#7ca142] text-[34px] md:text-[48px] lg:text-[60px] tracking-tight mt-1">
                   {slides[current].titleSecondary}
                 </div>
               </h1>
 
               {/* Subtitle */}
               <div className="flex items-center gap-2 mb-3">
-                <span className="text-[#1f471b] font-serif italic font-medium text-xl md:text-[22px]">
+                <span className="text-[#1f471b] font-serif italic font-medium text-[20px] md:text-[24px] lg:text-[28px] leading-[1.3]">
                   {slides[current].subtitle}
                 </span>
                 <Leaf className="w-5 h-5 text-[#7ca142] fill-[#7ca142]" />
               </div>
 
               {/* Description */}
-              <p className="text-[#4a4a4a] font-medium text-[13px] md:text-[15px] leading-relaxed max-w-[500px] mb-6">
+              <p className="text-[#4a4a4a] font-normal text-[16px] md:text-[18px] leading-[1.6] max-w-[600px] mb-6">
                 {slides[current].description}
               </p>
 
@@ -244,13 +244,13 @@ const HeroSection = () => {
                 {/* Date */}
                 <div className="flex items-center gap-3">
                   <div className="flex items-center justify-center">
-                    <CalendarDays className="w-7 h-7 text-[#2b5825]" strokeWidth={1.5} />
+                    <CalendarDays className="w-8 h-8 text-[#2b5825]" strokeWidth={1.5} />
                   </div>
                   <div className="flex flex-col text-[#2b5825]">
-                    <div className="font-extrabold text-[13px] md:text-[14px] tracking-tight">
+                    <div className="font-extrabold text-[14px] md:text-[15px] tracking-tight">
                       {slides[current].date}
                     </div>
-                    <div className="text-[#4a4a4a] text-[12px] md:text-[13px]">
+                    <div className="text-[#4a4a4a] text-[13px] md:text-[14px]">
                       {slides[current].dateSub}
                     </div>
                   </div>
@@ -262,13 +262,13 @@ const HeroSection = () => {
                 {/* Location */}
                 <div className="flex items-center gap-3">
                   <div className="flex items-center justify-center">
-                    <MapPin className="w-7 h-7 text-[#2b5825]" strokeWidth={1.5} />
+                    <MapPin className="w-8 h-8 text-[#2b5825]" strokeWidth={1.5} />
                   </div>
                   <div className="flex flex-col text-[#2b5825]">
-                    <div className="font-extrabold text-[13px] md:text-[14px] tracking-tight">
+                    <div className="font-extrabold text-[14px] md:text-[15px] tracking-tight">
                       {slides[current].location}
                     </div>
-                    <div className="text-[#4a4a4a] text-[12px] md:text-[13px]">
+                    <div className="text-[#4a4a4a] text-[13px] md:text-[14px]">
                       {slides[current].locationSub}
                     </div>
                   </div>
@@ -277,7 +277,7 @@ const HeroSection = () => {
               </div>
 
               {/* Action Buttons */}
-              <div className="flex flex-row items-center gap-2 sm:gap-4 pt-3 relative w-full">
+              <div className="flex flex-row flex-nowrap justify-between gap-1 sm:gap-4 pt-3 relative w-full overflow-visible">
                 {/* Floating Sparkles around buttons - Multi-colored to match logo theme */}
                 <Sparkle style={{ top: '-15px', left: '15%', animationDelay: '0s', color: '#F2B40E' }} />
                 <Sparkle style={{ bottom: '-10px', left: '35%', animationDelay: '0.4s', color: '#3b8c2a' }} />
@@ -287,19 +287,19 @@ const HeroSection = () => {
 
                 <Link
                   href="/book-a-stand"
-                  className="hero-shimmer-btn bg-[#2b5825] hover:bg-[#1f471b] text-white px-3 sm:px-4 py-2 sm:py-2.5 rounded-md font-bold text-[9px] sm:text-[11px] tracking-wider uppercase transition-all shadow-md hover:-translate-y-0.5 text-center"
+                  className="hero-shimmer-btn flex-1 bg-[#2b5825] hover:bg-[#1f471b] text-white px-1 sm:px-6 py-2 sm:py-3 rounded-md font-bold text-[9px] sm:text-[12px] md:text-[13px] tracking-tight sm:tracking-wider uppercase transition-all shadow-md hover:-translate-y-0.5 text-center flex items-center justify-center whitespace-nowrap min-h-[44px]"
                 >
                   Book Your Stall
                 </Link>
                 <Link
                   href="/visitor-registration"
-                  className="hero-shimmer-btn hero-shimmer-btn-dark bg-white hover:bg-gray-50 text-[#2b5825] border border-[#2b5825] px-3 sm:px-4 py-2 sm:py-2.5 rounded-md font-bold text-[9px] sm:text-[11px] tracking-wider uppercase transition-all shadow-sm hover:-translate-y-0.5 text-center"
+                  className="hero-shimmer-btn hero-shimmer-btn-dark flex-1 bg-white hover:bg-gray-50 text-[#2b5825] border border-[#2b5825] px-1 sm:px-6 py-2 sm:py-3 rounded-md font-bold text-[9px] sm:text-[12px] md:text-[13px] tracking-tight sm:tracking-wider uppercase transition-all shadow-sm hover:-translate-y-0.5 text-center flex items-center justify-center whitespace-nowrap min-h-[44px]"
                 >
                   Register as Visitor
                 </Link>
                 <Link
                   href="/delegate-registration"
-                  className="hero-shimmer-btn bg-[#7ca142] hover:bg-[#688a35] text-white px-3 sm:px-4 py-2 sm:py-2.5 rounded-md font-bold text-[9px] sm:text-[11px] tracking-wider uppercase transition-all shadow-md hover:-translate-y-0.5 text-center"
+                  className="hero-shimmer-btn flex-1 bg-[#7ca142] hover:bg-[#688a35] text-white px-1 sm:px-6 py-2 sm:py-3 rounded-md font-bold text-[9px] sm:text-[12px] md:text-[13px] tracking-tight sm:tracking-wider uppercase transition-all shadow-md hover:-translate-y-0.5 text-center flex items-center justify-center whitespace-nowrap min-h-[44px]"
                 >
                   Register as Delegate
                 </Link>

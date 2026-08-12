@@ -61,8 +61,8 @@ const WhoShouldAttendItems = [
 const SponsorsAndAttend = () => {
   return (
     <>
-      <section className="w-full px-2 lg:px-11 relative z-10 py-2 overflow-hidden bg-[#EFF7EE]">
-        <div className="grid grid-cols-1 xl:grid-cols-12 gap-6 xl:gap-8 items-start">
+      <section className="w-full relative z-10 py-2 md:py-4 lg:py-4 overflow-hidden bg-[#EFF7EE]">
+        <div className="w-full px-4 md:px-11 grid grid-cols-1 xl:grid-cols-12 gap-2 xl:gap-4 items-start">
 
           {/* LEFT: WHY ATTEND */}
           <motion.div
@@ -74,18 +74,18 @@ const SponsorsAndAttend = () => {
           >
             <div className="flex flex-col md:flex-row items-start gap-1 mb-1 text-left">
               <div className="flex items-center gap-1.5">
-                <h2 className="text-[24px] md:text-[32px] font-black text-[#1a1a1a] tracking-tight">
+                <h2 className="text-[28px] md:text-[34px] lg:text-[40px] font-bold text-[#1a1a1a] tracking-tight leading-[1.2]">
                   WHY <span className="bg-gradient-to-r from-[#00643b] to-[#f58220] bg-clip-text text-transparent">ATTEND?</span>
                 </h2>
                 <Leaf className="w-6 h-6 md:w-8 md:h-8 text-[#f58220] fill-[#f58220]" />
               </div>
             </div>
-            <p className="text-[12px] md:text-[12.5px] text-gray-700 font-medium mb-2 leading-snug max-w-full md:max-w-[350px] text-left">
+            <p className="text-[16px] md:text-[18px] text-gray-700 font-normal mb-2 leading-[1.6] max-w-[500px] text-left">
               Explore innovations, build connections and gain insights that drive better health and stronger businesses.
             </p>
 
             {/* Divider with Leaf */}
-            <div className="flex items-center gap-4 mb-2 md:mb-1">
+            <div className="flex items-center gap-4 mb-1 md:mb-2">
               <div className="h-[1px] flex-grow bg-gray-200" />
               <Leaf className="w-3.5 h-3.5 text-[#00643b] fill-[#00643b]" />
               <div className="h-[1px] flex-grow bg-gray-200" />
@@ -103,21 +103,21 @@ const SponsorsAndAttend = () => {
                       {React.cloneElement(item.icon as React.ReactElement<{ className?: string }>, { className: 'w-5 h-5 text-[#f58220]' })}
                     </div>
                     <div className="flex-1">
-                      <h3 className="text-[13px] font-bold text-[#00643b] mb-1 leading-none pt-1.5">{item.title}</h3>
-                      <p className="text-[10px] text-gray-600 font-semibold leading-snug">{item.desc}</p>
+                      <h3 className="text-[16px] md:text-[18px] font-bold text-[#00643b] mb-1 leading-none pt-1.5">{item.title}</h3>
+                      <p className="text-[14px] md:text-[15px] text-gray-600 font-normal leading-[1.6]">{item.desc}</p>
                     </div>
                   </div>
                 ))}
               </div>
-              <div className="py-2 px-0 md:px-3 border-b-0 md:border-b border-dashed border-gray-300 relative">
+              <div className="py-2 px-0 md:px-2 border-b-0 md:border-b border-dashed border-gray-300 relative">
                 {WhyAttendItemsRight.slice(0, 1).map((item, index) => (
                   <div key={index} className="flex gap-4 group">
                     <div className="w-10 h-10 rounded-full flex items-center justify-center bg-[#fff8f2] shrink-0 mt-0.5 border border-[#feeddf]">
                       {React.cloneElement(item.icon as React.ReactElement<{ className?: string }>, { className: 'w-5 h-5 text-[#f58220]' })}
                     </div>
                     <div className="flex-1">
-                      <h3 className="text-[13px] font-bold text-[#00643b] mb-1 leading-none pt-1.5">{item.title}</h3>
-                      <p className="text-[10px] text-gray-600 font-semibold leading-snug">{item.desc}</p>
+                      <h3 className="text-[16px] md:text-[18px] font-bold text-[#00643b] mb-1 leading-none pt-1.5">{item.title}</h3>
+                      <p className="text-[14px] md:text-[15px] text-gray-600 font-normal leading-[1.6]">{item.desc}</p>
                     </div>
                   </div>
                 ))}
@@ -131,8 +131,8 @@ const SponsorsAndAttend = () => {
                       {React.cloneElement(item.icon as React.ReactElement<{ className?: string }>, { className: 'w-5 h-5 text-[#f58220]' })}
                     </div>
                     <div className="flex-1">
-                      <h3 className="text-[13px] font-bold text-[#00643b] mb-1 leading-none pt-1.5">{item.title}</h3>
-                      <p className="text-[10px] text-gray-600 font-semibold leading-snug">{item.desc}</p>
+                      <h3 className="text-[16px] md:text-[18px] font-bold text-[#00643b] mb-1 leading-none pt-1.5">{item.title}</h3>
+                      <p className="text-[14px] md:text-[15px] text-gray-600 font-normal leading-[1.6]">{item.desc}</p>
                     </div>
                   </div>
                 ))}
@@ -144,8 +144,8 @@ const SponsorsAndAttend = () => {
                       {React.cloneElement(item.icon as React.ReactElement<{ className?: string }>, { className: 'w-5 h-5 text-[#f58220]' })}
                     </div>
                     <div className="flex-1">
-                      <h3 className="text-[13px] font-bold text-[#00643b] mb-1 leading-none pt-1.5">{item.title}</h3>
-                      <p className="text-[10px] text-gray-600 font-semibold leading-snug">{item.desc}</p>
+                      <h3 className="text-[16px] md:text-[18px] font-bold text-[#00643b] mb-1 leading-none pt-1.5">{item.title}</h3>
+                      <p className="text-[14px] md:text-[15px] text-gray-600 font-normal leading-[1.6]">{item.desc}</p>
                     </div>
                   </div>
                 ))}
@@ -159,8 +159,8 @@ const SponsorsAndAttend = () => {
                       {React.cloneElement(item.icon as React.ReactElement<{ className?: string }>, { className: 'w-5 h-5 text-[#f58220]' })}
                     </div>
                     <div className="flex-1">
-                      <h3 className="text-[13px] font-bold text-[#00643b] mb-1 leading-none pt-1.5">{item.title}</h3>
-                      <p className="text-[10px] text-gray-600 font-semibold leading-snug">{item.desc}</p>
+                      <h3 className="text-[16px] md:text-[18px] font-bold text-[#00643b] mb-1 leading-none pt-1.5">{item.title}</h3>
+                      <p className="text-[14px] md:text-[15px] text-gray-600 font-normal leading-[1.6]">{item.desc}</p>
                     </div>
                   </div>
                 ))}
@@ -172,8 +172,8 @@ const SponsorsAndAttend = () => {
                       {React.cloneElement(item.icon as React.ReactElement<{ className?: string }>, { className: 'w-5 h-5 text-[#f58220]' })}
                     </div>
                     <div className="flex-1">
-                      <h3 className="text-[13px] font-bold text-[#00643b] mb-1 leading-none pt-1.5">{item.title}</h3>
-                      <p className="text-[10px] text-gray-600 font-semibold leading-snug">{item.desc}</p>
+                      <h3 className="text-[16px] md:text-[18px] font-bold text-[#00643b] mb-1 leading-none pt-1.5">{item.title}</h3>
+                      <p className="text-[14px] md:text-[15px] text-gray-600 font-normal leading-[1.6]">{item.desc}</p>
                     </div>
                   </div>
                 ))}
@@ -192,9 +192,9 @@ const SponsorsAndAttend = () => {
             whileInView={{ opacity: 1, scale: 1 }}
             viewport={{ once: true, margin: "-50px" }}
             transition={{ duration: 0.7, delay: 0.3 }}
-            className="xl:col-span-4 flex justify-center items-center relative py-2 md:py-4"
+            className="xl:col-span-4 self-center flex justify-center items-center relative py-2 md:py-4"
           >
-            <div className="relative w-[250px] h-[250px] md:w-[320px] md:h-[320px] aspect-square">
+            <div className="relative w-[250px] h-[250px] md:w-[360px] md:h-[360px] aspect-square">
 
               {/* Image Circle Container */}
               <div className="absolute inset-0 rounded-full border-[5px] md:border-[8px] border-white shadow-xl overflow-hidden grid grid-cols-2 grid-rows-2 gap-1 bg-white">
@@ -254,7 +254,7 @@ const SponsorsAndAttend = () => {
               <div className="bg-[#3b8c2a] text-white p-2 flex items-center justify-center relative">
                 <div className="flex items-center gap-2">
                   <Users className="w-4 h-4 text-[#f58220]" />
-                  <span className="text-[14px] font-black uppercase tracking-wider">WHO SHOULD ATTEND?</span>
+                  <span className="text-[16px] md:text-[18px] font-bold uppercase tracking-wider">WHO SHOULD ATTEND?</span>
                 </div>
               </div>
 
@@ -264,7 +264,7 @@ const SponsorsAndAttend = () => {
                     <div className="w-5 h-5 rounded bg-[#fff8f2] flex items-center justify-center text-[#f58220] group-hover:bg-[#f58220] group-hover:text-white transition-all duration-300 border border-[#feeddf] shrink-0">
                       {React.cloneElement(item.icon as React.ReactElement<{ className?: string }>, { className: 'w-3 h-3' })}
                     </div>
-                    <span className="text-[9.5px] md:text-[9px] text-gray-700 font-bold group-hover:text-[#00643b] transition-colors leading-tight">{item.label}</span>
+                    <span className="text-[13px] md:text-[14px] text-gray-700 font-bold group-hover:text-[#00643b] transition-colors leading-[1.4]">{item.label}</span>
                   </div>
                 ))}
               </div>
@@ -274,7 +274,7 @@ const SponsorsAndAttend = () => {
                 <div className="w-6 h-6 bg-[#f58220] rounded-full flex items-center justify-center shrink-0 shadow-sm">
                   <Star className="w-3.5 h-3.5 text-white" />
                 </div>
-                <p className="text-[10px] text-[#00643b] font-black leading-tight">
+                <p className="text-[14px] text-[#00643b] font-bold leading-[1.4]">
                   Whether you're sourcing, learning or networking — this is the place to be!
                 </p>
               </div>
@@ -285,7 +285,7 @@ const SponsorsAndAttend = () => {
       </section>
 
       {/* NEW FULL WIDTH BAND */}
-      <section className="w-full bg-[#3b8c2a] relative z-20 py-1 lg:py-2 border-y border-[#164429] shadow-2xl overflow-hidden">
+      <section className="w-full bg-[#3b8c2a] relative z-20 py-1.5 lg:py-2 border-y border-[#164429] shadow-2xl overflow-hidden">
         {/* Background Sparkles */}
         <Sparkles className="absolute top-2 left-10 w-4 h-4 text-white opacity-40 animate-pulse" />
         <Sparkles className="absolute bottom-2 left-1/4 w-6 h-6 text-white opacity-40 animate-pulse delay-300" />
@@ -296,7 +296,7 @@ const SponsorsAndAttend = () => {
         <div className="absolute -top-10 -left-10 w-48 h-48 bg-white opacity-10 rounded-full blur-2xl pointer-events-none"></div>
         <div className="absolute -bottom-10 -right-10 w-48 h-48 bg-white opacity-10 rounded-full blur-2xl pointer-events-none"></div>
 
-        <div className="max-w-[1500px] mx-auto px-4 lg:px-11 flex flex-col xl:flex-row items-center justify-between gap-4 relative z-10 w-full">
+        <div className="w-full px-4 md:px-8 flex flex-col xl:flex-row items-center justify-between gap-4 relative z-10 w-full">
 
           {/* Item 1: Date */}
           <div className="flex items-center gap-2 group">
@@ -304,8 +304,8 @@ const SponsorsAndAttend = () => {
               <CalendarDays className="w-4 h-4" strokeWidth={2.5} />
             </div>
             <div className="flex flex-col text-left">
-              <span className="text-[13px] lg:text-[14px] font-black text-white leading-tight">19 &ndash; 21</span>
-              <span className="text-[9px] lg:text-[10px] font-bold text-teal-50 uppercase tracking-wider">FEBRUARY 2027</span>
+              <span className="text-[14px] lg:text-[15px] font-black text-white leading-tight">19 &ndash; 21</span>
+              <span className="text-[11px] lg:text-[12px] font-bold text-teal-50 uppercase tracking-wider">FEBRUARY 2027</span>
             </div>
           </div>
 
@@ -317,8 +317,8 @@ const SponsorsAndAttend = () => {
               <MapPin className="w-4 h-4" strokeWidth={2.5} />
             </div>
             <div className="flex flex-col text-left">
-              <span className="text-[13px] lg:text-[14px] font-black text-white leading-tight uppercase">PRAGATI MAIDAN</span>
-              <span className="text-[9px] lg:text-[10px] font-bold text-teal-50 uppercase tracking-wider">NEW DELHI, INDIA</span>
+              <span className="text-[14px] lg:text-[15px] font-black text-white leading-tight uppercase">PRAGATI MAIDAN</span>
+              <span className="text-[11px] lg:text-[12px] font-bold text-teal-50 uppercase tracking-wider">NEW DELHI, INDIA</span>
             </div>
           </div>
 
@@ -330,8 +330,8 @@ const SponsorsAndAttend = () => {
               <Globe className="w-4 h-4" strokeWidth={2.5} />
             </div>
             <div className="flex flex-col text-left">
-              <span className="text-[13px] lg:text-[14px] font-black text-white leading-tight uppercase">GLOBAL EDITION</span>
-              <span className="text-[8px] lg:text-[9px] font-bold text-teal-50 uppercase leading-tight tracking-wide">CONNECTING THE WORLD<br />OF ORGANIC & NATURAL</span>
+              <span className="text-[14px] lg:text-[15px] font-black text-white leading-tight uppercase">GLOBAL EDITION</span>
+              <span className="text-[10px] lg:text-[11px] font-bold text-teal-50 uppercase leading-tight tracking-wide">CONNECTING THE WORLD<br />OF ORGANIC & NATURAL</span>
             </div>
           </div>
 
@@ -341,16 +341,16 @@ const SponsorsAndAttend = () => {
           <div className="flex items-center gap-2 group">
             <Trophy className="w-6 h-6 text-yellow-300 group-hover:scale-110 transition-transform duration-300 drop-shadow-[0_0_8px_rgba(250,204,21,0.6)] shrink-0" strokeWidth={2} />
             <div className="flex flex-col text-left">
-              <span className="text-[11px] lg:text-[12px] font-bold text-white leading-tight uppercase">BE PART OF INDIA'S BIGGEST</span>
-              <span className="text-[12px] lg:text-[13px] font-black text-[#0b2918] uppercase leading-tight">ORGANIC & NATURAL SHOW!</span>
+              <span className="text-[12px] lg:text-[13px] font-bold text-white leading-tight uppercase">BE PART OF INDIA'S BIGGEST</span>
+              <span className="text-[13px] lg:text-[14px] font-black text-[#0b2918] uppercase leading-tight">ORGANIC & NATURAL SHOW!</span>
             </div>
           </div>
 
           <div className="hidden xl:block w-[1px] h-6 bg-white/40"></div>
 
           {/* Register Button */}
-          <button className="flex items-center gap-2 bg-[#F2B40E] hover:bg-[#0b2912] px-4 py-1.5 rounded-full shadow-[0_0_15px_rgba(242,180,14,0.4)] hover:shadow-[0_0_20px_rgba(11,41,18,0.5)] transition-all duration-300 transform hover:scale-105 scale-95 lg:scale-100 border-2 border-[#0b2912] group">
-            <span className="text-[#0b2912] group-hover:text-white font-black text-[11px] lg:text-[12px] tracking-wide uppercase transition-colors">
+          <button className="flex items-center gap-3 bg-[#F2B40E] hover:bg-[#0b2912] px-6 py-2 rounded-full shadow-[0_0_15px_rgba(242,180,14,0.4)] hover:shadow-[0_0_20px_rgba(11,41,18,0.5)] transition-all duration-300 transform hover:scale-105 shrink-0 border-2 border-[#0b2912] group min-h-[44px]">
+            <span className="text-[#0b2912] group-hover:text-white font-bold text-[14px] lg:text-[15px] tracking-wide uppercase transition-colors">
               REGISTER AS VISITOR!
             </span>
             <div className="w-5 h-5 bg-[#0b2912] rounded-full flex items-center justify-center text-[#F2B40E] group-hover:bg-white group-hover:text-[#0b2912] shrink-0 transition-colors">

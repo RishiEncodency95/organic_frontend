@@ -119,7 +119,7 @@ const IntroductionSection = () => {
               <p className="text-[15px] md:text-[16px] leading-[1.5] text-slate-700 font-medium border-l-4 border-[#F2B40E] pl-5 bg-gradient-to-r from-[#F2B40E]/5 to-transparent py-3 rounded-r-xl shadow-sm">
                 <strong className="text-[#1a6b3a] font-bold">Bharat Organic Expo 2027</strong> Bharat Organic Expo 2027 is India's leading international exhibition dedicated to organic products, sustainable agriculture, natural wellness, eco-friendly innovations, and green business opportunities. The Expo brings together manufacturers, exhibitors, buyers, importers, exporters, investors, government organizations, industry experts, startups, researchers, and global delegates under one dynamic platform.
               </p>
-              <p className="text-[14px] md:text-[15px] leading-[1.4] text-slate-600">
+              <p className="text-[14px] md:text-[16px] leading-[1.4] text-slate-600">
                 Designed to foster business growth, knowledge sharing, innovation, and international collaboration, Bharat Organic Expo serves as the perfect destination for discovering new products, building strategic partnerships, expanding global markets, and promoting a sustainable future.              </p>
             </div>
 

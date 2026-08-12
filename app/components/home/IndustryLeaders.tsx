@@ -8,7 +8,7 @@ import industryImg from "../../assets/home/industry.png";
 
 const IndustryLeaders = () => {
   return (
-    <section className="relative w-full bg-white py-2 lg:py-4 px-4 lg:px-11 overflow-hidden">
+    <section className="relative w-full bg-white py-2 md:py-4 lg:py-4 px-4 md:px-11 overflow-hidden">
 
       {/* Decorative Elements */}
       <div className="absolute top-10 left-10 opacity-10 pointer-events-none">
@@ -28,7 +28,7 @@ const IndustryLeaders = () => {
         </svg>
       </div>
 
-      <div className="flex flex-col lg:flex-row items-stretch gap-6 lg:gap-10 relative z-10">
+      <div className="flex flex-col lg:flex-row items-stretch gap-6 lg:gap-10 relative z-10 ">
 
         {/* LEFT: IMAGE */}
         <motion.div
@@ -52,8 +52,8 @@ const IndustryLeaders = () => {
                 <Leaf className="w-4 h-4" strokeWidth={2} />
               </div>
               <div className="flex flex-col text-left">
-                <span className="text-[9px] font-bold uppercase tracking-widest text-teal-300 leading-none mb-1">Uniting the World for</span>
-                <span className="text-[13px] md:text-[14px] font-black text-white leading-none tracking-wide">Sustainable Living</span>
+                <span className="text-[10px] md:text-[11px] font-bold uppercase tracking-widest text-teal-300 leading-none mb-1">Uniting the World for</span>
+                <span className="text-[15px] md:text-[16px] font-black text-white leading-none tracking-wide">Sustainable Living</span>
               </div>
             </div>
           </div>
@@ -73,19 +73,19 @@ const IndustryLeaders = () => {
           className="w-full lg:w-[55%] flex flex-col justify-center"
         >
           {/* Top Badge */}
-          <div className="inline-flex items-center gap-2 bg-[#fdf5ed] border border-[#f58220]/20 rounded-md px-3 py-1.5 mb-3 shadow-sm w-max">
-            <Leaf className="w-3.5 h-3.5 text-[#f58220]" />
-            <span className="text-[10px] md:text-[11px] font-bold text-[#f58220] tracking-[0.2em] uppercase">Industry Testimonials</span>
+          <div className="inline-flex items-center gap-2 bg-[#fdf5ed] border border-[#f58220]/20 rounded-md px-4 py-2 mb-4 shadow-sm w-max">
+            <Leaf className="w-4 h-4 text-[#f58220]" />
+            <span className="text-[12px] md:text-[13px] lg:text-[14px] font-bold text-[#f58220] tracking-[0.2em] uppercase">Industry Testimonials</span>
           </div>
 
-          <h2 className="text-[18px] md:text-[30px] font-semibold text-[#00643b] leading-[1.1] mb-2 tracking-tight">
+          <h2 className="text-[28px] md:text-[34px] lg:text-[40px] font-bold text-[#00643b] leading-[1.2] mb-4 tracking-tight">
             What Global Experts Say About <br className="hidden md:block" />
             <span className="text-[#3b8c2a]">Bharat Organic Expo</span>
           </h2>
 
           <div className="w-24 h-1 bg-[#3b8c2a] mb-4"></div>
 
-          <p className="text-[15px] md:text-[17px] text-gray-600 leading-relaxed mb-6 max-w-[700px]">
+          <p className="text-[16px] md:text-[18px] text-gray-600 leading-[1.6] mb-8 max-w-[700px] font-normal">
             Trusted by leaders across the natural & organic sectors. Bharat Organic Expo serves as the premier platform bridging the gap between innovative sustainable brands, farmers, and global buyers. We are deeply committed to fostering long-lasting B2B connections, driving eco-friendly practices, and showcasing the very best of nature. Discover how we are transforming the <span className="font-bold text-[#3b8c2a]">organic business landscape</span> globally and shaping a healthier, greener tomorrow.
           </p>
 
@@ -101,30 +101,30 @@ const IndustryLeaders = () => {
                 <div className="w-8 h-8 rounded-full bg-[#f4fcf6] flex items-center justify-center text-[#3b8c2a] mb-1.5 border border-[#3b8c2a]/10">
                   <stat.icon className="w-3.5 h-3.5" strokeWidth={2.5} />
                 </div>
-                <span className="text-[16px] md:text-[18px] font-black text-[#1a1a1a] leading-none mb-1">{stat.val}</span>
-                <span className="text-[9px] font-bold text-gray-500 uppercase tracking-wider leading-tight">{stat.label}</span>
+                <span className="text-[18px] md:text-[20px] font-black text-[#1a1a1a] leading-none mb-2">{stat.val}</span>
+                <span className="text-[10px] md:text-[11px] font-bold text-gray-500 uppercase tracking-wider leading-tight">{stat.label}</span>
               </div>
             ))}
           </div>
           {/* Bottom Action Bar (Highlighted) */}
           <div className="relative flex items-center justify-between bg-[#3b8c2a] shadow-[0_0_30px_rgba(59,140,42,0.25)] border-[2px] border-[#3b8c2a]/60 rounded-full p-2 px-3 gap-2 w-full max-w-full hover:-translate-y-1 hover:shadow-[0_10px_40px_rgba(59,140,42,0.4)] transition-all duration-300 overflow-x-auto no-scrollbar group">
-            
+
             {/* Shine Effect */}
             <div className="absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-white/10 to-transparent group-hover:animate-[shimmer_1.5s_infinite] rounded-full pointer-events-none"></div>
-            
+
             <div className="flex items-center gap-3 md:gap-4 flex-nowrap w-max">
-              
+
               {/* Item 1 */}
               <div className="flex items-center gap-2">
                 <div className="w-7 h-7 rounded-full bg-white/20 border border-white/30 flex items-center justify-center text-white shrink-0">
                   <Users className="w-3.5 h-3.5" strokeWidth={2.5} />
                 </div>
                 <div className="flex flex-col text-left whitespace-nowrap">
-                  <span className="text-[9px] font-black uppercase tracking-widest text-white/90 leading-none">Grow Together.</span>
-                  <span className="text-[10px] font-black text-white mt-1 leading-none tracking-wide">Meet. Connect.</span>
+                  <span className="text-[10px] md:text-[11px] font-black uppercase tracking-widest text-white/90 leading-none">Grow Together.</span>
+                  <span className="text-[11px] md:text-[12px] font-black text-white mt-1 leading-none tracking-wide">Meet. Connect.</span>
                 </div>
               </div>
-              
+
               <div className="w-[1px] h-6 bg-white/30 shrink-0"></div>
 
               {/* Item 2 */}
@@ -133,8 +133,8 @@ const IndustryLeaders = () => {
                   <CalendarDays className="w-3.5 h-3.5" strokeWidth={2.5} />
                 </div>
                 <div className="flex flex-col text-left whitespace-nowrap">
-                  <span className="text-[9px] font-black uppercase tracking-widest text-white/90 leading-none">19 - 21 February</span>
-                  <span className="text-[10px] font-black text-white mt-1 leading-none tracking-wide">2027</span>
+                  <span className="text-[10px] md:text-[11px] font-black uppercase tracking-widest text-white/90 leading-none">19 - 21 February</span>
+                  <span className="text-[11px] md:text-[12px] font-black text-white mt-1 leading-none tracking-wide">2027</span>
                 </div>
               </div>
 
@@ -146,17 +146,17 @@ const IndustryLeaders = () => {
                   <MapPin className="w-3.5 h-3.5" strokeWidth={2.5} />
                 </div>
                 <div className="flex flex-col text-left whitespace-nowrap">
-                  <span className="text-[9px] font-black uppercase tracking-widest text-white/90 leading-none">Pragati Maidan</span>
-                  <span className="text-[10px] font-black text-white mt-1 leading-none tracking-wide">New Delhi, India</span>
+                  <span className="text-[10px] md:text-[11px] font-black uppercase tracking-widest text-white/90 leading-none">Pragati Maidan</span>
+                  <span className="text-[11px] md:text-[12px] font-black text-white mt-1 leading-none tracking-wide">New Delhi, India</span>
                 </div>
               </div>
             </div>
-            
+
             <Link
               href="/buyer-registration"
-              className="bg-[#f58220] hover:bg-[#e67515] text-white px-5 py-2 rounded-full text-[10px] font-black uppercase tracking-wider flex items-center justify-center gap-2 transition-colors shadow-md shrink-0 ml-3 border border-[#f58220]/20 whitespace-nowrap"
+              className="bg-[#f58220] hover:bg-[#e67515] text-white px-3 py-2 rounded-full text-[10px] md:text-[12px] font-bold uppercase tracking-wider flex items-center justify-center gap-2 transition-colors shadow-md shrink-0 ml-3 border border-[#f58220]/20 whitespace-nowrap"
             >
-              <CalendarCheck className="w-3.5 h-3.5" strokeWidth={2.5} />
+              <CalendarCheck className="w-4 h-4" strokeWidth={2.5} />
               Register As Buyer
             </Link>
           </div>

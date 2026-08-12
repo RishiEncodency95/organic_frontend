@@ -35,21 +35,21 @@ const articles = [
 
 const LatestInsights = () => {
   return (
-    <section className="relative w-full bg-white py-2 lg:py-4 overflow-hidden border-t border-gray-100">
+    <section className="relative w-full bg-white py-2 md:py-4 lg:py-4 overflow-hidden border-t border-gray-100">
 
-      <div className="w-full px-4 lg:px-11 relative z-10">
+      <div className="w-full px-4 md:px-8 mx-auto max-w-7xl relative z-10">
 
         {/* Header Section */}
         <div className="flex flex-col mb-6">
 
           <div className="flex flex-col items-center text-center w-full relative">
-            <div className="flex items-center gap-2 text-[#3b8c2a] font-bold text-[11px] md:text-[13px] uppercase tracking-widest mb-2">
+            <div className="flex items-center gap-2 text-[#3b8c2a] font-bold text-[12px] md:text-[13px] lg:text-[14px] uppercase tracking-widest mb-4">
               <Leaf className="w-4 h-4" />
               <span>LATEST INSIGHTS</span>
               <Leaf className="w-4 h-4" />
             </div>
 
-            <h2 className="text-[18px] md:text-[28px] font-medium text-[#1a1a1a] leading-tight mb-2 tracking-tight font-serif">
+            <h2 className="text-[28px] md:text-[34px] lg:text-[40px] font-bold text-[#1a1a1a] leading-[1.2] mb-4 tracking-tight font-serif">
               Organic Industry <span className="text-[#0f5c2e]">Perspectives</span>
             </h2>
 
@@ -61,23 +61,23 @@ const LatestInsights = () => {
             </div>
 
             <div className="flex flex-col md:flex-row items-center justify-between w-full text-left gap-6">
-              <p className="text-[15px] md:text-[17px] text-gray-600 max-w-[600px] leading-relaxed text-center md:text-left">
+              <p className="text-[16px] md:text-[18px] text-gray-600 max-w-[600px] leading-[1.6] text-center md:text-left font-normal">
                 Stay informed with the latest trends, insights and innovations <br className="hidden md:block" />
                 shaping the future of the organic and sustainable sectors.
               </p>
 
-              <button className="bg-[#3b8c2a] hover:bg-[#2d7a2d] text-white px-5 py-2.5 rounded-md font-bold text-[10px] md:text-[11px] tracking-widest uppercase transition-colors flex items-center gap-2 shadow-lg shadow-green-600/20 group whitespace-nowrap">
+              <button className="bg-[#3b8c2a] hover:bg-[#2d7a2d] text-white px-6 py-2 rounded-md font-semibold text-[12px] md:text-[14px] tracking-widest uppercase transition-colors flex items-center gap-2 shadow-lg shadow-green-600/20 group whitespace-nowrap min-h-[44px]">
                 View all articles
-                <ArrowRight className="w-3.5 h-3.5 transition-transform group-hover:translate-x-1" />
+                <ArrowRight className="w-5 h-5 transition-transform group-hover:translate-x-1" />
               </button>
             </div>
           </div>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-2">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
           {articles.map((article) => (
             <div key={article.id} className="relative bg-[#fcfdfc] rounded-[24px] overflow-hidden shadow-[0_8px_20px_rgba(0,0,0,0.06),0_2px_5px_rgba(0,0,0,0.03)] border border-gray-200/60 flex flex-col group cursor-pointer transition-all duration-500 ease-out hover:-translate-y-1 hover:shadow-[0_15px_40px_rgba(0,0,0,0.1),0_5px_15px_rgba(0,0,0,0.05)]">
-              
+
               {/* Inner 3D Emboss Highlight */}
               <div className="absolute inset-0 rounded-[24px] shadow-[inset_0_2px_4px_rgba(255,255,255,0.9),inset_0_-2px_6px_rgba(0,0,0,0.03)] pointer-events-none z-30"></div>
 
@@ -105,11 +105,11 @@ const LatestInsights = () => {
                   <span className="text-gray-700 font-medium text-[13px]">{article.date}</span>
                 </div>
 
-                <h3 className="text-[19px] md:text-[21px] font-bold text-[#0f5c2e] leading-[1.35] mb-3 group-hover:text-[#3b8c2a] transition-colors line-clamp-2">
+                <h3 className="text-[18px] md:text-[20px] font-bold text-[#0f5c2e] leading-[1.3] mb-3 group-hover:text-[#3b8c2a] transition-colors line-clamp-2">
                   {article.title}
                 </h3>
 
-                <p className="text-gray-500 text-[14px] leading-[1.6] mb-4 flex-1 line-clamp-3">
+                <p className="text-gray-500 text-[16px] leading-[1.6] mb-4 flex-1 line-clamp-3">
                   {article.description}
                 </p>
 

@@ -96,7 +96,7 @@ const stats = [
 
 const VoicesOfImpact = () => {
   return (
-    <section className="relative w-full bg-[#EFF7EE] py-2 lg:py-4 overflow-hidden">
+    <section className="relative w-full bg-[#EFF7EE] py-2 md:py-4 lg:py-4 overflow-hidden">
       <style>{`
         @keyframes scroll-left {
           0% { transform: translateX(0%); }
@@ -131,60 +131,10 @@ const VoicesOfImpact = () => {
         </svg>
       </div>
 
-      <div className="max-w-[1400px] mx-auto px-4 lg:px-10 relative z-10">
-
-        {/* Header */}
-        {/* <div className="flex flex-col items-center text-center mb-6">
-          <div className="flex items-center gap-2 text-[#3b8c2a] font-bold text-[11px] md:text-[13px] uppercase tracking-widest mb-4">
-            <Leaf className="w-4 h-4" />
-            <span>VOICES OF IMPACT</span>
-            <Leaf className="w-4 h-4" />
-          </div>
-          <h2 className="text-[32px] md:text-[40px] font-black text-[#1a1a1a] leading-tight mb-2 tracking-tight">
-            Real Stories. <span className="text-[#3b8c2a]">Real Impact.</span>
-          </h2>
-          <p className="text-[15px] md:text-[17px] text-gray-600 max-w-[700px] leading-relaxed">
-            Hear from visionaries, partners and change makers <br className="hidden md:block" />
-            who are building a <span className="font-bold text-[#3b8c2a]">sustainable & healthier</span> tomorrow.
-          </p>
-        </div> */}
-
-        {/* Videos Section */}
-        {/* <div className="relative mb-10 w-full overflow-hidden -mx-4 px-4 sm:mx-0 sm:px-0">
-          <div className="flex w-max animate-scroll-right gap-6">
-            {[...videos, ...videos, ...videos, ...videos].map((vid, idx) => (
-              <div key={`${vid.id}-${idx}`} className="relative w-[85vw] md:w-[45vw] lg:w-[23vw] xl:w-[310px] h-[300px] rounded-[24px] overflow-hidden shadow-2xl shrink-0 group/card cursor-pointer border border-[#e8f2eb]">
-           
-                <div className="absolute inset-0 bg-gradient-to-b from-black/10 via-transparent to-black/80 z-10 transition-colors group-hover/card:to-black/90"></div>
-                <img src={vid.image} alt="Video thumbnail" className="w-full h-full object-cover transition-transform duration-700 group-hover/card:scale-105" />
-                
-       
-                <div className="absolute inset-0 m-auto w-14 h-14 bg-white/95 backdrop-blur-sm rounded-full flex items-center justify-center shadow-[0_8px_30px_rgba(0,0,0,0.15)] z-20 transition-transform group-hover/card:scale-110">
-                  <Play className="w-5 h-5 text-[#3b8c2a] ml-1" fill="currentColor" />
-                </div>
-
-      
-                <div className="absolute bottom-0 left-0 right-0 p-5 z-20 flex items-end justify-between">
-                  <div className="flex items-center gap-3.5">
-                    <div className="w-9 h-9 rounded-full bg-white/20 backdrop-blur-md flex items-center justify-center shrink-0 border border-white/30">
-                      <Play className="w-3.5 h-3.5 text-white ml-0.5" fill="currentColor" />
-                    </div>
-                    <div className="flex flex-col text-left">
-                      <span className="text-white font-bold text-[15px] leading-none mb-1 tracking-wide">{vid.title}</span>
-                      <span className="text-white/90 font-medium text-[11px] leading-none tracking-wide">{vid.subtitle}</span>
-                    </div>
-                  </div>
-                  <div className="bg-black/60 backdrop-blur-md px-3 py-1.5 rounded-full border border-white/10 flex items-center">
-                    <span className="text-white font-bold text-[11px] tracking-widest">{vid.duration}</span>
-                  </div>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div> */}
+      <div className="w-full px-4 md:px-11 relative z-10">
 
         {/* Testimonials Header */}
-        <div className="flex items-center justify-center gap-3 text-[#3b8c2a] font-bold text-[11px] md:text-[13px] uppercase tracking-widest mb-4">
+        <div className="flex items-center justify-center gap-3 text-[#3b8c2a] font-bold text-[12px] md:text-[14px] lg:text-[15px] uppercase tracking-widest mb-6">
           <Leaf className="w-4 h-4" />
           <span>MORE INSPIRING STORIES</span>
           <Leaf className="w-4 h-4" />
@@ -194,7 +144,7 @@ const VoicesOfImpact = () => {
         <div className="relative mb-4 w-full overflow-hidden -mx-4 px-4 sm:mx-0 sm:px-0">
           <div className="flex w-max animate-scroll-left gap-5 py-2">
             {[...testimonials, ...testimonials, ...testimonials, ...testimonials].map((testi, idx) => (
-              <div key={`${testi.id}-${idx}`} className="bg-white rounded-2xl p-5 shadow-[0_8px_30px_rgba(0,0,0,0.06)] border border-[#e8f2eb] min-w-[280px] w-[280px] h-[300px] shrink-0 flex flex-col transition-transform hover:-translate-y-1 duration-300 cursor-pointer">
+              <div key={`${testi.id}-${idx}`} className="bg-white rounded-2xl p-6 shadow-[0_8px_30px_rgba(0,0,0,0.06)] border border-[#e8f2eb] min-w-[320px] w-[320px] h-[340px] shrink-0 flex flex-col transition-transform hover:-translate-y-1 duration-300 cursor-pointer">
                 <div className="flex items-start gap-4 mb-3">
                   <div className="relative">
                     <img src={testi.image} alt={testi.name} className="w-14 h-14 rounded-full object-cover border-2 border-green-100" />
@@ -206,22 +156,22 @@ const VoicesOfImpact = () => {
                     </div>
                   </div>
                   <div className="flex flex-col pt-1">
-                    <span className="font-bold text-[#00643b] text-[14px] leading-tight mb-1">{testi.name}</span>
-                    <span className="text-gray-500 text-[11px] leading-snug mb-1">{testi.designation}</span>
-                    <div className="flex items-center text-gray-400 text-[10px] font-medium">
-                      <MapPin className="w-3 h-3 mr-1" />
+                    <span className="font-bold text-[#00643b] text-[16px] md:text-[18px] leading-tight mb-1">{testi.name}</span>
+                    <span className="text-gray-500 text-[12px] md:text-[13px] leading-snug mb-1">{testi.designation}</span>
+                    <div className="flex items-center text-gray-400 text-[11px] md:text-[12px] font-medium">
+                      <MapPin className="w-3.5 h-3.5 mr-1" />
                       {testi.location}
                     </div>
                   </div>
                 </div>
 
-                <p className="text-gray-600 text-[12px] leading-relaxed mb-4 mt-2 flex-1 line-clamp-6">
+                <p className="text-gray-600 text-[16px] leading-[1.6] mb-4 mt-2 flex-1 line-clamp-6">
                   {testi.quote}
                 </p>
 
-                <div className="flex items-center font-bold text-[#3b8c2a] text-[12px] group/link">
+                <div className="flex items-center font-bold text-[#3b8c2a] text-[14px] md:text-[15px] group/link">
                   Read Story
-                  <ArrowRight className="w-3.5 h-3.5 ml-1 transition-transform group-hover/link:translate-x-1" />
+                  <ArrowRight className="w-4 h-4 ml-1 transition-transform group-hover/link:translate-x-1" />
                 </div>
               </div>
             ))}
@@ -231,8 +181,8 @@ const VoicesOfImpact = () => {
       </div>
 
       {/* ── Bottom Stats Strip (Edge to Edge) ── */}
-      <div className="w-full bg-[#3b8c2a] relative z-20 py-2 lg:py-2 px-2 lg:px-11 border-y border-[#164429] shadow-2xl overflow-x-auto hide-scrollbar">
-        <div className="w-full flex items-center justify-between min-w-[1000px] max-w-[1400px] mx-auto gap-4">
+      <div className="w-full bg-[#3b8c2a] relative z-20 py-1.5 lg:py-2 px-4 md:px-11 border-y border-[#164429] shadow-2xl overflow-x-auto hide-scrollbar">
+        <div className="w-full flex items-center justify-between  gap-4">
           {stats.map((stat, i) => (
             <React.Fragment key={i}>
               <div className="flex items-center gap-2 md:gap-3 group cursor-pointer hover:scale-105 transition-transform duration-300">
@@ -240,8 +190,8 @@ const VoicesOfImpact = () => {
                   <stat.icon className="w-4 h-4 text-[#3b8c2a]" strokeWidth={2.5} />
                 </div>
                 <div className="flex flex-col text-left">
-                  <span className="text-white font-black text-[13px] md:text-[14px] leading-tight tracking-wider uppercase mb-0.5">{stat.val}</span>
-                  <span className="text-[#e8f2eb] font-bold text-[9px] md:text-[10px] leading-none tracking-wide uppercase">{stat.label}</span>
+                  <span className="text-white font-black text-[15px] md:text-[16px] lg:text-[18px] leading-tight tracking-wider uppercase mb-1">{stat.val}</span>
+                  <span className="text-[#e8f2eb] font-bold text-[11px] md:text-[12px] leading-none tracking-wide uppercase">{stat.label}</span>
                 </div>
               </div>
 

@@ -45,51 +45,35 @@ const ExpoCategories = () => {
         }
       `}</style>
 
-      {/* Decorative White Flowers */}
-      {/* <FlowerDecoration className="absolute -top-[100px] -left-[100px] w-[500px] h-[500px] pointer-events-none opacity-[0.9] -rotate-12 animate-float-flower" />
-      <FlowerDecoration className="absolute top-[30%] -right-[150px] w-[600px] h-[600px] pointer-events-none opacity-[0.7] rotate-[15deg] animate-float-flower" style={{ animationDelay: '2s' }} />
-      <FlowerDecoration className="absolute -bottom-[150px] left-[15%] w-[450px] h-[450px] pointer-events-none opacity-[0.8] -rotate-[25deg] animate-float-flower" style={{ animationDelay: '4s' }} /> */}
 
       <div className="w-full px-0 relative z-10">
 
         {/* Header */}
-        <div className="px-4 sm:px-6 lg:px-11 w-full ">
-          <div className="flex flex-col xl:flex-row items-center justify-between mb-4 bg-white py-3 px-4 md:px-8 rounded-full shadow-[0_4px_20px_rgba(0,0,0,0.03)] border border-gray-100 gap-4 xl:gap-6">
-
-            {/* Pill */}
-            <div className="flex items-center gap-3 shrink-0">
-              <div className="flex items-center gap-1 hidden md:flex">
-                <span className="w-1.5 h-1.5 rounded-full bg-[#3b8c2a]"></span>
-                <span className="w-8 h-[1px] bg-[#3b8c2a]"></span>
-              </div>
-              <div className="px-5 py-1.5 rounded-full border border-[#3b8c2a] bg-[#f8fdf9]">
-                <span className="text-[#3b8c2a] text-[12px] font-bold tracking-[0.1em] uppercase whitespace-nowrap">
-                  EXPO CATEGORIES
-                </span>
-              </div>
-              <div className="flex items-center gap-1 hidden md:flex">
-                <span className="w-8 h-[1px] bg-[#3b8c2a]"></span>
-                <span className="w-1.5 h-1.5 rounded-full bg-[#3b8c2a]"></span>
-              </div>
+        <div className="px-4 md:px-8 mx-auto max-w-7xl w-full flex flex-col items-center text-center mb-2 md:mb-4">
+          {/* Badge */}
+          <div className="flex items-center gap-3 mb-4">
+            <div className="h-[1.5px] w-12 bg-gradient-to-l from-[#3b8c2a] to-transparent hidden sm:block"></div>
+            <div className="px-5 py-2 rounded-full border border-[#d5ebd9] bg-[#eef5f0] shadow-sm flex items-center justify-center">
+              <span className="text-[#1a3821] text-[13px] md:text-[14px] font-bold tracking-[0.1em] uppercase drop-shadow-sm">
+                EXPO CATEGORIES
+              </span>
             </div>
-
-            {/* Title */}
-            <h2 className="text-[16px] md:text-[22px] font-bold text-[#111827] tracking-tight shrink-0 text-center uppercase">
-              Explore Diverse <span className="text-[#3b8c2a]">Healthcare Sectors</span>
-            </h2>
-
-            {/* Description */}
-            <div className="flex items-center gap-4 hidden xl:flex shrink-0">
-              <div className="w-[1px] h-8 bg-gray-200"></div>
-              <p className="text-[#64748b] text-[14px] md:text-[15px] font-medium whitespace-nowrap">
-                One Platform. Every Healthcare Solution.
-              </p>
-            </div>
+            <div className="h-[1.5px] w-12 bg-gradient-to-r from-[#3b8c2a] to-transparent hidden sm:block"></div>
           </div>
+
+          {/* Title */}
+          <h2 className="text-[#154726] text-3xl md:text-[34px] lg:text-[40px] font-extrabold leading-[1.15] mb-4 drop-shadow-sm" style={{ fontFamily: 'Georgia, serif' }}>
+            Explore Diverse <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#3b8c2a] to-[#F2B40E]">Healthcare Sectors</span>
+          </h2>
+
+          {/* Description */}
+          <p className="text-[#475569] text-[16px] md:text-[18px] max-w-2xl font-medium leading-[1.6]">
+            One Platform. Every Healthcare Solution. Discover the future of organic and sustainable living across multiple dedicated zones.
+          </p>
         </div>
 
         {/* Static Grid Layout (No Slider) */}
-        <div className="w-full mb-2 py-2 px-4 lg:px-11 grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-5 gap-2 lg:gap-3 justify-center">
+        <div className="w-full mb-4 py-2 px-2 md:px-11 grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-3 lg:gap-4 justify-center">
           {categories.map((item, index) => {
             const Icon = item.icon;
             const displayIndex = index + 1; // Numbering 1 to 10
@@ -117,11 +101,11 @@ const ExpoCategories = () => {
                   <div className="absolute inset-0 opacity-[0.03] pointer-events-none" style={{ backgroundImage: 'radial-gradient(circle at 1px 1px, black 1px, transparent 0)', backgroundSize: '14px 14px' }} />
 
                   {/* Title & Description */}
-                  <div className="flex flex-col items-start text-left w-full">
-                    <h3 className="text-[14px] font-bold text-gray-900 leading-[1.3] mb-1.5  group-hover:text-opacity-80 transition-opacity">
+                  <div className="flex flex-col items-start text-left w-full mt-2 mb-2">
+                    <h3 className="text-[18px] md:text-[20px] font-bold text-gray-900 leading-[1.3] mb-2 group-hover:text-opacity-80 transition-opacity">
                       {item.title}
                     </h3>
-                    <p className="text-[11px] text-gray-500 leading-[1.4] line-clamp-3 font-normal">
+                    <p className="text-[14px] md:text-[15px] lg:text-[16px] text-gray-500 leading-[1.6] line-clamp-3 font-normal">
                       {item.desc}
                     </p>
                   </div>
@@ -135,10 +119,10 @@ const ExpoCategories = () => {
         </div>
 
         {/* Button */}
-        <div className="flex justify-center  px-4">
-          <button className="group flex items-center justify-center gap-2 px-6 py-2.5 rounded-full border-2 border-[#F2B40E] bg-[#3b8c2a] text-white text-[11px] md:text-[12px] font-bold uppercase tracking-wider hover:bg-[#F2B40E] hover:text-[#0b2912] hover:shadow-lg transition-all duration-300">
+        <div className="flex justify-center px-4 mb-2">
+          <button className="group flex items-center justify-center gap-3 px-6 py-2 rounded-full border-2 border-[#F2B40E] bg-[#3b8c2a] text-white text-[12px] md:text-[14px] font-bold uppercase tracking-wider hover:bg-[#F2B40E] hover:text-[#0b2912] hover:shadow-lg transition-all duration-300 min-h-[44px]">
             VIEW ALL CATEGORIES
-            <ArrowRight size={14} strokeWidth={2.5} className="group-hover:translate-x-1 transition-transform" />
+            <ArrowRight size={16} strokeWidth={2.5} className="group-hover:translate-x-1 transition-transform" />
           </button>
         </div>
 

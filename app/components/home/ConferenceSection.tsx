@@ -29,7 +29,7 @@ const OrangeSparkle = ({ style }: { style?: React.CSSProperties }) => (
 
 const ConferenceSeminars = () => {
   return (
-    <section className="bg-white py-2 md:py-4 px-2 lg:px-11 overflow-hidden relative shadow-[0_0_60px_rgba(245,130,32,0.1)] border-y border-[#f58220]/20 z-20">
+    <section className="bg-white py-2 md:py-4 lg:py-4 px-4 md:px-11 overflow-hidden relative shadow-[0_0_60px_rgba(245,130,32,0.1)] border-y border-[#f58220]/20 z-20">
       {/* Subtle Glowing Highlights */}
       <div className="absolute top-0 right-0 w-[600px] h-[600px] bg-[#f58220]/[0.04] rounded-full blur-[80px] -z-10 translate-x-1/3 -translate-y-1/4 pointer-events-none"></div>
       <div className="absolute bottom-0 left-0 w-[500px] h-[500px] bg-[#3b8c2a]/[0.04] rounded-full blur-[80px] -z-10 -translate-x-1/4 translate-y-1/4 pointer-events-none"></div>
@@ -122,10 +122,9 @@ const ConferenceSeminars = () => {
         }
       `}</style>
 
-      <div className="flex flex-col xl:flex-row items-center justify-between gap-6 lg:gap-10  py-2">
+      <div className="flex flex-col xl:flex-row items-center justify-between gap-6 lg:gap-10 py-2">
 
         {/* LEFT IMAGE BOX */}
-
         <div className="flex flex-col md:flex-row items-center gap-2 lg:gap-4 flex-1 w-full">
           <motion.div
             initial={{ opacity: 0, x: 30 }}
@@ -134,18 +133,18 @@ const ConferenceSeminars = () => {
             viewport={{ once: true }}
             className="flex flex-col items-start w-full md:max-w-[70%]"
           >
-            <div className="flex items-center gap-2 mb-2">
-              <span className="text-[10px] md:text-[11px] font-black uppercase tracking-widest text-[#f58220] bg-[#f58220]/10 px-3 py-1 rounded-full border border-[#f58220]/20">
+            <div className="flex items-center gap-2 mb-4">
+              <span className="text-[12px] md:text-[13px] lg:text-[14px] font-bold uppercase tracking-widest text-[#f58220] bg-[#f58220]/10 px-4 py-1.5 rounded-full border border-[#f58220]/20">
                 GLOBAL CONFERENCE & SEMINARS
               </span>
             </div>
 
-            <h2 className="text-[26px] md:text-[36px] font-black text-[#1a1a1a] leading-tight mb-3">
+            <h3 className="text-[28px] md:text-[30px] lg:text-[32px] font-bold text-[#1a1a1a] leading-[1.2] mb-4">
               Where Knowledge Meets <br className="hidden md:block" />
               <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#00643b] to-[#3b8c2a]">the Future of Organic</span>
-            </h2>
+            </h3>
 
-            <p className="text-[13px] md:text-[15px] text-gray-600 leading-relaxed mb-4 font-medium border-l-2 border-[#f58220] pl-3">
+            <p className="text-[16px] md:text-[18px] text-gray-600 leading-[1.6] mb-6 font-normal border-l-4 border-[#f58220] pl-4">
               Join expert-led sessions, panel discussions &amp; thought leadership talks on the latest trends shaping the future of organic, natural and sustainable living.
             </p>
 
@@ -160,7 +159,7 @@ const ConferenceSeminars = () => {
                   <div className="mt-0.5 bg-[#f58220]/10 p-0.5 rounded-full">
                     <CheckCircle className="w-4 h-4 text-[#f58220] shrink-0" />
                   </div>
-                  <span className="text-[13px] md:text-[14px] font-semibold text-gray-700">{text}</span>
+                  <span className="text-[15px] md:text-[16px] font-medium text-gray-700">{text}</span>
                 </div>
               ))}
             </div>
@@ -177,9 +176,9 @@ const ConferenceSeminars = () => {
               </div>
 
               <Link href="/conference" target="_blank" className="relative z-10">
-                <button className="orange-btn flex items-center gap-2 px-8 py-2 rounded-xl">
-                  <span className="btn-text text-[13px] md:text-[14px]">View Conference Schedule</span>
-                  <ArrowRight className="btn-arrow w-4 h-4" />
+                <button className="flex items-center justify-center gap-2 px-8 py-2 rounded-xl bg-gradient-to-r from-[#f58634] to-[#ff9b4f] hover:from-[#e67929] hover:to-[#f58634] text-white font-semibold uppercase tracking-wider shadow-[0_5px_15px_rgba(245,134,52,0.3)] hover:shadow-[0_8px_25px_rgba(245,134,52,0.4)] transition-all duration-300 hover:-translate-y-1 min-h-[44px] group">
+                  <span className="text-[12px] md:text-[14px]">View Conference Schedule</span>
+                  <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
                 </button>
               </Link>
             </div>
@@ -202,10 +201,10 @@ const ConferenceSeminars = () => {
                   <item.icon className="w-5 h-5 text-[#f58220] group-hover:text-white transition-colors duration-300" />
                 </div>
                 <div className="flex flex-col">
-                  <span className="text-[12px] md:text-[13px] font-black text-[#1a1a1a] leading-tight uppercase tracking-[0.1em]">
+                  <span className="text-[12px] md:text-[13px] lg:text-[14px] font-bold text-[#1a1a1a] leading-tight uppercase tracking-[0.1em]">
                     {item.title}
                   </span>
-                  <span className="text-[10px] font-bold text-gray-500 leading-tight uppercase tracking-[0.15em] mt-0.5">
+                  <span className="text-[11px] lg:text-[12px] font-semibold text-gray-500 leading-tight uppercase tracking-[0.15em] mt-0.5">
                     {item.sub}
                   </span>
                 </div>

@@ -45,7 +45,7 @@ const cards = [
 
 const GlobalPlatform = () => {
   return (
-    <section className="relative w-full flex items-center bg-white py-2 lg:py-4 overflow-hidden font-inter border-y border-green-100">
+    <section className="relative w-full flex items-center bg-white py-2 md:py-4 lg:py-4 px-2 md:px-11 overflow-hidden font-inter border-y border-green-100">
       {/* Background Image Map/Design */}
       <div className="absolute inset-0 z-0">
         <Image
@@ -57,30 +57,39 @@ const GlobalPlatform = () => {
         />
       </div>
 
-      <div className=" w-full px-2 sm:px-4 lg:px-11 xl:px-11 relative z-10 flex flex-col xl:flex-row justify-between gap-4 lg:gap-8 items-center">
+      <div className="w-full relative z-10 flex flex-col xl:flex-row justify-between gap-4 lg:gap-6 items-center">
 
         {/* Left Content */}
         <div className="w-full xl:w-[35%] flex flex-col items-center xl:items-start text-center xl:text-left relative z-20">
-          <p className="w-full text-[13px] font-bold text-center tracking-widest uppercase mb-2 text-[#3b8c2a] drop-shadow-sm">
-            FROM INDIA TO <span className="text-[#f58634]">THE WORLD</span>
-          </p>
+          <div className="relative group inline-flex mb-4 mx-auto xl:mx-0 self-center xl:self-start">
+            {/* Glow effect */}
+            <div className="absolute -inset-0.5 bg-gradient-to-r from-[#3b8c2a] via-[#f58634] to-[#3b8c2a] rounded-lg blur opacity-50 group-hover:opacity-100 transition duration-500 animate-pulse"></div>
+            
+            {/* Gradient Border Wrapper */}
+            <div className="relative bg-gradient-to-r from-[#3b8c2a] via-[#f58634] to-[#3b8c2a] p-[1.5px] rounded-lg">
+              {/* Inner Text */}
+              <p className="bg-white px-4 py-1.5 rounded-[6px] text-[12px] md:text-[13px] lg:text-[14px] font-bold tracking-widest uppercase text-[#3b8c2a] drop-shadow-sm flex items-center justify-center m-0">
+                FROM INDIA TO <span className="text-[#f58634] ml-1">THE WORLD</span>
+              </p>
+            </div>
+          </div>
 
-          <h2 className="text-[#1a3821] text-4xl lg:text-[40px] leading-[1.1] font-bold mb-3 font-serif drop-shadow-md">
+          <h2 className="text-[#1a3821] text-[28px] md:text-[34px] lg:text-[40px] leading-[1.2] font-bold mb-4 font-serif drop-shadow-md text-center xl:text-left">
             From a National Expo<br />
             to a <span className="text-[#f58634]">Global Platform</span>
           </h2>
 
-          <p className="text-[#475569] text-[15px] leading-relaxed mb-8 max-w-[450px] font-medium">
+          <p className="text-[#475569] text-[16px] md:text-[18px] leading-[1.6] mb-8 max-w-[450px] font-normal text-center xl:text-left mx-auto xl:mx-0">
             Bharat Organic Expo is India's most influential platform connecting organic products, people and possibilities.
           </p>
 
           <div className="flex flex-col gap-4 w-full">
             {listItems.map((item, index) => (
-              <div key={index} className="flex items-center gap-3">
-                <div className="w-6 h-6 rounded-full bg-white flex items-center justify-center shrink-0 shadow-sm border border-[#e2eee4]">
-                  <Leaf size={12} className="text-[#3b8c2a] fill-[#3b8c2a]" strokeWidth={1} />
+              <div key={index} className="flex items-center gap-4">
+                <div className="w-8 h-8 rounded-full bg-white flex items-center justify-center shrink-0 shadow-sm border border-[#e2eee4]">
+                  <Leaf size={14} className="text-[#3b8c2a] fill-[#3b8c2a]" strokeWidth={1} />
                 </div>
-                <span className="text-[#334155] font-bold text-[14px] drop-shadow-sm">{item}</span>
+                <span className="text-[#334155] font-bold text-[15px] md:text-[16px] drop-shadow-sm text-left">{item}</span>
               </div>
             ))}
           </div>
@@ -103,7 +112,7 @@ const GlobalPlatform = () => {
                   {card.icon}
                 </div>
 
-                <h3 className="text-[#154726] font-extrabold text-[14px] leading-snug tracking-wide whitespace-pre-line mb-3 h-10 flex items-center justify-center relative z-10 drop-shadow-sm">
+                <h3 className="text-[#154726] font-extrabold text-[16px] md:text-[18px] leading-[1.3] tracking-wide whitespace-pre-line mb-4 h-10 flex items-center justify-center relative z-10 drop-shadow-sm">
                   {card.title}
                 </h3>
 
@@ -113,7 +122,7 @@ const GlobalPlatform = () => {
                   </div>
                 </div>
 
-                <p className="text-[#475569] text-[13px] leading-[1.7] font-medium px-1 relative z-10 pb-2">
+                <p className="text-[#475569] text-[14px] md:text-[15px] lg:text-[16px] leading-[1.6] font-normal px-2 relative z-10 pb-4">
                   {card.desc}
                 </p>
 
