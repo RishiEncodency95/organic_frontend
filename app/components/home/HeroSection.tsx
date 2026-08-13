@@ -277,7 +277,7 @@ const HeroSection = () => {
               </div>
 
               {/* Action Buttons */}
-              <div className="flex flex-row flex-nowrap justify-between gap-1 sm:gap-4 pt-3 relative w-full overflow-visible">
+              <div className="flex flex-nowrap items-center gap-2 sm:gap-4 pt-3 relative overflow-visible w-full overflow-x-auto hide-scrollbar pb-2">
                 {/* Floating Sparkles around buttons - Multi-colored to match logo theme */}
                 <Sparkle style={{ top: '-15px', left: '15%', animationDelay: '0s', color: '#F2B40E' }} />
                 <Sparkle style={{ bottom: '-10px', left: '35%', animationDelay: '0.4s', color: '#3b8c2a' }} />
@@ -287,19 +287,19 @@ const HeroSection = () => {
 
                 <Link
                   href="/book-a-stand"
-                  className="hero-shimmer-btn flex-1 bg-[#2b5825] hover:bg-[#1f471b] text-white px-1 sm:px-6 py-2 sm:py-1.5 rounded-md font-bold text-[9px] sm:text-[12px] md:text-[13px] tracking-tight sm:tracking-wider uppercase transition-all shadow-md hover:-translate-y-0.5 text-center flex items-center justify-center whitespace-nowrap "
+                  className="hero-shimmer-btn w-fit bg-[#2b5825] hover:bg-[#1f471b] text-white px-4 py-2 sm:py-2.5 rounded-md font-bold text-[10px] sm:text-[12px] md:text-[13px] tracking-tight sm:tracking-wider uppercase transition-all shadow-md hover:-translate-y-0.5 text-center flex items-center justify-center whitespace-nowrap"
                 >
                   Book Your Stall
                 </Link>
                 <Link
                   href="/visitor-registration"
-                  className="hero-shimmer-btn hero-shimmer-btn-dark flex-1 bg-white hover:bg-gray-50 text-[#2b5825] border border-[#2b5825] px-1 sm:px-6 py-2 sm:py-3 rounded-md font-bold text-[9px] sm:text-[12px] md:text-[13px] tracking-tight sm:tracking-wider uppercase transition-all shadow-sm hover:-translate-y-0.5 text-center flex items-center justify-center whitespace-nowrap "
+                  className="hero-shimmer-btn hero-shimmer-btn-dark w-fit bg-white hover:bg-gray-50 text-[#2b5825] border border-[#2b5825] px-4 py-2 sm:py-2.5 rounded-md font-bold text-[10px] sm:text-[12px] md:text-[13px] tracking-tight sm:tracking-wider uppercase transition-all shadow-sm hover:-translate-y-0.5 text-center flex items-center justify-center whitespace-nowrap"
                 >
                   Register as Visitor
                 </Link>
                 <Link
                   href="/delegate-registration"
-                  className="hero-shimmer-btn flex-1 bg-[#7ca142] hover:bg-[#688a35] text-white px-1 sm:px-6 py-2 sm:py-3 rounded-md font-bold text-[9px] sm:text-[12px] md:text-[13px] tracking-tight sm:tracking-wider uppercase transition-all shadow-md hover:-translate-y-0.5 text-center flex items-center justify-center whitespace-nowrap"
+                  className="hero-shimmer-btn w-fit bg-[#7ca142] hover:bg-[#688a35] text-white px-4 py-2 sm:py-2.5 rounded-md font-bold text-[10px] sm:text-[12px] md:text-[13px] tracking-tight sm:tracking-wider uppercase transition-all shadow-md hover:-translate-y-0.5 text-center flex items-center justify-center whitespace-nowrap"
                 >
                   Register as Delegate
                 </Link>

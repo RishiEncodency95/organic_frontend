@@ -84,37 +84,35 @@ const BuyerSellerMeet = () => {
               </p>
 
               {/* Description */}
-              <p className="text-[16px] md:text-[18px] text-gray-700 font-normal leading-[1.6] max-w-[500px] mb-6">
+              <p className="text-[16px] md:text-[18px] text-gray-700 font-normal leading-[1.6] max-w-[500px] mb-4">
                 Join India's most exclusive B2B networking platform for the organic sector. Our highly curated Buyer-Seller Meet brings together certified farmers, eco-friendly product manufacturers, and top-tier global buyers. Pre-schedule your 1-on-1 meetings to secure bulk orders and forge lasting partnerships in the booming sustainable market.
               </p>
 
-              {/* Features Row */}
-              <div className="flex flex-wrap items-start gap-3 justify-between max-w-[480px] mb-5">
+              {/* Features Grid */}
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 md:gap-2  max-w-[520px] mb-4">
                 {[
                   { icon: UserCheck, title: 'VERIFIED', sub: 'ORGANIC BUYERS' },
                   { icon: Handshake, title: '1-ON-1 B2B', sub: 'MEETINGS' },
                   { icon: Globe, title: 'LUCRATIVE GREEN', sub: 'OPPORTUNITIES' },
                   { icon: Store, title: 'EXPAND GLOBAL', sub: 'REACH' },
-                ].map((feat, idx, arr) => (
-                  <React.Fragment key={idx}>
-                    <div className="flex flex-col items-center text-center w-[20%] min-w-[60px]">
-                      <div className="w-10 h-10 rounded-full bg-[#f4fcf6] flex items-center justify-center text-[#3b8c2a] mb-2 border border-[#3b8c2a]/20">
-                        <feat.icon className="w-4 h-4" strokeWidth={1.5} />
-                      </div>
-                      <span className="text-[8px] md:text-[9px] font-black text-[#1a1a1a] leading-tight uppercase">{feat.title}<br />{feat.sub}</span>
+                ].map((feat, idx) => (
+                  <div key={idx} className="flex items-center gap-3 bg-[#f8fcf9] hover:bg-[#f0f9f3] transition-colors px-3 py-1.5 rounded-xl border border-[#3b8c2a]/10 shadow-sm">
+                    <div className="w-10 h-10 rounded-full bg-white flex items-center justify-center text-[#3b8c2a] shrink-0 border border-[#3b8c2a]/20 shadow-sm">
+                      <feat.icon className="w-5 h-5" strokeWidth={2} />
                     </div>
-                    {idx < arr.length - 1 && (
-                      <div className="w-px h-10 bg-gray-200 mt-2 hidden sm:block"></div>
-                    )}
-                  </React.Fragment>
+                    <div className="flex flex-col text-left">
+                      <span className="text-[12px] md:text-[14px] font-black text-[#1a1a1a] leading-tight uppercase">{feat.title}</span>
+                      <span className="text-[10px] md:text-[12px] font-bold text-gray-500 leading-tight uppercase">{feat.sub}</span>
+                    </div>
+                  </div>
                 ))}
               </div>
 
               {/* Buttons */}
-              <div className="flex flex-wrap items-center gap-3">
+              <div className="flex flex-wrap items-center gap-16">
                 <Link
                   href="/buyer-registration"
-                  className="bg-[#3b8c2a] hover:bg-[#2d7a2d] text-white px-6 py-3 rounded-md font-bold text-[15px] md:text-[16px] tracking-widest uppercase transition-colors flex items-center gap-2 shadow-lg shadow-green-600/20 min-h-[44px]"
+                  className="bg-[#3b8c2a] hover:bg-[#2d7a2d] text-white px-6 py-2 rounded-md font-semibold text-[12px] md:text-[14px] tracking-widest uppercase transition-colors flex items-center gap-2 shadow-lg shadow-green-600/20 min-h-[44px]"
                 >
                   <CalendarCheck className="w-5 h-5" />
                   Register Now
@@ -122,7 +120,7 @@ const BuyerSellerMeet = () => {
                 </Link>
                 <Link
                   href="/schedule"
-                  className="bg-white hover:bg-gray-50 border border-gray-300 text-[#1a1a1a] px-6 py-3 rounded-md font-bold text-[15px] md:text-[16px] tracking-widest uppercase transition-colors flex items-center gap-2 shadow-sm min-h-[44px]"
+                  className="bg-white hover:bg-gray-50 border border-gray-300 text-[#1a1a1a] px-6 py-2 rounded-md font-semibold text-[12px] md:text-[14px] tracking-widest uppercase transition-colors flex items-center gap-2 shadow-sm min-h-[44px]"
                 >
                   <CalendarDays className="w-5 h-5 text-[#3b8c2a]" />
                   View Schedule
@@ -133,7 +131,7 @@ const BuyerSellerMeet = () => {
 
             {/* Right: Image Card */}
             <div className="flex-1 w-full lg:max-w-[50%] relative">
-              <div className="relative w-full h-[300px] lg:h-[500px] rounded-[16px] lg:rounded-[24px] overflow-hidden shadow-[0_20px_50px_rgba(0,0,0,0.15)] border-[6px] border-white">
+              <div className="relative w-full h-[300px] lg:h-[530px] rounded-[16px] lg:rounded-[24px] overflow-hidden shadow-[0_20px_50px_rgba(0,0,0,0.15)] border-[6px] border-white">
                 <img
                   src={bs_meet.src}
                   alt="Buyer Seller Meet"
