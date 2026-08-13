@@ -5,8 +5,8 @@ import organImg from '@/app/assets/about/organi.png';
 
 const AboutOrganizer = () => {
   return (
-    <section className="w-full bg-white py-2 md:py-4 overflow-hidden border-t border-gray-100">
-      <div className="w-full px-4 md:px-11 xl:px-11">
+    <section className="w-full bg-white py-12 md:py-16 lg:py-20 overflow-hidden border-t border-gray-100">
+      <div className="w-full px-4 md:px-8 mx-auto max-w-7xl">
 
         {/* TOP SECTION: About the Organizer */}
         <div className="flex flex-col lg:flex-row gap-12 xl:gap-20 items-center">
@@ -20,11 +20,11 @@ const AboutOrganizer = () => {
               </h3>
             </div>
 
-            <h2 className="text-[28px] md:text-[32px] lg:text-[34px] font-semibold text-[#113d29] leading-tight mb-4">
+            <h2 className="text-[28px] md:text-[34px] lg:text-[40px] font-bold text-[#113d29] leading-[1.2] mb-4">
               Namo Gange Wellness Pvt. Ltd.
             </h2>
 
-            <div className="space-y-4 text-[#374151] text-[14px] md:text-[15px] leading-relaxed mb-6">
+            <div className="space-y-4 text-[#374151] text-[16px] md:text-[18px] leading-[1.6] mb-6">
               <p>
                 A professionally managed exhibition and conference organizer in India, specializing in creating
                 large-scale B2B trade shows, healthcare exhibitions, and global business platforms.
@@ -53,7 +53,7 @@ const AboutOrganizer = () => {
                     <div className="mt-0.5 min-w-[16px] w-4 h-4 rounded-full bg-[#fef2eb] text-[#e85d1c] flex items-center justify-center shrink-0">
                       <Check size={10} strokeWidth={3} />
                     </div>
-                    <span className="text-[14px] font-medium text-[#111] leading-snug">
+                    <span className="text-[14px] md:text-[16px] font-medium text-[#111] leading-snug">
                       {capability}
                     </span>
                   </div>
@@ -78,8 +78,9 @@ const AboutOrganizer = () => {
               <div className="relative z-10 w-full h-full overflow-hidden rounded-[12px] bg-white">
                 <Image
                   src={organImg}
-                  alt="About Organizer"
+                  alt="Namo Gange Wellness Pvt. Ltd. organizing Bharat Organic Expo 2027"
                   fill
+                  sizes="(max-width: 768px) 100vw, 50vw"
                   className="object-cover group-hover:scale-110 transition-transform duration-700 ease-in-out"
                 />
               </div>
@@ -117,7 +118,7 @@ const AboutOrganizer = () => {
           </div>
 
           {/* Centered Paragraph */}
-          <p className="text-[#374151] text-[14px] md:text-[15px] text-center max-w-4xl mx-auto mb-6">
+          <p className="text-[#374151] text-[16px] md:text-[18px] leading-[1.6] text-center max-w-3xl mx-auto mb-10 mt-6">
             With a proven legacy of delivering result-oriented exhibitions, we forge lasting business relationships and accelerate industry growth.
           </p>
 
@@ -126,30 +127,30 @@ const AboutOrganizer = () => {
             {/* Card 1: Our Journey */}
             <div className="bg-[#f8f9fa] border border-gray-200 border-b-[5px] border-b-gray-300 rounded-2xl shadow-md hover:-translate-y-2 hover:shadow-[0_20px_40px_rgba(0,0,0,0.1)] hover:border-b-[#3b8c2a] transition-all duration-300 p-6 md:p-8 flex flex-col h-full">
               <div className="flex items-start gap-3 mb-6 min-h-[40px] md:min-h-[48px]">
-                <div className="w-8 h-8 rounded-full bg-white shadow-sm text-[#e85d1c] flex items-center justify-center shrink-0 mt-0.5">
-                  <Clock size={16} strokeWidth={2.5} />
+                <div className="w-10 h-10 rounded-full bg-white shadow-sm text-[#e85d1c] flex items-center justify-center shrink-0 mt-0.5">
+                  <Clock size={20} strokeWidth={2.5} />
                 </div>
-                <h4 className="text-[12px] md:text-[13px] font-bold text-[#113d29] tracking-wider uppercase leading-snug">
+                <h4 className="text-[18px] md:text-[20px] font-bold text-[#113d29] tracking-wider uppercase leading-[1.3]">
                   OUR JOURNEY: A LEGACY OF GROWTH
                 </h4>
               </div>
 
-              <div className="flex flex-col gap-6 flex-1">
+              <div className="flex flex-col gap-6 flex-1 mt-4">
                 <div className="flex items-start gap-4">
-                  <span className="text-[#e85d1c] font-extrabold text-[14px] min-w-[50px] md:min-w-[60px]">2016</span>
-                  <p className="text-[13px] text-[#4b5563] leading-relaxed">
+                  <span className="text-[#e85d1c] font-extrabold text-[16px] min-w-[50px] md:min-w-[65px]">2016</span>
+                  <p className="text-[14px] md:text-[15px] text-[#4b5563] leading-[1.6]">
                     Company Founded — commitment to exceptional exhibition management.
                   </p>
                 </div>
                 <div className="flex items-start gap-4">
-                  <span className="text-[#e85d1c] font-extrabold text-[14px] min-w-[50px] md:min-w-[60px]">2016–25</span>
-                  <p className="text-[13px] text-[#4b5563] leading-relaxed">
+                  <span className="text-[#e85d1c] font-extrabold text-[16px] min-w-[50px] md:min-w-[65px]">2016–25</span>
+                  <p className="text-[14px] md:text-[15px] text-[#4b5563] leading-[1.6]">
                     Successfully organized Indian Health & Wellness Expos, establishing a credible global platform for integrated healthcare, preventive wellness and medical innovation.
                   </p>
                 </div>
                 <div className="flex items-start gap-4">
-                  <span className="text-[#e85d1c] font-extrabold text-[14px] min-w-[50px] md:min-w-[60px]">2026</span>
-                  <p className="text-[13px] text-[#4b5563] leading-relaxed">
+                  <span className="text-[#e85d1c] font-extrabold text-[16px] min-w-[50px] md:min-w-[65px]">2026</span>
+                  <p className="text-[14px] md:text-[15px] text-[#4b5563] leading-[1.6]">
                     IHWE 9th Edition — nine successful editions, sustained growth, expanding global participation and established leadership in the integrated healthcare and wellness industry.
                   </p>
                 </div>
@@ -159,36 +160,36 @@ const AboutOrganizer = () => {
             {/* Card 2: Driving Innovation */}
             <div className="bg-[#f8f9fa] border border-gray-200 border-b-[5px] border-b-gray-300 rounded-2xl shadow-md hover:-translate-y-2 hover:shadow-[0_20px_40px_rgba(0,0,0,0.1)] hover:border-b-[#3b8c2a] transition-all duration-300 p-6 md:p-8 flex flex-col h-full">
               <div className="flex items-start gap-3 mb-6 min-h-[40px] md:min-h-[48px]">
-                <div className="w-8 h-8 rounded-full bg-white shadow-sm text-[#e85d1c] flex items-center justify-center shrink-0 mt-0.5">
-                  <Star size={16} strokeWidth={2.5} />
+                <div className="w-10 h-10 rounded-full bg-white shadow-sm text-[#e85d1c] flex items-center justify-center shrink-0 mt-0.5">
+                  <Star size={20} strokeWidth={2.5} />
                 </div>
-                <h4 className="text-[12px] md:text-[13px] font-bold text-[#113d29] tracking-wider uppercase leading-snug">
+                <h4 className="text-[18px] md:text-[20px] font-bold text-[#113d29] tracking-wider uppercase leading-[1.3]">
                   DRIVING INNOVATION ACROSS CORE SECTORS
                 </h4>
               </div>
 
-              <ul className="space-y-2 flex-1">
+              <ul className="space-y-4 flex-1 mt-4">
                 <li className="flex items-start gap-3">
-                  <div className="mt-2 w-1.5 h-1.5 rounded-full bg-[#e85d1c] shrink-0"></div>
-                  <p className="text-[13px] text-[#4b5563] leading-relaxed">
+                  <div className="mt-2 w-2 h-2 rounded-full bg-[#e85d1c] shrink-0"></div>
+                  <p className="text-[14px] md:text-[15px] text-[#4b5563] leading-[1.6]">
                     <strong className="text-[#113d29]">Health & Wellness:</strong> Shaping the future of integrated personal & public healthcare through innovation, prevention, and global collaboration.
                   </p>
                 </li>
                 <li className="flex items-start gap-3">
-                  <div className="mt-2 w-1.5 h-1.5 rounded-full bg-[#e85d1c] shrink-0"></div>
-                  <p className="text-[13px] text-[#4b5563] leading-relaxed">
+                  <div className="mt-2 w-2 h-2 rounded-full bg-[#e85d1c] shrink-0"></div>
+                  <p className="text-[14px] md:text-[15px] text-[#4b5563] leading-[1.6]">
                     <strong className="text-[#113d29]">Medical Sustainability:</strong> Promoting eco-friendly medical practices, sustainable hospital infrastructure and green healthcare technologies.
                   </p>
                 </li>
                 <li className="flex items-start gap-3">
-                  <div className="mt-2 w-1.5 h-1.5 rounded-full bg-[#e85d1c] shrink-0"></div>
-                  <p className="text-[13px] text-[#4b5563] leading-relaxed">
+                  <div className="mt-2 w-2 h-2 rounded-full bg-[#e85d1c] shrink-0"></div>
+                  <p className="text-[14px] md:text-[15px] text-[#4b5563] leading-[1.6]">
                     <strong className="text-[#113d29]">Digital Health:</strong> Bridging technology and healthcare for smarter solutions.
                   </p>
                 </li>
                 <li className="flex items-start gap-3">
-                  <div className="mt-2 w-1.5 h-1.5 rounded-full bg-[#e85d1c] shrink-0"></div>
-                  <p className="text-[13px] text-[#4b5563] leading-relaxed">
+                  <div className="mt-2 w-2 h-2 rounded-full bg-[#e85d1c] shrink-0"></div>
+                  <p className="text-[14px] md:text-[15px] text-[#4b5563] leading-[1.6]">
                     <strong className="text-[#113d29]">Health Tourism:</strong> Positioning India as a global leader in health travel.
                   </p>
                 </li>
@@ -198,20 +199,20 @@ const AboutOrganizer = () => {
             {/* Card 3: Flagship Events */}
             <div className="bg-[#f8f9fa] border border-gray-200 border-b-[5px] border-b-gray-300 rounded-2xl shadow-md hover:-translate-y-2 hover:shadow-[0_20px_40px_rgba(0,0,0,0.1)] hover:border-b-[#3b8c2a] transition-all duration-300 p-6 md:p-8 flex flex-col h-full">
               <div className="flex items-start gap-3 mb-6 min-h-[40px] md:min-h-[48px]">
-                <div className="w-8 h-8 rounded-full bg-white shadow-sm text-[#e85d1c] flex items-center justify-center shrink-0 mt-0.5">
-                  <Flag size={16} strokeWidth={2.5} />
+                <div className="w-10 h-10 rounded-full bg-white shadow-sm text-[#e85d1c] flex items-center justify-center shrink-0 mt-0.5">
+                  <Flag size={20} strokeWidth={2.5} />
                 </div>
-                <h4 className="text-[12px] md:text-[13px] font-bold text-[#113d29] tracking-wider uppercase leading-snug">
+                <h4 className="text-[18px] md:text-[20px] font-bold text-[#113d29] tracking-wider uppercase leading-[1.3]">
                   FLAGSHIP EVENTS: A PROVEN TRACK RECORD
                 </h4>
               </div>
 
-              <div className="flex-1 flex flex-col">
-                <p className="text-[13px] text-[#4b5563] leading-relaxed mb-5">
+              <div className="flex-1 flex flex-col mt-4">
+                <p className="text-[14px] md:text-[15px] text-[#4b5563] leading-[1.6] mb-6">
                   NGWPL's flagship events consistently deliver exceptional value and foster vibrant communities, creating significant market opportunities.
                 </p>
 
-                <ul className="space-y-2">
+                <ul className="space-y-4">
                 {[
                   "Punjab Health & Wellness Expo",
                   "The Yogshala Expo",
@@ -221,8 +222,8 @@ const AboutOrganizer = () => {
                   "Organic Expo"
                 ].map((event, idx) => (
                   <li key={idx} className="flex items-center gap-3">
-                    <div className="w-1.5 h-1.5 rounded-full bg-[#e85d1c] shrink-0"></div>
-                    <span className="text-[13px] font-medium text-[#4b5563]">{event}</span>
+                    <div className="w-2 h-2 rounded-full bg-[#e85d1c] shrink-0"></div>
+                    <span className="text-[14px] md:text-[15px] font-medium text-[#4b5563]">{event}</span>
                   </li>
                 ))}
               </ul>

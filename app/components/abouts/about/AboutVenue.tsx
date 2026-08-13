@@ -36,8 +36,8 @@ const venueFeatures = [
 
 const AboutVenue = () => {
   return (
-    <section className="w-full bg-[#EFF7EE] py-2 md:py-4 border-t border-gray-100">
-      <div className="w-full px-4 md:px-11 xl:px-11 max-w-[1600px] mx-auto">
+    <section className="w-full bg-[#EFF7EE] py-12 md:py-16 lg:py-20 border-t border-gray-100">
+      <div className="w-full px-4 md:px-8 max-w-7xl mx-auto">
 
         <div className="flex flex-col lg:flex-row items-stretch gap-6 lg:gap-8">
 
@@ -71,18 +71,18 @@ const AboutVenue = () => {
               </h3>
             </div>
 
-            <h2 className="text-[28px] md:text-[32px] lg:text-[34px] font-semibold text-[#113d29] leading-tight mb-4">
+            <h2 className="text-[28px] md:text-[34px] lg:text-[40px] font-bold text-[#113d29] leading-[1.2] mb-8">
               Why Pragati Maidan, New Delhi?
             </h2>
 
             {/* Features Grid */}
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-y-4 gap-x-6">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-y-6 gap-x-8">
               {venueFeatures.map((feature, idx) => (
                 <div key={idx} className="flex items-start gap-4">
                   <div className={`w-12 h-12 rounded-full border-[2px] flex items-center justify-center shrink-0 bg-transparent ${feature.colorClass}`}>
                     {feature.icon}
                   </div>
-                  <p className="text-[13px] md:text-[14px] text-gray-700 leading-relaxed font-medium mt-1">
+                  <p className="text-[14px] md:text-[16px] text-gray-700 leading-relaxed font-medium mt-1">
                     {feature.text}
                   </p>
                 </div>

@@ -1,8 +1,14 @@
-"use client";
 // Force IDE refresh to clear cached TS errors
+import React, { Suspense } from "react";
+import { Metadata } from 'next';
 
-import React, { Suspense, lazy } from "react";
-import Head from "next/head";
+export const metadata: Metadata = {
+  title: "About Us | Bharat Organic Expo 2027",
+  description: "Learn about the core mission and visionary approach of the Bharat Organic Expo 2027.",
+  alternates: {
+    canonical: "/about",
+  }
+};
 
 // Synchronous load for above the fold
 import AboutHero from "@/app/components/abouts/about/AboutHero";
@@ -13,7 +19,7 @@ import AboutVenue from "../components/abouts/about/AboutVenue";
 import AboutFaq from "../components/abouts/about/AboutFaq";
 import VisionMission from "../components/abouts/about/VisionMission";
 import AboutOrganizer from "../components/abouts/about/AboutOrganizer";
-import HomeAbout from "@/app/components/home/HomeAbout";
+import HomeAbout from "@/app/components/abouts/about/HomeAbout";
 
 const LoadingFallback = () => (
   <div className="w-full min-h-[300px] flex items-center justify-center">
@@ -24,11 +30,6 @@ const LoadingFallback = () => (
 const AboutPage = () => {
   return (
     <>
-      <Head>
-        <title>About Us | Bharat Organic Expo</title>
-        <meta name="description" content="India's Largest Organic & Natural Products Exhibition" />
-      </Head>
-
       <div className="bg-[#ffffff] min-h-screen">
         <AboutHero />
         <AboutStrip />

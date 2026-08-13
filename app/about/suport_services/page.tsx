@@ -1,16 +1,21 @@
 import React from 'react';
-import Head from 'next/head';
 import { Headphones, Ticket, Megaphone } from 'lucide-react';
+
+import { Metadata } from 'next';
+
+export const metadata: Metadata = {
+  title: "Support Services | Bharat Organic Expo 2027",
+  description: "Find the resources and help you need for a successful experience at the Bharat Organic Expo 2027. We provide Exhibitor Support, Visitor Information, and Media resources.",
+  alternates: {
+    canonical: "/about/suport_services",
+  }
+};
 
 const SupportServicesPage = () => {
   return (
     <>
-      <Head>
-        <title>Support Services | Bharat Organic Expo</title>
-      </Head>
-      
-      <div className="bg-[#ffffff] min-h-screen pt-24 md:pt-32 pb-16">
-        <div className="w-full px-4 md:px-11 xl:px-11 mx-auto max-w-[1600px]">
+      <div className="bg-[#ffffff] min-h-screen pt-24 md:pt-32 pb-16 md:pb-20">
+        <div className="w-full px-4 md:px-8 mx-auto max-w-7xl">
           
           <div className="flex flex-col items-center text-center mb-12">
             <div className="flex items-center gap-3 mb-2">
@@ -21,10 +26,10 @@ const SupportServicesPage = () => {
               <div className="w-8 h-[2px] bg-[#e85d1c]"></div>
             </div>
             
-            <h1 className="text-[32px] md:text-[40px] lg:text-[48px] font-bold text-[#113d29] leading-tight mb-4">
+            <h1 className="text-[30px] md:text-[40px] lg:text-[48px] font-bold text-[#113d29] leading-tight mb-4">
               Support Services
             </h1>
-            <p className="text-[14px] md:text-[16px] text-gray-600 max-w-2xl mx-auto leading-relaxed">
+            <p className="text-[16px] md:text-[18px] text-gray-600 max-w-3xl mx-auto leading-[1.6]">
               We are committed to providing you with the best support. Find the resources and help you need for a successful experience at the Expo.
             </p>
           </div>
@@ -37,10 +42,10 @@ const SupportServicesPage = () => {
                 <Headphones size={24} />
               </div>
               <h3 className="text-[18px] md:text-[20px] font-bold text-[#113d29] mb-3">Exhibitor Support</h3>
-              <p className="text-[14px] text-gray-600 leading-relaxed mb-8 flex-1">
+              <p className="text-[16px] md:text-[18px] text-gray-600 leading-[1.6] mb-8 flex-1">
                 Assistance with booth setup, logistics, and technical requirements to ensure a smooth exhibiting experience.
               </p>
-              <button className="text-[#e85d1c] font-bold text-[13px] tracking-wider uppercase hover:text-[#3b8c2a] transition-colors flex items-center gap-2">
+              <button className="text-[#e85d1c] font-bold text-[15px] md:text-[16px] tracking-wider uppercase hover:text-[#3b8c2a] transition-colors flex items-center gap-2">
                 Read More <span>→</span>
               </button>
             </div>
@@ -51,10 +56,10 @@ const SupportServicesPage = () => {
                 <Ticket size={24} />
               </div>
               <h3 className="text-[18px] md:text-[20px] font-bold text-[#113d29] mb-3">Visitor Information</h3>
-              <p className="text-[14px] text-gray-600 leading-relaxed mb-8 flex-1">
+              <p className="text-[16px] md:text-[18px] text-gray-600 leading-[1.6] mb-8 flex-1">
                 Help with registration, travel accommodations, visa assistance, and navigating the venue.
               </p>
-              <button className="text-[#e85d1c] font-bold text-[13px] tracking-wider uppercase hover:text-[#3b8c2a] transition-colors flex items-center gap-2">
+              <button className="text-[#e85d1c] font-bold text-[15px] md:text-[16px] tracking-wider uppercase hover:text-[#3b8c2a] transition-colors flex items-center gap-2">
                 Read More <span>→</span>
               </button>
             </div>
@@ -65,10 +70,10 @@ const SupportServicesPage = () => {
                 <Megaphone size={24} />
               </div>
               <h3 className="text-[18px] md:text-[20px] font-bold text-[#113d29] mb-3">Media & Press</h3>
-              <p className="text-[14px] text-gray-600 leading-relaxed mb-8 flex-1">
+              <p className="text-[16px] md:text-[18px] text-gray-600 leading-[1.6] mb-8 flex-1">
                 Resources, press kits, and accreditation details for media professionals and journalists.
               </p>
-              <button className="text-[#e85d1c] font-bold text-[13px] tracking-wider uppercase hover:text-[#3b8c2a] transition-colors flex items-center gap-2">
+              <button className="text-[#e85d1c] font-bold text-[15px] md:text-[16px] tracking-wider uppercase hover:text-[#3b8c2a] transition-colors flex items-center gap-2">
                 Read More <span>→</span>
               </button>
             </div>

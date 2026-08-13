@@ -4,6 +4,7 @@ import React from "react";
 import aboutBanner from "../../../assets/about/about1.png";
 import { Sprout, Users, Globe2, Heart, ArrowRight, Sun } from "lucide-react";
 import Link from "next/link";
+import Image from "next/image";
 
 // Sparkle component for button highlights
 const Sparkle = ({ style, color = '#7ca142' }: { style?: React.CSSProperties, color?: string }) => (
@@ -65,30 +66,33 @@ const AboutHero = () => {
         }
       `}</style>
       {/* Background Image */}
-      <img
-        src={aboutBanner.src}
-        alt="About Us Background"
-        className="absolute inset-0 w-full h-full object-cover z-0"
+      <Image
+        src={aboutBanner}
+        alt="Bharat Organic Expo 2027 exhibition and visitors"
+        fill
+        priority
+        className="object-cover z-0"
+        sizes="100vw"
       />
       {/* Lightened dark gradient overlay so text is readable, just like home */}
       <div className="absolute inset-0 bg-gradient-to-r from-[#fcfcf0]/50 via-[#fcfcf0]/0 to-transparent z-10 pointer-events-none" />
 
       {/* Content Overlay */}
-      <div className="relative z-20 container mx-auto max-w-[1400px] px-6 h-full flex flex-col justify-center">
+      <div className="relative z-20 w-full px-2 md:px-11 h-full flex flex-col justify-center">
         <div className="max-w-xl text-left mt-16 md:mt-0 space-y-4 w-full max-w-2xl">
 
           {/* Tagline Badge */}
-          <div className="inline-flex items-center gap-2 px-4 py-1.5 bg-gradient-to-r from-[#F2B40E]/10 to-[#f58220]/10 backdrop-blur-md font-extrabold text-[10px] md:text-[13px] tracking-[0.2em] uppercase rounded-full mb-4 shadow-[0_0_20px_rgba(242,180,14,0.4)] border border-[#F2B40E]/40 w-max">
+          <div className="inline-flex items-center gap-2 px-4 py-1.5 bg-gradient-to-r from-[#F2B40E]/10 to-[#f58220]/10 backdrop-blur-md font-extrabold text-[12px] md:text-[14px] tracking-[0.2em] uppercase rounded-full mb-4 shadow-[0_0_20px_rgba(242,180,14,0.4)] border border-[#F2B40E]/40 w-max">
             <Sun className="w-4 h-4 text-[#f58220] animate-[spin_8s_linear_infinite]" fill="currentColor" />
             <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#d97706] to-[#b45309]">ABOUT US</span>
           </div>
 
           {/* Title */}
           <h1 className="leading-[1.1] font-semibold uppercase pb-2">
-            <div className="text-[#1f471b] text-3xl md:text-4xl lg:text-5xl xl:text-5xl tracking-tight pb-1">
+            <div className="text-[#1f471b] text-[30px] md:text-[40px] lg:text-[48px] tracking-tight pb-1">
               BHARAT ORGANIC
             </div>
-            <div className="text-[#7ca142] text-3xl md:text-4xl lg:text-5xl xl:text-6xl tracking-tight">
+            <div className="text-[#7ca142] text-[30px] md:text-[40px] lg:text-[52px] tracking-tight">
               EXPO 2027
             </div>
           </h1>
@@ -96,13 +100,13 @@ const AboutHero = () => {
           {/* Subtitle */}
           <div className="flex items-center gap-3 ">
             <div className="w-12 h-1 bg-[#7ca142] rounded-full"></div>
-            <span className="text-[#2b5825] font-bold text-sm md:text-base tracking-widest uppercase">
+            <span className="text-[#2b5825] font-bold text-[14px] md:text-[16px] tracking-widest uppercase">
               Our Mission & Vision
             </span>
           </div>
 
           {/* Description */}
-          <p className="text-[#4a4a4a] font-semibold text-[13px] md:text-[15px] leading-relaxed max-w-lg mt-4 border-l-2 border-[#7ca142]/30 pl-4">
+          <p className="text-[#4a4a4a] font-semibold text-[16px] md:text-[18px] leading-[1.6] max-w-3xl mt-4 border-l-2 border-[#7ca142]/30 pl-4">
             Learn about the core mission and visionary approach of the Bharat Organic Expo. We stand proudly as India's premier integrated platform, dedicated to uniting organic brands, sustainable farmers, visionary innovators, and conscious consumers under one roof.
           </p>
 
@@ -117,17 +121,17 @@ const AboutHero = () => {
 
             <Link
               href="/book-a-stand"
-              className="hero-shimmer-btn bg-[#2b5825] hover:bg-[#1f471b] text-white px-6 py-3 rounded-md font-bold text-[12px] tracking-wider uppercase transition-all shadow-md hover:-translate-y-0.5 text-center flex items-center justify-center gap-2"
+              className="hero-shimmer-btn bg-[#2b5825] hover:bg-[#1f471b] text-white px-4 sm:px-6 py-2 sm:py-3 rounded-md font-bold text-[10px] sm:text-[12px] md:text-[13px] tracking-tight sm:tracking-wider uppercase transition-all shadow-md hover:-translate-y-0.5 text-center flex items-center justify-center gap-2 whitespace-nowrap min-h-[44px]"
             >
               BOOK YOUR STALL
-              <ArrowRight className="w-4 h-4" />
+              <ArrowRight className="w-4 h-4 sm:w-5 sm:h-5" />
             </Link>
             <Link
               href="/visitor-registration"
-              className="hero-shimmer-btn hero-shimmer-btn-dark bg-white hover:bg-gray-50 text-[#2b5825] border border-[#2b5825] px-6 py-3 rounded-md font-bold text-[12px] tracking-wider uppercase transition-all shadow-sm hover:-translate-y-0.5 text-center flex items-center justify-center gap-2"
+              className="hero-shimmer-btn hero-shimmer-btn-dark bg-white hover:bg-gray-50 text-[#2b5825] border border-[#2b5825] px-4 sm:px-6 py-2 sm:py-3 rounded-md font-bold text-[10px] sm:text-[12px] md:text-[13px] tracking-tight sm:tracking-wider uppercase transition-all shadow-sm hover:-translate-y-0.5 text-center flex items-center justify-center gap-2 whitespace-nowrap min-h-[44px]"
             >
               REGISTER AS BUYER
-              <ArrowRight className="w-4 h-4" />
+              <ArrowRight className="w-4 h-4 sm:w-5 sm:h-5" />
             </Link>
           </div>
 

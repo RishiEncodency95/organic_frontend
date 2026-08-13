@@ -2,8 +2,8 @@ import React from 'react';
 
 const VisionMission = () => {
   return (
-    <section className="w-full bg-[#EFF7EE] py-2 md:py-4 border-t border-gray-100">
-      <div className="w-full px-4 md:px-11 xl:px-11 ">
+    <section className="w-full bg-[#EFF7EE] py-12 md:py-16 lg:py-20 border-t border-gray-100">
+      <div className="w-full px-4 md:px-8 mx-auto max-w-7xl">
         <div className="w-full bg-white rounded-xl shadow-[0_4px_20px_rgba(0,0,0,0.03)] border border-gray-100 overflow-hidden relative">
           {/* Subtle glowing backgrounds (now faint green for light theme) */}
           <div className="absolute top-0 right-0 w-96 h-96 bg-[#3b8c2a] opacity-5 rounded-full blur-[100px]"></div>
@@ -20,11 +20,11 @@ const VisionMission = () => {
                 </h3>
               </div>
 
-              <h2 className="text-[28px] md:text-[32px] lg:text-[34px] font-semibold text-[#113d29] leading-tight mb-4">
+              <h2 className="text-[28px] md:text-[34px] lg:text-[40px] font-bold text-[#113d29] leading-[1.2] mb-4">
                 India as a Global Wellness Hub
               </h2>
 
-              <div className="space-y-4 text-[#374151] text-[14px] md:text-[15px] leading-relaxed flex-1">
+              <div className="space-y-4 text-[#374151] text-[16px] md:text-[18px] leading-[1.6] flex-1">
                 <p>
                   To position India as a Global Hub for Healthcare, Wellness, and AYUSH, by creating an integrated ecosystem that connects traditional wisdom, modern healthcare, innovation, and global markets.
                 </p>
@@ -47,11 +47,11 @@ const VisionMission = () => {
                 </h3>
               </div>
 
-              <h2 className="text-[28px] md:text-[32px] lg:text-[34px] font-semibold text-[#113d29] leading-tight mb-4">
+              <h2 className="text-[28px] md:text-[34px] lg:text-[40px] font-bold text-[#113d29] leading-[1.2] mb-4">
                 World-Class B2B Health Platform
               </h2>
 
-              <div className="space-y-4 text-[#374151] text-[14px] md:text-[15px] leading-relaxed flex-1">
+              <div className="space-y-4 text-[#374151] text-[16px] md:text-[18px] leading-[1.6] flex-1">
                 <p>
                   To build a world-class B2B healthcare and wellness platform that brings together industry leaders, innovators, buyers, and global stakeholders to drive business growth and collaboration.
                 </p>

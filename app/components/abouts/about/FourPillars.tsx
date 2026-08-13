@@ -34,13 +34,13 @@ const pillars = [
 
 const FourPillars = () => {
   return (
-    <section className="w-full bg-white py-2 md:py-4">
-      <div className="w-full px-4 md:px-11 xl:px-11">
-        <h2 className="text-center text-[16px] md:text-[20px] lg:text-[20px] font-semibold text-[#113d29] uppercase tracking-[0.1em] mb-4">
-          ONE PLATFORM. FOUR POWERFUL PILLARS.
+    <section className="w-full bg-white py-12 md:py-16 lg:py-20">
+      <div className="w-full px-4 md:px-8 mx-auto max-w-7xl">
+        <h2 className="text-center text-[28px] md:text-[34px] lg:text-[40px] font-bold text-[#113d29] leading-[1.2] mb-12">
+          One Platform. Four Powerful Pillars.
         </h2>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-2 xl:gap-3">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 xl:gap-8">
           {pillars.map((pillar, index) => (
             <div
               key={index}
@@ -61,14 +61,14 @@ const FourPillars = () => {
               </div>
 
               {/* Content */}
-              <div className="pt-8 pb-2 px-6 flex flex-col items-center text-center flex-1">
+              <div className="pt-8 pb-6 px-6 flex flex-col items-center text-center flex-1">
                  <h3
-                  className="text-[13px] md:text-[14px] font-bold uppercase tracking-wide leading-snug mb-4 max-w-[80%]"
+                  className="text-[18px] md:text-[20px] font-bold uppercase tracking-wide leading-[1.3] mb-4"
                   style={{ color: pillar.color }}
                 >
                   {pillar.title}
                 </h3>
-                <p className="text-[12px] md:text-[13px] text-gray-600 leading-[1.6] text-center">
+                <p className="text-[14px] md:text-[15px] text-gray-600 leading-[1.6] text-center">
                   {pillar.description}
                 </p>
               </div>

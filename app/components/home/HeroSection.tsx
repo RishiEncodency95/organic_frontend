@@ -287,19 +287,19 @@ const HeroSection = () => {
 
                 <Link
                   href="/book-a-stand"
-                  className="hero-shimmer-btn flex-1 bg-[#2b5825] hover:bg-[#1f471b] text-white px-1 sm:px-6 py-2 sm:py-3 rounded-md font-bold text-[9px] sm:text-[12px] md:text-[13px] tracking-tight sm:tracking-wider uppercase transition-all shadow-md hover:-translate-y-0.5 text-center flex items-center justify-center whitespace-nowrap min-h-[44px]"
+                  className="hero-shimmer-btn flex-1 bg-[#2b5825] hover:bg-[#1f471b] text-white px-1 sm:px-6 py-2 sm:py-1.5 rounded-md font-bold text-[9px] sm:text-[12px] md:text-[13px] tracking-tight sm:tracking-wider uppercase transition-all shadow-md hover:-translate-y-0.5 text-center flex items-center justify-center whitespace-nowrap "
                 >
                   Book Your Stall
                 </Link>
                 <Link
                   href="/visitor-registration"
-                  className="hero-shimmer-btn hero-shimmer-btn-dark flex-1 bg-white hover:bg-gray-50 text-[#2b5825] border border-[#2b5825] px-1 sm:px-6 py-2 sm:py-3 rounded-md font-bold text-[9px] sm:text-[12px] md:text-[13px] tracking-tight sm:tracking-wider uppercase transition-all shadow-sm hover:-translate-y-0.5 text-center flex items-center justify-center whitespace-nowrap min-h-[44px]"
+                  className="hero-shimmer-btn hero-shimmer-btn-dark flex-1 bg-white hover:bg-gray-50 text-[#2b5825] border border-[#2b5825] px-1 sm:px-6 py-2 sm:py-3 rounded-md font-bold text-[9px] sm:text-[12px] md:text-[13px] tracking-tight sm:tracking-wider uppercase transition-all shadow-sm hover:-translate-y-0.5 text-center flex items-center justify-center whitespace-nowrap "
                 >
                   Register as Visitor
                 </Link>
                 <Link
                   href="/delegate-registration"
-                  className="hero-shimmer-btn flex-1 bg-[#7ca142] hover:bg-[#688a35] text-white px-1 sm:px-6 py-2 sm:py-3 rounded-md font-bold text-[9px] sm:text-[12px] md:text-[13px] tracking-tight sm:tracking-wider uppercase transition-all shadow-md hover:-translate-y-0.5 text-center flex items-center justify-center whitespace-nowrap min-h-[44px]"
+                  className="hero-shimmer-btn flex-1 bg-[#7ca142] hover:bg-[#688a35] text-white px-1 sm:px-6 py-2 sm:py-3 rounded-md font-bold text-[9px] sm:text-[12px] md:text-[13px] tracking-tight sm:tracking-wider uppercase transition-all shadow-md hover:-translate-y-0.5 text-center flex items-center justify-center whitespace-nowrap"
                 >
                   Register as Delegate
                 </Link>
@@ -309,20 +309,6 @@ const HeroSection = () => {
         </div>
       </div>
 
-      {/* Slide Indicators */}
-      {/* <div className="absolute bottom-10 left-0 right-0 z-30 flex justify-center gap-3">
-        {slides.map((_, i) => (
-          <button
-            key={i}
-            onClick={() => {
-              setDirection(i > current ? 1 : -1);
-              setCurrent(i);
-            }}
-            className={`w-12 h-1.5 rounded-full transition-all duration-300 ${i === current ? "bg-[#3b8c2a]" : "bg-white/30 hover:bg-white/50"
-              }`}
-          />
-        ))}
-      </div> */}
     </section>
   );
 };

@@ -81,24 +81,24 @@ const features = [
 
 const ExploreSectors = () => {
   return (
-    <section className="bg-[#f2fdf5]/20 py-2 lg:py-4 overflow-hidden relative border-t border-gray-100">
+    <section className="bg-[#f2fdf5]/20 py-12 md:py-16 lg:py-20 overflow-hidden relative border-t border-gray-100">
 
       {/* Background Dots Pattern */}
       <div className="absolute inset-0 opacity-10 pointer-events-none" style={{ backgroundImage: 'radial-gradient(#3b8c2a 1px, transparent 1px)', backgroundSize: '24px 24px' }}></div>
 
-      <div className="w-full px-4 lg:px-11 relative z-10 ">
+      <div className="w-full px-4 md:px-8 mx-auto max-w-7xl relative z-10 ">
 
         {/* Header Title */}
-        <div className="text-center mb-4">
-          <h2 className="text-[20px] md:text-[28px] font-black text-[#0b2912] uppercase tracking-tight flex items-center justify-center gap-2">
-            <Leaf className="w-5 h-5 text-[#3b8c2a]" />
+        <div className="text-center mb-8">
+          <h2 className="text-[28px] md:text-[34px] lg:text-[40px] font-bold text-[#0b2912] uppercase tracking-tight flex items-center justify-center gap-2 leading-[1.2]">
+            <Leaf className="w-6 h-6 md:w-8 md:h-8 text-[#3b8c2a]" />
             EXPLORE DIVERSE <span className="text-[#3b8c2a]">ORGANIC</span> SECTORS
-            <Leaf className="w-5 h-5 text-[#3b8c2a]" />
+            <Leaf className="w-6 h-6 md:w-8 md:h-8 text-[#3b8c2a]" />
           </h2>
-          <div className="flex items-center justify-center gap-3 mt-1.5">
-            <div className="w-12 h-[1.5px] bg-[#3b8c2a]/30"></div>
-            <p className="text-[#0b2912] font-semibold text-[11px] md:text-[13px] tracking-wide">One Platform. Every Sustainable Solution.</p>
-            <div className="w-12 h-[1.5px] bg-[#3b8c2a]/30"></div>
+          <div className="flex items-center justify-center gap-3 mt-4">
+            <div className="w-12 h-[2px] bg-[#3b8c2a]/30"></div>
+            <p className="text-[#0b2912] font-bold text-[12px] md:text-[13px] lg:text-[14px] uppercase tracking-wide">One Platform. Every Sustainable Solution.</p>
+            <div className="w-12 h-[2px] bg-[#3b8c2a]/30"></div>
           </div>
         </div>
 
@@ -111,7 +111,7 @@ const ExploreSectors = () => {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.3, delay: idx * 0.05 }}
-              className="bg-white rounded-[24px] p-2 border border-gray-100 shadow-[0_4px_15px_rgba(0,0,0,0.03)] hover:shadow-[0_12px_25px_rgba(59,140,42,0.15)] hover:-translate-y-1.5 transition-all duration-300 group flex flex-col h-[220px] md:h-[240px]"
+              className="bg-white rounded-[24px] p-2 border border-gray-100 shadow-[0_4px_15px_rgba(0,0,0,0.03)] hover:shadow-[0_12px_25px_rgba(59,140,42,0.15)] hover:-translate-y-1.5 transition-all duration-300 group flex flex-col h-[280px] md:h-[300px]"
             >
               {/* Unique Leaf Shaped Image Container */}
               <div className="relative h-[115px] md:h-[135px] w-full overflow-hidden shrink-0 rounded-tl-[35px] rounded-br-[35px] rounded-tr-[12px] rounded-bl-[12px] shadow-inner">
@@ -125,10 +125,10 @@ const ExploreSectors = () => {
               </div>
 
               {/* Bottom Content */}
-              <div className="px-2 md:px-3 pt-3 flex flex-col flex-grow justify-between relative bg-white">
+              <div className="px-3 md:px-4 pt-4 flex flex-col flex-grow justify-between relative bg-white">
                 <div>
-                  <h4 className="text-[10px] md:text-[11px] font-black text-[#0b2912] leading-tight mb-1.5 group-hover:text-[#3b8c2a] transition-colors">{sector.title}</h4>
-                  <p className="text-[9px] md:text-[10px] text-gray-500 leading-snug line-clamp-2">{sector.desc}</p>
+                  <h4 className="text-[16px] md:text-[18px] font-bold text-[#0b2912] leading-[1.3] mb-2 group-hover:text-[#3b8c2a] transition-colors">{sector.title}</h4>
+                  <p className="text-[14px] md:text-[15px] lg:text-[16px] text-gray-500 leading-[1.5] line-clamp-2">{sector.desc}</p>
                 </div>
 
                 {/* Animated Arrow on Hover */}
@@ -157,7 +157,7 @@ const ExploreSectors = () => {
         <div className="absolute -top-10 -left-10 w-48 h-48 bg-white opacity-10 rounded-full blur-2xl pointer-events-none"></div>
         <div className="absolute -bottom-10 -right-10 w-48 h-48 bg-white opacity-10 rounded-full blur-2xl pointer-events-none"></div>
 
-        <div className="max-w-[1600px] mx-auto px-2 lg:px-6 flex flex-wrap lg:flex-nowrap lg:flex-row items-center justify-center lg:justify-between gap-3 lg:gap-2 relative z-10 w-full">
+        <div className="max-w-7xl mx-auto px-4 md:px-8 flex flex-wrap lg:flex-nowrap lg:flex-row items-center justify-center lg:justify-between gap-4 lg:gap-2 relative z-10 w-full py-4 lg:py-6">
 
           {/* Mapped Features Data */}
           {features.map((feature, idx) => (
@@ -167,8 +167,8 @@ const ExploreSectors = () => {
                   <feature.icon className="w-3.5 h-3.5 lg:w-4 lg:h-4" strokeWidth={2.5} />
                 </div>
                 <div className="flex flex-col text-left">
-                  <span className="text-[10px] lg:text-[11px] xl:text-[13px] font-black text-white leading-tight uppercase whitespace-nowrap">{feature.title}</span>
-                  <span className="text-[8px] lg:text-[9px] xl:text-[10px] font-bold text-teal-50 tracking-wider mt-0.5 whitespace-nowrap">{feature.desc}</span>
+                  <span className="text-[12px] md:text-[13px] lg:text-[14px] font-bold text-white leading-[1.2] uppercase whitespace-nowrap">{feature.title}</span>
+                  <span className="text-[11px] lg:text-[12px] font-medium text-teal-50 tracking-wider mt-0.5 whitespace-nowrap">{feature.desc}</span>
                 </div>
               </div>
 
@@ -181,8 +181,8 @@ const ExploreSectors = () => {
           <div className="hidden lg:block w-[1px] h-6 bg-white/40"></div>
 
           {/* Custom Action Button */}
-          <button className="flex items-center gap-2 bg-[#F2B40E] hover:bg-[#0b2912] px-4 py-1.5 rounded-full shadow-[0_0_15px_rgba(242,180,14,0.4)] hover:shadow-[0_0_20px_rgba(11,41,18,0.5)] transition-all duration-300 transform hover:scale-105 shrink-0 border-2 border-[#0b2912] group mt-2 lg:mt-0">
-            <span className="text-[#0b2912] group-hover:text-white font-black text-[10px] lg:text-[12px] tracking-wide uppercase transition-colors whitespace-nowrap">
+          <button className="flex items-center gap-3 bg-[#F2B40E] hover:bg-[#0b2912] px-6 py-3 rounded-full shadow-[0_0_15px_rgba(242,180,14,0.4)] hover:shadow-[0_0_20px_rgba(11,41,18,0.5)] transition-all duration-300 transform hover:scale-105 shrink-0 border-2 border-[#0b2912] group mt-4 lg:mt-0 min-h-[44px]">
+            <span className="text-[#0b2912] group-hover:text-white font-bold text-[13px] md:text-[14px] lg:text-[15px] tracking-wide uppercase transition-colors whitespace-nowrap">
               Explore. Connect. Grow.
             </span>
             <div className="w-5 h-5 bg-[#0b2912] rounded-full flex items-center justify-center text-[#F2B40E] group-hover:bg-white group-hover:text-[#0b2912] shrink-0 transition-colors">
@@ -198,7 +198,7 @@ const ExploreSectors = () => {
         <div className="flex w-max animate-marquee-fast">
           {[...Array(6)].map((_, i) => (
             <div key={i} className="flex items-center">
-              <span className="text-[10px] font-black text-white/90 tracking-widest uppercase px-6 whitespace-nowrap">
+              <span className="text-[12px] md:text-[13px] lg:text-[14px] font-bold text-white/90 tracking-widest uppercase px-6 whitespace-nowrap">
                 ORGANIC FOODS & BEVERAGES • WELLNESS, FITNESS & PREVENTIVE HEALTHCARE • NATURAL COSMETICS • SUSTAINABLE LIFESTYLE
               </span>
             </div>

@@ -244,7 +244,7 @@ const SponsorshipCategories = () => {
                     <span className="text-[#F2B40E]">AT BHARAT ORGANIC EXPO 2027</span>
                   </h3>
                   <p className="text-[14px] lg:text-[15px] text-gray-300 font-medium leading-relaxed max-w-[360px] mb-4">
-                    Reach the right audience, build meaningful connections and grow your business with India's biggest organic show.
+                    meaningful connections and grow your business with India's biggest organic show.
                   </p>
                 </div>
 
@@ -289,18 +289,18 @@ const SponsorshipCategories = () => {
                 </div>
 
                 {/* Buttons horizontally aligned */}
-                <div className="flex flex-wrap items-center gap-2 mt-auto">
-                  <button className="flex items-center gap-2 px-4 py-2 border border-[#3b8c2a]/80 hover:border-[#3b8c2a] rounded-full text-white hover:bg-[#3b8c2a]/10 transition-colors">
-                    <Download className="w-4 h-4" />
-                    <span className="text-[11px] font-bold uppercase tracking-wider">DOWNLOAD BROCHURE</span>
+                <div className="flex flex-nowrap items-center gap-2 mt-auto w-full">
+                  <button className="flex items-center justify-center gap-1.5 px-3 lg:px-4 py-2 border border-[#3b8c2a]/80 hover:border-[#3b8c2a] rounded-full text-white hover:bg-[#3b8c2a]/10 transition-colors flex-1 min-w-0">
+                    <Download className="w-3.5 h-3.5 shrink-0" />
+                    <span className="text-[9px] xl:text-[11px] font-bold uppercase tracking-wider whitespace-nowrap overflow-hidden text-ellipsis">DOWNLOAD BROCHURE</span>
                   </button>
-                  <button className="flex items-center gap-2 px-4 py-2 bg-[#3b8c2a] hover:bg-[#2f7121] border border-[#3b8c2a] rounded-full text-white transition-colors shadow-lg">
-                    <MessageCircle className="w-4 h-4" />
-                    <span className="text-[11px] font-bold uppercase tracking-wider">ANY QUERY?</span>
+                  <button className="flex items-center justify-center gap-1.5 px-3 lg:px-4 py-2 bg-[#3b8c2a] hover:bg-[#2f7121] border border-[#3b8c2a] rounded-full text-white transition-colors shadow-lg flex-1 min-w-0">
+                    <MessageCircle className="w-3.5 h-3.5 shrink-0" />
+                    <span className="text-[9px] xl:text-[11px] font-bold uppercase tracking-wider whitespace-nowrap overflow-hidden text-ellipsis">ANY QUERY?</span>
                   </button>
-                  <button className="flex items-center gap-2 px-4 py-2 border border-[#3b8c2a]/80 hover:border-[#3b8c2a] rounded-full text-white hover:bg-[#3b8c2a]/10 transition-colors">
-                    <PhoneCall className="w-4 h-4" />
-                    <span className="text-[11px] font-bold uppercase tracking-wider">TALK TO US</span>
+                  <button className="flex items-center justify-center gap-1.5 px-3 lg:px-4 py-2 border border-[#3b8c2a]/80 hover:border-[#3b8c2a] rounded-full text-white hover:bg-[#3b8c2a]/10 transition-colors flex-1 min-w-0">
+                    <PhoneCall className="w-3.5 h-3.5 shrink-0" />
+                    <span className="text-[9px] xl:text-[11px] font-bold uppercase tracking-wider whitespace-nowrap overflow-hidden text-ellipsis">TALK TO US</span>
                   </button>
                 </div>
               </div>

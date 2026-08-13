@@ -54,10 +54,10 @@ const AudienceStrip = () => {
                   <item.icon className={`w-3.5 h-3.5 md:w-6 md:h-6 ${item.color}`} />
                 </div>
                 <div className="flex flex-col">
-                  <span className="text-white font-bold text-[9px] md:text-[12px] leading-[1.1] tracking-wider uppercase">
+                  <span className="text-white font-bold text-[12px] md:text-[14px] leading-[1.1] tracking-wider uppercase">
                     {item.title}
                   </span>
-                  <span className="text-slate-300 font-medium text-[8px] md:text-[11px] leading-[1.1] tracking-wide uppercase">
+                  <span className="text-slate-300 font-medium text-[12px] md:text-[14px] leading-[1.1] tracking-wide uppercase mt-1" >
                     {item.subtitle}
                   </span>
                 </div>

@@ -11,20 +11,7 @@ const Topbar = () => {
 
     return (
         <>
-            <style>{`
-        @keyframes sparkleAnim {
-          0%   { opacity: 0; transform: scale(0.5) translateY(0); }
-          40%  { opacity: 1; transform: scale(1.2) translateY(-2px); }
-          80%  { opacity: 0.6; transform: scale(0.9) translateY(-3px); }
-          100% { opacity: 0; transform: scale(0.5) translateY(-4px); }
-        }
-        .sparkle-dot {
-          position: relative;
-          display: inline-block;
-          margin: 0 15px;
-          animation: sparkleAnim 1.6s ease-in-out infinite;
-        }
-      `}</style>
+
             <motion.div
                 className="bg-black border-b border-[#3b8c2a]/30 text-slate-200 text-[11px] relative z-[150] py-1 shadow-md shadow-black/20"
             >
@@ -48,35 +35,6 @@ const Topbar = () => {
                         </a>
                     </div>
 
-                    {/* Center Section - Scrolling Marquee - Hidden on small screens */}
-                    <div className="hidden md:flex flex-1 min-w-0 max-w-[200px] lg:max-w-[340px] xl:max-w-[560px] 2xl:max-w-[720px] overflow-hidden relative h-full items-center justify-center px-4 ml-6">
-                        <motion.div
-                            animate={{ x: ["0%", "-50%"] }}
-                            transition={{
-                                repeat: Infinity,
-                                duration: 100,
-                                ease: "linear",
-                            }}
-                            className="whitespace-nowrap font-black uppercase tracking-[0.1em] text-[10.5px] flex items-center text-white drop-shadow-[0_0_8px_rgba(255,255,255,0.4)]"
-                        >
-                            <div className="flex items-center gap-1">
-                                {[...Array(4)].map((_, i) => (
-                                    <div key={i} className="flex items-center">
-                                        <span>{marqueeText}</span>
-                                        <span className="sparkle-dot text-[#fbbf24] drop-shadow-[0_0_12px_rgba(251,191,36,0.8)]" style={{ margin: '0 10px' }}>✦</span>
-                                    </div>
-                                ))}
-                            </div>
-                            <div className="flex items-center gap-1">
-                                {[...Array(4)].map((_, i) => (
-                                    <div key={i} className="flex items-center">
-                                        <span>{marqueeText}</span>
-                                        <span className="sparkle-dot text-[#fbbf24] drop-shadow-[0_0_12px_rgba(251,191,36,0.8)]" style={{ margin: '0 10px' }}>✦</span>
-                                    </div>
-                                ))}
-                            </div>
-                        </motion.div>
-                    </div>
 
                     {/* Right Section - Login Buttons */}
                     <div className="hidden md:flex flex-shrink-0 items-center gap-2">

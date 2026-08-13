@@ -342,7 +342,7 @@ const SponsorsAndAttend = () => {
             <Trophy className="w-6 h-6 text-yellow-300 group-hover:scale-110 transition-transform duration-300 drop-shadow-[0_0_8px_rgba(250,204,21,0.6)] shrink-0" strokeWidth={2} />
             <div className="flex flex-col text-left">
               <span className="text-[12px] lg:text-[13px] font-bold text-white leading-tight uppercase">BE PART OF INDIA'S BIGGEST</span>
-              <span className="text-[13px] lg:text-[14px] font-black text-[#0b2918] uppercase leading-tight">ORGANIC & NATURAL SHOW!</span>
+              <span className="text-[13px] lg:text-[14px] font-black text-[#f58220] uppercase leading-tight">ORGANIC & NATURAL SHOW!</span>
             </div>
           </div>
 

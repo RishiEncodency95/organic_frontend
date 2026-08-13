@@ -94,9 +94,9 @@ const IntroductionSection = () => {
             className="w-full lg:w-[60%]"
           >
             {/* Introduction Badge */}
-            <div className="inline-flex items-center gap-2 px-4 py-1 rounded-full bg-gradient-to-r from-[#3b8c2a]/10 to-[#F2B40E]/10 border border-[#3b8c2a]/20 shadow-[0_4px_15px_rgba(59,140,42,0.06)] mb-4 transform hover:scale-105 transition-transform duration-300">
+            <div className="inline-flex items-center gap-2 px-4 py-1 rounded-full bg-gradient-to-r from-[#3b8c2a]/10 to-[#F2B40E]/10 border border-[#3b8c2a]/20 shadow-[0_4px_15px_rgba(59,140,42,0.06)] mb-2 transform hover:scale-105 transition-transform duration-300">
               <span className="w-2 h-2 rounded-full bg-[#F2B40E] animate-pulse"></span>
-              <span className="text-[11px] md:text-xs font-black uppercase tracking-[0.25em] text-[#1a6b3a]">
+              <span className="text-[11px] md:text-[14px] font-black uppercase tracking-[0.25em] text-[#1a6b3a]">
                 INTRODUCTION
               </span>
             </div>
@@ -145,21 +145,21 @@ const IntroductionSection = () => {
               <div className="absolute top-0 right-0 w-32 h-32 bg-[#F2B40E] opacity-10 blur-2xl rounded-full"></div>
               <div className="absolute bottom-0 left-0 w-32 h-32 bg-[#3b8c2a] opacity-10 blur-2xl rounded-full"></div>
 
-              <div className="text-[#3b8c2a] text-[9px] md:text-[11px] font-black tracking-[0.25em] uppercase mb-1 flex items-center justify-center gap-1.5 w-full relative z-10 drop-shadow-sm">
+              <div className="text-[#3b8c2a] text-[9px] md:text-[14px] font-black tracking-[0.25em] uppercase mb-1 flex items-center justify-center gap-1.5 w-full relative z-10 drop-shadow-sm">
                 <span className="w-1.5 h-1.5 rounded-full bg-[#F2B40E] animate-pulse"></span>
                 EVENT BEGINS IN
                 <span className="w-1.5 h-1.5 rounded-full bg-[#F2B40E] animate-pulse"></span>
               </div>
 
-              <div className="flex justify-center gap-1.5 sm:gap-2 w-full relative z-10">
+              <div className="flex justify-center gap-4 sm:gap-2 w-full relative z-10">
                 {['DAYS', 'HOURS', 'MINS', 'SECS'].map((label, idx) => {
                   const value = idx === 0 ? timeLeft.days : idx === 1 ? timeLeft.hours : idx === 2 ? timeLeft.mins : timeLeft.secs;
                   return (
-                    <div key={label} className="bg-gradient-to-b from-[#f6fbf7] to-white border border-[#3b8c2a]/30 rounded-lg px-2 py-0.5 sm:px-3 sm:py-1 min-w-[50px] sm:min-w-[65px] flex flex-col items-center justify-center shadow-inner group-hover:border-[#F2B40E] group-hover:shadow-[0_4px_15px_rgba(242,180,14,0.2)] transition-all duration-300">
+                    <div key={label} className="bg-gradient-to-b from-[#f6fbf7] to-white border border-[#3b8c2a]/30 rounded-lg px-2 py-0.5 sm:px-3 sm:py-1 min-w-[60px] sm:min-w-[65px] flex flex-col items-center justify-center shadow-inner group-hover:border-[#F2B40E] group-hover:shadow-[0_4px_15px_rgba(242,180,14,0.2)] transition-all duration-300">
                       <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#1a6b3a] to-[#3b8c2a] text-xl sm:text-xl font-semibold leading-none tracking-tighter drop-shadow-[0_2px_2px_rgba(0,0,0,0.1)]">
                         {value.toString().padStart(2, '0')}
                       </span>
-                      <span className="text-[#F2B40E] text-[7px] sm:text-[8px] font-extrabold tracking-[0.2em] uppercase mt-0.5">
+                      <span className="text-[#F2B40E] text-[14px] sm:text-[14px] font-semibold uppercase mt-0.5">
                         {label}
                       </span>
                     </div>
@@ -169,7 +169,7 @@ const IntroductionSection = () => {
             </div>
 
             {/* Image Container */}
-            <div className="relative z-10 p-2 md:p-3 rounded-[1.5rem] bg-white/60 backdrop-blur-md border border-white shadow-[0_15px_40px_rgba(0,0,0,0.06)] max-w-[450px] w-full">
+            <   div className="relative z-10 p-2 md:p-3 rounded-[1.5rem] bg-white/60 backdrop-blur-md border border-white shadow-[0_15px_40px_rgba(0,0,0,0.06)] max-w-[450px] w-full">
               {staticData.image ? (
                 <img
                   loading="lazy"
