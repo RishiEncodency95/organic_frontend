@@ -1,6 +1,6 @@
 "use client";
 import React, { useState } from 'react';
-import { Plus, Minus, HelpCircle } from 'lucide-react';
+import { Plus, Minus, HelpCircle, ArrowRight } from 'lucide-react';
 import Image from 'next/image';
 import faqImg from '@/app/assets/about/faq.png';
 
@@ -130,8 +130,9 @@ const AboutFaq = () => {
                 <p className="text-[14px] md:text-[16px] text-gray-600 italic mb-4">
                   "Still have questions about exhibiting at the Expo?"
                 </p>
-                <button className="bg-[#113d29] hover:bg-[#0b2418] text-white text-[12px] md:text-[14px] font-semibold uppercase tracking-wider py-2 px-6 rounded-md transition-colors flex items-center justify-center">
+                <button className="inline-flex items-center gap-2 px-6 py-2 rounded-full border-2 border-[#F2B40E] bg-[#3b8c2a] text-white font-semibold text-[12px] md:text-[14px] uppercase tracking-wide hover:bg-[#F2B40E] hover:text-[#0b2912] transition-colors duration-300 group shadow-md hover:shadow-lg">
                   CONTACT OUR HELP DESK
+                  <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" strokeWidth={2.5} />
                 </button>
               </div>
             </div>
@@ -141,44 +142,207 @@ const AboutFaq = () => {
       </section>
 
       {/* Bottom CTA Banner */}
-      <section className="w-full bg-[#113d29] py-8 md:py-12 border-t-4 border-[#e85d1c] relative overflow-hidden">
-        {/* Subtle background pattern/glow */}
-        <div className="absolute top-0 right-0 w-96 h-96 bg-[#3b8c2a] opacity-20 rounded-full blur-[100px] pointer-events-none"></div>
-        <div className="absolute bottom-0 left-0 w-96 h-96 bg-[#3b8c2a] opacity-20 rounded-full blur-[100px] pointer-events-none"></div>
+      <section className="relative w-full overflow-hidden bg-[#EFF7EE] border-t border-[#e85d1c]/70">
+        {/* Decorative background */}
+        <div className="absolute -top-32 -right-32 h-80 w-80 rounded-full bg-[#3b8c2a]/20 blur-3xl pointer-events-none" />
+        <div className="absolute -bottom-40 -left-32 h-80 w-80 rounded-full bg-[#e85d1c]/10 blur-3xl pointer-events-none" />
 
-        <div className="w-full px-4 md:px-11 relative z-10">
-          <div className="flex flex-col lg:flex-row items-center justify-between gap-6">
+        {/* Subtle pattern */}
+        <div
+          className="absolute inset-0 opacity-[0.035] pointer-events-none"
+          style={{
+            backgroundImage:
+              "radial-gradient(circle at 1px 1px, rgba(17,61,41,0.15) 1px, transparent 0)",
+            backgroundSize: "24px 24px",
+          }}
+        />
 
-            <div className="flex-1">
-              <div className="flex items-center gap-3 mb-4">
-                <div className="w-6 h-[2px] bg-[#e85d1c]"></div>
-                <h3 className="text-[12px] md:text-[14px] font-bold text-[#e85d1c] tracking-[0.15em] uppercase">
-                  IGNITE YOUR GROWTH
-                </h3>
+        <div className="relative z-10  px-5 py-2 sm:px-8 md:py-4 lg:px-11 xl:px-16">
+          <div className="flex flex-col gap-10 lg:flex-row lg:items-center lg:justify-between">
+
+            {/* LEFT CONTENT */}
+            <div className="max-w-[700px]">
+
+              {/* Eyebrow */}
+              <div className="mb-6 inline-flex items-center gap-2 rounded-full border border-[#e85d1c]/30 bg-[#e85d1c]/10 px-4 py-2 backdrop-blur-md">
+                <span className="relative flex h-2 w-2">
+                  <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-[#e85d1c] opacity-75"></span>
+                  <span className="relative inline-flex h-2 w-2 rounded-full bg-[#e85d1c]"></span>
+                </span>
+                <span className="text-[12px] font-bold uppercase tracking-[0.2em] text-[#e85d1c]">
+                  Ignite Your Growth
+                </span>
               </div>
-              <h2 className="text-[28px] md:text-[34px] lg:text-[40px] font-bold text-white leading-[1.2] mb-4">
-                Be Part of India's Global Wellness Movement
+
+              {/* Heading */}
+              <h2 className="max-w-[580px] text-[28px] lg:text-[32px] font-extrabold leading-[1.12] tracking-tight text-[#113d29] sm:text-[36px] md:text-[42px] lg:text-[48px]">
+                Be Part of India's{" "}
+                <span className="bg-gradient-to-r from-[#3b8c2a] via-[#4F8F35] to-[#F2B40E] bg-clip-text text-transparent drop-shadow-sm">
+                  Global Organic Movement
+                </span>
               </h2>
-              <p className="text-[16px] md:text-[18px] text-gray-300 leading-[1.6]">
-                Exhibit. Connect. Collaborate. Grow. Join healthcare leaders in building the future of wellness.
+
+              {/* Description */}
+              <p className="mt-5 max-w-[620px] text-[15px] leading-7 text-gray-600 sm:text-[16px]">
+                Exhibit. Connect. Collaborate. Grow. Join industry leaders,
+                buyers, innovators and organic brands shaping a healthier,
+                sustainable future.
               </p>
+
+              {/* Small trust line */}
+              <div className="mt-6 flex flex-wrap items-center gap-x-6 gap-y-3 text-[12px] font-semibold uppercase tracking-wide text-gray-500">
+                <span className="flex items-center gap-2">
+                  <span className="h-2 w-2 rounded-full bg-[#3b8c2a]" />
+                  19–21 February 2027
+                </span>
+
+                <span className="hidden h-4 w-px bg-gray-300 sm:block" />
+
+                <span className="flex items-center gap-2">
+                  <span className="h-2 w-2 rounded-full bg-[#e85d1c]" />
+                  Pragati Maidan, New Delhi
+                </span>
+              </div>
             </div>
 
-            <div className="flex flex-wrap items-center justify-center lg:justify-end gap-4 w-full lg:w-auto mt-6 lg:mt-0">
-              <button className="bg-gradient-to-r from-[#f97316] to-[#e85d1c] hover:from-[#ea580c] hover:to-[#c2410c] text-white text-[15px] md:text-[16px] font-bold uppercase tracking-wider py-3 px-6 rounded shadow-lg transition-all hover:scale-105 min-h-[44px] flex items-center justify-center">
-                BOOK YOUR STALL
-              </button>
-              <button className="bg-white hover:bg-gray-100 text-[#113d29] text-[15px] md:text-[16px] font-bold uppercase tracking-wider py-3 px-6 rounded shadow-lg transition-all hover:scale-105 min-h-[44px] flex items-center justify-center">
-                VISITOR REGISTRATION
-              </button>
-              <button className="bg-white hover:bg-gray-100 text-[#113d29] text-[15px] md:text-[16px] font-bold uppercase tracking-wider py-3 px-6 rounded shadow-lg transition-all hover:scale-105 min-h-[44px] flex items-center justify-center">
-                DELEGATE REGISTER
-              </button>
-              <button className="bg-white hover:bg-gray-100 text-[#113d29] text-[15px] md:text-[16px] font-bold uppercase tracking-wider py-3 px-6 rounded shadow-lg transition-all hover:scale-105 min-h-[44px] flex items-center justify-center">
-                BUYER REGISTER
-              </button>
-            </div>
+            {/* RIGHT CTA AREA */}
+            <div className="w-full lg:max-w-[560px]">
 
+              <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
+
+                {/* Primary CTA */}
+                <button
+                  className="
+              group relative flex min-h-[62px] items-center
+              justify-between overflow-hidden rounded-xl
+              border border-[#e85d1c]
+              bg-gradient-to-r from-[#e85d1c] to-[#d04a11]
+              px-5 text-left
+              shadow-[0_10px_30px_rgba(232,93,28,0.3)]
+              transition-all duration-500
+              hover:-translate-y-1.5
+              hover:shadow-[0_20px_40px_rgba(232,93,28,0.4)]
+            "
+                >
+                  {/* Hover Shine Effect */}
+                  <div className="absolute inset-0 z-0 flex -translate-x-[150%] items-center justify-center bg-gradient-to-r from-transparent via-white/30 to-transparent skew-x-[-25deg] transition-all duration-700 ease-out group-hover:translate-x-[150%]"></div>
+
+                  <div className="relative z-10">
+                    <span className="block text-[11px] font-bold uppercase tracking-widest text-white/80">
+                      For Exhibitors
+                    </span>
+
+                    <span className="mt-1 block text-[15px] font-extrabold uppercase tracking-wide text-white drop-shadow-sm">
+                      Book Your Stall
+                    </span>
+                  </div>
+
+                  <span className="relative z-10 text-xl text-white transition-transform duration-300 group-hover:translate-x-2">
+                    →
+                  </span>
+                </button>
+
+                {/* Visitor */}
+                <button
+                  className="
+              group relative flex min-h-[62px] items-center
+              justify-between overflow-hidden rounded-xl
+              border border-gray-200
+              bg-white/60
+              px-5 text-left
+              backdrop-blur-md
+              transition-all duration-300
+              hover:-translate-y-1
+              hover:border-[#3b8c2a]/40
+              hover:bg-white
+              hover:shadow-[0_10px_20px_rgba(59,140,42,0.1)]
+            "
+                >
+                  <div>
+                    <span className="block text-[11px] font-bold uppercase tracking-widest text-gray-500">
+                      For Visitors
+                    </span>
+
+                    <span className="mt-1 block text-[14px] font-extrabold uppercase tracking-wide text-[#113d29]">
+                      Visitor Registration
+                    </span>
+                  </div>
+
+                  <span className="text-xl text-[#3b8c2a] transition-transform duration-300 group-hover:translate-x-1">
+                    →
+                  </span>
+                </button>
+
+                {/* Delegate */}
+                <button
+                  className="
+              group relative flex min-h-[62px] items-center
+              justify-between overflow-hidden rounded-xl
+              border border-gray-200
+              bg-white/60
+              px-5 text-left
+              backdrop-blur-md
+              transition-all duration-300
+              hover:-translate-y-1
+              hover:border-[#3b8c2a]/40
+              hover:bg-white
+              hover:shadow-[0_10px_20px_rgba(59,140,42,0.1)]
+            "
+                >
+                  <div>
+                    <span className="block text-[11px] font-bold uppercase tracking-widest text-gray-500">
+                      Knowledge Platform
+                    </span>
+
+                    <span className="mt-1 block text-[14px] font-extrabold uppercase tracking-wide text-[#113d29]">
+                      Delegate Registration
+                    </span>
+                  </div>
+
+                  <span className="text-xl text-[#3b8c2a] transition-transform duration-300 group-hover:translate-x-1">
+                    →
+                  </span>
+                </button>
+
+                {/* Buyer */}
+                <button
+                  className="
+              group relative flex min-h-[62px] items-center
+              justify-between overflow-hidden rounded-xl
+              border border-gray-200
+              bg-white/60
+              px-5 text-left
+              backdrop-blur-md
+              transition-all duration-300
+              hover:-translate-y-1
+              hover:border-[#3b8c2a]/40
+              hover:bg-white
+              hover:shadow-[0_10px_20px_rgba(59,140,42,0.1)]
+            "
+                >
+                  <div>
+                    <span className="block text-[11px] font-bold uppercase tracking-widest text-gray-500">
+                      B2B Networking
+                    </span>
+
+                    <span className="mt-1 block text-[14px] font-extrabold uppercase tracking-wide text-[#113d29]">
+                      Buyer Registration
+                    </span>
+                  </div>
+
+                  <span className="text-xl text-[#3b8c2a] transition-transform duration-300 group-hover:translate-x-1">
+                    →
+                  </span>
+                </button>
+
+              </div>
+
+              {/* Bottom note */}
+              <div className="mt-4 flex items-center justify-center gap-2 text-[11px] font-medium text-gray-500">
+                <span className="h-1.5 w-1.5 rounded-full bg-[#3b8c2a]" />
+                Connect with India's organic & wellness ecosystem
+              </div>
+            </div>
           </div>
         </div>
       </section>
