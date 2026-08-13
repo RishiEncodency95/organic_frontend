@@ -1,6 +1,8 @@
 "use client";
 import React, { useState } from 'react';
 import { Plus, Minus, HelpCircle } from 'lucide-react';
+import Image from 'next/image';
+import faqImg from '@/app/assets/about/faq.png';
 
 const faqs = [
   {
@@ -18,6 +20,10 @@ const faqs = [
   {
     question: "What industries are covered in the expo?",
     answer: "Key sectors include Medical Equipment, AYUSH, Digital Health, Preventive Wellness, Hospital Infrastructure, Health Tourism, and Sustainable Medical Practices."
+  },
+  {
+    question: "How can I participate in the expo?",
+    answer: "You can participate as an exhibitor, delegate, sponsor, or visitor. Please register through our website or contact our help desk for specific participation opportunities."
   },
   {
     question: "How can I participate in the expo?",
@@ -47,32 +53,32 @@ const AboutFaq = () => {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
       />
-      <section className="w-full bg-white py-12 md:py-16 lg:py-20 border-t border-gray-100">
-        <div className="w-full px-4 md:px-8 mx-auto max-w-7xl">
+      <section className="w-full bg-white py-2 md:py-4 lg:py-4 border-t border-gray-100">
+        <div className="w-full px-4 md:px-11">
 
           {/* Header */}
-          <div className="flex flex-col items-center text-center mb-8">
+          <div className="flex flex-col items-center text-center mb-4">
             <div className="flex items-center gap-3 mb-2">
               <div className="w-8 h-[1px] bg-[#113d29]"></div>
-              <h3 className="text-[12px] md:text-[13px] font-bold text-[#113d29] tracking-[0.2em] uppercase">
+              <h3 className="text-[12px] md:text-[16px] font-semibold text-[#113d29] tracking-[0.2em] uppercase">
                 SUPPORT & INFO
               </h3>
               <div className="w-8 h-[1px] bg-[#113d29]"></div>
             </div>
 
-            <h2 className="text-[28px] md:text-[34px] lg:text-[40px] font-bold text-[#113d29] leading-[1.2] mb-4">
+            <h2 className="text-[18px] md:text-[26px] lg:text-[28px] font-semibold text-[#113d29] leading-[1.2] mb-2">
               Frequently Asked <span className="text-[#3b8c2a]">Questions</span>
             </h2>
 
-            <p className="text-[16px] md:text-[18px] text-gray-600 leading-[1.6] max-w-3xl mx-auto">
+            <p className="text-[14px] md:text-[16px] text-gray-600 leading-[1.6] max-w-4xl mx-auto">
               Find answers to common inquiries about the 9th Indian Health & Wellness Expo (Global Edition).
             </p>
           </div>
 
-          <div className="flex flex-col lg:flex-row items-stretch gap-6 lg:gap-8">
+          <div className="flex w-full flex-col lg:flex-row items-stretch gap-3 lg:gap-4">
 
             {/* Left Column: FAQ Accordion */}
-            <div className="flex-1 lg:max-w-[55%] flex flex-col gap-3">
+            <div className="lg:w-[65%] flex flex-col gap-3">
               {faqs.map((faq, index) => {
                 const isOpen = openIndex === index;
 
@@ -83,13 +89,13 @@ const AboutFaq = () => {
                   >
                     <button
                       onClick={() => setOpenIndex(isOpen ? -1 : index)}
-                      className="w-full flex items-center justify-between p-4 md:p-5 text-left focus:outline-none"
+                      className="w-full flex items-center justify-between p-2 md:px-5 md:py-4 text-left focus:outline-none"
                     >
-                      <div className="flex items-center gap-3 pr-4">
+                      <div className="flex items-center gap-2 pr-4">
                         <div className={`w-6 h-6 rounded-full flex items-center justify-center shrink-0 ${isOpen ? 'bg-[#113d29] text-white' : 'bg-transparent text-gray-400'}`}>
                           <HelpCircle size={16} />
                         </div>
-                        <span className={`text-[18px] md:text-[20px] font-bold leading-[1.3] ${isOpen ? 'text-[#111]' : 'text-gray-800'}`}>
+                        <span className={`text-[16px] md:text-[18px] font-semibold leading-[1.3] ${isOpen ? 'text-[#111]' : 'text-gray-800'}`}>
                           Q{index + 1}. {faq.question}
                         </span>
                       </div>
@@ -114,17 +120,17 @@ const AboutFaq = () => {
             </div>
 
             {/* Right Column: Image & Help Desk */}
-            <div className="flex-1 flex flex-col">
-              <div className="flex-1 bg-gray-100 rounded-t-xl overflow-hidden relative min-h-[200px] md:min-h-[300px]">
+            <div className="flex lg:w-[35%] flex-col">
+              <div className="flex-1 bg-gray-100 rounded-t-xl overflow-hidden relative min-h-[200px] md:min-h-[300px] group">
                 {/* Image Placeholder */}
-                {/* <Image src={exhibitionImage} alt="Exhibition" fill className="object-cover" /> */}
+                <Image src={faqImg} alt="FAQ Expo Support" fill className="object-cover group-hover:scale-110 transition-transform duration-700 ease-in-out" />
               </div>
 
-              <div className="bg-white border border-t-0 border-gray-200 rounded-b-xl py-6 px-6 flex flex-col items-center justify-center text-center shadow-sm">
+              <div className="bg-[#f4f9f4] border border-t-0 border-[#d3e5d3] rounded-b-xl py-4 px-6 flex flex-col items-center justify-center text-center shadow-sm">
                 <p className="text-[14px] md:text-[16px] text-gray-600 italic mb-4">
                   "Still have questions about exhibiting at the Expo?"
                 </p>
-                <button className="bg-[#113d29] hover:bg-[#0b2418] text-white text-[15px] md:text-[16px] font-bold uppercase tracking-wider py-3 px-6 rounded-md transition-colors flex items-center justify-center min-h-[44px]">
+                <button className="bg-[#113d29] hover:bg-[#0b2418] text-white text-[12px] md:text-[14px] font-semibold uppercase tracking-wider py-2 px-6 rounded-md transition-colors flex items-center justify-center">
                   CONTACT OUR HELP DESK
                 </button>
               </div>
@@ -140,7 +146,7 @@ const AboutFaq = () => {
         <div className="absolute top-0 right-0 w-96 h-96 bg-[#3b8c2a] opacity-20 rounded-full blur-[100px] pointer-events-none"></div>
         <div className="absolute bottom-0 left-0 w-96 h-96 bg-[#3b8c2a] opacity-20 rounded-full blur-[100px] pointer-events-none"></div>
 
-        <div className="w-full px-4 md:px-8 mx-auto max-w-7xl relative z-10">
+        <div className="w-full px-4 md:px-11 relative z-10">
           <div className="flex flex-col lg:flex-row items-center justify-between gap-6">
 
             <div className="flex-1">

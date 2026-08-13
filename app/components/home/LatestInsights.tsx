@@ -37,7 +37,7 @@ const LatestInsights = () => {
   return (
     <section className="relative w-full bg-white py-2 md:py-4 lg:py-4 overflow-hidden border-t border-gray-100">
 
-      <div className="w-full px-4 md:px-8 mx-auto max-w-7xl relative z-10">
+      <div className="w-full px-4 md:px-11 relative z-10">
 
         {/* Header Section */}
         <div className="flex flex-col mb-6">

@@ -5,23 +5,21 @@ import organImg from '@/app/assets/about/organi.png';
 
 const AboutOrganizer = () => {
   return (
-    <section className="w-full bg-white py-12 md:py-16 lg:py-20 overflow-hidden border-t border-gray-100">
-      <div className="w-full px-4 md:px-8 mx-auto max-w-7xl">
+    <section className="w-full bg-white py-2 md:py-4 lg:py-4 overflow-hidden border-t border-gray-100">
+      <div className="w-full px-4 md:px-11">
 
         {/* TOP SECTION: About the Organizer */}
-        <div className="flex flex-col lg:flex-row gap-12 xl:gap-20 items-center">
+        <div className="flex flex-col lg:flex-row gap-4 lg:gap-8 items-center">
 
           {/* Left Column */}
-          <div className="flex-1 lg:w-[55%]">
-            <div className="flex items-center gap-3 mb-4">
-              <div className="w-12 h-[2px] bg-[#e85d1c]"></div>
-              <h3 className="text-[12px] md:text-[14px] font-bold text-[#e85d1c] tracking-[0.15em] uppercase">
-                ABOUT THE ORGANIZER
-              </h3>
+          <div className="flex-1 lg:w-[50%]">
+            <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-[#f0f9f0] border border-[#3b8c2a]/20 mb-4">
+              <Star className="w-4 h-4 text-[#e85d1c] fill-[#e85d1c]" />
+              <span className="text-[12px] font-bold text-[#3b8c2a] uppercase tracking-wider">ABOUT ORGANIZER</span>
             </div>
 
-            <h2 className="text-[28px] md:text-[34px] lg:text-[40px] font-bold text-[#113d29] leading-[1.2] mb-4">
-              Namo Gange Wellness Pvt. Ltd.
+            <h2 className="text-[17px] md:text-[22px] lg:text-[24px] font-semibold text-[#111] leading-[1.2] tracking-tight mb-4">
+              NAMO GANGE <span className="text-[#3b8c2a]">WELLNESS</span>
             </h2>
 
             <div className="space-y-4 text-[#374151] text-[16px] md:text-[18px] leading-[1.6] mb-6">
@@ -67,11 +65,11 @@ const AboutOrganizer = () => {
             {/* Decorative dots background */}
             <div className="absolute -inset-6 opacity-30 z-0" style={{ backgroundImage: 'radial-gradient(#9ca3af 2px, transparent 2px)', backgroundSize: '20px 20px' }}></div>
 
-            <div className="relative z-10 w-full aspect-[3/2] lg:aspect-[16/9] p-[4px] rounded-2xl bg-[#f0f9f0] shadow-lg group hover:shadow-[0_0_35px_rgba(59,140,42,0.6)] transition-all duration-500 overflow-hidden">
-              
+            <div className="relative z-10 w-full h-[350px] md:h-[420px] lg:h-[420px] p-[4px] rounded-2xl bg-[#f0f9f0] shadow-lg group hover:shadow-[0_0_35px_rgba(59,140,42,0.6)] transition-all duration-500 overflow-hidden">
+
               {/* Spinning Animated Border Effect */}
-              <div 
-                className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[150%] lg:w-[120%] aspect-square bg-[conic-gradient(from_0deg,transparent_0_120deg,#3b8c2a_180deg,transparent_180deg_300deg,#e85d1c_360deg)] animate-spin opacity-80 group-hover:opacity-100 transition-opacity" 
+              <div
+                className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[150%] lg:w-[120%] aspect-square bg-[conic-gradient(from_0deg,transparent_0_120deg,#3b8c2a_180deg,transparent_180deg_300deg,#e85d1c_360deg)] animate-spin opacity-80 group-hover:opacity-100 transition-opacity"
                 style={{ animationDuration: '4s' }}
               ></div>
 
@@ -95,7 +93,7 @@ const AboutOrganizer = () => {
         </div>
 
         {/* BOTTOM SECTION: Our Journey */}
-        <div className="w-full pt-4 mt-6 border-t border-gray-200">
+        <div className="w-full pt-3 mt-3 border-t border-gray-200">
           {/* Headings Row */}
           <div className="flex flex-col md:flex-row items-center justify-between gap-4 mb-6">
             {/* Left Title */}
@@ -118,19 +116,19 @@ const AboutOrganizer = () => {
           </div>
 
           {/* Centered Paragraph */}
-          <p className="text-[#374151] text-[16px] md:text-[18px] leading-[1.6] text-center max-w-3xl mx-auto mb-10 mt-6">
+          <p className="text-[#374151] text-[16px] md:text-[18px] leading-[1.6] text-center max-w-3xl mx-auto mb-4">
             With a proven legacy of delivering result-oriented exhibitions, we forge lasting business relationships and accelerate industry growth.
           </p>
 
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-3">
 
             {/* Card 1: Our Journey */}
-            <div className="bg-[#f8f9fa] border border-gray-200 border-b-[5px] border-b-gray-300 rounded-2xl shadow-md hover:-translate-y-2 hover:shadow-[0_20px_40px_rgba(0,0,0,0.1)] hover:border-b-[#3b8c2a] transition-all duration-300 p-6 md:p-8 flex flex-col h-full">
-              <div className="flex items-start gap-3 mb-6 min-h-[40px] md:min-h-[48px]">
+            <div className="bg-[#f8f9fa] border border-gray-200 border-b-[5px] border-b-gray-300 rounded-2xl shadow-md hover:-translate-y-2 hover:shadow-[0_20px_40px_rgba(0,0,0,0.1)] hover:border-b-[#3b8c2a] transition-all duration-300 p-4 md:p-6 flex flex-col h-full">
+              <div className="flex items-start gap-3 mb-2 min-h-[36px] md:min-h-[40px]">
                 <div className="w-10 h-10 rounded-full bg-white shadow-sm text-[#e85d1c] flex items-center justify-center shrink-0 mt-0.5">
                   <Clock size={20} strokeWidth={2.5} />
                 </div>
-                <h4 className="text-[18px] md:text-[20px] font-bold text-[#113d29] tracking-wider uppercase leading-[1.3]">
+                <h4 className="text-[16px] md:text-[20px] font-semibold text-[#113d29] tracking-wider uppercase leading-[1.3]">
                   OUR JOURNEY: A LEGACY OF GROWTH
                 </h4>
               </div>
@@ -158,12 +156,12 @@ const AboutOrganizer = () => {
             </div>
 
             {/* Card 2: Driving Innovation */}
-            <div className="bg-[#f8f9fa] border border-gray-200 border-b-[5px] border-b-gray-300 rounded-2xl shadow-md hover:-translate-y-2 hover:shadow-[0_20px_40px_rgba(0,0,0,0.1)] hover:border-b-[#3b8c2a] transition-all duration-300 p-6 md:p-8 flex flex-col h-full">
-              <div className="flex items-start gap-3 mb-6 min-h-[40px] md:min-h-[48px]">
+            <div className="bg-[#f8f9fa] border border-gray-200 border-b-[5px] border-b-gray-300 rounded-2xl shadow-md hover:-translate-y-2 hover:shadow-[0_20px_40px_rgba(0,0,0,0.1)] hover:border-b-[#3b8c2a] transition-all duration-300 p-4 md:p-6 flex flex-col h-full">
+              <div className="flex items-start gap-3 mb-2 min-h-[36px] md:min-h-[40px]">
                 <div className="w-10 h-10 rounded-full bg-white shadow-sm text-[#e85d1c] flex items-center justify-center shrink-0 mt-0.5">
                   <Star size={20} strokeWidth={2.5} />
                 </div>
-                <h4 className="text-[18px] md:text-[20px] font-bold text-[#113d29] tracking-wider uppercase leading-[1.3]">
+                <h4 className="text-[16px] md:text-[20px] font-semibold text-[#113d29] tracking-wider uppercase leading-[1.3]">
                   DRIVING INNOVATION ACROSS CORE SECTORS
                 </h4>
               </div>
@@ -197,12 +195,12 @@ const AboutOrganizer = () => {
             </div>
 
             {/* Card 3: Flagship Events */}
-            <div className="bg-[#f8f9fa] border border-gray-200 border-b-[5px] border-b-gray-300 rounded-2xl shadow-md hover:-translate-y-2 hover:shadow-[0_20px_40px_rgba(0,0,0,0.1)] hover:border-b-[#3b8c2a] transition-all duration-300 p-6 md:p-8 flex flex-col h-full">
-              <div className="flex items-start gap-3 mb-6 min-h-[40px] md:min-h-[48px]">
+            <div className="bg-[#f8f9fa] border border-gray-200 border-b-[5px] border-b-gray-300 rounded-2xl shadow-md hover:-translate-y-2 hover:shadow-[0_20px_40px_rgba(0,0,0,0.1)] hover:border-b-[#3b8c2a] transition-all duration-300 p-4 md:p-6 flex flex-col h-full">
+              <div className="flex items-start gap-3 mb-2 min-h-[36px] md:min-h-[40px]">
                 <div className="w-10 h-10 rounded-full bg-white shadow-sm text-[#e85d1c] flex items-center justify-center shrink-0 mt-0.5">
                   <Flag size={20} strokeWidth={2.5} />
                 </div>
-                <h4 className="text-[18px] md:text-[20px] font-bold text-[#113d29] tracking-wider uppercase leading-[1.3]">
+                <h4 className="text-[16px] md:text-[20px] font-semibold text-[#113d29] tracking-wider uppercase leading-[1.3]">
                   FLAGSHIP EVENTS: A PROVEN TRACK RECORD
                 </h4>
               </div>
@@ -213,20 +211,20 @@ const AboutOrganizer = () => {
                 </p>
 
                 <ul className="space-y-4">
-                {[
-                  "Punjab Health & Wellness Expo",
-                  "The Yogshala Expo",
-                  "Arogya Sangoshthi",
-                  "Agritech Innovate India",
-                  "Bharat Development & Schemes Expo",
-                  "Organic Expo"
-                ].map((event, idx) => (
-                  <li key={idx} className="flex items-center gap-3">
-                    <div className="w-2 h-2 rounded-full bg-[#e85d1c] shrink-0"></div>
-                    <span className="text-[14px] md:text-[15px] font-medium text-[#4b5563]">{event}</span>
-                  </li>
-                ))}
-              </ul>
+                  {[
+                    "Punjab Health & Wellness Expo",
+                    "The Yogshala Expo",
+                    "Arogya Sangoshthi",
+                    "Agritech Innovate India",
+                    "Bharat Development & Schemes Expo",
+                    "Organic Expo"
+                  ].map((event, idx) => (
+                    <li key={idx} className="flex items-center gap-3">
+                      <div className="w-2 h-2 rounded-full bg-[#e85d1c] shrink-0"></div>
+                      <span className="text-[14px] md:text-[15px] font-medium text-[#4b5563]">{event}</span>
+                    </li>
+                  ))}
+                </ul>
               </div>
             </div>
 

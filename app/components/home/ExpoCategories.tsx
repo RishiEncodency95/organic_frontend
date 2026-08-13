@@ -49,7 +49,7 @@ const ExpoCategories = () => {
       <div className="w-full px-0 relative z-10">
 
         {/* Header */}
-        <div className="px-4 md:px-8 mx-auto max-w-7xl w-full flex flex-col items-center text-center mb-2 md:mb-4">
+        <div className="px-4 md:px-11 w-full flex flex-col items-center text-center mb-2 md:mb-4">
           {/* Badge */}
           <div className="flex items-center gap-3 mb-4">
             <div className="h-[1.5px] w-12 bg-gradient-to-l from-[#3b8c2a] to-transparent hidden sm:block"></div>

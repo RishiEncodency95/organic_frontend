@@ -1,5 +1,7 @@
 import React from 'react';
 import { Briefcase, Globe, Building, Users, Landmark, Star, MapPin } from 'lucide-react';
+import Image from 'next/image';
+import pragatiMaidanImg from './pragati_maidan.png';
 
 const venueFeatures = [
   {
@@ -36,15 +38,14 @@ const venueFeatures = [
 
 const AboutVenue = () => {
   return (
-    <section className="w-full bg-[#EFF7EE] py-12 md:py-16 lg:py-20 border-t border-gray-100">
-      <div className="w-full px-4 md:px-8 max-w-7xl mx-auto">
+    <section className="w-full bg-[#EFF7EE] py-2 md:py-4 lg:py-4 border-t border-gray-100">
+      <div className="w-full px-4 md:px-11">
 
         <div className="flex flex-col lg:flex-row items-stretch gap-6 lg:gap-8">
 
           {/* Left Column: Image Area */}
-          <div className="flex-1 lg:max-w-[45%] relative rounded-xl overflow-hidden shadow-xl min-h-[250px] md:min-h-[300px] lg:min-h-[320px] bg-gray-100 border border-gray-200">
-            {/* User can add next/image here */}
-            {/* <Image src={venueImage} alt="Pragati Maidan" fill className="object-cover" /> */}
+          <div className="flex-1 lg:max-w-[45%] relative rounded-xl overflow-hidden shadow-xl min-h-[250px] md:min-h-[300px] lg:min-h-[320px] bg-gray-100 border border-gray-200 group">
+            <Image src={pragatiMaidanImg} alt="Pragati Maidan" fill className="object-cover group-hover:scale-110 transition-transform duration-700 ease-in-out" />
 
             {/* Hall Badge */}
             <div className="absolute top-4 right-4 bg-[#e85d1c] text-white px-4 py-1 text-[12px] md:text-[14px] font-bold tracking-wider rounded-sm z-10 uppercase">
@@ -71,7 +72,7 @@ const AboutVenue = () => {
               </h3>
             </div>
 
-            <h2 className="text-[28px] md:text-[34px] lg:text-[40px] font-bold text-[#113d29] leading-[1.2] mb-8">
+            <h2 className="text-[28px] md:text-[30px] lg:text-[32px] font-semibold text-[#113d29] leading-[1.2] mb-4">
               Why Pragati Maidan, New Delhi?
             </h2>
 

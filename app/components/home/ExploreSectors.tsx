@@ -81,12 +81,12 @@ const features = [
 
 const ExploreSectors = () => {
   return (
-    <section className="bg-[#f2fdf5]/20 py-12 md:py-16 lg:py-20 overflow-hidden relative border-t border-gray-100">
+    <section className="bg-[#f2fdf5]/20 py-2 md:py-4 lg:py-4 overflow-hidden relative border-t border-gray-100">
 
       {/* Background Dots Pattern */}
       <div className="absolute inset-0 opacity-10 pointer-events-none" style={{ backgroundImage: 'radial-gradient(#3b8c2a 1px, transparent 1px)', backgroundSize: '24px 24px' }}></div>
 
-      <div className="w-full px-4 md:px-8 mx-auto max-w-7xl relative z-10 ">
+      <div className="w-full px-4 md:px-11 relative z-10 ">
 
         {/* Header Title */}
         <div className="text-center mb-8">
