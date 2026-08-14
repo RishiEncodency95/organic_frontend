@@ -136,140 +136,144 @@ const PartnersAndBrands = () => {
           </Marquee>
         </div>
 
-        {/* SECTION DIVIDER 1 */}
-        <div className="w-full flex items-center justify-center my-2 relative">
-          <div className="absolute w-full h-[2px] bg-gradient-to-r from-transparent via-[#3b8c2a]/80 to-transparent"></div>
-          <div className="bg-[#fafaf9] px-4 relative z-10">
-            <Leaf size={16} className="text-[#3b8c2a]/80" />
-          </div>
-        </div>
-
         {/* MIDDLE ROW: 3 CARDS */}
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-2 md:gap-1">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-2 md:gap-1 mt-5">
 
           {/* Card 1: Knowledge Partners */}
-          <div className="bg-white rounded-2xl shadow-sm hover:shadow-md border border-[#3b8c2a]/30 hover:border-[#3b8c2a] transition-all p-4 flex flex-col relative overflow-hidden group/card">
-            <div className="flex items-center justify-center gap-2 relative z-10">
-              <div className="flex-1 h-[1px] bg-gradient-to-r from-transparent to-gray-200"></div>
-              <div className="w-8 h-8 rounded-full bg-[#1a5a2a] flex items-center justify-center text-white shrink-0 shadow-sm group-hover/card:scale-110 transition-transform">
-                <BookOpen size={14} className="fill-current" />
+          <div className="flex flex-col gap-3">
+            <div className="w-full flex items-center justify-center relative my-1">
+              <div className="absolute w-full h-[2px] bg-gradient-to-r from-transparent via-[#1a5a2a]/60 to-transparent"></div>
+              <div className="bg-[#fafaf9] px-4 py-1.5 relative z-10 flex items-center gap-2 border border-[#1a5a2a]/60 rounded-full shadow-sm">
+                <BookOpen size={13} className="text-[#1a5a2a]" />
+                <span className="text-[10px] md:text-[11px] xl:text-[12px] font-black text-[#1a5a2a] tracking-widest uppercase whitespace-nowrap">
+                  KNOWLEDGE PARTNERS
+                </span>
+                <BookOpen size={13} className="text-[#1a5a2a]" />
               </div>
-              <span className="text-[11px] lg:text-[13px] font-bold text-[#111] tracking-widest uppercase">KNOWLEDGE PARTNERS</span>
-              <div className="flex-1 h-[1px] bg-gradient-to-l from-transparent to-gray-200"></div>
             </div>
 
-            <div className="w-full flex-1 relative mt-2">
-              <Marquee speed="25s" reverse>
-                <div className="flex items-center py-2">
-                  <div className="flex flex-col items-center w-[110px] shrink-0 bg-[#f4fcf6] border border-[#3b8c2a]/20 rounded-xl p-3 mx-2 hover:shadow-md transition-all cursor-pointer hover:-translate-y-1">
-                    <div className="w-10 h-10 rounded-full bg-white flex items-center justify-center text-[#2d7a2d] mb-2 shadow-sm">
-                      <GraduationCap size={20} />
+            <div className="bg-white rounded-2xl shadow-sm hover:shadow-md border border-[#3b8c2a]/30 hover:border-[#3b8c2a] transition-all p-4 flex flex-col relative overflow-hidden group/card flex-1">
+              <div className="w-full flex-1 relative">
+                <Marquee speed="25s" reverse>
+                  <div className="flex items-center py-2">
+                    <div className="flex flex-col items-center w-[110px] shrink-0 bg-[#f4fcf6] border border-[#3b8c2a]/20 rounded-xl p-3 mx-2 hover:shadow-md transition-all cursor-pointer hover:-translate-y-1">
+                      <div className="w-10 h-10 rounded-full bg-white flex items-center justify-center text-[#2d7a2d] mb-2 shadow-sm">
+                        <GraduationCap size={20} />
+                      </div>
+                      <span className="font-bold text-[#2d7a2d] text-center text-[12px] leading-tight mb-1">Eco<br />Science</span>
+                      <span className="text-[8px] font-bold text-gray-500 uppercase tracking-wider bg-white px-2 py-0.5 rounded-full border border-gray-100">ACADEMY</span>
                     </div>
-                    <span className="font-bold text-[#2d7a2d] text-center text-[12px] leading-tight mb-1">Eco<br />Science</span>
-                    <span className="text-[8px] font-bold text-gray-500 uppercase tracking-wider bg-white px-2 py-0.5 rounded-full border border-gray-100">ACADEMY</span>
-                  </div>
 
-                  <div className="flex flex-col items-center w-[110px] shrink-0 bg-[#f4fcf6] border border-[#3b8c2a]/20 rounded-xl p-3 mx-2 hover:shadow-md transition-all cursor-pointer hover:-translate-y-1">
-                    <div className="w-10 h-10 rounded-full bg-white flex items-center justify-center text-[#1a5a2a] mb-2 shadow-sm">
-                      <Leaf size={20} className="fill-current" />
+                    <div className="flex flex-col items-center w-[110px] shrink-0 bg-[#f4fcf6] border border-[#3b8c2a]/20 rounded-xl p-3 mx-2 hover:shadow-md transition-all cursor-pointer hover:-translate-y-1">
+                      <div className="w-10 h-10 rounded-full bg-white flex items-center justify-center text-[#1a5a2a] mb-2 shadow-sm">
+                        <Leaf size={20} className="fill-current" />
+                      </div>
+                      <span className="font-bold text-[#1a5a2a] text-center text-[12px] leading-tight mb-1">Green<br />Learn</span>
+                      <span className="text-[8px] font-bold text-gray-500 uppercase tracking-wider bg-white px-2 py-0.5 rounded-full border border-gray-100">UNIVERSITY</span>
                     </div>
-                    <span className="font-bold text-[#1a5a2a] text-center text-[12px] leading-tight mb-1">Green<br />Learn</span>
-                    <span className="text-[8px] font-bold text-gray-500 uppercase tracking-wider bg-white px-2 py-0.5 rounded-full border border-gray-100">UNIVERSITY</span>
-                  </div>
 
-                  <div className="flex flex-col items-center w-[110px] shrink-0 bg-[#f4fcf6] border border-[#3b8c2a]/20 rounded-xl p-3 mx-2 hover:shadow-md transition-all cursor-pointer hover:-translate-y-1">
-                    <div className="w-10 h-10 rounded-full bg-white flex items-center justify-center text-[#2d7a2d] mb-2 shadow-sm">
-                      <Lightbulb size={20} />
+                    <div className="flex flex-col items-center w-[110px] shrink-0 bg-[#f4fcf6] border border-[#3b8c2a]/20 rounded-xl p-3 mx-2 hover:shadow-md transition-all cursor-pointer hover:-translate-y-1">
+                      <div className="w-10 h-10 rounded-full bg-white flex items-center justify-center text-[#2d7a2d] mb-2 shadow-sm">
+                        <Lightbulb size={20} />
+                      </div>
+                      <span className="font-bold text-[#2d7a2d] text-center text-[12px] leading-tight mb-1">Future<br />Insights</span>
+                      <span className="text-[8px] font-bold text-gray-500 uppercase tracking-wider bg-white px-2 py-0.5 rounded-full border border-gray-100">INSTITUTE</span>
                     </div>
-                    <span className="font-bold text-[#2d7a2d] text-center text-[12px] leading-tight mb-1">Future<br />Insights</span>
-                    <span className="text-[8px] font-bold text-gray-500 uppercase tracking-wider bg-white px-2 py-0.5 rounded-full border border-gray-100">INSTITUTE</span>
                   </div>
-                </div>
-              </Marquee>
+                </Marquee>
+              </div>
             </div>
           </div>
 
           {/* Card 2: Wellness Partners */}
-          <div className="bg-white rounded-2xl shadow-sm hover:shadow-md border border-[#5a8024]/30 hover:border-[#5a8024] transition-all p-4 flex flex-col relative overflow-hidden group/card">
-            <div className="flex items-center justify-center gap-2 relative z-10">
-              <div className="flex-1 h-[1px] bg-gradient-to-r from-transparent to-gray-200"></div>
-              <div className="w-8 h-8 rounded-full bg-[#5a8024] flex items-center justify-center text-white shrink-0 shadow-sm group-hover/card:scale-110 transition-transform">
-                <User size={14} className="fill-current" />
+          <div className="flex flex-col gap-3">
+            <div className="w-full flex items-center justify-center relative my-1">
+              <div className="absolute w-full h-[2px] bg-gradient-to-r from-transparent via-[#5a8024]/60 to-transparent"></div>
+              <div className="bg-[#fafaf9] px-4 py-1.5 relative z-10 flex items-center gap-2 border border-[#5a8024]/60 rounded-full shadow-sm">
+                <User size={13} className="text-[#5a8024]" />
+                <span className="text-[10px] md:text-[11px] xl:text-[12px] font-black text-[#5a8024] tracking-widest uppercase whitespace-nowrap">
+                  WELLNESS PARTNERS
+                </span>
+                <User size={13} className="text-[#5a8024]" />
               </div>
-              <span className="text-[11px] lg:text-[13px] font-bold text-[#111] tracking-widest uppercase whitespace-nowrap">WELLNESS PARTNERS</span>
-              <div className="flex-1 h-[1px] bg-gradient-to-l from-transparent to-gray-200"></div>
             </div>
 
-            <div className="w-full flex-1 relative mt-2">
-              <Marquee speed="25s" reverse>
-                <div className="flex items-center py-2">
-                  <div className="flex flex-col items-center w-[110px] shrink-0 bg-[#fbf5eb] border border-[#d97706]/20 rounded-xl p-3 mx-2 hover:shadow-md transition-all cursor-pointer hover:-translate-y-1">
-                    <div className="w-10 h-10 rounded-full bg-white flex items-center justify-center text-[#dc2626] mb-2 shadow-sm">
-                      <Plus size={20} strokeWidth={3} />
+            <div className="bg-white rounded-2xl shadow-sm hover:shadow-md border border-[#5a8024]/30 hover:border-[#5a8024] transition-all p-4 flex flex-col relative overflow-hidden group/card flex-1">
+              <div className="w-full flex-1 relative">
+                <Marquee speed="25s" reverse>
+                  <div className="flex items-center py-2">
+                    <div className="flex flex-col items-center w-[110px] shrink-0 bg-[#fbf5eb] border border-[#d97706]/20 rounded-xl p-3 mx-2 hover:shadow-md transition-all cursor-pointer hover:-translate-y-1">
+                      <div className="w-10 h-10 rounded-full bg-white flex items-center justify-center text-[#dc2626] mb-2 shadow-sm">
+                        <Plus size={20} strokeWidth={3} />
+                      </div>
+                      <span className="font-bold text-[#dc2626] text-center text-[12px] leading-tight mb-1">PureHealth</span>
+                      <span className="text-[8px] font-bold text-gray-500 uppercase tracking-wider bg-white px-2 py-0.5 rounded-full border border-gray-100">CENTERS</span>
                     </div>
-                    <span className="font-bold text-[#dc2626] text-center text-[12px] leading-tight mb-1">PureHealth</span>
-                    <span className="text-[8px] font-bold text-gray-500 uppercase tracking-wider bg-white px-2 py-0.5 rounded-full border border-gray-100">CENTERS</span>
-                  </div>
 
-                  <div className="flex flex-col items-center w-[110px] shrink-0 bg-[#f0f9ff] border border-[#0284c7]/20 rounded-xl p-3 mx-2 hover:shadow-md transition-all cursor-pointer hover:-translate-y-1">
-                    <div className="w-10 h-10 rounded-full bg-white flex items-center justify-center text-[#0284c7] mb-2 shadow-sm">
-                      <HeartPulse size={20} />
+                    <div className="flex flex-col items-center w-[110px] shrink-0 bg-[#f0f9ff] border border-[#0284c7]/20 rounded-xl p-3 mx-2 hover:shadow-md transition-all cursor-pointer hover:-translate-y-1">
+                      <div className="w-10 h-10 rounded-full bg-white flex items-center justify-center text-[#0284c7] mb-2 shadow-sm">
+                        <HeartPulse size={20} />
+                      </div>
+                      <span className="font-bold text-[#0284c7] text-center text-[12px] leading-tight mb-1">HealthPlus</span>
+                      <span className="text-[8px] font-bold text-gray-500 uppercase tracking-wider bg-white px-2 py-0.5 rounded-full border border-gray-100">HOSPITALS</span>
                     </div>
-                    <span className="font-bold text-[#0284c7] text-center text-[12px] leading-tight mb-1">HealthPlus</span>
-                    <span className="text-[8px] font-bold text-gray-500 uppercase tracking-wider bg-white px-2 py-0.5 rounded-full border border-gray-100">HOSPITALS</span>
-                  </div>
 
-                  <div className="flex flex-col items-center w-[110px] shrink-0 bg-[#f5f3ff] border border-[#7c3aed]/20 rounded-xl p-3 mx-2 hover:shadow-md transition-all cursor-pointer hover:-translate-y-1">
-                    <div className="w-10 h-10 rounded-full bg-white flex items-center justify-center text-[#7c3aed] mb-2 shadow-sm">
-                      <Flower2 size={20} />
+                    <div className="flex flex-col items-center w-[110px] shrink-0 bg-[#f5f3ff] border border-[#7c3aed]/20 rounded-xl p-3 mx-2 hover:shadow-md transition-all cursor-pointer hover:-translate-y-1">
+                      <div className="w-10 h-10 rounded-full bg-white flex items-center justify-center text-[#7c3aed] mb-2 shadow-sm">
+                        <Flower2 size={20} />
+                      </div>
+                      <span className="font-bold text-[#7c3aed] text-center text-[12px] leading-tight mb-1">MindCare</span>
+                      <span className="text-[8px] font-bold text-gray-500 uppercase tracking-wider bg-white px-2 py-0.5 rounded-full border border-gray-100">WELLNESS</span>
                     </div>
-                    <span className="font-bold text-[#7c3aed] text-center text-[12px] leading-tight mb-1">MindCare</span>
-                    <span className="text-[8px] font-bold text-gray-500 uppercase tracking-wider bg-white px-2 py-0.5 rounded-full border border-gray-100">WELLNESS</span>
                   </div>
-                </div>
-              </Marquee>
+                </Marquee>
+              </div>
             </div>
           </div>
 
           {/* Card 3: Supporting Associations */}
-          <div className="bg-white rounded-2xl shadow-sm hover:shadow-md border border-[#1e4a32]/30 hover:border-[#1e4a32] transition-all p-4 flex flex-col relative overflow-hidden group/card">
-            <div className="flex items-center justify-center gap-2 relative z-10">
-              <div className="flex-1 h-[1px] bg-gradient-to-r from-transparent to-gray-200"></div>
-              <div className="w-8 h-8 rounded-full bg-[#1e4a32] flex items-center justify-center text-white shrink-0 shadow-sm group-hover/card:scale-110 transition-transform">
-                <Handshake size={14} className="fill-current" />
+          <div className="flex flex-col gap-3">
+            <div className="w-full flex items-center justify-center relative my-1">
+              <div className="absolute w-full h-[2px] bg-gradient-to-r from-transparent via-[#1e4a32]/60 to-transparent"></div>
+              <div className="bg-[#fafaf9] px-4 py-1.5 relative z-10 flex items-center gap-2 border border-[#1e4a32]/60 rounded-full shadow-sm">
+                <Handshake size={13} className="text-[#1e4a32]" />
+                <span className="text-[10px] md:text-[11px] xl:text-[12px] font-black text-[#1e4a32] tracking-widest uppercase whitespace-nowrap">
+                  SUPPORTING ASSOC.
+                </span>
+                <Handshake size={13} className="text-[#1e4a32]" />
               </div>
-              <span className="text-[11px] lg:text-[13px] font-bold text-[#111] tracking-widest uppercase">SUPPORTING ASSOCIATIONS</span>
-              <div className="flex-1 h-[1px] bg-gradient-to-l from-transparent to-gray-200"></div>
             </div>
 
-            <div className="w-full flex-1 relative mt-2">
-              <Marquee speed="25s" reverse>
-                <div className="flex items-center py-2">
-                  <div className="flex flex-col items-center w-[110px] shrink-0 bg-[#eff6ff] border border-[#2563eb]/20 rounded-xl p-3 mx-2 hover:shadow-md transition-all cursor-pointer hover:-translate-y-1">
-                    <div className="w-10 h-10 rounded-full bg-white flex items-center justify-center text-[#2563eb] mb-2 shadow-sm">
-                      <Users size={20} />
+            <div className="bg-white rounded-2xl shadow-sm hover:shadow-md border border-[#1e4a32]/30 hover:border-[#1e4a32] transition-all p-4 flex flex-col relative overflow-hidden group/card flex-1">
+              <div className="w-full flex-1 relative">
+                <Marquee speed="25s" reverse>
+                  <div className="flex items-center py-2">
+                    <div className="flex flex-col items-center w-[110px] shrink-0 bg-[#eff6ff] border border-[#2563eb]/20 rounded-xl p-3 mx-2 hover:shadow-md transition-all cursor-pointer hover:-translate-y-1">
+                      <div className="w-10 h-10 rounded-full bg-white flex items-center justify-center text-[#2563eb] mb-2 shadow-sm">
+                        <Users size={20} />
+                      </div>
+                      <span className="font-bold text-[#2563eb] text-center text-[12px] leading-tight mb-1">AgriUnion</span>
+                      <span className="text-[8px] font-bold text-gray-500 uppercase tracking-wider bg-white px-2 py-0.5 rounded-full border border-gray-100">FEDERATION</span>
                     </div>
-                    <span className="font-bold text-[#2563eb] text-center text-[12px] leading-tight mb-1">AgriUnion</span>
-                    <span className="text-[8px] font-bold text-gray-500 uppercase tracking-wider bg-white px-2 py-0.5 rounded-full border border-gray-100">FEDERATION</span>
-                  </div>
 
-                  <div className="flex flex-col items-center w-[110px] shrink-0 bg-[#f0fdf4] border border-[#166534]/20 rounded-xl p-3 mx-2 hover:shadow-md transition-all cursor-pointer hover:-translate-y-1">
-                    <div className="w-10 h-10 rounded-full bg-white flex items-center justify-center text-[#166534] mb-2 shadow-sm">
-                      <Globe size={20} />
+                    <div className="flex flex-col items-center w-[110px] shrink-0 bg-[#f0fdf4] border border-[#166534]/20 rounded-xl p-3 mx-2 hover:shadow-md transition-all cursor-pointer hover:-translate-y-1">
+                      <div className="w-10 h-10 rounded-full bg-white flex items-center justify-center text-[#166534] mb-2 shadow-sm">
+                        <Globe size={20} />
+                      </div>
+                      <span className="font-bold text-[#166534] text-center text-[12px] leading-tight mb-1">EarthSave</span>
+                      <span className="text-[8px] font-bold text-gray-500 uppercase tracking-wider bg-white px-2 py-0.5 rounded-full border border-gray-100">FOUNDATION</span>
                     </div>
-                    <span className="font-bold text-[#166534] text-center text-[12px] leading-tight mb-1">EarthSave</span>
-                    <span className="text-[8px] font-bold text-gray-500 uppercase tracking-wider bg-white px-2 py-0.5 rounded-full border border-gray-100">FOUNDATION</span>
-                  </div>
 
-                  <div className="flex flex-col items-center w-[110px] shrink-0 bg-[#fff7ed] border border-[#ea580c]/20 rounded-xl p-3 mx-2 hover:shadow-md transition-all cursor-pointer hover:-translate-y-1">
-                    <div className="w-10 h-10 rounded-full bg-white flex items-center justify-center text-[#ea580c] mb-2 shadow-sm">
-                      <Sprout size={20} />
+                    <div className="flex flex-col items-center w-[110px] shrink-0 bg-[#fff7ed] border border-[#ea580c]/20 rounded-xl p-3 mx-2 hover:shadow-md transition-all cursor-pointer hover:-translate-y-1">
+                      <div className="w-10 h-10 rounded-full bg-white flex items-center justify-center text-[#ea580c] mb-2 shadow-sm">
+                        <Sprout size={20} />
+                      </div>
+                      <span className="font-bold text-[#ea580c] text-center text-[12px] leading-tight mb-1">GreenEarth</span>
+                      <span className="text-[8px] font-bold text-gray-500 uppercase tracking-wider bg-white px-2 py-0.5 rounded-full border border-gray-100">ALLIANCE</span>
                     </div>
-                    <span className="font-bold text-[#ea580c] text-center text-[12px] leading-tight mb-1">GreenEarth</span>
-                    <span className="text-[8px] font-bold text-gray-500 uppercase tracking-wider bg-white px-2 py-0.5 rounded-full border border-gray-100">ALLIANCE</span>
                   </div>
-                </div>
-              </Marquee>
+                </Marquee>
+              </div>
             </div>
           </div>
 

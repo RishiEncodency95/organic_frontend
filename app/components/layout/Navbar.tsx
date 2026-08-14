@@ -173,7 +173,7 @@ const Navbar = () => {
                                         {link.dropdown && (
                                             <AnimatePresence>
                                                 {activeDropdown === link.label && (
-                                                    <div className="absolute top-[calc(100%-10px)] left-1/2 -translate-x-1/2 pt-4 w-[220px]">
+                                                    <div className="absolute top-[calc(100%-10px)] left-1/2 -translate-x-1/2 pt-4 w-[230px]">
                                                         <div className="absolute top-2 left-1/2 -translate-x-1/2 w-4 h-4 bg-white border-t border-l border-slate-100 rotate-45 z-10" />
                                                         <motion.div
                                                             initial={{ opacity: 0, scale: 0.95, y: 10 }}
