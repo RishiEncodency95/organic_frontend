@@ -137,7 +137,7 @@ const PartnersAndBrands = () => {
         </div>
 
         {/* MIDDLE ROW: 3 CARDS */}
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-2 md:gap-1 mt-5">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-2 md:gap-1 mt-4">
 
           {/* Card 1: Knowledge Partners */}
           <div className="flex flex-col gap-3">

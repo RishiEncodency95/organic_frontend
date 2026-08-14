@@ -64,6 +64,14 @@ const AboutHero = () => {
         .hero-shimmer-btn-dark::before {
           background: linear-gradient(to right, transparent, rgba(43,88,37,0.15), transparent);
         }
+        @keyframes badgeGlowAndFloat {
+          0% { transform: translateY(0px); box-shadow: 0 0 15px rgba(245,130,32,0.4); }
+          50% { transform: translateY(-5px); box-shadow: 0 0 35px rgba(245,130,32,0.8); }
+          100% { transform: translateY(0px); box-shadow: 0 0 15px rgba(245,130,32,0.4); }
+        }
+        .animate-badge-special {
+          animation: badgeGlowAndFloat 3s ease-in-out infinite;
+        }
       `}</style>
       {/* Background Image */}
       <Image
@@ -82,9 +90,11 @@ const AboutHero = () => {
         <div className="max-w-xl text-left mt-16 md:mt-0 space-y-4 w-full max-w-2xl">
 
           {/* Tagline Badge */}
-          <div className="inline-flex items-center gap-2 px-4 py-1.5 bg-gradient-to-r from-[#F2B40E]/10 to-[#f58220]/10 backdrop-blur-md font-extrabold text-[12px] md:text-[14px] tracking-[0.2em] uppercase rounded-full mb-4 shadow-[0_0_20px_rgba(242,180,14,0.4)] border border-[#F2B40E]/40 w-max">
-            <Sun className="w-4 h-4 text-[#f58220] animate-[spin_8s_linear_infinite]" fill="currentColor" />
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#d97706] to-[#b45309]">ABOUT US</span>
+          <div className="animate-badge-special hero-shimmer-btn overflow-hidden inline-flex items-center gap-3 px-6 py-2 bg-gradient-to-r from-[#f58220]/15 to-[#e65c00]/15 backdrop-blur-md font-black text-[15px] md:text-[18px] tracking-[0.25em] uppercase rounded-full mb-6 border-2 border-[#f58220] w-max cursor-default">
+            <Sun className="w-5 h-5 md:w-6 md:h-6 text-[#f58220] animate-[spin_6s_linear_infinite]" fill="currentColor" />
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#f58220] to-[#e65c00] drop-shadow-md">
+              ABOUT US
+            </span>
           </div>
 
           {/* Title */}
@@ -103,6 +113,7 @@ const AboutHero = () => {
             <span className="text-[#2b5825] font-bold text-[14px] md:text-[16px] tracking-widest uppercase">
               Our Mission & Vision
             </span>
+            <div className="w-12 h-1 bg-[#7ca142] rounded-full"></div>
           </div>
 
           {/* Description */}
@@ -111,7 +122,7 @@ const AboutHero = () => {
           </p>
 
           {/* Buttons */}
-          <div className="flex flex-col sm:flex-row gap-4 pt-4 relative w-max">
+          <div className="flex flex-row flex-wrap lg:flex-nowrap gap-2 sm:gap-3 pt-4 relative w-full">
             {/* Floating Sparkles around buttons - Multi-colored to match logo theme */}
             <Sparkle style={{ top: '-15px', left: '15%', animationDelay: '0s', color: '#F2B40E' }} />
             <Sparkle style={{ bottom: '-10px', left: '35%', animationDelay: '0.4s', color: '#3b8c2a' }} />
@@ -121,17 +132,21 @@ const AboutHero = () => {
 
             <Link
               href="/book-a-stand"
-              className="hero-shimmer-btn bg-[#2b5825] hover:bg-[#1f471b] text-white px-4 sm:px-6 py-2 sm:py-3 rounded-md font-bold text-[10px] sm:text-[12px] md:text-[13px] tracking-tight sm:tracking-wider uppercase transition-all shadow-md hover:-translate-y-0.5 text-center flex items-center justify-center gap-2 whitespace-nowrap min-h-[44px]"
+              className="hero-shimmer-btn bg-[#2b5825] hover:bg-[#1f471b] text-white px-3 sm:px-4 py-1 lg:py-2 rounded-md font-bold text-[9px] sm:text-[11px] md:text-[12px] tracking-tight sm:tracking-wider uppercase transition-all shadow-md hover:-translate-y-0.5 text-center flex items-center justify-center whitespace-nowrap"
             >
               BOOK YOUR STALL
-              <ArrowRight className="w-4 h-4 sm:w-5 sm:h-5" />
             </Link>
             <Link
               href="/visitor-registration"
-              className="hero-shimmer-btn hero-shimmer-btn-dark bg-white hover:bg-gray-50 text-[#2b5825] border border-[#2b5825] px-4 sm:px-6 py-2 sm:py-3 rounded-md font-bold text-[10px] sm:text-[12px] md:text-[13px] tracking-tight sm:tracking-wider uppercase transition-all shadow-sm hover:-translate-y-0.5 text-center flex items-center justify-center gap-2 whitespace-nowrap min-h-[44px]"
+              className="hero-shimmer-btn hero-shimmer-btn-dark bg-white hover:bg-gray-50 text-[#2b5825] border border-[#2b5825] px-3 sm:px-4 py-1 lg:py-2 rounded-md font-bold text-[9px] sm:text-[11px] md:text-[12px] tracking-tight sm:tracking-wider uppercase transition-all shadow-sm hover:-translate-y-0.5 text-center flex items-center justify-center whitespace-nowrap"
             >
-              REGISTER AS BUYER
-              <ArrowRight className="w-4 h-4 sm:w-5 sm:h-5" />
+              REGISTER AS VISITOR
+            </Link>
+            <Link
+              href="/delegate-registration"
+              className="hero-shimmer-btn bg-[#7ca142] hover:bg-[#688a35] text-white px-3 sm:px-4 py-1 lg:py-2 rounded-md font-bold text-[9px] sm:text-[11px] md:text-[12px] tracking-tight sm:tracking-wider uppercase transition-all shadow-md hover:-translate-y-0.5 text-center flex items-center justify-center whitespace-nowrap"
+            >
+              REGISTER AS DELEGATE
             </Link>
           </div>
 
