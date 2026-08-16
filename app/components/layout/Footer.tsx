@@ -60,29 +60,29 @@ export default function Footer() {
       <div className="container mx-auto max-w-[1536px] relative z-10 flex flex-col lg:flex-row">
 
         {/* Column 1: Cream Area Content */}
-        <div className="w-full lg:w-[28%] bg-[#f4ebd9] lg:bg-transparent rounded-br-[80px] lg:rounded-none px-6 py-8 text-gray-900 flex flex-col items-center text-center">
+        <div className="w-full lg:w-[28%] bg-[#f4ebd9] lg:bg-transparent rounded-br-[80px] lg:rounded-none px-6 py-8 text-gray-900 flex flex-col items-center text-center font-inter">
           <img src={footerLogo.src} alt="Bharat Organic Expo" className="w-48 mb-4" />
-          <p className="text-[12px] leading-relaxed max-w-sm">
+          <p className="text-[12px] font-semibold leading-relaxed max-w-sm text-gray-800">
             A global platform uniting over <span className="font-bold text-[#b8860b]">500+ exhibitors</span> from across the organic value chain, showcasing certified products, advanced agritech, sustainable practices, and the rich heritage of traditional wellness. Discover the future of organic living with expert-led conferences and unmatched B2B opportunities.
           </p>
         </div>
 
         {/* Right Area (Dark Green) */}
-        <div className="w-full lg:w-[72%] grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-x-6 gap-y-8 px-6 py-8">
+        <div className="w-full lg:w-[72%] grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-x-6 gap-y-8 px-6 py-8 font-inter">
 
           {/* Quick Links */}
           <div>
-            <h4 className="font-poppins font-semibold text-white uppercase mb-3 text-[13px] tracking-wider">
+            <h4 className="font-poppins font-bold text-white uppercase mb-3 text-[13px] tracking-wider">
               QUICK LINKS
             </h4>
-            <ul className="space-y-2 text-[12px] text-gray-300">
+            <ul className="space-y-2 text-[12px] text-gray-200 font-semibold">
               {quickLinks.map((link, i) => (
                 <li key={i}><Link href={link.path} className="hover:text-white transition-colors">{link.name}</Link></li>
               ))}
               {subLinks.map((link, i) => (
                 <li key={`sub-${i}`} className="pl-2">
                   <Link href={link.path} className="flex items-center gap-1.5 hover:text-white transition-colors">
-                    <ChevronRight size={12} className="text-gray-500" />
+                    <ChevronRight size={12} className="text-gray-400" />
                     {link.name}
                   </Link>
                 </li>
@@ -92,7 +92,7 @@ export default function Footer() {
 
           {/* Conference Highlights */}
           <div>
-            <h4 className="font-poppins font-semibold text-white uppercase mb-3 text-[13px] tracking-wider">
+            <h4 className="font-poppins font-bold text-white uppercase mb-3 text-[13px] tracking-wider">
               CONFERENCE HIGHLIGHTS
             </h4>
             <div className="flex flex-col gap-3">
@@ -102,8 +102,8 @@ export default function Footer() {
                     {item.icon}
                   </div>
                   <div className="pt-0.5">
-                    <h5 className="text-[12px] font-semibold text-white leading-none mb-1">{item.title}</h5>
-                    <p className="text-[10px] text-gray-400 leading-tight pr-2">{item.desc}</p>
+                    <h5 className="text-[12px] font-bold text-white leading-none mb-1 font-poppins">{item.title}</h5>
+                    <p className="text-[10px] text-gray-300 font-medium leading-tight pr-2">{item.desc}</p>
                   </div>
                 </div>
               ))}
@@ -112,25 +112,25 @@ export default function Footer() {
 
           {/* Get In Touch */}
           <div>
-            <h4 className="font-poppins font-semibold text-[#f1edd9] uppercase mb-3 text-[13px] tracking-wider">
+            <h4 className="font-poppins font-bold text-[#f1edd9] uppercase mb-3 text-[13px] tracking-wider">
               GET IN TOUCH
             </h4>
-            <div className="text-[12px] text-gray-300 space-y-1.5 mb-4">
-              <p><span className="text-gray-400">Phone:</span> +91 96549 00525</p>
-              <p><span className="text-gray-400">Email:</span> info@bharatorganicexpo.com</p>
-              <p><span className="text-gray-400">Web:</span> www.bharatorganicexpo.com</p>
+            <div className="text-[12px] text-gray-200 font-semibold space-y-1.5 mb-4">
+              <p><span className="text-gray-400 font-medium">Phone:</span> +91 96549 00525</p>
+              <p><span className="text-gray-400 font-medium">Email:</span> info@bharatorganicexpo.com</p>
+              <p><span className="text-gray-400 font-medium">Web:</span> www.bharatorganicexpo.com</p>
             </div>
 
-            <h5 className="font-poppins font-medium text-gray-400 uppercase mb-1.5 text-[11px] tracking-widest">ADDRESS:</h5>
-            <p className="text-[12px] text-gray-300 mb-3 leading-relaxed">
+            <h5 className="font-poppins font-bold text-gray-400 uppercase mb-1.5 text-[11px] tracking-widest">ADDRESS:</h5>
+            <p className="text-[12px] text-gray-200 font-semibold mb-3 leading-relaxed">
               Hall 5, Pragati Maidan,<br/>New Delhi, India 110001
             </p>
-            <button className="border border-gray-500 text-gray-300 text-[10px] font-medium px-3 py-1 rounded-md mb-4 uppercase tracking-wider hover:bg-white hover:text-[#0d2f17] transition-colors">
+            <button className="border border-gray-400 text-gray-200 text-[10px] font-bold px-3 py-1 rounded-md mb-4 uppercase tracking-wider hover:bg-white hover:text-[#0d2f17] transition-colors font-poppins">
               VIEW ON GOOGLE MAPS
             </button>
 
-            <h5 className="font-poppins font-medium text-gray-400 uppercase mb-2 text-[11px] tracking-widest">CONFERENCE HELPLINE</h5>
-            <div className="flex items-center gap-2 text-white font-semibold text-[14px]">
+            <h5 className="font-poppins font-bold text-gray-400 uppercase mb-2 text-[11px] tracking-widest">CONFERENCE HELPLINE</h5>
+            <div className="flex items-center gap-2 text-white font-bold text-[14px] font-poppins">
               <Phone size={14} className="text-gray-400" />
               <span>+91 96549 00525</span>
             </div>
@@ -138,11 +138,11 @@ export default function Footer() {
 
           {/* Organised By & Connect */}
           <div className="flex flex-col">
-            <p className="text-gray-300 text-[12px] mb-1 font-medium">Organised by:</p>
+            <p className="text-gray-300 text-[12px] mb-1 font-semibold">Organised by:</p>
             <h3 className="text-[#ea6a10] font-bold text-xl tracking-wider mb-0.5 uppercase font-poppins">
               NAMO<span className="text-[#2b88c4]">GANGE</span>
             </h3>
-            <p className="text-gray-400 text-[9px] uppercase tracking-[0.2em] mb-3">WELLNESS PVT. LTD.</p>
+            <p className="text-gray-400 text-[9px] font-bold uppercase tracking-[0.2em] mb-3 font-poppins">WELLNESS PVT. LTD.</p>
 
             <div className="w-full h-[1px] bg-gradient-to-r from-transparent via-gray-500 to-transparent mb-3 relative">
               <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-[#0d2f17] px-2 text-[#d68523] text-[10px]">
@@ -150,7 +150,7 @@ export default function Footer() {
               </div>
             </div>
 
-            <p className="text-gray-300 text-[11px] mb-3 leading-relaxed">
+            <p className="text-gray-200 text-[11px] mb-3 leading-relaxed font-semibold">
               Your conference companion for<br/>agenda, updates and networking.
             </p>
 
@@ -159,10 +159,10 @@ export default function Footer() {
               <img src={placeholderImg.src} alt="Nature's Bounty" className="w-full h-full object-cover" />
             </div>
 
-            <h5 className="font-poppins font-semibold text-white uppercase mb-2 text-[12px] tracking-wider">CONNECT WITH US</h5>
+            <h5 className="font-poppins font-bold text-white uppercase mb-2 text-[12px] tracking-wider">CONNECT WITH US</h5>
             <div className="flex gap-2">
               {[Facebook, Twitter, Linkedin, Instagram].map((Icon, idx) => (
-                <a key={idx} href="#" className="w-7 h-7 rounded-md border border-gray-600 flex items-center justify-center text-gray-300 hover:text-white hover:border-white transition-colors">
+                <a key={idx} href="#" className="w-7 h-7 rounded-md border border-gray-500 flex items-center justify-center text-gray-300 hover:text-white hover:border-white transition-colors">
                   <Icon size={12} />
                 </a>
               ))}
@@ -176,8 +176,8 @@ export default function Footer() {
       </div>
 
       {/* Bottom Legal Bar */}
-      <div className="relative z-20 border-t border-white/10 bg-[#071d0e]">
-        <div className="container mx-auto max-w-[1536px] px-6 py-2.5 flex flex-col md:flex-row justify-between items-center text-[10px] text-gray-400">
+      <div className="relative z-20 border-t border-white/10 bg-[#071d0e] font-inter">
+        <div className="container mx-auto max-w-[1536px] px-6 py-2.5 flex flex-col md:flex-row justify-between items-center text-[10px] text-gray-200 font-semibold">
           <div className="flex flex-wrap items-center gap-x-2 gap-y-1 mb-3 md:mb-0">
             <Link href="/privacy" className="hover:text-white">Privacy Policy</Link>
             <span>|</span>
