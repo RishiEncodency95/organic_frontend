@@ -1,6 +1,7 @@
 import React from "react";
 import { Target, Globe2, Lightbulb, ShieldCheck, ArrowRight, Leaf } from "lucide-react";
 import Link from "next/link";
+import nominateBg from "../../../assets/about/advisory_board_member/nominate1.png";
 
 const WhyJoinAdvisory = () => {
     const benefits = [
@@ -31,7 +32,7 @@ const WhyJoinAdvisory = () => {
             <div className="w-full px-4 md:px-11">
 
                 {/* Top Section: Why Join & Cards */}
-                <div className="flex flex-col lg:flex-row gap-8 xl:gap-12 mb-16 items-start">
+                <div className="flex flex-col lg:flex-row gap-8 xl:gap-12 mb-4 items-start">
 
                     {/* Left: Text Block */}
                     <div className="w-full lg:w-1/3 xl:w-1/4 flex flex-col pt-2">
@@ -71,45 +72,82 @@ const WhyJoinAdvisory = () => {
                 </div>
 
                 {/* Bottom Banner Section */}
-                <div className="relative w-full rounded-2xl overflow-hidden bg-gradient-to-br from-[#3b8c2a] to-[#265c1b] shadow-xl border border-[#3b8c2a]/20">
+                <div
+                    className="relative w-full rounded-2xl overflow-hidden shadow-xl border border-[#3b8c2a]/20"
+                    style={{
+                        backgroundImage: `url(${nominateBg.src})`,
+                        backgroundSize: 'cover',
+                        backgroundPosition: 'center'
+                    }}
+                >
                     {/* Subtle pattern */}
                     <div className="absolute inset-0 opacity-10 pointer-events-none mix-blend-overlay">
                         <div className="w-full h-full bg-[url('https://www.transparenttextures.com/patterns/stardust.png')]"></div>
                     </div>
 
                     {/* Banner Content Container */}
-                    <div className="relative z-10 flex flex-col md:flex-row items-center justify-between px-6 py-6 md:px-10 lg:px-12 gap-6">
+                    <div className="relative z-10 flex flex-col md:flex-row items-center justify-between px-6 py-4 md:px-10 lg:px-11 gap-6">
 
                         {/* Left Side: Banner Text */}
-                        <div className="w-full md:w-2/3 flex flex-col items-start">
-                            <span className="inline-block px-3 py-1 bg-white/10 rounded-full text-[#F4E3A1] font-bold text-[10px] md:text-[11px] tracking-widest uppercase mb-3 border border-white/20 backdrop-blur-sm">
-                                Be Part of a Transformative Journey
-                            </span>
-                            <h2 className="text-white font-serif text-[24px] md:text-[30px] lg:text-[36px] leading-[1.15] mb-3">
-                                Nominate for the <br className="hidden md:block" />
-                                <span className="font-sans font-black tracking-tight">ADVISORY BOARD</span>
+                        <div className="w-full md:w-2/3 flex flex-col items-start md:pr-10">
+                            <div className="inline-flex items-center gap-2 px-3 py-1 bg-white rounded-full text-[#3b8c2a] font-bold text-[10px] md:text-[11px] tracking-widest uppercase mb-2 shadow-sm border border-gray-100">
+                                <Leaf size={14} className="fill-[#3b8c2a]" />
+                                BE PART OF A TRANSFORMATIVE JOURNEY
+                            </div>
+                            <h2 className="text-[#333] font-serif text-[18px] md:text-[28px] lg:text-[32px] leading-[1.1] mb-2">
+                                Nominate for the <br />
+                                <span className="font-sans font-black text-[#1f471b] tracking-tight text-[36px] md:text-[48px] lg:text-[56px] uppercase">
+                                    Advisory Board
+                                </span>
                             </h2>
-                            <p className="text-white/90 font-medium text-[13px] md:text-[14px] max-w-md mb-2 md:mb-0 leading-relaxed">
+                            <p className="text-[#555] font-medium text-[13px] md:text-[15px] max-w-[450px] mb-3 leading-relaxed">
                                 Help us bring the right leaders together to catalyze innovation, sustainability, and industry growth.
                             </p>
+
+                            {/* 4 Feature Icons Row */}
+                            <div className="flex items-center justify-start gap-4 md:gap-6 divide-x divide-gray-300">
+                                <div className="flex flex-col items-center justify-center gap-2 px-2 first:pl-0 group cursor-default">
+                                    <div className="w-10 h-10 rounded-full border border-[#3b8c2a]/30 bg-[#f8fcf6] group-hover:bg-[#3b8c2a] group-hover:border-[#3b8c2a] text-[#1f471b] group-hover:text-white transition-all duration-300 flex items-center justify-center">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2" /><circle cx="9" cy="7" r="4" /><path d="M22 21v-2a4 4 0 0 0-3-3.87" /><path d="M16 3.13a4 4 0 0 1 0 7.75" /></svg>
+                                    </div>
+                                    <span className="text-center text-[#333] font-bold text-[9px] md:text-[10px] tracking-widest uppercase max-w-[80px]">
+                                        STRONGER<br />LEADERSHIP
+                                    </span>
+                                </div>
+                                <div className="flex flex-col items-center justify-center gap-2 px-2 md:px-4 group cursor-default">
+                                    <div className="w-10 h-10 rounded-full border border-[#3b8c2a]/30 bg-[#f8fcf6] group-hover:bg-[#3b8c2a] group-hover:border-[#3b8c2a] text-[#1f471b] group-hover:text-white transition-all duration-300 flex items-center justify-center">
+                                        <Leaf size={20} strokeWidth={2} />
+                                    </div>
+                                    <span className="text-center text-[#333] font-bold text-[9px] md:text-[10px] tracking-widest uppercase max-w-[80px]">
+                                        SUSTAINABLE<br />FUTURE
+                                    </span>
+                                </div>
+                                <div className="flex flex-col items-center justify-center gap-2 px-2 md:px-4 group cursor-default">
+                                    <div className="w-10 h-10 rounded-full border border-[#3b8c2a]/30 bg-[#f8fcf6] group-hover:bg-[#3b8c2a] group-hover:border-[#3b8c2a] text-[#1f471b] group-hover:text-white transition-all duration-300 flex items-center justify-center">
+                                        <Lightbulb size={20} strokeWidth={2} />
+                                    </div>
+                                    <span className="text-center text-[#333] font-bold text-[9px] md:text-[10px] tracking-widest uppercase max-w-[80px]">
+                                        INNOVATION<br />DRIVEN
+                                    </span>
+                                </div>
+                                <div className="flex flex-col items-center justify-center gap-2 px-2 md:px-4 group cursor-default">
+                                    <div className="w-10 h-10 rounded-full border border-[#3b8c2a]/30 bg-[#f8fcf6] group-hover:bg-[#3b8c2a] group-hover:border-[#3b8c2a] text-[#1f471b] group-hover:text-white transition-all duration-300 flex items-center justify-center">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polyline points="22 7 13.5 15.5 8.5 10.5 2 17" /><polyline points="16 7 22 7 22 13" /></svg>
+                                    </div>
+                                    <span className="text-center text-[#333] font-bold text-[9px] md:text-[10px] tracking-widest uppercase max-w-[80px]">
+                                        INDUSTRY<br />GROWTH
+                                    </span>
+                                </div>
+                            </div>
                         </div>
 
                         {/* Right Side: Graphic & Button */}
-                        <div className="w-full md:w-1/3 flex flex-col items-center justify-center relative gap-5">
-                            <div className="hidden md:flex relative w-20 h-20 items-center justify-center shrink-0">
-                                {/* Glowing aura */}
-                                <div className="absolute inset-0 bg-white/20 rounded-full blur-2xl"></div>
-                                {/* Spinning dashed ring */}
-                                <div className="absolute inset-2 rounded-full border border-dashed border-white/40 animate-[spin_20s_linear_infinite]"></div>
-                                {/* Inner solid circle */}
-                                <div className="absolute inset-4 bg-white/10 backdrop-blur-md rounded-full shadow-inner border border-white/20"></div>
-                                {/* Center Icon */}
-                                <Leaf size={28} className="text-white drop-shadow-md relative z-10" strokeWidth={1.5} />
-                            </div>
+                        <div className="w-full md:w-1/3 flex flex-col items-center justify-center relative gap-5 mt-32 md:mt-40">
+
 
                             <Link
                                 href="/nominate"
-                                className="group inline-flex items-center gap-3 bg-white text-[#1f471b] px-6 py-3 rounded-full font-bold text-[12px] md:text-[13px] tracking-widest uppercase transition-all shadow-lg hover:shadow-xl hover:bg-[#F4E3A1] hover:-translate-y-0.5 z-20 shrink-0"
+                                className="group inline-flex items-center gap-3 bg-[#f5c742] text-[#1f471b] px-6 py-3 rounded-full font-bold text-[12px] md:text-[13px] tracking-widest uppercase transition-all shadow-lg hover:shadow-xl hover:bg-[#e0b536] hover:-translate-y-0.5 z-20 shrink-0"
                             >
                                 Nominate Now
                                 <ArrowRight size={16} strokeWidth={2.5} className="group-hover:translate-x-1 transition-transform" />
