@@ -89,7 +89,7 @@ h1, h2, h3, h4, h5, h6 {
 .uiverse-btn-exhibitor {
   background: linear-gradient(90deg, rgba(56, 189, 248, 0.45) -12.74%, rgba(14, 165, 233, 0.2) 56.76%);
   border: 2px solid #38bdf8;
-  color: #ffffff;
+  color: #0369a1;
 }
 .uiverse-btn-exhibitor::before {
   background: #0369a1;
@@ -98,14 +98,14 @@ h1, h2, h3, h4, h5, h6 {
 .uiverse-btn-exhibitor:hover {
   background: linear-gradient(90deg, rgba(56, 189, 248, 0.75) -12.74%, rgba(14, 165, 233, 0.45) 56.76%);
   box-shadow: 0 0 12px rgba(56, 189, 248, 0.4);
-  color: #ffffff;
+  color: #0f172a;
 }
 
 /* Buyer Login (Amber / Gold) */
 .uiverse-btn-buyer {
   background: linear-gradient(90deg, rgba(245, 158, 11, 0.45) -12.74%, rgba(217, 119, 6, 0.2) 56.76%);
   border: 2px solid #f59e0b;
-  color: #ffffff;
+  color: #92400e;
 }
 .uiverse-btn-buyer::before {
   background: #78350f;
@@ -114,14 +114,14 @@ h1, h2, h3, h4, h5, h6 {
 .uiverse-btn-buyer:hover {
   background: linear-gradient(90deg, rgba(245, 158, 11, 0.75) -12.74%, rgba(217, 119, 6, 0.45) 56.76%);
   box-shadow: 0 0 12px rgba(245, 158, 11, 0.4);
-  color: #ffffff;
+  color: #0f172a;
 }
 
 /* Delegates Login (Organic Green) */
 .uiverse-btn-delegates {
   background: linear-gradient(90deg, rgba(34, 197, 94, 0.45) -12.74%, rgba(22, 163, 74, 0.2) 56.76%);
   border: 2px solid #4ade80;
-  color: #ffffff;
+  color: #14532d;
 }
 .uiverse-btn-delegates::before {
   background: #14532d;
@@ -130,7 +130,7 @@ h1, h2, h3, h4, h5, h6 {
 .uiverse-btn-delegates:hover {
   background: linear-gradient(90deg, rgba(34, 197, 94, 0.75) -12.74%, rgba(22, 163, 74, 0.45) 56.76%);
   box-shadow: 0 0 12px rgba(74, 222, 128, 0.4);
-  color: #ffffff;
+  color: #0f172a;
 }
 
 /* User Login (White Background as requested by user) */

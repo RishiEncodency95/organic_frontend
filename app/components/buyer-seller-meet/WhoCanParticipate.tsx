@@ -62,7 +62,7 @@ export default function WhoCanParticipate() {
   ];
 
   return (
-    <section id="who-can-participate" className="pt-8 pb-16 bg-[#f9f9f9] font-inter relative overflow-hidden">
+    <section id="who-can-participate" className="pt-8 pb-16 bg-[#f9f9f9] font-inter relative overflow-hidden scroll-mt-28">
       {/* Decorative Left Image */}
       <div className="absolute left-0 top-[20%] pointer-events-none opacity-100 w-32 md:w-48 lg:w-64 z-0">
         <img src={leafsImg.src} alt="Leaf Decoration" className="w-full h-auto object-contain -translate-x-1/4" />
