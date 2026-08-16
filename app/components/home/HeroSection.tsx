@@ -227,7 +227,7 @@ const HeroSection = () => {
 
               {/* Subtitle */}
               <div className="flex items-center gap-2 mb-3">
-                <span className="text-[#1f471b] font-serif italic font-medium text-[20px] md:text-[24px] lg:text-[28px] leading-[1.3]">
+                <span className="text-[#1f471b] font-serif font-medium text-[20px] md:text-[24px] lg:text-[28px] leading-[1.3]">
                   {slides[current].subtitle}
                 </span>
                 <Leaf className="w-5 h-5 text-[#7ca142] fill-[#7ca142]" />

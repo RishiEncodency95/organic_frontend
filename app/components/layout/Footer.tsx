@@ -119,10 +119,12 @@ const Footer = () => {
         { name: "Home", path: "/" },
         { name: "About Us", path: "/about" },
         { name: "Conference Tracks", path: "/conference" },
+        { name: "Awards", path: "/awards" },
         { name: "Speakers", path: "/speakers" },
         { name: "Agenda", path: "/agenda" },
         { name: "Registration", path: "/registration" },
         { name: "Exhibition", path: "/exhibitors" },
+        { name: "Blog", path: "/blog" },
         { name: "Contact Us", path: "/contact" }
     ];
 

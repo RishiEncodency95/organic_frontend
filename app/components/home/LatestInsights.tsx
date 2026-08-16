@@ -1,6 +1,7 @@
 "use client";
 
 import React from 'react';
+import Link from 'next/link';
 import { Leaf, Calendar, Clock, ArrowRight, ChevronLeft, ChevronRight, Play } from 'lucide-react';
 
 const articles = [
@@ -66,10 +67,10 @@ const LatestInsights = () => {
                 shaping the future of the organic and sustainable sectors.
               </p>
 
-              <button className="bg-[#3b8c2a] hover:bg-[#2d7a2d] text-white px-6 py-2 rounded-md font-semibold text-[12px] md:text-[14px] tracking-widest uppercase transition-colors flex items-center gap-2 shadow-lg shadow-green-600/20 group whitespace-nowrap min-h-[44px]">
+              <Link href="/blog" className="bg-[#3b8c2a] hover:bg-[#2d7a2d] text-white px-6 py-2 rounded-md font-semibold text-[12px] md:text-[14px] tracking-widest uppercase transition-colors flex items-center gap-2 shadow-lg shadow-green-600/20 group whitespace-nowrap min-h-[44px]">
                 View all articles
                 <ArrowRight className="w-5 h-5 transition-transform group-hover:translate-x-1" />
-              </button>
+              </Link>
             </div>
           </div>
         </div>
