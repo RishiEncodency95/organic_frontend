@@ -4,6 +4,7 @@ import introImg from "../../assets/home/homeIntro.png";
 
 import { motion, useInView, animate } from "framer-motion";
 import { useState, useEffect, useRef } from "react";
+import { SITE_CONFIG } from "@/app/constants/siteConfig";
 import {
   Stethoscope, Landmark, Leaf, Globe, Building2, GraduationCap,
   Users, Handshake, Package, Sparkles, Camera, ShieldCheck, UserCheck, Activity, Award, Briefcase
@@ -69,8 +70,8 @@ const IntroductionSection = () => {
   const sortedFeatures = [
     { _id: "1", icon: "Award", number: "10+", label: "YEARS OF LEGACY" },
     { _id: "2", icon: "Sparkles", number: "8", label: "SUCCESSFUL EDITIONS" },
-    { _id: "3", icon: "Users", number: "10,000+", label: "EXHIBITORS & BRANDS" },
-    { _id: "4", icon: "Globe", number: "80+", label: "COUNTRIES PARTICIPATED" },
+    { _id: "3", icon: "Users", number: SITE_CONFIG.stats.exhibitors, label: "EXHIBITORS & BRANDS" },
+    { _id: "4", icon: "Globe", number: SITE_CONFIG.stats.countries, label: "COUNTRIES PARTICIPATED" },
   ];
 
   return (

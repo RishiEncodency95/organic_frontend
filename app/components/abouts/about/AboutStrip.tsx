@@ -2,17 +2,18 @@
 
 import React from 'react';
 import { Users, Building2, Map, Award } from 'lucide-react';
+import { SITE_CONFIG } from '@/app/constants/siteConfig';
 
 const AboutStrip = () => {
   const items = [
     {
-      title: "500+",
+      title: SITE_CONFIG.stats.exhibitors,
       subtitle: "TOP EXHIBITORS",
       icon: Building2,
       color: "text-orange-500"
     },
     {
-      title: "25,000+",
+      title: SITE_CONFIG.stats.visitors,
       subtitle: "TRADE VISITORS",
       icon: Users,
       color: "text-[#3b8c2a]"

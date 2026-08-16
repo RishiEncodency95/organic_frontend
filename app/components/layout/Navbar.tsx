@@ -29,7 +29,6 @@ const navLinks = [
             // { label: "Support & Services", path: "/support", icon: Briefcase, description: "Explore our global network of collaborators" },
             { label: "Advisory Board Members", path: "/about/advisory_board_member", icon: Users, description: "Meet the experts behind the exhibition" },
             { label: "Blogs", path: "/blog", icon: Layout, description: "Latest news and insights from the wellness industry" },
-            { label: "Glimpses of the Event", path: "/gallery", icon: Camera, description: "Explore opportunities as a domestic or international buyer" },
         ]
     },
     {
@@ -55,6 +54,7 @@ const navLinks = [
             { label: "Partnership / Collaboration", path: "/partnership", icon: Sparkles, description: "Experience the latest in health & wellness" },
         ],
     },
+    { label: "Glimpses", path: "/gallery" },
     { label: "Conference", path: "/conference" },
     { label: "Awards", path: "/awards" },
     { label: "Contact", path: "/contact" },
@@ -94,6 +94,7 @@ const dropdownIcons: Record<string, React.ElementType> = {
 
 // Standalone links (non-dropdown)
 const standaloneLinks = [
+    { label: "Glimpses", path: "/gallery", icon: Camera },
     { label: "Conference", path: "/conference", icon: Mic },
     { label: "Awards", path: "/awards", icon: Star },
     { label: "Contact", path: "/contact", icon: Phone },
@@ -129,7 +130,7 @@ const Navbar = () => {
 
             <motion.nav
                 className={`${scrolled
-                    ? "fixed top-0 left-0 right-0 z-[100] bg-white/95 backdrop-blur-md shadow-md py-0.5 border-b border-slate-200/60"
+                    ? "fixed top-0 left-0 right-0 z-[100] bg-white shadow-md py-0.5 border-b border-slate-200"
                     : "relative z-[100] bg-white border-b border-slate-200 py-1 shadow-sm"
                     } transition-all duration-500`}
             >
@@ -149,7 +150,7 @@ const Navbar = () => {
                         </div>
 
                         <div className="flex-1 flex items-center">
-                            <div className="flex-1 flex items-center justify-center gap-1 xl:gap-2">
+                            <div className="flex-1 flex items-center justify-center gap-1 xl:gap-1.5">
                                 {navLinks.map((link) => (
                                     <div
                                         key={link.label}
@@ -159,15 +160,15 @@ const Navbar = () => {
                                     >
                                         <Link
                                             href={link.path || "#"}
-                                            style={{ fontFamily: "'Roboto', sans-serif" }}
-                                            className={`px-3 py-2 text-[12.5px] font-bold tracking-[0.05em] uppercase transition-all duration-300 flex items-center gap-1 relative group whitespace-nowrap ${pathname === link.path ? "text-[#276F27]" : "text-slate-900"
+                                            style={{ fontFamily: "'Poppins', sans-serif", fontWeight: 500 }}
+                                            className={`px-2 py-1.5 text-[11px] xl:text-[11.5px] font-medium tracking-[0.02em] uppercase transition-all duration-300 flex items-center gap-1 relative group whitespace-nowrap ${pathname === link.path ? "text-[#c2410c]" : "text-slate-900 hover:text-[#c2410c]"
                                                 }`}
                                         >
                                             {link.label}
                                             {link.dropdown && (
                                                 <ChevronDown className={`w-3 h-3 transition-transform duration-300 ${activeDropdown === link.label ? "rotate-180" : ""}`} />
                                             )}
-                                            <span className={`absolute -bottom-1 left-2 right-2 h-[2px] bg-[#276F27] transition-transform duration-300 origin-left ${pathname === link.path ? "scale-x-100" : "scale-x-0 group-hover:scale-x-100"}`} />
+                                            <span className={`absolute bottom-0 left-1.5 right-1.5 h-[2px] bg-[#276F27] transition-transform duration-300 origin-left ${pathname === link.path ? "scale-x-100" : "scale-x-0 group-hover:scale-x-100"}`} />
                                         </Link>
 
                                         {link.dropdown && (
@@ -200,7 +201,7 @@ const Navbar = () => {
                                                                             )}>
                                                                                 <item.icon className="w-3.5 h-3.5" />
                                                                             </div>
-                                                                            <div className="flex flex-col gap-0.5">
+                                                                            <div className="flex flex-col gap-0.5" style={{ fontFamily: "'Poppins', sans-serif" }}>
                                                                                 <span className={cn(
                                                                                     "text-[12px] font-semibold text-slate-800 transition-colors",
                                                                                     isEven ? "group-hover:text-[#3b8c2a]" : "group-hover:text-[#f59e0b]"
@@ -228,10 +229,14 @@ const Navbar = () => {
                                     onMouseLeave={() => setActiveDropdown(null)}
                                 >
                                     <button
-                                        className="group relative overflow-hidden border-2 px-5 py-2.5 rounded-xl font-bold text-[10px] uppercase tracking-widest transition-all duration-500 whitespace-nowrap flex-shrink-0 bg-[#60241E] hover:bg-[#4a1c17] border-white text-white flex items-center gap-1.5 shadow-md hover:shadow-lg"
+                                        style={{ fontFamily: "'Poppins', sans-serif", fontWeight: 600 }}
+                                        className="group relative inline-flex items-center justify-center gap-1 px-3.5 py-1.5 overflow-hidden rounded-lg border-2 border-[#c2410c] text-[#c2410c] font-semibold text-[9.5px] uppercase tracking-wider transition-colors duration-300 hover:text-white shadow-sm flex-shrink-0 whitespace-nowrap"
                                     >
-                                        <span className="relative z-10">Register Now</span>
-                                        <ChevronDown className={cn("w-3 h-3 transition-transform duration-500", activeDropdown === "registration" ? "rotate-180" : "")} />
+                                        <span className="absolute top-full left-full w-36 h-36 bg-[#c2410c] rounded-full transition-all duration-500 ease-in-out group-hover:-top-6 group-hover:-left-6 pointer-events-none" />
+                                        <span className="relative z-10 flex items-center gap-1">
+                                            Register Now
+                                            <ChevronDown className={cn("w-3 h-3 transition-transform duration-300", activeDropdown === "registration" ? "rotate-180" : "")} />
+                                        </span>
                                     </button>
 
                                     <AnimatePresence>
@@ -255,7 +260,6 @@ const Navbar = () => {
                                                             { to: "tel:+919654900525", icon: Phone, label: "TALK TO EXPO\nADVISOR", color: "green", click: "Registration: Expo Advisor" },
                                                         ].map((item, idx) => {
                                                             const commonProps = {
-                                                                key: item.to,
                                                                 onClick: () => setActiveDropdown(null),
                                                                 className: cn(
                                                                     "flex items-center gap-1.5 px-2 py-2 hover:bg-slate-50 text-left transition-all group relative z-20 border-b border-slate-100",
@@ -273,8 +277,8 @@ const Navbar = () => {
                                                                     )}>
                                                                         <item.icon className="w-3 h-3" />
                                                                     </div>
-                                                                    <span className={cn(
-                                                                        "text-[9px] font-semibold text-slate-800 uppercase tracking-wider transition-colors leading-tight whitespace-pre-line",
+                                                                    <span style={{ fontFamily: "'Poppins', sans-serif" }} className={cn(
+                                                                        "text-[9.5px] font-semibold text-slate-800 uppercase tracking-wider transition-colors leading-tight whitespace-pre-line",
                                                                         item.color === "orange" ? "group-hover:text-[#f59e0b]" : "group-hover:text-[#3b8c2a]"
                                                                     )}>
                                                                         {item.label}
@@ -283,9 +287,9 @@ const Navbar = () => {
                                                             );
 
                                                             return item.to.startsWith("tel:") ? (
-                                                                <a href={item.to} {...commonProps}>{Content}</a>
+                                                                <a key={item.to} href={item.to} {...commonProps}>{Content}</a>
                                                             ) : (
-                                                                <Link href={item.to} target="_blank" rel="noopener noreferrer" {...commonProps}>{Content}</Link>
+                                                                <Link key={item.to} href={item.to} target="_blank" rel="noopener noreferrer" {...commonProps}>{Content}</Link>
                                                             );
                                                         })}
                                                     </div>
@@ -509,7 +513,7 @@ const Navbar = () => {
                                                                         )}>
                                                                             <item.icon className={cn("w-3.5 h-3.5", idx % 2 === 0 ? "text-[#3b8c2a]" : "text-[#f59e0b]")} />
                                                                         </div>
-                                                                        <div className="flex-1 min-w-0">
+                                                                        <div className="flex-1 min-w-0" style={{ fontFamily: "'Poppins', sans-serif" }}>
                                                                             <div className="text-[12px] font-medium text-slate-900">{item.label}</div>
                                                                             <div className="text-[10px] text-slate-400 truncate">{item.description}</div>
                                                                         </div>
@@ -565,39 +569,36 @@ const Navbar = () => {
                             {/* Login Buttons */}
                             <div className="px-5 mt-4 mb-2">
                                 <div className="text-[9px] font-semibold text-slate-400 uppercase tracking-[0.15em] mb-3">Account</div>
-                                <div className="grid grid-cols-2 gap-2">
+                                <div className="grid grid-cols-2 gap-2.5">
                                     <Link
                                         href="/exhibitor-login"
                                         onClick={() => setMobileOpen(false)}
-                                        className="flex items-center justify-center gap-2 bg-slate-900 text-white rounded-xl py-3 text-[10px] font-semibold uppercase tracking-wider active:scale-95 transition-all"
+                                        className="uiverse-btn uiverse-btn-exhibitor uiverse-btn-mobile"
                                     >
-                                        <Lock className="w-3.5 h-3.5 text-[#f59e0b]" />
-                                        Exhibitor
+                                        Exhibitor Login
                                     </Link>
                                     <Link
                                         href="/buyer-login"
                                         onClick={() => setMobileOpen(false)}
-                                        className="flex items-center justify-center gap-2 bg-slate-900 text-white rounded-xl py-3 text-[10px] font-semibold uppercase tracking-wider active:scale-95 transition-all"
+                                        className="uiverse-btn uiverse-btn-buyer uiverse-btn-mobile"
                                     >
-                                        <Lock className="w-3.5 h-3.5 text-[#f59e0b]" />
-                                        Buyer
+                                        Buyer Login
                                     </Link>
                                     <Link
-                                        href="/conference"
+                                        href="/delegates-login"
                                         onClick={() => setMobileOpen(false)}
-                                        className="flex items-center justify-center gap-2 bg-white border border-slate-200 text-slate-800 rounded-xl py-3 text-[10px] font-semibold uppercase tracking-wider active:scale-95 transition-all"
+                                        className="uiverse-btn uiverse-btn-delegates uiverse-btn-mobile"
                                     >
-                                        Delegates
+                                        Delegates Login
                                     </Link>
                                     <a
                                         href="https://admin.organicexpo.in/login"
                                         target="_blank"
                                         rel="noopener noreferrer"
                                         onClick={() => setMobileOpen(false)}
-                                        className="flex items-center justify-center gap-1.5 bg-white border border-slate-200 text-slate-800 rounded-xl py-3 text-[10px] font-semibold uppercase tracking-wider active:scale-95 transition-all"
+                                        className="uiverse-btn uiverse-btn-user uiverse-btn-mobile"
                                     >
                                         User Login
-                                        <ExternalLink className="w-3 h-3 text-slate-400" />
                                     </a>
                                 </div>
                             </div>

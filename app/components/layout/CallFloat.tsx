@@ -1,7 +1,8 @@
 import { Phone } from "lucide-react";
+import { SITE_CONFIG } from "@/app/constants/siteConfig";
 
 const CallFloat = () => {
-    const phoneNumber = "+919876543210";
+    const phoneNumber = SITE_CONFIG.rawPhone;
 
     return (
         <>
