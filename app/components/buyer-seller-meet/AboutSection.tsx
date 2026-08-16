@@ -17,8 +17,8 @@ export default function AboutSection() {
   ];
 
   const links = [
-    { label: "Register as Buyer", icon: <User size={16} />, href: "/visitor-registration" },
-    { label: "Participate as Exhibitor", icon: <Briefcase size={16} />, href: "/book-a-stand" },
+    { label: "Register as Buyer", icon: <User size={16} />, href: "/buyer-registration" },
+    { label: "Participate as Exhibitor", icon: <Briefcase size={16} />, href: "/conference" },
     { label: "How it Works", icon: <HelpCircle size={16} />, href: "#how-it-works" },
     { label: "Who Can Participate", icon: <Users size={16} />, href: "#who-can-participate" },
     { label: "Contact Us", icon: <Phone size={16} />, href: "/contact" },
@@ -90,21 +90,33 @@ export default function AboutSection() {
             
             {/* Links List */}
             <div className="flex flex-col relative z-10">
-              {links.map((link, i) => (
-                <Link
-                  key={i}
-                  href={link.href}
-                  className={`flex items-center justify-between px-6 py-4 bg-transparent hover:bg-gray-50/80 transition-colors group ${
+              {links.map((link, i) => {
+                const commonProps = {
+                  className: `flex items-center justify-between px-6 py-4 bg-transparent hover:bg-gray-50/80 transition-colors group ${
                     i !== links.length - 1 ? "border-b border-gray-200" : ""
-                  }`}
-                >
-                  <div className="flex items-center gap-3 text-[#1b5e20] transition-colors">
-                    {link.icon}
-                    <span className="text-sm font-semibold text-black">{link.label}</span>
-                  </div>
-                  <ChevronRight size={18} className="text-[#1b5e20] group-hover:translate-x-1 transition-transform" />
-                </Link>
-              ))}
+                  }`
+                };
+                
+                const content = (
+                  <>
+                    <div className="flex items-center gap-3 text-[#1b5e20] transition-colors">
+                      {link.icon}
+                      <span className="text-sm font-semibold text-black">{link.label}</span>
+                    </div>
+                    <ChevronRight size={18} className="text-[#1b5e20] group-hover:translate-x-1 transition-transform" />
+                  </>
+                );
+
+                return link.href.startsWith("#") ? (
+                  <a key={i} href={link.href} {...commonProps}>
+                    {content}
+                  </a>
+                ) : (
+                  <Link key={i} href={link.href} {...commonProps}>
+                    {content}
+                  </Link>
+                );
+              })}
             </div>
           </div>
 

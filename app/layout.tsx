@@ -33,6 +33,11 @@ export const metadata: Metadata = {
     siteName: "Bharat Organic Expo 2027",
     type: "website",
   },
+  icons: {
+    icon: "/favicon.ico",
+    shortcut: "/favicon-16x16.png",
+    apple: "/apple-touch-icon.png",
+  },
 };
 
 const eventSchema = {

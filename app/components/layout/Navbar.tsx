@@ -50,7 +50,7 @@ const navLinks = [
         label: "Opportunities",
         dropdown: [
             { label: "Sponsorship", path: "/sponsership", icon: FileCheck, description: "Get your complimentary visitor pass today" },
-            { label: "Branding Opportunities", path: "/e-promotion-web", icon: ShoppingBag, description: "Explore opportunities as a domestic or international buyer" },
+            { label: "E-Promotion Opportunity", path: "/e-promotion-web", icon: ShoppingBag, description: "Explore opportunities as a domestic or international buyer" },
             { label: "Partnership / Collaboration", path: "/partnership", icon: Sparkles, description: "Experience the latest in health & wellness" },
         ],
     },
@@ -596,9 +596,9 @@ const Navbar = () => {
                                         target="_blank"
                                         rel="noopener noreferrer"
                                         onClick={() => setMobileOpen(false)}
-                                        className="uiverse-btn uiverse-btn-user uiverse-btn-mobile"
+                                        className="uiverse-btn uiverse-btn-user uiverse-btn-mobile text-center"
                                     >
-                                        User Login
+                                        LOGIN
                                     </a>
                                 </div>
                             </div>

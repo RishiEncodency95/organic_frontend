@@ -55,7 +55,12 @@ export default function Footer() {
     { name: "About Us", path: "/about" },
     { name: "Exhibitor Registration", path: "/registration" },
     { name: "Delegate Registration", path: "/delegate" },
-    { name: "Conference Tracks", path: "/conference" }
+    { name: "Conference Tracks", path: "/conference" },
+    { name: "Speakers", path: "/speakers" },
+    { name: "Agenda", path: "/agenda" },
+    { name: "Exhibition", path: "/exhibitors" },
+    { name: "Awards", path: "/awards" },
+    { name: "Contact Us", path: "/contact" }
   ];
 
   const subLinks = [
@@ -127,7 +132,7 @@ export default function Footer() {
 
           {/* Quick Links */}
           <div className="lg:border-r lg:border-white/10 lg:pr-8">
-            <h4 className="font-poppins font-semibold text-[#F3B71B] uppercase text-[13px] tracking-wider mb-1">
+            <h4 className="font-poppins font-semibold text-[#F3B71B] uppercase text-[13px] tracking-wider mb-1 ml-3">
               QUICK LINKS
             </h4>
             <img src={uuogImg.src} alt="divider" className="h-3.5 w-auto -mt-1.5 mb-2.5 object-contain" />
@@ -137,14 +142,6 @@ export default function Footer() {
                 <li key={i}>
                   <Link href={link.path} className="hover:text-white transition-colors flex items-center gap-1.5 group">
                     <ChevronRight size={14} className="text-[#F3B71B] group-hover:translate-x-1 transition-transform shrink-0" />
-                    {link.name}
-                  </Link>
-                </li>
-              ))}
-              {subLinks.map((link, i) => (
-                <li key={`sub-${i}`}>
-                  <Link href={link.path} className="flex items-center gap-1.5 hover:text-white transition-colors">
-                    <ChevronRight size={12} className="text-[#F3B71B]" />
                     {link.name}
                   </Link>
                 </li>
@@ -176,7 +173,7 @@ export default function Footer() {
 
           {/* Get In Touch */}
           <div className="lg:border-r lg:border-white/10 lg:pr-4">
-            <h4 className="font-poppins font-semibold text-[#F3B71B] uppercase text-[13px] tracking-wider mb-1">
+            <h4 className="font-poppins font-semibold text-[#F3B71B] uppercase text-[13px] tracking-wider mb-1 ml-3">
               GET IN TOUCH
             </h4>
             <img src={uuogImg.src} alt="divider" className="h-3.5 w-auto -mt-1.5 mb-2.5 object-contain" />
@@ -206,7 +203,7 @@ export default function Footer() {
 
           {/* Organised By & Connect */}
           <div className="flex flex-col">
-            <h4 className="font-poppins font-semibold text-[#F3B71B] uppercase text-[13px] tracking-wider mb-1">
+            <h4 className="font-poppins font-semibold text-[#F3B71B] uppercase text-[13px] tracking-wider mb-1 ml-3">
               Organised by:
             </h4>
 

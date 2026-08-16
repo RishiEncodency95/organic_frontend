@@ -42,7 +42,7 @@ export default function HowItWorks() {
   ];
 
   return (
-    <section id="how-it-works" className="pt-4 pb-4 bg-[#f9f9f9] font-inter text-center border-t border-gray-100">
+    <section id="how-it-works" className="pt-4 pb-4 bg-[#f9f9f9] font-inter text-center border-t border-gray-100 scroll-mt-28">
       <div className="container mx-auto px-4 max-w-[1400px]">
         <div className="flex items-center justify-center mb-6 w-full">
           <div className="h-[1px] bg-gray-200 flex-1"></div>

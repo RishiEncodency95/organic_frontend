@@ -38,40 +38,55 @@ const Topbar = () => {
                     </div>
 
 
-                    {/* Right Section - Login Buttons */}
                     <div className="hidden md:flex flex-shrink-0 items-center gap-2">
-                        <Link
-                            href="/exhibitor-login"
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="uiverse-btn uiverse-btn-exhibitor"
-                        >
-                            Exhibitor Login
-                        </Link>
-                        <Link
-                            href="/buyer-login"
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="uiverse-btn uiverse-btn-buyer"
-                        >
-                            Buyer Login
-                        </Link>
-                        <Link
-                            href="/delegates-login"
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="uiverse-btn uiverse-btn-delegates"
-                        >
-                            Delegates Login
-                        </Link>
-                        <a
-                            href="https://admin.organicexpo.in/login"
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="uiverse-btn uiverse-btn-user ml-1"
-                        >
-                            User Login
-                        </a>
+                        <div className="relative group">
+                            <a
+                                href="https://admin.organicexpo.in/login"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="uiverse-btn uiverse-btn-user ml-1 flex items-center gap-1.5 cursor-pointer"
+                            >
+                                LOGIN <span className="text-[8px]">▼</span>
+                            </a>
+                            
+                            {/* Hover Dropdown */}
+                            <div className="absolute right-0 top-full pt-3 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 translate-y-2 group-hover:translate-y-0 z-50">
+                                <div className="flex flex-col gap-2 p-3 bg-white rounded-xl shadow-[0_10px_40px_rgba(0,0,0,0.15)] border border-slate-100 min-w-[180px]">
+                                    <a
+                                        href="https://admin.organicexpo.in/login"
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                        className="uiverse-btn uiverse-btn-user uiverse-btn-mobile text-center"
+                                    >
+                                        User Login
+                                    </a>
+                                    <Link
+                                        href="/exhibitor-login"
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                        className="uiverse-btn uiverse-btn-exhibitor uiverse-btn-mobile text-center"
+                                    >
+                                        Exhibitor Login
+                                    </Link>
+                                    <Link
+                                        href="/buyer-login"
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                        className="uiverse-btn uiverse-btn-buyer uiverse-btn-mobile text-center"
+                                    >
+                                        Buyer Login
+                                    </Link>
+                                    <Link
+                                        href="/delegates-login"
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                        className="uiverse-btn uiverse-btn-delegates uiverse-btn-mobile text-center"
+                                    >
+                                        Delegates Login
+                                    </Link>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </motion.div>
