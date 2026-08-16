@@ -185,7 +185,7 @@ const AudienceStrip = () => {
                 className="flex items-center justify-start sm:justify-center xl:justify-start"
               >
                 <div
-                  ref={el => (itemRefs.current[i] = el)}
+                  ref={(el) => { itemRefs.current[i] = el; }}
                   className="tb-item-group flex items-center gap-2 md:gap-2.5 group cursor-default"
                   style={{ opacity: 0 }}
                 >
