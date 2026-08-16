@@ -52,7 +52,6 @@ export default function Footer() {
     <footer className="relative bg-[#0d2f17] text-white font-inter overflow-hidden border-t-4 border-[#e89c2c]">
       {/* Decorative Cream Background for Left Column (Desktop) */}
       <div className="hidden lg:block absolute top-0 left-0 bottom-0 w-[28%] bg-[#f4ebd9] rounded-r-[80px] z-0 shadow-2xl overflow-hidden">
-         <img src={leafsImg.src} alt="Leaf" className="absolute -left-10 top-1/2 -translate-y-1/2 w-40 opacity-40 rotate-[15deg]" />
          <div className="absolute -bottom-20 -left-10 w-56 h-56 border-[1px] border-[#d8c39e] rounded-full opacity-50" />
          <div className="absolute -bottom-14 -left-3 w-40 h-40 border-[1px] border-[#d8c39e] rounded-full opacity-50" />
       </div>
