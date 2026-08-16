@@ -49,9 +49,9 @@ export default function Footer() {
   ];
 
   return (
-    <footer className="relative bg-[#0d2f17] text-white font-inter overflow-hidden border-t-4 border-[#e89c2c]">
+    <footer className="relative bg-[#0d2f17] text-white font-inter overflow-hidden">
       {/* Decorative Cream Background for Left Column (Desktop) */}
-      <div className="hidden lg:block absolute top-0 left-0 bottom-0 w-[28%] bg-[#f4ebd9] rounded-r-[80px] z-0 shadow-2xl overflow-hidden">
+      <div className="hidden lg:block absolute top-0 left-0 bottom-0 w-[28%] bg-[#F1DEC4] rounded-r-[80px] z-0 shadow-2xl overflow-hidden">
          <div className="absolute -bottom-20 -left-10 w-56 h-56 border-[1px] border-[#d8c39e] rounded-full opacity-50" />
          <div className="absolute -bottom-14 -left-3 w-40 h-40 border-[1px] border-[#d8c39e] rounded-full opacity-50" />
       </div>
@@ -59,10 +59,16 @@ export default function Footer() {
       <div className="container mx-auto max-w-[1536px] relative z-10 flex flex-col lg:flex-row">
 
         {/* Column 1: Cream Area Content */}
-        <div className="w-full lg:w-[28%] bg-[#f4ebd9] lg:bg-transparent rounded-br-[80px] lg:rounded-none px-6 py-8 text-gray-900 flex flex-col items-center text-center font-inter">
-          <img src={footerLogo.src} alt="Bharat Organic Expo" className="w-48 mb-4" />
-          <p className="text-[12px] font-medium leading-relaxed max-w-sm text-gray-800">
-            A global platform uniting over <span className="font-semibold text-[#b8860b]">500+ exhibitors</span> from across the organic value chain, showcasing certified products, advanced agritech, sustainable practices, and the rich heritage of traditional wellness. Discover the future of organic living with expert-led conferences and unmatched B2B opportunities.
+        <div className="w-full lg:w-[28%] bg-[#F1DEC4] lg:bg-transparent rounded-br-[80px] lg:rounded-none px-6 py-8 text-gray-900 flex flex-col items-center text-center font-inter">
+          <img src={footerLogo.src} alt="Bharat Organic Expo" className="w-64 md:w-72 mb-4" />
+          <p className="text-[14px] font-semibold leading-relaxed max-w-md text-black">
+            A global platform uniting over <span className="font-extrabold text-[#D4AF37]">500+</span><br />
+            exhibitors from across the organic value chain,<br />
+            showcasing certified products, advanced agritech,<br />
+            sustainable practices, and the rich heritage of<br />
+            traditional wellness. Discover the future of organic living<br />
+            with expert-led conferences and unmatched<br />
+            B2B opportunities.
           </p>
         </div>
 
