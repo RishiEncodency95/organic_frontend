@@ -140,7 +140,7 @@ const Navbar = () => {
                     <div className="hidden xl:flex items-center justify-between py-0 relative h-14">
                         <div className="relative z-[150] h-full flex items-center gap-2">
                             <div className="relative h-full flex items-center min-w-[140px] xl:min-w-[180px] mr-4">
-                                <Link href="/" className="absolute top-1 xl:top-1.5 left-0 flex items-center justify-center transition-opacity hover:opacity-90 z-[200]">
+                                <Link href="/" className="absolute top-1 xl:top-1 left-0 flex items-center justify-center transition-opacity hover:opacity-90 z-[200]">
                                     <img loading="lazy" decoding="async" src={navbarLogo.src}
                                         alt="Organic Expo Logo"
                                         className="h-[80px] xl:h-[105px] w-auto object-contain drop-shadow-md"
@@ -149,8 +149,8 @@ const Navbar = () => {
                             </div>
                         </div>
 
-                        <div className="flex-1 flex items-center">
-                            <div className="flex-1 flex items-center justify-center gap-1 xl:gap-1.5">
+                        <div className=" flex items-center">
+                            <div className=" flex items-center justify-end xl:justify-center gap-1 lg:gap-4">
                                 {navLinks.map((link) => (
                                     <div
                                         key={link.label}
@@ -160,8 +160,8 @@ const Navbar = () => {
                                     >
                                         <Link
                                             href={link.path || "#"}
-                                            style={{ fontFamily: "'Poppins', sans-serif", fontWeight: 500 }}
-                                            className={`px-2 py-1.5 text-[11px] xl:text-[11.5px] font-medium tracking-[0.02em] uppercase transition-all duration-300 flex items-center gap-1 relative group whitespace-nowrap ${pathname === link.path ? "text-[#c2410c]" : "text-slate-900 hover:text-[#c2410c]"
+                                            style={{ fontFamily: "'Poppins', sans-serif" }}
+                                            className={`px-1.5 2xl:px-2.5 py-2 text-[14px] lg:text-[13.5px] font-semibold tracking-wide uppercase transition-all duration-300 flex items-center gap-1 relative group whitespace-nowrap ${pathname === link.path ? "text-[#3b8c2a]" : "text-slate-800 hover:text-[#3b8c2a]"
                                                 }`}
                                         >
                                             {link.label}
@@ -222,83 +222,7 @@ const Navbar = () => {
                                 ))}
                             </div>
 
-                            <div className="flex items-center gap-2 flex-shrink-0">
-                                <div
-                                    className="relative"
-                                    onMouseEnter={() => setActiveDropdown("registration")}
-                                    onMouseLeave={() => setActiveDropdown(null)}
-                                >
-                                    <button
-                                        style={{ fontFamily: "'Poppins', sans-serif", fontWeight: 600 }}
-                                        className="group relative inline-flex items-center justify-center gap-1 px-3.5 py-1.5 overflow-hidden rounded-lg border-2 border-[#c2410c] text-[#c2410c] font-semibold text-[9.5px] uppercase tracking-wider transition-colors duration-300 hover:text-white shadow-sm flex-shrink-0 whitespace-nowrap"
-                                    >
-                                        <span className="absolute top-full left-full w-36 h-36 bg-[#c2410c] rounded-full transition-all duration-500 ease-in-out group-hover:-top-6 group-hover:-left-6 pointer-events-none" />
-                                        <span className="relative z-10 flex items-center gap-1">
-                                            Register Now
-                                            <ChevronDown className={cn("w-3 h-3 transition-transform duration-300", activeDropdown === "registration" ? "rotate-180" : "")} />
-                                        </span>
-                                    </button>
-
-                                    <AnimatePresence>
-                                        {activeDropdown === "registration" && (
-                                            <div className="absolute top-[calc(100%-8px)] right-0 pt-4 w-[260px] z-50">
-                                                <div className="absolute top-[10px] right-10 w-4 h-4 bg-white border-t border-l border-slate-100 rotate-45 z-10" />
-                                                <motion.div
-                                                    initial={{ opacity: 0, scale: 0.9, y: 15 }}
-                                                    animate={{ opacity: 1, scale: 1, y: 0 }}
-                                                    exit={{ opacity: 0, scale: 0.9, y: 10 }}
-                                                    transition={{ type: "spring" as const, damping: 25, stiffness: 300 }}
-                                                    className="relative bg-white rounded-2xl shadow-[0_15px_45px_rgba(0,0,0,0.15)] border border-slate-100 p-1 overflow-hidden z-20"
-                                                >
-                                                    <div className="grid grid-cols-2">
-                                                        {[
-                                                            { to: "/book-a-stand", icon: Store, label: "BOOK A\nSTALL", color: "orange", click: "Registration: Book A Stall" },
-                                                            { to: "/visitor-registration", icon: UserPlus, label: "REGISTER AS\nVISITOR", color: "green", click: "Registration: Visitor Pass" },
-                                                            { to: "/conference", icon: Globe, label: "DELEGATE\nREGISTRATION", color: "orange", click: "Registration: Delegates Register" },
-                                                            { to: "/buyer-registration", icon: Users, label: "REGISTER AS\nBUYER", color: "green", click: "Registration: Buyer Register" },
-                                                            { to: "/sponsership", icon: Award, label: "SPONSORSHIP\nOPPORTUNITIES", color: "orange", click: "Registration: Sponsorship" },
-                                                            { to: "tel:+919654900525", icon: Phone, label: "TALK TO EXPO\nADVISOR", color: "green", click: "Registration: Expo Advisor" },
-                                                        ].map((item, idx) => {
-                                                            const commonProps = {
-                                                                onClick: () => setActiveDropdown(null),
-                                                                className: cn(
-                                                                    "flex items-center gap-1.5 px-2 py-2 hover:bg-slate-50 text-left transition-all group relative z-20 border-b border-slate-100",
-                                                                    idx % 2 === 0 ? "border-r" : ""
-                                                                )
-                                                            };
-
-                                                            const Content = (
-                                                                <>
-                                                                    <div className={cn(
-                                                                        "w-6 h-6 flex-shrink-0 rounded-lg flex items-center justify-center transition-all duration-300 shadow-sm",
-                                                                        item.color === "orange"
-                                                                            ? "bg-[#f59e0b]/5 text-[#f59e0b] group-hover:bg-[#f59e0b] group-hover:text-white"
-                                                                            : "bg-[#3b8c2a]/5 text-[#3b8c2a] group-hover:bg-[#3b8c2a] group-hover:text-white"
-                                                                    )}>
-                                                                        <item.icon className="w-3 h-3" />
-                                                                    </div>
-                                                                    <span style={{ fontFamily: "'Poppins', sans-serif" }} className={cn(
-                                                                        "text-[9.5px] font-semibold text-slate-800 uppercase tracking-wider transition-colors leading-tight whitespace-pre-line",
-                                                                        item.color === "orange" ? "group-hover:text-[#f59e0b]" : "group-hover:text-[#3b8c2a]"
-                                                                    )}>
-                                                                        {item.label}
-                                                                    </span>
-                                                                </>
-                                                            );
-
-                                                            return item.to.startsWith("tel:") ? (
-                                                                <a key={item.to} href={item.to} {...commonProps}>{Content}</a>
-                                                            ) : (
-                                                                <Link key={item.to} href={item.to} target="_blank" rel="noopener noreferrer" {...commonProps}>{Content}</Link>
-                                                            );
-                                                        })}
-                                                    </div>
-                                                </motion.div>
-                                            </div>
-                                        )}
-                                    </AnimatePresence>
-                                </div>
-                            </div>
+                            {/* Removed Register Now from here */}
                         </div>
                     </div>
 

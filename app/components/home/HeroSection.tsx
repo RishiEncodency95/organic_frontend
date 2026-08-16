@@ -411,7 +411,7 @@ const HeroSection = () => {
 
       <section
         ref={sectionRef}
-        className="relative w-full overflow-hidden bg-[#fcfcf0] h-[510px] sm:h-[430px] md:h-[490px] lg:h-[530px] flex items-center font-inter"
+        className="relative w-full overflow-hidden bg-[#fcfcf0] h-[68vh] md:h-[72vh] lg:h-[78vh] min-h-[400px] flex items-center font-inter"
       >
         {/* ── BACKGROUND LAYERS ── */}
         {SLIDES.map(({ id, img }) => (
@@ -467,6 +467,9 @@ const HeroSection = () => {
           }}
         />
 
+        {/* ── BACKGROUND GRADIENT (Left to Right Fade) ── */}
+        <div className="absolute inset-0 bg-gradient-to-r from-[#fcfcf0]/60 via-[#fcfcf0]/0 to-transparent z-10 pointer-events-none" />
+
         {/* ── CONTENT PANELS ── */}
         <div
           className="relative container mx-auto max-w-[1400px] px-6 h-full grid items-center justify-items-start"
@@ -484,43 +487,43 @@ const HeroSection = () => {
                 pointerEvents: cur === slide.id ? "auto" : "none",
               }}
             >
-              <div className="space-y-3 w-full max-w-2xl">
+              <div className="space-y-6 w-full max-w-2xl">
                 {/* Tagline */}
-                <div data-anim="1" className="flex items-center gap-2 mb-1">
-                  <div className="w-7 h-[2px] bg-[#c2410c]/60" />
-                  <span className="text-[#c2410c] text-[11px] md:text-[12px] font-bold tracking-[0.14em] uppercase">
+                <div data-anim="1" className="flex items-center gap-2">
+                  <div className="w-7 h-[2px] bg-[#c2410c]/80" />
+                  <span className="text-[#c2410c] text-[11px] md:text-[18px] font-bold tracking-[0.14em] uppercase">
                     {slide.tagline}
                   </span>
-                  <div className="w-7 h-[2px] bg-[#c2410c]/60" />
+                  <div className="w-7 h-[2px] bg-[#c2410c]/80" />
                 </div>
 
                 {/* Title */}
-                <h1 data-anim="2" className="leading-[1.15] font-bold uppercase pb-1">
+                <h1 data-anim="2" className="leading-[1.15] font-bold uppercase">
                   <div className="text-[#1f471b] text-[26px] md:text-[38px] lg:text-[48px] tracking-tight">
                     {slide.titlePrimary}
                   </div>
-                  <div className="text-[#7ca142] text-[26px] md:text-[38px] lg:text-[48px] tracking-tight mt-0.5">
+                  <div className="text-[#7ca142] text-[26px] md:text-[38px] lg:text-[48px] tracking-tight mt-1">
                     {slide.titleSecondary}
                   </div>
                 </h1>
 
                 {/* Subtitle */}
-                <p data-anim="3" className="text-[#1f471b] font-medium text-[17px] md:text-[20px] lg:text-[23px] leading-[1.3]">
+                <p data-anim="3" className="text-[#1f471b] font-semibold text-[17px] md:text-[20px] lg:text-[23px] leading-[1.3]">
                   {slide.subtitle}
                 </p>
 
                 {/* Description */}
-                <p data-anim="4" className="text-black font-medium text-[14px] md:text-[16px] leading-relaxed max-w-[560px] mb-2">
+                <p data-anim="4" className="text-black font-medium text-[14px] md:text-[16px] leading-relaxed max-w-[560px]">
                   {slide.description}
                 </p>
 
                 {/* Date / Location */}
-                <div data-anim="5" className="flex flex-wrap items-center gap-x-4 gap-y-2 text-[#2b5825] font-bold text-[11px] sm:text-[12px] uppercase mb-1">
+                <div data-anim="5" className="flex flex-wrap items-center gap-x-4 gap-y-2 text-[#2b5825] font-bold text-[11px] lg:text-[15px] uppercase">
                   <div className="flex items-center gap-2">
                     <CalendarDays size={16} className="shrink-0" />
                     <span>{slide.date}</span>
                   </div>
-                  <span className="hidden sm:inline opacity-40">|</span>
+                  <span className="hidden sm:inline opacity-80">|</span>
                   <div className="flex items-center gap-2">
                     <MapPin size={16} className="shrink-0" />
                     <span>{slide.location}</span>
@@ -537,7 +540,7 @@ const HeroSection = () => {
                   <div className="relative shrink-0">
                     <Link
                       href="/book-a-stand"
-                      className="group relative inline-flex items-center justify-start gap-2 px-5 py-2.5 rounded-lg font-semibold text-[11px] uppercase tracking-widest text-white transition-all active:scale-95 relative z-10 w-full sm:w-auto overflow-hidden"
+                      className="group relative inline-flex items-center justify-start gap-2 px-5 py-2.5 rounded-lg font-semibold text-[14px] uppercase tracking-widest text-white transition-all active:scale-95 relative z-10 w-full sm:w-auto overflow-hidden"
                       style={{
                         background: "linear-gradient(135deg, #ea580c, #c2410c)",
                       }}
@@ -554,7 +557,7 @@ const HeroSection = () => {
                     <Sparkle color="#3b82f6" shadow="#28396C" style={{ top: "-10px", right: "10%", animationDelay: "1s" }} />
                     <Link
                       href="/visitor-registration"
-                      className="blue-btn-hero text-white px-5 py-2.5 rounded-lg font-semibold text-[11px] uppercase tracking-widest flex items-center justify-start gap-2 transition-all active:scale-95 relative z-10 w-full sm:w-auto whitespace-nowrap"
+                      className="blue-btn-hero text-white px-5 py-2.5 rounded-lg font-semibold text-[14px] uppercase tracking-widest flex items-center justify-start gap-2 transition-all active:scale-95 relative z-10 w-full sm:w-auto whitespace-nowrap"
                     >
                       Register as Visitor <ArrowRight size={14} />
                     </Link>
@@ -574,9 +577,8 @@ const HeroSection = () => {
             <button
               key={id}
               onClick={() => goTo(id)}
-              className={`rounded-full border border-[#2b5825]/30 transition-all duration-400 ${
-                cur === id ? "w-5 h-2 bg-[#2b5825] dot-active-hero" : "w-2 h-2 bg-[#2b5825]/40 hover:bg-[#2b5825]/70"
-              }`}
+              className={`rounded-full border border-[#2b5825]/30 transition-all duration-400 ${cur === id ? "w-5 h-2 bg-[#2b5825] dot-active-hero" : "w-2 h-2 bg-[#2b5825]/40 hover:bg-[#2b5825]/70"
+                }`}
               aria-label={`Go to slide ${id + 1}`}
             />
           ))}
