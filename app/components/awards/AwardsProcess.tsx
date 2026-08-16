@@ -79,16 +79,13 @@ const AwardsProcess = () => {
                   <ArrowRight className="pointer-events-none absolute right-[-12px] top-4 h-[18px] w-[18px] text-[#3b8c2a]/50 sm:top-5" />
                 )}
                 <div className="group flex flex-col items-center text-center">
-                  <span className="relative flex h-10 w-10 items-center justify-center rounded-full bg-[#2b5825] text-white shadow-sm transition-transform duration-300 group-hover:scale-110">
-                    <Icon className="h-[18px] w-[18px]" />
-                    <span className="absolute -top-1.5 -right-1.5 flex h-4 w-4 items-center justify-center rounded-full bg-[#F2B40E] text-[8px] font-bold text-[#0b2912]">
-                      {step.num}
-                    </span>
+                  <span className="relative flex h-14 w-14 items-center justify-center rounded-full bg-[#2b5825] text-white shadow-sm transition-transform duration-300 group-hover:scale-110">
+                    <Icon className="h-7 w-7" />
                   </span>
-                  <h3 className="mt-2 text-[11px] sm:text-xs font-bold uppercase tracking-wide text-[#154726]">
+                  <h3 className="mt-2 text-base font-bold uppercase tracking-wide text-[#154726]">
                     {step.title}
                   </h3>
-                  <p className="mt-1 text-[10.5px] sm:text-[11px] leading-snug text-[#154726]/60">
+                  <p className="mt-1 text-base leading-snug text-[#154726]/60">
                     {step.desc}
                   </p>
                 </div>

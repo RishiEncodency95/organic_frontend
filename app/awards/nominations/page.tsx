@@ -21,7 +21,7 @@ export default function NominationsPage() {
       <AwardProcess />
       <section
         id="nomination-form"
-        className="container mx-auto max-w-[1400px] px-6 py-2 md:py-4 grid grid-cols-1 gap-4 lg:gap-4 lg:grid-cols-[1fr_320px]"
+        className="container mx-auto max-w-[1400px] px-6 py-2 md:py-4 grid grid-cols-1 gap-4 lg:gap-4 lg:grid-cols-[1fr_380px]"
       >
         <NominationForm onSubmitted={() => setSubmitted(true)} />
         <NominationSidebar />

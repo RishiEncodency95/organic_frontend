@@ -17,14 +17,14 @@ export default function NominationSuccess({
         <h2 className="mt-4 text-xl font-extrabold text-emerald-950">
           NOMINATION SUBMITTED!
         </h2>
-        <p className="mt-2 text-sm text-emerald-950/70 leading-relaxed">
+        <p className="mt-2 text-base text-emerald-950/70 leading-relaxed">
           Thank you for submitting your nomination for the{" "}
           <strong>Bharat Organic Excellence Awards 2027</strong>. Our jury team
           will review your application and contact you shortly.
         </p>
         <button
           onClick={onReset}
-          className="mt-6 inline-flex items-center gap-2 rounded-full bg-emerald-950 px-6 py-2.5 text-sm font-semibold text-white shadow-lg transition-all duration-300 hover:bg-emerald-900 active:scale-95"
+          className="mt-6 inline-flex items-center gap-2 rounded-full bg-emerald-950 px-6 py-2.5 text-base font-semibold text-white shadow-lg transition-all duration-300 hover:bg-emerald-900 active:scale-95"
         >
           Submit Another Nomination
         </button>

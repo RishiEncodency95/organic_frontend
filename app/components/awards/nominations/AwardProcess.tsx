@@ -56,7 +56,7 @@ export default function AwardProcess() {
       <Reveal>
         <div className="mb-6 flex items-center justify-center gap-2 text-emerald-900">
           <Sprout className="h-4 w-4 text-lime-600" />
-          <h2 className="text-[16px] md:text-[17px] font-bold tracking-widest">
+          <h2 className="text-base md:text-[17px] font-bold tracking-widest">
             THE AWARD PROCESS
           </h2>
           <Sprout className="h-4 w-4 -scale-x-100 text-lime-600" />
@@ -73,13 +73,13 @@ export default function AwardProcess() {
                   <span className="absolute left-full top-1/2 hidden h-px w-full -translate-y-1/2 border-t-2 border-dashed border-lime-600/40 sm:block" />
                 )}
               </div>
-              <p className="mt-2 text-[11px] font-bold text-amber-600">
+              <p className="mt-2 text-base font-bold text-amber-600">
                 {s.n}
               </p>
-              <p className="text-[11px] font-bold uppercase text-emerald-950">
+              <p className="text-base font-bold uppercase text-emerald-950">
                 {s.title}
               </p>
-<p className="mt-1 text-[12px] leading-snug text-emerald-950/75 md:text-[13px]">
+<p className="mt-1 text-base leading-snug text-emerald-950/75 md:text-base">
                   {s.desc}
                 </p>
             </div>

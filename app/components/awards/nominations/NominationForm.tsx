@@ -116,7 +116,7 @@ function Field({
 }) {
   return (
     <div className={span === 2 ? "sm:col-span-2" : ""}>
-      <label className="block text-[13px] font-medium text-emerald-950 mb-1">
+      <label className="block text-sm font-medium text-emerald-950 mb-1">
         {label} {required && <span className="text-amber-600">*</span>}
       </label>
       <input
@@ -124,7 +124,7 @@ function Field({
         placeholder={placeholder}
         value={value}
         onChange={(e) => onChange(e.target.value)}
-        className="w-full rounded-md border border-emerald-900/15 bg-white px-3 py-2 text-sm text-emerald-950 placeholder:text-emerald-950/70 outline-none transition-all duration-200 focus:border-amber-500 focus:ring-2 focus:ring-amber-400/30 hover:border-emerald-900/30"
+        className="w-full rounded-md border border-emerald-900/15 bg-white px-3 py-2 text-sm text-emerald-950 placeholder:text-xs placeholder:text-emerald-950/60 outline-none transition-all duration-200 focus:border-amber-500 focus:ring-2 focus:ring-amber-400/30 hover:border-emerald-900/30"
       />
     </div>
   );
@@ -147,7 +147,7 @@ function Select({
 }) {
   return (
     <div>
-      <label className="block text-[13px] font-medium text-emerald-950 mb-1">
+      <label className="block text-sm font-medium text-emerald-950 mb-1">
         {label} {required && <span className="text-amber-600">*</span>}
       </label>
       <select
@@ -171,6 +171,7 @@ function TextArea({
   placeholder,
   required = false,
   span = 1,
+  className = "",
   value,
   onChange,
 }: {
@@ -178,20 +179,21 @@ function TextArea({
   placeholder: string;
   required?: boolean;
   span?: number;
+  className?: string;
   value: string;
   onChange: (v: string) => void;
 }) {
   return (
     <div className={span === 2 ? "sm:col-span-2" : span === 4 ? "sm:col-span-2 lg:col-span-4" : ""}>
-      <label className="block text-[13px] font-medium text-emerald-950 mb-1">
+      <label className="block text-sm font-medium text-emerald-950 mb-1">
         {label} {required && <span className="text-amber-600">*</span>}
       </label>
       <textarea
-        rows={3}
+        rows={2}
         placeholder={placeholder}
         value={value}
         onChange={(e) => onChange(e.target.value)}
-        className="w-full resize-none rounded-md border border-emerald-900/15 bg-white px-3 py-2 text-sm text-emerald-950 placeholder:text-emerald-950/70 outline-none transition-all duration-200 focus:border-amber-500 focus:ring-2 focus:ring-amber-400/30 hover:border-emerald-900/30"
+        className={`w-full resize-none rounded-md border border-emerald-900/15 bg-white px-3 py-1 text-sm text-emerald-950 placeholder:text-xs placeholder:text-emerald-950/60 outline-none transition-all duration-200 focus:border-amber-500 focus:ring-2 focus:ring-amber-400/30 hover:border-emerald-900/30 ${className}`}
       />
     </div>
   );
@@ -211,15 +213,13 @@ function UploadRow({
   return (
     <div>
       <div className="mb-1">
-        <p className="text-[13px] font-medium text-emerald-950">{label}</p>
-        <p className="text-[11px] text-emerald-950/80">{subLabel}</p>
+        <p className="text-sm font-medium text-emerald-950">{label}</p>
+        <p className="text-xs text-emerald-950/70">{subLabel}</p>
       </div>
-      <label className="flex cursor-pointer items-center gap-2 rounded-md border border-dashed border-amber-500/50 bg-amber-50 px-3 py-2 text-xs text-emerald-950/70 transition-colors duration-200 hover:bg-amber-100">
-        <Upload className="h-4 w-4 shrink-0 text-amber-600" />
+      <label className="flex h-16 md:h-20 w-full cursor-pointer flex-col items-center justify-center gap-0.5 rounded-md border border-dashed border-amber-500/50 bg-amber-50 text-sm text-emerald-950/70 transition-colors duration-200 hover:bg-amber-100">
+        <Upload className="h-5 w-5 shrink-0 text-amber-600" />
         Upload File
-        <span className="truncate text-emerald-950/75">
-          {fileName || "No file chosen"}
-        </span>
+        <span className="text-xs text-emerald-950/60">{fileName || "No file chosen"}</span>
         <input
           type="file"
           className="hidden"
@@ -233,10 +233,10 @@ function UploadRow({
 function SectionBadge({ n, title }: { n: number; title: string }) {
   return (
     <div className="flex items-center gap-2 mb-3">
-      <span className="flex h-7 w-7 items-center justify-center rounded-md bg-lime-600 text-sm font-bold text-white shadow-sm shadow-lime-600/40">
+      <span className="flex h-7 w-7 items-center justify-center rounded-md bg-lime-600 text-base font-bold text-white shadow-sm shadow-lime-600/40">
         {n}
       </span>
-      <h3 className="text-[15px] md:text-[16px] font-bold tracking-wide text-emerald-950">
+      <h3 className="text-base font-bold tracking-wide text-emerald-950">
         {title}
       </h3>
     </div>
@@ -294,16 +294,16 @@ export default function NominationForm({
               <h2 className="text-[22px] md:text-[24px] font-extrabold text-emerald-950">
                 NOMINATION FORM
               </h2>
-              <p className="text-xs text-emerald-950/85">
+              <p className="text-base text-emerald-950/85">
                 Please fill in the details below to submit your nomination.
               </p>
             </div>
           </div>
           <div className="hidden items-center gap-2 sm:flex">
-            <ShieldCheck className="h-6 w-6 text-amber-500" />
+            <ShieldCheck className="h-8 w-8 text-amber-500" />
             <div className="flex flex-col leading-tight">
-              <p className="text-[11px] font-bold text-emerald-950">100%</p>
-              <p className="text-[8px] text-emerald-950/80">SECURE</p>
+              <p className="text-base font-bold text-emerald-950">100% Secure</p>
+              <p className="text-xs text-emerald-950/70">Confidential</p>
             </div>
           </div>
         </div>
@@ -434,6 +434,7 @@ export default function NominationForm({
               label="Key Achievements (Max 5 points)"
               placeholder="List your major achievements, awards, recognitions or milestones."
               required
+              className="h-24"
               value={form.keyAchievements}
               onChange={(v) => update("keyAchievements", v)}
             />
@@ -441,6 +442,7 @@ export default function NominationForm({
               label="Unique Contribution to Healthcare / Wellness"
               placeholder="What makes you unique and your contribution to the industry?"
               required
+              className="h-24"
               value={form.uniqueContribution}
               onChange={(v) => update("uniqueContribution", v)}
             />
@@ -448,12 +450,14 @@ export default function NominationForm({
               label="Impact Created"
               placeholder="Share the impact created, people served, lives touched, growth metrics, etc."
               required
+              className="h-24"
               value={form.impactCreated}
               onChange={(v) => update("impactCreated", v)}
             />
             <TextArea
               label="Innovation / Technology Used (If any)"
               placeholder="Mention any innovation, technology or research that adds value."
+              className="h-24"
               value={form.innovation}
               onChange={(v) => update("innovation", v)}
             />
@@ -462,6 +466,7 @@ export default function NominationForm({
               placeholder="Share why you believe you are the right choice for this award."
               required
               span={2}
+              className="h-24"
               value={form.whyDeserve}
               onChange={(v) => update("whyDeserve", v)}
             />
@@ -471,7 +476,7 @@ export default function NominationForm({
         {/* 5. Supporting documents */}
         <div className="mt-6">
           <SectionBadge n={5} title="SUPPORTING DOCUMENTS" />
-          <p className="mb-3 text-[11px] text-emerald-950/80">
+          <p className="mb-3 text-sm text-emerald-950/80">
             Upload supporting documents (PDF, DOC, JPG, PNG – Max size 10MB each)
           </p>
           <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
@@ -495,8 +500,8 @@ export default function NominationForm({
             />
             <div>
               <div className="mb-1">
-                <p className="text-[13px] font-medium text-emerald-950">Social Links</p>
-                <p className="text-[11px] text-emerald-950/50">Website / Social Links</p>
+                <p className="text-sm font-medium text-emerald-950">Social Links</p>
+                <p className="text-xs text-emerald-950/70">Website / Social Links</p>
               </div>
               <div className="relative">
                 <Link2 className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-amber-600" />
@@ -505,12 +510,12 @@ export default function NominationForm({
                   placeholder="https://www.example.com"
                   value={form.socialLink}
                   onChange={(e) => update("socialLink", e.target.value)}
-                  className="w-full rounded-md border border-emerald-900/15 bg-white py-2 pl-9 pr-3 text-sm text-emerald-950 placeholder:text-emerald-950/70 outline-none transition-all duration-200 focus:border-amber-500 focus:ring-2 focus:ring-amber-400/30 hover:border-emerald-900/30"
+                  className="w-full rounded-md border border-emerald-900/15 bg-white py-2 pl-9 pr-3 text-sm text-emerald-950 placeholder:text-xs placeholder:text-emerald-950/60 outline-none transition-all duration-200 focus:border-amber-500 focus:ring-2 focus:ring-amber-400/30 hover:border-emerald-900/30"
                 />
               </div>
             </div>
           </div>
-          <p className="mt-3 text-[11px] italic text-emerald-950/75">
+          <p className="mt-3 text-xs italic text-emerald-950/75">
             You can upload multiple files after submission.
           </p>
         </div>
@@ -518,7 +523,7 @@ export default function NominationForm({
         {/* 6. Declaration */}
         <div className="mt-6">
           <SectionBadge n={6} title="DECLARATION" />
-          <label className="flex items-start gap-2 rounded-md bg-emerald-50/60 p-2.5 text-[11px] text-emerald-950/95 cursor-pointer">
+          <label className="flex items-start gap-2 rounded-md bg-emerald-50/60 p-2.5 text-sm text-emerald-950/95 cursor-pointer">
             <input
               type="checkbox"
               checked={form.declaration}
@@ -532,7 +537,7 @@ export default function NominationForm({
           </label>
 
           {error && (
-            <p className="mt-3 rounded-md bg-red-50 px-3 py-2 text-xs font-semibold text-red-600">
+            <p className="mt-3 rounded-md bg-red-50 px-3 py-2 text-base font-semibold text-red-600">
               {error}
             </p>
           )}
@@ -540,12 +545,12 @@ export default function NominationForm({
           <button
             onClick={handleSubmit}
             disabled={submitting}
-            className="group mt-4 flex w-full items-center justify-center gap-2 rounded-md bg-emerald-950 py-2.5 text-sm font-bold text-white shadow-md transition-all duration-300 hover:bg-emerald-900 hover:shadow-lg active:scale-[0.98] disabled:opacity-60 disabled:cursor-not-allowed sm:w-auto sm:px-8"
+            className="group mt-4 flex w-full items-center justify-center gap-2 rounded-md bg-emerald-950 py-2.5 text-base font-bold text-white shadow-md transition-all duration-300 hover:bg-emerald-900 hover:shadow-lg active:scale-[0.98] disabled:opacity-60 disabled:cursor-not-allowed sm:w-auto sm:px-8"
           >
             <Send className="h-4 w-4 transition-transform duration-300 group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
             {submitting ? "SUBMITTING..." : "SUBMIT NOMINATION"}
           </button>
-          <p className="mt-3 text-[11px] text-emerald-950/80">
+          <p className="mt-3 text-base text-emerald-950/80">
             <ShieldCheck className="mr-1 inline h-3.5 w-3.5 text-amber-600" />
             Your information is secure and will be kept confidential.
           </p>

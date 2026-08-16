@@ -1,6 +1,7 @@
 "use client";
 
 import React from "react";
+import Image from "next/image";
 import { Trophy, Sprout, Store, Globe2, Lightbulb } from "lucide-react";
 import { Reveal } from "../shared/Reveal";
 import bgImg from "../../assets/awards/celebrating_leaders.png";
@@ -16,9 +17,11 @@ const AwardsCelebratingLeaders = () => {
   return (
     <section className="relative w-full overflow-hidden bg-[#0b2912] py-2 md:py-4">
       <div className="absolute inset-0 z-0">
-        <img
-          src={bgImg.src}
+        <Image
+          src={bgImg}
           alt="Celebrating leaders of India's organic movement"
+          fill
+          sizes="100vw"
           className="h-full w-full object-cover"
         />
         <div className="absolute inset-0 bg-gradient-to-r from-[#0b2912]/90 via-[#0b2912]/70 to-[#0b2912]/40" />
@@ -27,7 +30,7 @@ const AwardsCelebratingLeaders = () => {
       <div className="relative z-10 container mx-auto max-w-[1400px] px-6">
         <div className="max-w-xl">
           <Reveal>
-            <span className="inline-flex items-center gap-2 text-[12px] md:text-[13px] font-extrabold tracking-widest uppercase text-[#F2B40E]">
+            <span className="inline-flex items-center gap-2 text-base font-extrabold tracking-widest uppercase text-[#F2B40E]">
               <Trophy className="w-4 h-4" />
               Bharat Organic Excellence Awards 2027
             </span>
@@ -42,7 +45,7 @@ const AwardsCelebratingLeaders = () => {
           </Reveal>
 
           <Reveal delay={200}>
-            <p className="mt-4 text-[15px] md:text-[16px] leading-relaxed text-[#e6f2e6] max-w-md">
+            <p className="mt-4 text-base leading-relaxed text-[#e6f2e6] max-w-md">
               From farm to shelf, we honour the changemakers who are
               building a cleaner, healthier and more sustainable India.
             </p>
@@ -55,7 +58,7 @@ const AwardsCelebratingLeaders = () => {
                 return (
                   <span
                     key={l.label}
-                    className="inline-flex items-center gap-2 rounded-full border border-white/25 bg-white/10 px-4 py-2 text-[12px] font-semibold text-white backdrop-blur-sm transition-all duration-300 hover:bg-white/20"
+                    className="inline-flex items-center gap-2 rounded-full border border-white/25 bg-white/10 px-4 py-2 text-base font-semibold text-white backdrop-blur-sm transition-all duration-300 hover:bg-white/20"
                   >
                     <Icon className="h-3.5 w-3.5 text-[#F2B40E]" />
                     {l.label}
