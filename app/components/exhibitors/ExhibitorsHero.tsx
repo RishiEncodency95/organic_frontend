@@ -1,4 +1,4 @@
-import React, { useRef } from "react";
+import React from "react";
 import {
     Leaf,
     Users,
@@ -7,74 +7,23 @@ import {
     Store,
 } from "lucide-react";
 
-import { Reveal } from "../shared/Reveal";
 import { HERO_STATS } from "./data";
 
 import bannerLeft from "../../assets/exhibitors/banner_left.png";
 import bannerRight from "../../assets/exhibitors/banner_right.png";
 
 const ExhibitorsHero = () => {
-    const heroRef = useRef<HTMLElement>(null);
-
-    /* -------------------------------------------------------------
-       Mouse based 3D parallax
-    ------------------------------------------------------------- */
-
-    const handleMouseMove = (e: React.MouseEvent<HTMLElement>) => {
-        const hero = heroRef.current;
-
-        if (!hero) return;
-
-        const rect = hero.getBoundingClientRect();
-
-        const mouseX =
-            (e.clientX - rect.left) / rect.width - 0.5;
-
-        const mouseY =
-            (e.clientY - rect.top) / rect.height - 0.5;
-
-        hero.style.setProperty(
-            "--mouse-x",
-            mouseX.toString()
-        );
-
-        hero.style.setProperty(
-            "--mouse-y",
-            mouseY.toString()
-        );
-    };
-
-    const handleMouseLeave = () => {
-        const hero = heroRef.current;
-
-        if (!hero) return;
-
-        hero.style.setProperty("--mouse-x", "0");
-        hero.style.setProperty("--mouse-y", "0");
-    };
-
-    /* -------------------------------------------------------------
-       Stat Icons
-    ------------------------------------------------------------- */
-
-    const statIcons = [
-        Store,
-        Users,
-        Handshake,
-        Globe2,
-    ];
+    const statIcons = [Store, Users, Handshake, Globe2];
 
     return (
         <section
-            ref={heroRef}
-            onMouseMove={handleMouseMove}
-            onMouseLeave={handleMouseLeave}
             className="
+                hero-3d
                 relative
                 w-full
                 overflow-hidden
                 isolate
-                bg-[#fcfcf0]
+                bg-[#fcf7e9]
 
                 min-h-[620px]
                 sm:min-h-[500px]
@@ -82,22 +31,20 @@ const ExhibitorsHero = () => {
                 lg:min-h-[610px]
             "
         >
-
             {/* =====================================================
                 BACKGROUND
             ===================================================== */}
 
             <div
                 className="
+                    hero-bg
                     absolute
                     inset-0
                     pointer-events-none
                     overflow-hidden
                 "
             >
-
-                {/* Main green glow */}
-
+                {/* Main cream atmosphere */}
                 <div
                     className="
                         absolute
@@ -106,13 +53,12 @@ const ExhibitorsHero = () => {
                         w-[520px]
                         h-[520px]
                         rounded-full
-                        bg-[#3e9b37]/20
+                        bg-[#dcebb8]/35
                         blur-[110px]
                     "
                 />
 
-                {/* Bottom lime glow */}
-
+                {/* Bottom warm glow */}
                 <div
                     className="
                         absolute
@@ -121,13 +67,12 @@ const ExhibitorsHero = () => {
                         w-[500px]
                         h-[500px]
                         rounded-full
-                        bg-[#a8cf22]/10
+                        bg-[#d9df9c]/25
                         blur-[120px]
                     "
                 />
 
-                {/* Golden glow */}
-
+                {/* Soft golden atmosphere */}
                 <div
                     className="
                         absolute
@@ -136,39 +81,40 @@ const ExhibitorsHero = () => {
                         w-[320px]
                         h-[320px]
                         rounded-full
-                        bg-[#f2b40e]/[0.06]
+                        bg-[#e8b84b]/[0.08]
                         blur-[100px]
                     "
                 />
 
-                {/* Very subtle organic texture */}
-
+                {/* Subtle organic texture */}
                 <div
                     className="
                         absolute
                         inset-0
                         opacity-[0.035]
-                        bg-[radial-gradient(circle_at_20%_30%,white_1px,transparent_1px)]
+                        bg-[radial-gradient(circle_at_20%_30%,#154726_1px,transparent_1px)]
                         bg-[length:26px_26px]
                     "
                 />
 
-                {/* Soft right side gradient */}
-
+                {/* Right side depth gradient */}
                 <div
                     className="
                         absolute
-                    inset-y-0
-                    right-0
-                    w-[65%]
-                    bg-gradient-to-l
-                    from-[#3b8c2a]/10
-                    via-transparent
-                    to-transparent
-                "
-            />
-            </div>
+                        inset-y-0
+                        right-0
+                        w-[65%]
+                        bg-gradient-to-l
+                        from-[#dcebb8]/30
+                        via-transparent
+                        to-transparent
+                    "
+                />
 
+                {/* 3D light rings */}
+                <div className="hero-ring hero-ring-1" />
+                <div className="hero-ring hero-ring-2" />
+            </div>
 
             {/* =====================================================
                 LEFT DECORATIVE IMAGE
@@ -179,6 +125,7 @@ const ExhibitorsHero = () => {
                 alt=""
                 aria-hidden="true"
                 className="
+                    hero-side-image
                     hidden
                     md:block
 
@@ -197,13 +144,9 @@ const ExhibitorsHero = () => {
                     opacity-70
 
                     z-[1]
-
                     pointer-events-none
-
-                    animate-[sideFloat_7s_ease-in-out_infinite]
                 "
             />
-
 
             {/* =====================================================
                 MAIN CONTAINER
@@ -216,7 +159,6 @@ const ExhibitorsHero = () => {
 
                     container
                     mx-auto
-
                     max-w-[1400px]
 
                     px-6
@@ -230,7 +172,6 @@ const ExhibitorsHero = () => {
                     items-center
                 "
             >
-
                 {/* =================================================
                     LEFT CONTENT
                 ================================================= */}
@@ -249,13 +190,9 @@ const ExhibitorsHero = () => {
                         lg:py-0
                     "
                 >
+                    {/* TRUST BADGE */}
 
-                    {/* =============================================
-                        TRUST BADGE
-                    ============================================= */}
-
-                    <Reveal>
-
+                    <div className="hero-content hero-delay-1">
                         <div
                             className="
                                 inline-flex
@@ -277,7 +214,6 @@ const ExhibitorsHero = () => {
                                 shadow-[0_8px_30px_rgba(0,0,0,0.12)]
                             "
                         >
-
                             <Leaf
                                 className="
                                     w-3.5
@@ -293,7 +229,6 @@ const ExhibitorsHero = () => {
                                     md:text-[10px]
 
                                     uppercase
-
                                     tracking-[0.22em]
 
                                     font-extrabold
@@ -303,18 +238,12 @@ const ExhibitorsHero = () => {
                             >
                                 Trusted by India's Leading Brands
                             </span>
-
                         </div>
+                    </div>
 
-                    </Reveal>
+                    {/* MAIN HEADING */}
 
-
-                    {/* =============================================
-                        MAIN HEADING
-                    ============================================= */}
-
-                    <Reveal delay={100}>
-
+                    <div className="hero-content hero-delay-2">
                         <h1
                             className="
                                 max-w-[720px]
@@ -336,7 +265,6 @@ const ExhibitorsHero = () => {
                                 mb-5
                             "
                         >
-
                             <span className="text-[#154726]">
                                 150+{" "}
                             </span>
@@ -347,21 +275,15 @@ const ExhibitorsHero = () => {
 
                             <br />
 
-                            <span className="text-[#154726]">
+                            <span className="text-[#F2B40E]">
                                 Health &amp; Wellness Brands
                             </span>
-
                         </h1>
+                    </div>
 
-                    </Reveal>
+                    {/* DESCRIPTION */}
 
-
-                    {/* =============================================
-                        DESCRIPTION
-                    ============================================= */}
-
-                    <Reveal delay={180}>
-
+                    <div className="hero-content hero-delay-3">
                         <p
                             className="
                                 max-w-[620px]
@@ -382,16 +304,11 @@ const ExhibitorsHero = () => {
                             Bharat Organic Expo as the platform to showcase,
                             connect and grow.
                         </p>
+                    </div>
 
-                    </Reveal>
+                    {/* STATISTICS */}
 
-
-                    {/* =============================================
-                        STATISTICS
-                    ============================================= */}
-
-                    <Reveal delay={260}>
-
+                    <div className="hero-content hero-delay-4">
                         <div
                             className="
                                 border-t
@@ -402,7 +319,6 @@ const ExhibitorsHero = () => {
                                 max-w-[650px]
                             "
                         >
-
                             <div
                                 className="
                                     grid
@@ -414,32 +330,21 @@ const ExhibitorsHero = () => {
                                     gap-y-6
                                 "
                             >
-
                                 {HERO_STATS.map((stat, index) => {
-
                                     const Icon =
                                         statIcons[
                                             index % statIcons.length
                                         ];
 
                                     return (
-
                                         <div
                                             key={stat.label}
                                             className="
-                                                group
-
                                                 flex
                                                 flex-col
                                                 gap-2
-
-                                                transition-all
-                                                duration-500
-
-                                                hover:-translate-y-1
                                             "
                                         >
-
                                             {/* Icon */}
 
                                             <div
@@ -455,15 +360,8 @@ const ExhibitorsHero = () => {
                                                     justify-center
 
                                                     text-[#3b8c2a]
-
-                                                    transition-all
-                                                    duration-500
-
-                                                    group-hover:scale-110
-                                                    group-hover:rotate-[-5deg]
                                                 "
                                             >
-
                                                 <Icon
                                                     className="
                                                         w-7
@@ -474,9 +372,7 @@ const ExhibitorsHero = () => {
                                                     "
                                                     strokeWidth={1.7}
                                                 />
-
                                             </div>
-
 
                                             {/* Number */}
 
@@ -489,12 +385,11 @@ const ExhibitorsHero = () => {
 
                                                     leading-none
 
-text-[#154726]
-                                            "
-                                        >
-                                            {stat.value}
-                                        </div>
-
+                                                    text-[#154726]
+                                                "
+                                            >
+                                                {stat.value}
+                                            </div>
 
                                             {/* Label */}
 
@@ -516,20 +411,13 @@ text-[#154726]
                                             >
                                                 {stat.label}
                                             </div>
-
                                         </div>
-
                                     );
                                 })}
-
                             </div>
-
                         </div>
-
-                    </Reveal>
-
+                    </div>
                 </div>
-
 
                 {/* =================================================
                     RIGHT SIDE 3D IMAGE
@@ -564,10 +452,7 @@ text-[#154726]
                         perspective: "1400px",
                     }}
                 >
-
-                    {/* =============================================
-                        IMAGE GLOW
-                    ============================================= */}
+                    {/* IMAGE GLOW */}
 
                     <div
                         className="
@@ -587,13 +472,12 @@ text-[#154726]
                         "
                     />
 
-
-                    {/* =============================================
-                        3D IMAGE WRAPPER
-                    ============================================= */}
+                    {/* 3D IMAGE */}
 
                     <div
                         className="
+                            hero-image-wrapper
+
                             absolute
                             inset-0
 
@@ -601,31 +485,13 @@ text-[#154726]
                             items-center
                             justify-end
                         "
-                        style={{
-                            transform: `
-                                translate3d(
-                                    calc(var(--mouse-x, 0) * 12px),
-                                    calc(var(--mouse-y, 0) * 10px),
-                                    0
-                                )
-
-                                rotateY(
-                                    calc(var(--mouse-x, 0) * -4deg)
-                                )
-
-                                rotateX(
-                                    calc(var(--mouse-y, 0) * 2deg)
-                                )
-                            `,
-                            transition:
-                                "transform 0.25s cubic-bezier(.2,.8,.2,1)",
-                        }}
                     >
-
                         <img
                             src={bannerRight.src}
                             alt="Bharat Organic Expo exhibitors"
                             className="
+                                hero-main-image
+
                                 relative
 
                                 w-full
@@ -635,80 +501,24 @@ text-[#154726]
 
                                 origin-center
 
-                                drop-shadow-[-25px_30px_50px_rgba(0,0,0,0.30)]
-
-                                animate-[heroFloat_7s_ease-in-out_infinite]
+                                drop-shadow-[-25px_30px_50px_rgba(0,0,0,0.25)]
                             "
                         />
-
                     </div>
-
                 </div>
 
-
                 {/* =================================================
-                    SMALL GOLD PARTICLES
+                    3D PARTICLES
                 ================================================= */}
 
-                <div
-                    className="
-                        absolute
-                        right-[38%]
-                        top-[25%]
+                <div className="hero-particle hero-particle-1" />
 
-                        w-2
-                        h-2
+                <div className="hero-particle hero-particle-2" />
 
-                        rounded-full
+                <div className="hero-particle hero-particle-3" />
 
-                        bg-[#f2b40e]
-
-                        shadow-[0_0_15px_rgba(242,180,14,0.8)]
-
-                        animate-[particleOne_4s_ease-in-out_infinite]
-                    "
-                />
-
-                <div
-                    className="
-                        absolute
-                        right-[31%]
-                        top-[38%]
-
-                        w-1.5
-                        h-1.5
-
-                        rounded-full
-
-                        bg-[#d7ed58]
-
-                        shadow-[0_0_12px_rgba(215,237,88,0.8)]
-
-                        animate-[particleTwo_5s_ease-in-out_infinite]
-                    "
-                />
-
-                <div
-                    className="
-                        absolute
-                        right-[45%]
-                        bottom-[28%]
-
-                        w-1.5
-                        h-1.5
-
-                        rounded-full
-
-                        bg-[#f2b40e]
-
-                        shadow-[0_0_12px_rgba(242,180,14,0.8)]
-
-                        animate-[particleThree_6s_ease-in-out_infinite]
-                    "
-                />
-
+                <div className="hero-particle hero-particle-4" />
             </div>
-
 
             {/* =====================================================
                 BOTTOM FADE
@@ -725,7 +535,7 @@ text-[#154726]
                     h-20
 
                     bg-gradient-to-t
-                    from-[#fcfcf0]/80
+                    from-[#fcf7e9]/90
                     to-transparent
 
                     pointer-events-none
@@ -734,148 +544,419 @@ text-[#154726]
                 "
             />
 
-
             {/* =====================================================
-                ANIMATIONS
+                ANIMATION CSS
             ===================================================== */}
 
             <style>{`
+                /* =====================================================
+                   MAIN HERO ENTRANCE
+                ===================================================== */
 
-                /* -----------------------------------------------
-                   Main exhibition image floating animation
-                ----------------------------------------------- */
+                .hero-3d {
+                    perspective: 1600px;
+                }
 
-                @keyframes heroFloat {
+                /*
+                 * Background enters first.
+                 * Slight scale creates cinematic camera movement.
+                 */
 
-                    0%,
+                .hero-bg {
+                    animation:
+                        heroBackgroundIn
+                        1.5s
+                        cubic-bezier(.16,1,.3,1)
+                        both;
+                }
+
+                @keyframes heroBackgroundIn {
+                    0% {
+                        opacity: 0;
+                        transform:
+                            scale(1.12)
+                            translateZ(-100px);
+                    }
+
+                    100% {
+                        opacity: 1;
+                        transform:
+                            scale(1)
+                            translateZ(0);
+                    }
+                }
+
+
+                /* =====================================================
+                   LEFT DECORATIVE IMAGE
+                ===================================================== */
+
+                .hero-side-image {
+                    animation:
+                        sideImageIn
+                        1.35s
+                        cubic-bezier(.16,1,.3,1)
+                        .12s
+                        both;
+                }
+
+                @keyframes sideImageIn {
+                    0% {
+                        opacity: 0;
+                        transform:
+                            translate3d(-45px, 35px, -180px)
+                            rotateY(18deg)
+                            scale(.86);
+                        filter: blur(7px);
+                    }
+
+                    65% {
+                        opacity: .72;
+                    }
+
+                    100% {
+                        opacity: .7;
+                        transform:
+                            translate3d(0,0,0)
+                            rotateY(0deg)
+                            scale(1);
+                        filter: blur(0);
+                    }
+                }
+
+
+                /* =====================================================
+                   CONTENT ENTRANCE
+                ===================================================== */
+
+                .hero-content {
+                    opacity: 0;
+                    transform:
+                        translate3d(0, 35px, -80px)
+                        rotateX(8deg)
+                        scale(.97);
+
+                    transform-origin: center bottom;
+
+                    animation:
+                        contentReveal
+                        .9s
+                        cubic-bezier(.16,1,.3,1)
+                        forwards;
+                }
+
+                .hero-delay-1 {
+                    animation-delay: .15s;
+                }
+
+                .hero-delay-2 {
+                    animation-delay: .27s;
+                }
+
+                .hero-delay-3 {
+                    animation-delay: .39s;
+                }
+
+                .hero-delay-4 {
+                    animation-delay: .51s;
+                }
+
+                @keyframes contentReveal {
+                    0% {
+                        opacity: 0;
+                        transform:
+                            translate3d(0, 35px, -80px)
+                            rotateX(8deg)
+                            scale(.97);
+                        filter: blur(5px);
+                    }
+
+                    60% {
+                        opacity: 1;
+                    }
+
+                    100% {
+                        opacity: 1;
+                        transform:
+                            translate3d(0,0,0)
+                            rotateX(0deg)
+                            scale(1);
+                        filter: blur(0);
+                    }
+                }
+
+
+                /* =====================================================
+                   MAIN 3D IMAGE
+                ===================================================== */
+
+                .hero-image-wrapper {
+                    transform-style: preserve-3d;
+
+                    animation:
+                        heroImageIn
+                        1.65s
+                        cubic-bezier(.16,1,.3,1)
+                        .05s
+                        both;
+                }
+
+                .hero-main-image {
+                    transform-style: preserve-3d;
+
+                    animation:
+                        imageSettle
+                        1.65s
+                        cubic-bezier(.16,1,.3,1)
+                        .05s
+                        both;
+                }
+
+                @keyframes heroImageIn {
+                    0% {
+                        opacity: 0;
+                        transform:
+                            translate3d(90px, 20px, -350px)
+                            rotateY(-12deg)
+                            rotateX(5deg)
+                            scale(.78);
+                        filter: blur(12px);
+                    }
+
+                    55% {
+                        opacity: 1;
+                        filter: blur(2px);
+                    }
+
+                    100% {
+                        opacity: 1;
+                        transform:
+                            translate3d(0,0,0)
+                            rotateY(0deg)
+                            rotateX(0deg)
+                            scale(1);
+                        filter: blur(0);
+                    }
+                }
+
+                @keyframes imageSettle {
+                    0% {
+                        transform:
+                            translateZ(-80px)
+                            rotateZ(-1deg);
+                    }
+
+                    70% {
+                        transform:
+                            translateZ(20px)
+                            rotateZ(.25deg);
+                    }
+
                     100% {
                         transform:
-                            translate3d(0, 0, 0)
+                            translateZ(0)
                             rotateZ(0deg);
                     }
+                }
 
-                    50% {
+
+                /* =====================================================
+                   3D RINGS / ATMOSPHERE
+                ===================================================== */
+
+                .hero-ring {
+                    position: absolute;
+                    border: 1px solid rgba(59, 140, 42, .08);
+                    border-radius: 9999px;
+                    pointer-events: none;
+
+                    animation:
+                        ringReveal
+                        1.8s
+                        cubic-bezier(.16,1,.3,1)
+                        both;
+                }
+
+                .hero-ring-1 {
+                    width: 420px;
+                    height: 420px;
+                    right: 8%;
+                    top: 8%;
+                    transform: rotateX(65deg);
+                }
+
+                .hero-ring-2 {
+                    width: 620px;
+                    height: 620px;
+                    right: -5%;
+                    top: -10%;
+                    border-color: rgba(168, 207, 34, .06);
+                    transform: rotateX(65deg);
+                    animation-delay: .15s;
+                }
+
+                @keyframes ringReveal {
+                    0% {
+                        opacity: 0;
                         transform:
-                            translate3d(0, -10px, 0)
-                            rotateZ(0.25deg);
+                            rotateX(65deg)
+                            scale(.65)
+                            translateZ(-250px);
                     }
-                }
 
-
-                /* -----------------------------------------------
-                   Side decorative image
-                ----------------------------------------------- */
-
-                @keyframes sideFloat {
-
-                    0%,
                     100% {
+                        opacity: 1;
                         transform:
-                            translateX(0);
+                            rotateX(65deg)
+                            scale(1)
+                            translateZ(0);
                     }
+                }
 
-                    50% {
+
+                /* =====================================================
+                   PARTICLES
+                   One-time entrance only — no infinite animation
+                ===================================================== */
+
+                .hero-particle {
+                    position: absolute;
+                    border-radius: 9999px;
+                    pointer-events: none;
+                    opacity: 0;
+
+                    animation:
+                        particleEntrance
+                        1.5s
+                        cubic-bezier(.16,1,.3,1)
+                        forwards;
+                }
+
+                .hero-particle-1 {
+                    right: 38%;
+                    top: 25%;
+                    width: 8px;
+                    height: 8px;
+                    background: #f2b40e;
+                    box-shadow:
+                        0 0 18px
+                        rgba(242,180,14,.55);
+                    animation-delay: .25s;
+                }
+
+                .hero-particle-2 {
+                    right: 31%;
+                    top: 38%;
+                    width: 6px;
+                    height: 6px;
+                    background: #a8cf22;
+                    box-shadow:
+                        0 0 15px
+                        rgba(168,207,34,.55);
+                    animation-delay: .4s;
+                }
+
+                .hero-particle-3 {
+                    right: 45%;
+                    bottom: 28%;
+                    width: 6px;
+                    height: 6px;
+                    background: #e2b43d;
+                    box-shadow:
+                        0 0 15px
+                        rgba(226,180,61,.55);
+                    animation-delay: .55s;
+                }
+
+                .hero-particle-4 {
+                    right: 25%;
+                    top: 20%;
+                    width: 4px;
+                    height: 4px;
+                    background: #3b8c2a;
+                    animation-delay: .7s;
+                }
+
+                @keyframes particleEntrance {
+                    0% {
+                        opacity: 0;
                         transform:
-                            translateX(7px)
-                            translateY(10px);
+                            translate3d(
+                                0,
+                                35px,
+                                -180px
+                            )
+                            scale(.2);
+                        filter: blur(5px);
                     }
-                }
 
+                    60% {
+                        opacity: .85;
+                    }
 
-                /* -----------------------------------------------
-                   Floating leaves
-                ----------------------------------------------- */
-
-                /* -----------------------------------------------
-                   Floating particles
-                ----------------------------------------------- */
-
-                @keyframes particleOne {
-
-                    0%,
                     100% {
-                        opacity: 0.3;
-                        transform: translate(0, 0) scale(1);
-                    }
-
-                    50% {
-                        opacity: 1;
-                        transform: translate(10px, -18px) scale(1.5);
-                    }
-                }
-
-
-                @keyframes particleTwo {
-
-                    0%,
-                    100% {
-                        opacity: 0.2;
-                        transform: translate(0, 0);
-                    }
-
-                    50% {
-                        opacity: 1;
-                        transform: translate(-12px, 12px);
+                        opacity: .55;
+                        transform:
+                            translate3d(
+                                0,
+                                0,
+                                0
+                            )
+                            scale(1);
+                        filter: blur(0);
                     }
                 }
 
 
-                @keyframes particleThree {
-
-                    0%,
-                    100% {
-                        opacity: 0.25;
-                        transform: translate(0, 0) scale(1);
-                    }
-
-                    50% {
-                        opacity: 1;
-                        transform: translate(15px, -10px) scale(1.4);
-                    }
-                }
-
-
-                /* -----------------------------------------------
-                   Accessibility
-                ----------------------------------------------- */
+                /* =====================================================
+                   ACCESSIBILITY
+                ===================================================== */
 
                 @media (prefers-reduced-motion: reduce) {
-
-                    *,
-                    *::before,
-                    *::after {
-                        animation-duration: 0.01ms !important;
-                        animation-iteration-count: 1 !important;
-                        transition-duration: 0.01ms !important;
+                    .hero-bg,
+                    .hero-side-image,
+                    .hero-content,
+                    .hero-image-wrapper,
+                    .hero-main-image,
+                    .hero-ring,
+                    .hero-particle {
+                        animation: none !important;
+                        opacity: 1 !important;
+                        transform: none !important;
+                        filter: none !important;
                     }
                 }
 
 
-                /* -----------------------------------------------
-                   Tablet
-                ----------------------------------------------- */
+                /* =====================================================
+                   TABLET
+                ===================================================== */
 
                 @media (max-width: 1023px) {
-
                     section img[alt="Bharat Organic Expo exhibitors"] {
-                        opacity: 0.42;
+                        opacity: .42;
                     }
                 }
 
 
-                /* -----------------------------------------------
-                   Mobile
-                ----------------------------------------------- */
+                /* =====================================================
+                   MOBILE
+                ===================================================== */
 
                 @media (max-width: 767px) {
-
                     section img[alt="Bharat Organic Expo exhibitors"] {
-                        opacity: 0.16;
+                        opacity: .16;
+                    }
+
+                    .hero-ring {
+                        display: none;
+                    }
+
+                    .hero-particle {
+                        display: none;
                     }
                 }
-
             `}</style>
-
         </section>
     );
 };

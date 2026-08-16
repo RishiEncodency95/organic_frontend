@@ -24,7 +24,7 @@ const AwardsCelebratingLeaders = () => {
         <div className="absolute inset-0 bg-gradient-to-r from-[#0b2912]/90 via-[#0b2912]/70 to-[#0b2912]/40" />
       </div>
 
-      <div className="relative z-10 container mx-auto max-w-[1400px] px-6 py-10 md:py-14">
+      <div className="relative z-10 container mx-auto max-w-[1400px] px-6">
         <div className="max-w-xl">
           <Reveal>
             <span className="inline-flex items-center gap-2 text-[12px] md:text-[13px] font-extrabold tracking-widest uppercase text-[#F2B40E]">

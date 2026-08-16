@@ -76,7 +76,7 @@ export default function RootLayout({
     <html
       lang="en"
       suppressHydrationWarning
-      className={`${poppins.variable} ${inter.variable} h-full antialiased overflow-x-hidden`}
+      className={`${poppins.variable} ${inter.variable} h-full antialiased overflow-x-clip`}
     >
       <head>
         <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -90,10 +90,10 @@ export default function RootLayout({
           dangerouslySetInnerHTML={{ __html: JSON.stringify(orgSchema) }}
         />
       </head>
-      <body suppressHydrationWarning className="min-h-full flex flex-col font-inter text-[16px] md:text-[18px] leading-[1.6] overflow-x-hidden w-full">
+      <body suppressHydrationWarning className="min-h-full flex flex-col font-inter text-[16px] md:text-[18px] leading-[1.6] overflow-x-clip w-full">
         <Topbar />
         <Navbar />
-        <main className="flex-grow overflow-x-hidden w-full">
+        <main className="flex-grow overflow-x-clip w-full">
           {children}
         </main>
         <Footer />
