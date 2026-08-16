@@ -19,7 +19,7 @@ export const metadata: Metadata = {
 
 const BlogPage = () => {
     return (
-        <div className="min-h-screen bg-white font-sans text-neutral-800 overflow-x-hidden">
+        <div className="min-h-screen bg-white font-sans text-neutral-800 overflow-x-clip">
             <BlogHero />
 
 <main className="container mx-auto max-w-[1400px] px-6 py-2 md:py-4 grid lg:grid-cols-[1fr_320px] gap-10 lg:gap-12">

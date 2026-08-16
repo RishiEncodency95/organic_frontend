@@ -42,7 +42,7 @@ const ExhibitorsPage = async () => {
     const exhibitors = await getExhibitors();
 
     return (
-        <div className="min-h-screen bg-white font-sans text-neutral-800 overflow-x-hidden">
+        <div className="min-h-screen bg-white font-sans text-neutral-800 overflow-x-clip">
             <ExhibitorsSection exhibitors={exhibitors} />
         </div>
     );

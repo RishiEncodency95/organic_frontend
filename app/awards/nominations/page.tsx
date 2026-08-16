@@ -214,7 +214,7 @@ function TextArea({
   onChange: (v: string) => void;
 }) {
   return (
-    <div className={span === 2 ? "sm:col-span-2" : ""}>
+    <div className={span === 2 ? "sm:col-span-2" : span === 4 ? "sm:col-span-2 lg:col-span-4" : ""}>
       <label className="block text-[13px] font-medium text-emerald-950 mb-1">
         {label} {required && <span className="text-amber-600">*</span>}
       </label>
@@ -430,7 +430,7 @@ export default function BharatOrganicAwards() {
   }
 
   return (
-    <div className="w-full min-h-screen overflow-x-hidden bg-[#f7f5ec] font-sans">
+    <div className="w-full min-h-screen overflow-x-clip bg-[#f7f5ec] font-sans">
       {/* ================= HERO ================= */}
       <section className="relative flex w-full items-center overflow-hidden bg-[#f7f5ec]">
         {/* full-width background image */}
@@ -645,22 +645,24 @@ export default function BharatOrganicAwards() {
             {/* 2. Award category */}
             <div className="mt-6">
               <SectionBadge n={2} title="AWARD CATEGORY" />
-              <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
-                <Select
-                  label="Select Award Category"
-                  placeholder="-- Select Award Category --"
-                  required
-                  options={AWARD_CATEGORIES}
-                  value={form.awardCategory}
-                  onChange={(v) => update("awardCategory", v)}
-                />
+              <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
+                <div className="lg:col-span-2">
+                  <Select
+                    label="Select Award Category"
+                    placeholder="-- Select Award Category --"
+                    required
+                    options={AWARD_CATEGORIES}
+                    value={form.awardCategory}
+                    onChange={(v) => update("awardCategory", v)}
+                  />
+                </div>
               </div>
             </div>
 
             {/* 3. Profile details */}
             <div className="mt-6">
               <SectionBadge n={3} title="PROFILE DETAILS" />
-              <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+              <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
                 <TextArea
                   label="Brief Profile (150 – 200 words)"
                   placeholder="Tell us about yourself / your organization and your core purpose."
@@ -688,7 +690,7 @@ export default function BharatOrganicAwards() {
                   label="Key Services / Products Offered"
                   placeholder="Write about the key services or products you offer."
                   required
-                  span={2}
+                  span={4}
                   value={form.keyServices}
                   onChange={(v) => update("keyServices", v)}
                 />
@@ -698,7 +700,7 @@ export default function BharatOrganicAwards() {
             {/* 4. Achievements & impact */}
             <div className="mt-6">
               <SectionBadge n={4} title="ACHIEVEMENTS & IMPACT" />
-              <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+              <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
                 <TextArea
                   label="Key Achievements (Max 5 points)"
                   placeholder="List your major achievements, awards, recognitions or milestones."
