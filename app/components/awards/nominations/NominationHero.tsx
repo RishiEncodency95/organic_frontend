@@ -2,7 +2,7 @@
 
 import React, { useEffect, useState } from "react";
 import Image from "next/image";
-import { Award, ArrowRight, Calendar, Leaf, MapPin, Medal } from "lucide-react";
+import { ArrowRight, Leaf } from "lucide-react";
 import nominationBg from "../../../assets/awards/nomination.webp";
 
 export default function NominationHero() {
@@ -39,21 +39,22 @@ export default function NominationHero() {
               : "opacity-0 [transform:perspective(1200px)_translateZ(-140px)_rotateY(-10deg)_rotateX(4deg)]"
           }`}
         >
+          <p className="mb-4 text-lg font-semibold italic text-lime-600 lg:text-xl">
+            Nominate Now
+          </p>
           <h1 className="text-[42px] font-black uppercase leading-[1.05] tracking-tight text-[#0b2912] sm:text-[52px] md:text-[62px] lg:text-[72px]">
-            <span className="text-[26px] sm:text-[34px] md:text-[42px] lg:text-[50px]">Bharat Organic</span>
+            <span className="text-[26px] font-bold sm:text-[34px] md:text-[42px] lg:text-[50px]">Bharat Organic</span>
             <br />
             Excellence
             <br />
             <span className="text-[#F2B40E]">Awards 2027</span>
           </h1>
 
-          <p className="mt-5 flex flex-wrap items-center gap-x-3 gap-y-1 text-base font-bold uppercase tracking-wider text-[#0b2912] sm:text-base">
-            <span>Celebrating Excellence</span>
-            <span className="h-2 w-2 rounded-full bg-[#F2B40E]" />
-            <span>Innovation</span>
-            <span className="h-2 w-2 rounded-full bg-[#F2B40E]" />
-            <span>Sustainability</span>
-          </p>
+          <div className="mt-6 border-t border-lime-600/70 pt-3">
+            <p className="text-base font-bold uppercase tracking-wider text-lime-600">
+              Recognising Excellence. Honouring Impact.
+            </p>
+          </div>
 
           <div className="mt-8 flex flex-wrap items-center gap-4">
             <button
@@ -61,42 +62,13 @@ export default function NominationHero() {
                 const formSection = document.getElementById("nomination-form");
                 if (formSection) formSection.scrollIntoView({ behavior: "smooth", block: "start" });
               }}
-              className="group inline-flex items-center gap-2.5 rounded-lg bg-[#0b2912] px-6 py-3 text-base font-bold uppercase tracking-wider text-white shadow-lg ring-1 ring-white/20 transition-all duration-300 hover:-translate-y-0.5 hover:bg-[#123d1c] hover:shadow-xl"
+              className="group inline-flex items-center gap-2.5 rounded-lg bg-[#0b2912] px-5 py-3 text-base font-bold uppercase tracking-wider text-white shadow-lg ring-1 ring-white/20 transition-all duration-300 hover:-translate-y-0.5 hover:bg-[#123d1c] hover:shadow-xl"
             >
-              <Award className="h-4 w-4 text-[#F2B40E]" />
-              Submit Nomination
-              <ArrowRight className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" />
+              Nominate Now
+              <span className="flex h-8 w-8 items-center justify-center rounded-full bg-gray-400/40 transition-all duration-300 group-hover:ring-2 group-hover:ring-[#F2B40E]">
+                <ArrowRight className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-0.5" />
+              </span>
             </button>
-            <a
-              href="/awards"
-              className="group inline-flex items-center gap-2.5 rounded-lg border-2 border-[#0b2912] bg-white px-6 py-2.5 text-base font-bold uppercase tracking-wider text-[#0b2912] shadow-lg transition-all duration-300 hover:-translate-y-0.5 hover:bg-[#f0f7f0] hover:shadow-xl"
-            >
-              <Medal className="h-4 w-4 text-[#0b2912]" />
-              View Categories
-              <ArrowRight className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" />
-            </a>
-          </div>
-
-          <div className="mt-8 flex flex-wrap items-center gap-x-5 gap-y-4 text-base font-medium text-[#0b2912] sm:gap-x-8">
-            <span className="flex items-center gap-3">
-              <span className="flex h-11 w-11 items-center justify-center rounded-full border-2 border-[#0b2912] bg-white">
-                <Calendar className="h-5 w-5 text-[#F2B40E]" />
-              </span>
-              <span className="flex flex-col leading-tight">
-                <span className="text-lg font-bold">31 December 2026</span>
-                <span className="uppercase tracking-wider">Nominations Close</span>
-              </span>
-            </span>
-            <span className="hidden h-10 w-px bg-[#0b2912]/20 sm:block" />
-            <span className="flex items-center gap-3">
-              <span className="flex h-11 w-11 items-center justify-center rounded-full border-2 border-[#0b2912] bg-white">
-                <MapPin className="h-5 w-5 text-[#F2B40E]" />
-              </span>
-              <span className="flex flex-col leading-tight">
-                <span className="text-lg font-bold">19 – 21 February 2027</span>
-                <span className="uppercase tracking-wider">Awards Ceremony</span>
-              </span>
-            </span>
           </div>
         </div>
       </div>

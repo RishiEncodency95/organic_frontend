@@ -64,7 +64,7 @@ export default function BottomStrip() {
           src={RightImage}
           alt=""
           aria-hidden="true"
-          className="pointer-events-none absolute bottom-0 left-0 z-0 h-20 w-36 -scale-x-100 object-cover opacity-15 lg:h-28 lg:w-48"
+          className="pointer-events-none absolute bottom-0 left-0 z-0 h-20 w-36 -scale-x-100 object-cover opacity-30 lg:h-28 lg:w-48"
         />
         <Image
           ref={rightLeafRef}

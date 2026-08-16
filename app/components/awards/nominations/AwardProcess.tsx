@@ -63,14 +63,14 @@ export default function AwardProcess() {
         </div>
       </Reveal>
 
-      <div className="grid grid-cols-3 gap-x-2 gap-y-6 sm:grid-cols-6 sm:gap-x-1">
+      <div className="grid grid-cols-3 gap-x-6 gap-y-10 sm:grid-cols-6 sm:gap-x-6">
         {processSteps.map((s, i) => (
           <Reveal key={s.n} delay={i * 100}>
             <div className="group flex flex-col items-center text-center">
-              <div className="relative flex h-14 w-14 items-center justify-center rounded-full border-2 border-lime-600/40 bg-lime-50 transition-all duration-300 group-hover:border-lime-600 group-hover:bg-lime-100 group-hover:shadow-lg group-hover:shadow-lime-600/20 group-hover:-translate-y-1">
+              <div className="relative flex h-14 w-14 items-center justify-center rounded-full border-2 border-transparent bg-gray-200 transition-all duration-300 group-hover:border-lime-600 group-hover:bg-gray-100 group-hover:shadow-lg group-hover:shadow-lime-600/20 group-hover:-translate-y-1">
                 <s.Icon className="h-6 w-6 text-emerald-800 transition-transform duration-300 group-hover:scale-110" />
                 {i < processSteps.length - 1 && (
-                  <span className="absolute left-full top-1/2 hidden h-px w-full -translate-y-1/2 border-t-2 border-dashed border-lime-600/40 sm:block" />
+                  <span className="absolute left-full top-1/2 hidden h-px w-[calc(100%+1.5rem)] -translate-y-1/2 border-t-2 border-dashed border-lime-600/40 sm:block" />
                 )}
               </div>
               <p className="mt-2 text-base font-bold text-amber-600">

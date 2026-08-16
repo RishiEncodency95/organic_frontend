@@ -288,8 +288,8 @@ export default function NominationForm({
     <div className="min-w-0">
       <Reveal className="rounded-2xl border border-emerald-900/10 bg-white p-5 shadow-sm">
         <div className="mb-4 flex items-center justify-between">
-          <div className="flex items-center gap-2">
-            <ClipboardList className="h-5 w-5 text-emerald-800" />
+          <div className="flex items-center gap-4">
+            <ClipboardList className="h-10 w-10 shrink-0 text-emerald-800" />
             <div>
               <h2 className="text-[22px] md:text-[24px] font-extrabold text-emerald-950">
                 NOMINATION FORM
