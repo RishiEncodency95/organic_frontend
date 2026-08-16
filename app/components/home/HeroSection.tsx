@@ -1,25 +1,31 @@
 "use client";
+import React, { useState, useEffect, useRef, useCallback } from "react";
+import Link from "next/link";
+import { CalendarDays, MapPin, ChevronLeft, ChevronRight, ArrowRight } from "lucide-react";
+import gsap from "gsap";
 import home1 from "../../assets/home/home11.png";
 import home2 from "../../assets/home/home22.png";
 import home3 from "../../assets/home/home33.png";
 import home4 from "../../assets/home/home44.png";
 import home5 from "../../assets/home/home55.png";
 import home6 from "../../assets/home/home1.jpg";
-import { useState, useEffect } from "react";
-import { motion, AnimatePresence } from "framer-motion";
-import Link from "next/link";
-import { CalendarDays, MapPin, ArrowRight, ChevronLeft, ChevronRight, Leaf } from "lucide-react";
 
-// Sparkle component for button highlights
-const Sparkle = ({ style, color = '#7ca142' }: { style?: React.CSSProperties, color?: string }) => (
+// -------------------------------------------------------------
+// NOTE: run `npm install gsap` in your project before using this.
+// -------------------------------------------------------------
+
+/* ─────────────────────────────────────────
+   SPARKLE
+───────────────────────────────────────── */
+const Sparkle = ({ style, color = "#F2B40E", shadow }: { style?: React.CSSProperties; color?: string; shadow?: string }) => (
   <span
     style={{
-      position: 'absolute',
-      pointerEvents: 'none',
-      fontSize: '18px',
-      color: color,
-      textShadow: `0 0 6px ${color}, 0 0 12px ${color}`,
-      animation: 'sparkleAnimHero 1.6s ease-in-out infinite',
+      position: "absolute",
+      pointerEvents: "none",
+      fontSize: "13px",
+      color,
+      textShadow: shadow ? `0 0 6px ${shadow}` : undefined,
+      animation: "sparkleAnim 1.6s ease-in-out infinite",
       opacity: 0,
       zIndex: 20,
       ...style,
@@ -29,287 +35,554 @@ const Sparkle = ({ style, color = '#7ca142' }: { style?: React.CSSProperties, co
   </span>
 );
 
-const slides = [
+/* ─────────────────────────────────────────
+   SLIDE DATA
+───────────────────────────────────────── */
+const SLIDES = [
   {
-    bgImage: home1,
+    id: 0,
+    img: home1,
     tagline: "ORGANIC FOOD & BEVERAGES",
     titlePrimary: "PURE & CERTIFIED",
     titleSecondary: "ORGANIC STAPLES",
     subtitle: "Taste the purity of nature.",
-    description: "Discover a diverse range of certified organic staples, farm-fresh produce, healthy snacks, and plant-based drinks.",
+    description:
+      "Discover a diverse range of certified organic staples, farm-fresh produce, healthy snacks, and plant-based drinks.",
     date: "19-21 FEBRUARY 2027",
-    dateSub: "Friday – Sunday",
-    location: "PRAGATI MAIDAN",
-    locationSub: "New Delhi, India",
-    eventDate: "2027-02-19T00:00:00"
+    location: "PRAGATI MAIDAN, NEW DELHI",
   },
   {
-    bgImage: home2,
+    id: 1,
+    img: home2,
     tagline: "SUPERFOODS",
     titlePrimary: "BOOST YOUR",
     titleSecondary: "IMMUNITY",
     subtitle: "Health straight from the earth.",
-    description: "Explore premium natural dietary supplements, organic protein powders, and powerful superfoods to fuel your everyday life.",
+    description:
+      "Explore premium natural dietary supplements, organic protein powders, and powerful superfoods to fuel your everyday life.",
     date: "19-21 FEBRUARY 2027",
-    dateSub: "Friday – Sunday",
-    location: "PRAGATI MAIDAN",
-    locationSub: "New Delhi, India",
-    eventDate: "2027-02-19T00:00:00"
+    location: "PRAGATI MAIDAN, NEW DELHI",
   },
   {
-    bgImage: home5,
+    id: 2,
+    img: home5,
     tagline: "NATURAL BEAUTY",
     titlePrimary: "CLEAN & CRUELTY",
     titleSecondary: "FREE COSMETICS",
     subtitle: "Radiance without the chemicals.",
-    description: "Source top-tier organic skincare, vegan cosmetics, and non-toxic personal hygiene products that care for you and the planet.",
+    description:
+      "Source top-tier organic skincare, vegan cosmetics, and non-toxic personal hygiene products that care for you and the planet.",
     date: "19-21 FEBRUARY 2027",
-    dateSub: "Friday – Sunday",
-    location: "PRAGATI MAIDAN",
-    locationSub: "New Delhi, India",
-    eventDate: "2027-02-19T00:00:00"
+    location: "PRAGATI MAIDAN, NEW DELHI",
   },
   {
-    bgImage: home3,
+    id: 3,
+    img: home3,
     tagline: "SMART & SUSTAINABLE FARMING",
     titlePrimary: "INNOVATING",
     titleSecondary: "AGRICULTURE",
     subtitle: "Empowering farmers with green tech.",
-    description: "Experience the latest in organic seeds, bio-fertilizers, agri-tech innovations, and vertical farming solutions.",
+    description:
+      "Experience the latest in organic seeds, bio-fertilizers, agri-tech innovations, and vertical farming solutions.",
     date: "19-21 FEBRUARY 2027",
-    dateSub: "Friday – Sunday",
-    location: "PRAGATI MAIDAN",
-    locationSub: "New Delhi, India",
-    eventDate: "2027-02-19T00:00:00"
+    location: "PRAGATI MAIDAN, NEW DELHI",
   },
   {
-    bgImage: home4,
+    id: 4,
+    img: home4,
     tagline: "HERBAL WELLNESS & AYURVEDA",
     titlePrimary: "ANCIENT WISDOM",
     titleSecondary: "MODERN HEALING",
     subtitle: "Balance your mind, body, and soul.",
-    description: "Immerse yourself in authentic Ayurvedic therapies, holistic herbal supplements, essential oils, and detox solutions.",
+    description:
+      "Immerse yourself in authentic Ayurvedic therapies, holistic herbal supplements, essential oils, and detox solutions.",
     date: "19-21 FEBRUARY 2027",
-    dateSub: "Friday – Sunday",
-    location: "PRAGATI MAIDAN",
-    locationSub: "New Delhi, India",
-    eventDate: "2027-02-19T00:00:00"
+    location: "PRAGATI MAIDAN, NEW DELHI",
   },
-
   {
-    bgImage: home6,
+    id: 5,
+    img: home6,
     tagline: "LIVE EXPO & NETWORKING",
     titlePrimary: "EXPERIENCE THE",
     titleSecondary: "MEGA EVENT",
     subtitle: "Connect with industry leaders.",
-    description: "Join thousands of experts, buyers, and exhibitors at the most anticipated organic and wellness mega event of the year.",
+    description:
+      "Join thousands of experts, buyers, and exhibitors at the most anticipated organic and wellness mega event of the year.",
     date: "19-21 FEBRUARY 2027",
-    dateSub: "Friday – Sunday",
-    location: "PRAGATI MAIDAN",
-    locationSub: "New Delhi, India",
-    eventDate: "2027-02-19T00:00:00"
-  }
+    location: "PRAGATI MAIDAN, NEW DELHI",
+  },
 ];
 
-const HeroSection = () => {
-  const [current, setCurrent] = useState(0);
-  const [direction, setDirection] = useState(0);
+const SLIDE_DURATION = 5000; // ms — same pacing as the reference carousel
+
+/* ─────────────────────────────────────────
+   CINEMATIC PROGRESS BAR
+   Thin line at the bottom that fills up over
+   the slide duration — remounts on `cur` change
+   so the fill always restarts cleanly.
+───────────────────────────────────────── */
+const ProgressBar = ({ cur, duration }: { cur: number; duration: number }) => {
+  const barRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    const timer = setInterval(() => {
-      setDirection(1);
-      setCurrent((prev) => (prev + 1) % slides.length);
-    }, 5000);
-    return () => clearInterval(timer);
-  }, []);
-
-  const slideVariants = {
-    enter: (direction: number) => ({
-      x: direction > 0 ? "100%" : "-100%",
-    }),
-    center: {
-      x: 0,
-      zIndex: 1,
-    },
-    exit: (direction: number) => ({
-      x: direction > 0 ? "-100%" : "100%",
-      zIndex: 0,
-    }),
-  };
+    if (!barRef.current) return;
+    gsap.fromTo(
+      barRef.current,
+      { scaleX: 0 },
+      { scaleX: 1, duration: duration / 1000, ease: "none", transformOrigin: "left center" }
+    );
+    return () => {
+      gsap.killTweensOf(barRef.current);
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [cur, duration]);
 
   return (
-    <section className="relative w-full overflow-hidden bg-white h-[580px] sm:h-[480px] md:h-[555px] lg:h-[610px]  flex items-center">
+    <div className="absolute bottom-0 left-0 right-0 h-[2.5px] bg-black/10 overflow-hidden" style={{ zIndex: 30 }}>
+      <div
+        ref={barRef}
+        className="h-full w-full origin-left"
+        style={{
+          background: "linear-gradient(90deg, #2b5825, #7ca142, #a3c96a)",
+          boxShadow: "0 0 8px 2px rgba(43,88,37,0.4)",
+          transformOrigin: "left center",
+        }}
+      />
+    </div>
+  );
+};
+
+/* ─────────────────────────────────────────
+   MAIN COMPONENT
+───────────────────────────────────────── */
+const HeroSection = () => {
+  const [cur, setCur] = useState(0);
+  const curRef = useRef(0);
+  const busyRef = useRef(false);
+  const timerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  /* layer refs */
+  const sectionRef = useRef<HTMLElement>(null);
+  const bgLayers = useRef<(HTMLDivElement | null)[]>([]);
+  const imgEls = useRef<(HTMLImageElement | null)[]>([]);
+  const panels = useRef<(HTMLDivElement | null)[]>([]);
+  const lensRef = useRef<HTMLDivElement>(null);
+  const vigRef = useRef<HTMLDivElement>(null);
+  const revealBar = useRef<HTMLDivElement>(null);
+  const kenTimeline = useRef<gsap.core.Tween | null>(null);
+
+  /* ── Ken-Burns on current slide ── */
+  const playKenBurns = useCallback((idx: number) => {
+    if (kenTimeline.current) kenTimeline.current.kill();
+    const img = imgEls.current[idx];
+    if (!img) return;
+    const origins = ["50% 50%", "40% 60%", "60% 40%", "55% 45%", "45% 55%", "50% 40%"];
+    gsap.set(img, { scale: 1.0, transformOrigin: origins[idx % origins.length] });
+    kenTimeline.current = gsap.to(img, { scale: 1.08, duration: 9, ease: "none" });
+  }, []);
+
+  /* ── Animate content OUT ── */
+  const contentOut = useCallback((idx: number, done?: () => void) => {
+    const panel = panels.current[idx];
+    if (!panel) {
+      done?.();
+      return;
+    }
+    const items = panel.querySelectorAll("[data-anim]");
+    gsap.to(items, {
+      y: -30,
+      opacity: 0,
+      duration: 0.4,
+      ease: "power3.in",
+      stagger: { each: 0.045, from: "start" },
+      onComplete: done,
+    });
+  }, []);
+
+  /* ── Animate content IN ── */
+  const contentIn = useCallback((idx: number) => {
+    const panel = panels.current[idx];
+    if (!panel) return;
+    const items = panel.querySelectorAll("[data-anim]");
+    gsap.set(items, { opacity: 0, y: 40, filter: "blur(4px)" });
+    gsap.to(items, {
+      opacity: 1,
+      y: 0,
+      filter: "blur(0px)",
+      duration: 0.75,
+      ease: "power3.out",
+      stagger: { each: 0.08, from: "start" },
+      delay: 0.1,
+    });
+  }, []);
+
+  /* ── CORE TRANSITION ── */
+  const goTo = useCallback(
+    (targetIdx: number) => {
+      if (busyRef.current || targetIdx === curRef.current) return;
+      busyRef.current = true;
+      if (timerRef.current) clearTimeout(timerRef.current);
+
+      const prevIdx = curRef.current;
+      const prevBg = bgLayers.current[prevIdx];
+      const prevImg = imgEls.current[prevIdx];
+      const nextBg = bgLayers.current[targetIdx];
+      const nextImg = imgEls.current[targetIdx];
+
+      curRef.current = targetIdx;
+
+      if (kenTimeline.current) kenTimeline.current.kill();
+
+      const tl = gsap.timeline({
+        onComplete: () => {
+          busyRef.current = false;
+          gsap.set(prevBg, { zIndex: 1, clipPath: "inset(0 0% 0 0)", opacity: 1, x: 0 });
+          gsap.set(prevImg, { scale: 1, filter: "none" });
+          startTimer(targetIdx);
+          playKenBurns(targetIdx);
+        },
+      });
+
+      // 1. content exits
+      tl.add(() => contentOut(prevIdx), 0);
+
+      // 2. lens flare burst
+      tl.fromTo(
+        lensRef.current,
+        { opacity: 0, scale: 0.3, x: "-50%", y: "-50%" },
+        { opacity: 0.5, scale: 2.2, duration: 0.22, ease: "power2.out" },
+        0.05
+      ).to(lensRef.current, { opacity: 0, scale: 3, duration: 0.4, ease: "power2.in" }, 0.22);
+
+      // 3. vignette pulse
+      tl.fromTo(
+        vigRef.current,
+        { opacity: 0 },
+        { opacity: 0.5, duration: 0.25, ease: "power2.out", yoyo: true, repeat: 1 },
+        0
+      );
+
+      // 4. reveal bar wipe + next image clip-path unclip
+      gsap.set(nextBg, { zIndex: 4 });
+      gsap.set(nextImg, { scale: 1.1, filter: "brightness(0.92) saturate(0.85)" });
+
+      tl.set(revealBar.current, { scaleX: 0, transformOrigin: "left center", opacity: 1 }, 0.08);
+      tl.to(revealBar.current, { scaleX: 1, duration: 0.55, ease: "power4.inOut" }, 0.08);
+
+      gsap.set(nextBg, { clipPath: "inset(0 100% 0 0)" });
+      tl.to(nextBg, { clipPath: "inset(0 0% 0 0)", duration: 0.55, ease: "power4.inOut" }, 0.08);
+
+      tl.to(
+        revealBar.current,
+        { scaleX: 0, transformOrigin: "right center", duration: 0.4, ease: "power4.in", opacity: 0 },
+        0.6
+      );
+
+      // 5. prev slide drifts away
+      tl.to(prevBg, { x: "-6%", opacity: 0, duration: 0.5, ease: "power2.in" }, 0.12);
+
+      // 6. next image sharpens + settles
+      tl.to(nextImg, { scale: 1, filter: "brightness(1) saturate(1)", duration: 0.85, ease: "power2.out" }, 0.35);
+
+      // 7. state update + content in
+      tl.add(() => {
+        setCur(targetIdx);
+        gsap.set(prevBg, { x: 0 });
+        gsap.set(nextBg, { zIndex: 2 });
+      }, 0.55);
+
+      tl.add(() => contentIn(targetIdx), 0.6);
+    },
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [contentOut, contentIn, playKenBurns]
+  );
+
+  const startTimer = useCallback(
+    (idx: number) => {
+      if (timerRef.current) clearTimeout(timerRef.current);
+      timerRef.current = setTimeout(() => {
+        goTo((idx + 1) % SLIDES.length);
+      }, SLIDE_DURATION);
+    },
+    [goTo]
+  );
+
+  /* ── INIT ── */
+  useEffect(() => {
+    bgLayers.current.forEach((el, i) => {
+      if (!el) return;
+      gsap.set(el, { zIndex: i === 0 ? 2 : 1, clipPath: "inset(0 0% 0 0)", opacity: 1, x: 0 });
+    });
+
+    panels.current.forEach((panel) => {
+      if (!panel) return;
+      const items = panel.querySelectorAll("[data-anim]");
+      gsap.set(items, { opacity: 0, y: 40, filter: "blur(4px)" });
+    });
+
+    gsap.set(lensRef.current, { opacity: 0, xPercent: -50, yPercent: -50 });
+    gsap.set(vigRef.current, { opacity: 0 });
+    gsap.set(revealBar.current, { scaleX: 0, opacity: 0 });
+
+    const initPanel = panels.current[0];
+    if (initPanel) {
+      const items = initPanel.querySelectorAll("[data-anim]");
+      gsap.set(items, { opacity: 0, y: 60, filter: "blur(8px)" });
+      gsap.to(items, {
+        opacity: 1,
+        y: 0,
+        filter: "blur(0px)",
+        duration: 1.0,
+        ease: "power4.out",
+        stagger: { each: 0.1, from: "start" },
+        delay: 0.3,
+      });
+    }
+
+    playKenBurns(0);
+    startTimer(0);
+
+    return () => {
+      if (timerRef.current) clearTimeout(timerRef.current);
+      if (kenTimeline.current) kenTimeline.current.kill();
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  return (
+    <>
       <style>{`
-        @keyframes sparkleAnimHero {
-          0%   { opacity: 0; transform: scale(0.5) translateY(0); }
-          40%  { opacity: 1; transform: scale(1.2) translateY(-2px); }
-          80%  { opacity: 0.6; transform: scale(0.9) translateY(-4px); }
-          100% { opacity: 0; transform: scale(0.5) translateY(-6px); }
+        @keyframes sparkleAnim {
+          0%   { opacity:0; transform:scale(0.5) translateY(0); }
+          40%  { opacity:1; transform:scale(1.2) translateY(-4px); }
+          80%  { opacity:0.5; transform:scale(0.9) translateY(-6px); }
+          100% { opacity:0; transform:scale(0.5) translateY(-8px); }
         }
-        @keyframes shimmerHero {
-          0%   { left: -75%; }
-          100% { left: 150%; }
+        @keyframes shimmerHero { 0% { left:-75%; } 100% { left:150%; } }
+        @keyframes dotPulseHero {
+          0%,100% { box-shadow:0 0 0 0px rgba(43,88,37,0.35); }
+          50%      { box-shadow:0 0 0 4px rgba(43,88,37,0.12); }
         }
-        .hero-shimmer-btn {
+
+        .hero-btn { position:relative; overflow:hidden; border:2px solid white !important; }
+        .hero-btn::before {
+          content:''; position:absolute; top:-50%; left:-75%; width:50%; height:200%;
+          background:linear-gradient(to right,transparent,rgba(255,255,255,0.45),transparent);
+          transform:skewX(-20deg); animation:shimmerHero 2.4s infinite;
+        }
+        .hero-btn-solid { background:#2b5825; }
+        .hero-btn-solid:hover { background:#1f471b; }
+        .hero-btn-lime { background:#7ca142; }
+        .hero-btn-lime:hover { background:#688a35; }
+        .hero-btn-outline { background:#ffffff; color:#2b5825; }
+        .hero-btn-outline:hover { background:#f3f7ef; }
+        .hero-btn-outline::before { background:linear-gradient(to right,transparent,rgba(43,88,37,0.1),transparent); }
+
+        .dot-active-hero { animation: dotPulseHero 1.8s ease-in-out infinite; }
+
+        .blue-btn-hero {
+          background: linear-gradient(135deg, #1b5e20 0%, #2e7d32 30%, #0e3b1c 60%, #1b5e20 100%);
+          background-size: 200% 200%;
           position: relative;
           overflow: hidden;
         }
-        .hero-shimmer-btn::before {
+        .blue-btn-hero::before {
           content: '';
           position: absolute;
           top: -50%;
           left: -75%;
           width: 50%;
           height: 200%;
-          background: linear-gradient(to right, transparent, rgba(255,255,255,0.4), transparent);
+          background: linear-gradient(to right, transparent, rgba(255,255,255,0.3), transparent);
           transform: skewX(-20deg);
           animation: shimmerHero 2.5s infinite;
         }
-        .hero-shimmer-btn-dark::before {
-          background: linear-gradient(to right, transparent, rgba(43,88,37,0.15), transparent);
+
+        .carousel-arrow-hero {
+          backdrop-filter: blur(8px);
+          -webkit-backdrop-filter: blur(8px);
+          transition: transform 0.2s ease, background 0.2s ease;
         }
+        .carousel-arrow-hero:hover { transform: translateY(-50%) scale(1.15); background: rgba(255,255,255,0.92); }
+
+        .hide-scrollbar::-webkit-scrollbar { display:none; }
+        .hide-scrollbar { -ms-overflow-style:none; scrollbar-width:none; }
       `}</style>
-      <AnimatePresence initial={false} custom={direction}>
-        <motion.div
-          key={current}
-          custom={direction}
-          variants={slideVariants}
-          initial="enter"
-          animate="center"
-          exit="exit"
-          transition={{
-            x: { type: "tween", ease: "easeInOut", duration: 0.8 }
+
+      <section
+        ref={sectionRef}
+        className="relative w-full overflow-hidden bg-[#fcfcf0] h-[510px] sm:h-[430px] md:h-[490px] lg:h-[530px] flex items-center font-inter"
+      >
+        {/* ── BACKGROUND LAYERS ── */}
+        {SLIDES.map(({ id, img }) => (
+          <div
+            key={id}
+            ref={(el) => {
+              bgLayers.current[id] = el;
+            }}
+            className="absolute inset-0 w-full h-full pointer-events-none"
+            style={{ zIndex: id === 0 ? 2 : 1, willChange: "clip-path, opacity, transform" }}
+          >
+            <img
+              ref={(el) => {
+                imgEls.current[id] = el;
+              }}
+              src={img.src}
+              alt={`Bharat Organic Expo slide ${id + 1}`}
+              className="w-full h-full object-cover select-none"
+              style={{ willChange: "transform, filter" }}
+            />
+          </div>
+        ))}
+
+        {/* ── TRANSITION VIGNETTE PULSE ── */}
+        <div ref={vigRef} className="absolute inset-0 pointer-events-none" style={{ zIndex: 7, background: "rgba(0,0,0,0.28)", opacity: 0 }} />
+
+        {/* ── LENS FLARE ── */}
+        <div
+          ref={lensRef}
+          className="absolute pointer-events-none"
+          style={{
+            zIndex: 8,
+            top: "40%",
+            left: "55%",
+            width: 180,
+            height: 180,
+            borderRadius: "50%",
+            background: "radial-gradient(circle, rgba(200,255,150,0.85) 0%, rgba(124,161,66,0.4) 35%, transparent 70%)",
+            mixBlendMode: "screen",
+            opacity: 0,
           }}
-          className="absolute inset-0 z-0"
+        />
+
+        {/* ── WIPE BAR ── */}
+        <div
+          ref={revealBar}
+          className="absolute inset-0 pointer-events-none"
+          style={{
+            zIndex: 9,
+            background: "linear-gradient(90deg, rgba(255,255,255,0.0) 0%, rgba(255,255,255,0.22) 50%, rgba(255,255,255,0.0) 100%)",
+            transformOrigin: "left center",
+            transform: "scaleX(0)",
+          }}
+        />
+
+        {/* ── CONTENT PANELS ── */}
+        <div
+          className="relative container mx-auto max-w-[1400px] px-6 h-full grid items-center justify-items-start"
+          style={{ zIndex: 20 }}
         >
-          <img
-            src={slides[current].bgImage.src}
-            alt="Hero Background"
-            className="w-full h-full object-cover"
-          />
-          {/* Light gradient overlay to make dark text readable and highlight the left side */}
-          <div className="absolute inset-0 bg-gradient-to-r from-[#fcfcf0]/70 via-[#fcfcf0]/0 to-transparent z-10 pointer-events-none" />
-        </motion.div>
-      </AnimatePresence>
-
-      <div className="relative z-20 container mx-auto max-w-[1400px] px-6 h-full flex flex-col justify-center">
-        <div className="max-w-xl text-left mt-16 md:mt-0">
-          <AnimatePresence mode="wait">
-            <motion.div
-              key={current}
-              custom={direction}
-              variants={slideVariants}
-              initial="enter"
-              animate="center"
-              exit="exit"
-              transition={{ x: { type: "spring", stiffness: 300, damping: 30 }, opacity: { duration: 0.5 } }}
-              className="space-y-4 w-full max-w-2xl"
+          {SLIDES.map((slide) => (
+            <div
+              key={slide.id}
+              ref={(el) => {
+                panels.current[slide.id] = el;
+              }}
+              className="col-start-1 row-start-1 w-full max-w-xl mt-16 md:mt-0"
+              style={{
+                visibility: cur === slide.id ? "visible" : "hidden",
+                pointerEvents: cur === slide.id ? "auto" : "none",
+              }}
             >
-              {/* Tagline Badge */}
-              <div className="flex items-center gap-2 mb-2">
-                <div className="w-8 h-[2px] bg-[#7ca142]/60"></div>
-                <Leaf className="w-4 h-4 text-[#7ca142] fill-[#7ca142]" />
-                <span className="text-[#1a3617] text-[12px] md:text-[13px] lg:text-[14px] font-extrabold tracking-widest uppercase">
-                  {slides[current].tagline}
-                </span>
-                <div className="w-8 h-[2px] bg-[#7ca142]/60"></div>
-              </div>
-
-              {/* Title */}
-              <h1 className="leading-[1.1] font-black uppercase pb-1">
-                <div className="text-[#1f471b] text-[34px] md:text-[48px] lg:text-[60px] tracking-tight">
-                  {slides[current].titlePrimary}
+              <div className="space-y-3 w-full max-w-2xl">
+                {/* Tagline */}
+                <div data-anim="1" className="flex items-center gap-2 mb-1">
+                  <div className="w-7 h-[2px] bg-[#c2410c]/60" />
+                  <span className="text-[#c2410c] text-[11px] md:text-[12px] font-bold tracking-[0.14em] uppercase">
+                    {slide.tagline}
+                  </span>
+                  <div className="w-7 h-[2px] bg-[#c2410c]/60" />
                 </div>
-                <div className="text-[#7ca142] text-[34px] md:text-[48px] lg:text-[60px] tracking-tight mt-1">
-                  {slides[current].titleSecondary}
-                </div>
-              </h1>
 
-              {/* Subtitle */}
-              <div className="flex items-center gap-2 mb-3">
-                <span className="text-[#1f471b] font-serif font-medium text-[20px] md:text-[24px] lg:text-[28px] leading-[1.3]">
-                  {slides[current].subtitle}
-                </span>
-                <Leaf className="w-5 h-5 text-[#7ca142] fill-[#7ca142]" />
-              </div>
-
-              {/* Description */}
-              <p className="text-[#4a4a4a] font-normal text-[16px] md:text-[18px] leading-[1.6] max-w-[600px] mb-6">
-                {slides[current].description}
-              </p>
-
-              {/* Details (Date & Location) */}
-              <div className="flex flex-col sm:flex-row items-center gap-6 sm:gap-10 pt-2 pb-2">
-
-                {/* Date */}
-                <div className="flex items-center gap-3">
-                  <div className="flex items-center justify-center">
-                    <CalendarDays className="w-8 h-8 text-[#2b5825]" strokeWidth={1.5} />
+                {/* Title */}
+                <h1 data-anim="2" className="leading-[1.15] font-bold uppercase pb-1">
+                  <div className="text-[#1f471b] text-[26px] md:text-[38px] lg:text-[48px] tracking-tight">
+                    {slide.titlePrimary}
                   </div>
-                  <div className="flex flex-col text-[#2b5825]">
-                    <div className="font-extrabold text-[14px] md:text-[15px] tracking-tight">
-                      {slides[current].date}
-                    </div>
-                    <div className="text-[#4a4a4a] text-[13px] md:text-[14px]">
-                      {slides[current].dateSub}
-                    </div>
+                  <div className="text-[#7ca142] text-[26px] md:text-[38px] lg:text-[48px] tracking-tight mt-0.5">
+                    {slide.titleSecondary}
+                  </div>
+                </h1>
+
+                {/* Subtitle */}
+                <p data-anim="3" className="text-[#1f471b] font-medium text-[17px] md:text-[20px] lg:text-[23px] leading-[1.3]">
+                  {slide.subtitle}
+                </p>
+
+                {/* Description */}
+                <p data-anim="4" className="text-black font-medium text-[14px] md:text-[16px] leading-relaxed max-w-[560px] mb-2">
+                  {slide.description}
+                </p>
+
+                {/* Date / Location */}
+                <div data-anim="5" className="flex flex-wrap items-center gap-x-4 gap-y-2 text-[#2b5825] font-bold text-[11px] sm:text-[12px] uppercase mb-1">
+                  <div className="flex items-center gap-2">
+                    <CalendarDays size={16} className="shrink-0" />
+                    <span>{slide.date}</span>
+                  </div>
+                  <span className="hidden sm:inline opacity-40">|</span>
+                  <div className="flex items-center gap-2">
+                    <MapPin size={16} className="shrink-0" />
+                    <span>{slide.location}</span>
                   </div>
                 </div>
 
-                {/* Vertical Divider */}
-                <div className="w-[1px] h-10 bg-[#c2d6b3] hidden sm:block"></div>
+                {/* Buttons */}
+                <div data-anim="6" className="flex flex-nowrap items-center gap-2 sm:gap-3 pt-2 relative overflow-visible w-full overflow-x-auto hide-scrollbar pb-2">
+                  <Sparkle color="#f97316" shadow="#c2410c" style={{ top: "-12px", left: "10%", animationDelay: "0s" }} />
+                  <Sparkle color="#f97316" shadow="#c2410c" style={{ top: "-15px", left: "50%", animationDelay: "0.4s" }} />
+                  <Sparkle color="#f97316" shadow="#c2410c" style={{ top: "-10px", right: "10%", animationDelay: "0.8s" }} />
 
-                {/* Location */}
-                <div className="flex items-center gap-3">
-                  <div className="flex items-center justify-center">
-                    <MapPin className="w-8 h-8 text-[#2b5825]" strokeWidth={1.5} />
+                  {/* Book Your Stall — orange gradient matching why-exhibit */}
+                  <div className="relative shrink-0">
+                    <Link
+                      href="/book-a-stand"
+                      className="group relative inline-flex items-center justify-start gap-2 px-5 py-2.5 rounded-lg font-semibold text-[11px] uppercase tracking-widest text-white transition-all active:scale-95 relative z-10 w-full sm:w-auto overflow-hidden"
+                      style={{
+                        background: "linear-gradient(135deg, #ea580c, #c2410c)",
+                      }}
+                    >
+                      <span className="absolute inset-0 bg-white/10 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-500 skew-x-12" />
+                      Book Your Stall <ArrowRight size={14} className="group-hover:translate-x-1 transition-transform" />
+                    </Link>
                   </div>
-                  <div className="flex flex-col text-[#2b5825]">
-                    <div className="font-extrabold text-[14px] md:text-[15px] tracking-tight">
-                      {slides[current].location}
-                    </div>
-                    <div className="text-[#4a4a4a] text-[13px] md:text-[14px]">
-                      {slides[current].locationSub}
-                    </div>
+
+                  {/* Register as Visitor — blue styling matching Download Brochure */}
+                  <div className="relative shrink-0">
+                    <Sparkle color="#3b82f6" shadow="#28396C" style={{ top: "-12px", left: "10%", animationDelay: "0.2s" }} />
+                    <Sparkle color="#3b82f6" shadow="#28396C" style={{ top: "-15px", left: "50%", animationDelay: "0.6s" }} />
+                    <Sparkle color="#3b82f6" shadow="#28396C" style={{ top: "-10px", right: "10%", animationDelay: "1s" }} />
+                    <Link
+                      href="/visitor-registration"
+                      className="blue-btn-hero text-white px-5 py-2.5 rounded-lg font-semibold text-[11px] uppercase tracking-widest flex items-center justify-start gap-2 transition-all active:scale-95 relative z-10 w-full sm:w-auto whitespace-nowrap"
+                    >
+                      Register as Visitor <ArrowRight size={14} />
+                    </Link>
                   </div>
                 </div>
-
               </div>
-
-              {/* Action Buttons */}
-              <div className="flex flex-nowrap items-center gap-2 sm:gap-4 pt-3 relative overflow-visible w-full overflow-x-auto hide-scrollbar pb-2">
-                {/* Floating Sparkles around buttons - Multi-colored to match logo theme */}
-                <Sparkle style={{ top: '-15px', left: '15%', animationDelay: '0s', color: '#F2B40E' }} />
-                <Sparkle style={{ bottom: '-10px', left: '35%', animationDelay: '0.4s', color: '#3b8c2a' }} />
-                <Sparkle style={{ top: '-5px', right: '45%', animationDelay: '0.8s', color: '#F6A003' }} />
-                <Sparkle style={{ top: '-20px', right: '15%', animationDelay: '0.2s', color: '#7ca142' }} />
-                <Sparkle style={{ bottom: '-5px', right: '5%', animationDelay: '0.6s', color: '#2b5825' }} />
-
-                <Link
-                  href="/book-a-stand"
-                  className="hero-shimmer-btn w-fit bg-[#2b5825] hover:bg-[#1f471b] text-white px-4 py-2 sm:py-2.5 rounded-md font-bold text-[10px] sm:text-[12px] md:text-[13px] tracking-tight sm:tracking-wider uppercase transition-all shadow-md hover:-translate-y-0.5 text-center flex items-center justify-center whitespace-nowrap"
-                >
-                  Book Your Stall
-                </Link>
-                <Link
-                  href="/visitor-registration"
-                  className="hero-shimmer-btn hero-shimmer-btn-dark w-fit bg-white hover:bg-gray-50 text-[#2b5825] border border-[#2b5825] px-4 py-2 sm:py-2.5 rounded-md font-bold text-[10px] sm:text-[12px] md:text-[13px] tracking-tight sm:tracking-wider uppercase transition-all shadow-sm hover:-translate-y-0.5 text-center flex items-center justify-center whitespace-nowrap"
-                >
-                  Register as Visitor
-                </Link>
-                <Link
-                  href="/delegate-registration"
-                  className="hero-shimmer-btn w-fit bg-[#7ca142] hover:bg-[#688a35] text-white px-4 py-2 sm:py-2.5 rounded-md font-bold text-[10px] sm:text-[12px] md:text-[13px] tracking-tight sm:tracking-wider uppercase transition-all shadow-md hover:-translate-y-0.5 text-center flex items-center justify-center whitespace-nowrap"
-                >
-                  Register as Delegate
-                </Link>
-              </div>
-            </motion.div>
-          </AnimatePresence>
+            </div>
+          ))}
         </div>
-      </div>
 
-    </section>
+        {/* ── PROGRESS BAR ── */}
+        <ProgressBar cur={cur} duration={SLIDE_DURATION} key={cur} />
+
+        {/* ── DOTS ── */}
+        <div className="absolute bottom-3 left-1/2 -translate-x-1/2 z-30 flex gap-1.5">
+          {SLIDES.map(({ id }) => (
+            <button
+              key={id}
+              onClick={() => goTo(id)}
+              className={`rounded-full border border-[#2b5825]/30 transition-all duration-400 ${
+                cur === id ? "w-5 h-2 bg-[#2b5825] dot-active-hero" : "w-2 h-2 bg-[#2b5825]/40 hover:bg-[#2b5825]/70"
+              }`}
+              aria-label={`Go to slide ${id + 1}`}
+            />
+          ))}
+        </div>
+      </section>
+    </>
   );
 };
 

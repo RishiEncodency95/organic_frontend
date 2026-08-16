@@ -1,8 +1,9 @@
 import React from "react";
 import CallFloat from "./CallFloat";
+import { SITE_CONFIG } from "@/app/constants/siteConfig";
 
 const WhatsAppFloat: React.FC = () => {
-    const phoneNumber = "+919876543210";
+    const phoneNumber = SITE_CONFIG.rawPhone;
     const message = "Hello! I would like to know more about the Organic Expo.";
 
     const cleanPhoneNumber = phoneNumber.replace(/\D/g, "");

@@ -1,19 +1,22 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import { Poppins, Inter } from "next/font/google";
 import "./globals.css";
 import Topbar from "./components/layout/Topbar";
 import Navbar from "./components/layout/Navbar";
 import Footer from "./components/layout/Footer";
 import SocialSidebar from "./components/layout/SocialSidebar";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
+const poppins = Poppins({
   subsets: ["latin"],
+  weight: ["300", "400", "500", "600", "700", "800", "900"],
+  variable: "--font-poppins",
+  display: "swap",
 });
 
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
+const inter = Inter({
   subsets: ["latin"],
+  variable: "--font-inter",
+  display: "swap",
 });
 
 export const metadata: Metadata = {
@@ -72,9 +75,12 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
+      suppressHydrationWarning
+      className={`${poppins.variable} ${inter.variable} h-full antialiased overflow-x-hidden`}
     >
       <head>
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(eventSchema) }}
@@ -84,10 +90,10 @@ export default function RootLayout({
           dangerouslySetInnerHTML={{ __html: JSON.stringify(orgSchema) }}
         />
       </head>
-      <body className="min-h-full flex flex-col font-sans text-[16px] md:text-[18px] leading-[1.6]">
+      <body suppressHydrationWarning className="min-h-full flex flex-col font-inter text-[16px] md:text-[18px] leading-[1.6] overflow-x-hidden w-full">
         <Topbar />
         <Navbar />
-        <main className="flex-grow">
+        <main className="flex-grow overflow-x-hidden w-full">
           {children}
         </main>
         <Footer />

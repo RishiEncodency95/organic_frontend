@@ -1,6 +1,7 @@
 "use client";
 
 import { Phone, Mail, MapPin, MessageCircle } from "lucide-react";
+import { SITE_CONFIG } from "@/app/constants/siteConfig";
 
 const ContactStrip = () => {
   return (
@@ -9,26 +10,26 @@ const ContactStrip = () => {
         <div className="grid grid-cols-2 md:grid-cols-4 divide-x divide-white/20">
 
           {/* Item 1 */}
-          <div className="flex items-center justify-center md:justify-start gap-4 px-4 py-4 hover:bg-black/10 transition-colors rounded-l-lg cursor-pointer group">
+          <a href={`tel:${SITE_CONFIG.rawPhone}`} className="flex items-center justify-center md:justify-start gap-4 px-4 py-4 hover:bg-black/10 transition-colors rounded-l-lg cursor-pointer group">
             <div className="w-10 h-10 rounded-full bg-white/20 flex items-center justify-center shrink-0 group-hover:bg-[#F2B40E] group-hover:shadow-md transition-all duration-300">
               <Phone size={18} className="text-white group-hover:text-[#0a1f12] transition-colors duration-300" />
             </div>
             <div className="flex flex-col">
               <span className="text-white text-[15px] md:text-[16px] font-bold leading-tight">Call Us</span>
-              <span className="text-white/80 text-[13px] md:text-[14px] font-medium leading-[1.6] group-hover:text-white transition-colors">+91 98765 43210</span>
+              <span className="text-white/80 text-[13px] md:text-[14px] font-medium leading-[1.6] group-hover:text-white transition-colors">{SITE_CONFIG.phone}</span>
             </div>
-          </div>
+          </a>
 
           {/* Item 2 */}
-          <div className="flex items-center justify-center md:justify-start gap-4 px-4 py-4 hover:bg-black/10 transition-colors cursor-pointer group">
+          <a href={`mailto:${SITE_CONFIG.email}`} className="flex items-center justify-center md:justify-start gap-4 px-4 py-4 hover:bg-black/10 transition-colors cursor-pointer group">
             <div className="w-10 h-10 rounded-full bg-white/20 flex items-center justify-center shrink-0 group-hover:bg-[#F2B40E] group-hover:shadow-md transition-all duration-300">
               <Mail size={18} className="text-white group-hover:text-[#0a1f12] transition-colors duration-300" />
             </div>
             <div className="flex flex-col">
               <span className="text-white text-[15px] md:text-[16px] font-bold leading-tight">Email Us</span>
-              <span className="text-white/80 text-[13px] md:text-[14px] font-medium leading-[1.6] group-hover:text-white transition-colors">info@bharatorganicexpo.com</span>
+              <span className="text-white/80 text-[13px] md:text-[14px] font-medium leading-[1.6] group-hover:text-white transition-colors">{SITE_CONFIG.email}</span>
             </div>
-          </div>
+          </a>
 
           {/* Item 3 */}
           <div className="flex items-center justify-center md:justify-start gap-4 px-4 py-4 hover:bg-black/10 transition-colors cursor-pointer group">
