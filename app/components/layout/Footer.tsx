@@ -108,7 +108,7 @@ export default function Footer() {
             <Sparkle color="#d68523" style={{ bottom: '10px', left: '5%', animationDelay: '0.2s' }} />
             <Sparkle color="#d68523" style={{ bottom: '-10px', right: '20%', animationDelay: '0.6s' }} />
             
-            <img src={footerLogo.src} alt="Bharat Organic Expo" className="w-full h-auto object-contain drop-shadow-md" />
+            <img src={footerLogo.src} alt="Bharat Organic Expo" className="w-full h-auto object-contain" style={{ filter: "drop-shadow(0 2px 5px rgba(0,0,0,0.2))" }} />
           </div>
 
           <p className="text-[14px] font-semibold leading-relaxed max-w-[340px] text-black text-center mx-auto">
@@ -219,8 +219,6 @@ export default function Footer() {
               <Sparkle color="#FFFFFF" style={{ bottom: '-8px', right: '10%', animationDelay: '0.6s' }} />
               <img src={namoLogo.src} alt="Namo Gange Wellness" className="w-full h-auto object-contain" style={{ filter: "drop-shadow(0 0 1px rgba(255,255,255,0.3))" }} />
             </div>
-
-            <img src={uuogImg.src} alt="divider" className="h-3.5 w-auto -mt-1 mb-2 object-contain" />
 
             <p className="text-gray-200 text-[11px] mb-3 leading-relaxed font-medium">
               Your conference companion for<br/>agenda, updates and networking.
