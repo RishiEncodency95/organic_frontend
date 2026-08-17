@@ -37,7 +37,7 @@ export default function HowItWorks() {
       num: "05",
       img: h5og.src,
       title: "MEET AT THE EXPO",
-      desc: "Participate in focused B2B\ninteractions during Bharat\nOrganic Expo 2027.",
+      desc: "Participate in focused B2B\ninteractions during Bharat\nBharat Organic Expo 2027.",
     },
   ];
 

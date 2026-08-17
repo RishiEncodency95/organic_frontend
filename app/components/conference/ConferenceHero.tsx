@@ -52,7 +52,7 @@ const ConferenceHero = () => {
               mounted ? "translate-y-0 opacity-100" : "translate-y-6 opacity-0"
             }`}
           >
-            The Buyer-Seller Meet at Bharat Organic Expo 2027 brings together
+            The Buyer-Seller Meet at Bharat Bharat Organic Expo 2027 brings together
             serious buyers and quality suppliers from across the organic,
             natural and sustainable industry ecosystem to create meaningful
             business opportunities.

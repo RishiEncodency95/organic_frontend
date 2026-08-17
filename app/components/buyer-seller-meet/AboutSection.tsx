@@ -17,7 +17,7 @@ export default function AboutSection() {
   ];
 
   const links = [
-    { label: "Register as Buyer", icon: <User size={16} />, href: "/buyer-registration" },
+    { label: "Register as Buyer", icon: <User size={16} />, href: "/registration/buyer-registration" },
     { label: "Participate as Exhibitor", icon: <Briefcase size={16} />, href: "/conference" },
     { label: "How it Works", icon: <HelpCircle size={16} />, href: "#how-it-works" },
     { label: "Who Can Participate", icon: <Users size={16} />, href: "#who-can-participate" },
@@ -44,7 +44,7 @@ export default function AboutSection() {
             </div>
             <div className="space-y-4 text-sm text-gray-600 font-medium mb-4 leading-relaxed">
               <p>
-                The Buyer-Seller Meet at Bharat Organic Expo 2027 is designed to facilitate focused B2B interactions between participating exhibitors and relevant business buyers.
+                The Buyer-Seller Meet at Bharat Bharat Organic Expo 2027 is designed to facilitate focused B2B interactions between participating exhibitors and relevant business buyers.
               </p>
               <p>
                 The platform enables participants to explore:

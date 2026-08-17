@@ -12,7 +12,7 @@ const AdvisoryPartners = () => {
                         <span className="text-[#888] font-bold text-[13px] md:text-[14px] tracking-[0.1em] uppercase mb-2">
                             ORGANIZED BY
                         </span>
-                        {/* Placeholder for Bharat Organic Expo 2027 Logo */}
+                        {/* Placeholder for Bharat Bharat Organic Expo 2027 Logo */}
                         <div className="flex items-center gap-2 group cursor-default">
                             <div className="relative flex items-center justify-center w-10 h-10 bg-white rounded-full shadow-[0_2px_8px_rgba(0,0,0,0.05)] border border-gray-100 group-hover:scale-105 transition-transform duration-300">
                                 <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-5 h-5 bg-[#f58220]/10 rounded-t-full"></div>

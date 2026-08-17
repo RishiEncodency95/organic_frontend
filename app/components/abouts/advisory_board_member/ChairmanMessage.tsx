@@ -61,7 +61,7 @@ const ChairmanMessage = () => {
                         {/* Description Paragraphs */}
                         <div className="space-y-2 text-[#4a4a4a] font-medium text-[14px] sm:text-[15px] lg:text-[16px] leading-relaxed">
                             <p>
-                                At Bharat Organic Expo 2027, we believe in the power of collaboration,
+                                At Bharat Bharat Organic Expo 2027, we believe in the power of collaboration,
                                 innovation, and sustainability.
                             </p>
                             <p>
@@ -76,7 +76,7 @@ const ChairmanMessage = () => {
                                 Mr. Vijay Sharma
                             </h3>
                             <p className="text-[#666666] text-[14px] lg:text-[16px] font-medium mt-1">
-                                Chairman, Bharat Organic Expo 2027
+                                Chairman, Bharat Bharat Organic Expo 2027
                             </p>
                         </div>
                     </div>

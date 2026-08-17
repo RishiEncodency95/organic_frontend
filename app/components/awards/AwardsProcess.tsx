@@ -60,7 +60,7 @@ const PROCESS_STEPS = [
     icon: Trophy,
     num: "06",
     title: "Recognition",
-    desc: "Winners are honoured at the Bharat Organic Expo 2027.",
+    desc: "Winners are honoured at the Bharat Bharat Organic Expo 2027.",
   },
 ];
 
