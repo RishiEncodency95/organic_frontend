@@ -20,6 +20,7 @@ import {
     Plane
 } from "lucide-react";
 import HeroBg from "@/app/assets/buyer.webp";
+import DiscountImg from "@/app/assets/registration/discount.png";
 import { Badge } from "@/app/components/ui/badge";
 import { Button } from "@/app/components/ui/button";
 import { Input } from "@/app/components/ui/input";
@@ -1223,7 +1224,7 @@ const BookAStand = () => {
                                                     <h3 className="text-xs font-medium text-[#d26019] uppercase tracking-[0.05em]" >Exhibitor Details</h3>
                                                 </div>
 
-                                                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-x-6 gap-y-4">
+                                                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-x-3 gap-y-3">
                                                     <div>
                                                         <label className={labelClasses}>COMPANY NAME <span className="text-red-500">*</span></label>
                                                         <input required name="exhibitorName" value={formData.exhibitorName} onChange={handleInputChange} placeholder="Write Here.." className={inputClasses} />
@@ -1539,7 +1540,7 @@ const BookAStand = () => {
                                                 {/* First Contact Person */}
                                                 <div className="space-y-2">
                                                     <h4 className="text-[13px] font-medium text-slate-900 border-l-4 border-[#23471d] pl-3 uppercase tracking-wider">First Contact Person Details</h4>
-                                                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-x-5 gap-y-4">
+                                                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-7 gap-x-3 gap-y-3">
                                                         <div>
                                                             <label className={labelClasses}>TITLE <span className="text-red-500">*</span></label>
                                                             <Select onValueChange={(v) => handleSelectChange('contact1.title', v)} value={formData.contact1.title}>
@@ -1563,37 +1564,36 @@ const BookAStand = () => {
                                                             <input required name="contact1.lastName" value={formData.contact1.lastName} onChange={handleInputChange} placeholder="Write Here.." className={inputClasses} />
                                                         </div>
                                                         <div>
-                                                            <label className={labelClasses}>EMAIL <span className="text-red-500">*</span></label>
-                                                            <div className="flex gap-1">
-                                                                <input
-                                                                    required
-                                                                    type="email"
-                                                                    name="contact1.email"
-                                                                    value={formData.contact1.email}
-                                                                    onChange={handleInputChange}
-                                                                    placeholder="Official Email"
-                                                                    className={` ${inputClasses} flex-1 ${emailVerified ? 'border-green-500' : ''}`}
-                                                                    readOnly={emailVerified}
-                                                                />
-                                                                {!emailVerified && (
-                                                                    <button type="button" onClick={handleSendEmailOtp} disabled={isEmailLoading || emailTimer > 0} className="inline-flex items-center justify-center h-7 bg-[#23471d] text-white text-[10px] font-bold uppercase rounded-[2px] px-3 transition-colors disabled:opacity-50 hover:bg-[#1a3515]">
+                                                            <div className="flex justify-between items-center mb-1">
+                                                                <label className="text-[11px] font-medium uppercase text-slate-800">EMAIL <span className="text-red-500">*</span></label>
+                                                                {!emailVerified ? (
+                                                                    <button type="button" onClick={handleSendEmailOtp} disabled={isEmailLoading || emailTimer > 0} className="inline-flex items-center justify-center h-[18px] bg-[#23471d] text-white text-[9px] font-bold uppercase rounded-[2px] px-2 transition-colors disabled:opacity-50 hover:bg-[#1a3515]">
                                                                         {emailTimer > 0 ? `Resend ${emailTimer}s` : 'Get OTP'}
                                                                     </button>
-                                                                )}
-                                                                {emailVerified && (
-                                                                    <div className="h-8 px-3 bg-green-50 border border-green-200 rounded-[2px] flex items-center justify-center">
-                                                                        <CheckCircle className="text-green-600" size={14} />
-                                                                    </div>
+                                                                ) : (
+                                                                    <span className="text-[10px] font-bold text-green-600 flex items-center gap-1">
+                                                                        <CheckCircle size={12} /> VERIFIED
+                                                                    </span>
                                                                 )}
                                                             </div>
+                                                            <input
+                                                                required
+                                                                type="email"
+                                                                name="contact1.email"
+                                                                value={formData.contact1.email}
+                                                                onChange={handleInputChange}
+                                                                placeholder="Official Email"
+                                                                className={`${inputClasses} w-full ${emailVerified ? 'border-green-500' : ''}`}
+                                                                readOnly={emailVerified}
+                                                            />
                                                             {!emailVerified && emailTimer > 0 && (
-                                                                <div className="flex gap-1 mt-2 animate-in fade-in slide-in-from-top-1">
+                                                                <div className="flex gap-1 mt-1 animate-in fade-in slide-in-from-top-1">
                                                                     <input
                                                                         value={emailOtp}
                                                                         onChange={(e) => setEmailOtp(e.target.value)}
                                                                         placeholder="6-Digit OTP"
                                                                         maxLength={6}
-                                                                        className="h-7 border border-[#23471d] bg-white text-slate-900 text-xs font-bold text-center tracking-[0.5em] outline-none focus:ring-1 focus:ring-[#23471d]/30 transition-all rounded-[2px]"
+                                                                        className="h-7 border border-[#23471d] bg-white text-slate-900 text-xs font-bold text-center tracking-[0.5em] outline-none focus:ring-1 focus:ring-[#23471d]/30 transition-all rounded-[2px] w-full"
                                                                     />
                                                                     <button type="button" onClick={handleVerifyEmailOtp} disabled={isEmailLoading} className="inline-flex items-center justify-center h-7 bg-[#23471d] text-white text-[10px] font-bold uppercase rounded-[2px] px-3 transition-colors disabled:opacity-50 hover:bg-[#1a3515]">Verify</button>
                                                                 </div>
@@ -1605,38 +1605,37 @@ const BookAStand = () => {
                                                             <input required name="contact1.designation" value={formData.contact1.designation} onChange={handleInputChange} placeholder="Write Here.." className={inputClasses} />
                                                         </div>
                                                         <div>
-                                                            <label className={labelClasses}>MOBILE <span className="text-red-500">*</span></label>
-                                                            <div className="flex gap-1">
-                                                                <input
-                                                                    required
-                                                                    name="contact1.mobile"
-                                                                    value={formData.contact1.mobile}
-                                                                    onChange={handleInputChange}
-                                                                    placeholder={exhibitorType === 'domestic' ? "10-digit number" : "WhatsApp Number"}
-                                                                    inputMode={exhibitorType === 'domestic' ? 'numeric' : 'tel'}
-                                                                    maxLength={exhibitorType === 'domestic' ? 10 : undefined}
-                                                                    className={`${inputClasses} flex-1 ${phoneVerified ? 'border-green-500' : ''}`}
-                                                                    readOnly={phoneVerified}
-                                                                />
-                                                                {!phoneVerified && (
-                                                                    <button type="button" onClick={handleSendPhoneOtp} disabled={isPhoneLoading || phoneTimer > 0} className="inline-flex items-center justify-center h-7 bg-[#23471d] text-white text-[10px] font-bold uppercase rounded-[2px] px-3 transition-colors disabled:opacity-50 hover:bg-[#1a3515]">
+                                                            <div className="flex justify-between items-center mb-1">
+                                                                <label className="text-[11px] font-medium uppercase text-slate-800">MOBILE <span className="text-red-500">*</span></label>
+                                                                {!phoneVerified ? (
+                                                                    <button type="button" onClick={handleSendPhoneOtp} disabled={isPhoneLoading || phoneTimer > 0} className="inline-flex items-center justify-center h-[18px] bg-[#23471d] text-white text-[9px] font-bold uppercase rounded-[2px] px-2 transition-colors disabled:opacity-50 hover:bg-[#1a3515]">
                                                                         {phoneTimer > 0 ? `${phoneTimer}s` : 'Get OTP'}
                                                                     </button>
-                                                                )}
-                                                                {phoneVerified && (
-                                                                    <div className="h-8 px-3 bg-green-50 border border-green-200 rounded-[2px] flex items-center justify-center">
-                                                                        <CheckCircle className="text-green-600" size={14} />
-                                                                    </div>
+                                                                ) : (
+                                                                    <span className="text-[10px] font-bold text-green-600 flex items-center gap-1">
+                                                                        <CheckCircle size={12} /> VERIFIED
+                                                                    </span>
                                                                 )}
                                                             </div>
+                                                            <input
+                                                                required
+                                                                name="contact1.mobile"
+                                                                value={formData.contact1.mobile}
+                                                                onChange={handleInputChange}
+                                                                placeholder={exhibitorType === 'domestic' ? "10-digit number" : "WhatsApp Number"}
+                                                                inputMode={exhibitorType === 'domestic' ? 'numeric' : 'tel'}
+                                                                maxLength={exhibitorType === 'domestic' ? 10 : undefined}
+                                                                className={`${inputClasses} w-full ${phoneVerified ? 'border-green-500' : ''}`}
+                                                                readOnly={phoneVerified}
+                                                            />
                                                             {!phoneVerified && phoneTimer > 0 && (
-                                                                <div className="flex gap-1 mt-2 animate-in fade-in slide-in-from-top-1">
+                                                                <div className="flex gap-1 mt-1 animate-in fade-in slide-in-from-top-1">
                                                                     <input
                                                                         value={phoneOtp}
                                                                         onChange={(e) => setPhoneOtp(e.target.value)}
                                                                         placeholder="6-Digit OTP"
                                                                         maxLength={6}
-                                                                        className="h-7 border border-[#25D366] bg-white text-slate-900 text-xs font-bold text-center tracking-[0.5em] outline-none focus:ring-1 focus:ring-[#25D366]/30 transition-all rounded-[2px]"
+                                                                        className="h-7 border border-[#25D366] bg-white text-slate-900 text-xs font-bold text-center tracking-[0.5em] outline-none focus:ring-1 focus:ring-[#25D366]/30 transition-all rounded-[2px] w-full"
                                                                     />
                                                                     <button type="button" onClick={handleVerifyPhoneOtp} disabled={isPhoneLoading} className="inline-flex items-center justify-center h-7 bg-[#25D366] text-white text-[10px] font-bold uppercase rounded-[2px] px-3 transition-colors disabled:opacity-50 hover:bg-[#20b858]">Verify</button>
                                                                 </div>
@@ -1814,7 +1813,7 @@ const BookAStand = () => {
                                                         </div>
 
                                                         <div className="w-[25%] flex justify-end items-end">
-                                                            <img loading="lazy" decoding="async" src="/bookStand/books.webp" alt="Payment Partners" className="w-full h-[160px] object-contain" />
+                                                            <img loading="lazy" decoding="async" src={DiscountImg.src} alt="Discount Offers" className="w-full h-[160px] object-contain" />
                                                         </div>
                                                     </div>
 
