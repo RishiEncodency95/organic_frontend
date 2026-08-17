@@ -6,66 +6,66 @@ import Swal from 'sweetalert2';
 
 // Helper component for multi-select
 const MultiSelectDropdown = ({ options, selected, onChange, placeholder = "Select options", error = false, accentColor = "amber" }: any) => {
-    const [open, setOpen] = useState(false);
-    
-    const toggle = (item: string) => {
-        if (selected.includes(item)) onChange(selected.filter((s: string) => s !== item));
-        else onChange([...selected, item]);
-    };
+  const [open, setOpen] = useState(false);
 
-    const accentClasses: any = {
-        amber: { bg: "bg-amber-50", text: "text-amber-700", check: "accent-amber-500", tag: "bg-amber-100 border-amber-300", tagText: "text-amber-700", tagX: "text-amber-500 hover:text-amber-700" },
-    };
-    const ac = accentClasses[accentColor] || accentClasses.amber;
+  const toggle = (item: string) => {
+    if (selected.includes(item)) onChange(selected.filter((s: string) => s !== item));
+    else onChange([...selected, item]);
+  };
 
-    return (
-        <div className="relative w-full">
-            <button
-                type="button"
-                onClick={() => setOpen((p) => !p)}
-                className={`w-full min-h-[34px] px-3 py-1.5 rounded-[2px] border text-left text-[12px] font-medium bg-white transition-all outline-none flex items-center justify-between gap-2 flex-wrap
+  const accentClasses: any = {
+    amber: { bg: "bg-amber-50", text: "text-amber-700", check: "accent-amber-500", tag: "bg-amber-100 border-amber-300", tagText: "text-amber-700", tagX: "text-amber-500 hover:text-amber-700" },
+  };
+  const ac = accentClasses[accentColor] || accentClasses.amber;
+
+  return (
+    <div className="relative w-full">
+      <button
+        type="button"
+        onClick={() => setOpen((p) => !p)}
+        className={`w-full min-h-[34px] px-3 py-1.5 rounded-[2px] border text-left text-[12px] font-medium bg-white transition-all outline-none flex items-center justify-between gap-2 flex-wrap
                     ${error ? "border-red-400" : open ? "border-[#4d7f1d]" : "border-slate-400"} hover:border-[#4d7f1d]`}
-            >
-                <span className="flex flex-wrap gap-1 flex-1">
-                    {selected.length === 0 ? (
-                        <span className="text-slate-400">{placeholder}</span>
-                    ) : (
-                        selected.slice(0, 3).map((s: string) => (
-                            <span key={s} className={`inline-flex items-center gap-1 text-[10px] font-semibold px-2 py-0.5 rounded-full border ${ac.tag} ${ac.tagText}`}>
-                                {s}
-                                <span role="button" onClick={(e) => { e.stopPropagation(); toggle(s); }} className={`cursor-pointer ${ac.tagX}`}>
-                                    <X size={9} />
-                                </span>
-                            </span>
-                        ))
-                    )}
-                    {selected.length > 3 && (
-                        <span className={`inline-flex items-center text-[10px] font-bold px-2 py-0.5 rounded-full border ${ac.tag} ${ac.tagText}`}>
-                            +{selected.length - 3} more
-                        </span>
-                    )}
+      >
+        <span className="flex flex-wrap gap-1 flex-1">
+          {selected.length === 0 ? (
+            <span className="text-slate-400">{placeholder}</span>
+          ) : (
+            selected.slice(0, 3).map((s: string) => (
+              <span key={s} className={`inline-flex items-center gap-1 text-[10px] font-semibold px-2 py-0.5 rounded-full border ${ac.tag} ${ac.tagText}`}>
+                {s}
+                <span role="button" onClick={(e) => { e.stopPropagation(); toggle(s); }} className={`cursor-pointer ${ac.tagX}`}>
+                  <X size={9} />
                 </span>
-                <ChevronsUpDown size={14} className={`shrink-0 text-slate-400 transition-transform ${open ? "rotate-180" : ""}`} />
-            </button>
-            {open && (
-                <div className="absolute z-50 top-full left-0 right-0 mt-1 bg-white border border-slate-200 rounded-lg shadow-xl max-h-[220px] overflow-y-auto custom-scrollbar">
-                    {options.length === 0 ? (
-                        <p className="text-[11px] text-slate-400 text-center py-3">No options available</p>
-                    ) : (
-                        options.map((opt: string) => {
-                            const isChecked = selected.includes(opt);
-                            return (
-                                <label key={opt} className={`flex items-center gap-2.5 px-3 py-2 cursor-pointer text-[12px] font-medium transition-colors ${isChecked ? `${ac.bg} ${ac.text}` : "text-slate-700 hover:bg-slate-50"}`}>
-                                    <input type="checkbox" checked={isChecked} onChange={() => toggle(opt)} className={`h-3.5 w-3.5 shrink-0 ${ac.check}`} />
-                                    {opt}
-                                </label>
-                            );
-                        })
-                    )}
-                </div>
-            )}
+              </span>
+            ))
+          )}
+          {selected.length > 3 && (
+            <span className={`inline-flex items-center text-[10px] font-bold px-2 py-0.5 rounded-full border ${ac.tag} ${ac.tagText}`}>
+              +{selected.length - 3} more
+            </span>
+          )}
+        </span>
+        <ChevronsUpDown size={14} className={`shrink-0 text-slate-400 transition-transform ${open ? "rotate-180" : ""}`} />
+      </button>
+      {open && (
+        <div className="absolute z-50 top-full left-0 right-0 mt-1 bg-white border border-slate-200 rounded-lg shadow-xl max-h-[220px] overflow-y-auto custom-scrollbar">
+          {options.length === 0 ? (
+            <p className="text-[11px] text-slate-400 text-center py-3">No options available</p>
+          ) : (
+            options.map((opt: string) => {
+              const isChecked = selected.includes(opt);
+              return (
+                <label key={opt} className={`flex items-center gap-2.5 px-3 py-2 cursor-pointer text-[12px] font-medium transition-colors ${isChecked ? `${ac.bg} ${ac.text}` : "text-slate-700 hover:bg-slate-50"}`}>
+                  <input type="checkbox" checked={isChecked} onChange={() => toggle(opt)} className={`h-3.5 w-3.5 shrink-0 ${ac.check}`} />
+                  {opt}
+                </label>
+              );
+            })
+          )}
         </div>
-    );
+      )}
+    </div>
+  );
 };
 
 const PURPOSE_GENERAL = ["Business Networking", "Exploring New Products", "Buying Products & Services", "Learning Industry Trends", "Others"];
@@ -106,36 +106,31 @@ export default function GeneralForm() {
     areaOfInterest: [] as string[]
   });
 
-  const apiUrl = process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000/api";
-
   useEffect(() => {
-    fetch(`${apiUrl}/crm/countries`)
-      .then(res => res.json())
-      .then(data => setCountries(data.data || data))
+    crmApi.getCountries()
+      .then(data => setCountries(data || []))
       .catch(err => console.error(err));
   }, []);
 
   useEffect(() => {
     if (formData.country) {
-        const countryObj = countries.find((c:any) => c.name === formData.country);
-        if (countryObj) {
-            fetch(`${apiUrl}/crm/states/${countryObj.countryCode}`)
-            .then(res => res.json())
-            .then(data => setStates(data.data || data))
-            .catch(err => console.error(err));
-        }
+      const countryObj = countries.find((c: any) => c.name === formData.country);
+      if (countryObj) {
+        crmApi.getStates(countryObj.countryCode)
+          .then(data => setStates(data || []))
+          .catch(err => console.error(err));
+      }
     }
   }, [formData.country, countries]);
 
   useEffect(() => {
     if (formData.state) {
-        const stateObj = states.find((s:any) => s.name === formData.state);
-        if (stateObj) {
-            fetch(`${apiUrl}/crm/cities/${stateObj.stateCode}`)
-            .then(res => res.json())
-            .then(data => setCities(data.data || data))
-            .catch(err => console.error(err));
-        }
+      const stateObj = states.find((s: any) => s.name === formData.state);
+      if (stateObj) {
+        crmApi.getCities(stateObj.stateCode)
+          .then(data => setCities(data || []))
+          .catch(err => console.error(err));
+      }
     }
   }, [formData.state, states]);
 
@@ -153,7 +148,7 @@ export default function GeneralForm() {
   const handleRequestOtp = async (type: 'email' | 'mobile') => {
     const value = type === 'email' ? formData.email : formData.mobileNo;
     if (!value) return;
-    
+
     setIsVerifying(prev => ({ ...prev, [type]: true }));
     try {
       const res = type === 'email'
@@ -250,17 +245,17 @@ export default function GeneralForm() {
 
       <div>
         <div className="flex flex-col sm:flex-row sm:items-center justify-between border-b border-[#4d7f1d]/20 pb-1.5 mb-4 gap-2 mt-8">
-            <h3 className="text-[14px] font-bold text-[#4d7f1d] uppercase tracking-wide font-poppins">
-                Personal Information
-            </h3>
-            <span className="text-[10px] font-bold bg-[#4d7f1d]/10 text-[#4d7f1d] px-2 py-1 rounded tracking-widest uppercase w-fit">Step 1 of 2</span>
+          <h3 className="text-[14px] font-bold text-[#4d7f1d] uppercase tracking-wide font-poppins">
+            Personal Information
+          </h3>
+          <span className="text-[10px] font-bold bg-[#4d7f1d]/10 text-[#4d7f1d] px-2 py-1 rounded tracking-widest uppercase w-fit">Step 1 of 2</span>
         </div>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
           <div><label className={labelClasses}>First Name *</label><input required name="firstName" value={formData.firstName} onChange={handleChange} className={inputClasses} placeholder="Enter First Name" /></div>
           <div><label className={labelClasses}>Last Name *</label><input required name="lastName" value={formData.lastName} onChange={handleChange} className={inputClasses} placeholder="Enter Last Name" /></div>
           <div><label className={labelClasses}>Gender *</label><select required name="gender" value={formData.gender} onChange={handleChange} className={inputClasses}><option value="">Select</option><option value="Male">Male</option><option value="Female">Female</option><option value="Other">Other</option></select></div>
           <div><label className={labelClasses}>Date of Birth (Optional)</label><input type="date" name="dob" value={formData.dob} onChange={handleChange} className={inputClasses} /></div>
-          
+
           <div className="space-y-1">
             <label className={labelClasses}>WhatsApp Number *</label>
             <div className="flex gap-2 h-[34px]">
@@ -309,31 +304,31 @@ export default function GeneralForm() {
 
       <div>
         <div className="flex flex-col sm:flex-row sm:items-center justify-between border-b border-[#4d7f1d]/20 pb-1.5 mb-4 gap-2 mt-8">
-            <h3 className="text-[14px] font-bold text-[#4d7f1d] uppercase tracking-wide font-poppins">
-                Additional Details
-            </h3>
-            <span className="text-[10px] font-bold bg-[#4d7f1d]/10 text-[#4d7f1d] px-2 py-1 rounded tracking-widest uppercase w-fit">Step 2 of 2</span>
+          <h3 className="text-[14px] font-bold text-[#4d7f1d] uppercase tracking-wide font-poppins">
+            Additional Details
+          </h3>
+          <span className="text-[10px] font-bold bg-[#4d7f1d]/10 text-[#4d7f1d] px-2 py-1 rounded tracking-widest uppercase w-fit">Step 2 of 2</span>
         </div>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
           <div>
             <label className={labelClasses}>Country *</label>
             <select required name="country" value={formData.country} onChange={handleChange} className={inputClasses}>
-                <option value="">Select Country</option>
-                {countries.length > 0 ? countries.map((c:any) => <option key={c.countryCode} value={c.name}>{c.name}</option>) : <option value="India">India</option>}
+              <option value="">Select Country</option>
+              {countries.length > 0 ? countries.map((c: any) => <option key={c.countryCode} value={c.name}>{c.name}</option>) : <option value="India">India</option>}
             </select>
           </div>
           <div>
             <label className={labelClasses}>State *</label>
             <select required name="state" value={formData.state} onChange={handleChange} className={inputClasses} disabled={!formData.country}>
-                <option value="">Select State</option>
-                {states.map((s:any) => <option key={s.stateCode} value={s.name}>{s.name}</option>)}
+              <option value="">Select State</option>
+              {states.map((s: any) => <option key={s.stateCode} value={s.name}>{s.name}</option>)}
             </select>
           </div>
           <div>
             <label className={labelClasses}>City *</label>
             <select required name="city" value={formData.city} onChange={handleChange} className={inputClasses} disabled={!formData.state}>
-                <option value="">Select City</option>
-                {cities.map((c:any) => <option key={c.name} value={c.name}>{c.name}</option>)}
+              <option value="">Select City</option>
+              {cities.map((c: any) => <option key={c.name} value={c.name}>{c.name}</option>)}
             </select>
           </div>
           <div><label className={labelClasses}>Pincode / Zip Code</label><input name="companyPincode" value={formData.companyPincode} onChange={handleChange} className={inputClasses} placeholder="Enter Pincode" /></div>
@@ -344,12 +339,12 @@ export default function GeneralForm() {
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-1">
                   {PURPOSE_GENERAL.map(option => (
                     <label key={option} className="flex items-start gap-2 cursor-pointer group">
-                      <input 
-                        type="checkbox" 
+                      <input
+                        type="checkbox"
                         checked={formData.purposeOfVisit.includes(option)}
                         onChange={(e) => {
-                          const newSelection = e.target.checked 
-                            ? [...formData.purposeOfVisit, option] 
+                          const newSelection = e.target.checked
+                            ? [...formData.purposeOfVisit, option]
                             : formData.purposeOfVisit.filter((item: string) => item !== option);
                           handleSelectChange('purposeOfVisit', newSelection);
                         }}
@@ -360,18 +355,18 @@ export default function GeneralForm() {
                   ))}
                 </div>
               </div>
-              
+
               <div className="space-y-4 bg-white p-5 border border-slate-200 rounded-sm shadow-sm">
                 <label className="text-[11px] font-bold text-[#4d7f1d] uppercase tracking-wider block border-b border-slate-200 pb-2">Area of Interest <span className=" text-red-500">*</span></label>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-1">
                   {INTEREST_GENERAL.map(option => (
                     <label key={option} className="flex items-start gap-2 cursor-pointer group">
-                      <input 
-                        type="checkbox" 
+                      <input
+                        type="checkbox"
                         checked={formData.areaOfInterest.includes(option)}
                         onChange={(e) => {
-                          const newSelection = e.target.checked 
-                            ? [...formData.areaOfInterest, option] 
+                          const newSelection = e.target.checked
+                            ? [...formData.areaOfInterest, option]
                             : formData.areaOfInterest.filter((item: string) => item !== option);
                           handleSelectChange('areaOfInterest', newSelection);
                         }}
@@ -389,15 +384,15 @@ export default function GeneralForm() {
 
       <div className="pt-4 border-t border-slate-100 mt-4">
         <label className="flex items-center gap-3 cursor-pointer group w-fit">
-            <input type="checkbox" name="subscribeNewsletter" checked={formData.subscribeNewsletter} onChange={handleChange} className="w-4 h-4 text-[#23471d] accent-[#23471d] border-slate-300 rounded-sm" />
-            <span className="text-[11px] font-bold text-[#23471d] uppercase tracking-wide">Subscribe to Event Updates & Newsletters</span>
+          <input type="checkbox" name="subscribeNewsletter" checked={formData.subscribeNewsletter} onChange={handleChange} className="w-4 h-4 text-[#23471d] accent-[#23471d] border-slate-300 rounded-sm" />
+          <span className="text-[11px] font-bold text-[#23471d] uppercase tracking-wide">Subscribe to Event Updates & Newsletters</span>
         </label>
       </div>
 
       <div className="pt-6 mt-4 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
         <p className="text-[10px] text-slate-400 font-bold uppercase tracking-[0.2em] flex items-center gap-2">
-            <ShieldCheck size={12} className="text-[#4d7f1d]" />
-            Secure Registration Portal
+          <ShieldCheck size={12} className="text-[#4d7f1d]" />
+          Secure Registration Portal
         </p>
         <button type="submit" disabled={loading} className="bg-[#4d7f1d] hover:bg-[#3b6315] text-white px-10 py-3 rounded-[4px] text-[13px] font-bold uppercase tracking-widest transition-all shadow-md flex items-center justify-center gap-2 font-inter disabled:opacity-50 w-full sm:w-auto">
           {loading ? <Loader2 className="animate-spin" size={18} /> : <>Submit Registration <ShieldCheck size={18} /></>}

@@ -130,8 +130,15 @@ export const adminApi = {
 };
 
 export const visitorApi = {
-    submitCorporate: async (data: any) => apiCall('/corporate-visitors', { method: 'POST', body: JSON.stringify(data) }),
-    submitInternational: async (data: any) => apiCall('/international-visitors', { method: 'POST', body: JSON.stringify(data) }),
-    submitGeneral: async (data: any) => apiCall('/general-visitors', { method: 'POST', body: JSON.stringify(data) }),
-    submitGroup: async (data: any) => apiCall('/group-visitors', { method: 'POST', body: JSON.stringify(data) })
+    submitCorporate: async (data: any) => apiCall('/corporate-visitors', { method: 'POST', body: JSON.stringify({ ...data, mobile: data.mobile || data.mobileNo }) }),
+    submitInternational: async (data: any) => apiCall('/international-visitors', { method: 'POST', body: JSON.stringify({ ...data, mobile: data.mobile || data.mobileNo }) }),
+    submitGeneral: async (data: any) => apiCall('/general-visitors', { method: 'POST', body: JSON.stringify({ ...data, mobile: data.mobile || data.mobileNo }) }),
+    submitGroup: async (data: any) => {
+        const payload = { ...data };
+        if (payload.persons && Array.isArray(payload.persons)) {
+            payload.persons = payload.persons.map((p: any) => ({ ...p, mobile: p.mobile || p.mobileNo }));
+        }
+        return apiCall('/group-visitors', { method: 'POST', body: JSON.stringify(payload) });
+    },
+    submitHealthCamp: async (data: any) => apiCall('/health-camp-visitors', { method: 'POST', body: JSON.stringify({ ...data, mobile: data.mobile || data.mobileNo }) })
 };

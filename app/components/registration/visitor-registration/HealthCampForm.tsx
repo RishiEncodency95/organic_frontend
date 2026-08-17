@@ -1,6 +1,8 @@
 "use client";
 import React, { useState, useEffect } from "react";
 import { CheckCircle2, ShieldCheck, HeartPulse, Loader2, CheckCircle, Activity, Calendar, Heart } from "lucide-react";
+import { crmApi, visitorApi } from "../../../../lib/api";
+import Swal from 'sweetalert2';
 
 const HEALTH_SERVICES = [
   { key: "generalCheckup", label: "General Check-up" },
@@ -66,12 +68,9 @@ export default function HealthCampForm() {
     subscribe: true
   });
 
-  const apiUrl = process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000/api";
-
   useEffect(() => {
-    fetch(`${apiUrl}/crm/countries`)
-      .then(res => res.json())
-      .then(data => setCountries(data.data || data))
+    crmApi.getCountries()
+      .then(data => setCountries(data || []))
       .catch(err => console.error(err));
   }, []);
 
@@ -79,9 +78,8 @@ export default function HealthCampForm() {
     if (formData.country) {
         const countryObj = countries.find((c:any) => c.name === formData.country);
         if (countryObj) {
-            fetch(`${apiUrl}/crm/states/${countryObj.countryCode}`)
-            .then(res => res.json())
-            .then(data => setStates(data.data || data))
+            crmApi.getStates(countryObj.countryCode)
+            .then(data => setStates(data || []))
             .catch(err => console.error(err));
         }
     }
@@ -91,9 +89,8 @@ export default function HealthCampForm() {
     if (formData.state) {
         const stateObj = states.find((s:any) => s.name === formData.state);
         if (stateObj) {
-            fetch(`${apiUrl}/crm/cities/${stateObj.stateCode}`)
-            .then(res => res.json())
-            .then(data => setCities(data.data || data))
+            crmApi.getCities(stateObj.stateCode)
+            .then(data => setCities(data || []))
             .catch(err => console.error(err));
         }
     }
@@ -116,11 +113,17 @@ export default function HealthCampForm() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
-    // Submit to real API endpoint here
-    setTimeout(() => {
-        setLoading(false);
+    try {
+      const res = await visitorApi.submitHealthCamp(formData);
+      if (res) {
         setSubmitted(true);
-    }, 1500);
+      } else {
+        Swal.fire({ icon: 'error', title: 'Submission Failed', text: 'Failed to submit registration.' });
+      }
+    } catch (error) {
+      Swal.fire({ icon: 'error', title: 'Error', text: 'Something went wrong.' });
+    }
+    setLoading(false);
   };
 
   const inputClasses = "w-full h-[34px] px-3 py-1.5 rounded-[2px] border border-slate-400 bg-white text-left text-[12px] font-medium text-slate-900 outline-none transition-all focus:border-[#e11d48] focus:ring-1 focus:ring-[#e11d48]/20 placeholder:text-slate-400 font-inter";

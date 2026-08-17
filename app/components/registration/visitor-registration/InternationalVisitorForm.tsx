@@ -104,12 +104,9 @@ export default function InternationalVisitorForm() {
 
   const [files, setFiles] = useState<Record<string, File | null>>({});
 
-  const apiUrl = process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000/api";
-
   useEffect(() => {
-    fetch(`${apiUrl}/crm/countries`)
-      .then(res => res.json())
-      .then(data => setCountries(data.data || data))
+    crmApi.getCountries()
+      .then(data => setCountries(data || []))
       .catch(err => console.error(err));
   }, []);
 
@@ -117,9 +114,8 @@ export default function InternationalVisitorForm() {
     if (formData.country) {
       const countryObj = countries.find((c: any) => c.name === formData.country);
       if (countryObj) {
-        fetch(`${apiUrl}/crm/states/${countryObj.countryCode}`)
-          .then(res => res.json())
-          .then(data => setStates(data.data || data))
+        crmApi.getStates(countryObj.countryCode)
+          .then(data => setStates(data || []))
           .catch(err => console.error(err));
       }
     }
@@ -129,9 +125,8 @@ export default function InternationalVisitorForm() {
     if (formData.state) {
       const stateObj = states.find((s: any) => s.name === formData.state);
       if (stateObj) {
-        fetch(`${apiUrl}/crm/cities/${stateObj.stateCode}`)
-          .then(res => res.json())
-          .then(data => setCities(data.data || data))
+        crmApi.getCities(stateObj.stateCode)
+          .then(data => setCities(data || []))
           .catch(err => console.error(err));
       }
     }
@@ -163,7 +158,7 @@ export default function InternationalVisitorForm() {
   const handleRequestOtp = async (type: 'email' | 'mobile') => {
     const value = type === 'email' ? formData.email : formData.mobileNo;
     if (!value) return;
-    
+
     setIsVerifying(prev => ({ ...prev, [type]: true }));
     try {
       const res = type === 'email'
@@ -333,14 +328,14 @@ export default function InternationalVisitorForm() {
             <div className="flex gap-2 h-[34px]">
               <input required type="tel" name="mobileNo" value={formData.mobileNo} onChange={handleChange} className={`${inputClasses} h-full`} disabled={otpVerified.mobile || otpSent.mobile} placeholder="+1 234 567 8900" />
               {!otpVerified.mobile && !otpSent.mobile && (
-                <button type="button" onClick={() => handleRequestOtp('mobile')} disabled={!formData.mobileNo || isVerifying.mobile} className={`bg-[#4d7f1d] text-white px-3 rounded-[2px] transition hover:bg-[#3b6315] h-full ${buttonTextClasses} disabled:opacity-50`}>
+                <button type="button" onClick={() => handleRequestOtp('mobile')} disabled={!formData.mobileNo || isVerifying.mobile} className={`bg-[#4d7f1d] text-white px-3 rounded-[2px] transition hover:bg-[#3b6315] h-full disabled:opacity-50`}>
                   {isVerifying.mobile ? <Loader2 className="animate-spin" size={14} /> : 'OTP'}
                 </button>
               )}
               {otpSent.mobile && !otpVerified.mobile && (
                 <>
                   <input type="text" maxLength={6} value={mobileOtp} onChange={(e) => setMobileOtp(e.target.value.replace(/\D/g, ''))} className={`${inputClasses} h-full w-[100px] text-center tracking-widest`} placeholder="OTP" />
-                  <button type="button" onClick={() => handleVerifyOtp('mobile')} className={`bg-[#4d7f1d] text-white px-3 rounded-[2px] transition hover:bg-[#3b6315] h-full ${buttonTextClasses}`}>
+                  <button type="button" onClick={() => handleVerifyOtp('mobile')} className={`bg-[#4d7f1d] text-white px-3 rounded-[2px] transition hover:bg-[#3b6315] h-full`}>
                     {isVerifying.mobile ? <Loader2 className="animate-spin" size={14} /> : 'Verify'}
                   </button>
                 </>
@@ -356,14 +351,14 @@ export default function InternationalVisitorForm() {
             <div className="flex gap-2 h-[34px]">
               <input required type="email" name="email" value={formData.email} onChange={handleChange} className={`${inputClasses} h-full`} disabled={otpVerified.email || otpSent.email} placeholder="Email Address" />
               {!otpVerified.email && !otpSent.email && (
-                <button type="button" onClick={() => handleRequestOtp('email')} disabled={!formData.email || isVerifying.email} className={`bg-[#4d7f1d] text-white px-3 rounded-[2px] transition hover:bg-[#3b6315] h-full ${buttonTextClasses} disabled:opacity-50`}>
+                <button type="button" onClick={() => handleRequestOtp('email')} disabled={!formData.email || isVerifying.email} className={`bg-[#4d7f1d] text-white px-3 rounded-[2px] transition hover:bg-[#3b6315] h-full disabled:opacity-50`}>
                   {isVerifying.email ? <Loader2 className="animate-spin" size={14} /> : 'OTP'}
                 </button>
               )}
               {otpSent.email && !otpVerified.email && (
                 <>
                   <input type="text" maxLength={6} value={emailOtp} onChange={(e) => setEmailOtp(e.target.value.replace(/\D/g, ''))} className={`${inputClasses} h-full w-[100px] text-center tracking-widest`} placeholder="OTP" />
-                  <button type="button" onClick={() => handleVerifyOtp('email')} className={`bg-[#4d7f1d] text-white px-3 rounded-[2px] transition hover:bg-[#3b6315] h-full ${buttonTextClasses}`}>
+                  <button type="button" onClick={() => handleVerifyOtp('email')} className={`bg-[#4d7f1d] text-white px-3 rounded-[2px] transition hover:bg-[#3b6315] h-full`}>
                     {isVerifying.email ? <Loader2 className="animate-spin" size={14} /> : 'Verify'}
                   </button>
                 </>

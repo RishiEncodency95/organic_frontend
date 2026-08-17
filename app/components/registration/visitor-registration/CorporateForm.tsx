@@ -151,7 +151,7 @@ export default function CorporateForm() {
   const handleRequestOtp = async (type: 'email' | 'mobile') => {
     const value = type === 'email' ? formData.email : formData.mobileNo;
     if (!value) return;
-    
+
     setIsVerifying(prev => ({ ...prev, [type]: true }));
     try {
       const res = type === 'email'
