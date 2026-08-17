@@ -142,3 +142,7 @@ export const visitorApi = {
     },
     submitHealthCamp: async (data: any) => apiCall('/health-camp-visitors', { method: 'POST', body: JSON.stringify({ ...data, mobile: data.mobile || data.mobileNo }) })
 };
+
+export const policyApi = {
+    getByPage: async (page: string) => apiCall(`/policies/${page}`)
+};
