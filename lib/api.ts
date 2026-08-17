@@ -128,3 +128,7 @@ export const countersApi = {
 export const adminApi = { 
     getEmployees: async () => apiCall('/admin/employees')
 };
+
+export const policyApi = {
+    getByPage: async (page: string) => apiCall(`/policies/${page}`)
+};
