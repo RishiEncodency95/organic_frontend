@@ -1,10 +1,10 @@
 "use client";
 import React from "react";
-import domBg from "../../assets/image/domog.png";
-import intBg from "../../assets/image/dom1og.png";
-import domIcon from "../../assets/icons/domog.png";
-import intIcon from "../../assets/icons/dom2og.png";
-import groupIcon from "../../assets/icons/exhibitor-logo-2.png"; // reusing this or we can use an icon
+import domBg from "../../../assets/image/domog.png";
+import intBg from "../../../assets/image/dom1og.png";
+import domIcon from "../../../assets/icons/domog.png";
+import intIcon from "../../../assets/icons/dom2og.png";
+import groupIcon from "../../../assets/icons/exhibitor-logo-2.png"; // reusing this or we can use an icon
 import { ArrowRight, Users, Globe2, Building2 } from "lucide-react";
 
 const Sparkle = ({
@@ -82,7 +82,7 @@ export default function CategorySelect({ visitorType, onChange }: CategorySelect
         <button
           onClick={() => onChange("international")}
           className={`relative flex flex-col md:flex-row items-center md:items-start gap-4 rounded-xl px-5 py-4 overflow-hidden text-center md:text-left cursor-pointer transition-all duration-300 active:scale-[0.98] group ${visitorType === "international"
-            ? "ring-2 ring-[#ea580c]/50 bg-white"
+            ? "ring-2 ring-[#a8d060]/50 bg-white"
             : "bg-white"
             }`}
           style={{ boxShadow: "rgba(0, 0, 0, 0.02) 0px 1px 3px 0px, rgba(27, 31, 35, 0.15) 0px 0px 0px 1px" }}
@@ -90,15 +90,15 @@ export default function CategorySelect({ visitorType, onChange }: CategorySelect
           <img src={intBg.src} alt="" className="absolute inset-0 w-full h-full object-cover z-0 pointer-events-none opacity-50" />
           <div className="relative shrink-0 z-10">
             <div className={`w-16 h-16 md:w-20 md:h-20 rounded-full bg-white flex items-center justify-center transition-all duration-300 ${visitorType === "international" ? "shadow-xl scale-105" : "shadow-md"}`}>
-              <Globe2 className="w-8 h-8 md:w-10 md:h-10 text-[#ea580c]" />
+              <Globe2 className="w-8 h-8 md:w-10 md:h-10 text-[#4d7f1d]" />
             </div>
           </div>
           <div className="relative z-10 flex-1 flex flex-col items-center md:items-start">
-            <h3 className="text-[#ea580c] font-semibold text-lg leading-none mb-1.5 uppercase tracking-wide font-poppins">International Visitor</h3>
+            <h3 className="text-[#4d7f1d] font-semibold text-lg leading-none mb-1.5 uppercase tracking-wide font-poppins">International Visitor</h3>
             <p className="text-gray-900 text-[11px] font-medium leading-relaxed max-w-[300px] font-inter">For delegates visiting from outside India, including visa invitation assistance.</p>
             <div className="relative inline-block mt-3">
-              <Sparkle color="#ea580c" shadow="#c2410c" style={{ top: "-12px", left: "10%", animationDelay: "0s" }} />
-              <div className={`inline-flex items-center gap-2 px-3 py-1.5 rounded-full text-[10px] font-bold uppercase tracking-widest transition-all ${visitorType === "international" ? "bg-[#ea580c] text-white" : "bg-[#ea580c] text-white opacity-90 group-hover:opacity-100"}`}>
+              <Sparkle color="#4d7f1d" shadow="#3b6315" style={{ top: "-12px", left: "10%", animationDelay: "0s" }} />
+              <div className={`inline-flex items-center gap-2 px-3 py-1.5 rounded-full text-[10px] font-bold uppercase tracking-widest transition-all ${visitorType === "international" ? "bg-[#4d7f1d] text-white" : "bg-[#4d7f1d] text-white opacity-90 group-hover:opacity-100"}`}>
                 {visitorType === "international" ? "✓ SELECTED" : "SELECT INTERNATIONAL"}
                 {visitorType !== "international" && <ArrowRight size={12} />}
               </div>
@@ -110,23 +110,23 @@ export default function CategorySelect({ visitorType, onChange }: CategorySelect
         <button
           onClick={() => onChange("group")}
           className={`relative flex flex-col md:flex-row items-center md:items-start gap-4 rounded-xl px-5 py-4 overflow-hidden text-center md:text-left cursor-pointer transition-all duration-300 active:scale-[0.98] group ${visitorType === "group"
-            ? "ring-2 ring-[#0369a1]/50 bg-white"
+            ? "ring-2 ring-[#a8d060]/50 bg-white"
             : "bg-white"
             }`}
           style={{ boxShadow: "rgba(0, 0, 0, 0.02) 0px 1px 3px 0px, rgba(27, 31, 35, 0.15) 0px 0px 0px 1px" }}
         >
-          <div className="absolute inset-0 bg-gradient-to-br from-sky-50 to-white z-0 pointer-events-none opacity-80" />
+          <div className="absolute inset-0 bg-gradient-to-br from-[#f8fcf3] to-white z-0 pointer-events-none opacity-80" />
           <div className="relative shrink-0 z-10">
             <div className={`w-16 h-16 md:w-20 md:h-20 rounded-full bg-white flex items-center justify-center transition-all duration-300 ${visitorType === "group" ? "shadow-xl scale-105" : "shadow-md"}`}>
-              <Users className="w-8 h-8 md:w-10 md:h-10 text-[#0369a1]" />
+              <Users className="w-8 h-8 md:w-10 md:h-10 text-[#4d7f1d]" />
             </div>
           </div>
           <div className="relative z-10 flex-1 flex flex-col items-center md:items-start">
-            <h3 className="text-[#0369a1] font-semibold text-lg leading-none mb-1.5 uppercase tracking-wide font-poppins">Group Registration</h3>
-            <p className="text-gray-900 text-[11px] font-medium leading-relaxed max-w-[300px] font-inter">Register multiple individuals from the same organization or group together.</p>
+            <h3 className="text-[#4d7f1d] font-semibold text-lg leading-none mb-1.5 uppercase tracking-wide font-poppins">Group Registration</h3>
+            <p className="text-gray-900 text-[11px] font-medium leading-relaxed max-w-[300px] font-inter">Register your entire team in one go. Applicable for 5–10 members from the same organization.</p>
             <div className="relative inline-block mt-3">
-              <Sparkle color="#0369a1" shadow="#0284c7" style={{ top: "-12px", left: "10%", animationDelay: "0.5s" }} />
-              <div className={`inline-flex items-center gap-2 px-3 py-1.5 rounded-full text-[10px] font-bold uppercase tracking-widest transition-all ${visitorType === "group" ? "bg-[#0369a1] text-white" : "bg-[#0369a1] text-white opacity-90 group-hover:opacity-100"}`}>
+              <Sparkle color="#4d7f1d" shadow="#3b6315" style={{ top: "-12px", left: "10%", animationDelay: "0.5s" }} />
+              <div className={`inline-flex items-center gap-2 px-3 py-1.5 rounded-full text-[10px] font-bold uppercase tracking-widest transition-all ${visitorType === "group" ? "bg-[#4d7f1d] text-white" : "bg-[#4d7f1d] text-white opacity-90 group-hover:opacity-100"}`}>
                 {visitorType === "group" ? "✓ SELECTED" : "SELECT GROUP"}
                 {visitorType !== "group" && <ArrowRight size={12} />}
               </div>

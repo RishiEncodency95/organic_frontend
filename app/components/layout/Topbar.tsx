@@ -44,7 +44,7 @@ const Topbar = () => {
 
                     {/* Right Section */}
                     <div className="hidden md:flex flex-shrink-0 items-center gap-3 pl-2">
-                        
+
                         {/* Register Now Dropdown */}
                         <div
                             className="relative"
@@ -73,7 +73,7 @@ const Topbar = () => {
                                             <div className="grid grid-cols-2">
                                                 {[
                                                     { to: "/registration/book-a-stand", icon: Store, label: "BOOK A\nSTALL", color: "orange" },
-                                                    { to: "/visitor-registration", icon: UserPlus, label: "REGISTER AS\nVISITOR", color: "green" },
+                                                    { to: "/registration/visitor-registration", icon: UserPlus, label: "REGISTER AS\nVISITOR", color: "green" },
                                                     { to: "/conference", icon: Globe, label: "DELEGATE\nREGISTRATION", color: "orange" },
                                                     { to: "/registration/buyer-registration", icon: Users, label: "REGISTER AS\nBUYER", color: "green" },
                                                     { to: "/sponsership", icon: Award, label: "SPONSORSHIP\nOPPORTUNITIES", color: "orange" },

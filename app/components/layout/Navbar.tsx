@@ -69,7 +69,7 @@ const bottomTabs = [
 
 const registrationOptions = [
     { label: "BOOK A STALL", path: "/registration/book-a-stand", icon: Store, color: "green" },
-    { label: "REGISTER AS VISITOR", path: "/visitor-registration", icon: UserPlus, color: "orange" },
+    { label: "REGISTER AS VISITOR", path: "/registration/visitor-registration", icon: UserPlus, color: "orange" },
     { label: "DELEGATE REGISTRATION", path: "/conference", icon: Globe, color: "green" },
     { label: "REGISTER AS BUYER", path: "/registration/buyer-registration", icon: Users, color: "orange" },
     { label: "SPONSORSHIP OPPORTUNITIES", path: "/sponsership", icon: Award, color: "green" },

@@ -128,3 +128,10 @@ export const countersApi = {
 export const adminApi = { 
     getEmployees: async () => apiCall('/admin/employees')
 };
+
+export const visitorApi = {
+    submitCorporate: async (data: any) => apiCall('/corporate-visitors', { method: 'POST', body: JSON.stringify(data) }),
+    submitInternational: async (data: any) => apiCall('/international-visitors', { method: 'POST', body: JSON.stringify(data) }),
+    submitGeneral: async (data: any) => apiCall('/general-visitors', { method: 'POST', body: JSON.stringify(data) }),
+    submitGroup: async (data: any) => apiCall('/group-visitors', { method: 'POST', body: JSON.stringify(data) })
+};

@@ -1,7 +1,8 @@
 "use client";
 import React, { useState, useEffect } from "react";
 import { CheckCircle2, ShieldCheck, Store, Loader2, CheckCircle, X, ChevronsUpDown } from "lucide-react";
-
+import { crmApi, verifyApi, visitorApi } from "../../../../lib/api";
+import Swal from 'sweetalert2';
 // Helper component for multi-select
 const MultiSelectDropdown = ({ options, selected, onChange, placeholder = "Select options", error = false, accentColor = "emerald" }: any) => {
   const [open, setOpen] = useState(false);
@@ -74,6 +75,8 @@ export default function CorporateForm() {
   const [isVerifying, setIsVerifying] = useState({ email: false, mobile: false });
   const [otpSent, setOtpSent] = useState({ email: false, mobile: false });
   const [otpVerified, setOtpVerified] = useState({ email: false, mobile: false });
+  const [emailOtp, setEmailOtp] = useState('');
+  const [mobileOtp, setMobileOtp] = useState('');
   const [loading, setLoading] = useState(false);
 
   const [countries, setCountries] = useState<any[]>([]);
@@ -109,12 +112,9 @@ export default function CorporateForm() {
     areaOfInterest: [] as string[]
   });
 
-  const apiUrl = process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000/api";
-
   useEffect(() => {
-    fetch(`${apiUrl}/crm/countries`)
-      .then(res => res.json())
-      .then(data => setCountries(data.data || data))
+    crmApi.getCountries()
+      .then(data => setCountries(data || []))
       .catch(err => console.error(err));
   }, []);
 
@@ -122,9 +122,8 @@ export default function CorporateForm() {
     if (formData.country) {
       const countryObj = countries.find((c: any) => c.name === formData.country);
       if (countryObj) {
-        fetch(`${apiUrl}/crm/states/${countryObj.countryCode}`)
-          .then(res => res.json())
-          .then(data => setStates(data.data || data))
+        crmApi.getStates(countryObj.countryCode)
+          .then(data => setStates(data || []))
           .catch(err => console.error(err));
       }
     }
@@ -134,9 +133,8 @@ export default function CorporateForm() {
     if (formData.state) {
       const stateObj = states.find((s: any) => s.name === formData.state);
       if (stateObj) {
-        fetch(`${apiUrl}/crm/cities/${stateObj.stateCode}`)
-          .then(res => res.json())
-          .then(data => setCities(data.data || data))
+        crmApi.getCities(stateObj.stateCode)
+          .then(data => setCities(data || []))
           .catch(err => console.error(err));
       }
     }
@@ -150,30 +148,71 @@ export default function CorporateForm() {
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
-  const handleSimulateOtp = (type: 'email' | 'mobile') => {
+  const handleRequestOtp = async (type: 'email' | 'mobile') => {
+    const value = type === 'email' ? formData.email : formData.mobileNo;
+    if (!value) return;
+    
     setIsVerifying(prev => ({ ...prev, [type]: true }));
-    setTimeout(() => {
-      setIsVerifying(prev => ({ ...prev, [type]: false }));
-      setOtpSent(prev => ({ ...prev, [type]: true }));
-    }, 1000);
+    try {
+      const res = type === 'email'
+        ? await verifyApi.sendEmailOtp(value, 'VISITOR')
+        : await verifyApi.sendPhoneOtp(value, 'VISITOR', formData.firstName);
+
+      if (res && res.success) {
+        setOtpSent(prev => ({ ...prev, [type]: true }));
+        Swal.fire({ icon: 'success', title: 'OTP Sent', text: `OTP sent to your ${type}.`, timer: 2000, showConfirmButton: false });
+      } else {
+        Swal.fire({ icon: 'error', title: 'Error', text: res?.message || 'Failed to send OTP.' });
+      }
+    } catch (error) {
+      Swal.fire({ icon: 'error', title: 'Error', text: 'Something went wrong.' });
+    }
+    setIsVerifying(prev => ({ ...prev, [type]: false }));
   };
 
-  const handleVerifyOtp = (type: 'email' | 'mobile') => {
+  const handleVerifyOtp = async (type: 'email' | 'mobile') => {
+    const otpValue = type === 'email' ? emailOtp : mobileOtp;
+    const value = type === 'email' ? formData.email : formData.mobileNo;
+    if (!otpValue || otpValue.length !== 6) {
+      Swal.fire({ icon: 'warning', title: 'Invalid OTP', text: 'Please enter a valid 6-digit OTP.' });
+      return;
+    }
     setIsVerifying(prev => ({ ...prev, [type]: true }));
-    setTimeout(() => {
-      setIsVerifying(prev => ({ ...prev, [type]: false }));
-      setOtpVerified(prev => ({ ...prev, [type]: true }));
-    }, 1000);
+    try {
+      const res = type === 'email'
+        ? await verifyApi.verifyEmailOtp(value, otpValue)
+        : await verifyApi.verifyPhoneOtp(value, otpValue);
+
+      if (res && res.success) {
+        setOtpVerified(prev => ({ ...prev, [type]: true }));
+        Swal.fire({ icon: 'success', title: 'Verified', text: 'Verified successfully!', timer: 2000, showConfirmButton: false });
+      } else {
+        Swal.fire({ icon: 'error', title: 'Invalid OTP', text: res?.message || 'Verification failed.' });
+      }
+    } catch (error) {
+      Swal.fire({ icon: 'error', title: 'Error', text: 'Something went wrong.' });
+    }
+    setIsVerifying(prev => ({ ...prev, [type]: false }));
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    if (!otpVerified.email || !otpVerified.mobile) {
+      Swal.fire({ icon: 'warning', title: 'Verification Required', text: 'Please verify both Email and WhatsApp number.' });
+      return;
+    }
     setLoading(true);
-    // Add real API logic here pointing to visitorApi.submitCorporate
-    setTimeout(() => {
-      setLoading(false);
-      setSubmitted(true);
-    }, 1500);
+    try {
+      const res = await visitorApi.submitCorporate(formData);
+      if (res) {
+        setSubmitted(true);
+      } else {
+        Swal.fire({ icon: 'error', title: 'Submission Failed', text: 'Failed to submit registration.' });
+      }
+    } catch (error) {
+      Swal.fire({ icon: 'error', title: 'Error', text: 'Something went wrong.' });
+    }
+    setLoading(false);
   };
 
   const inputClasses = "w-full h-[34px] px-3 py-1.5 rounded-[2px] border border-slate-400 bg-white text-left text-[12px] font-medium text-slate-900 outline-none transition-all focus:border-[#4d7f1d] focus:ring-1 focus:ring-[#4d7f1d]/20 placeholder:text-slate-400 font-inter";
@@ -224,16 +263,19 @@ export default function CorporateForm() {
           <div className="space-y-1">
             <label className={labelClasses}>WhatsApp Number *</label>
             <div className="flex gap-2 h-[34px]">
-              <input required type="tel" name="mobileNo" value={formData.mobileNo} onChange={handleChange} className={`${inputClasses} h-full`} disabled={otpVerified.mobile} placeholder="Enter WhatsApp Number" />
+              <input required type="tel" name="mobileNo" value={formData.mobileNo} onChange={handleChange} className={`${inputClasses} h-full`} disabled={otpVerified.mobile || otpSent.mobile} placeholder="Enter WhatsApp Number" />
               {!otpVerified.mobile && !otpSent.mobile && (
-                <button type="button" onClick={() => handleSimulateOtp('mobile')} className={`bg-[#23471d] text-white px-3 rounded-[2px] transition hover:bg-[#1a3516] h-full ${buttonTextClasses}`}>
+                <button type="button" onClick={() => handleRequestOtp('mobile')} disabled={!formData.mobileNo || isVerifying.mobile} className={`bg-[#23471d] text-white px-3 rounded-[2px] transition hover:bg-[#1a3516] h-full ${buttonTextClasses} disabled:opacity-50`}>
                   {isVerifying.mobile ? <Loader2 className="animate-spin" size={14} /> : 'OTP'}
                 </button>
               )}
               {otpSent.mobile && !otpVerified.mobile && (
-                <button type="button" onClick={() => handleVerifyOtp('mobile')} className={`bg-[#23471d] text-white px-3 rounded-[2px] transition hover:bg-[#1a3516] h-full ${buttonTextClasses}`}>
-                  {isVerifying.mobile ? <Loader2 className="animate-spin" size={14} /> : 'Verify'}
-                </button>
+                <>
+                  <input type="text" maxLength={6} value={mobileOtp} onChange={(e) => setMobileOtp(e.target.value.replace(/\D/g, ''))} className={`${inputClasses} h-full w-[100px] text-center tracking-widest`} placeholder="OTP" />
+                  <button type="button" onClick={() => handleVerifyOtp('mobile')} className={`bg-[#23471d] text-white px-3 rounded-[2px] transition hover:bg-[#1a3516] h-full ${buttonTextClasses}`}>
+                    {isVerifying.mobile ? <Loader2 className="animate-spin" size={14} /> : 'Verify'}
+                  </button>
+                </>
               )}
               {otpVerified.mobile && <CheckCircle size={18} className="text-[#4d7f1d] self-center shrink-0 ml-2" />}
             </div>
@@ -244,18 +286,21 @@ export default function CorporateForm() {
           <div className="space-y-1">
             <label className={labelClasses}>Email Address *</label>
             <div className="flex gap-2 h-[34px]">
-              <input required type="email" name="email" value={formData.email} onChange={handleChange} className={`${inputClasses} h-full`} disabled={otpVerified.email} placeholder="Enter Email Address" />
+              <input required type="email" name="email" value={formData.email} onChange={handleChange} className={`${inputClasses} h-full`} disabled={otpVerified.email || otpSent.email} placeholder="Enter Email Address" />
               {!otpVerified.email && !otpSent.email && (
-                <button type="button" onClick={() => handleSimulateOtp('email')} className={`bg-[#23471d] text-white px-3 rounded-[2px] transition hover:bg-[#1a3516] h-full ${buttonTextClasses}`}>
+                <button type="button" onClick={() => handleRequestOtp('email')} disabled={!formData.email || isVerifying.email} className={`bg-[#23471d] text-white px-3 rounded-[2px] transition hover:bg-[#1a3516] h-full ${buttonTextClasses} disabled:opacity-50`}>
                   {isVerifying.email ? <Loader2 className="animate-spin" size={14} /> : 'OTP'}
                 </button>
               )}
               {otpSent.email && !otpVerified.email && (
-                <button type="button" onClick={() => handleVerifyOtp('email')} className={`bg-[#23471d] text-white px-3 rounded-[2px] transition hover:bg-[#1a3516] h-full ${buttonTextClasses}`}>
-                  {isVerifying.email ? <Loader2 className="animate-spin" size={14} /> : 'Verify'}
-                </button>
+                <>
+                  <input type="text" maxLength={6} value={emailOtp} onChange={(e) => setEmailOtp(e.target.value.replace(/\D/g, ''))} className={`${inputClasses} h-full w-[100px] text-center tracking-widest`} placeholder="OTP" />
+                  <button type="button" onClick={() => handleVerifyOtp('email')} className={`bg-[#23471d] text-white px-3 rounded-[2px] transition hover:bg-[#1a3516] h-full ${buttonTextClasses}`}>
+                    {isVerifying.email ? <Loader2 className="animate-spin" size={14} /> : 'Verify'}
+                  </button>
+                </>
               )}
-              {otpVerified.email && <CheckCircle size={18} className="text-emerald-600 self-center shrink-0 ml-2" />}
+              {otpVerified.email && <CheckCircle size={18} className="text-[#4d7f1d] self-center shrink-0 ml-2" />}
             </div>
           </div>
 
@@ -369,21 +414,21 @@ export default function CorporateForm() {
           </div>
         </div>
         <div className="md:col-span-2 lg:col-span-4 mt-2">
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-                <div className="space-y-4 text-left">
-                    <label className="text-[11px] font-bold text-[#4d7f1d] uppercase tracking-wider block">Would you like to schedule B2B meetings? <span className=" text-red-500">*</span></label>
-                    <div className="flex gap-6">
-                        <label className="flex items-center space-x-2 cursor-pointer">
-                            <input type="radio" name="schedulingB2B" value="yes" checked={formData.schedulingB2B === 'yes'} onChange={handleChange} className="w-4 h-4 text-[#23471d] accent-[#23471d] border-slate-400" />
-                            <span className="text-[13px] font-medium text-slate-700">Yes</span>
-                        </label>
-                        <label className="flex items-center space-x-2 cursor-pointer">
-                            <input type="radio" name="schedulingB2B" value="no" checked={formData.schedulingB2B === 'no'} onChange={handleChange} className="w-4 h-4 text-[#23471d] accent-[#23471d] border-slate-400" />
-                            <span className="text-[13px] font-medium text-slate-700">No</span>
-                        </label>
-                    </div>
-                </div>
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+            <div className="space-y-4 text-left">
+              <label className="text-[11px] font-bold text-[#4d7f1d] uppercase tracking-wider block">Would you like to schedule B2B meetings? <span className=" text-red-500">*</span></label>
+              <div className="flex gap-6">
+                <label className="flex items-center space-x-2 cursor-pointer">
+                  <input type="radio" name="schedulingB2B" value="yes" checked={formData.schedulingB2B === 'yes'} onChange={handleChange} className="w-4 h-4 text-[#23471d] accent-[#23471d] border-slate-400" />
+                  <span className="text-[13px] font-medium text-slate-700">Yes</span>
+                </label>
+                <label className="flex items-center space-x-2 cursor-pointer">
+                  <input type="radio" name="schedulingB2B" value="no" checked={formData.schedulingB2B === 'no'} onChange={handleChange} className="w-4 h-4 text-[#23471d] accent-[#23471d] border-slate-400" />
+                  <span className="text-[13px] font-medium text-slate-700">No</span>
+                </label>
+              </div>
             </div>
+          </div>
         </div>
         <div className="md:col-span-2 lg:col-span-4"><label className={labelClasses}>Any Specific Requirement</label><input name="anyRequirement" value={formData.anyRequirement} onChange={handleChange} className={inputClasses} placeholder="Please specify if any..." /></div>
       </div>
@@ -396,8 +441,8 @@ export default function CorporateForm() {
 
       <div className="pt-6 mt-4 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
         <p className="text-[10px] text-slate-400 font-bold uppercase tracking-[0.2em] flex items-center gap-2">
-            <ShieldCheck size={12} className="text-[#1b5e20]" />
-            Secure Registration Portal
+          <ShieldCheck size={12} className="text-[#1b5e20]" />
+          Secure Registration Portal
         </p>
         <button type="submit" disabled={loading} className="bg-[#1b5e20] hover:bg-[#144718] text-white px-10 py-3 rounded-[4px] text-[13px] font-bold uppercase tracking-widest transition-all shadow-md flex items-center justify-center gap-2 font-inter disabled:opacity-50 w-full sm:w-auto">
           {loading ? <Loader2 className="animate-spin" size={18} /> : <>Submit Registration <ShieldCheck size={18} /></>}

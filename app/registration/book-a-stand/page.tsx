@@ -1665,7 +1665,7 @@ const BookAStand = () => {
                                                             <Select onValueChange={(v) => handleStallChange(v)} value={formData?.participation?.stallNo ? String(formData.participation.stallNo) : undefined}>
                                                                 <SelectTrigger className={inputClasses}>
                                                                     <span className={`truncate ${!formData?.participation?.stallNo ? "text-slate-400" : ""}`}>
-                                                                        {formData?.participation?.stallNo 
+                                                                        {formData?.participation?.stallNo
                                                                             ? (() => {
                                                                                 const stall = availableStalls?.find((s: any) => String(s._id || s.id) === String(formData.participation.stallNo));
                                                                                 return stall ? `Stall ${stall.stallNumber || stall.stallName || stall.name || stall.id}` : formData.participation.stallNo;

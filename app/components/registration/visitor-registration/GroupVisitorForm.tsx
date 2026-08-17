@@ -1,6 +1,8 @@
 "use client";
 import React, { useState, useEffect } from "react";
-import { CheckCircle2, ShieldCheck, Users, Loader2, Plus, Trash2, CheckCircle, X, ChevronsUpDown } from "lucide-react";
+import { Users, Plus, Trash2, CheckCircle2, Globe2, Loader2, CheckCircle, X, ChevronsUpDown } from "lucide-react";
+import { crmApi, verifyApi, visitorApi } from "../../../../lib/api";
+import Swal from 'sweetalert2';
 
 const MIN_PERSONS = 5;
 const MAX_PERSONS = 10;
@@ -87,28 +89,91 @@ export default function GroupVisitorForm() {
     if (persons.length > MIN_PERSONS) setPersons(prev => prev.filter((_, i) => i !== index));
   };
 
+  const [isVerifying, setIsVerifying] = useState({ email: false, mobile: false });
+  const [otpSent, setOtpSent] = useState({ email: false, mobile: false });
+  const [otpVerified, setOtpVerified] = useState({ email: false, mobile: false });
+  const [emailOtp, setEmailOtp] = useState('');
+  const [mobileOtp, setMobileOtp] = useState('');
+
+  const handleRequestOtp = async (type: 'email' | 'mobile') => {
+    const value = type === 'email' ? persons[0].email : persons[0].mobileNo;
+    if (!value) return;
+    
+    setIsVerifying(prev => ({ ...prev, [type]: true }));
+    try {
+      const res = type === 'email'
+        ? await verifyApi.sendEmailOtp(value, 'VISITOR')
+        : await verifyApi.sendPhoneOtp(value, 'VISITOR', persons[0].firstName);
+
+      if (res && res.success) {
+        setOtpSent(prev => ({ ...prev, [type]: true }));
+        Swal.fire({ icon: 'success', title: 'OTP Sent', text: `OTP sent to your ${type}.`, timer: 2000, showConfirmButton: false });
+      } else {
+        Swal.fire({ icon: 'error', title: 'Error', text: res?.message || 'Failed to send OTP.' });
+      }
+    } catch (error) {
+      Swal.fire({ icon: 'error', title: 'Error', text: 'Something went wrong.' });
+    }
+    setIsVerifying(prev => ({ ...prev, [type]: false }));
+  };
+
+  const handleVerifyOtp = async (type: 'email' | 'mobile') => {
+    const otpValue = type === 'email' ? emailOtp : mobileOtp;
+    const value = type === 'email' ? persons[0].email : persons[0].mobileNo;
+    if (!otpValue || otpValue.length !== 6) {
+      Swal.fire({ icon: 'warning', title: 'Invalid OTP', text: 'Please enter a valid 6-digit OTP.' });
+      return;
+    }
+    setIsVerifying(prev => ({ ...prev, [type]: true }));
+    try {
+      const res = type === 'email'
+        ? await verifyApi.verifyEmailOtp(value, otpValue)
+        : await verifyApi.verifyPhoneOtp(value, otpValue);
+
+      if (res && res.success) {
+        setOtpVerified(prev => ({ ...prev, [type]: true }));
+        Swal.fire({ icon: 'success', title: 'Verified', text: 'Verified successfully!', timer: 2000, showConfirmButton: false });
+      } else {
+        Swal.fire({ icon: 'error', title: 'Invalid OTP', text: res?.message || 'Verification failed.' });
+      }
+    } catch (error) {
+      Swal.fire({ icon: 'error', title: 'Error', text: 'Something went wrong.' });
+    }
+    setIsVerifying(prev => ({ ...prev, [type]: false }));
+  };
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!company.confirmInfo || !company.agreeTerms || !company.acceptPrivacy || !company.agreeRules) {
       alert("Please accept all declarations."); return;
     }
+    if (!otpVerified.email || !otpVerified.mobile) {
+      Swal.fire({ icon: 'warning', title: 'Verification Required', text: 'Please verify the Primary Contact (Person 1) Email and Mobile number.' });
+      return;
+    }
     setLoading(true);
-    // Add real API logic here pointing to visitorApi.submitGroup
-    setTimeout(() => {
-        setLoading(false);
+    try {
+      const res = await visitorApi.submitGroup({ company, persons });
+      if (res) {
         setSubmitted(true);
-    }, 1500);
+      } else {
+        Swal.fire({ icon: 'error', title: 'Submission Failed', text: 'Failed to submit registration.' });
+      }
+    } catch (error) {
+      Swal.fire({ icon: 'error', title: 'Error', text: 'Something went wrong.' });
+    }
+    setLoading(false);
   };
 
-  const inputClasses = "w-full h-[34px] px-3 py-1.5 rounded-[2px] border border-slate-400 bg-white text-left text-[12px] font-medium text-slate-900 outline-none transition-all focus:border-[#0284c7] focus:ring-1 focus:ring-[#0ea5e9]/20 placeholder:text-slate-400 font-inter";
+  const inputClasses = "w-full h-[34px] px-3 py-1.5 rounded-[2px] border border-slate-400 bg-white text-left text-[12px] font-medium text-slate-900 outline-none transition-all focus:border-[#3b6315] focus:ring-1 focus:ring-[#4d7f1d]/20 placeholder:text-slate-400 font-inter";
   const labelClasses = "text-[12px] font-semibold text-slate-900 mb-1 block text-left font-inter uppercase";
-  const sectionTitleClasses = "text-[14px] font-bold text-[#0369a1] pb-2 border-b border-[#bae6fd] flex items-center gap-2 mb-4 uppercase tracking-wide font-poppins mt-8";
+  const sectionTitleClasses = "text-[14px] font-bold text-[#4d7f1d] pb-2 border-b border-[#bae6fd] flex items-center gap-2 mb-4 uppercase tracking-wide font-poppins mt-8";
   
   if (submitted) {
     return (
       <div className="flex flex-col items-center justify-center py-16 text-center">
         <div className="w-20 h-20 rounded-full bg-[#f0f9ff] flex items-center justify-center mb-6 shadow-lg">
-          <CheckCircle2 size={40} className="text-[#0369a1]" />
+          <CheckCircle2 size={40} className="text-[#4d7f1d]" />
         </div>
         <h3 className="text-2xl font-bold text-[#1a3352] mb-2 font-poppins">Group Registration Successful!</h3>
         <p className="text-gray-500 text-sm max-w-sm leading-relaxed">
@@ -121,7 +186,7 @@ export default function GroupVisitorForm() {
   return (
     <form onSubmit={handleSubmit} className="w-full space-y-2 animate-in fade-in duration-500">
       <div className="flex items-center gap-3 mb-6">
-        <div className="w-10 h-10 rounded-full bg-[#0369a1] flex items-center justify-center shrink-0 shadow-md">
+        <div className="w-10 h-10 rounded-full bg-[#4d7f1d] flex items-center justify-center shrink-0 shadow-md">
           <Users size={18} className="text-white" />
         </div>
         <div>
@@ -186,7 +251,7 @@ export default function GroupVisitorForm() {
 
       {step === 1 && (
           <div className="pt-6 mt-4 flex justify-center">
-              <button type="button" onClick={() => setStep(2)} className="bg-[#0369a1] hover:bg-[#0284c7] text-white px-10 py-3 rounded-[4px] text-[13px] font-bold uppercase tracking-widest transition-all shadow-md flex items-center justify-center gap-2 font-inter w-full sm:w-auto">
+              <button type="button" onClick={() => setStep(2)} className="bg-[#4d7f1d] hover:bg-[#3b6315] text-white px-10 py-3 rounded-[4px] text-[13px] font-bold uppercase tracking-widest transition-all shadow-md flex items-center justify-center gap-2 font-inter w-full sm:w-auto">
                   Next Step
               </button>
           </div>
@@ -197,24 +262,24 @@ export default function GroupVisitorForm() {
 
       <div>
         <div className="flex items-center justify-between border-b border-[#bae6fd] pb-2 mt-8 mb-4">
-            <h3 className="text-[14px] font-bold text-[#0369a1] uppercase tracking-wide font-poppins">
+            <h3 className="text-[14px] font-bold text-[#4d7f1d] uppercase tracking-wide font-poppins">
                 2. Personal Information
                 <span className="ml-2 text-[10px] text-slate-400 normal-case tracking-normal font-medium">({persons.length} / {MAX_PERSONS} — min. {MIN_PERSONS})</span>
             </h3>
             <button type="button" onClick={addPerson} disabled={persons.length >= MAX_PERSONS}
-                className="flex items-center gap-1.5 text-[10px] font-extrabold text-[#0369a1] uppercase tracking-wider hover:text-[#0284c7] disabled:text-slate-300 transition-colors">
+                className="flex items-center gap-1.5 text-[10px] font-extrabold text-[#4d7f1d] uppercase tracking-wider hover:text-[#3b6315] disabled:text-slate-300 transition-colors">
                 <Plus size={13} /> Add Member
             </button>
         </div>
 
-        <p className="text-[11px] text-[#0369a1] font-semibold bg-[#f0f9ff] border border-[#bae6fd] rounded px-3 py-1.5 mb-4">
+        <p className="text-[11px] text-[#4d7f1d] font-semibold bg-[#f0f9ff] border border-[#bae6fd] rounded px-3 py-1.5 mb-4">
             Person 1 is the primary contact.
         </p>
 
         <div className="space-y-3">
             {persons.map((person, idx) => (
                 <div key={idx} className={`border rounded-lg px-4 py-3 relative ${idx === 0 ? "border-[#bae6fd] bg-[#f0f9ff]" : "border-slate-200 bg-slate-50/40"}`}>
-                    <div className="absolute -left-2 -top-2 w-6 h-6 rounded-full bg-[#0369a1] text-white flex items-center justify-center text-[10px] font-black shadow-sm">
+                    <div className="absolute -left-2 -top-2 w-6 h-6 rounded-full bg-[#4d7f1d] text-white flex items-center justify-center text-[10px] font-black shadow-sm">
                         {idx + 1}
                     </div>
                     
@@ -240,14 +305,44 @@ export default function GroupVisitorForm() {
                                 <option value="others">Others</option>
                             </select>
                         </div>
-                        <div>
+                        <div className={idx === 0 ? "col-span-2" : ""}>
                             <label className={labelClasses}>Email Address *</label>
-                            <input required type="email" value={person.email} onChange={e => handlePersonChange(idx, "email", e.target.value)} className={inputClasses} placeholder="Email" />
+                            <div className="flex gap-2 h-[34px]">
+                                <input required type="email" value={person.email} onChange={e => handlePersonChange(idx, "email", e.target.value)} className={`${inputClasses} h-full`} placeholder="Email" disabled={idx === 0 && (otpVerified.email || otpSent.email)} />
+                                {idx === 0 && !otpVerified.email && !otpSent.email && (
+                                    <button type="button" onClick={() => handleRequestOtp('email')} disabled={!person.email || isVerifying.email} className={`bg-[#4d7f1d] text-white px-3 rounded-[2px] transition hover:bg-[#3b6315] h-full ${buttonTextClasses} disabled:opacity-50`}>
+                                        {isVerifying.email ? <Loader2 className="animate-spin" size={14} /> : 'OTP'}
+                                    </button>
+                                )}
+                                {idx === 0 && otpSent.email && !otpVerified.email && (
+                                    <>
+                                        <input type="text" maxLength={6} value={emailOtp} onChange={(e) => setEmailOtp(e.target.value.replace(/\D/g, ''))} className={`${inputClasses} h-full w-[80px] text-center tracking-widest`} placeholder="OTP" />
+                                        <button type="button" onClick={() => handleVerifyOtp('email')} className={`bg-[#4d7f1d] text-white px-3 rounded-[2px] transition hover:bg-[#3b6315] h-full ${buttonTextClasses}`}>
+                                            {isVerifying.email ? <Loader2 className="animate-spin" size={14} /> : 'Verify'}
+                                        </button>
+                                    </>
+                                )}
+                                {idx === 0 && otpVerified.email && <CheckCircle size={18} className="text-[#4d7f1d] self-center shrink-0 ml-2" />}
+                            </div>
                         </div>
-                        <div className="relative">
+                        <div className={`relative ${idx === 0 ? "col-span-2" : ""}`}>
                             <label className={labelClasses}>WhatsApp No. *</label>
-                            <div className="flex gap-2">
-                                <input required type="tel" value={person.mobileNo} onChange={e => handlePersonChange(idx, "mobileNo", e.target.value)} className={inputClasses} placeholder="Mobile" />
+                            <div className="flex gap-2 h-[34px]">
+                                <input required type="tel" value={person.mobileNo} onChange={e => handlePersonChange(idx, "mobileNo", e.target.value)} className={`${inputClasses} h-full w-full`} placeholder="Mobile" disabled={idx === 0 && (otpVerified.mobile || otpSent.mobile)} />
+                                {idx === 0 && !otpVerified.mobile && !otpSent.mobile && (
+                                    <button type="button" onClick={() => handleRequestOtp('mobile')} disabled={!person.mobileNo || isVerifying.mobile} className={`bg-[#4d7f1d] text-white px-3 rounded-[2px] transition hover:bg-[#3b6315] h-full ${buttonTextClasses} disabled:opacity-50 shrink-0`}>
+                                        {isVerifying.mobile ? <Loader2 className="animate-spin" size={14} /> : 'OTP'}
+                                    </button>
+                                )}
+                                {idx === 0 && otpSent.mobile && !otpVerified.mobile && (
+                                    <>
+                                        <input type="text" maxLength={6} value={mobileOtp} onChange={(e) => setMobileOtp(e.target.value.replace(/\D/g, ''))} className={`${inputClasses} h-full w-[80px] text-center tracking-widest shrink-0`} placeholder="OTP" />
+                                        <button type="button" onClick={() => handleVerifyOtp('mobile')} className={`bg-[#4d7f1d] text-white px-3 rounded-[2px] transition hover:bg-[#3b6315] h-full ${buttonTextClasses} shrink-0`}>
+                                            {isVerifying.mobile ? <Loader2 className="animate-spin" size={14} /> : 'Verify'}
+                                        </button>
+                                    </>
+                                )}
+                                {idx === 0 && otpVerified.mobile && <CheckCircle size={18} className="text-[#4d7f1d] self-center shrink-0 ml-2" />}
                                 {persons.length > MIN_PERSONS && (
                                     <button type="button" onClick={() => removePerson(idx)} className="h-[34px] w-[34px] shrink-0 flex items-center justify-center bg-red-50 text-red-500 rounded border border-red-200 hover:bg-red-100 transition-colors">
                                         <Trash2 size={14} />
@@ -265,7 +360,7 @@ export default function GroupVisitorForm() {
         <h3 className={sectionTitleClasses}>3. Purpose & Location Preferences</h3>
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
           <div className="space-y-4 bg-white p-5 border border-slate-200 rounded-sm shadow-sm">
-            <label className="text-[11px] font-bold text-[#0369a1] uppercase tracking-wider block border-b border-slate-200 pb-2">Purpose of Visit <span className="text-red-500">*</span></label>
+            <label className="text-[11px] font-bold text-[#4d7f1d] uppercase tracking-wider block border-b border-slate-200 pb-2">Purpose of Visit <span className="text-red-500">*</span></label>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-1">
               {PURPOSE_OPTIONS.map(option => (
                 <label key={option} className="flex items-start gap-2 cursor-pointer group">
@@ -278,7 +373,7 @@ export default function GroupVisitorForm() {
                         : company.purposeOfVisit.filter((item: string) => item !== option);
                       setCompany(prev => ({ ...prev, purposeOfVisit: newSelection }));
                     }}
-                    className="mt-0.5 w-3.5 h-3.5 text-[#0369a1] accent-[#0369a1] shrink-0 border-slate-300 rounded-[2px]"
+                    className="mt-0.5 w-3.5 h-3.5 text-[#4d7f1d] accent-[#4d7f1d] shrink-0 border-slate-300 rounded-[2px]"
                   />
                   <span className="text-[11px] text-slate-600 group-hover:text-slate-900 font-medium transition-colors font-inter whitespace-nowrap">{option}</span>
                 </label>
@@ -286,7 +381,7 @@ export default function GroupVisitorForm() {
             </div>
           </div>
           <div className="space-y-4 bg-white p-5 border border-slate-200 rounded-sm shadow-sm">
-            <label className="text-[11px] font-bold text-[#0369a1] uppercase tracking-wider block border-b border-slate-200 pb-2">Area of Interest <span className="text-red-500">*</span></label>
+            <label className="text-[11px] font-bold text-[#4d7f1d] uppercase tracking-wider block border-b border-slate-200 pb-2">Area of Interest <span className="text-red-500">*</span></label>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-1">
               {INTEREST_OPTIONS.map(option => (
                 <label key={option} className="flex items-start gap-2 cursor-pointer group">
@@ -299,7 +394,7 @@ export default function GroupVisitorForm() {
                         : company.areaOfInterest.filter((item: string) => item !== option);
                       setCompany(prev => ({ ...prev, areaOfInterest: newSelection }));
                     }}
-                    className="mt-0.5 w-3.5 h-3.5 text-[#0369a1] accent-[#0369a1] shrink-0 border-slate-300 rounded-[2px]"
+                    className="mt-0.5 w-3.5 h-3.5 text-[#4d7f1d] accent-[#4d7f1d] shrink-0 border-slate-300 rounded-[2px]"
                   />
                   <span className="text-[11px] text-slate-600 group-hover:text-slate-900 font-medium transition-colors font-inter whitespace-nowrap">{option}</span>
                 </label>
@@ -309,7 +404,7 @@ export default function GroupVisitorForm() {
         </div>
         
         <div className="space-y-3 mt-6">
-          <h3 className="text-sm font-bold text-[#0369a1] uppercase tracking-[0.05em] border-b border-slate-400 pb-1.5 font-inter">
+          <h3 className="text-sm font-bold text-[#4d7f1d] uppercase tracking-[0.05em] border-b border-slate-400 pb-1.5 font-inter">
             Additional Preferences
           </h3>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-5 gap-y-4">
@@ -317,11 +412,11 @@ export default function GroupVisitorForm() {
               <label className={labelClasses}>SCHEDULING B2B MEETINGS?</label>
               <div className="flex gap-6 mt-1">
                   <label className="flex items-center space-x-2 cursor-pointer">
-                      <input type="radio" name="schedulingB2B" value="yes" checked={company.schedulingB2B === 'yes'} onChange={handleCompanyChange} className="w-4 h-4 text-[#0369a1] accent-[#0369a1] border-slate-400" />
+                      <input type="radio" name="schedulingB2B" value="yes" checked={company.schedulingB2B === 'yes'} onChange={handleCompanyChange} className="w-4 h-4 text-[#4d7f1d] accent-[#4d7f1d] border-slate-400" />
                       <span className="text-[13px] font-medium text-slate-700">Yes</span>
                   </label>
                   <label className="flex items-center space-x-2 cursor-pointer">
-                      <input type="radio" name="schedulingB2B" value="no" checked={company.schedulingB2B === 'no'} onChange={handleCompanyChange} className="w-4 h-4 text-[#0369a1] accent-[#0369a1] border-slate-400" />
+                      <input type="radio" name="schedulingB2B" value="no" checked={company.schedulingB2B === 'no'} onChange={handleCompanyChange} className="w-4 h-4 text-[#4d7f1d] accent-[#4d7f1d] border-slate-400" />
                       <span className="text-[13px] font-medium text-slate-700">No</span>
                   </label>
               </div>
@@ -330,11 +425,11 @@ export default function GroupVisitorForm() {
               <label className={labelClasses}>WHATSAPP UPDATES?</label>
               <div className="flex gap-6 mt-1">
                   <label className="flex items-center space-x-2 cursor-pointer">
-                      <input type="radio" name="whatsappUpdates" value="yes" checked={company.whatsappUpdates === 'yes'} onChange={(e) => setCompany(p => ({ ...p, whatsappUpdates: 'yes' }))} className="w-4 h-4 text-[#0369a1] accent-[#0369a1] border-slate-400" />
+                      <input type="radio" name="whatsappUpdates" value="yes" checked={company.whatsappUpdates === 'yes'} onChange={(e) => setCompany(p => ({ ...p, whatsappUpdates: 'yes' }))} className="w-4 h-4 text-[#4d7f1d] accent-[#4d7f1d] border-slate-400" />
                       <span className="text-[13px] font-medium text-slate-700">Yes</span>
                   </label>
                   <label className="flex items-center space-x-2 cursor-pointer">
-                      <input type="radio" name="whatsappUpdates" value="no" checked={company.whatsappUpdates === 'no'} onChange={(e) => setCompany(p => ({ ...p, whatsappUpdates: 'no' }))} className="w-4 h-4 text-[#0369a1] accent-[#0369a1] border-slate-400" />
+                      <input type="radio" name="whatsappUpdates" value="no" checked={company.whatsappUpdates === 'no'} onChange={(e) => setCompany(p => ({ ...p, whatsappUpdates: 'no' }))} className="w-4 h-4 text-[#4d7f1d] accent-[#4d7f1d] border-slate-400" />
                       <span className="text-[13px] font-medium text-slate-700">No</span>
                   </label>
               </div>
@@ -349,38 +444,38 @@ export default function GroupVisitorForm() {
 
       <div className="pt-4 space-y-3 bg-slate-50 p-4 border border-slate-200 mt-6 rounded-sm">
         <label className="flex items-start gap-3 cursor-pointer group">
-          <input type="checkbox" name="confirmInfo" checked={company.confirmInfo} onChange={handleCompanyChange} className="w-4 h-4 accent-[#0ea5e9] shrink-0 mt-0.5" />
+          <input type="checkbox" name="confirmInfo" checked={company.confirmInfo} onChange={handleCompanyChange} className="w-4 h-4 accent-[#4d7f1d] shrink-0 mt-0.5" />
           <span className="text-[11px] font-medium text-slate-700">I confirm that the information provided is accurate and complete. *</span>
         </label>
         <label className="flex items-start gap-3 cursor-pointer group">
-          <input type="checkbox" name="agreeTerms" checked={company.agreeTerms} onChange={handleCompanyChange} className="w-4 h-4 accent-[#0ea5e9] shrink-0 mt-0.5" />
+          <input type="checkbox" name="agreeTerms" checked={company.agreeTerms} onChange={handleCompanyChange} className="w-4 h-4 accent-[#4d7f1d] shrink-0 mt-0.5" />
           <span className="text-[11px] font-medium text-slate-700">I agree to the Terms and Conditions of the event. *</span>
         </label>
         <label className="flex items-start gap-3 cursor-pointer group">
-          <input type="checkbox" name="acceptPrivacy" checked={company.acceptPrivacy} onChange={handleCompanyChange} className="w-4 h-4 accent-[#0ea5e9] shrink-0 mt-0.5" />
+          <input type="checkbox" name="acceptPrivacy" checked={company.acceptPrivacy} onChange={handleCompanyChange} className="w-4 h-4 accent-[#4d7f1d] shrink-0 mt-0.5" />
           <span className="text-[11px] font-medium text-slate-700">I accept the Privacy Policy. *</span>
         </label>
         <label className="flex items-start gap-3 cursor-pointer group">
-          <input type="checkbox" name="agreeRules" checked={company.agreeRules} onChange={handleCompanyChange} className="w-4 h-4 accent-[#0ea5e9] shrink-0 mt-0.5" />
+          <input type="checkbox" name="agreeRules" checked={company.agreeRules} onChange={handleCompanyChange} className="w-4 h-4 accent-[#4d7f1d] shrink-0 mt-0.5" />
           <span className="text-[11px] font-medium text-slate-700">I agree to abide by the event rules and regulations. *</span>
         </label>
       </div>
 
       <div className="pt-4 border-t border-slate-100 mt-4">
         <label className="flex items-center gap-3 cursor-pointer group w-fit">
-            <input type="checkbox" name="subscribeNewsletter" checked={company.subscribeNewsletter} onChange={handleCompanyChange} className="w-4 h-4 text-[#0ea5e9] accent-[#0ea5e9] border-slate-300 rounded-sm" />
+            <input type="checkbox" name="subscribeNewsletter" checked={company.subscribeNewsletter} onChange={handleCompanyChange} className="w-4 h-4 text-[#4d7f1d] accent-[#4d7f1d] border-slate-300 rounded-sm" />
             <span className="text-[10px] font-bold text-slate-500">
-                I agree to the <a href="/terms-of-service" className="text-[#0369a1] underline">Terms &amp; Conditions</a> and <a href="/privacy-policy" className="text-[#0369a1] underline">Privacy Policy</a>
+                I agree to the <a href="/terms-of-service" className="text-[#4d7f1d] underline">Terms &amp; Conditions</a> and <a href="/privacy-policy" className="text-[#4d7f1d] underline">Privacy Policy</a>
             </span>
         </label>
       </div>
 
       <div className="pt-6 mt-4 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
         <p className="text-[10px] text-slate-400 font-bold uppercase tracking-[0.2em] flex items-center gap-2">
-            <ShieldCheck size={12} className="text-[#0369a1]" />
+            <ShieldCheck size={12} className="text-[#4d7f1d]" />
             Secure Registration Portal
         </p>
-        <button type="submit" disabled={loading} className="bg-[#0369a1] hover:bg-[#0284c7] text-white px-10 py-3 rounded-[4px] text-[13px] font-bold uppercase tracking-widest transition-all shadow-md flex items-center justify-center gap-2 font-inter disabled:opacity-50 w-full sm:w-auto">
+        <button type="submit" disabled={loading} className="bg-[#4d7f1d] hover:bg-[#3b6315] text-white px-10 py-3 rounded-[4px] text-[13px] font-bold uppercase tracking-widest transition-all shadow-md flex items-center justify-center gap-2 font-inter disabled:opacity-50 w-full sm:w-auto">
           {loading ? <Loader2 className="animate-spin" size={18} /> : <>Submit Registration <ShieldCheck size={18} /></>}
         </button>
       </div>

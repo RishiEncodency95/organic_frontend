@@ -1,6 +1,8 @@
 "use client";
 import React, { useState, useEffect } from "react";
 import { CheckCircle2, ShieldCheck, Globe2, Loader2, CheckCircle, X, ChevronsUpDown, Upload } from "lucide-react";
+import { crmApi, verifyApi, visitorApi } from "../../../../lib/api";
+import Swal from 'sweetalert2';
 
 // Helper component for multi-select
 const MultiSelectDropdown = ({ options, selected, onChange, placeholder = "Select options", error = false, accentColor = "orange" }: any) => {
@@ -12,7 +14,7 @@ const MultiSelectDropdown = ({ options, selected, onChange, placeholder = "Selec
   };
 
   const ac = {
-    bg: "bg-[#fff4ed]", text: "text-[#ea580c]", check: "accent-[#ea580c]", tag: "bg-[#ffedd5] border-[#fdba74]", tagText: "text-[#ea580c]", tagX: "text-[#f97316] hover:text-[#ea580c]"
+    bg: "bg-[#fff4ed]", text: "text-[#4d7f1d]", check: "accent-[#4d7f1d]", tag: "bg-[#ffedd5] border-[#fdba74]", tagText: "text-[#4d7f1d]", tagX: "text-[#f97316] hover:text-[#4d7f1d]"
   };
 
   return (
@@ -21,7 +23,7 @@ const MultiSelectDropdown = ({ options, selected, onChange, placeholder = "Selec
         type="button"
         onClick={() => setOpen((p) => !p)}
         className={`w-full min-h-[34px] px-3 py-1.5 rounded-[2px] border text-left text-[12px] font-medium bg-white transition-all outline-none flex items-center justify-between gap-2 flex-wrap
-                    ${error ? "border-red-400" : open ? "border-[#ea580c]" : "border-slate-400"} hover:border-[#ea580c]`}
+                    ${error ? "border-red-400" : open ? "border-[#4d7f1d]" : "border-slate-400"} hover:border-[#4d7f1d]`}
       >
         <span className="flex flex-wrap gap-1 flex-1">
           {selected.length === 0 ? (
@@ -152,28 +154,91 @@ export default function InternationalVisitorForm() {
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
+  const [isVerifying, setIsVerifying] = useState({ email: false, mobile: false });
+  const [otpSent, setOtpSent] = useState({ email: false, mobile: false });
+  const [otpVerified, setOtpVerified] = useState({ email: false, mobile: false });
+  const [emailOtp, setEmailOtp] = useState('');
+  const [mobileOtp, setMobileOtp] = useState('');
+
+  const handleRequestOtp = async (type: 'email' | 'mobile') => {
+    const value = type === 'email' ? formData.email : formData.mobileNo;
+    if (!value) return;
+    
+    setIsVerifying(prev => ({ ...prev, [type]: true }));
+    try {
+      const res = type === 'email'
+        ? await verifyApi.sendEmailOtp(value, 'VISITOR')
+        : await verifyApi.sendPhoneOtp(value, 'VISITOR', formData.firstName);
+
+      if (res && res.success) {
+        setOtpSent(prev => ({ ...prev, [type]: true }));
+        Swal.fire({ icon: 'success', title: 'OTP Sent', text: `OTP sent to your ${type}.`, timer: 2000, showConfirmButton: false });
+      } else {
+        Swal.fire({ icon: 'error', title: 'Error', text: res?.message || 'Failed to send OTP.' });
+      }
+    } catch (error) {
+      Swal.fire({ icon: 'error', title: 'Error', text: 'Something went wrong.' });
+    }
+    setIsVerifying(prev => ({ ...prev, [type]: false }));
+  };
+
+  const handleVerifyOtp = async (type: 'email' | 'mobile') => {
+    const otpValue = type === 'email' ? emailOtp : mobileOtp;
+    const value = type === 'email' ? formData.email : formData.mobileNo;
+    if (!otpValue || otpValue.length !== 6) {
+      Swal.fire({ icon: 'warning', title: 'Invalid OTP', text: 'Please enter a valid 6-digit OTP.' });
+      return;
+    }
+    setIsVerifying(prev => ({ ...prev, [type]: true }));
+    try {
+      const res = type === 'email'
+        ? await verifyApi.verifyEmailOtp(value, otpValue)
+        : await verifyApi.verifyPhoneOtp(value, otpValue);
+
+      if (res && res.success) {
+        setOtpVerified(prev => ({ ...prev, [type]: true }));
+        Swal.fire({ icon: 'success', title: 'Verified', text: 'Verified successfully!', timer: 2000, showConfirmButton: false });
+      } else {
+        Swal.fire({ icon: 'error', title: 'Invalid OTP', text: res?.message || 'Verification failed.' });
+      }
+    } catch (error) {
+      Swal.fire({ icon: 'error', title: 'Error', text: 'Something went wrong.' });
+    }
+    setIsVerifying(prev => ({ ...prev, [type]: false }));
+  };
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!formData.confirmInfo || !formData.agreeTerms || !formData.acceptPrivacy || !formData.agreeRules) {
       alert("Please accept all declarations."); return;
     }
+    if (!otpVerified.email || !otpVerified.mobile) {
+      Swal.fire({ icon: 'warning', title: 'Verification Required', text: 'Please verify both Email and Mobile number.' });
+      return;
+    }
     setLoading(true);
-    // Add real API logic here pointing to visitorApi.submitInternational
-    setTimeout(() => {
-      setLoading(false);
-      setSubmitted(true);
-    }, 1500);
+    try {
+      const res = await visitorApi.submitInternational(formData);
+      if (res) {
+        setSubmitted(true);
+      } else {
+        Swal.fire({ icon: 'error', title: 'Submission Failed', text: 'Failed to submit registration.' });
+      }
+    } catch (error) {
+      Swal.fire({ icon: 'error', title: 'Error', text: 'Something went wrong.' });
+    }
+    setLoading(false);
   };
 
-  const inputClasses = "w-full h-[34px] px-3 py-1.5 rounded-[2px] border border-slate-400 bg-white text-left text-[12px] font-medium text-slate-900 outline-none transition-all focus:border-[#ea580c] focus:ring-1 focus:ring-[#ea580c]/20 placeholder:text-slate-400 font-inter";
+  const inputClasses = "w-full h-[34px] px-3 py-1.5 rounded-[2px] border border-slate-400 bg-white text-left text-[12px] font-medium text-slate-900 outline-none transition-all focus:border-[#4d7f1d] focus:ring-1 focus:ring-[#4d7f1d]/20 placeholder:text-slate-400 font-inter";
   const labelClasses = "text-[12px] font-semibold text-slate-900 mb-1 block text-left font-inter";
-  const sectionTitleClasses = "text-[14px] font-bold text-[#ea580c] pb-2 border-b border-[#ea580c]/20 flex items-center gap-2 mb-4 uppercase tracking-wide font-poppins mt-8";
+  const sectionTitleClasses = "text-[14px] font-bold text-[#4d7f1d] pb-2 border-b border-[#4d7f1d]/20 flex items-center gap-2 mb-4 uppercase tracking-wide font-poppins mt-8";
 
   if (submitted) {
     return (
       <div className="flex flex-col items-center justify-center py-16 text-center">
         <div className="w-20 h-20 rounded-full bg-[#fff4ed] flex items-center justify-center mb-6 shadow-lg">
-          <CheckCircle2 size={40} className="text-[#ea580c]" />
+          <CheckCircle2 size={40} className="text-[#4d7f1d]" />
         </div>
         <h3 className="text-2xl font-bold text-[#1a3352] mb-2 font-poppins">Registration Successful!</h3>
         <p className="text-gray-500 text-sm max-w-sm leading-relaxed">
@@ -186,7 +251,7 @@ export default function InternationalVisitorForm() {
   return (
     <form onSubmit={handleSubmit} className="w-full space-y-2 animate-in fade-in duration-500">
       <div className="flex items-center gap-3 mb-6">
-        <div className="w-10 h-10 rounded-full bg-[#ea580c] flex items-center justify-center shrink-0 shadow-md">
+        <div className="w-10 h-10 rounded-full bg-[#4d7f1d] flex items-center justify-center shrink-0 shadow-md">
           <Globe2 size={18} className="text-white" />
         </div>
         <div>
@@ -263,11 +328,49 @@ export default function InternationalVisitorForm() {
       <div>
         <h3 className={sectionTitleClasses}>2. Contact Details & Location</h3>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-          <div><label className={labelClasses}>Mobile No. (with Country Code) *</label><input required type="tel" name="mobileNo" value={formData.mobileNo} onChange={handleChange} className={inputClasses} placeholder="+1 234 567 8900" /></div>
+          <div className="space-y-1">
+            <label className={labelClasses}>Mobile No. (with Country Code) *</label>
+            <div className="flex gap-2 h-[34px]">
+              <input required type="tel" name="mobileNo" value={formData.mobileNo} onChange={handleChange} className={`${inputClasses} h-full`} disabled={otpVerified.mobile || otpSent.mobile} placeholder="+1 234 567 8900" />
+              {!otpVerified.mobile && !otpSent.mobile && (
+                <button type="button" onClick={() => handleRequestOtp('mobile')} disabled={!formData.mobileNo || isVerifying.mobile} className={`bg-[#4d7f1d] text-white px-3 rounded-[2px] transition hover:bg-[#3b6315] h-full ${buttonTextClasses} disabled:opacity-50`}>
+                  {isVerifying.mobile ? <Loader2 className="animate-spin" size={14} /> : 'OTP'}
+                </button>
+              )}
+              {otpSent.mobile && !otpVerified.mobile && (
+                <>
+                  <input type="text" maxLength={6} value={mobileOtp} onChange={(e) => setMobileOtp(e.target.value.replace(/\D/g, ''))} className={`${inputClasses} h-full w-[100px] text-center tracking-widest`} placeholder="OTP" />
+                  <button type="button" onClick={() => handleVerifyOtp('mobile')} className={`bg-[#4d7f1d] text-white px-3 rounded-[2px] transition hover:bg-[#3b6315] h-full ${buttonTextClasses}`}>
+                    {isVerifying.mobile ? <Loader2 className="animate-spin" size={14} /> : 'Verify'}
+                  </button>
+                </>
+              )}
+              {otpVerified.mobile && <CheckCircle size={18} className="text-[#4d7f1d] self-center shrink-0 ml-2" />}
+            </div>
+          </div>
           <div><label className={labelClasses}>WhatsApp Number</label><input type="tel" name="whatsappNo" value={formData.whatsappNo} onChange={handleChange} className={inputClasses} placeholder="+1 234 567 8900" /></div>
           <div><label className={labelClasses}>India Contact Number</label><input type="tel" name="indiaContactNo" value={formData.indiaContactNo} onChange={handleChange} className={inputClasses} placeholder="+91 123 456 7890" /></div>
 
-          <div><label className={labelClasses}>Official Email ID *</label><input required type="email" name="email" value={formData.email} onChange={handleChange} className={inputClasses} placeholder="Email Address" /></div>
+          <div className="space-y-1">
+            <label className={labelClasses}>Official Email ID *</label>
+            <div className="flex gap-2 h-[34px]">
+              <input required type="email" name="email" value={formData.email} onChange={handleChange} className={`${inputClasses} h-full`} disabled={otpVerified.email || otpSent.email} placeholder="Email Address" />
+              {!otpVerified.email && !otpSent.email && (
+                <button type="button" onClick={() => handleRequestOtp('email')} disabled={!formData.email || isVerifying.email} className={`bg-[#4d7f1d] text-white px-3 rounded-[2px] transition hover:bg-[#3b6315] h-full ${buttonTextClasses} disabled:opacity-50`}>
+                  {isVerifying.email ? <Loader2 className="animate-spin" size={14} /> : 'OTP'}
+                </button>
+              )}
+              {otpSent.email && !otpVerified.email && (
+                <>
+                  <input type="text" maxLength={6} value={emailOtp} onChange={(e) => setEmailOtp(e.target.value.replace(/\D/g, ''))} className={`${inputClasses} h-full w-[100px] text-center tracking-widest`} placeholder="OTP" />
+                  <button type="button" onClick={() => handleVerifyOtp('email')} className={`bg-[#4d7f1d] text-white px-3 rounded-[2px] transition hover:bg-[#3b6315] h-full ${buttonTextClasses}`}>
+                    {isVerifying.email ? <Loader2 className="animate-spin" size={14} /> : 'Verify'}
+                  </button>
+                </>
+              )}
+              {otpVerified.email && <CheckCircle size={18} className="text-[#4d7f1d] self-center shrink-0 ml-2" />}
+            </div>
+          </div>
           <div><label className={labelClasses}>Personal Email ID</label><input type="email" name="personalEmail" value={formData.personalEmail} onChange={handleChange} className={inputClasses} placeholder="Personal Email ID" /></div>
 
           <div className="md:col-span-3"><label className={labelClasses}>Residential Address</label><input name="address" value={formData.address} onChange={handleChange} className={inputClasses} placeholder="Full Address" /></div>
@@ -299,7 +402,7 @@ export default function InternationalVisitorForm() {
 
       {step === 1 && (
         <div className="pt-6 mt-4 flex justify-center">
-          <button type="button" onClick={() => setStep(2)} className="bg-[#ea580c] hover:bg-[#c2410c] text-white px-10 py-3 rounded-[4px] text-[13px] font-bold uppercase tracking-widest transition-all shadow-md flex items-center justify-center gap-2 font-inter w-full sm:w-auto">
+          <button type="button" onClick={() => setStep(2)} className="bg-[#4d7f1d] hover:bg-[#3b6315] text-white px-10 py-3 rounded-[4px] text-[13px] font-bold uppercase tracking-widest transition-all shadow-md flex items-center justify-center gap-2 font-inter w-full sm:w-auto">
             Next Step
           </button>
         </div>
@@ -312,7 +415,7 @@ export default function InternationalVisitorForm() {
             <h3 className={sectionTitleClasses}>3. Purpose & Visit Planning</h3>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
               <div className="space-y-4 bg-white p-5 border border-slate-200 rounded-sm shadow-sm lg:col-span-2">
-                <label className="text-[11px] font-bold text-[#ea580c] uppercase tracking-wider block border-b border-slate-200 pb-2">Purpose of Visit <span className="text-red-500">*</span></label>
+                <label className="text-[11px] font-bold text-[#4d7f1d] uppercase tracking-wider block border-b border-slate-200 pb-2">Purpose of Visit <span className="text-red-500">*</span></label>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-1">
                   {PURPOSE_OPTIONS.map(option => (
                     <label key={option} className="flex items-start gap-2 cursor-pointer group">
@@ -325,7 +428,7 @@ export default function InternationalVisitorForm() {
                             : formData.purposeOfVisit.filter((item: string) => item !== option);
                           handleSelectChange('purposeOfVisit', newSelection);
                         }}
-                        className="mt-0.5 w-3.5 h-3.5 text-[#ea580c] accent-[#ea580c] shrink-0 border-slate-300 rounded-[2px]"
+                        className="mt-0.5 w-3.5 h-3.5 text-[#4d7f1d] accent-[#4d7f1d] shrink-0 border-slate-300 rounded-[2px]"
                       />
                       <span className="text-[11px] text-slate-600 group-hover:text-slate-900 font-medium transition-colors font-inter whitespace-nowrap">{option}</span>
                     </label>
@@ -333,7 +436,7 @@ export default function InternationalVisitorForm() {
                 </div>
               </div>
               <div className="space-y-4 bg-white p-5 border border-slate-200 rounded-sm shadow-sm lg:col-span-2">
-                <label className="text-[11px] font-bold text-[#ea580c] uppercase tracking-wider block border-b border-slate-200 pb-2">Interested Sectors <span className="text-red-500">*</span></label>
+                <label className="text-[11px] font-bold text-[#4d7f1d] uppercase tracking-wider block border-b border-slate-200 pb-2">Interested Sectors <span className="text-red-500">*</span></label>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-1">
                   {INTEREST_OPTIONS.map(option => (
                     <label key={option} className="flex items-start gap-2 cursor-pointer group">
@@ -346,7 +449,7 @@ export default function InternationalVisitorForm() {
                             : formData.areaOfInterest.filter((item: string) => item !== option);
                           handleSelectChange('areaOfInterest', newSelection);
                         }}
-                        className="mt-0.5 w-3.5 h-3.5 text-[#ea580c] accent-[#ea580c] shrink-0 border-slate-300 rounded-[2px]"
+                        className="mt-0.5 w-3.5 h-3.5 text-[#4d7f1d] accent-[#4d7f1d] shrink-0 border-slate-300 rounded-[2px]"
                       />
                       <span className="text-[11px] text-slate-600 group-hover:text-slate-900 font-medium transition-colors font-inter whitespace-nowrap">{option}</span>
                     </label>
@@ -424,9 +527,9 @@ export default function InternationalVisitorForm() {
                 { key: 'visaDocs', label: 'Visa Documents' },
                 { key: 'photoId', label: 'Photo ID' },
               ].map(({ key, label }) => (
-                <label key={key} className="flex flex-col items-center justify-center gap-2 p-3 border-2 border-dashed border-slate-300 rounded-md cursor-pointer hover:border-[#ea580c]/50 hover:bg-orange-50/50 transition-all group">
-                  <Upload size={16} className="text-slate-400 group-hover:text-[#ea580c] transition-colors" />
-                  <span className="text-[10px] font-bold text-slate-500 uppercase tracking-wide text-center group-hover:text-[#ea580c]">{label}</span>
+                <label key={key} className="flex flex-col items-center justify-center gap-2 p-3 border-2 border-dashed border-slate-300 rounded-md cursor-pointer hover:border-[#4d7f1d]/50 hover:bg-orange-50/50 transition-all group">
+                  <Upload size={16} className="text-slate-400 group-hover:text-[#4d7f1d] transition-colors" />
+                  <span className="text-[10px] font-bold text-slate-500 uppercase tracking-wide text-center group-hover:text-[#4d7f1d]">{label}</span>
                   {files[key] && <span className="text-[9px] text-green-600 font-bold truncate w-full text-center">{files[key]?.name}</span>}
                   <input type="file" className="hidden" onChange={(e) => setFiles(prev => ({ ...prev, [key]: e.target.files?.[0] || null }))} />
                 </label>
@@ -436,36 +539,36 @@ export default function InternationalVisitorForm() {
 
           <div className="pt-4 space-y-3 bg-slate-50 p-4 border border-slate-200 mt-6 rounded-sm">
             <label className="flex items-start gap-3 cursor-pointer group">
-              <input type="checkbox" name="confirmInfo" checked={formData.confirmInfo} onChange={handleChange} className="w-4 h-4 accent-[#ea580c] shrink-0 mt-0.5" />
+              <input type="checkbox" name="confirmInfo" checked={formData.confirmInfo} onChange={handleChange} className="w-4 h-4 accent-[#4d7f1d] shrink-0 mt-0.5" />
               <span className="text-[11px] font-medium text-slate-700 leading-tight">I confirm that the information provided is accurate and complete.</span>
             </label>
             <label className="flex items-start gap-3 cursor-pointer group">
-              <input type="checkbox" name="agreeTerms" checked={formData.agreeTerms} onChange={handleChange} className="w-4 h-4 accent-[#ea580c] shrink-0 mt-0.5" />
+              <input type="checkbox" name="agreeTerms" checked={formData.agreeTerms} onChange={handleChange} className="w-4 h-4 accent-[#4d7f1d] shrink-0 mt-0.5" />
               <span className="text-[11px] font-medium text-slate-700 leading-tight">I agree to the Terms and Conditions of the event.</span>
             </label>
             <label className="flex items-start gap-3 cursor-pointer group">
-              <input type="checkbox" name="acceptPrivacy" checked={formData.acceptPrivacy} onChange={handleChange} className="w-4 h-4 accent-[#ea580c] shrink-0 mt-0.5" />
+              <input type="checkbox" name="acceptPrivacy" checked={formData.acceptPrivacy} onChange={handleChange} className="w-4 h-4 accent-[#4d7f1d] shrink-0 mt-0.5" />
               <span className="text-[11px] font-medium text-slate-700 leading-tight">I accept the Privacy Policy.</span>
             </label>
             <label className="flex items-start gap-3 cursor-pointer group">
-              <input type="checkbox" name="agreeRules" checked={formData.agreeRules} onChange={handleChange} className="w-4 h-4 accent-[#ea580c] shrink-0 mt-0.5" />
+              <input type="checkbox" name="agreeRules" checked={formData.agreeRules} onChange={handleChange} className="w-4 h-4 accent-[#4d7f1d] shrink-0 mt-0.5" />
               <span className="text-[11px] font-medium text-slate-700 leading-tight">I agree to abide by the event rules and regulations.</span>
             </label>
           </div>
 
           <div className="pt-4">
             <label className="flex items-center gap-2 cursor-pointer">
-              <input type="checkbox" name="subscribeNewsletter" checked={formData.subscribeNewsletter} onChange={handleChange} className="w-4 h-4 text-[#ea580c] accent-[#ea580c]" />
+              <input type="checkbox" name="subscribeNewsletter" checked={formData.subscribeNewsletter} onChange={handleChange} className="w-4 h-4 text-[#4d7f1d] accent-[#4d7f1d]" />
               <span className="text-sm font-medium text-slate-700">Subscribe to IHWE Global Updates & Newsletters</span>
             </label>
           </div>
 
           <div className="pt-6 mt-4 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
             <p className="text-[10px] text-slate-400 font-bold uppercase tracking-[0.2em] flex items-center gap-2">
-              <ShieldCheck size={12} className="text-[#ea580c]" />
+              <ShieldCheck size={12} className="text-[#4d7f1d]" />
               Secure Registration Portal
             </p>
-            <button type="submit" disabled={loading} className="bg-[#ea580c] hover:bg-[#c2410c] text-white px-10 py-3 rounded-[4px] text-[13px] font-bold uppercase tracking-widest transition-all shadow-md flex items-center justify-center gap-2 font-inter disabled:opacity-50 w-full sm:w-auto">
+            <button type="submit" disabled={loading} className="bg-[#4d7f1d] hover:bg-[#3b6315] text-white px-10 py-3 rounded-[4px] text-[13px] font-bold uppercase tracking-widest transition-all shadow-md flex items-center justify-center gap-2 font-inter disabled:opacity-50 w-full sm:w-auto">
               {loading ? <Loader2 className="animate-spin" size={18} /> : <>Submit Registration <ShieldCheck size={18} /></>}
             </button>
           </div>
