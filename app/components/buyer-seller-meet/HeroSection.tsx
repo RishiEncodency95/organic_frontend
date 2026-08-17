@@ -188,7 +188,7 @@ export default function HeroSection() {
                 style={{ opacity: 0 }}
                 className="text-[#131730] text-sm md:text-base max-w-lg mb-5 font-bold leading-relaxed text-left"
               >
-                Connect with the Right Businesses. Create Real Opportunities. A focused B2B networking platform at Bharat Organic Expo 2027.
+                Connect with the Right Businesses. Create Real Opportunities. A focused B2B networking platform at Bharat Bharat Organic Expo 2027.
               </p>
 
               {/* Date & Venue */}
@@ -215,7 +215,7 @@ export default function HeroSection() {
                   <Sparkle color="#3b82f6" shadow="#28396C" style={{ top: "-15px", left: "50%", animationDelay: "0.6s" }} />
                   <Sparkle color="#3b82f6" shadow="#28396C" style={{ top: "-10px", right: "10%", animationDelay: "1s" }} />
                   <Link
-                    href="/buyer-registration"
+                    href="/registration/buyer-registration"
                     className="blue-btn-hero text-white px-4 py-2 rounded-lg font-semibold text-[10px] uppercase tracking-widest flex items-center justify-start gap-2 transition-all active:scale-95 shadow-lg relative z-10 w-full sm:w-auto"
                   >
                     REGISTER AS A BUYER <ArrowRight size={14} />

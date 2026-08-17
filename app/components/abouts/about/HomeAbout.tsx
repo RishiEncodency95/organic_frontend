@@ -60,7 +60,7 @@ const HomeAbout = () => {
 
                             <div className="space-y-4 max-w-[760px]">
                                 <p className="text-[#4b5563] text-[16px] md:text-[18px] leading-[1.6] border-l-4 border-[#F2B40E] pl-4">
-                                    <strong className="text-[#111827] font-bold">Bharat Organic Expo 2027</strong> is India's most influential international exhibition & conference dedicated to organic products, wellness, Ayurveda, and sustainable living. We bring together global brands, innovators, buyers, and policymakers to build connections and create transformative opportunities.
+                                    <strong className="text-[#111827] font-bold">Bharat Bharat Organic Expo 2027</strong> is India's most influential international exhibition & conference dedicated to organic products, wellness, Ayurveda, and sustainable living. We bring together global brands, innovators, buyers, and policymakers to build connections and create transformative opportunities.
                                 </p>
 
                                 <p className="text-[#4b5563] text-[16px] md:text-[18px] leading-[1.6]">

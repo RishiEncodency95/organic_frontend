@@ -76,7 +76,7 @@ const AboutHero = () => {
       {/* Background Image */}
       <Image
         src={aboutBanner}
-        alt="Bharat Organic Expo 2027 exhibition and visitors"
+        alt="Bharat Bharat Organic Expo 2027 exhibition and visitors"
         fill
         priority
         className="object-cover z-0"

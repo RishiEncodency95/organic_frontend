@@ -1,10 +1,10 @@
 "use client";
 import React, { useRef, useEffect, useState } from "react";
-import BuyerHero from "../components/buyer-registration/Hero";
-import FeatureStrip from "../components/buyer-seller-meet/FeatureStrip";
-import CategorySelect from "../components/buyer-registration/CategorySelect";
-import DomesticForm from "../components/buyer-registration/DomesticForm";
-import InternationalForm from "../components/buyer-registration/InternationalForm";
+import BuyerHero from "../../components/registration/buyer-registration/Hero";
+import FeatureStrip from "../../components/buyer-seller-meet/FeatureStrip";
+import CategorySelect from "../../components/registration/buyer-registration/CategorySelect";
+import DomesticForm from "../../components/registration/buyer-registration/DomesticForm";
+import InternationalForm from "../../components/registration/buyer-registration/InternationalForm";
 
 export default function BuyerRegistrationPage() {
   const [buyerType, setBuyerType] = useState<"domestic" | "international" | null>(null);
@@ -44,11 +44,10 @@ export default function BuyerRegistrationPage() {
 
               {/* Form card */}
               <div
-                className={`w-full rounded-2xl border p-6 md:p-8 shadow-sm transition-all duration-300 ${
-                  buyerType === "domestic"
+                className={`w-full rounded-2xl border p-6 md:p-8 shadow-sm transition-all duration-300 ${buyerType === "domestic"
                     ? "border-[#a8d060]/40 bg-[#fafff5]"
                     : "border-[#4f8fe0]/40 bg-[#f8faff]"
-                }`}
+                  }`}
               >
                 {buyerType === "domestic" ? <DomesticForm /> : <InternationalForm />}
               </div>

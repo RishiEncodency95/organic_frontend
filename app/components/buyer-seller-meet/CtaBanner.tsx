@@ -24,7 +24,7 @@ export default function CtaBanner() {
                 <span className="text-[#facc15] whitespace-nowrap">NEW BUSINESS OPPORTUNITIES?</span>
               </h2>
               <p className="text-white/80 text-sm font-medium">
-                Join the Buyer-Seller Meet at Bharat Organic Expo 2027.
+                Join the Buyer-Seller Meet at Bharat Bharat Organic Expo 2027.
               </p>
             </div>
 

@@ -72,10 +72,10 @@ const Topbar = () => {
                                         >
                                             <div className="grid grid-cols-2">
                                                 {[
-                                                    { to: "/book-a-stand", icon: Store, label: "BOOK A\nSTALL", color: "orange" },
+                                                    { to: "/registration/book-a-stand", icon: Store, label: "BOOK A\nSTALL", color: "orange" },
                                                     { to: "/visitor-registration", icon: UserPlus, label: "REGISTER AS\nVISITOR", color: "green" },
                                                     { to: "/conference", icon: Globe, label: "DELEGATE\nREGISTRATION", color: "orange" },
-                                                    { to: "/buyer-registration", icon: Users, label: "REGISTER AS\nBUYER", color: "green" },
+                                                    { to: "/registration/buyer-registration", icon: Users, label: "REGISTER AS\nBUYER", color: "green" },
                                                     { to: "/sponsership", icon: Award, label: "SPONSORSHIP\nOPPORTUNITIES", color: "orange" },
                                                     { to: "tel:+919654900525", icon: Phone, label: "TALK TO EXPO\nADVISOR", color: "green" },
                                                 ].map((item, idx) => {

@@ -65,7 +65,7 @@ const AdvisoryHero = () => {
             {/* Background Image (Globe and Green scenery on the right) */}
             <Image
                 src={heroBanner}
-                alt="Bharat Organic Expo 2027 Advisory Board Members"
+                alt="Bharat Bharat Organic Expo 2027 Advisory Board Members"
                 fill
                 priority
                 className="object-cover object-right z-0"
@@ -108,7 +108,7 @@ const AdvisoryHero = () => {
 
                     {/* Description */}
                     <p className="text-[#4a4a4a] font-medium text-[12px] md:text-[16px] lg:text-[17px] leading-[1.7] max-w-[600px] mt-4 border-l-4 border-[#7ca142]/40 pl-3">
-                        Meet the distinguished leaders, industry experts, and visionary professionals shaping the strategic direction of <span className="text-[#1f471b] font-black">Bharat Organic Expo 2027.</span> Their collective wisdom, decades of experience, and unwavering commitment to sustainable agriculture ensure that our platform remains at the absolute forefront of the global organic movement.
+                        Meet the distinguished leaders, industry experts, and visionary professionals shaping the strategic direction of <span className="text-[#1f471b] font-black">Bharat Bharat Organic Expo 2027.</span> Their collective wisdom, decades of experience, and unwavering commitment to sustainable agriculture ensure that our platform remains at the absolute forefront of the global organic movement.
                     </p>
 
                     {/* Buttons */}
