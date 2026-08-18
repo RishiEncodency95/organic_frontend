@@ -37,7 +37,7 @@ const highlights = [
 ];
 
 const HeroSection = () => (
-  <section className="relative flex items-center pt-3 md:pt-5 pb-4 md:pb-6 overflow-hidden min-h-[380px] sm:min-h-[420px] md:min-h-[450px] lg:min-h-[470px]">
+  <section className="relative w-full min-h-[380px] sm:min-h-[420px] md:min-h-[450px] lg:min-h-[470px] flex items-center overflow-hidden font-inter pt-3 md:pt-5 pb-4 md:pb-6 border-b-4 border-[#ea580c]">
     {/* BG Image */}
     <div className="absolute inset-0 z-0 w-full overflow-hidden pointer-events-none">
       <img
@@ -55,14 +55,13 @@ const HeroSection = () => (
       <div className="flex flex-col lg:flex-row items-center justify-between gap-6 lg:gap-8">
 
         {/* Left Content Column - Positioned to start far left */}
-        <div className="w-full lg:w-[50%] xl:w-[46%] text-left shrink-0 -ml-0 lg:-ml-1">
+        <div className="w-full lg:w-[50%] xl:w-[46%] text-left shrink-0 -ml-0 lg:-ml-1 -translate-y-1 lg:-translate-y-2">
 
           {/* Green Line & Tagline */}
           <div className="flex items-center justify-start gap-2.5 mb-2">
             <span className="w-8 h-[2.5px] bg-[#c2410c] shrink-0" />
             <p
-              className="text-[#c2410c] text-[12px] md:text-[14px] font-bold uppercase tracking-[0.18em] text-left"
-              style={{ textShadow: "1px 1px 1px rgba(0,0,0,0.3)" }}
+              className="text-[#c2410c] text-[13px] md:text-[15px] lg:text-[16px] font-bold uppercase tracking-[0.18em] text-left"
             >
               INDIA&apos;S PREMIER ORGANIC & WELLNESS EVENT
             </p>
@@ -71,16 +70,14 @@ const HeroSection = () => (
           {/* Main Titles */}
           <h1
             className="text-2xl md:text-3xl lg:text-4xl font-black leading-[1.1] mb-2 text-left font-poppins"
-            style={{ textShadow: "1px 1px 2px rgba(0,0,0,0.4)" }}
           >
-            <span className="text-[#1b5e20] text-lg md:text-2xl lg:text-[28px] block mb-0.5">CONNECT. COLLABORATE.</span>
-            <span className="text-[#4B1426] text-[16px] sm:text-[20px] md:text-[24px] lg:text-[27px] block font-black tracking-tight whitespace-nowrap">CULTIVATE A HEALTHIER TOMORROW.</span>
+            <span className="text-[#1b5e20] text-xl md:text-[26px] lg:text-[32px] block mb-0.5">CONNECT. COLLABORATE.</span>
+            <span className="text-[#4B1426] text-lg sm:text-[22px] md:text-[26px] lg:text-[30px] block font-black tracking-tight whitespace-nowrap">CULTIVATE A HEALTHIER TOMORROW.</span>
           </h1>
 
           {/* Subtitle */}
           <p
-            className="text-[#131730] text-[12px] md:text-[14px] max-w-md mb-4 font-semibold leading-relaxed text-left"
-            style={{ textShadow: "1px 1px 1px rgba(0,0,0,0.1)" }}
+            className="text-[#131730] text-[13px] md:text-[15px] lg:text-[16px] max-w-lg mb-4 font-semibold leading-relaxed text-left"
           >
             Bharat Organic Expo brings together global innovators, brands, buyers &amp; experts to promote sustainable living and natural well-being.
           </p>
@@ -95,15 +92,15 @@ const HeroSection = () => (
                     decoding="async"
                     src={getImgSrc(item.img)}
                     alt={item.main}
-                    className="w-6 md:w-7 h-auto shrink-0"
+                    className="w-7 md:w-8 lg:w-9 h-auto shrink-0"
                   />
                   <div className="flex flex-col text-left">
-                    <span className="text-[10px] md:text-[11px] font-black text-[#1b5e20] uppercase leading-none">{item.main}</span>
-                    <span className="text-[10px] md:text-[11px] font-bold text-[#4B1426] uppercase tracking-tighter mt-0.5">{item.sub}</span>
+                    <span className="text-[11px] md:text-[12px] lg:text-[13px] font-black text-[#1b5e20] uppercase leading-none">{item.main}</span>
+                    <span className="text-[11px] md:text-[12px] lg:text-[13px] font-bold text-[#4B1426] uppercase tracking-tighter mt-0.5">{item.sub}</span>
                   </div>
                 </div>
                 {i < arr.length - 1 && (
-                  <div className="h-5 w-[1px] bg-slate-300/50 hidden sm:block mx-0.5" />
+                  <div className="h-6 w-[1px] bg-slate-300/50 hidden sm:block mx-0.5" />
                 )}
               </React.Fragment>
             ))}

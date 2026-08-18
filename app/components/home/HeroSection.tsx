@@ -247,36 +247,44 @@ const HeroSection = () => {
       tl.add(() => contentOut(prevIdx), 0);
 
       // 2. lens flare burst
-      tl.fromTo(
-        lensRef.current,
-        { opacity: 0, scale: 0.3, x: "-50%", y: "-50%" },
-        { opacity: 0.5, scale: 2.2, duration: 0.22, ease: "power2.out" },
-        0.05
-      ).to(lensRef.current, { opacity: 0, scale: 3, duration: 0.4, ease: "power2.in" }, 0.22);
+      if (lensRef.current) {
+        tl.fromTo(
+          lensRef.current,
+          { opacity: 0, scale: 0.3, x: "-50%", y: "-50%" },
+          { opacity: 0.5, scale: 2.2, duration: 0.22, ease: "power2.out" },
+          0.05
+        ).to(lensRef.current, { opacity: 0, scale: 3, duration: 0.4, ease: "power2.in" }, 0.22);
+      }
 
       // 3. vignette pulse
-      tl.fromTo(
-        vigRef.current,
-        { opacity: 0 },
-        { opacity: 0.5, duration: 0.25, ease: "power2.out", yoyo: true, repeat: 1 },
-        0
-      );
+      if (vigRef.current) {
+        tl.fromTo(
+          vigRef.current,
+          { opacity: 0 },
+          { opacity: 0.5, duration: 0.25, ease: "power2.out", yoyo: true, repeat: 1 },
+          0
+        );
+      }
 
       // 4. reveal bar wipe + next image clip-path unclip
       gsap.set(nextBg, { zIndex: 4 });
       gsap.set(nextImg, { scale: 1.1, filter: "brightness(0.92) saturate(0.85)" });
 
-      tl.set(revealBar.current, { scaleX: 0, transformOrigin: "left center", opacity: 1 }, 0.08);
-      tl.to(revealBar.current, { scaleX: 1, duration: 0.55, ease: "power4.inOut" }, 0.08);
+      if (revealBar.current) {
+        tl.set(revealBar.current, { scaleX: 0, transformOrigin: "left center", opacity: 1 }, 0.08);
+        tl.to(revealBar.current, { scaleX: 1, duration: 0.55, ease: "power4.inOut" }, 0.08);
+      }
 
       gsap.set(nextBg, { clipPath: "inset(0 100% 0 0)" });
       tl.to(nextBg, { clipPath: "inset(0 0% 0 0)", duration: 0.55, ease: "power4.inOut" }, 0.08);
 
-      tl.to(
-        revealBar.current,
-        { scaleX: 0, transformOrigin: "right center", duration: 0.4, ease: "power4.in", opacity: 0 },
-        0.6
-      );
+      if (revealBar.current) {
+        tl.to(
+          revealBar.current,
+          { scaleX: 0, transformOrigin: "right center", duration: 0.4, ease: "power4.in", opacity: 0 },
+          0.6
+        );
+      }
 
       // 5. prev slide drifts away
       tl.to(prevBg, { x: "-6%", opacity: 0, duration: 0.5, ease: "power2.in" }, 0.12);
@@ -287,8 +295,8 @@ const HeroSection = () => {
       // 7. state update + content in
       tl.add(() => {
         setCur(targetIdx);
-        gsap.set(prevBg, { x: 0 });
-        gsap.set(nextBg, { zIndex: 2 });
+        if (prevBg) gsap.set(prevBg, { x: 0 });
+        if (nextBg) gsap.set(nextBg, { zIndex: 2 });
       }, 0.55);
 
       tl.add(() => contentIn(targetIdx), 0.6);
@@ -320,9 +328,9 @@ const HeroSection = () => {
       gsap.set(items, { opacity: 0, y: 40, filter: "blur(4px)" });
     });
 
-    gsap.set(lensRef.current, { opacity: 0, xPercent: -50, yPercent: -50 });
-    gsap.set(vigRef.current, { opacity: 0 });
-    gsap.set(revealBar.current, { scaleX: 0, opacity: 0 });
+    if (lensRef.current) gsap.set(lensRef.current, { opacity: 0, xPercent: -50, yPercent: -50 });
+    if (vigRef.current) gsap.set(vigRef.current, { opacity: 0 });
+    if (revealBar.current) gsap.set(revealBar.current, { scaleX: 0, opacity: 0 });
 
     const initPanel = panels.current[0];
     if (initPanel) {
@@ -487,9 +495,9 @@ const HeroSection = () => {
                 pointerEvents: cur === slide.id ? "auto" : "none",
               }}
             >
-              <div className="space-y-6 w-full max-w-2xl">
+              <div className="flex flex-col w-full max-w-2xl">
                 {/* Tagline */}
-                <div data-anim="1" className="flex items-center gap-2">
+                <div data-anim="1" className="flex items-center gap-2 mb-2">
                   <div className="w-7 h-[2px] bg-[#c2410c]/80" />
                   <span className="text-[#c2410c] text-[11px] md:text-[18px] font-bold tracking-[0.14em] uppercase">
                     {slide.tagline}
@@ -498,7 +506,11 @@ const HeroSection = () => {
                 </div>
 
                 {/* Title */}
-                <h1 data-anim="2" className="leading-[1.15] font-bold uppercase">
+                <h1 
+                  data-anim="2" 
+                  className="leading-[1.15] font-bold uppercase font-poppins mb-3"
+                  style={{ textShadow: "1px 1px 2px rgba(0,0,0,0.4)" }}
+                >
                   <div className="text-[#1f471b] text-[26px] md:text-[38px] lg:text-[48px] tracking-tight">
                     {slide.titlePrimary}
                   </div>
@@ -508,17 +520,17 @@ const HeroSection = () => {
                 </h1>
 
                 {/* Subtitle */}
-                <p data-anim="3" className="text-[#1f471b] font-semibold text-[17px] md:text-[20px] lg:text-[23px] leading-[1.3]">
+                <p data-anim="3" className="text-[#1f471b] font-semibold text-[17px] md:text-[20px] lg:text-[23px] leading-[1.3] mb-3">
                   {slide.subtitle}
                 </p>
 
                 {/* Description */}
-                <p data-anim="4" className="text-black font-medium text-[14px] md:text-[16px] leading-relaxed max-w-[560px]">
+                <p data-anim="4" className="text-black font-medium text-[14px] md:text-[16px] leading-relaxed max-w-[560px] mb-6">
                   {slide.description}
                 </p>
 
                 {/* Date / Location */}
-                <div data-anim="5" className="flex flex-wrap items-center gap-x-4 gap-y-2 text-[#2b5825] font-bold text-[11px] lg:text-[15px] uppercase">
+                <div data-anim="5" className="flex flex-wrap items-center gap-x-4 gap-y-2 text-[#4B1426] font-bold text-[11px] lg:text-[15px] uppercase mb-6">
                   <div className="flex items-center gap-2">
                     <CalendarDays size={16} className="shrink-0" />
                     <span>{slide.date}</span>
@@ -540,7 +552,7 @@ const HeroSection = () => {
                   <div className="relative shrink-0">
                     <Link
                       href="/book-a-stand"
-                      className="group relative inline-flex items-center justify-start gap-2 px-5 py-2.5 rounded-lg font-semibold text-[14px] uppercase tracking-widest text-white transition-all active:scale-95 relative z-10 w-full sm:w-auto overflow-hidden"
+                      className="group relative inline-flex items-center justify-start gap-2 px-4 py-2 rounded-lg font-semibold text-[10px] uppercase tracking-widest text-white transition-all active:scale-95 relative z-10 w-full sm:w-auto overflow-hidden"
                       style={{
                         background: "linear-gradient(135deg, #ea580c, #c2410c)",
                       }}
@@ -557,7 +569,7 @@ const HeroSection = () => {
                     <Sparkle color="#3b82f6" shadow="#28396C" style={{ top: "-10px", right: "10%", animationDelay: "1s" }} />
                     <Link
                       href="/visitor-registration"
-                      className="blue-btn-hero text-white px-5 py-2.5 rounded-lg font-semibold text-[14px] uppercase tracking-widest flex items-center justify-start gap-2 transition-all active:scale-95 relative z-10 w-full sm:w-auto whitespace-nowrap"
+                      className="blue-btn-hero text-white px-4 py-2 rounded-lg font-semibold text-[10px] uppercase tracking-widest flex items-center justify-start gap-2 transition-all active:scale-95 relative z-10 w-full sm:w-auto whitespace-nowrap"
                     >
                       Register as Visitor <ArrowRight size={14} />
                     </Link>

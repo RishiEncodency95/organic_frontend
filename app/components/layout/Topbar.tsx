@@ -17,6 +17,91 @@ const Topbar = () => {
 
     return (
         <>
+            <style>{`
+                .wave-btn {
+                 display: inline-flex;
+                 align-items: center;
+                 gap: 4px;
+                 padding: 6px 14px;
+                 border: 1px solid #f58220;
+                 border-radius: 4px;
+                 transition: all 0.2s ease-in;
+                 position: relative;
+                 overflow: hidden;
+                 font-size: 10px;
+                 font-weight: 600;
+                 cursor: pointer;
+                 color: #fff;
+                 z-index: 1;
+                 text-transform: uppercase;
+                 letter-spacing: 0.05em;
+                 background-color: transparent;
+                }
+                
+                .wave-btn:before {
+                 content: "";
+                 position: absolute;
+                 left: 50%;
+                 transform: translateX(-50%) scaleY(1) scaleX(1.25);
+                 top: 100%;
+                 width: 140%;
+                 height: 180%;
+                 background-color: rgba(255, 255, 255, 0.05);
+                 border-radius: 50%;
+                 display: block;
+                 transition: all 0.5s 0.1s cubic-bezier(0.55, 0, 0.1, 1);
+                 z-index: -1;
+                }
+                
+                .wave-btn:after {
+                 content: "";
+                 position: absolute;
+                 left: 55%;
+                 transform: translateX(-50%) scaleY(1) scaleX(1.45);
+                 top: 180%;
+                 width: 160%;
+                 height: 190%;
+                 background-color: #f58220;
+                 border-radius: 50%;
+                 display: block;
+                 transition: all 0.5s 0.1s cubic-bezier(0.55, 0, 0.1, 1);
+                 z-index: -1;
+                }
+                
+                .wave-btn:hover {
+                 color: #ffffff;
+                 border: 1px solid #f58220;
+                }
+                
+                .wave-btn:hover:before {
+                 top: -35%;
+                 background-color: #f58220;
+                 transform: translateX(-50%) scaleY(1.3) scaleX(0.8);
+                }
+                
+                .wave-btn:hover:after {
+                 top: -45%;
+                 background-color: #f58220;
+                 transform: translateX(-50%) scaleY(1.3) scaleX(0.8);
+                }
+                
+                .wave-btn.btn-white {
+                 background-color: #fff;
+                 border: 1px solid #fff;
+                 color: #000;
+                }
+                .wave-btn.btn-white:after {
+                 background-color: #f58220;
+                }
+                .wave-btn.btn-white:hover {
+                 border: 1px solid #f58220;
+                 color: #fff;
+                }
+                .wave-btn.btn-white:hover:before,
+                .wave-btn.btn-white:hover:after {
+                 background-color: #f58220;
+                }
+            `}</style>
 
             <motion.div
                 className="bg-black border-b border-[#3b8c2a]/30 text-slate-200 text-[11px] relative z-[150] py-1 shadow-md shadow-black/20"
@@ -53,7 +138,7 @@ const Topbar = () => {
                         >
                             <button
                                 style={{ fontFamily: "'Poppins', sans-serif" }}
-                                className="flex items-center gap-1.5 bg-[#3b8c2a] hover:bg-[#2b6a1f] text-white px-5 py-1.5 rounded-full font-bold text-[10px] md:text-[11px] tracking-widest uppercase transition-all duration-300 shadow-sm hover:shadow-md flex-shrink-0"
+                                className="wave-btn flex-shrink-0"
                             >
                                 Register Now
                                 <ChevronDown className={cn("w-3.5 h-3.5 transition-transform duration-300", activeDropdown === "registration" ? "rotate-180" : "")} />
@@ -121,46 +206,59 @@ const Topbar = () => {
 
                         {/* User Login Dropdown */}
                         <div className="relative group">
-                            <a
-                                href="https://admin.organicexpo.in/login"
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                className="flex items-center gap-1.5 bg-[#f58220] hover:bg-[#d9731b] text-white px-5 py-1.5 rounded-full font-bold text-[10px] md:text-[11px] tracking-widest uppercase transition-all duration-300 shadow-sm hover:shadow-md"
+                            <button
+                                className="wave-btn btn-white"
+                                style={{ fontFamily: "'Poppins', sans-serif" }}
                             >
-                                User Login
+                                Login
                                 <ChevronDown size={14} className="group-hover:rotate-180 transition-transform duration-300" />
-                            </a>
+                            </button>
 
                             {/* Dropdown Menu */}
-                            <div className="absolute right-0 top-full pt-3 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 z-[200]">
-                                <div className="bg-white rounded-xl shadow-xl border border-gray-100 py-2 w-52 flex flex-col relative before:content-[''] before:absolute before:top-[-6px] before:right-8 before:w-3 before:h-3 before:bg-white before:border-t before:border-l before:border-gray-100 before:rotate-45">
-                                    <Link
-                                        href="/exhibitor-login"
-                                        target="_blank"
-                                        rel="noopener noreferrer"
-                                        className="flex items-center gap-2.5 text-[#444] hover:bg-[#EFF7EE] hover:text-[#3b8c2a] px-5 py-3 text-[11px] font-bold tracking-widest transition-colors uppercase border-b border-gray-50 last:border-0 group/link"
-                                    >
-                                        <Store size={14} className="text-[#3b8c2a] opacity-80 group-hover/link:opacity-100" />
-                                        Exhibitor Login
-                                    </Link>
-                                    <Link
-                                        href="/buyer-login"
-                                        target="_blank"
-                                        rel="noopener noreferrer"
-                                        className="flex items-center gap-2.5 text-[#444] hover:bg-[#EFF7EE] hover:text-[#3b8c2a] px-5 py-3 text-[11px] font-bold tracking-widest transition-colors uppercase border-b border-gray-50 last:border-0 group/link"
-                                    >
-                                        <Briefcase size={14} className="text-[#3b8c2a] opacity-80 group-hover/link:opacity-100" />
-                                        Buyer Login
-                                    </Link>
-                                    <Link
-                                        href="/delegates-login"
-                                        target="_blank"
-                                        rel="noopener noreferrer"
-                                        className="flex items-center gap-2.5 text-[#444] hover:bg-[#EFF7EE] hover:text-[#3b8c2a] px-5 py-3 text-[11px] font-bold tracking-widest transition-colors uppercase border-b border-gray-50 last:border-0 group/link"
-                                    >
-                                        <Users size={14} className="text-[#3b8c2a] opacity-80 group-hover/link:opacity-100" />
-                                        Delegates Login
-                                    </Link>
+                            <div className="absolute right-0 top-[calc(100%-2px)] pt-4 w-[260px] opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 z-[200]">
+                                <div className="absolute top-[10px] right-10 w-4 h-4 bg-white border-t border-l border-slate-100 rotate-45 z-10" />
+                                <div className="relative bg-white rounded-2xl shadow-[0_15px_45px_rgba(0,0,0,0.15)] border border-slate-100 p-1 overflow-hidden z-20">
+                                    <div className="grid grid-cols-2">
+                                        {[
+                                            { to: "https://admin.organicexpo.in/login", icon: UserPlus, label: "USER\nLOGIN", color: "orange", external: true },
+                                            { to: "/exhibitor-login", icon: Store, label: "EXHIBITOR\nLOGIN", color: "green", external: false },
+                                            { to: "/buyer-login", icon: Briefcase, label: "BUYER\nLOGIN", color: "orange", external: false },
+                                            { to: "/delegates-login", icon: Users, label: "DELEGATES\nLOGIN", color: "green", external: false },
+                                        ].map((item, idx) => {
+                                            const commonProps = {
+                                                className: cn(
+                                                    "flex items-center gap-1.5 px-2 py-2 hover:bg-slate-50 text-left transition-all group/link relative z-20 border-b border-slate-100",
+                                                    idx % 2 === 0 ? "border-r" : "",
+                                                    idx >= 2 ? "border-b-0" : ""
+                                                )
+                                            };
+
+                                            const Content = (
+                                                <>
+                                                    <div className={cn(
+                                                        "w-6 h-6 flex-shrink-0 rounded-lg flex items-center justify-center transition-all duration-300 shadow-sm",
+                                                        item.color === "orange"
+                                                            ? "bg-[#f59e0b]/5 text-[#f59e0b] group-hover/link:bg-[#f59e0b] group-hover/link:text-white"
+                                                            : "bg-[#3b8c2a]/5 text-[#3b8c2a] group-hover/link:bg-[#3b8c2a] group-hover/link:text-white"
+                                                    )}>
+                                                        <item.icon className="w-3 h-3" />
+                                                    </div>
+                                                    <span style={{ fontFamily: "'Poppins', sans-serif" }} className={cn(
+                                                        "text-[9.5px] font-semibold text-slate-800 uppercase tracking-wider transition-colors leading-tight whitespace-pre-line",
+                                                        item.color === "orange" ? "group-hover/link:text-[#f59e0b]" : "group-hover/link:text-[#3b8c2a]"
+                                                    )}>
+                                                        {item.label}
+                                                    </span>
+                                                </>
+                                            );
+
+                                            return item.external ? (
+                                                <a key={item.to} href={item.to} target="_blank" rel="noopener noreferrer" {...commonProps}>{Content}</a>
+                                            ) : (
+                                                <Link key={item.to} href={item.to} {...commonProps}>{Content}</Link>
+                                            );
+                                        })}
+                                    </div>
                                 </div>
                             </div>
                         </div>

@@ -39,13 +39,7 @@ export default function HeroSection() {
         defaults: { ease: "power3.out" },
       });
 
-      // Leaf — elastic pop-in + continuous float
-      tl.fromTo(
-        leafRef.current,
-        { opacity: 0, scale: 0.3, rotate: -25, y: 40 },
-        { opacity: 1, scale: 1, rotate: 0, y: 0, duration: 1.1, ease: "elastic.out(1, 0.55)" },
-        0
-      );
+      // Leaf animation completely removed as per user request
 
       // Heading lines — masked reveal with 3D tilt
       tl.fromTo(
@@ -84,15 +78,7 @@ export default function HeroSection() {
         0.95
       );
 
-      // Continuous float on leaf
-      gsap.to(leafRef.current, {
-        y: "+=12",
-        duration: 2.6,
-        ease: "sine.inOut",
-        yoyo: true,
-        repeat: -1,
-        delay: 1.4,
-      });
+      // Continuous float removed as per user request
     }, sectionRef);
 
     return () => ctx.revert();
@@ -151,7 +137,7 @@ export default function HeroSection() {
         <div
           ref={leafRef}
           className="absolute -left-5 lg:left-0 top-[5%] lg:top-[10%] z-10 hidden sm:block w-32 md:w-40 lg:w-[200px] pointer-events-none"
-          style={{ opacity: 0 }}
+          style={{ opacity: 1 }}
         >
           <img
             src={leafImg.src}

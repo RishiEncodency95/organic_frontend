@@ -1,5 +1,6 @@
 import React from "react";
 import HeroSection from "../components/opportunity/epromotion-opportunity/HeroSection";
+import EPromoteBand from "../components/opportunity/epromotion-opportunity/EPromoteBand";
 import WhyEPromote from "../components/opportunity/epromotion-opportunity/WhyEPromote";
 import EPromotionOpportunities from "../components/opportunity/epromotion-opportunity/EPromotionOpportunities";
 
@@ -12,6 +13,7 @@ export default function EPromotionWebPage() {
   return (
     <main className="w-full bg-[#f9f9f9]">
       <HeroSection />
+      <EPromoteBand />
       <WhyEPromote />
       <EPromotionOpportunities />
     </main>

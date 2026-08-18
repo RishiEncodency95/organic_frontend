@@ -1,5 +1,6 @@
 import { Metadata } from "next";
 import BlogHero from "@/app/components/blog/BlogHero";
+import AboutStrip from "@/app/components/abouts/about/AboutStrip";
 import BlogFeatured from "@/app/components/blog/BlogFeatured";
 import BlogExperts from "@/app/components/blog/BlogExperts";
 import BlogLatest from "@/app/components/blog/BlogLatest";
@@ -21,6 +22,7 @@ const BlogPage = () => {
     return (
         <div className="min-h-screen bg-white font-sans text-neutral-800 overflow-x-clip">
             <BlogHero />
+            <AboutStrip />
 
 <main className="container mx-auto max-w-[1400px] px-6 py-2 md:py-4 grid lg:grid-cols-[1fr_320px] gap-10 lg:gap-12">
         <div className="min-w-0">

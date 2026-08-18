@@ -42,7 +42,7 @@ const AudienceStrip = () => {
   ];
 
   return (
-    <div className="bg-[#3B8D2A] w-full py-1.5 md:py-3 border-t border-b border-white/10 shadow-inner overflow-x-auto hide-scrollbar">
+    <div className="bg-[#3B8D2A] w-full py-1.5 md:py-3 border-t border-b border-white/10 shadow-inner overflow-x-auto hide-scrollbar font-inter">
       <div className="max-w-[1600px] mx-auto px-4 md:px-11">
         <div className="flex items-center justify-between min-w-[1000px]">
           {items.map((item, index) => (

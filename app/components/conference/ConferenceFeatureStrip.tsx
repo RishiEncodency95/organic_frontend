@@ -1,38 +1,113 @@
 "use client";
+import React, { useRef, useEffect } from "react";
+import { Users, CheckCircle, Target, ArrowUpRight, TrendingUp } from "lucide-react";
+import gsap from "gsap";
 
-import React from "react";
-import { Users2, ShieldCheck, Handshake, Target, TrendingUp } from "lucide-react";
-import { Reveal } from "../shared/Reveal";
+export default function ConferenceFeatureStrip() {
+  const bandRef = useRef<HTMLDivElement>(null);
+  const shimmerRef = useRef<HTMLDivElement>(null);
+  const itemRefs = useRef<(HTMLDivElement | null)[]>([]);
+  const dividerRefs = useRef<(HTMLDivElement | null)[]>([]);
 
-const strip = [
-  { icon: Users2, label: "Curated Meetings", sub: "Relevant Connections" },
-  { icon: ShieldCheck, label: "Verified Business", sub: "Profiles" },
-  { icon: Handshake, label: "Industry Focused", sub: "Networking" },
-  { icon: Target, label: "New Opportunities", sub: "& Partnerships" },
-  { icon: TrendingUp, label: "Business Growth", sub: "& Expansion" },
-];
+  const features = [
+    { icon: Users, title: "Curated Meetings", subtitle: "Relevant Connections" },
+    { icon: CheckCircle, title: "Verified Business", subtitle: "Profiles" },
+    { icon: Target, title: "Industry Focused", subtitle: "Networking" },
+    { icon: ArrowUpRight, title: "New Opportunities", subtitle: "& Partnerships" },
+    { icon: TrendingUp, title: "Business Growth", subtitle: "& Expansion" },
+  ];
 
-const ConferenceFeatureStrip = () => {
+  itemRefs.current = [];
+  dividerRefs.current = [];
+
+  useEffect(() => {
+    const ctx = gsap.context(() => {
+      const tl = gsap.timeline({
+        delay: 1.2, // fires right after hero animation completes
+        defaults: { ease: "power3.out" },
+      });
+
+      // Band wipe reveal left→right
+      tl.fromTo(
+        bandRef.current,
+        { opacity: 0, y: 20, clipPath: "inset(0% 100% 0% 0%)" },
+        { opacity: 1, y: 0, clipPath: "inset(0% 0% 0% 0%)", duration: 0.9, ease: "power4.inOut" },
+        0
+      );
+
+      // Shimmer sweep
+      tl.fromTo(
+        shimmerRef.current,
+        { xPercent: -130, opacity: 0.8 },
+        { xPercent: 230, opacity: 0, duration: 1.0, ease: "power1.inOut" },
+        0.6
+      );
+
+      // Dividers grow
+      tl.fromTo(
+        dividerRefs.current.filter(Boolean),
+        { scaleY: 0 },
+        { scaleY: 1, duration: 0.4, stagger: 0.06, ease: "power2.out" },
+        0.55
+      );
+
+      // Stat items 3D flip
+      tl.fromTo(
+        itemRefs.current.filter(Boolean),
+        { opacity: 0, rotationX: -80, y: 20, transformOrigin: "top center" },
+        { opacity: 1, rotationX: 0, y: 0, duration: 0.6, stagger: 0.1, ease: "back.out(1.7)" },
+        0.6
+      );
+    });
+
+    return () => ctx.revert();
+  }, []);
+
   return (
-    <section className="container relative z-10 -mt-8 mx-auto max-w-[1400px] px-6 sm:-mt-10">
-      <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-5 sm:gap-4">
-        {strip.map((item, i) => (
-          <Reveal key={item.label} delay={i * 70} direction={i % 2 === 0 ? "up" : "zoom"} className="h-full">
-            <div className="flex h-full items-center gap-3 rounded-2xl border border-gray-200/60 bg-[#fcfdfc] p-3 md:p-4 shadow-[rgba(0,0,0,0.02)_0px_1px_3px_0px,rgba(27,31,35,0.15)_0px_0px_0px_1px] transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_15px_40px_rgba(0,0,0,0.12)]">
-              <div className="flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-full bg-[#3b8c2a]/10 transition-transform duration-300 hover:scale-110 hover:bg-[#3b8c2a]/20">
-                <item.icon className="h-6 w-6 text-[#2b5825]" strokeWidth={1.75} />
-              </div>
-              <p className="text-xs font-semibold leading-tight text-[#154726]">
-                {item.label}
-                <br />
-                {item.sub}
-              </p>
-            </div>
-          </Reveal>
-        ))}
-      </div>
-    </section>
-  );
-};
+    <div className="relative z-20 -mt-6 md:-mt-8 font-inter">
+      <div className="w-full max-w-[1400px] mx-auto px-4 sm:px-6 md:px-8 lg:px-8">
+        <div
+          ref={bandRef}
+          style={{ opacity: 0, backgroundColor: "#1b5e20", boxShadow: "0 8px 20px -10px rgba(0,0,0,0.3)" }}
+          className="rounded-2xl border border-white/10 p-0.5 md:py-2 md:px-3 relative overflow-hidden [perspective:1000px]"
+        >
+          {/* Shimmer overlay */}
+          <div
+            ref={shimmerRef}
+            className="absolute inset-y-0 left-0 w-1/3 pointer-events-none"
+            style={{ background: "linear-gradient(100deg, transparent, rgba(255,255,255,0.18), transparent)", opacity: 0 }}
+          />
 
-export default ConferenceFeatureStrip;
+          <div className="grid grid-cols-2 sm:grid-cols-3 md:flex md:flex-nowrap items-center justify-center md:justify-between gap-y-3 gap-x-2 md:gap-0">
+            {features.map((item, i) => {
+              const IconComponent = item.icon;
+              return (
+                <React.Fragment key={i}>
+                  <div
+                    ref={(el) => { itemRefs.current[i] = el; }}
+                    style={{ opacity: 0 }}
+                    className="flex flex-col items-center text-center group flex-1 py-1"
+                  >
+                    <IconComponent className="w-4 h-4 md:w-5 md:h-5 mb-1 text-white stroke-[1.75]" />
+                    <h4 className="text-[11px] sm:text-[13px] md:text-sm font-semibold text-white leading-none font-inter mb-0.5">
+                      {item.title}
+                    </h4>
+                    <p className="text-[8px] md:text-[9px] font-bold text-[#facc15] uppercase tracking-widest leading-tight mt-0.5 font-inter">
+                      {item.subtitle}
+                    </p>
+                  </div>
+                  {i < features.length - 1 && (
+                    <div
+                      ref={(el) => { dividerRefs.current[i] = el; }}
+                      className="hidden md:block w-px h-6 bg-white/20"
+                    />
+                  )}
+                </React.Fragment>
+              );
+            })}
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}

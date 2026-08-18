@@ -161,14 +161,14 @@ const Navbar = () => {
                                         <Link
                                             href={link.path || "#"}
                                             style={{ fontFamily: "'Poppins', sans-serif" }}
-                                            className={`px-1.5 2xl:px-2.5 py-2 text-[14px] lg:text-[13.5px] font-semibold tracking-wide uppercase transition-all duration-300 flex items-center gap-1 relative group whitespace-nowrap ${pathname === link.path ? "text-[#3b8c2a]" : "text-slate-800 hover:text-[#3b8c2a]"
+                                            className={`px-1.5 2xl:px-2.5 py-2 text-[13px] lg:text-[12.5px] font-medium tracking-wide uppercase transition-all duration-300 flex items-center gap-1 relative group whitespace-nowrap ${pathname === link.path ? "text-[#3b8c2a]" : "text-slate-800 hover:text-[#3b8c2a]"
                                                 }`}
                                         >
                                             {link.label}
                                             {link.dropdown && (
                                                 <ChevronDown className={`w-3 h-3 transition-transform duration-300 ${activeDropdown === link.label ? "rotate-180" : ""}`} />
                                             )}
-                                            <span className={`absolute bottom-0 left-1.5 right-1.5 h-[2px] bg-[#276F27] transition-transform duration-300 origin-left ${pathname === link.path ? "scale-x-100" : "scale-x-0 group-hover:scale-x-100"}`} />
+                                            <span className={`absolute bottom-0 left-1.5 right-1.5 h-[2px] bg-[#ea580c] transition-transform duration-300 origin-left ${pathname === link.path ? "scale-x-100" : "scale-x-0 group-hover:scale-x-100"}`} />
                                         </Link>
 
                                         {link.dropdown && (
@@ -388,7 +388,7 @@ const Navbar = () => {
                                     <div className="w-9 h-9 rounded-xl bg-slate-100 flex items-center justify-center flex-shrink-0">
                                         <Home className={cn("w-4 h-4", pathname === "/" ? "text-[#3b8c2a]" : "text-slate-500")} />
                                     </div>
-                                    <span className={cn("text-[13px] font-semibold flex-1", pathname === "/" ? "text-[#3b8c2a]" : "text-slate-900")}>
+                                    <span className={cn("text-[13px] font-medium flex-1", pathname === "/" ? "text-[#3b8c2a]" : "text-slate-900")}>
                                         Home
                                     </span>
                                     {pathname === "/" && <div className="w-1.5 h-1.5 rounded-full bg-[#3b8c2a]" />}
@@ -407,7 +407,7 @@ const Navbar = () => {
                                                 <div className="w-9 h-9 rounded-xl bg-slate-100 flex items-center justify-center flex-shrink-0">
                                                     <ParentIcon className={cn("w-4 h-4 transition-colors", isOpen ? "text-[#3b8c2a]" : "text-slate-500")} />
                                                 </div>
-                                                <span className={cn("text-[13px] font-semibold flex-1 text-left transition-colors", isOpen ? "text-[#3b8c2a]" : "text-slate-900")}>
+                                                <span className={cn("text-[13px] font-medium flex-1 text-left transition-colors", isOpen ? "text-[#3b8c2a]" : "text-slate-900")}>
                                                     {link.label}
                                                 </span>
                                                 <ChevronDown className={cn("w-4 h-4 transition-transform duration-300", isOpen ? "rotate-180 text-[#3b8c2a]" : "text-slate-400")} />
@@ -466,7 +466,7 @@ const Navbar = () => {
                                         <div className="w-9 h-9 rounded-xl bg-slate-100 flex items-center justify-center flex-shrink-0">
                                             <link.icon className={cn("w-4 h-4", pathname === link.path ? "text-[#3b8c2a]" : "text-slate-500")} />
                                         </div>
-                                        <span className={cn("text-[13px] font-semibold flex-1", pathname === link.path ? "text-[#3b8c2a]" : "text-slate-900")}>
+                                        <span className={cn("text-[13px] font-medium flex-1", pathname === link.path ? "text-[#3b8c2a]" : "text-slate-900")}>
                                             {link.label}
                                         </span>
                                         {pathname === link.path && <div className="w-1.5 h-1.5 rounded-full bg-[#3b8c2a]" />}

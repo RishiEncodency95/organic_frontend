@@ -12,12 +12,12 @@ export default function SectionHeading({
 }) {
   return (
     <div className="flex items-center justify-between mb-3">
-      <strong
-        className="flex items-center gap-3 text-[16px] md:text-[18px] font-extrabold text-[#154726] leading-[1.2] tracking-tight"
+      <h2
+        className="flex items-center gap-3 text-xl md:text-2xl font-semibold text-[#1b5e20] uppercase leading-[1.1] font-poppins tracking-tight"
       >
         <span className="w-1 h-[24px] bg-[#3b8c2a] rounded-full" />
         {children}
-      </strong>
+      </h2>
       {action && (
         <a
           href="#"
