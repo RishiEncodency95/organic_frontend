@@ -180,24 +180,24 @@ const VoicesOfImpact = () => {
 
       </div>
 
-      {/* ── Bottom Stats Strip (Edge to Edge) ── */}
-      <div className="w-full bg-[#3b8c2a] relative z-20 py-1.5 lg:py-2 px-4 md:px-11 border-y border-[#164429] shadow-2xl overflow-x-auto hide-scrollbar">
-        <div className="w-full flex items-center justify-between  gap-4">
+      {/* ── Bottom Stats Strip ── */}
+      <div className="w-full bg-[#1b5e20] relative z-20 py-2.5 px-4 md:px-11 border-y border-white/10 shadow-xl overflow-x-auto hide-scrollbar font-inter">
+        <div className="w-full max-w-7xl mx-auto flex items-center justify-between gap-3 md:gap-6">
           {stats.map((stat, i) => (
             <React.Fragment key={i}>
-              <div className="flex items-center gap-2 md:gap-3 group cursor-pointer hover:scale-105 transition-transform duration-300">
-                <div className="w-8 h-8 rounded-lg bg-white flex items-center justify-center shadow-md group-hover:shadow-lg transition-shadow shrink-0">
-                  <stat.icon className="w-4 h-4 text-[#3b8c2a]" strokeWidth={2.5} />
-                </div>
-                <div className="flex flex-col text-left">
-                  <span className="text-white font-black text-[15px] md:text-[16px] lg:text-[18px] leading-tight tracking-wider uppercase mb-1">{stat.val}</span>
-                  <span className="text-[#e8f2eb] font-bold text-[11px] md:text-[12px] leading-none tracking-wide uppercase">{stat.label}</span>
-                </div>
+              <div className="flex flex-col items-center text-center group flex-1 py-1 shrink-0">
+                <stat.icon className="w-4 h-4 md:w-5 md:h-5 mb-1 text-white stroke-[1.75]" />
+                <h4 className="text-[12px] sm:text-[13px] md:text-sm font-semibold text-white leading-none font-inter mb-0.5">
+                  {stat.val}
+                </h4>
+                <p className="text-[8px] md:text-[9px] font-bold text-[#facc15] uppercase tracking-widest leading-tight mt-0.5 font-inter">
+                  {stat.label}
+                </p>
               </div>
 
               {/* Separator Line */}
               {i < stats.length - 1 && (
-                <div className="w-px h-6 bg-white/40 shrink-0 mx-1 md:mx-2" />
+                <div className="w-px h-6 bg-white/20 shrink-0 mx-1 md:mx-2" />
               )}
             </React.Fragment>
           ))}

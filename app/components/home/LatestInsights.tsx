@@ -36,7 +36,7 @@ const articles = [
 
 const LatestInsights = () => {
   return (
-    <section className="relative w-full bg-white py-2 md:py-4 lg:py-4 overflow-hidden border-t border-gray-100">
+    <section className="relative w-full bg-white py-4 md:py-6 overflow-hidden border-t border-gray-100 font-inter">
 
       <div className="w-full px-4 md:px-11 relative z-10">
 
@@ -44,84 +44,84 @@ const LatestInsights = () => {
         <div className="flex flex-col mb-6">
 
           <div className="flex flex-col items-center text-center w-full relative">
-            <div className="flex items-center gap-2 text-[#3b8c2a] font-bold text-[12px] md:text-[13px] lg:text-[14px] uppercase tracking-widest mb-4">
+            <div className="flex items-center gap-2 text-[#1b5e20] font-semibold text-xs md:text-sm uppercase tracking-widest mb-2 font-poppins">
               <Leaf className="w-4 h-4" />
               <span>LATEST INSIGHTS</span>
               <Leaf className="w-4 h-4" />
             </div>
 
-            <h2 className="text-[28px] md:text-[34px] lg:text-[40px] font-bold text-[#1a1a1a] leading-[1.2] mb-4 tracking-tight font-serif">
-              Organic Industry <span className="text-[#0f5c2e]">Perspectives</span>
+            <h2 className="text-xl md:text-2xl lg:text-3xl font-semibold text-[#1b5e20] uppercase leading-[1.1] font-poppins relative inline-block mb-3">
+              Organic Industry <span className="text-[#3b8c2a]">Perspectives</span>
             </h2>
 
             {/* Title Divider */}
-            <div className="flex items-center justify-center gap-2 mb-2">
+            <div className="flex items-center justify-center gap-2 mb-3">
               <div className="w-10 h-px bg-gray-300"></div>
               <Leaf className="w-4 h-4 text-[#3b8c2a] fill-[#3b8c2a] opacity-80" />
               <div className="w-10 h-px bg-gray-300"></div>
             </div>
 
             <div className="flex flex-col md:flex-row items-center justify-between w-full text-left gap-6">
-              <p className="text-[16px] md:text-[18px] text-gray-600 max-w-[600px] leading-[1.6] text-center md:text-left font-normal">
+              <p className="text-sm md:text-base text-gray-800 font-semibold max-w-[600px] leading-relaxed text-center md:text-left font-inter">
                 Stay informed with the latest trends, insights and innovations <br className="hidden md:block" />
                 shaping the future of the organic and sustainable sectors.
               </p>
 
-              <Link href="/blog" className="bg-[#3b8c2a] hover:bg-[#2d7a2d] text-white px-6 py-2 rounded-md font-semibold text-[12px] md:text-[14px] tracking-widest uppercase transition-colors flex items-center gap-2 shadow-lg shadow-green-600/20 group whitespace-nowrap min-h-[44px]">
+              <Link href="/blog" className="bg-[#1b5e20] hover:bg-[#144417] text-white px-5 py-2.5 rounded-md font-semibold text-xs tracking-widest uppercase transition-colors flex items-center gap-2 shadow-md group whitespace-nowrap min-h-[40px] font-poppins">
                 View all articles
-                <ArrowRight className="w-5 h-5 transition-transform group-hover:translate-x-1" />
+                <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
               </Link>
             </div>
           </div>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8 font-inter">
           {articles.map((article) => (
-            <div key={article.id} className="relative bg-[#fcfdfc] rounded-[24px] overflow-hidden shadow-[0_8px_20px_rgba(0,0,0,0.06),0_2px_5px_rgba(0,0,0,0.03)] border border-gray-200/60 flex flex-col group cursor-pointer transition-all duration-500 ease-out hover:-translate-y-1 hover:shadow-[0_15px_40px_rgba(0,0,0,0.1),0_5px_15px_rgba(0,0,0,0.05)]">
+            <div key={article.id} className="relative bg-[#fcfdfc] rounded-[20px] overflow-hidden shadow-[0_4px_15px_rgba(0,0,0,0.05)] border border-gray-200/60 flex flex-col group cursor-pointer transition-all duration-300 ease-out hover:-translate-y-1 hover:shadow-lg">
 
               {/* Inner 3D Emboss Highlight */}
-              <div className="absolute inset-0 rounded-[24px] shadow-[inset_0_2px_4px_rgba(255,255,255,0.9),inset_0_-2px_6px_rgba(0,0,0,0.03)] pointer-events-none z-30"></div>
+              <div className="absolute inset-0 rounded-[20px] shadow-[inset_0_2px_4px_rgba(255,255,255,0.9),inset_0_-2px_6px_rgba(0,0,0,0.03)] pointer-events-none z-30"></div>
 
               {/* Image Container */}
-              <div className="relative h-[220px] md:h-[240px] w-full overflow-hidden">
+              <div className="relative h-[200px] md:h-[220px] w-full overflow-hidden">
                 <img src={article.image} alt={article.title} className="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-[1.03]" />
 
                 {/* Featured Badge */}
                 {article.featured && (
-                  <div className="absolute top-4 left-4 bg-[#1b5e20] text-white text-[10px] font-bold tracking-wider uppercase px-3 py-1.5 rounded-md shadow-md z-20">
+                  <div className="absolute top-4 left-4 bg-[#1b5e20] text-white text-[10px] font-semibold tracking-wider uppercase px-3 py-1.5 rounded-md shadow-md z-20 font-poppins">
                     FEATURED
                   </div>
                 )}
               </div>
 
               {/* Content */}
-              <div className="p-2 lg:px-4 lg:py-2  flex flex-col flex-1 relative bg-white">
+              <div className="p-4 lg:p-5 flex flex-col flex-1 relative bg-white font-inter">
                 {/* Subtle Leaf bg inside card */}
                 <div className="absolute bottom-3 right-3 w-10 h-10 opacity-[0.06] pointer-events-none">
                   <Leaf className="w-full h-full text-[#3b8c2a] fill-[#3b8c2a]" />
                 </div>
 
-                <div className="flex items-center gap-2 mb-4">
+                <div className="flex items-center gap-2 mb-3">
                   <Calendar className="w-4 h-4 text-[#3b8c2a]" strokeWidth={2.5} />
-                  <span className="text-gray-700 font-medium text-[13px]">{article.date}</span>
+                  <span className="text-gray-700 font-semibold text-xs">{article.date}</span>
                 </div>
 
-                <h3 className="text-[18px] md:text-[20px] font-bold text-[#0f5c2e] leading-[1.3] mb-3 group-hover:text-[#3b8c2a] transition-colors line-clamp-2">
+                <h3 className="text-base md:text-lg font-semibold text-[#1b5e20] leading-snug mb-2 font-poppins group-hover:text-[#3b8c2a] transition-colors line-clamp-2">
                   {article.title}
                 </h3>
 
-                <p className="text-gray-500 text-[16px] leading-[1.6] mb-4 flex-1 line-clamp-3">
+                <p className="text-gray-700 text-xs md:text-sm font-semibold leading-relaxed mb-4 flex-1 line-clamp-3 font-inter">
                   {article.description}
                 </p>
 
                 <div className="flex items-center justify-between mt-auto">
-                  <div className="flex items-center text-[#1b5e20] font-bold text-[14px] group/btn transition-colors hover:text-[#3b8c2a]">
+                  <div className="flex items-center text-[#1b5e20] font-semibold text-xs md:text-sm group/btn transition-colors hover:text-[#3b8c2a] font-poppins">
                     Read more
                     <ArrowRight className="w-4 h-4 ml-1 transition-transform group-hover/btn:translate-x-1" strokeWidth={2.5} />
                   </div>
 
-                  <div className="flex items-center gap-1.5 text-gray-500 font-medium text-[13px]">
-                    <Clock className="w-4 h-4 text-gray-400" />
+                  <div className="flex items-center gap-1.5 text-gray-600 font-semibold text-xs">
+                    <Clock className="w-3.5 h-3.5 text-gray-500" />
                     <span>{article.readTime}</span>
                   </div>
                 </div>
