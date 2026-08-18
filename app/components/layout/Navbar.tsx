@@ -68,10 +68,10 @@ const bottomTabs = [
 ];
 
 const registrationOptions = [
-    { label: "BOOK A STALL", path: "/book-a-stand", icon: Store, color: "green" },
-    { label: "REGISTER AS VISITOR", path: "/visitor-registration", icon: UserPlus, color: "orange" },
+    { label: "BOOK A STALL", path: "/registration/book-a-stand", icon: Store, color: "green" },
+    { label: "REGISTER AS VISITOR", path: "/registration/visitor-registration", icon: UserPlus, color: "orange" },
     { label: "DELEGATE REGISTRATION", path: "/conference", icon: Globe, color: "green" },
-    { label: "REGISTER AS BUYER", path: "/buyer-registration", icon: Users, color: "orange" },
+    { label: "REGISTER AS BUYER", path: "/registration/buyer-registration", icon: Users, color: "orange" },
     { label: "SPONSORSHIP OPPORTUNITIES", path: "/sponsership", icon: Award, color: "green" },
     { label: "TALK TO EXPO ADVISOR", path: "tel:+919654900525", icon: Phone, color: "orange" },
 ];

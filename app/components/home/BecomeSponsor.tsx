@@ -49,7 +49,7 @@ const BecomeSponsor = () => {
             </div>
             
             <p className="text-[16px] md:text-[17px] text-gray-700 font-medium leading-[1.4] max-w-[450px]">
-              Partner with <strong className="text-[#3b8c2a]">Bharat Organic Expo 2027</strong> and unlock premium visibility, strategic connections and unmatched business opportunities with industry leaders and decision-makers.
+              Partner with <strong className="text-[#3b8c2a]">Bharat Bharat Organic Expo 2027</strong> and unlock premium visibility, strategic connections and unmatched business opportunities with industry leaders and decision-makers.
             </p>
           </motion.div>
 

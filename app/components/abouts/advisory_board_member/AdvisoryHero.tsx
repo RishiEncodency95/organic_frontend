@@ -59,7 +59,7 @@ const AdvisoryHero = () => {
             {/* Background Image (Globe and Green scenery on the right) */}
             <Image
                 src={heroBanner}
-                alt="Bharat Organic Expo 2027 Advisory Board Members"
+                alt="Bharat Bharat Organic Expo 2027 Advisory Board Members"
                 fill
                 priority
                 className="object-cover object-right z-0"

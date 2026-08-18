@@ -9,8 +9,8 @@ const articles = [
     id: 1,
     featured: true,
     date: "Jan 12, 2027",
-    title: "Bharat Organic Expo 2027: A New Era for Sustainable Farming",
-    description: "Discover how the Bharat Organic Expo 2027 is uniting global buyers with India's top organic farmers and sustainable brands to revolutionize the industry.",
+    title: "Bharat Bharat Organic Expo 2027: A New Era for Sustainable Farming",
+    description: "Discover how the Bharat Bharat Organic Expo 2027 is uniting global buyers with India's top organic farmers and sustainable brands to revolutionize the industry.",
     readTime: "5 min read",
     image: "https://images.pexels.com/photos/1595108/pexels-photo-1595108.jpeg?auto=compress&cs=tinysrgb&w=800"
   },

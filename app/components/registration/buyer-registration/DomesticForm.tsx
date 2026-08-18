@@ -148,7 +148,7 @@ const MultiSelectDropdown = ({ options, selected, onChange, placeholder = "Selec
     );
 };
 
-export default function InternationalBuyerForm() {
+export default function DomesticBuyerForm() {
   const [submitted, setSubmitted] = useState(false);
   const [isVerifying, setIsVerifying] = useState({ email: false, mobile: false });
   const [otpSent, setOtpSent] = useState({ email: false, mobile: false });
@@ -163,7 +163,6 @@ export default function InternationalBuyerForm() {
     alternateNumber: "",
     emailAddress: "",
     website: "",
-    country: "",
     registeredAddress: "",
     stateProvince: "",
     city: "",
@@ -260,7 +259,7 @@ export default function InternationalBuyerForm() {
         </div>
         <h3 className="text-2xl font-bold text-[#1a3352] mb-2 font-poppins">Registration Successful!</h3>
         <p className="text-gray-500 text-sm max-w-sm leading-relaxed">
-          Thank you for registering as an International Buyer at Bharat Organic Expo 2027. A confirmation will be sent to your email.
+          Thank you for registering as a Domestic Buyer at Bharat Bharat Organic Expo 2027. A confirmation will be sent to your email.
         </p>
         <div className="mt-8 px-6 py-3 rounded-xl bg-[#4d7f1d] text-white text-sm font-bold uppercase tracking-wider">
           19 – 21 February 2027 · Hall 12, Bharat Mandapam
@@ -273,11 +272,11 @@ export default function InternationalBuyerForm() {
     <form onSubmit={handleSubmit} className="w-full space-y-2 animate-in fade-in duration-500">
       <div className="flex items-center gap-3 mb-6">
         <div className="w-10 h-10 rounded-full bg-[#4d7f1d] flex items-center justify-center shrink-0 shadow-md">
-          <Globe size={18} className="text-white" />
+          <User size={18} className="text-white" />
         </div>
         <div>
-          <h3 className="text-lg font-bold text-[#1a3352] uppercase tracking-wide font-poppins">International Buyer Registration</h3>
-          <p className="text-[12px] text-gray-500 font-medium">Bharat Organic Expo 2027</p>
+          <h3 className="text-lg font-bold text-[#1a3352] uppercase tracking-wide font-poppins">Domestic Buyer Registration</h3>
+          <p className="text-[12px] text-gray-500 font-medium">Bharat Bharat Organic Expo 2027</p>
         </div>
       </div>
 
@@ -348,8 +347,7 @@ export default function InternationalBuyerForm() {
           <div><label className={labelClasses}>Website (Optional)</label><input type="url" name="website" value={formData.website} onChange={handleChange} placeholder="https://..." className={inputClasses} /></div>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-4 mt-4">
-          <div><label className={labelClasses}>Country *</label><input required name="country" value={(formData as any).country || ""} onChange={handleChange} placeholder="e.g. USA" className={inputClasses} /></div>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mt-4">
           <div><label className={labelClasses}>Registered Address *</label><input required name="registeredAddress" value={formData.registeredAddress} onChange={handleChange} placeholder="Full Corporate Address" className={inputClasses} /></div>
           <div><label className={labelClasses}>State/Province *</label><input required name="stateProvince" value={formData.stateProvince} onChange={handleChange} placeholder="e.g. Maharashtra" className={inputClasses} /></div>
           <div><label className={labelClasses}>City *</label><input required name="city" value={formData.city} onChange={handleChange} placeholder="e.g. Mumbai" className={inputClasses} /></div>

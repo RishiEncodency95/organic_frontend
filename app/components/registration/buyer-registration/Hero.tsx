@@ -2,8 +2,8 @@
 import React, { useRef, useEffect } from "react";
 import Link from "next/link";
 import { CalendarDays, MapPin, ArrowRight, CheckCircle2 } from "lucide-react";
-import bgImage from "../../assets/banner/b2rrog.webp";
-import footerLogo from "../../assets/logos/footerlogo.png";
+import bgImage from "../../../assets/banner/b2rrog.webp";
+import footerLogo from "../../../assets/logos/footerlogo.png";
 import gsap from "gsap";
 
 const Sparkle = ({
