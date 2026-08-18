@@ -6,6 +6,7 @@ import CategorySelect from "../../components/registration/visitor-registration/C
 import DomesticVisitorForm from "../../components/registration/visitor-registration/DomesticVisitorForm";
 import InternationalVisitorForm from "../../components/registration/visitor-registration/InternationalVisitorForm";
 import GroupVisitorForm from "../../components/registration/visitor-registration/GroupVisitorForm";
+import { ShieldCheck } from "lucide-react";
 
 export default function VisitorRegistrationPage() {
   const [visitorType, setVisitorType] = useState<"domestic" | "international" | "group" | null>(null);
@@ -34,25 +35,24 @@ export default function VisitorRegistrationPage() {
         {visitorType && (
           <section className="w-full bg-white pb-16">
             <div className="max-w-[1410px] mx-auto px-4 md:px-8">
-              {/* Divider */}
-              <div className="flex items-center gap-4 pt-8 pb-6">
-                <span className="flex-1 h-px bg-gradient-to-r from-transparent to-gray-200" />
-                <span className="text-[11px] font-bold uppercase tracking-[0.2em] text-gray-400">
-                  {visitorType === "domestic" ? "Domestic Visitor" : visitorType === "international" ? "International Visitor" : "Group"} Registration Form
-                </span>
-                <span className="flex-1 h-px bg-gradient-to-l from-transparent to-gray-200" />
-              </div>
-
               {/* Form card */}
               <div
-                className={`w-full rounded-2xl border p-6 md:p-8 shadow-sm transition-all duration-300 ${visitorType === "domestic"
-                  ? "border-[#a8d060]/50 bg-[#fafff5]"
-                  : visitorType === "international"
-                    ? "border-[#a8d060]/50 bg-[#fafff5]"
-                    : "border-[#a8d060]/50 bg-[#fafff5]"
-                  }`}
+                className="bg-white border border-slate-500 shadow-2xl overflow-hidden rounded-sm"
               >
-                {visitorType === "domestic" ? <DomesticVisitorForm /> : visitorType === "international" ? <InternationalVisitorForm /> : <GroupVisitorForm />}
+                <div className="bg-green-800 px-6 py-1 text-white flex justify-between items-center border-b-2 border-[#a8d060]">
+                  <div>
+                      <h2 className="text-sm font-medium uppercase tracking-wider text-white">
+                          {visitorType === "domestic" ? "Domestic Visitor Registration" : visitorType === "international" ? "International Visitor Registration" : "Group Registration"}
+                      </h2>
+                      <p className="text-[10px] text-green-200 uppercase tracking-widest font-semibold mt-0.5">
+                          Premier Edition of Bharat Organic Expo 2027 (Global Edition)
+                      </p>
+                  </div>
+                  <ShieldCheck className="text-[#a8d060]" size={22} />
+                </div>
+                <div className="px-4 pt-4 pb-8 space-y-2 bg-white">
+                  {visitorType === "domestic" ? <DomesticVisitorForm /> : visitorType === "international" ? <InternationalVisitorForm /> : <GroupVisitorForm />}
+                </div>
               </div>
             </div>
           </section>

@@ -126,9 +126,11 @@ export default function HealthCampForm() {
     setLoading(false);
   };
 
-  const inputClasses = "w-full h-[34px] px-3 py-1.5 rounded-[2px] border border-slate-400 bg-white text-left text-[12px] font-medium text-slate-900 outline-none transition-all focus:border-[#e11d48] focus:ring-1 focus:ring-[#e11d48]/20 placeholder:text-slate-400 font-inter";
-  const labelClasses = "text-[12px] font-semibold text-slate-900 mb-1 block text-left font-inter uppercase";
-  const sectionTitleClasses = "text-[14px] font-bold text-[#e11d48] pb-2 border-b border-[#e11d48]/20 flex items-center gap-2 mb-4 uppercase tracking-wide font-poppins mt-8";
+  const inputClasses = "rounded border border-slate-400 h-7 focus:border-[#23471d] focus:ring-[#23471d]/10 transition-all text-[12px] bg-white placeholder:text-slate-400 text-slate-900 font-normal shadow-none outline-none px-3 w-full text-left";
+  const labelClasses = "text-[11px] font-medium uppercase text-slate-800 mb-1 block text-left";
+  const sectionTitleClasses = "text-[12px] font-medium text-[#4d7f1d] uppercase tracking-[0.05em]";
+  const sectionTitleWrapperClasses = "pb-1 border-b border-slate-500 mb-3 mt-6 flex justify-between items-end";
+  const buttonTextClasses = "text-[12px] font-bold uppercase tracking-wider font-inter";
   
   if (submitted) {
     return (
@@ -157,8 +159,10 @@ export default function HealthCampForm() {
       </div>
 
       <div>
-        <h3 className={sectionTitleClasses}>1. Patient Information</h3>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+        <div className={sectionTitleWrapperClasses}>
+            <h3 className={sectionTitleClasses}>1. Patient Information</h3>
+        </div>
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-x-3 gap-y-3">
           <div>
             <label className={labelClasses}>Event Name *</label>
             <select required name="registrationFor" value={formData.registrationFor} onChange={handleChange} className={inputClasses} disabled>
@@ -206,8 +210,10 @@ export default function HealthCampForm() {
       </div>
 
       <div>
-        <h3 className={sectionTitleClasses}><Heart className="w-4 h-4 mr-1"/> 2. Medical Background</h3>
-        <div className="space-y-4 bg-slate-50 p-4 border border-slate-200 rounded-sm">
+        <div className={sectionTitleWrapperClasses}>
+            <h3 className={sectionTitleClasses}><Heart className="w-4 h-4 mr-1 inline-block mb-1"/> 2. Medical Background</h3>
+        </div>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-x-3 gap-y-3">
             {[
                 { label: "Existing Medical Conditions?", key: "existingMedicalConditions", area: "existingMedicalConditions_text" },
                 { label: "Currently taking medications?", key: "isTakingMedications", area: "medicationNames" },
@@ -216,15 +222,15 @@ export default function HealthCampForm() {
             ].map(({ label, key, area }) => (
                 <div key={key} className="grid grid-cols-1 md:grid-cols-3 gap-2 items-start">
                     <div>
-                        <label className="text-[12px] font-semibold text-gray-700 uppercase">{label}</label>
+                        <label className={labelClasses}>{label}</label>
                         <div className="flex gap-4 mt-1">
                             <label className="flex items-center gap-1.5 cursor-pointer">
-                                <input type="radio" name={key} value="yes" checked={(formData as any)[key] === "yes"} onChange={handleChange} className="w-3.5 h-3.5 accent-[#e11d48]" />
-                                <span className="text-[11px] font-semibold text-gray-600 uppercase">Yes</span>
+                                <input type="radio" name={key} value="yes" checked={(formData as any)[key] === "yes"} onChange={handleChange} className="w-3.5 h-3.5 accent-[#4d7f1d]" />
+                                <span className="text-[11px] font-medium text-slate-700">Yes</span>
                             </label>
                             <label className="flex items-center gap-1.5 cursor-pointer">
-                                <input type="radio" name={key} value="no" checked={(formData as any)[key] === "no"} onChange={handleChange} className="w-3.5 h-3.5 accent-[#e11d48]" />
-                                <span className="text-[11px] font-semibold text-gray-600 uppercase">No</span>
+                                <input type="radio" name={key} value="no" checked={(formData as any)[key] === "no"} onChange={handleChange} className="w-3.5 h-3.5 accent-[#4d7f1d]" />
+                                <span className="text-[11px] font-medium text-slate-700">No</span>
                             </label>
                         </div>
                     </div>
@@ -234,7 +240,7 @@ export default function HealthCampForm() {
                                 name={area}
                                 value={(formData as any)[area] || ""}
                                 onChange={handleChange}
-                                className="w-full h-10 p-2 border border-slate-400 focus:border-[#e11d48] outline-none text-[12px] rounded-[2px] bg-white resize-none shadow-inner"
+                                className="w-full h-7 px-3 border border-slate-400 focus:border-[#4d7f1d] outline-none text-[12px] rounded bg-white"
                                 placeholder="Provide details here..."
                             />
                         )}
@@ -244,10 +250,12 @@ export default function HealthCampForm() {
         </div>
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-x-3 gap-y-3 mt-6">
           <div>
-            <h3 className={sectionTitleClasses}><Activity className="w-4 h-4 mr-1"/> 3. Health Check-Up Services</h3>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-3 bg-[#fff1f2] p-4 border border-[#e11d48]/20 rounded-sm">
+            <div className={sectionTitleWrapperClasses}>
+                <h3 className={sectionTitleClasses}><Activity className="w-4 h-4 mr-1 inline-block mb-1"/> 3. Health Check-Up Services</h3>
+            </div>
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 pt-1">
                 {HEALTH_SERVICES.map(({ key, label }) => (
                     <label key={key} className="flex items-center gap-2 cursor-pointer group">
                         <input
@@ -256,14 +264,16 @@ export default function HealthCampForm() {
                             onChange={(e) => handleHealthServiceChange(key, e.target.checked)}
                             className="w-4 h-4 rounded border-slate-400 accent-[#e11d48]"
                         />
-                        <span className="text-[12px] font-medium text-gray-700 group-hover:text-[#e11d48] transition-colors">{label}</span>
+                        <span className="text-[11px] text-slate-600 group-hover:text-slate-900 font-medium transition-colors font-inter whitespace-nowrap">{label}</span>
                     </label>
                 ))}
             </div>
           </div>
           <div>
-            <h3 className={sectionTitleClasses}><Calendar className="w-4 h-4 mr-1"/> 4. Appointment Schedule</h3>
-            <div className="space-y-4 bg-slate-50 p-4 border border-slate-200 rounded-sm">
+            <div className={sectionTitleWrapperClasses}>
+                <h3 className={sectionTitleClasses}><Calendar className="w-4 h-4 mr-1 inline-block mb-1"/> 4. Appointment Schedule</h3>
+            </div>
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-3 gap-y-3">
                 <div>
                     <label className={labelClasses}>Preferred Date *</label>
                     <input required type="date" name="preferredDate" value={formData.preferredDate} onChange={handleChange} className={inputClasses} />
@@ -287,15 +297,15 @@ export default function HealthCampForm() {
                     { label: "Agree to health updates & reminders? *", key: "agreeToUpdates" },
                 ].map(({ label, key }) => (
                     <div key={key}>
-                        <label className="text-[12px] font-semibold text-gray-700 uppercase block mb-1">{label}</label>
+                        <label className={labelClasses}>{label}</label>
                         <div className="flex gap-4">
                             <label className="flex items-center gap-1.5 cursor-pointer">
-                                <input type="radio" name={key} value="yes" checked={(formData as any)[key] === "yes"} onChange={handleChange} className="w-3.5 h-3.5 accent-[#e11d48]" />
-                                <span className="text-[11px] font-semibold text-gray-600 uppercase">Yes</span>
+                                <input type="radio" name={key} value="yes" checked={(formData as any)[key] === "yes"} onChange={handleChange} className="w-3.5 h-3.5 accent-[#4d7f1d]" />
+                                <span className="text-[11px] font-medium text-slate-700">Yes</span>
                             </label>
                             <label className="flex items-center gap-1.5 cursor-pointer">
-                                <input type="radio" name={key} value="no" checked={(formData as any)[key] === "no"} onChange={handleChange} className="w-3.5 h-3.5 accent-[#e11d48]" />
-                                <span className="text-[11px] font-semibold text-gray-600 uppercase">No</span>
+                                <input type="radio" name={key} value="no" checked={(formData as any)[key] === "no"} onChange={handleChange} className="w-3.5 h-3.5 accent-[#4d7f1d]" />
+                                <span className="text-[11px] font-medium text-slate-700">No</span>
                             </label>
                         </div>
                     </div>
@@ -307,7 +317,7 @@ export default function HealthCampForm() {
                     name="specificHealthConcerns"
                     value={formData.specificHealthConcerns}
                     onChange={handleChange}
-                    className="w-full h-20 p-2 border border-slate-400 focus:border-[#e11d48] outline-none text-[12px] rounded-[2px] bg-white resize-none shadow-inner"
+                    className="w-full h-20 p-2 border border-slate-400 focus:border-[#4d7f1d] outline-none text-[12px] rounded bg-white resize-none"
                     placeholder="Mention any specific concerns for the doctors..."
                 />
             </div>
@@ -316,17 +326,17 @@ export default function HealthCampForm() {
 
       <div className="pt-4 border-t border-slate-100 mt-8">
         <label className="flex items-center gap-3 cursor-pointer group w-fit">
-            <input type="checkbox" name="subscribeNewsletter" checked={(formData as any).subscribeNewsletter} onChange={handleChange} className="w-4 h-4 text-[#e11d48] accent-[#e11d48] border-slate-300 rounded-sm" />
-            <span className="text-[11px] font-bold text-[#e11d48] uppercase tracking-wide">Subscribe to Event Updates & Wellness Newsletters</span>
+            <input type="checkbox" name="subscribeNewsletter" checked={(formData as any).subscribeNewsletter} onChange={handleChange} className="w-4 h-4 text-[#4d7f1d] accent-[#4d7f1d] border-slate-300 rounded-sm" />
+            <span className="text-[11px] font-bold text-[#4d7f1d] uppercase tracking-wide">Subscribe to Event Updates & Wellness Newsletters</span>
         </label>
       </div>
 
       <div className="pt-6 mt-4 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
         <p className="text-[10px] text-slate-400 font-bold uppercase tracking-[0.2em] flex items-center gap-2">
-            <ShieldCheck size={12} className="text-[#e11d48]" />
+            <ShieldCheck size={12} className="text-[#4d7f1d]" />
             Secure Registration Portal
         </p>
-        <button type="submit" disabled={loading} className="bg-[#e11d48] hover:bg-[#be123c] text-white px-10 py-3 rounded-[4px] text-[13px] font-bold uppercase tracking-widest transition-all shadow-md flex items-center justify-center gap-2 font-inter disabled:opacity-50 w-full sm:w-auto">
+        <button type="submit" disabled={loading} className="bg-[#4d7f1d] hover:bg-[#3b6315] text-white px-10 py-3 rounded text-[13px] font-bold uppercase tracking-widest transition-all shadow-md flex items-center justify-center gap-2 font-inter disabled:opacity-50 w-full sm:w-auto">
           {loading ? <Loader2 className="animate-spin" size={18} /> : <>Submit Registration <ShieldCheck size={18} /></>}
         </button>
       </div>
