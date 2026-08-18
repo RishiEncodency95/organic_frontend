@@ -70,17 +70,6 @@ const BookAStandHero = () => {
                             ))}
                         </div>
 
-                        <div className="mt-5">
-                            <button className="flex items-center gap-3 bg-[#4a8f2f] hover:bg-[#3d7a26] text-white px-6 py-2 rounded-full text-xs font-semibold uppercase tracking-wider shadow-md transition-all duration-300 hover:scale-[1.03]">
-                                Book Your Stall Now
-                                <span className="w-6 h-6 rounded-full bg-white flex items-center justify-center shrink-0">
-                                    <svg xmlns="http://www.w3.org/2000/svg" className="w-3.5 h-3.5 text-[#4a8f2f]" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-                                        <path d="M5 12h14M13 6l6 6-6 6" />
-                                    </svg>
-                                </span>
-                            </button>
-                        </div>
-
                     </div>
 
                     <div className="w-[40%]">

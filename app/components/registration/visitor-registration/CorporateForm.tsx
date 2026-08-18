@@ -160,12 +160,12 @@ export default function CorporateForm() {
 
       if (res && res.success) {
         setOtpSent(prev => ({ ...prev, [type]: true }));
-        Swal.fire({ icon: 'success', title: 'OTP Sent', text: `OTP sent to your ${type}.`, timer: 2000, showConfirmButton: false });
+        Swal.fire({ scrollbarPadding: false, icon: 'success', title: 'OTP Sent', text: `OTP sent to your ${type}.`, timer: 2000, showConfirmButton: false });
       } else {
-        Swal.fire({ icon: 'error', title: 'Error', text: res?.message || 'Failed to send OTP.' });
+        Swal.fire({ scrollbarPadding: false, icon: 'error', title: 'Error', text: res?.message || 'Failed to send OTP.' });
       }
     } catch (error) {
-      Swal.fire({ icon: 'error', title: 'Error', text: 'Something went wrong.' });
+      Swal.fire({ scrollbarPadding: false, icon: 'error', title: 'Error', text: 'Something went wrong.' });
     }
     setIsVerifying(prev => ({ ...prev, [type]: false }));
   };
@@ -174,7 +174,7 @@ export default function CorporateForm() {
     const otpValue = type === 'email' ? emailOtp : mobileOtp;
     const value = type === 'email' ? formData.email : formData.mobileNo;
     if (!otpValue || otpValue.length !== 6) {
-      Swal.fire({ icon: 'warning', title: 'Invalid OTP', text: 'Please enter a valid 6-digit OTP.' });
+      Swal.fire({ scrollbarPadding: false, icon: 'warning', title: 'Invalid OTP', text: 'Please enter a valid 6-digit OTP.' });
       return;
     }
     setIsVerifying(prev => ({ ...prev, [type]: true }));
@@ -185,12 +185,12 @@ export default function CorporateForm() {
 
       if (res && res.success) {
         setOtpVerified(prev => ({ ...prev, [type]: true }));
-        Swal.fire({ icon: 'success', title: 'Verified', text: 'Verified successfully!', timer: 2000, showConfirmButton: false });
+        Swal.fire({ scrollbarPadding: false, icon: 'success', title: 'Verified', text: 'Verified successfully!', timer: 2000, showConfirmButton: false });
       } else {
-        Swal.fire({ icon: 'error', title: 'Invalid OTP', text: res?.message || 'Verification failed.' });
+        Swal.fire({ scrollbarPadding: false, icon: 'error', title: 'Invalid OTP', text: res?.message || 'Verification failed.' });
       }
     } catch (error) {
-      Swal.fire({ icon: 'error', title: 'Error', text: 'Something went wrong.' });
+      Swal.fire({ scrollbarPadding: false, icon: 'error', title: 'Error', text: 'Something went wrong.' });
     }
     setIsVerifying(prev => ({ ...prev, [type]: false }));
   };
@@ -198,7 +198,7 @@ export default function CorporateForm() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!otpVerified.email || !otpVerified.mobile) {
-      Swal.fire({ icon: 'warning', title: 'Verification Required', text: 'Please verify both Email and WhatsApp number.' });
+      Swal.fire({ scrollbarPadding: false, icon: 'warning', title: 'Verification Required', text: 'Please verify both Email and WhatsApp number.' });
       return;
     }
     setLoading(true);
@@ -207,10 +207,10 @@ export default function CorporateForm() {
       if (res) {
         setSubmitted(true);
       } else {
-        Swal.fire({ icon: 'error', title: 'Submission Failed', text: 'Failed to submit registration.' });
+        Swal.fire({ scrollbarPadding: false, icon: 'error', title: 'Submission Failed', text: 'Failed to submit registration.' });
       }
     } catch (error) {
-      Swal.fire({ icon: 'error', title: 'Error', text: 'Something went wrong.' });
+      Swal.fire({ scrollbarPadding: false, icon: 'error', title: 'Error', text: 'Something went wrong.' });
     }
     setLoading(false);
   };
@@ -438,14 +438,14 @@ export default function CorporateForm() {
         </div>
         <div className="md:col-span-2 lg:col-span-4"><label className={labelClasses}>Any Specific Requirement</label><input name="anyRequirement" value={formData.anyRequirement} onChange={handleChange} className={inputClasses} placeholder="Please specify if any..." /></div>
       </div>
-      <div className="pt-4 border-t border-slate-100 mt-4">
+      <div className="pt-2 border-t border-slate-100 mt-2">
         <label className="flex items-center gap-3 cursor-pointer group w-fit">
           <input type="checkbox" name="subscribeNewsletter" checked={formData.subscribeNewsletter} onChange={handleChange} className="w-4 h-4 text-[#23471d] accent-[#23471d] border-slate-300 rounded-sm" />
           <span className="text-[11px] font-bold text-[#23471d] uppercase tracking-wide">Subscribe to Event Updates & Newsletters</span>
         </label>
       </div>
 
-      <div className="pt-6 mt-4 flex flex-col-reverse items-center justify-center gap-4">
+      <div className="pt-3 mt-2 flex flex-col-reverse items-center justify-center gap-2">
         <p className="text-[10px] text-slate-400 font-bold uppercase tracking-[0.2em] flex items-center gap-2">
           <ShieldCheck size={12} className="text-[#1b5e20]" />
           Secure Registration Portal
