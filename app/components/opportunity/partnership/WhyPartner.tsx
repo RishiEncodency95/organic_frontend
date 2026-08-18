@@ -1,6 +1,7 @@
 "use client";
 import React from "react";
 import { Shield, MapPin, Network, ClipboardList } from "lucide-react";
+import SectionContainer from "@/app/components/layout/SectionContainer";
 
 // Import custom icons for Right Column (Key Benefits)
 import e1og from "@/app/assets/icons/e1og.png";
@@ -43,7 +44,7 @@ export default function WhyPartner() {
         className="absolute right-0 bottom-0 w-32 md:w-48 object-contain pointer-events-none z-0 opacity-80" 
       />
       
-      <div className="container mx-auto px-4 max-w-7xl relative z-10">
+      <SectionContainer className="relative z-10">
         
         {/* Large Single Card containing both sections */}
         <div 
@@ -126,7 +127,7 @@ export default function WhyPartner() {
           </div>
         </div>
         
-      </div>
+      </SectionContainer>
     </section>
   );
 }

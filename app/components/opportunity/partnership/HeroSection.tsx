@@ -2,8 +2,10 @@
 import React, { useState, useEffect, useRef } from "react";
 import Image from "next/image";
 import { Users, Store, UserCheck, Globe, Calendar, MapPin, Briefcase } from "lucide-react";
-import bgImg from "../../../assets/banner/partog.png";
+import bgImg from "../../../assets/banner/partog.webp";
+import leafImg from "../../../assets/icons/leafs.png";
 import gsap from "gsap";
+import SectionContainer from "@/app/components/layout/SectionContainer";
 
 const AnimatedCounter = ({ value }: { value: string }) => {
   const [count, setCount] = useState(0);
@@ -164,19 +166,26 @@ export default function HeroSection() {
           <img src={bgImg.src} alt="Partnership BG" className="part-bg-img w-full h-full object-cover" />
         </div>
 
+        {/* Left Corner Decorative Leaf Image */}
+        <img 
+          src={leafImg.src} 
+          alt="Leaf Decoration" 
+          className="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-1/4 w-28 sm:w-36 md:w-48 lg:w-56 object-contain pointer-events-none z-10 opacity-90" 
+        />
+
         {/* Content Container */}
-        <div className="container mx-auto px-4 sm:px-6 max-w-7xl relative z-10">
-          <div className="max-w-xl bg-white/80 md:bg-transparent p-4 md:p-0 rounded-xl md:rounded-none backdrop-blur-sm md:backdrop-blur-none translate-y-1 lg:translate-y-2">
+        <SectionContainer className="relative z-10">
+          <div className="max-w-xl bg-white/80 md:bg-transparent p-4 md:p-0 md:pl-6 lg:pl-10 rounded-xl md:rounded-none backdrop-blur-sm md:backdrop-blur-none translate-y-1 lg:translate-y-2">
 
             <h4
               ref={badgeRef}
               style={{ opacity: 0 }}
-              className="text-[12px] md:text-[13px] lg:text-[14px] font-bold text-[#c2410c] tracking-[0.15em] uppercase mb-2"
+              className="text-[13px] md:text-[15px] lg:text-[16px] font-bold text-[#c2410c] tracking-[0.15em] uppercase mb-2"
             >
               PARTNERSHIP / COLLABORATION
             </h4>
 
-            <h1 className="text-4xl md:text-5xl lg:text-[52px] font-black text-[#1b5e20] leading-[1.05] mb-3 font-poppins tracking-tight">
+            <h1 className="text-4xl md:text-[52px] lg:text-[58px] font-black text-[#1b5e20] leading-[1.05] mb-3 font-poppins tracking-tight">
               <span className="block overflow-hidden">
                 <span ref={line1Ref} style={{ opacity: 0, display: "block", fontWeight: 600 }}>Let&apos;s Grow</span>
               </span>
@@ -184,7 +193,7 @@ export default function HeroSection() {
                 <span ref={line2Ref} style={{ opacity: 0, display: "block", fontWeight: 600 }}>Organic.</span>
               </span>
               <span className="block overflow-hidden">
-                <span ref={line3Ref} style={{ opacity: 0, display: "block" }} className="font-serif italic text-[#ea580c] font-bold tracking-normal text-3xl md:text-4xl lg:text-[46px]">Together.</span>
+                <span ref={line3Ref} style={{ opacity: 0, display: "block" }} className="font-serif italic text-[#ea580c] font-bold tracking-normal text-3xl md:text-[44px] lg:text-[52px]">Together.</span>
               </span>
             </h1>
 
@@ -213,11 +222,11 @@ export default function HeroSection() {
               </div>
             </div>
           </div>
-        </div>
+        </SectionContainer>
 
         {/* Stats Bar - animated like FeatureStrip */}
-        <div className="absolute left-0 right-0 bottom-0 translate-y-1/2 z-30 px-4 sm:px-6 md:px-8">
-          <div className="max-w-[1400px] mx-auto">
+        <div className="absolute left-0 right-0 bottom-0 translate-y-1/2 z-30">
+          <SectionContainer>
             <div
               ref={bandRef}
               style={{ opacity: 0, backgroundColor: "#1b5e20", boxShadow: "0 8px 20px -10px rgba(0,0,0,0.3)" }}
@@ -257,7 +266,7 @@ export default function HeroSection() {
                 ))}
               </div>
             </div>
-          </div>
+          </SectionContainer>
         </div>
       </section>
     </>

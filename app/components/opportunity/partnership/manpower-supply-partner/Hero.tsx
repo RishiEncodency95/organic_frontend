@@ -2,8 +2,9 @@
 import React from "react";
 import Link from "next/link";
 import { Calendar, MapPin, Globe } from "lucide-react";
-import travelBg from "@/app/assets/banner/manog.png";
+import travelBg from "@/app/assets/banner/manog.webp";
 import pleaf from "@/app/assets/icons/pleaf.png";
+import SectionContainer from "@/app/components/layout/SectionContainer";
 
 export default function Hero() {
   return (
@@ -17,7 +18,7 @@ export default function Hero() {
         />
       </div>
 
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl relative z-10 mt-2 md:mt-4 lg:mt-6">
+      <SectionContainer className="relative z-10 mt-2 md:mt-4 lg:mt-6">
 
         <div className="max-w-4xl flex flex-col items-start text-left">
           {/* Main Title */}
@@ -25,18 +26,24 @@ export default function Hero() {
             className="font-semibold leading-[1.05] mb-4 font-poppins"
             style={{ textShadow: "1px 1px 2px rgba(0,0,0,0.4)" }}
           >
-            <span className="text-3xl md:text-5xl lg:text-[58px] text-[#1b5e20] block mb-1">SKILLED PEOPLE.</span>
-            <span className="text-2xl md:text-4xl lg:text-[44px] text-[#ea580c] block">STRONGER EXHIBITIONS.</span>
+            <span className="text-3xl md:text-5xl lg:text-[60px] text-[#1b5e20] block mb-1">SKILLED PEOPLE.</span>
+            <span className="text-2xl md:text-4xl lg:text-[46px] text-[#ea580c] block">STRONGER EXHIBITIONS.</span>
           </h1>
 
+          {/* Subtitle */}
+          <p className="text-[#1b5e20] text-sm md:text-base font-bold uppercase tracking-wider mb-2">
+            Professional & Reliable Manpower Solutions
+          </p>
+
           {/* Description */}
-          <p className="text-[#131730] text-[15px] md:text-base font-bold leading-relaxed max-w-2xl mb-5">
-            Professional and reliable manpower that<br className="hidden md:block" />
-            keeps your stall operations seamless.
+          <p className="text-[#131730] text-sm md:text-[15px] font-bold leading-relaxed max-w-2xl mb-5">
+            Partner with Bharat Organic Expo 2027 as our Manpower Supply Partner<br className="hidden md:block" />
+            and provide skilled, reliable personnel to keep stall operations seamless<br className="hidden md:block" />
+            and elevate exhibitor & visitor experiences.
           </p>
 
           {/* Metadata (Date, Location) */}
-          <div className="flex flex-wrap items-center gap-3 sm:gap-4 text-[#4B1426] text-xs sm:text-[15px] md:text-base font-bold w-full max-w-4xl">
+          <div className="flex flex-wrap items-center gap-3 sm:gap-4 text-[#4B1426] text-xs sm:text-sm md:text-[15px] font-bold w-full max-w-4xl">
             <div className="flex items-center gap-2">
               <div className="w-8 h-8 rounded-lg bg-[#ea580c]/10 flex items-center justify-center text-[#ea580c] shrink-0">
                 <Calendar size={16} />
@@ -52,7 +59,7 @@ export default function Hero() {
             </div>
           </div>
         </div>
-      </div>
+      </SectionContainer>
     </section>
   );
 }

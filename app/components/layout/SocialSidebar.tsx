@@ -470,6 +470,7 @@ const SocialSidebar = () => {
                   target={social.isExternal ? "_blank" : "_self"}
                   rel="noopener noreferrer"
                   className="sb-btn"
+                  aria-label={social.label}
                   style={{
                     background: social.bg,
                     boxShadow:

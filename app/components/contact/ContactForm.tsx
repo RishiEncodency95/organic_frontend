@@ -53,14 +53,14 @@ const ContactForm = () => {
       
       {/* Decorative Left Image */}
       <img 
-        src={leafs?.src || leafs} 
+        src={(leafs as any)?.src || (leafs as any)} 
         alt="leaf decoration" 
         className="absolute left-0 top-1/2 -translate-y-1/2 w-32 md:w-48 opacity-100 pointer-events-none -translate-x-1/4 z-0" 
       />
       
       {/* Decorative Right Image */}
       <img 
-        src={footerright?.src || footerright} 
+        src={(footerright as any)?.src || (footerright as any)} 
         alt="right decoration" 
         className="absolute right-0 top-0 mt-4 w-32 md:w-48 opacity-100 pointer-events-none z-20" 
       />
@@ -282,7 +282,7 @@ const ContactForm = () => {
             </div>
 
             {/* Decorative Leaf */}
-            <img src={cleaf?.src || cleaf} alt="decoration" className="absolute -bottom-8 right-0 w-20 md:w-28 pointer-events-none opacity-80" />
+            <img src={(cleaf as any)?.src || (cleaf as any)} alt="decoration" className="absolute -bottom-8 right-0 w-20 md:w-28 pointer-events-none opacity-80" />
           </div>
 
         </div>

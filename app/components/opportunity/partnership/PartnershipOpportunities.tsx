@@ -5,6 +5,7 @@ import { ArrowRight, CheckCircle2 } from "lucide-react";
 import leaf from "@/app/assets/icons/bleaf.png";
 import leafsImg from "@/app/assets/icons/leafs.png";
 import footerRightImg from "@/app/assets/icons/footerright.webp";
+import SectionContainer from "@/app/components/layout/SectionContainer";
 
 // Import custom category icon images
 import tog1 from "@/app/assets/icons/1tog.png";
@@ -126,7 +127,7 @@ export default function PartnershipOpportunities() {
         <img src={footerRightImg.src} alt="Decoration" className="w-full h-auto object-contain translate-x-1/4" />
       </div>
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-8 relative z-10">
+      <SectionContainer className="mt-8 relative z-10">
         
         {/* Header */}
         <div className="text-center mb-10">
@@ -186,7 +187,7 @@ export default function PartnershipOpportunities() {
             </div>
           ))}
         </div>
-      </div>
+      </SectionContainer>
     </section>
   );
 }

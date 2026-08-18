@@ -7,6 +7,7 @@ import p4og from "@/app/assets/icons/p4og.png";
 import p5og from "@/app/assets/icons/p5og.png";
 import p6og from "@/app/assets/icons/p6og.png";
 import pleaf from "@/app/assets/icons/pleaf.png";
+import SectionContainer from "@/app/components/layout/SectionContainer";
 
 export default function KeyBenefits() {
   const benefits = [
@@ -45,7 +46,7 @@ export default function KeyBenefits() {
         className="absolute left-0 top-1/2 -translate-y-1/2 w-16 md:w-24 object-contain pointer-events-none z-0 opacity-100" 
       />
 
-      <div className="max-w-[1400px] mx-auto px-4 sm:px-6 md:px-8 lg:px-8 relative z-10">
+      <SectionContainer className="relative z-10">
         
         {/* Header */}
         <div className="text-center mb-10 flex flex-col items-center justify-center">
@@ -80,7 +81,7 @@ export default function KeyBenefits() {
           ))}
         </div>
 
-      </div>
+      </SectionContainer>
     </section>
   );
 }

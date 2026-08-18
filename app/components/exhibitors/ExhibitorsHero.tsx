@@ -2,8 +2,9 @@
 import React from "react";
 import Link from "next/link";
 import { ArrowRight, CalendarDays, MapPin, Leaf } from "lucide-react";
-import bgImg from "../../assets/banner/exhog.png";
+import bgImg from "../../assets/banner/exhog.webp";
 import leafImg from "../../assets/icons/leafs.png";
+import SectionContainer from "@/app/components/layout/SectionContainer";
 
 const Sparkle = ({ style, color = "#ffdd00", shadow = "#ffa500" }: { style?: React.CSSProperties; color?: string; shadow?: string }) => (
   <span
@@ -73,8 +74,8 @@ const ExhibitorsHero = () => {
         </div>
 
         {/* Content */}
-        <div className="container mx-auto px-6 max-w-7xl relative z-10">
-          <div className="max-w-2xl -translate-y-2 md:-translate-y-4 lg:-translate-y-5">
+        <SectionContainer className="relative z-10">
+          <div className="max-w-2xl -translate-y-2 md:-translate-y-4 lg:-translate-y-5 ml-0 lg:ml-8 xl:ml-12">
 
             {/* Trust Badge */}
             <div className="inline-flex items-center gap-2 mb-4 rounded-full bg-[#063f25] border border-[#a8cf22]/30 px-3.5 py-1.5 shadow-[0_8px_30px_rgba(0,0,0,0.12)]">
@@ -86,10 +87,10 @@ const ExhibitorsHero = () => {
 
             {/* Heading */}
             <h1 className="font-semibold leading-[1.05] mb-4 font-poppins" style={{ textShadow: "1px 1px 2px rgba(0,0,0,0.4)" }}>
-              <span className="text-3xl md:text-4xl lg:text-[52px] text-[#001810] block mb-1">
+              <span className="text-4xl md:text-5xl lg:text-[60px] text-[#001810] block mb-1">
                 150+{" "}<span className="text-[#3b8c2a]">Leading</span>
               </span>
-              <span className="text-2xl md:text-3xl lg:text-[40px] text-[#001810] block">
+              <span className="text-3xl md:text-4xl lg:text-[46px] text-[#001810] block">
                 Health &amp; Wellness Brands
               </span>
             </h1>
@@ -146,7 +147,7 @@ const ExhibitorsHero = () => {
             </div>
 
           </div>
-        </div>
+        </SectionContainer>
       </section>
     </>
   );

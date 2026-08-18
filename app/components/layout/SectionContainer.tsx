@@ -1,8 +1,8 @@
 import React from "react";
 
-const SectionContainer = ({ children, className }: any) => {
+const SectionContainer = ({ children, className, style, ...props }: any) => {
     return (
-        <div className={`w-full px-2 lg:px-11 ${className || ''}`}>
+        <div className={`w-full px-4 md:px-11 ${className || ''}`} style={style} {...props}>
             {children}
         </div>
     );

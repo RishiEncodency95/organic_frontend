@@ -13,6 +13,7 @@ import {
     Store, UserPlus, Globe, Award
 } from "lucide-react";
 import navbarLogo from "../../assets/logos/navbarlogo1.png";
+import SectionContainer from "@/app/components/layout/SectionContainer";
 
 // Local cn utility since @/lib/utils is missing
 const cn = (...classes: (string | undefined | null | false)[]) => classes.filter(Boolean).join(" ");
@@ -55,14 +56,14 @@ const navLinks = [
         ],
     },
     { label: "Glimpses", path: "/gallery" },
-    { label: "Conference", path: "/conference" },
+    { label: "Conference", path: "https://arogya.namogange.org/", isExternal: true },
     { label: "Awards", path: "/awards" },
     { label: "Contact", path: "/contact" },
 ];
 
 const bottomTabs = [
     { label: "Home", path: "/", icon: Home },
-    { label: "Conference", path: "/conference", icon: Mic },
+    { label: "Conference", path: "https://arogya.namogange.org/", icon: Mic, isExternal: true },
     { label: "Award", path: "/awards", icon: Trophy },
     { label: "Contact", path: "/contact", icon: Phone },
 ];
@@ -70,7 +71,7 @@ const bottomTabs = [
 const registrationOptions = [
     { label: "BOOK A STALL", path: "/registration/book-a-stand", icon: Store, color: "green" },
     { label: "REGISTER AS VISITOR", path: "/registration/visitor-registration", icon: UserPlus, color: "orange" },
-    { label: "DELEGATE REGISTRATION", path: "/conference", icon: Globe, color: "green" },
+    { label: "DELEGATE REGISTRATION", path: "https://arogya.namogange.org/", icon: Globe, color: "green", isExternal: true },
     { label: "REGISTER AS BUYER", path: "/registration/buyer-registration", icon: Users, color: "orange" },
     { label: "SPONSORSHIP OPPORTUNITIES", path: "/sponsership", icon: Award, color: "green" },
     { label: "TALK TO EXPO ADVISOR", path: "tel:+919654900525", icon: Phone, color: "orange" },
@@ -95,7 +96,7 @@ const dropdownIcons: Record<string, React.ElementType> = {
 // Standalone links (non-dropdown)
 const standaloneLinks = [
     { label: "Glimpses", path: "/gallery", icon: Camera },
-    { label: "Conference", path: "/conference", icon: Mic },
+    { label: "Conference", path: "https://arogya.namogange.org/", icon: Mic, isExternal: true },
     { label: "Awards", path: "/awards", icon: Star },
     { label: "Contact", path: "/contact", icon: Phone },
 ];
@@ -134,7 +135,7 @@ const Navbar = () => {
                     : "relative z-[100] bg-white border-b border-slate-200 py-1 shadow-sm"
                     } transition-all duration-500`}
             >
-                <div className="container mx-auto px-6 max-w-[1400px]">
+                <SectionContainer>
 
                     {/* ─── DESKTOP NAV (unchanged) ─── */}
                     <div className="hidden xl:flex items-center justify-between py-0 relative h-14">
@@ -160,6 +161,8 @@ const Navbar = () => {
                                     >
                                         <Link
                                             href={link.path || "#"}
+                                            target={link.isExternal ? "_blank" : undefined}
+                                            rel={link.isExternal ? "noopener noreferrer" : undefined}
                                             style={{ fontFamily: "'Poppins', sans-serif" }}
                                             className={`px-1.5 2xl:px-2.5 py-2 text-[13px] lg:text-[12.5px] font-medium tracking-wide uppercase transition-all duration-300 flex items-center gap-1 relative group whitespace-nowrap ${pathname === link.path ? "text-[#3b8c2a]" : "text-slate-800 hover:text-[#3b8c2a]"
                                                 }`}
@@ -263,7 +266,7 @@ const Navbar = () => {
                             </button>
                         </div>
                     </div>
-                </div>
+                </SectionContainer>
             </motion.nav>
 
             {/* ─── MOBILE BOTTOM TAB BAR ─── */}
@@ -275,6 +278,8 @@ const Navbar = () => {
                             <Link
                                 key={tab.path}
                                 href={tab.path}
+                                target={tab.isExternal ? "_blank" : undefined}
+                                rel={tab.isExternal ? "noopener noreferrer" : undefined}
                                 className="flex flex-col items-center gap-0.5 px-3 py-1.5 rounded-xl transition-all"
                             >
                                 <div className={cn(
@@ -457,6 +462,8 @@ const Navbar = () => {
                                     <Link
                                         key={link.path}
                                         href={link.path}
+                                        target={link.isExternal ? "_blank" : undefined}
+                                        rel={link.isExternal ? "noopener noreferrer" : undefined}
                                         onClick={() => setMobileOpen(false)}
                                         className={cn(
                                             "flex items-center gap-3 py-3 px-3 rounded-xl border-b border-slate-50 transition-all",

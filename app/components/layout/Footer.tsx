@@ -4,7 +4,7 @@ import React from "react";
 import Link from "next/link";
 import footerLogo from "../../assets/logos/footerlogo.png";
 import footerBottomImg from "../../assets/logos/footerimg.png";
-import namoLogo from "../../assets/logos/namo.png";
+import namoLogo from "../../assets/logos/namo1.png";
 import placeholderImg from "../../assets/image/image1.webp";
 import footogImg from "../../assets/image/bottog.png";
 import foot1ogImg from "../../assets/icons/foot1og.png";
@@ -54,8 +54,8 @@ export default function Footer() {
     { name: "Home", path: "/" },
     { name: "About Us", path: "/about" },
     { name: "Exhibitor Registration", path: "/registration" },
-    { name: "Delegate Registration", path: "/delegate" },
-    { name: "Conference Tracks", path: "/conference" },
+    { name: "Delegate Registration", path: "https://arogya.namogange.org/", isExternal: true },
+    { name: "Conference Tracks", path: "https://arogya.namogange.org/", isExternal: true },
     { name: "Speakers", path: "/speakers" },
     { name: "Agenda", path: "/agenda" },
     { name: "Exhibition", path: "/exhibitors" },
@@ -140,7 +140,12 @@ export default function Footer() {
             <ul className="space-y-1.5 text-[14px] text-gray-200 font-medium">
               {quickLinks.map((link, i) => (
                 <li key={i}>
-                  <Link href={link.path} className="hover:text-white transition-colors flex items-center gap-1.5 group">
+                  <Link
+                    href={link.path}
+                    target={link.isExternal ? "_blank" : undefined}
+                    rel={link.isExternal ? "noopener noreferrer" : undefined}
+                    className="hover:text-white transition-colors flex items-center gap-1.5 group"
+                  >
                     <ChevronRight size={14} className="text-[#F3B71B] group-hover:translate-x-1 transition-transform shrink-0" />
                     {link.name}
                   </Link>
@@ -214,7 +219,7 @@ export default function Footer() {
               <Sparkle color="#FFFFFF" style={{ top: '-10px', right: '15%', animationDelay: '0.8s' }} />
               <Sparkle color="#FFFFFF" style={{ bottom: '4px', left: '5%', animationDelay: '0.2s' }} />
               <Sparkle color="#FFFFFF" style={{ bottom: '-8px', right: '10%', animationDelay: '0.6s' }} />
-              <img src={namoLogo.src} alt="Namo Gange Wellness" className="w-full h-auto object-contain" style={{ filter: "drop-shadow(0 0 1px rgba(255,255,255,0.6))" }} />
+              <img src={namoLogo.src} alt="Namo Gange Wellness" className="w-full h-auto object-contain" />
             </div>
 
             <p className="text-gray-200 text-[11px] mb-3 leading-relaxed font-medium">
@@ -226,8 +231,14 @@ export default function Footer() {
 
             <h5 className="font-poppins font-semibold text-[#F3B71B] uppercase mb-2 text-[12px] tracking-wider">CONNECT WITH US</h5>
             <div className="flex gap-2">
-              {[Facebook, Twitter, Linkedin, Instagram, Youtube].map((Icon, idx) => (
-                <a key={idx} href="#" className="w-7 h-7 rounded-md flex items-center justify-center text-white hover:text-[#F3B71B] transition-colors">
+              {[
+                { Icon: Facebook, label: "Facebook" },
+                { Icon: Twitter, label: "Twitter" },
+                { Icon: Linkedin, label: "LinkedIn" },
+                { Icon: Instagram, label: "Instagram" },
+                { Icon: Youtube, label: "YouTube" }
+              ].map(({ Icon, label }, idx) => (
+                <a key={idx} href="#" aria-label={label} className="w-7 h-7 rounded-md flex items-center justify-center text-white hover:text-[#F3B71B] transition-colors">
                   <Icon size={14} />
                 </a>
               ))}

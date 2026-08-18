@@ -109,7 +109,7 @@ const IntroductionSection = () => {
             </div>
 
             {/* Title */}
-            <h2 className="text-[28px] md:text-[32px] lg:text-[36px] font-semibold font-poppins text-slate-900 leading-[1.15] mb-2 tracking-tight">
+            <h2 className="text-[32px] md:text-[40px] lg:text-[46px] font-semibold font-poppins text-slate-900 leading-[1.15] mb-2 tracking-tight">
               Welcome to <br className="hidden md:block" />
               <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#3b8c2a] to-[#1a6b3a] relative inline-block">
                 BHARAT ORGANIC EXPO <span className="text-[#F2B40E] inline-block">2027</span>
@@ -176,13 +176,15 @@ const IntroductionSection = () => {
             </div>
 
             {/* Image Container */}
-            <   div className="relative z-10 p-2 md:p-3 rounded-[1.5rem] bg-white/60 backdrop-blur-md border border-white shadow-[0_15px_40px_rgba(0,0,0,0.06)] max-w-[450px] w-full">
+            <div className="relative z-10 p-2 md:p-3 rounded-[1.5rem] bg-white/60 backdrop-blur-md border border-white shadow-[0_15px_40px_rgba(0,0,0,0.06)] max-w-[450px] w-full">
               {staticData.image ? (
                 <img
                   loading="lazy"
                   decoding="async"
                   src={staticData.image.src}
                   alt="ORGANIC EXPO Introduction"
+                  width={800}
+                  height={600}
                   className="w-full h-auto object-cover rounded-2xl"
                 />
               ) : (

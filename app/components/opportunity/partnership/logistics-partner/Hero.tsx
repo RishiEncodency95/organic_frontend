@@ -2,9 +2,10 @@
 import React from "react";
 import Link from "next/link";
 import { Calendar, MapPin, Globe } from "lucide-react";
-import travelBg from "@/app/assets/banner/logiog.png";
+import travelBg from "@/app/assets/banner/logiog.webp";
 import pleaf from "@/app/assets/icons/pleaf.png";
 import planog from "@/app/assets/icons/planog.png";
+import SectionContainer from "@/app/components/layout/SectionContainer";
 
 export default function Hero() {
   return (
@@ -18,7 +19,7 @@ export default function Hero() {
         />
       </div>
 
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl relative z-10 mt-2 md:mt-4 lg:mt-6">
+      <SectionContainer className="relative z-10 mt-2 md:mt-4 lg:mt-6">
 
         <div className="max-w-4xl flex flex-col items-start text-left">
           {/* Main Title */}
@@ -59,7 +60,7 @@ export default function Hero() {
             </div>
           </div>
         </div>
-      </div>
+      </SectionContainer>
     </section>
   );
 }

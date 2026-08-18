@@ -1,11 +1,12 @@
 import React from "react";
 import { ArrowRight } from "lucide-react";
 import cogIcon from "../../../assets/icons/cog.png";
+import SectionContainer from "@/app/components/layout/SectionContainer";
 
 export default function ContactCTA() {
   return (
     <section className="pt-2 pb-8 bg-[#fcfcf0] font-inter">
-      <div className="container mx-auto px-4 max-w-7xl">
+      <SectionContainer>
         <div 
           className="bg-[#0a1f0d] rounded-2xl p-4 md:px-8 md:py-4 flex flex-col md:flex-row items-center justify-between gap-4 md:gap-6 relative overflow-hidden"
           style={{ boxShadow: "rgba(0, 0, 0, 0.1) 0px 10px 15px -3px, rgba(0, 0, 0, 0.05) 0px 4px 6px -2px" }}
@@ -38,7 +39,7 @@ export default function ContactCTA() {
             </a>
           </div>
         </div>
-      </div>
+      </SectionContainer>
     </section>
   );
 }

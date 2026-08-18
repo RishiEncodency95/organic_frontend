@@ -3,15 +3,16 @@
 import React from "react";
 import { Leaf, Sprout, Tractor, HeartHandshake, Recycle, Globe2 } from "lucide-react";
 import { Reveal } from "../shared/Reveal";
+import SectionContainer from "@/app/components/layout/SectionContainer";
 
 function SectionHeading({ children }: { children: React.ReactNode }) {
   return (
-    <Reveal className="flex items-center justify-center gap-2.5 text-center">
-      <Leaf className="h-3.5 w-3.5 shrink-0 -rotate-45 text-[#3b8c2a]" />
-      <h2 className="text-[16px] md:text-[18px] lg:text-[20px] font-extrabold uppercase tracking-wide text-[#154726]">
+    <Reveal className="flex items-center justify-center gap-2.5 text-center mb-6">
+      <Leaf className="h-4 w-4 shrink-0 -rotate-45 text-[#1b5e20]" />
+      <h2 className="text-xl md:text-2xl font-semibold text-[#1b5e20] uppercase leading-[1.1] font-poppins relative inline-block">
         {children}
       </h2>
-      <Leaf className="h-3.5 w-3.5 shrink-0 rotate-[135deg] text-[#3b8c2a]" />
+      <Leaf className="h-4 w-4 shrink-0 rotate-[135deg] text-[#1b5e20]" />
     </Reveal>
   );
 }
@@ -26,7 +27,7 @@ const CATEGORIES = [
       "Nutrition Innovation Award",
       "Emerging Organic Food Brand",
     ],
-    iconBg: "bg-[#2b5825]",
+    iconBg: "bg-[#1b5e20]",
   },
   {
     icon: Leaf,
@@ -87,31 +88,36 @@ const CATEGORIES = [
 
 const AwardsCategories = () => {
   return (
-    <section id="categories" className="bg-[#fcfcf0] py-2 md:py-4">
-      <div className="container mx-auto max-w-[1400px] px-6">
+    <section id="categories" className="bg-[#f9f9f9] py-8 md:py-12 font-inter">
+      <SectionContainer>
         <SectionHeading>Award Categories</SectionHeading>
 
-        <div className="mt-5 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
+        <div className="mt-6 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
           {CATEGORIES.map((cat, i) => {
             const Icon = cat.icon;
             return (
               <Reveal key={cat.title} delay={i * 90} className="h-full">
-                <div className="group h-full rounded-2xl border border-gray-200/60 bg-[#fcfdfc] p-5 shadow-[0_10px_30px_rgba(0,0,0,0.08)] transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_18px_45px_rgba(0,0,0,0.14)] hover:border-green-200">
-                  <span
-                    className={`mx-auto flex h-10 w-10 items-center justify-center rounded-full text-white transition-transform duration-300 group-hover:scale-110 ${cat.iconBg}`}
-                  >
-                    <Icon className="h-[18px] w-[18px]" />
-                  </span>
-                  <h3 className="mt-3 text-center text-[14px] md:text-[15px] font-bold uppercase leading-snug tracking-wide text-[#154726]">
-                    {cat.title}
-                  </h3>
-                  <ul className="mt-2.5 space-y-1.5">
+                <div
+                  className="group h-full rounded-xl bg-white p-5 hover:shadow-md transition-shadow"
+                  style={{ boxShadow: "rgba(0, 0, 0, 0.02) 0px 1px 3px 0px, rgba(27, 31, 35, 0.15) 0px 0px 0px 1px" }}
+                >
+                  <div className="flex items-center gap-3 mb-3">
+                    <span
+                      className={`flex h-10 w-10 shrink-0 items-center justify-center rounded-lg text-white transition-transform duration-300 group-hover:scale-105 ${cat.iconBg}`}
+                    >
+                      <Icon className="h-5 w-5" />
+                    </span>
+                    <h3 className="text-xs sm:text-sm font-semibold text-[#1b5e20] uppercase font-poppins leading-snug">
+                      {cat.title}
+                    </h3>
+                  </div>
+                  <ul className="space-y-2 mt-3 pt-3 border-t border-gray-100">
                     {cat.items.map((item) => (
                       <li
                         key={item}
-                        className="flex items-start gap-2 text-[13px] leading-snug text-[#154726]/70"
+                        className="flex items-center gap-2 text-[11px] sm:text-xs text-gray-900 font-medium leading-relaxed"
                       >
-                        <span className="mt-[7px] h-1 w-1 shrink-0 rounded-full bg-[#3b8c2a]" />
+                        <span className="h-1.5 w-1.5 shrink-0 rounded-full bg-[#1b5e20]" />
                         {item}
                       </li>
                     ))}
@@ -121,7 +127,7 @@ const AwardsCategories = () => {
             );
           })}
         </div>
-      </div>
+      </SectionContainer>
     </section>
   );
 };
