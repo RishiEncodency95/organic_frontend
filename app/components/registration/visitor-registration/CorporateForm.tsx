@@ -83,7 +83,7 @@ export default function CorporateForm() {
   const [states, setStates] = useState<any[]>([]);
   const [cities, setCities] = useState<any[]>([]);
 
-  const defaultEventName = "9th Edition of International Health & Wellness Expo 2026";
+  const defaultEventName = "Organic Expo 2026";
 
   const [formData, setFormData] = useState({
     registrationFor: defaultEventName,
