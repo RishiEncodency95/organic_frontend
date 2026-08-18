@@ -1,6 +1,7 @@
 import React from "react";
 import { Metadata } from "next";
 import AdvisoryHero from "@/app/components/abouts/advisory_board_member/AdvisoryHero";
+import AboutStrip from "@/app/components/abouts/about/AboutStrip";
 import ChairmanMessage from "@/app/components/abouts/advisory_board_member/ChairmanMessage";
 import AdvisoryBoardGrid from "@/app/components/abouts/advisory_board_member/AdvisoryBoardGrid";
 import WhyJoinAdvisory from "@/app/components/abouts/advisory_board_member/WhyJoinAdvisory";
@@ -18,6 +19,7 @@ const AdvisoryBoardMemberPage = () => {
   return (
     <div className="bg-[#ffffff] min-h-screen">
       <AdvisoryHero />
+      <AboutStrip />
       <ChairmanMessage />
       <AdvisoryBoardGrid />
       <WhyJoinAdvisory />

@@ -71,7 +71,7 @@ export default function HeroSection() {
   ];
 
   return (
-    <section className="relative w-full min-h-[400px] lg:min-h-[500px] flex items-center bg-[#f4f7f6] overflow-hidden font-inter pt-10 pb-24">
+    <section className="relative w-full min-h-[380px] sm:min-h-[420px] md:min-h-[450px] lg:min-h-[470px] flex items-center bg-[#f4f7f6] overflow-hidden font-inter pt-3 md:pt-5 pb-4 md:pb-6">
       {/* Background Image */}
       <div 
         className="absolute inset-0 z-0"
@@ -95,13 +95,13 @@ export default function HeroSection() {
 
       {/* Content Container */}
       <div className="container mx-auto px-6 max-w-7xl relative z-10">
-        <div className="max-w-2xl">
-          <h1 className="text-4xl md:text-5xl lg:text-[54px] font-bold text-[#001810] leading-tight mb-4 font-poppins tracking-tight">
+        <div className="max-w-2xl -translate-y-2 md:-translate-y-4 lg:-translate-y-5">
+          <h1 className="text-4xl md:text-5xl lg:text-[54px] font-bold text-[#001810] leading-tight mb-1.5 font-poppins tracking-tight">
             SPONSORSHIP <br />
             <span className="text-[#7ea82a]">OPPORTUNITIES</span>
           </h1>
           
-          <div className="flex items-center gap-3 mb-6 pl-1">
+          <div className="flex items-center gap-3 mb-3 pl-1">
             <div className="w-16 h-[2px] bg-[#d97706]"></div>
             <Leaf className="text-[#d97706] w-4 h-4 fill-[#d97706] -rotate-12" />
             <span className="text-[#d97706] font-semibold text-lg tracking-wide font-poppins">
@@ -111,8 +111,8 @@ export default function HeroSection() {
 
           <p className="text-gray-800 text-lg md:text-xl font-medium leading-relaxed max-w-lg mb-8">
             <span className="font-medium text-black">Align your brand with India's Premier Organic Expo</span><br />
-            and connect with the <span className="font-bold text-[#4B1426]">right audience</span>,<br />
-            build credibility and drive real impact.
+            and connect with the <span className="font-bold text-[#4B1426]">right audience</span>, build<br />
+            credibility and drive real impact.
           </p>
         </div>
       </div>

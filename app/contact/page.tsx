@@ -12,10 +12,17 @@ export const metadata: Metadata = {
 
 // Synchronous load for above the fold
 import ContactHero from "../components/contact/ContactHero";
-import ContactStrip from "../components/contact/ContactStrip";
 
 // Lazy load below the fold components using next/dynamic
-const ContactFormSection = dynamic(() => import("../components/contact/ContactFormSection"), {
+const ContactForm = dynamic(() => import("../components/contact/ContactForm"), {
+  loading: () => (
+    <div className="w-full min-h-[300px] flex items-center justify-center">
+      <div className="w-8 h-8 border-4 border-[#3b8c2a] border-t-transparent rounded-full animate-spin"></div>
+    </div>
+  )
+});
+
+const ContactBottom = dynamic(() => import("../components/contact/ContactBottom"), {
   loading: () => (
     <div className="w-full min-h-[300px] flex items-center justify-center">
       <div className="w-8 h-8 border-4 border-[#3b8c2a] border-t-transparent rounded-full animate-spin"></div>
@@ -25,11 +32,10 @@ const ContactFormSection = dynamic(() => import("../components/contact/ContactFo
 
 const ContactPage = () => {
   return (
-    <div className="w-full bg-[#f4f7f4] min-h-screen">
+    <div className="w-full bg-[#fbfcf7] min-h-screen">
       <ContactHero />
-      <ContactStrip />
-
-      <ContactFormSection />
+      <ContactForm />
+      <ContactBottom />
     </div>
   );
 };
