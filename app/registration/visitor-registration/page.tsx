@@ -33,7 +33,7 @@ export default function VisitorRegistrationPage() {
       {/* Registration Form */}
       <div ref={formRef} className="scroll-mt-10">
         {visitorType && (
-          <section className="w-full bg-white pb-16">
+          <section className="w-full bg-white pb-8">
             <div className="max-w-[1410px] mx-auto px-4 md:px-8">
               {/* Form card */}
               <div

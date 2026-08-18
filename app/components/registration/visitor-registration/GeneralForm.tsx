@@ -390,7 +390,7 @@ export default function GeneralForm() {
         </label>
       </div>
 
-      <div className="pt-6 mt-4 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+      <div className="pt-6 mt-4 flex flex-col-reverse items-center justify-center gap-4">
         <p className="text-[10px] text-slate-400 font-bold uppercase tracking-[0.2em] flex items-center gap-2">
           <ShieldCheck size={12} className="text-[#4d7f1d]" />
           Secure Registration Portal

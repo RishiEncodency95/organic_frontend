@@ -259,8 +259,8 @@ export default function InternationalVisitorForm() {
 
       <div>
         <div className={sectionTitleWrapperClasses}>
-            <h3 className={sectionTitleClasses}>1. Event & Organization</h3>
-            <span className="text-[10px] font-bold bg-[#4d7f1d]/10 text-[#4d7f1d] px-2 py-1 rounded tracking-widest uppercase w-fit">Step 1 of 3</span>
+          <h3 className={sectionTitleClasses}>1. Event & Organization</h3>
+          <span className="text-[10px] font-bold bg-[#4d7f1d]/10 text-[#4d7f1d] px-2 py-1 rounded tracking-widest uppercase w-fit">Step 1 of 3</span>
         </div>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-x-3 gap-y-3">
           <div>
@@ -327,8 +327,8 @@ export default function InternationalVisitorForm() {
 
       <div>
         <div className={sectionTitleWrapperClasses}>
-            <h3 className={sectionTitleClasses}>2. Contact Details & Location</h3>
-            <span className="text-[10px] font-bold bg-[#4d7f1d]/10 text-[#4d7f1d] px-2 py-1 rounded tracking-widest uppercase w-fit">Step 2 of 3</span>
+          <h3 className={sectionTitleClasses}>2. Contact Details & Location</h3>
+          <span className="text-[10px] font-bold bg-[#4d7f1d]/10 text-[#4d7f1d] px-2 py-1 rounded tracking-widest uppercase w-fit">Step 2 of 3</span>
         </div>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-x-3 gap-y-3">
           <div className="space-y-1">
@@ -416,8 +416,8 @@ export default function InternationalVisitorForm() {
 
           <div>
             <div className={sectionTitleWrapperClasses}>
-                <h3 className={sectionTitleClasses}>3. Purpose & Visit Planning</h3>
-                <span className="text-[10px] font-bold bg-[#4d7f1d]/10 text-[#4d7f1d] px-2 py-1 rounded tracking-widest uppercase w-fit">Step 3 of 3</span>
+              <h3 className={sectionTitleClasses}>3. Purpose & Visit Planning</h3>
+              <span className="text-[10px] font-bold bg-[#4d7f1d]/10 text-[#4d7f1d] px-2 py-1 rounded tracking-widest uppercase w-fit">Step 3 of 3</span>
             </div>
             <div className="grid grid-cols-1 lg:grid-cols-4 gap-x-3 gap-y-3">
               <div className="space-y-3 bg-white p-4 border border-slate-200 rounded-sm shadow-sm lg:col-span-2">
@@ -493,7 +493,7 @@ export default function InternationalVisitorForm() {
 
           <div>
             <div className={sectionTitleWrapperClasses}>
-                <h3 className={sectionTitleClasses}>4. Conference & Document Upload</h3>
+              <h3 className={sectionTitleClasses}>4. Conference & Document Upload</h3>
             </div>
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-x-3 gap-y-3">
               <div>
@@ -571,7 +571,7 @@ export default function InternationalVisitorForm() {
             </label>
           </div>
 
-          <div className="pt-6 mt-4 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+          <div className="pt-6 mt-4 flex flex-col-reverse items-center justify-center gap-4">
             <p className="text-[10px] text-slate-400 font-bold uppercase tracking-[0.2em] flex items-center gap-2">
               <ShieldCheck size={12} className="text-[#4d7f1d]" />
               Secure Registration Portal

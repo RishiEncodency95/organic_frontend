@@ -194,10 +194,10 @@ export default function GroupVisitorForm() {
 
       <div>
         <div className={sectionTitleWrapperClasses}>
-            <h3 className={sectionTitleClasses}>1. Company & Industry Information</h3>
-            <span className="text-[10px] font-bold bg-[#4d7f1d]/10 text-[#4d7f1d] px-2 py-1 rounded tracking-widest uppercase w-fit">Step 1 of 3</span>
+          <h3 className={sectionTitleClasses}>1. Company & Industry Information</h3>
+          <span className="text-[10px] font-bold bg-[#4d7f1d]/10 text-[#4d7f1d] px-2 py-1 rounded tracking-widest uppercase w-fit">Step 1 of 3</span>
         </div>
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-x-3 gap-y-3">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-x-3 gap-y-3">
           <div className="md:col-span-2"><label className={labelClasses}>Company Name *</label><input required name="companyName" value={company.companyName} onChange={handleCompanyChange} className={inputClasses} placeholder="Enter Company Name.." /></div>
           <div className="md:col-span-2"><label className={labelClasses}>Company Website *</label><input required name="companyWebsite" value={company.companyWebsite} onChange={handleCompanyChange} className={inputClasses} placeholder="Enter Company Website.." /></div>
 
@@ -361,8 +361,8 @@ export default function GroupVisitorForm() {
 
           <div>
             <div className={sectionTitleWrapperClasses}>
-                <h3 className={sectionTitleClasses}>3. Purpose & Location Preferences</h3>
-                <span className="text-[10px] font-bold bg-[#4d7f1d]/10 text-[#4d7f1d] px-2 py-1 rounded tracking-widest uppercase w-fit">Step 3 of 3</span>
+              <h3 className={sectionTitleClasses}>3. Purpose & Location Preferences</h3>
+              <span className="text-[10px] font-bold bg-[#4d7f1d]/10 text-[#4d7f1d] px-2 py-1 rounded tracking-widest uppercase w-fit">Step 3 of 3</span>
             </div>
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-x-3 gap-y-3">
               <div className="space-y-3 bg-white p-4 border border-slate-200 rounded-sm shadow-sm">
@@ -413,7 +413,7 @@ export default function GroupVisitorForm() {
               <h3 className="text-[11px] font-medium uppercase text-[#d26019] tracking-[0.05em] block border-b border-slate-200 pb-1">
                 Additional Preferences
               </h3>
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-3 gap-y-3">
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-x-3 gap-y-3">
                 <div>
                   <label className={labelClasses}>SCHEDULING B2B MEETINGS?</label>
                   <div className="flex gap-6 mt-1">
@@ -471,12 +471,12 @@ export default function GroupVisitorForm() {
             <label className="flex items-center gap-3 cursor-pointer group w-fit">
               <input type="checkbox" name="subscribeNewsletter" checked={company.subscribeNewsletter} onChange={handleCompanyChange} className="w-4 h-4 text-[#4d7f1d] accent-[#4d7f1d] border-slate-300 rounded-sm" />
               <span className="text-[10px] font-bold text-slate-500">
-                I agree to the <a href="/terms-of-service" className="text-[#4d7f1d] underline">Terms &amp; Conditions</a> and <a href="/privacy-policy" className="text-[#4d7f1d] underline">Privacy Policy</a>
+                I agree to the <a href="/registration/terms-and-conditions" target="_blank" className="text-[#4d7f1d] underline">Terms &amp; Conditions</a> and <a href="/registration/privacy-policy" target="_blank" className="text-[#4d7f1d] underline">Privacy Policy</a>
               </span>
             </label>
           </div>
 
-          <div className="pt-6 mt-4 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+          <div className="pt-6 mt-4 flex flex-col-reverse items-center justify-center gap-4">
             <p className="text-[10px] text-slate-400 font-bold uppercase tracking-[0.2em] flex items-center gap-2">
               <ShieldCheck size={12} className="text-[#4d7f1d]" />
               Secure Registration Portal
