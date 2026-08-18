@@ -29,7 +29,7 @@ const OrangeSparkle = ({ style }: { style?: React.CSSProperties }) => (
 
 const ConferenceSeminars = () => {
   return (
-    <section className="bg-white py-2 md:py-4 lg:py-4 px-4 md:px-11 overflow-hidden relative shadow-[0_0_60px_rgba(245,130,32,0.1)] border-y border-[#f58220]/20 z-20">
+    <section className="bg-white py-2 md:py-4 lg:py-6 px-4 md:px-11 overflow-hidden relative shadow-[0_0_60px_rgba(245,130,32,0.1)] border-y border-[#f58220]/20 z-20">
       {/* Subtle Glowing Highlights */}
       <div className="absolute top-0 right-0 w-[600px] h-[600px] bg-[#f58220]/[0.04] rounded-full blur-[80px] -z-10 translate-x-1/3 -translate-y-1/4 pointer-events-none"></div>
       <div className="absolute bottom-0 left-0 w-[500px] h-[500px] bg-[#3b8c2a]/[0.04] rounded-full blur-[80px] -z-10 -translate-x-1/4 translate-y-1/4 pointer-events-none"></div>
@@ -139,7 +139,7 @@ const ConferenceSeminars = () => {
               </span>
             </div>
 
-            <h3 className="text-[28px] md:text-[30px] lg:text-[32px] font-bold text-[#1a1a1a] leading-[1.2] mb-4">
+            <h3 className="text-[18px] md:text-[24px] lg:text-[28px] font-medium text-[#1a1a1a] leading-[1.2] mb-4">
               Where Knowledge Meets <br className="hidden md:block" />
               <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#00643b] to-[#3b8c2a]">the Future of Organic</span>
             </h3>

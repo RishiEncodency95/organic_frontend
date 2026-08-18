@@ -2,18 +2,30 @@
 
 import { motion } from "framer-motion";
 import { ArrowRight, Apple, Leaf, Sprout, Package, Milk, Droplet, Pill, Box, Tractor, Globe } from "lucide-react";
+import Image from "next/image";
+
+import sectors1 from "../../assets/home/sectors1.png";
+import sectors2 from "../../assets/home/sectors2.png";
+import sectors3 from "../../assets/home/sectors3.png";
+import sectors4 from "../../assets/home/sectors4.png";
+import sectors5 from "../../assets/home/sectors5.png";
+import sectors6 from "../../assets/home/sectors6.png";
+import sectors7 from "../../assets/home/sectors7.png";
+import sectors8 from "../../assets/home/sectors8.png";
+import sectors9 from "../../assets/home/sectors9.png";
+import sectors10 from "../../assets/home/sectors10.png";
 
 const categories = [
-  { icon: Apple, title: "Organic Food & Beverages", desc: "Wide range of certified organic foods, beverages, healthy snacks, grains, pulses, and ingredients.", color: "#4ade80", image: "https://images.unsplash.com/photo-1542838132-92c53300491e?w=800&q=80" },
-  { icon: Leaf, title: "AYUSH, Ayurveda & Herba", desc: "Ayurvedic medicines, herbal supplements, essential oils, teas, wellness products and holistic solutions.", color: "#14b8a6", image: "https://images.unsplash.com/photo-1540555700478-4be289fbecef?w=800&q=80" },
-  { icon: Sprout, title: "Organic Natural Farming", desc: "Natural farming practices, organic cultivation methods, innovations and farm-to-market solutions.", color: "#22c55e", image: "https://images.unsplash.com/photo-1625246333195-78d9c38ad449?w=800&q=80" },
-  { icon: Package, title: "Organic Inputs, Seeds & Bio- Inputs", desc: "Bio-fertilisers, organic manures, soil enhancers, pesticides and high-quality seeds.", color: "#fb923c", image: "https://images.unsplash.com/photo-1592841200221-a6898f307baa?w=800&q=80" },
-  { icon: Milk, title: "Dairy, Livestock & Allied", desc: "Organic dairy products, livestock nutrition, animal health solutions and sustainable practices.", color: "#f472b6", image: "https://images.unsplash.com/photo-1570042225831-d98fa7577f1e?w=800&q=80" },
-  { icon: Droplet, title: "Natural Beauty & Personal Care", desc: "Herbal skincare, haircare, personal care and eco-friendly beauty products.", color: "#60a5fa", image: "https://images.unsplash.com/photo-1556228578-0d85b1a4d571?w=800&q=80" },
-  { icon: Pill, title: "Nutraceuticals & Functional Nutrition", desc: "Dietary supplements, functional foods, immunity boosters and wellness nutrition products.", color: "#34d399", image: "https://images.unsplash.com/photo-1610832958506-aa56368176cf?w=800&q=80" },
-  { icon: Box, title: "Sustainable Packaging & Processing", desc: "Eco-friendly, biodegradable, recyclable and sustainable packaging solutions.", color: "#3b82f6", image: "https://images.unsplash.com/photo-1542601906990-b4d3fb778b09?w=800&q=80" },
-  { icon: Tractor, title: "AgriTech, GreenTech & Innovation", desc: "Innovative agri technologies, smart farming, irrigation, farm mechanization and digital solutions.", color: "#10b981", image: "https://images.unsplash.com/photo-1595000780282-e1a53f937d36?w=800&q=80" },
-  { icon: Globe, title: "Certification, Export, Trade & Services", desc: "Exporters, importers, trade associations and global business opportunities for organic products.", color: "#f59e0b", image: "https://images.unsplash.com/photo-1497435334941-8c899ee9e8e9?w=800&q=80" },
+  { icon: Apple, title: "Organic Food & Beverages", desc: "Wide range of certified organic foods, beverages, healthy snacks, grains, pulses, and ingredients.", color: "#4ade80", image: sectors1 },
+  { icon: Leaf, title: "AYUSH, Ayurveda & Herba", desc: "Ayurvedic medicines, herbal supplements, essential oils, teas, wellness products and holistic solutions.", color: "#14b8a6", image: sectors2 },
+  { icon: Sprout, title: "Organic Natural Farming", desc: "Natural farming practices, organic cultivation methods, innovations and farm-to-market solutions.", color: "#22c55e", image: sectors3 },
+  { icon: Package, title: "Organic Inputs, Seeds & Bio- Inputs", desc: "Bio-fertilisers, organic manures, soil enhancers, pesticides and high-quality seeds.", color: "#fb923c", image: sectors4 },
+  { icon: Milk, title: "Dairy, Livestock & Allied", desc: "Organic dairy products, livestock nutrition, animal health solutions and sustainable practices.", color: "#f472b6", image: sectors5 },
+  { icon: Droplet, title: "Natural Beauty & Personal Care", desc: "Herbal skincare, haircare, personal care and eco-friendly beauty products.", color: "#60a5fa", image: sectors6 },
+  { icon: Pill, title: "Nutraceuticals & Functional Nutrition", desc: "Dietary supplements, functional foods, immunity boosters and wellness nutrition products.", color: "#34d399", image: sectors7 },
+  { icon: Box, title: "Sustainable Packaging & Processing", desc: "Eco-friendly, biodegradable, recyclable and sustainable packaging solutions.", color: "#3b82f6", image: sectors8 },
+  { icon: Tractor, title: "AgriTech, GreenTech & Innovation", desc: "Innovative agri technologies, smart farming, irrigation, farm mechanization and digital solutions.", color: "#10b981", image: sectors9 },
+  { icon: Globe, title: "Certification, Export, Trade & Services", desc: "Exporters, importers, trade associations and global business opportunities for organic products.", color: "#f59e0b", image: sectors10 },
 ];
 
 const FlowerDecoration = ({ className, style }: { className?: string; style?: React.CSSProperties }) => (
@@ -33,7 +45,7 @@ const FlowerDecoration = ({ className, style }: { className?: string; style?: Re
 
 const ExpoCategories = () => {
   return (
-    <section className="py-2 md:py-4 lg:py-4 bg-[#EFF7EE] border-t border-b border-[#CDE3C9] relative overflow-hidden">
+    <section className="py-2 md:py-4 lg:py-8 bg-[#EFF7EE] border-t border-b border-[#CDE3C9] relative overflow-hidden">
       <style>{`
         @keyframes float-flower {
           0% { transform: translateY(0px) rotate(0deg); }
@@ -48,32 +60,30 @@ const ExpoCategories = () => {
 
       <div className="w-full px-0 relative z-10">
 
-        {/* Header */}
-        <div className="px-4 md:px-11 w-full flex flex-col items-center text-center mb-2 md:mb-4">
-          {/* Badge */}
-          <div className="flex items-center gap-3 mb-4">
-            <div className="h-[1.5px] w-12 bg-gradient-to-l from-[#3b8c2a] to-transparent hidden sm:block"></div>
-            <div className="px-5 py-2 rounded-full border border-[#d5ebd9] bg-[#eef5f0] shadow-sm flex items-center justify-center">
-              <span className="text-[#1a3821] text-[13px] md:text-[14px] font-bold tracking-[0.1em] uppercase drop-shadow-sm">
-                EXPO CATEGORIES
-              </span>
-            </div>
-            <div className="h-[1.5px] w-12 bg-gradient-to-r from-[#3b8c2a] to-transparent hidden sm:block"></div>
+        {/* Section Header */}
+        <div className="px-4 md:px-11 w-full flex flex-col items-center text-center mb-6 relative z-10">
+          {/* Elegant Badge */}
+          <div className="inline-flex items-center justify-center gap-2 px-4 py-1.5 mb-2 rounded-full bg-white border border-[#3b8c2a]/20 shadow-[0_2px_10px_rgba(59,140,42,0.05)]">
+            <span className="w-1.5 h-1.5 rounded-full bg-[#f58634] animate-pulse"></span>
+            <span className="text-[#3b8c2a] text-[11px] md:text-[12px] font-bold tracking-[0.2em] uppercase">
+              Expo Categories
+            </span>
           </div>
 
           {/* Title */}
-          <h2 className="text-[#154726] text-3xl md:text-[34px] lg:text-[40px] font-extrabold leading-[1.15] mb-2 drop-shadow-sm" style={{ fontFamily: 'Georgia, serif' }}>
-            Explore Diverse <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#3b8c2a] to-[#F2B40E]">Exhibition Sectors</span>
+          <h2 className="text-[#1a3821] text-[18px] md:text-[30px] lg:text-[32px] font-medium leading-[1.2] mb-4 font-poppins tracking-tight">
+            Explore Diverse <br className="sm:hidden" />
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#3b8c2a] to-[#F2B40E]">Exhibition Sectors</span>
           </h2>
 
           {/* Description */}
-          <p className="text-[#475569] text-[16px] md:text-[18px] max-w-4xl font-medium leading-[1.4]">
-            <span className="font-bold text-[#154726]">One Platform. Every Opportunity.</span> Bharat Organic Expo brings together the entire organic ecosystem under one roof. Explore a wide range of sectors driving sustainable living, natural wellness, ethical production and global trade.
+          <p className="text-slate-600 text-[15px] md:text-[17px]  font-medium leading-[1.7]">
+            <span className="font-bold text-[#1a3821]">One Platform. Every Opportunity.</span> Bharat Organic Expo brings together the entire organic ecosystem under one roof. Explore a wide range of sectors driving sustainable living, natural wellness, ethical production and global trade.
           </p>
         </div>
 
         {/* Static Grid Layout (No Slider) */}
-        <div className="w-full mb-8 py-2 px-2 md:px-11 grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-x-2 lg:gap-x-2 gap-y-4 lg:gap-y-8 justify-center">
+        <div className="w-full mb-6 py-2 px-2 md:px-11 grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-x-2 lg:gap-x-2 gap-y-4 lg:gap-y-4 justify-center">
           {categories.map((item, index) => {
             const Icon = item.icon;
             const displayIndex = index + 1; // Numbering 1 to 10
@@ -81,7 +91,7 @@ const ExpoCategories = () => {
             return (
               <div
                 key={index}
-                className="group flex flex-col w-full h-auto bg-[#f6f4f0] rounded-2xl cursor-pointer border-[1px] border-[#c0b7af] shadow-sm hover:shadow-2xl hover:-translate-y-2 hover:border-[#3b8c2a]/50 transition-all duration-500 relative mt-6"
+                className="group flex flex-col w-full h-auto bg-[#f6f4f0] rounded-2xl cursor-pointer border-[1px] border-[#c0b7af] shadow-sm hover:shadow-2xl hover:-translate-y-2 hover:border-[#3b8c2a]/50 transition-all duration-500 relative mt-4"
               >
                 {/* Top-Center Badge */}
                 <div className="absolute top-[-20px] left-1/2 -translate-x-1/2 w-14 h-14 rounded-full border-2 border-[#e8c051] shadow-md z-20 overflow-hidden flex items-center justify-center bg-gradient-to-b from-[#1c3f25] to-[#0a170d]">
@@ -91,39 +101,27 @@ const ExpoCategories = () => {
 
                 {/* Top Half: Image */}
                 <div className="relative w-full h-[140px] lg:h-[180px] shrink-0 overflow-hidden rounded-t-[15px] bg-gray-200">
-                  <img src={item.image} className="absolute inset-0 w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" alt={item.title} />
+                  <Image src={item.image} alt={item.title} fill className="object-cover group-hover:scale-110 transition-transform duration-700" />
                 </div>
 
                 {/* Bottom Half: Content */}
-                <div className="px-4 py-3 relative z-10 flex flex-col flex-grow items-center text-center">
-
+                <div className="px-3 py-3 md:px-4 md:py-4 relative z-10 flex flex-col flex-grow items-start text-left bg-white rounded-b-2xl w-full">
                   {/* Title */}
-                  <h3 className="text-[14px] md:text-[17px] font-bold text-[#111] leading-[1.25] mb-2 max-w-[90%]">
+                  <h3 className="text-[13.5px] md:text-[16px] font-medium text-[#1a3821] leading-[1.2] mb-2.5 group-hover:text-[#3b8c2a] transition-colors line-clamp-2 w-full">
                     {item.title}
                   </h3>
 
-                  {/* Decorative Separator */}
-                  <div className="flex items-center justify-center w-full max-w-[140px] mb-2 opacity-90">
-                    <div className="flex-1 h-[2px] bg-[#d35400]"></div>
-                    <div className="px-2 flex items-center justify-center text-[#558b2f]">
-                      <svg viewBox="0 0 24 24" fill="currentColor" className="w-5 h-5">
-                        <path d="M17,8C8,10 5.9,16.17 3.82,21.34L5.71,22L6.66,19.7C7.14,19.87 7.64,20 8,20C19,20 22,3 22,3C21,5 14,5.25 9,6.25C4,7.25 2,11.5 2,13.5C2,15.5 3.75,17.25 3.75,17.25C7,8 17,8 17,8Z" />
-                      </svg>
-                    </div>
-                    <div className="flex-1 h-[2px] bg-[#d35400]"></div>
-                  </div>
-
                   {/* Description */}
-                  <p className="text-[11.5px] md:text-[16px] text-[#444] leading-[1.5] font-medium tracking-tight px-1">
+                  <p className="text-[11.5px] md:text-[14px] text-slate-600 leading-[1.4] mb-3 flex-grow line-clamp-3 w-full text-justify">
                     {item.desc}
                   </p>
 
                   {/* View More Link */}
-                  <div className="mt-auto w-full flex justify-end pt-3 pr-2">
-                    <span className="inline-flex items-center gap-1 text-[#3b8c2a] hover:text-[#2b5825] text-[12px] font-bold uppercase tracking-widest transition-colors duration-300">
-                      View More
-                      <ArrowRight size={12} strokeWidth={3} className="group-hover:translate-x-1 transition-transform" />
+                  <div className="mt-auto w-full flex justify-between items-center pt-2.5 border-t border-slate-100">
+                    <span className="text-[#f58220] group-hover:text-[#d35400] text-[10.5px] md:text-[11px] font-bold uppercase tracking-widest transition-colors duration-300">
+                      Explore
                     </span>
+                    <ArrowRight size={14} strokeWidth={2.5} className="text-[#f58220] group-hover:text-[#d35400] group-hover:translate-x-1 transition-all duration-300" />
                   </div>
                 </div>
 
