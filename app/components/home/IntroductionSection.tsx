@@ -77,14 +77,14 @@ const IntroductionSection = () => {
 
   return (
     <section
-      className="py-2 md:py-4 overflow-hidden relative font-inter"
+      className="py-2 md:py-6 overflow-hidden relative font-inter"
       style={{ background: staticData.bgColor }}
     >
       {/* Decorative Background Elements */}
-      <img 
-        src={leafog.src} 
-        alt="Leaf Decoration" 
-        className="absolute -left-20 md:-left-32 top-1/2 -translate-y-1/2 w-40 md:w-64 object-contain pointer-events-none z-0 opacity-50" 
+      <img
+        src={leafog.src}
+        alt="Leaf Decoration"
+        className="absolute -left-20 md:-left-32 top-1/2 -translate-y-1/2 w-40 md:w-64 object-contain pointer-events-none z-0 opacity-50"
       />
       <div className="absolute top-0 right-0 w-[600px] h-[600px] bg-[#3b8c2a]/5 rounded-full blur-[100px] -z-10 translate-x-1/3 -translate-y-1/4"></div>
       <div className="absolute bottom-0 left-0 w-[400px] h-[400px] bg-[#3b6fd4]/5 rounded-full blur-[80px] -z-10 -translate-x-1/4 translate-y-1/4"></div>
@@ -109,25 +109,28 @@ const IntroductionSection = () => {
             </div>
 
             {/* Title */}
-            <h2 className="text-[28px] md:text-[32px] lg:text-[36px] font-semibold font-poppins text-slate-900 leading-[1.15] mb-2 tracking-tight">
-              Welcome to <br className="hidden md:block" />
+            <h2 className="text-[28px] md:text-[32px] lg:text-[36px] font-semibold font-poppins text-slate-900 leading-[1.3] md:leading-[1.4] mb-4 tracking-tight">
+              WELCOME TO{" "}
               <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#3b8c2a] to-[#1a6b3a] relative inline-block">
-                BHARAT ORGANIC EXPO <span className="text-[#F2B40E] inline-block">2027</span>
+                BHARAT ORGANIC EXPO{" "}
+                <span className="text-[#F2B40E] inline-block">2027</span>
                 <svg className="absolute w-full h-3 -bottom-1 left-0 text-[#F2B40E]/40" viewBox="0 0 100 10" preserveAspectRatio="none"><path d="M0 5 Q 50 10 100 5" stroke="currentColor" strokeWidth="4" fill="transparent" /></svg>
               </span>
-              <span className="text-[15px] md:text-[16px] font-semibold text-black mt-4 block tracking-normal">
+              {" "}
+              <span className="text-[15px] md:text-[18px] font-medium text-black mt-4 block tracking-normal">
                 {/* A Global Platform for Organic & Sustainable Living */}
                 India's Premier Platform for Organic Products, Sustainable Agriculture & Natural Living
               </span>
             </h2>
 
-            {/* Description */}
-            <div className="mb-3 pr-0 lg:pr-10 space-y-3">
-              <p className="text-[15px] md:text-[16px] leading-[1.5] text-slate-700 font-medium border-l-4 border-[#F2B40E] pl-5 bg-gradient-to-r from-[#F2B40E]/5 to-transparent py-3 rounded-r-xl shadow-sm">
-                <strong className="text-[#1a6b3a] font-bold">Bharat Bharat Organic Expo 2027</strong> Bharat Bharat Organic Expo 2027 is India's leading international exhibition dedicated to organic products, sustainable agriculture, natural wellness, eco-friendly innovations, and green business opportunities. The Expo brings together manufacturers, exhibitors, buyers, importers, exporters, investors, government organizations, industry experts, startups, researchers, and global delegates under one dynamic platform.
+            <div className="mb-4 space-y-4">
+              <p className="text-[15px] md:text-[16px] leading-[1.7] text-slate-700 font-medium border-l-4 border-[#F2B40E] pl-5 bg-gradient-to-r from-[#F2B40E]/5 to-transparent py-4 rounded-r-xl shadow-sm">
+                <strong className="text-[#1a6b3a] font-bold">Bharat Organic Expo 2027</strong>{" "}
+                is India's leading international exhibition dedicated to organic products, sustainable agriculture, natural wellness, eco-friendly innovations, and green business opportunities. The Expo brings together manufacturers, exhibitors, buyers, importers, exporters, investors, government organizations, industry experts, startups, researchers, and global delegates under one dynamic platform.
               </p>
-              <p className="text-[14px] md:text-[16px] leading-[1.4] text-slate-600">
-                Designed to foster business growth, knowledge sharing, innovation, and international collaboration, Bharat Organic Expo serves as the perfect destination for discovering new products, building strategic partnerships, expanding global markets, and promoting a sustainable future.              </p>
+              <p className="text-[14px] md:text-[16px] leading-[1.7] text-slate-600">
+                Designed to foster business growth, knowledge sharing, innovation, and international collaboration, Bharat Organic Expo serves as the perfect destination for discovering new products, building strategic partnerships, expanding global markets, and promoting a sustainable future.
+              </p>
             </div>
 
             {/* Action Buttons (Optional) */}
@@ -176,7 +179,7 @@ const IntroductionSection = () => {
             </div>
 
             {/* Image Container */}
-            <   div className="relative z-10 p-2 md:p-3 rounded-[1.5rem] bg-white/60 backdrop-blur-md border border-white shadow-[0_15px_40px_rgba(0,0,0,0.06)] max-w-[450px] w-full">
+            <div className="relative z-10 p-2 md:p-3 rounded-[1.5rem] bg-white/60 backdrop-blur-md border border-white shadow-[0_15px_40px_rgba(0,0,0,0.06)] w-full">
               {staticData.image ? (
                 <img
                   loading="lazy"

@@ -499,15 +499,15 @@ const HeroSection = () => {
                 {/* Tagline */}
                 <div data-anim="1" className="flex items-center gap-2 mb-2">
                   <div className="w-7 h-[2px] bg-[#c2410c]/80" />
-                  <span className="text-[#c2410c] text-[11px] md:text-[18px] font-bold tracking-[0.14em] uppercase">
+                  <span className="text-[#c2410c] text-[11px] md:text-[18px] font-semibold tracking-[0.14em] uppercase">
                     {slide.tagline}
                   </span>
                   <div className="w-7 h-[2px] bg-[#c2410c]/80" />
                 </div>
 
                 {/* Title */}
-                <h1 
-                  data-anim="2" 
+                <h1
+                  data-anim="2"
                   className="leading-[1.15] font-bold uppercase font-poppins mb-3"
                   style={{ textShadow: "1px 1px 2px rgba(0,0,0,0.4)" }}
                 >

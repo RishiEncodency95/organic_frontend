@@ -74,7 +74,7 @@ const SponsorsAndAttend = () => {
           >
             <div className="flex flex-col md:flex-row items-start gap-1 mb-1 text-left">
               <div className="flex items-center gap-1.5">
-                <h2 className="text-[28px] md:text-[34px] lg:text-[40px] font-bold text-[#1a1a1a] tracking-tight leading-[1.2]">
+                <h2 className="text-[18px] md:text-[24px] lg:text-[30px] font-semibold text-[#1a1a1a] tracking-tight leading-[1.2]">
                   WHY <span className="bg-gradient-to-r from-[#00643b] to-[#f58220] bg-clip-text text-transparent">ATTEND?</span>
                 </h2>
                 <Leaf className="w-6 h-6 md:w-8 md:h-8 text-[#f58220] fill-[#f58220]" />
