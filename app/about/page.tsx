@@ -3,8 +3,8 @@ import React, { Suspense } from "react";
 import { Metadata } from 'next';
 
 export const metadata: Metadata = {
-  title: "About Us | Bharat Bharat Organic Expo 2027",
-  description: "Learn about the core mission and visionary approach of the Bharat Bharat Organic Expo 2027.",
+  title: "About Us | Bharat Organic Expo 2027",
+  description: "Learn about the core mission and visionary approach of the Bharat Organic Expo 2027.",
   alternates: {
     canonical: "/about",
   }

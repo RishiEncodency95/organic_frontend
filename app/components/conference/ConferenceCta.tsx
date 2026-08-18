@@ -21,7 +21,7 @@ const ConferenceCta = () => {
                   Ready to Connect with the Right Businesses?
                 </h3>
                 <p className="mt-1 text-[16px] text-[#b8d9b9]">
-                  Join the Buyer-Seller Meet at Bharat Bharat Organic Expo 2027.
+                  Join the Buyer-Seller Meet at Bharat Organic Expo 2027.
                 </p>
               </div>
             </div>

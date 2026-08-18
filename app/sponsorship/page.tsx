@@ -6,8 +6,8 @@ import BottomOpportunities from "../components/opportunity/sponsorship/BottomOpp
 import ContactCTA from "../components/opportunity/sponsorship/ContactCTA";
 
 export const metadata = {
-  title: "Sponsorship Opportunities | Bharat Bharat Organic Expo 2027",
-  description: "Maximize your brand visibility and connect with a highly targeted audience at Bharat Bharat Organic Expo 2027.",
+  title: "Sponsorship Opportunities | Bharat Organic Expo 2027",
+  description: "Maximize your brand visibility and connect with a highly targeted audience at Bharat Organic Expo 2027.",
 };
 
 export default function SponsorshipPage() {

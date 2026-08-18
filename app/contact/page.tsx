@@ -3,7 +3,7 @@ import dynamic from 'next/dynamic';
 import React from 'react';
 
 export const metadata: Metadata = {
-  title: "Contact Us | Bharat Bharat Organic Expo 2027",
+  title: "Contact Us | Bharat Organic Expo 2027",
   description: "Get in touch with the Bharat Organic Expo team for any queries regarding exhibiting, visiting, or sponsoring.",
   alternates: {
     canonical: "/contact",

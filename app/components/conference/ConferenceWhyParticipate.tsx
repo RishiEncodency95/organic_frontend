@@ -55,7 +55,7 @@ const ConferenceWhyParticipate = () => {
             <div>
               <SectionHeading>Exhibitors: Connect with Relevant Buyers</SectionHeading>
               <p className="mt-3 text-[16px] leading-relaxed text-gray-600">
-                Exhibitors at Bharat Bharat Organic Expo 2027 can use the
+                Exhibitors at Bharat Organic Expo 2027 can use the
                 Buyer-Seller Meet platform to connect with highly relevant
                 business buyers and explore sourcing, distribution,
                 procurement and strategic partnership opportunities.

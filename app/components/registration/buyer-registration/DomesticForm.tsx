@@ -318,7 +318,7 @@ export default function DomesticBuyerForm() {
         </div>
         <h3 className="text-2xl font-bold text-[#1a3352] mb-2 font-poppins">Registration Successful!</h3>
         <p className="text-gray-500 text-sm max-w-sm leading-relaxed">
-          Thank you for registering as a Domestic Buyer at Bharat Bharat Organic Expo 2027. A confirmation will be sent to your email.
+          Thank you for registering as a Domestic Buyer at Bharat Organic Expo 2027. A confirmation will be sent to your email.
         </p>
         <div className="mt-8 px-6 py-3 rounded-xl bg-[#4d7f1d] text-white text-sm font-bold uppercase tracking-wider">
           19 – 21 February 2027 · Hall 12, Bharat Mandapam
@@ -335,7 +335,7 @@ export default function DomesticBuyerForm() {
         </div>
         <div>
           <h3 className="text-lg font-bold text-[#1a3352] uppercase tracking-wide font-poppins">Domestic Buyer Registration</h3>
-          <p className="text-[12px] text-gray-500 font-medium">Bharat Bharat Organic Expo 2027</p>
+          <p className="text-[12px] text-gray-500 font-medium">Bharat Organic Expo 2027</p>
         </div>
       </div>
 
@@ -380,9 +380,9 @@ export default function DomesticBuyerForm() {
               )}
               {otpVerified.mobile && <CheckCircle size={18} className="text-emerald-600 self-center shrink-0 ml-2" />}
             </div>
-              {otpSent.mobile && !otpVerified.mobile && (
-                <input type="text" placeholder="Enter OTP" value={otpValue.mobile} onChange={e => setOtpValue(p => ({...p, mobile: e.target.value}))} className={`${inputClasses} mt-2 text-center tracking-widest`} />
-              )}
+            {otpSent.mobile && !otpVerified.mobile && (
+              <input type="text" placeholder="Enter OTP" value={otpValue.mobile} onChange={e => setOtpValue(p => ({ ...p, mobile: e.target.value }))} className={`${inputClasses} mt-2 text-center tracking-widest`} />
+            )}
           </div>
           <div><label className={labelClasses}>Alternate Number *</label><input required type="tel" name="alternateNumber" value={formData.alternateNumber} onChange={handleChange} placeholder="Alternate number" className={inputClasses} /></div>
           <div className="space-y-1">
@@ -401,9 +401,9 @@ export default function DomesticBuyerForm() {
               )}
               {otpVerified.email && <CheckCircle size={18} className="text-emerald-600 self-center shrink-0 ml-2" />}
             </div>
-              {otpSent.email && !otpVerified.email && (
-                <input type="text" placeholder="Enter OTP" value={otpValue.email} onChange={e => setOtpValue(p => ({...p, email: e.target.value}))} className={`${inputClasses} mt-2 text-center tracking-widest`} />
-              )}
+            {otpSent.email && !otpVerified.email && (
+              <input type="text" placeholder="Enter OTP" value={otpValue.email} onChange={e => setOtpValue(p => ({ ...p, email: e.target.value }))} className={`${inputClasses} mt-2 text-center tracking-widest`} />
+            )}
           </div>
           <div><label className={labelClasses}>Website (Optional)</label><input type="url" name="website" value={formData.website} onChange={handleChange} placeholder="https://..." className={inputClasses} /></div>
           <div><label className={labelClasses}>Registered Address *</label><input required name="registeredAddress" value={formData.registeredAddress} onChange={handleChange} placeholder="Full Corporate Address" className={inputClasses} /></div>
