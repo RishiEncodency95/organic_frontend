@@ -76,7 +76,7 @@ const AboutOrganizer = () => {
               <div className="relative z-10 w-full h-full overflow-hidden rounded-[12px] bg-white">
                 <Image
                   src={organImg}
-                  alt="Namo Gange Wellness Pvt. Ltd. organizing Bharat Bharat Organic Expo 2027"
+                  alt="Namo Gange Wellness Pvt. Ltd. organizing Bharat Organic Expo 2027"
                   fill
                   sizes="(max-width: 768px) 100vw, 50vw"
                   className="object-cover group-hover:scale-110 transition-transform duration-700 ease-in-out"

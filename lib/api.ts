@@ -143,6 +143,18 @@ export const visitorApi = {
     submitHealthCamp: async (data: any) => apiCall('/health-camp-visitors', { method: 'POST', body: JSON.stringify({ ...data, mobile: data.mobile || data.mobileNo }) })
 };
 
+export const buyerApi = {
+    submitBuyer: async (formData: FormData) => {
+        const response = await fetch(`${API_URL}/buyer-registration`, {
+            method: 'POST',
+            body: formData,
+            // Let browser set Content-Type for FormData
+        });
+        if (!response.ok) return { success: false };
+        return await response.json();
+    }
+};
+
 export const policyApi = {
     getByPage: async (page: string) => apiCall(`/policies/${page}`)
 };

@@ -27,9 +27,8 @@ const ConferenceHero = () => {
 
 
           <h1
-            className={`mt-5 text-[34px] font-semibold font-poppins uppercase leading-[1.1] tracking-tight text-white transition-all delay-150 duration-700 ease-out md:text-[48px] lg:text-[58px] ${
-              mounted ? "translate-y-0 opacity-100" : "translate-y-6 opacity-0"
-            }`}
+            className={`mt-5 text-[34px] font-semibold font-poppins uppercase leading-[1.1] tracking-tight text-white transition-all delay-150 duration-700 ease-out md:text-[48px] lg:text-[58px] ${mounted ? "translate-y-0 opacity-100" : "translate-y-6 opacity-0"
+              }`}
           >
             Who Can
             <br />
@@ -40,20 +39,18 @@ const ConferenceHero = () => {
           </h1>
 
           <p
-            className={`mt-2.5 max-w-[600px] text-[16px] leading-relaxed text-[#e6f2e6] transition-all delay-300 duration-700 ease-out md:text-[17px] ${
-              mounted ? "translate-y-0 opacity-100" : "translate-y-6 opacity-0"
-            }`}
+            className={`mt-2.5 max-w-[600px] text-[16px] leading-relaxed text-[#e6f2e6] transition-all delay-300 duration-700 ease-out md:text-[17px] ${mounted ? "translate-y-0 opacity-100" : "translate-y-6 opacity-0"
+              }`}
           >
-            The Buyer-Seller Meet at Bharat Bharat Organic Expo 2027 brings together
+            The Buyer-Seller Meet at Bharat Organic Expo 2027 brings together
             serious buyers and quality suppliers from across the organic,
             natural and sustainable industry ecosystem to create meaningful
             business opportunities.
           </p>
 
           <div
-            className={`mt-6 flex flex-wrap items-center gap-5 text-sm text-white transition-all delay-500 duration-700 ease-out sm:gap-8 ${
-              mounted ? "translate-y-0 opacity-100" : "translate-y-6 opacity-0"
-            }`}
+            className={`mt-6 flex flex-wrap items-center gap-5 text-sm text-white transition-all delay-500 duration-700 ease-out sm:gap-8 ${mounted ? "translate-y-0 opacity-100" : "translate-y-6 opacity-0"
+              }`}
           >
             <span className="flex items-center gap-2">
               <CalendarDays className="h-4 w-4 text-[#F2B40E]" />

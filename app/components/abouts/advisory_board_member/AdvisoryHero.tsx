@@ -59,7 +59,7 @@ const AdvisoryHero = () => {
             {/* Background Image (Globe and Green scenery on the right) */}
             <Image
                 src={heroBanner}
-                alt="Bharat Bharat Organic Expo 2027 Advisory Board Members"
+                alt="Bharat Organic Expo 2027 Advisory Board Members"
                 fill
                 priority
                 className="object-cover object-right z-0"
@@ -75,7 +75,7 @@ const AdvisoryHero = () => {
 
 
                     {/* Title */}
-                    <h1 
+                    <h1
                         className="font-black leading-[1.05] mb-4 text-left font-poppins"
                         style={{ textShadow: "1px 1px 2px rgba(0,0,0,0.4)" }}
                     >

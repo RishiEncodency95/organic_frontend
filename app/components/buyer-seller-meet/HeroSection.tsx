@@ -174,7 +174,7 @@ export default function HeroSection() {
                 style={{ opacity: 0 }}
                 className="text-[#131730] text-sm md:text-base max-w-lg mb-5 font-bold leading-relaxed text-left"
               >
-                Connect with the Right Businesses. Create Real Opportunities. A focused B2B networking platform at Bharat Bharat Organic Expo 2027.
+                Connect with the Right Businesses. Create Real Opportunities. A focused B2B networking platform at Bharat Organic Expo 2027.
               </p>
 
               {/* Date & Venue */}

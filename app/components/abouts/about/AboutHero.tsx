@@ -89,7 +89,7 @@ const AboutHero = () => {
       {/* Background Image */}
       <Image
         src={aboutBanner}
-        alt="Bharat Bharat Organic Expo 2027 exhibition and visitors"
+        alt="Bharat Organic Expo 2027 exhibition and visitors"
         fill
         priority
         className="object-cover z-0"
@@ -110,7 +110,7 @@ const AboutHero = () => {
           </div>
 
           {/* Title */}
-          <h1 
+          <h1
             className="font-black leading-[1.05] mb-4 text-left font-poppins"
             style={{ textShadow: "1px 1px 2px rgba(0,0,0,0.4)" }}
           >

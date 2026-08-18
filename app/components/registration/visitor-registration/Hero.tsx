@@ -157,12 +157,15 @@ export default function VisitorRegistrationHero() {
             <div className="w-full lg:w-[65%] xl:w-[55%] text-left shrink-0 ml-0 lg:ml-4 xl:ml-6">
 
               <div ref={logoRef} style={{ opacity: 0 }} className="mb-4 flex items-center justify-start gap-4 w-full">
-                <img
-                  src={footerLogo.src}
-                  alt="Bharat Organic Expo"
-                  className="h-16 md:h-20 w-auto object-contain drop-shadow-md"
-                />
-                <div className="w-px h-14 bg-[#1b5e20]/40 shrink-0" />
+                {/* Header Style from Home */}
+                <div data-anim="1" className="flex items-center gap-2 mb-2">
+                  <div className="w-7 h-[2px] bg-[#c2410c]/80" />
+                  <span className="text-[#c2410c] text-[11px] md:text-[18px] font-bold tracking-[0.14em] uppercase">
+                    BHARAT ORGANIC EXPO
+                  </span>
+                  <div className="w-7 h-[2px] bg-[#c2410c]/80" />
+                </div>
+                {/* <div className="w-px h-14 bg-[#1b5e20]/40 shrink-0" />
                 <div className="flex flex-col gap-1">
                   {["ORGANIC", "NATURAL", "SUSTAINABLE"].map((tag) => (
                     <div key={tag} className="flex items-center gap-1.5">
@@ -172,7 +175,7 @@ export default function VisitorRegistrationHero() {
                       <span className="text-[10px] md:text-xs font-bold text-[#1b5e20] tracking-widest uppercase">{tag}</span>
                     </div>
                   ))}
-                </div>
+                </div> */}
               </div>
 
               <h1

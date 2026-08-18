@@ -30,7 +30,7 @@ export default function HealthCampForm() {
   const [states, setStates] = useState<any[]>([]);
   const [cities, setCities] = useState<any[]>([]);
 
-  const defaultEventName = "9th Edition of International Health & Wellness Expo 2026";
+  const defaultEventName = "Organic Expo 2026";
 
   const [formData, setFormData] = useState({
     registrationFor: defaultEventName,
@@ -118,10 +118,10 @@ export default function HealthCampForm() {
       if (res) {
         setSubmitted(true);
       } else {
-        Swal.fire({ icon: 'error', title: 'Submission Failed', text: 'Failed to submit registration.' });
+        Swal.fire({ scrollbarPadding: false, icon: 'error', title: 'Submission Failed', text: 'Failed to submit registration.' });
       }
     } catch (error) {
-      Swal.fire({ icon: 'error', title: 'Error', text: 'Something went wrong.' });
+      Swal.fire({ scrollbarPadding: false, icon: 'error', title: 'Error', text: 'Something went wrong.' });
     }
     setLoading(false);
   };
@@ -331,7 +331,7 @@ export default function HealthCampForm() {
         </label>
       </div>
 
-      <div className="pt-6 mt-4 flex flex-col-reverse items-center justify-center gap-4">
+      <div className="pt-3 mt-2 flex flex-col-reverse items-center justify-center gap-2">
         <p className="text-[10px] text-slate-400 font-bold uppercase tracking-[0.2em] flex items-center gap-2">
           <ShieldCheck size={12} className="text-[#4d7f1d]" />
           Secure Registration Portal

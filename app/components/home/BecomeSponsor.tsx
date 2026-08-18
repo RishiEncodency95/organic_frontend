@@ -23,9 +23,9 @@ const BecomeSponsor = () => {
 
       <div className="max-w-[1500px] mx-auto  relative z-10">
         <div className="flex flex-col xl:flex-row items-center justify-between gap-6 xl:gap-8">
-          
+
           {/* LEFT: CONTENT */}
-          <motion.div 
+          <motion.div
             initial={{ opacity: 0, x: -30 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true, margin: "-50px" }}
@@ -36,58 +36,58 @@ const BecomeSponsor = () => {
               <Star className="w-4 h-4 text-[#F2B40E]" fill="#F2B40E" />
               <span className="text-[12px] md:text-[13px] font-black text-[#0b2912] tracking-wider uppercase">Sponsorship Opportunities Open</span>
             </div>
-            
+
             <h2 className="text-[32px] md:text-[40px] font-black text-[#0b2912] leading-[1.05] mb-2 tracking-tight uppercase">
               BECOME A <br className="hidden xl:block" />
               <span className="text-[#3b8c2a]">SPONSOR</span>
             </h2>
-            
+
             <div className="inline-block bg-[#F2B40E] px-3 py-1 mb-2 rounded-sm shadow-sm transform -rotate-1">
               <p className="text-[13px] md:text-[15px] font-black text-[#0b2912] uppercase tracking-wide">
                 POSITION YOUR BRAND AT THE FOREFRONT OF THE ORGANIC INDUSTRY
               </p>
             </div>
-            
+
             <p className="text-[16px] md:text-[17px] text-gray-700 font-medium leading-[1.4] max-w-[450px]">
-              Partner with <strong className="text-[#3b8c2a]">Bharat Bharat Organic Expo 2027</strong> and unlock premium visibility, strategic connections and unmatched business opportunities with industry leaders and decision-makers.
+              Partner with <strong className="text-[#3b8c2a]">Bharat Organic Expo 2027</strong> and unlock premium visibility, strategic connections and unmatched business opportunities with industry leaders and decision-makers.
             </p>
           </motion.div>
 
           {/* CENTER: IMAGE */}
-          <motion.div 
+          <motion.div
             initial={{ opacity: 0, scale: 0.95 }}
             whileInView={{ opacity: 1, scale: 1 }}
             viewport={{ once: true, margin: "-50px" }}
             transition={{ duration: 0.7, delay: 0.2 }}
             className="w-full xl:w-[380px] shrink-0 relative flex justify-center py-2"
           >
-             {/* Left side green accent shape to mimic the reference curve */}
-             <div className="absolute -left-3 top-2 bottom-2 w-12 bg-[#3b8c2a] rounded-l-full z-10 hidden xl:block shadow-lg"></div>
-             
-             <div className="relative w-full max-w-[340px] aspect-[16/9] xl:aspect-[16/10] rounded-[1.5rem] overflow-hidden shadow-2xl border-[4px] border-white z-20 group">
-               <img 
-                 src="https://images.unsplash.com/photo-1531058020387-3be344556be6?w=800&auto=format&fit=crop&q=80" 
-                 alt="Exhibition Stall" 
-                 className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
-                 loading="lazy"
-               />
-               {/* Gradient Overlay */}
-               <div className="absolute inset-0 bg-gradient-to-t from-[#0b2912]/90 via-[#0b2912]/20 to-transparent"></div>
-               
-               {/* Overlay Text */}
-               <div className="absolute bottom-5 left-5 right-5 text-left transform translate-y-2 group-hover:translate-y-0 transition-transform duration-300">
-                 <div className="inline-block px-2 py-0.5 bg-[#F2B40E] text-[#0b2912] text-[12px] font-black uppercase tracking-wider rounded-sm mb-1.5">
-                   Premium Booths
-                 </div>
-                 <p className="text-white font-black text-[18px] md:text-[20px] leading-tight drop-shadow-md">
-                   STRONGER TOGETHER FOR A HEALTHIER TOMORROW
-                 </p>
-               </div>
-             </div>
+            {/* Left side green accent shape to mimic the reference curve */}
+            <div className="absolute -left-3 top-2 bottom-2 w-12 bg-[#3b8c2a] rounded-l-full z-10 hidden xl:block shadow-lg"></div>
+
+            <div className="relative w-full max-w-[340px] aspect-[16/9] xl:aspect-[16/10] rounded-[1.5rem] overflow-hidden shadow-2xl border-[4px] border-white z-20 group">
+              <img
+                src="https://images.unsplash.com/photo-1531058020387-3be344556be6?w=800&auto=format&fit=crop&q=80"
+                alt="Exhibition Stall"
+                className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                loading="lazy"
+              />
+              {/* Gradient Overlay */}
+              <div className="absolute inset-0 bg-gradient-to-t from-[#0b2912]/90 via-[#0b2912]/20 to-transparent"></div>
+
+              {/* Overlay Text */}
+              <div className="absolute bottom-5 left-5 right-5 text-left transform translate-y-2 group-hover:translate-y-0 transition-transform duration-300">
+                <div className="inline-block px-2 py-0.5 bg-[#F2B40E] text-[#0b2912] text-[12px] font-black uppercase tracking-wider rounded-sm mb-1.5">
+                  Premium Booths
+                </div>
+                <p className="text-white font-black text-[18px] md:text-[20px] leading-tight drop-shadow-md">
+                  STRONGER TOGETHER FOR A HEALTHIER TOMORROW
+                </p>
+              </div>
+            </div>
           </motion.div>
 
           {/* RIGHT: FEATURES LIST */}
-          <motion.div 
+          <motion.div
             initial={{ opacity: 0, x: 30 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true, margin: "-50px" }}
@@ -101,7 +101,7 @@ const BecomeSponsor = () => {
                 WHY SPONSOR <span className="text-white">BHARAT ORGANIC EXPO?</span>
               </h3>
             </div>
-            
+
             {/* Grid */}
             <div className="p-3 grid grid-cols-1 sm:grid-cols-2 gap-x-3 gap-y-3">
               {SponsorFeatures.map((feature, idx) => (

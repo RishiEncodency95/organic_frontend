@@ -175,24 +175,13 @@ export default function BuyerRegistrationHero() {
 
               {/* Logo + Tags row */}
               <div ref={logoRef} style={{ opacity: 0 }} className="mb-4 flex items-center justify-start gap-4 w-full">
-                {/* Logo */}
-                <img
-                  src={footerLogo.src}
-                  alt="Bharat Organic Expo"
-                  className="h-16 md:h-20 w-auto object-contain drop-shadow-md"
-                />
-                {/* Vertical divider */}
-                <div className="w-px h-14 bg-[#1b5e20]/40 shrink-0" />
-                {/* Tags */}
-                <div className="flex flex-col gap-1">
-                  {["ORGANIC", "NATURAL", "SUSTAINABLE"].map((tag) => (
-                    <div key={tag} className="flex items-center gap-1.5">
-                      <svg className="w-3.5 h-3.5 text-[#1b5e20] shrink-0" viewBox="0 0 24 24" fill="currentColor">
-                        <path d="M17 8C8 10 5.9 16.17 3.82 21.34L5.71 22l1-2.3A4.49 4.49 0 008 20C19 20 22 3 22 3c-1 2-8 2-13 2 0 0-1 0-2 1 0 0 .5-1 3-2 0 0-4 1-6 8 0 0 2-1 6-1 0 0-2 2-2 7 0 0 4-5 12-6 0 0-1-4-3-3z"/>
-                      </svg>
-                      <span className="text-[10px] md:text-xs font-bold text-[#1b5e20] tracking-widest uppercase">{tag}</span>
-                    </div>
-                  ))}
+                {/* Header Style from Home */}
+                <div data-anim="1" className="flex items-center gap-2 mb-2">
+                  <div className="w-7 h-[2px] bg-[#c2410c]/80" />
+                  <span className="text-[#c2410c] text-[11px] md:text-[18px] font-bold tracking-[0.14em] uppercase">
+                    BHARAT ORGANIC EXPO
+                  </span>
+                  <div className="w-7 h-[2px] bg-[#c2410c]/80" />
                 </div>
               </div>
 

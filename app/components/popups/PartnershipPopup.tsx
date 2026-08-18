@@ -89,7 +89,7 @@ export default function PartnershipPopup({ isOpen, onClose, initialService }: Pa
   const [isSubmitted, setIsSubmitted] = useState(false);
 
   const [whatsappNumber, setWhatsappNumber] = useState("9654900525");
-  const [whatsappMessage, setWhatsappMessage] = useState("Hello! I would like to know more about the Bharat Bharat Organic Expo 2027 Sponsorship Opportunities.");
+  const [whatsappMessage, setWhatsappMessage] = useState("Hello! I would like to know more about the Bharat Organic Expo 2027 Sponsorship Opportunities.");
 
   const cleanPhone = whatsappNumber.replace(/\D/g, "");
   const formattedPhone = cleanPhone.length === 10 ? "91" + cleanPhone : cleanPhone;
@@ -122,7 +122,7 @@ export default function PartnershipPopup({ isOpen, onClose, initialService }: Pa
       alert("Please fill all required fields");
       return;
     }
-    
+
     setIsSubmitting(true);
     // Simulate API call
     setTimeout(() => {

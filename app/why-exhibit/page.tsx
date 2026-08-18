@@ -7,11 +7,11 @@ import BuyersSection from "@/app/components/participate/why-exhibit/BuyersSectio
 import TestimonialsSection from "@/app/components/participate/why-exhibit/TestimonialsSection";
 
 export const metadata: Metadata = {
-  title: "Why Exhibit | Bharat Bharat Organic Expo 2027",
+  title: "Why Exhibit | Bharat Organic Expo 2027",
   description:
-    "Exhibit at Bharat Bharat Organic Expo 2027 – India's premier B2B platform for organic food, agriculture, AYUSH and sustainable industries. Reach 8,000+ qualified buyers, 200+ exhibitors and global decision makers.",
+    "Exhibit at Bharat Organic Expo 2027 – India's premier B2B platform for organic food, agriculture, AYUSH and sustainable industries. Reach 8,000+ qualified buyers, 200+ exhibitors and global decision makers.",
   openGraph: {
-    title: "Why Exhibit at Bharat Bharat Organic Expo 2027",
+    title: "Why Exhibit at Bharat Organic Expo 2027",
     description:
       "Showcase, connect and grow globally at India's leading organic B2B exhibition. 19–21 February 2027, Bharat Mandapam, New Delhi.",
     url: "https://bharatorganicexpo.com/why-exhibit",
