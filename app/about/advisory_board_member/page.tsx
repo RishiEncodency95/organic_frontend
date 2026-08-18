@@ -8,8 +8,8 @@ import WhyJoinAdvisory from "@/app/components/abouts/advisory_board_member/WhyJo
 import AdvisoryPartners from "@/app/components/abouts/advisory_board_member/AdvisoryPartners";
 
 export const metadata: Metadata = {
-  title: "Advisory Board Members | Bharat Bharat Organic Expo 2027",
-  description: "Meet the distinguished leaders and professionals shaping the strategic direction of Bharat Bharat Organic Expo 2027.",
+  title: "Advisory Board Members | Bharat Organic Expo 2027",
+  description: "Meet the distinguished leaders and professionals shaping the strategic direction of Bharat Organic Expo 2027.",
   alternates: {
     canonical: "/about/advisory_board_member",
   }

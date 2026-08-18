@@ -317,7 +317,7 @@ export default function InternationalBuyerForm() {
         </div>
         <h3 className="text-2xl font-bold text-[#1a3352] mb-2 font-poppins">Registration Successful!</h3>
         <p className="text-gray-500 text-sm max-w-sm leading-relaxed">
-          Thank you for registering as an International Buyer at Bharat Bharat Organic Expo 2027. A confirmation will be sent to your email.
+          Thank you for registering as an International Buyer at Bharat Organic Expo 2027. A confirmation will be sent to your email.
         </p>
         <div className="mt-8 px-6 py-3 rounded-xl bg-[#4d7f1d] text-white text-sm font-bold uppercase tracking-wider">
           19 – 21 February 2027 · Hall 12, Bharat Mandapam
@@ -334,7 +334,7 @@ export default function InternationalBuyerForm() {
         </div>
         <div>
           <h3 className="text-lg font-bold text-[#1a3352] uppercase tracking-wide font-poppins">International Buyer Registration</h3>
-          <p className="text-[12px] text-gray-500 font-medium">Bharat Bharat Organic Expo 2027</p>
+          <p className="text-[12px] text-gray-500 font-medium">Bharat Organic Expo 2027</p>
         </div>
       </div>
 

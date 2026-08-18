@@ -117,9 +117,8 @@ function Reveal({
     <div
       ref={ref}
       style={{ transitionDelay: visible ? `${delay}ms` : "0ms" }}
-      className={`transition-all duration-700 ease-out will-change-transform ${
-        visible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6"
-      } ${className}`}
+      className={`transition-all duration-700 ease-out will-change-transform ${visible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6"
+        } ${className}`}
     >
       {children}
     </div>
@@ -321,7 +320,7 @@ const processSteps = [
   {
     n: "06",
     title: "Recognition",
-    desc: "Winners are honoured at the Bharat Bharat Organic Expo 2027.",
+    desc: "Winners are honoured at the Bharat Organic Expo 2027.",
     Icon: Trophy,
   },
 ];

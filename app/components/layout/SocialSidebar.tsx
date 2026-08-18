@@ -12,7 +12,7 @@ const SocialSidebar = () => {
 
   const socialLinks = {
     whatsappNumber: SITE_CONFIG.rawPhone.replace(/\D/g, ""),
-    whatsappMessage: "Hello! I would like to know more about Bharat Bharat Organic Expo 2027.",
+    whatsappMessage: "Hello! I would like to know more about Bharat Organic Expo 2027.",
     callNumber: SITE_CONFIG.rawPhone,
     facebook: "https://www.facebook.com/namogangewellness.event",
     instagram: "https://www.instagram.com/namogangewellness/",

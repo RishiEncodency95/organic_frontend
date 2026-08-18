@@ -4,8 +4,8 @@ import { Headphones, Ticket, Megaphone } from 'lucide-react';
 import { Metadata } from 'next';
 
 export const metadata: Metadata = {
-  title: "Support Services | Bharat Bharat Organic Expo 2027",
-  description: "Find the resources and help you need for a successful experience at the Bharat Bharat Organic Expo 2027. We provide Exhibitor Support, Visitor Information, and Media resources.",
+  title: "Support Services | Bharat Organic Expo 2027",
+  description: "Find the resources and help you need for a successful experience at the Bharat Organic Expo 2027. We provide Exhibitor Support, Visitor Information, and Media resources.",
   alternates: {
     canonical: "/about/suport_services",
   }

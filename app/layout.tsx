@@ -23,15 +23,15 @@ const inter = Inter({
 export const metadata: Metadata = {
   metadataBase: new URL("https://bharatorganicexpo.com"), // Placeholder domain
   title: {
-    default: "Bharat Bharat Organic Expo 2027",
-    template: "%s | Bharat Bharat Organic Expo 2027",
+    default: "Bharat Organic Expo 2027",
+    template: "%s | Bharat Organic Expo 2027",
   },
-  description: "Join Bharat Bharat Organic Expo 2027, the premier exhibition and conference for organic food, agriculture, and natural products in India.",
+  description: "Join Bharat Organic Expo 2027, the premier exhibition and conference for organic food, agriculture, and natural products in India.",
   openGraph: {
-    title: "Bharat Bharat Organic Expo 2027",
-    description: "Join Bharat Bharat Organic Expo 2027, the premier exhibition and conference for organic food, agriculture, and natural products in India.",
+    title: "Bharat Organic Expo 2027",
+    description: "Join Bharat Organic Expo 2027, the premier exhibition and conference for organic food, agriculture, and natural products in India.",
     url: "https://bharatorganicexpo.com",
-    siteName: "Bharat Bharat Organic Expo 2027",
+    siteName: "Bharat Organic Expo 2027",
     type: "website",
   },
   icons: {
@@ -44,7 +44,7 @@ export const metadata: Metadata = {
 const eventSchema = {
   "@context": "https://schema.org",
   "@type": "Event",
-  "name": "Bharat Bharat Organic Expo 2027",
+  "name": "Bharat Organic Expo 2027",
   "startDate": "2027-02-19",
   "endDate": "2027-02-21",
   "eventAttendanceMode": "https://schema.org/OfflineEventAttendanceMode",
@@ -58,7 +58,7 @@ const eventSchema = {
       "addressCountry": "IN"
     }
   },
-  "description": "Join Bharat Bharat Organic Expo 2027, the premier exhibition and conference for organic food, agriculture, and natural products in India.",
+  "description": "Join Bharat Organic Expo 2027, the premier exhibition and conference for organic food, agriculture, and natural products in India.",
   "organizer": {
     "@type": "Organization",
     "name": "Namo Gange Wellness Pvt. Ltd.",
