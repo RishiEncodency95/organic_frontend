@@ -2,6 +2,7 @@
 import React, { useRef, useEffect } from "react";
 import { Users, CheckCircle, Target, ArrowUpRight, TrendingUp } from "lucide-react";
 import gsap from "gsap";
+import SectionContainer from "@/app/components/layout/SectionContainer";
 
 export default function ConferenceFeatureStrip() {
   const bandRef = useRef<HTMLDivElement>(null);
@@ -65,7 +66,7 @@ export default function ConferenceFeatureStrip() {
 
   return (
     <div className="relative z-20 -mt-6 md:-mt-8 font-inter">
-      <div className="w-full max-w-[1400px] mx-auto px-4 sm:px-6 md:px-8 lg:px-8">
+      <SectionContainer>
         <div
           ref={bandRef}
           style={{ opacity: 0, backgroundColor: "#1b5e20", boxShadow: "0 8px 20px -10px rgba(0,0,0,0.3)" }}
@@ -89,7 +90,7 @@ export default function ConferenceFeatureStrip() {
                     className="flex flex-col items-center text-center group flex-1 py-1"
                   >
                     <IconComponent className="w-4 h-4 md:w-5 md:h-5 mb-1 text-white stroke-[1.75]" />
-                    <h4 className="text-[11px] sm:text-[13px] md:text-sm font-semibold text-white leading-none font-inter mb-0.5">
+                    <h4 className="text-[11px] sm:text-[13px] md:text-sm font-semibold text-[#fff] leading-none font-inter mb-0.5">
                       {item.title}
                     </h4>
                     <p className="text-[8px] md:text-[9px] font-bold text-[#facc15] uppercase tracking-widest leading-tight mt-0.5 font-inter">
@@ -107,7 +108,7 @@ export default function ConferenceFeatureStrip() {
             })}
           </div>
         </div>
-      </div>
+      </SectionContainer>
     </div>
   );
 }

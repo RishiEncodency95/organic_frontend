@@ -2,7 +2,7 @@
 import React from 'react';
 import Image from 'next/image';
 import { MapPin, Mail, Phone, Clock, Send } from 'lucide-react';
-import contactbg from '@/app/assets/banner/contactbgog.png';
+import contactbg from '@/app/assets/banner/contactbgog.webp';
 import SectionContainer from '@/app/components/layout/SectionContainer';
 import { SITE_CONFIG } from '@/app/constants/siteConfig';
 
@@ -39,7 +39,7 @@ const ContactHero = () => {
         {/* Background Image */}
         <div
           className="absolute inset-0 z-0 bg-no-repeat bg-cover bg-right md:bg-center"
-          style={{ backgroundImage: `url(${contactbg?.src || contactbg})` }}
+          style={{ backgroundImage: `url(${(contactbg as any)?.src || contactbg})` }}
         >
         </div>
 

@@ -2,6 +2,7 @@
 import React, { useRef, useEffect } from "react";
 import { Users, CheckCircle, Target, ArrowUpRight, TrendingUp } from "lucide-react";
 import gsap from "gsap";
+import SectionContainer from "@/app/components/layout/SectionContainer";
 
 export default function EPromoteBand() {
   const bandRef = useRef<HTMLDivElement>(null);
@@ -65,7 +66,7 @@ export default function EPromoteBand() {
 
   return (
     <div className="relative z-20 -mt-6 md:-mt-8 font-inter">
-      <div className="w-full max-w-[1400px] mx-auto px-4 sm:px-6 md:px-8 lg:px-8">
+      <SectionContainer>
         <div
           ref={bandRef}
           style={{ opacity: 0, backgroundColor: "#1b5e20", boxShadow: "0 8px 20px -10px rgba(0,0,0,0.3)" }}
@@ -107,7 +108,7 @@ export default function EPromoteBand() {
             })}
           </div>
         </div>
-      </div>
+      </SectionContainer>
     </div>
   );
 }

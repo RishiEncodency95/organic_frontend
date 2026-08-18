@@ -3,6 +3,7 @@ import React, { useState, useEffect, useRef, useCallback } from "react";
 import Link from "next/link";
 import { CalendarDays, MapPin, ChevronLeft, ChevronRight, ArrowRight } from "lucide-react";
 import gsap from "gsap";
+import SectionContainer from "@/app/components/layout/SectionContainer";
 import home1 from "../../assets/home/home11.png";
 import home2 from "../../assets/home/home22.png";
 import home3 from "../../assets/home/home33.png";
@@ -22,12 +23,12 @@ const Sparkle = ({ style, color = "#F2B40E", shadow }: { style?: React.CSSProper
     style={{
       position: "absolute",
       pointerEvents: "none",
-      fontSize: "13px",
+      fontSize: "15px",
       color,
-      textShadow: shadow ? `0 0 6px ${shadow}` : undefined,
+      textShadow: shadow ? `0 0 8px ${shadow}, 0 0 16px ${shadow}` : undefined,
       animation: "sparkleAnim 1.6s ease-in-out infinite",
       opacity: 0,
-      zIndex: 20,
+      zIndex: 25,
       ...style,
     }}
   >
@@ -439,6 +440,9 @@ const HeroSection = () => {
               alt={`Bharat Organic Expo slide ${id + 1}`}
               className="w-full h-full object-cover select-none"
               style={{ willChange: "transform, filter" }}
+              fetchPriority={id === 0 ? "high" : "low"}
+              loading={id === 0 ? "eager" : "lazy"}
+              decoding={id === 0 ? "sync" : "async"}
             />
           </div>
         ))}
@@ -479,8 +483,8 @@ const HeroSection = () => {
         <div className="absolute inset-0 bg-gradient-to-r from-[#fcfcf0]/60 via-[#fcfcf0]/0 to-transparent z-10 pointer-events-none" />
 
         {/* ── CONTENT PANELS ── */}
-        <div
-          className="relative container mx-auto max-w-[1400px] px-6 h-full grid items-center justify-items-start"
+        <SectionContainer
+          className="relative z-20 h-full grid items-center justify-items-start"
           style={{ zIndex: 20 }}
         >
           {SLIDES.map((slide) => (
@@ -499,59 +503,63 @@ const HeroSection = () => {
                 {/* Tagline */}
                 <div data-anim="1" className="flex items-center gap-2 mb-2">
                   <div className="w-7 h-[2px] bg-[#c2410c]/80" />
-                  <span className="text-[#c2410c] text-[11px] md:text-[18px] font-semibold tracking-[0.14em] uppercase">
+                  <span className="text-[#c2410c] text-xs md:text-sm font-bold tracking-[0.14em] uppercase">
                     {slide.tagline}
                   </span>
                   <div className="w-7 h-[2px] bg-[#c2410c]/80" />
                 </div>
 
                 {/* Title */}
-                <h1
-                  data-anim="2"
-                  className="leading-[1.15] font-bold uppercase font-poppins mb-3"
+                <h1 
+                  data-anim="2" 
+                  className="text-3xl md:text-4xl lg:text-[56px] font-semibold leading-[1.05] font-poppins mb-3"
                   style={{ textShadow: "1px 1px 2px rgba(0,0,0,0.4)" }}
                 >
-                  <div className="text-[#1f471b] text-[26px] md:text-[38px] lg:text-[48px] tracking-tight">
+                  <div className="text-[#1b5e20] tracking-tight">
                     {slide.titlePrimary}
                   </div>
-                  <div className="text-[#7ca142] text-[26px] md:text-[38px] lg:text-[48px] tracking-tight mt-1">
+                  <div className="text-[#F6A919] tracking-tight mt-1">
                     {slide.titleSecondary}
                   </div>
                 </h1>
 
                 {/* Subtitle */}
-                <p data-anim="3" className="text-[#1f471b] font-semibold text-[17px] md:text-[20px] lg:text-[23px] leading-[1.3] mb-3">
+                <p data-anim="3" className="text-[#131730] font-bold text-sm md:text-base leading-relaxed mb-2 font-inter">
                   {slide.subtitle}
                 </p>
 
                 {/* Description */}
-                <p data-anim="4" className="text-black font-medium text-[14px] md:text-[16px] leading-relaxed max-w-[560px] mb-6">
+                <p data-anim="4" className="text-[#131730] font-bold text-sm md:text-[15px] leading-relaxed max-w-lg mb-5 font-inter">
                   {slide.description}
                 </p>
 
                 {/* Date / Location */}
-                <div data-anim="5" className="flex flex-wrap items-center gap-x-4 gap-y-2 text-[#4B1426] font-bold text-[11px] lg:text-[15px] uppercase mb-6">
+                <div data-anim="5" className="flex flex-wrap items-center gap-3 sm:gap-4 text-[#4B1426] text-sm md:text-[15px] font-bold mb-6">
                   <div className="flex items-center gap-2">
-                    <CalendarDays size={16} className="shrink-0" />
+                    <CalendarDays size={18} className="shrink-0 text-[#ea580c]" />
                     <span>{slide.date}</span>
                   </div>
-                  <span className="hidden sm:inline opacity-80">|</span>
+                  <div className="hidden sm:block w-px h-5 bg-[#4B1426]/30"></div>
                   <div className="flex items-center gap-2">
-                    <MapPin size={16} className="shrink-0" />
+                    <MapPin size={18} className="shrink-0 text-[#ea580c]" />
                     <span>{slide.location}</span>
                   </div>
                 </div>
 
                 {/* Buttons */}
                 <div data-anim="6" className="flex flex-nowrap items-center gap-2 sm:gap-3 pt-2 relative overflow-visible w-full overflow-x-auto hide-scrollbar pb-2">
-                  <Sparkle color="#f97316" shadow="#c2410c" style={{ top: "-12px", left: "10%", animationDelay: "0s" }} />
-                  <Sparkle color="#f97316" shadow="#c2410c" style={{ top: "-15px", left: "50%", animationDelay: "0.4s" }} />
-                  <Sparkle color="#f97316" shadow="#c2410c" style={{ top: "-10px", right: "10%", animationDelay: "0.8s" }} />
 
                   {/* Book Your Stall — orange gradient matching why-exhibit */}
                   <div className="relative shrink-0">
+                    <Sparkle color="#ffc107" shadow="#ea580c" style={{ top: "-14px", left: "5%", animationDelay: "0s" }} />
+                    <Sparkle color="#ff9800" shadow="#c2410c" style={{ top: "-18px", left: "28%", animationDelay: "0.3s" }} />
+                    <Sparkle color="#ffdd00" shadow="#ea580c" style={{ top: "-15px", left: "50%", animationDelay: "0.6s" }} />
+                    <Sparkle color="#ff9800" shadow="#c2410c" style={{ top: "-18px", left: "72%", animationDelay: "0.9s" }} />
+                    <Sparkle color="#ffc107" shadow="#ea580c" style={{ top: "-14px", right: "5%", animationDelay: "1.2s" }} />
                     <Link
-                      href="/book-a-stand"
+                      href="/registration/book-a-stand"
+                      target="_blank"
+                      rel="noopener noreferrer"
                       className="group relative inline-flex items-center justify-start gap-2 px-4 py-2 rounded-lg font-semibold text-[10px] uppercase tracking-widest text-white transition-all active:scale-95 relative z-10 w-full sm:w-auto overflow-hidden"
                       style={{
                         background: "linear-gradient(135deg, #ea580c, #c2410c)",
@@ -562,13 +570,15 @@ const HeroSection = () => {
                     </Link>
                   </div>
 
-                  {/* Register as Visitor — blue styling matching Download Brochure */}
+                  {/* Register as Visitor — green styling matching blue-btn-hero bg */}
                   <div className="relative shrink-0">
-                    <Sparkle color="#3b82f6" shadow="#28396C" style={{ top: "-12px", left: "10%", animationDelay: "0.2s" }} />
-                    <Sparkle color="#3b82f6" shadow="#28396C" style={{ top: "-15px", left: "50%", animationDelay: "0.6s" }} />
-                    <Sparkle color="#3b82f6" shadow="#28396C" style={{ top: "-10px", right: "10%", animationDelay: "1s" }} />
+                    <Sparkle color="#4ade80" shadow="#1b5e20" style={{ top: "-14px", left: "10%", animationDelay: "0.2s" }} />
+                    <Sparkle color="#86efac" shadow="#16a34a" style={{ top: "-18px", left: "50%", animationDelay: "0.6s" }} />
+                    <Sparkle color="#4ade80" shadow="#1b5e20" style={{ top: "-14px", right: "10%", animationDelay: "1s" }} />
                     <Link
-                      href="/visitor-registration"
+                      href="/registration/visitor-registration"
+                      target="_blank"
+                      rel="noopener noreferrer"
                       className="blue-btn-hero text-white px-4 py-2 rounded-lg font-semibold text-[10px] uppercase tracking-widest flex items-center justify-start gap-2 transition-all active:scale-95 relative z-10 w-full sm:w-auto whitespace-nowrap"
                     >
                       Register as Visitor <ArrowRight size={14} />
@@ -578,21 +588,26 @@ const HeroSection = () => {
               </div>
             </div>
           ))}
-        </div>
+        </SectionContainer>
 
         {/* ── PROGRESS BAR ── */}
         <ProgressBar cur={cur} duration={SLIDE_DURATION} key={cur} />
 
         {/* ── DOTS ── */}
-        <div className="absolute bottom-3 left-1/2 -translate-x-1/2 z-30 flex gap-1.5">
+        <div className="absolute bottom-3 left-1/2 -translate-x-1/2 z-30 flex items-center gap-1">
           {SLIDES.map(({ id }) => (
             <button
               key={id}
               onClick={() => goTo(id)}
-              className={`rounded-full border border-[#2b5825]/30 transition-all duration-400 ${cur === id ? "w-5 h-2 bg-[#2b5825] dot-active-hero" : "w-2 h-2 bg-[#2b5825]/40 hover:bg-[#2b5825]/70"
-                }`}
+              className="p-2 flex items-center justify-center cursor-pointer focus:outline-none"
               aria-label={`Go to slide ${id + 1}`}
-            />
+            >
+              <span
+                className={`block rounded-full border border-[#2b5825]/30 transition-all duration-400 ${
+                  cur === id ? "w-5 h-2 bg-[#2b5825] dot-active-hero" : "w-2 h-2 bg-[#2b5825]/40 hover:bg-[#2b5825]/70"
+                }`}
+              />
+            </button>
           ))}
         </div>
       </section>

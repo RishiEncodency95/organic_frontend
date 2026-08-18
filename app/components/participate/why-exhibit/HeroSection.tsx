@@ -2,12 +2,13 @@
 import React from "react";
 import Link from "next/link";
 import { ArrowRight, Download, Calendar, MapPin } from "lucide-react";
-import exhibitBg from "@/app/assets/banner/exhibitog.png";
+import exhibitBg from "@/app/assets/banner/exhibitog.webp";
 
 import x1 from "@/app/assets/icons/x1.png";
 import x2 from "@/app/assets/icons/x2.png";
 import x3 from "@/app/assets/icons/x3.png";
 import x4 from "@/app/assets/icons/x4.png";
+import SectionContainer from "@/app/components/layout/SectionContainer";
 
 const getImgSrc = (src: any): string => (typeof src === "string" ? src : src.src);
 
@@ -51,7 +52,7 @@ const HeroSection = () => (
     </div>
 
     {/* Max Width Container aligned with Navbar */}
-    <div className="w-full max-w-[1400px] mx-auto px-4 sm:px-6 md:px-8 lg:px-8 relative z-10 py-1 md:py-2">
+    <SectionContainer className="relative z-10 py-1 md:py-2">
       <div className="flex flex-col lg:flex-row items-center justify-between gap-6 lg:gap-8">
 
         {/* Left Content Column - Positioned to start far left */}
@@ -180,7 +181,7 @@ const HeroSection = () => (
         </div>
 
       </div>
-    </div>
+    </SectionContainer>
   </section>
 );
 
