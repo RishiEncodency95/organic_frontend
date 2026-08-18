@@ -118,10 +118,10 @@ export default function HealthCampForm() {
       if (res) {
         setSubmitted(true);
       } else {
-        Swal.fire({ icon: 'error', title: 'Submission Failed', text: 'Failed to submit registration.' });
+        Swal.fire({ scrollbarPadding: false, icon: 'error', title: 'Submission Failed', text: 'Failed to submit registration.' });
       }
     } catch (error) {
-      Swal.fire({ icon: 'error', title: 'Error', text: 'Something went wrong.' });
+      Swal.fire({ scrollbarPadding: false, icon: 'error', title: 'Error', text: 'Something went wrong.' });
     }
     setLoading(false);
   };

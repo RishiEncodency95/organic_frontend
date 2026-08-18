@@ -240,20 +240,51 @@ export default function DomesticBuyerForm() {
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
-  const handleSimulateOtp = (type: 'email' | 'mobile') => {
+  const handleSimulateOtp = async (type: 'email' | 'mobile') => {
+    const value = type === 'email' ? formData.emailAddress : formData.mobileNumber;
+    if (!value) return;
+
     setIsVerifying(prev => ({ ...prev, [type]: true }));
-    setTimeout(() => {
-      setIsVerifying(prev => ({ ...prev, [type]: false }));
-      setOtpSent(prev => ({ ...prev, [type]: true }));
-    }, 1000);
+    try {
+      const res = type === 'email'
+        ? await verifyApi.sendEmailOtp(value, 'BUYER')
+        : await verifyApi.sendPhoneOtp(value, 'BUYER', formData.fullName);
+
+      if (res && res.success) {
+        setOtpSent(prev => ({ ...prev, [type]: true }));
+        Swal.fire({ scrollbarPadding: false, icon: 'success', title: 'OTP Sent', text: `OTP sent to your ${type}.`, timer: 2000, showConfirmButton: false });
+      } else {
+        Swal.fire({ scrollbarPadding: false, icon: 'error', title: 'Error', text: res?.message || 'Failed to send OTP.' });
+      }
+    } catch (error) {
+      Swal.fire({ scrollbarPadding: false, icon: 'error', title: 'Error', text: 'Something went wrong.' });
+    }
+    setIsVerifying(prev => ({ ...prev, [type]: false }));
   };
 
-  const handleVerifyOtp = (type: 'email' | 'mobile') => {
+  const handleVerifyOtp = async (type: 'email' | 'mobile') => {
+    const value = type === 'email' ? formData.emailAddress : formData.mobileNumber;
+    const otp = type === 'email' ? otpValue.email : otpValue.mobile;
+    if (!otp || otp.length !== 6) {
+      Swal.fire({ scrollbarPadding: false, icon: 'warning', title: 'Invalid OTP', text: 'Please enter a valid 6-digit OTP.' });
+      return;
+    }
     setIsVerifying(prev => ({ ...prev, [type]: true }));
-    setTimeout(() => {
-      setIsVerifying(prev => ({ ...prev, [type]: false }));
-      setOtpVerified(prev => ({ ...prev, [type]: true }));
-    }, 1000);
+    try {
+      const res = type === 'email'
+        ? await verifyApi.verifyEmailOtp(value, otp)
+        : await verifyApi.verifyPhoneOtp(value, otp);
+
+      if (res && res.success) {
+        setOtpVerified(prev => ({ ...prev, [type]: true }));
+        Swal.fire({ scrollbarPadding: false, icon: 'success', title: 'Verified', text: 'Verified successfully!', timer: 2000, showConfirmButton: false });
+      } else {
+        Swal.fire({ scrollbarPadding: false, icon: 'error', title: 'Invalid OTP', text: res?.message || 'Verification failed.' });
+      }
+    } catch (error) {
+      Swal.fire({ scrollbarPadding: false, icon: 'error', title: 'Error', text: 'Something went wrong.' });
+    }
+    setIsVerifying(prev => ({ ...prev, [type]: false }));
   };
 
   const handlePackageSelection = (pkg: any) => {
@@ -349,9 +380,9 @@ export default function DomesticBuyerForm() {
               )}
               {otpVerified.mobile && <CheckCircle size={18} className="text-emerald-600 self-center shrink-0 ml-2" />}
             </div>
-            {otpSent.mobile && !otpVerified.mobile && (
-              <input placeholder="Enter OTP" className={`${inputClasses} mt-2 text-center tracking-widest`} />
-            )}
+              {otpSent.mobile && !otpVerified.mobile && (
+                <input type="text" placeholder="Enter OTP" value={otpValue.mobile} onChange={e => setOtpValue(p => ({...p, mobile: e.target.value}))} className={`${inputClasses} mt-2 text-center tracking-widest`} />
+              )}
           </div>
           <div><label className={labelClasses}>Alternate Number *</label><input required type="tel" name="alternateNumber" value={formData.alternateNumber} onChange={handleChange} placeholder="Alternate number" className={inputClasses} /></div>
           <div className="space-y-1">
@@ -370,9 +401,9 @@ export default function DomesticBuyerForm() {
               )}
               {otpVerified.email && <CheckCircle size={18} className="text-emerald-600 self-center shrink-0 ml-2" />}
             </div>
-            {otpSent.email && !otpVerified.email && (
-              <input placeholder="Enter OTP" className={`${inputClasses} mt-2 text-center tracking-widest`} />
-            )}
+              {otpSent.email && !otpVerified.email && (
+                <input type="text" placeholder="Enter OTP" value={otpValue.email} onChange={e => setOtpValue(p => ({...p, email: e.target.value}))} className={`${inputClasses} mt-2 text-center tracking-widest`} />
+              )}
           </div>
           <div><label className={labelClasses}>Website (Optional)</label><input type="url" name="website" value={formData.website} onChange={handleChange} placeholder="https://..." className={inputClasses} /></div>
           <div><label className={labelClasses}>Registered Address *</label><input required name="registeredAddress" value={formData.registeredAddress} onChange={handleChange} placeholder="Full Corporate Address" className={inputClasses} /></div>

@@ -157,12 +157,12 @@ export default function GeneralForm() {
 
       if (res && res.success) {
         setOtpSent(prev => ({ ...prev, [type]: true }));
-        Swal.fire({ icon: 'success', title: 'OTP Sent', text: `OTP sent to your ${type}.`, timer: 2000, showConfirmButton: false });
+        Swal.fire({ scrollbarPadding: false, icon: 'success', title: 'OTP Sent', text: `OTP sent to your ${type}.`, timer: 2000, showConfirmButton: false });
       } else {
-        Swal.fire({ icon: 'error', title: 'Error', text: res?.message || 'Failed to send OTP.' });
+        Swal.fire({ scrollbarPadding: false, icon: 'error', title: 'Error', text: res?.message || 'Failed to send OTP.' });
       }
     } catch (error) {
-      Swal.fire({ icon: 'error', title: 'Error', text: 'Something went wrong.' });
+      Swal.fire({ scrollbarPadding: false, icon: 'error', title: 'Error', text: 'Something went wrong.' });
     }
     setIsVerifying(prev => ({ ...prev, [type]: false }));
   };
@@ -171,7 +171,7 @@ export default function GeneralForm() {
     const otpValue = type === 'email' ? emailOtp : mobileOtp;
     const value = type === 'email' ? formData.email : formData.mobileNo;
     if (!otpValue || otpValue.length !== 6) {
-      Swal.fire({ icon: 'warning', title: 'Invalid OTP', text: 'Please enter a valid 6-digit OTP.' });
+      Swal.fire({ scrollbarPadding: false, icon: 'warning', title: 'Invalid OTP', text: 'Please enter a valid 6-digit OTP.' });
       return;
     }
     setIsVerifying(prev => ({ ...prev, [type]: true }));
@@ -182,12 +182,12 @@ export default function GeneralForm() {
 
       if (res && res.success) {
         setOtpVerified(prev => ({ ...prev, [type]: true }));
-        Swal.fire({ icon: 'success', title: 'Verified', text: 'Verified successfully!', timer: 2000, showConfirmButton: false });
+        Swal.fire({ scrollbarPadding: false, icon: 'success', title: 'Verified', text: 'Verified successfully!', timer: 2000, showConfirmButton: false });
       } else {
-        Swal.fire({ icon: 'error', title: 'Invalid OTP', text: res?.message || 'Verification failed.' });
+        Swal.fire({ scrollbarPadding: false, icon: 'error', title: 'Invalid OTP', text: res?.message || 'Verification failed.' });
       }
     } catch (error) {
-      Swal.fire({ icon: 'error', title: 'Error', text: 'Something went wrong.' });
+      Swal.fire({ scrollbarPadding: false, icon: 'error', title: 'Error', text: 'Something went wrong.' });
     }
     setIsVerifying(prev => ({ ...prev, [type]: false }));
   };
@@ -195,7 +195,7 @@ export default function GeneralForm() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!otpVerified.email || !otpVerified.mobile) {
-      Swal.fire({ icon: 'warning', title: 'Verification Required', text: 'Please verify both Email and WhatsApp number.' });
+      Swal.fire({ scrollbarPadding: false, icon: 'warning', title: 'Verification Required', text: 'Please verify both Email and WhatsApp number.' });
       return;
     }
     setLoading(true);
@@ -204,10 +204,10 @@ export default function GeneralForm() {
       if (res) {
         setSubmitted(true);
       } else {
-        Swal.fire({ icon: 'error', title: 'Submission Failed', text: 'Failed to submit registration.' });
+        Swal.fire({ scrollbarPadding: false, icon: 'error', title: 'Submission Failed', text: 'Failed to submit registration.' });
       }
     } catch (error) {
-      Swal.fire({ icon: 'error', title: 'Error', text: 'Something went wrong.' });
+      Swal.fire({ scrollbarPadding: false, icon: 'error', title: 'Error', text: 'Something went wrong.' });
     }
     setLoading(false);
   };
