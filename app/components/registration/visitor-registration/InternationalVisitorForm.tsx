@@ -225,9 +225,11 @@ export default function InternationalVisitorForm() {
     setLoading(false);
   };
 
-  const inputClasses = "w-full h-[34px] px-3 py-1.5 rounded-[2px] border border-slate-400 bg-white text-left text-[12px] font-medium text-slate-900 outline-none transition-all focus:border-[#4d7f1d] focus:ring-1 focus:ring-[#4d7f1d]/20 placeholder:text-slate-400 font-inter";
-  const labelClasses = "text-[12px] font-semibold text-slate-900 mb-1 block text-left font-inter";
-  const sectionTitleClasses = "text-[14px] font-bold text-[#4d7f1d] pb-2 border-b border-[#4d7f1d]/20 flex items-center gap-2 mb-4 uppercase tracking-wide font-poppins mt-8";
+  const inputClasses = "rounded border border-slate-400 h-7 focus:border-[#23471d] focus:ring-[#23471d]/10 transition-all text-[12px] bg-white placeholder:text-slate-400 text-slate-900 font-normal shadow-none outline-none px-3 w-full text-left";
+  const labelClasses = "text-[11px] font-medium uppercase text-slate-800 mb-1 block text-left";
+  const sectionTitleClasses = "text-[12px] font-medium text-[#4d7f1d] uppercase tracking-[0.05em]";
+  const sectionTitleWrapperClasses = "pb-1 border-b border-slate-500 mb-3 mt-6 flex justify-between items-end";
+  const buttonTextClasses = "text-[12px] font-bold uppercase tracking-wider font-inter";
 
   if (submitted) {
     return (
@@ -256,8 +258,11 @@ export default function InternationalVisitorForm() {
       </div>
 
       <div>
-        <h3 className={sectionTitleClasses}>1. Personal Information</h3>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+        <div className={sectionTitleWrapperClasses}>
+          <h3 className={sectionTitleClasses}>1. Event & Organization</h3>
+          <span className="text-[10px] font-bold bg-[#4d7f1d]/10 text-[#4d7f1d] px-2 py-1 rounded tracking-widest uppercase w-fit">Step 1 of 3</span>
+        </div>
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-x-3 gap-y-3">
           <div>
             <label className={labelClasses}>Register For *</label>
             <select required name="registrationFor" value={formData.registrationFor} onChange={handleChange} className={inputClasses}>
@@ -321,21 +326,24 @@ export default function InternationalVisitorForm() {
       </div>
 
       <div>
-        <h3 className={sectionTitleClasses}>2. Contact Details & Location</h3>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+        <div className={sectionTitleWrapperClasses}>
+          <h3 className={sectionTitleClasses}>2. Contact Details & Location</h3>
+          <span className="text-[10px] font-bold bg-[#4d7f1d]/10 text-[#4d7f1d] px-2 py-1 rounded tracking-widest uppercase w-fit">Step 2 of 3</span>
+        </div>
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-x-3 gap-y-3">
           <div className="space-y-1">
             <label className={labelClasses}>Mobile No. (with Country Code) *</label>
-            <div className="flex gap-2 h-[34px]">
+            <div className="flex gap-2 h-7">
               <input required type="tel" name="mobileNo" value={formData.mobileNo} onChange={handleChange} className={`${inputClasses} h-full`} disabled={otpVerified.mobile || otpSent.mobile} placeholder="+1 234 567 8900" />
               {!otpVerified.mobile && !otpSent.mobile && (
-                <button type="button" onClick={() => handleRequestOtp('mobile')} disabled={!formData.mobileNo || isVerifying.mobile} className={`bg-[#4d7f1d] text-white px-3 rounded-[2px] transition hover:bg-[#3b6315] h-full disabled:opacity-50`}>
+                <button type="button" onClick={() => handleRequestOtp('mobile')} disabled={!formData.mobileNo || isVerifying.mobile} className={`bg-[#4d7f1d] text-white px-3 rounded text-[10px] uppercase font-bold transition hover:bg-[#3b6315] h-full disabled:opacity-50`}>
                   {isVerifying.mobile ? <Loader2 className="animate-spin" size={14} /> : 'OTP'}
                 </button>
               )}
               {otpSent.mobile && !otpVerified.mobile && (
                 <>
                   <input type="text" maxLength={6} value={mobileOtp} onChange={(e) => setMobileOtp(e.target.value.replace(/\D/g, ''))} className={`${inputClasses} h-full w-[100px] text-center tracking-widest`} placeholder="OTP" />
-                  <button type="button" onClick={() => handleVerifyOtp('mobile')} className={`bg-[#4d7f1d] text-white px-3 rounded-[2px] transition hover:bg-[#3b6315] h-full`}>
+                  <button type="button" onClick={() => handleVerifyOtp('mobile')} className={`bg-[#4d7f1d] text-white px-3 rounded text-[10px] uppercase font-bold transition hover:bg-[#3b6315] h-full`}>
                     {isVerifying.mobile ? <Loader2 className="animate-spin" size={14} /> : 'Verify'}
                   </button>
                 </>
@@ -348,17 +356,17 @@ export default function InternationalVisitorForm() {
 
           <div className="space-y-1">
             <label className={labelClasses}>Official Email ID *</label>
-            <div className="flex gap-2 h-[34px]">
+            <div className="flex gap-2 h-7">
               <input required type="email" name="email" value={formData.email} onChange={handleChange} className={`${inputClasses} h-full`} disabled={otpVerified.email || otpSent.email} placeholder="Email Address" />
               {!otpVerified.email && !otpSent.email && (
-                <button type="button" onClick={() => handleRequestOtp('email')} disabled={!formData.email || isVerifying.email} className={`bg-[#4d7f1d] text-white px-3 rounded-[2px] transition hover:bg-[#3b6315] h-full disabled:opacity-50`}>
+                <button type="button" onClick={() => handleRequestOtp('email')} disabled={!formData.email || isVerifying.email} className={`bg-[#4d7f1d] text-white px-3 rounded text-[10px] uppercase font-bold transition hover:bg-[#3b6315] h-full disabled:opacity-50`}>
                   {isVerifying.email ? <Loader2 className="animate-spin" size={14} /> : 'OTP'}
                 </button>
               )}
               {otpSent.email && !otpVerified.email && (
                 <>
                   <input type="text" maxLength={6} value={emailOtp} onChange={(e) => setEmailOtp(e.target.value.replace(/\D/g, ''))} className={`${inputClasses} h-full w-[100px] text-center tracking-widest`} placeholder="OTP" />
-                  <button type="button" onClick={() => handleVerifyOtp('email')} className={`bg-[#4d7f1d] text-white px-3 rounded-[2px] transition hover:bg-[#3b6315] h-full`}>
+                  <button type="button" onClick={() => handleVerifyOtp('email')} className={`bg-[#4d7f1d] text-white px-3 rounded text-[10px] uppercase font-bold transition hover:bg-[#3b6315] h-full`}>
                     {isVerifying.email ? <Loader2 className="animate-spin" size={14} /> : 'Verify'}
                   </button>
                 </>
@@ -368,7 +376,7 @@ export default function InternationalVisitorForm() {
           </div>
           <div><label className={labelClasses}>Personal Email ID</label><input type="email" name="personalEmail" value={formData.personalEmail} onChange={handleChange} className={inputClasses} placeholder="Personal Email ID" /></div>
 
-          <div className="md:col-span-3"><label className={labelClasses}>Residential Address</label><input name="address" value={formData.address} onChange={handleChange} className={inputClasses} placeholder="Full Address" /></div>
+          <div className="md:col-span-2"><label className={labelClasses}>Residential Address</label><input name="address" value={formData.address} onChange={handleChange} className={inputClasses} placeholder="Full Address" /></div>
 
           <div>
             <label className={labelClasses}>Country *</label>
@@ -407,11 +415,14 @@ export default function InternationalVisitorForm() {
         <div className="space-y-2 animate-in fade-in slide-in-from-bottom-4 duration-500">
 
           <div>
-            <h3 className={sectionTitleClasses}>3. Purpose & Visit Planning</h3>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-              <div className="space-y-4 bg-white p-5 border border-slate-200 rounded-sm shadow-sm lg:col-span-2">
-                <label className="text-[11px] font-bold text-[#4d7f1d] uppercase tracking-wider block border-b border-slate-200 pb-2">Purpose of Visit <span className="text-red-500">*</span></label>
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-1">
+            <div className={sectionTitleWrapperClasses}>
+              <h3 className={sectionTitleClasses}>3. Purpose & Visit Planning</h3>
+              <span className="text-[10px] font-bold bg-[#4d7f1d]/10 text-[#4d7f1d] px-2 py-1 rounded tracking-widest uppercase w-fit">Step 3 of 3</span>
+            </div>
+            <div className="grid grid-cols-1 lg:grid-cols-4 gap-x-3 gap-y-3">
+              <div className="space-y-3 bg-white p-4 border border-slate-200 rounded-sm shadow-sm lg:col-span-2">
+                <label className="text-[11px] font-medium uppercase text-[#d26019] tracking-[0.05em] block border-b border-slate-200 pb-1">Purpose of Visit <span className="text-red-500">*</span></label>
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 pt-1">
                   {PURPOSE_OPTIONS.map(option => (
                     <label key={option} className="flex items-start gap-2 cursor-pointer group">
                       <input
@@ -430,9 +441,9 @@ export default function InternationalVisitorForm() {
                   ))}
                 </div>
               </div>
-              <div className="space-y-4 bg-white p-5 border border-slate-200 rounded-sm shadow-sm lg:col-span-2">
-                <label className="text-[11px] font-bold text-[#4d7f1d] uppercase tracking-wider block border-b border-slate-200 pb-2">Interested Sectors <span className="text-red-500">*</span></label>
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-1">
+              <div className="space-y-3 bg-white p-4 border border-slate-200 rounded-sm shadow-sm lg:col-span-2">
+                <label className="text-[11px] font-medium uppercase text-[#d26019] tracking-[0.05em] block border-b border-slate-200 pb-1">Interested Sectors <span className="text-red-500">*</span></label>
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 pt-1">
                   {INTEREST_OPTIONS.map(option => (
                     <label key={option} className="flex items-start gap-2 cursor-pointer group">
                       <input
@@ -481,8 +492,10 @@ export default function InternationalVisitorForm() {
           </div>
 
           <div>
-            <h3 className={sectionTitleClasses}>4. Conference & Document Upload</h3>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+            <div className={sectionTitleWrapperClasses}>
+              <h3 className={sectionTitleClasses}>4. Conference & Document Upload</h3>
+            </div>
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-x-3 gap-y-3">
               <div>
                 <label className={labelClasses}>Schedule B2B meetings? *</label>
                 <select required name="schedulingB2B" value={formData.schedulingB2B} onChange={handleChange} className={inputClasses}>
@@ -558,7 +571,7 @@ export default function InternationalVisitorForm() {
             </label>
           </div>
 
-          <div className="pt-6 mt-4 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+          <div className="pt-6 mt-4 flex flex-col-reverse items-center justify-center gap-4">
             <p className="text-[10px] text-slate-400 font-bold uppercase tracking-[0.2em] flex items-center gap-2">
               <ShieldCheck size={12} className="text-[#4d7f1d]" />
               Secure Registration Portal
