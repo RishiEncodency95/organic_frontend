@@ -1,6 +1,6 @@
 import { Metadata } from "next";
 import ExhibitorsSection from "@/app/components/exhibitors/ExhibitorsSection";
-import { ApiExhibitor } from "@/app/components/exhibitors/data";
+import { ApiExhibitor, fallbackExhibitors } from "@/app/components/exhibitors/data";
 
 export const metadata: Metadata = {
     title: "Exhibitors | Bharat Organic Expo",
@@ -16,7 +16,7 @@ const PAGE_SIZE = 80;
 const getExhibitors = async (): Promise<ApiExhibitor[]> => {
     try {
         const first = await fetch(`${API_BASE}/api/exhibitor?page=1&limit=${PAGE_SIZE}`, { cache: "force-cache" });
-        if (!first.ok) return [];
+        if (!first.ok) return fallbackExhibitors;
         const firstJson = await first.json();
         const totalPages = firstJson.pagination?.totalPages ?? 1;
         const restPages =
@@ -30,11 +30,13 @@ const getExhibitors = async (): Promise<ApiExhibitor[]> => {
 
         const all = [firstJson, ...restPages].flatMap((j) => j.data ?? []);
         const seen = new Set<string>();
-        return (all as ApiExhibitor[])
+        const res = (all as ApiExhibitor[])
             .filter((e) => (seen.has(e._id) ? false : (seen.add(e._id), true)))
             .sort((a, b) => a.order - b.order);
+            
+        return res.length > 0 ? res : fallbackExhibitors;
     } catch {
-        return [];
+        return fallbackExhibitors;
     }
 };
 

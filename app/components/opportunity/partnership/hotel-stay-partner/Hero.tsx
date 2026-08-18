@@ -1,7 +1,8 @@
 "use client";
 import React from "react";
 import { Calendar, MapPin } from "lucide-react";
-import hotelBg from "@/app/assets/banner/hotelog.png";
+import hotelBg from "@/app/assets/banner/hotelog.webp";
+import SectionContainer from "@/app/components/layout/SectionContainer";
 
 export default function Hero() {
   return (
@@ -15,7 +16,7 @@ export default function Hero() {
         />
       </div>
 
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl relative z-10">
+      <SectionContainer className="relative z-10">
         <div className="max-w-4xl flex flex-col items-start text-left">
 
           {/* Main Title */}
@@ -56,7 +57,7 @@ export default function Hero() {
             </div>
           </div>
         </div>
-      </div>
+      </SectionContainer>
     </section>
   );
 }

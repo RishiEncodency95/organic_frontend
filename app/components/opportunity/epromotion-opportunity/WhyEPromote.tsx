@@ -3,6 +3,7 @@ import React, { useRef, useEffect } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { Megaphone, Users, BadgeCheck, TrendingUp, Target, Mail } from "lucide-react";
+import SectionContainer from "@/app/components/layout/SectionContainer";
 import leafIcon from "../../../assets/icons/leafs.png";
 import epogImg from "../../../assets/icons/epog.png";
 import e1og from "../../../assets/icons/e1og.png";
@@ -78,7 +79,7 @@ export default function WhyEPromote() {
       <img ref={leftDecorRef} src={leafIcon.src} alt="Leaf Decoration" className="absolute left-0 top-1/2 -translate-y-1/2 w-28 md:w-40 object-contain pointer-events-none z-0" style={{ opacity: 0 }} />
       <img ref={rightDecorRef} src={footerRightImg.src} alt="Right Decoration" className="absolute right-0 bottom-0 w-32 md:w-48 object-contain pointer-events-none z-0" style={{ opacity: 0 }} />
       
-      <div className="container mx-auto px-4 max-w-7xl relative z-10">
+      <SectionContainer className="relative z-10">
         <div className="flex flex-col lg:flex-row gap-8 lg:gap-16 items-center">
           
           {/* Left Column: Why E-Promote */}
@@ -133,7 +134,7 @@ export default function WhyEPromote() {
           </div>
           
         </div>
-      </div>
+      </SectionContainer>
     </section>
   );
 }

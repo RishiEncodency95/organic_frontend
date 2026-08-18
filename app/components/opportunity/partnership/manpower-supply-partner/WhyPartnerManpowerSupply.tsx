@@ -3,8 +3,9 @@ import React, { useState } from "react";
 import { ArrowRight, CheckCircle2, Mail, Phone, Globe, MapPin } from "lucide-react";
 import pleaf from "@/app/assets/icons/pleaf.png";
 import leafRight from "@/app/assets/icons/leafright.png";
-import hog from "@/app/assets/icons/manog.png";
+import manog from "@/app/assets/icons/manog.png";
 import leafsImg from "@/app/assets/icons/leafs.png";
+import SectionContainer from "@/app/components/layout/SectionContainer";
 
 export default function WhyPartnerManpowerSupply() {
   const [stateVal, setStateVal] = useState("");
@@ -12,11 +13,11 @@ export default function WhyPartnerManpowerSupply() {
   const [agreed, setAgreed] = useState(false);
 
   const points = [
-    "Reach high-value delegates,\nexhibitors & industry leaders",
-    "Build strong relationships\nwith business communities",
-    "Position your brand among top manpower supply providers",
-    "Increase brand recall and visibility",
-    "Support a movement towards organic & sustainable future"
+    "Position your brand as a trusted manpower solutions provider",
+    "Direct connect with 200+ exhibitors needing support staff",
+    "Enhance brand recall, credibility & market presence",
+    "Build long-term business partnerships in event industry",
+    "Support seamless operations at India's premier organic expo"
   ];
 
   const statesList = [
@@ -33,7 +34,7 @@ export default function WhyPartnerManpowerSupply() {
         className="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-1/4 w-32 md:w-48 object-contain pointer-events-none z-10 opacity-100" 
       />
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+      <SectionContainer className="relative z-10">
         
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch">
           
@@ -52,7 +53,7 @@ export default function WhyPartnerManpowerSupply() {
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M17.8 19.2 16 11l3.5-3.5C21 6 21.5 4 21 3c-1-.5-3 0-4.5 1.5L13 8 4.8 6.2c-.5-.1-.9.2-1.1.6L3 8l6 5-3 3-3-1-2 2 4 4 2-2-1-3 3-3 5 6 1.2-.7c.4-.2.7-.6.6-1.1Z"/></svg>
                       </div>
                     </div>
-                    <span className="text-[13px] md:text-sm font-bold text-gray-900 leading-snug whitespace-pre-line">{pt}</span>
+                    <span className="text-[13px] md:text-sm font-bold text-gray-900 leading-snug">{pt}</span>
                   </li>
                 ))}
               </ul>
@@ -60,9 +61,9 @@ export default function WhyPartnerManpowerSupply() {
 
             {/* Graphic Decoration */}
             <img 
-              src={hog.src} 
-              alt="Decoration" 
-              className="absolute right-0 bottom-0 w-56 md:w-80 lg:w-[350px] object-contain pointer-events-none opacity-100 mix-blend-multiply" 
+              src={manog.src} 
+              alt="Manpower Decoration" 
+              className="absolute right-0 bottom-0 w-64 sm:w-72 md:w-88 lg:w-[380px] max-w-[98%] object-contain pointer-events-none opacity-100 mix-blend-multiply" 
             />
           </div>
 
@@ -254,7 +255,7 @@ export default function WhyPartnerManpowerSupply() {
 
         </div>
 
-        {/* Contact Footer Bar - Styled to match screenshot in one line without card/shadow */}
+        {/* Contact Footer Bar */}
         <div className="mt-12 bg-white pt-6 border-t border-gray-200 flex flex-wrap lg:flex-nowrap items-center justify-between gap-4 w-full">
           <div className="text-gray-900 font-bold text-xs lg:text-[13px] uppercase tracking-wider whitespace-nowrap">
             For partnership enquiries, please contact:
@@ -266,8 +267,8 @@ export default function WhyPartnerManpowerSupply() {
             <div className="w-8 h-8 rounded-full bg-[#d6a549] flex items-center justify-center text-white shrink-0">
               <Mail size={16} />
             </div>
-            <a href="mailto:info@namogangewellness.com" className="text-xs lg:text-[13px] font-bold text-gray-900 hover:text-[#113217] transition-colors whitespace-nowrap">
-              info@namogangewellness.com
+            <a href="mailto:partnership@bharatorganicexpo.in" className="text-xs lg:text-[13px] font-bold text-gray-900 hover:text-[#113217] transition-colors whitespace-nowrap">
+              partnership@bharatorganicexpo.in
             </a>
           </div>
 
@@ -277,8 +278,8 @@ export default function WhyPartnerManpowerSupply() {
             <div className="w-8 h-8 rounded-full bg-[#d6a549] flex items-center justify-center text-white shrink-0">
               <Phone size={16} />
             </div>
-            <a href="tel:+919654900525" className="text-xs lg:text-[13px] font-bold text-gray-900 hover:text-[#113217] transition-colors whitespace-nowrap">
-              +91-9654900525
+            <a href="tel:+917428991115" className="text-xs lg:text-[13px] font-bold text-gray-900 hover:text-[#113217] transition-colors whitespace-nowrap">
+              +91 7428 99 1115
             </a>
           </div>
 
@@ -304,7 +305,7 @@ export default function WhyPartnerManpowerSupply() {
           </div>
         </div>
 
-      </div>
+      </SectionContainer>
     </section>
   );
 }

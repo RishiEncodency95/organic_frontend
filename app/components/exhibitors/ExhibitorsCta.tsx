@@ -4,6 +4,7 @@ import { Reveal } from "../shared/Reveal";
 import { BOTTOM_STATS } from "./data";
 import beImg from "../../assets/icons/be.png";
 import bleafImg from "../../assets/icons/bleaf.png";
+import SectionContainer from "@/app/components/layout/SectionContainer";
 
 const Sparkle = ({ color, shadow, style }: { color: string; shadow: string; style: React.CSSProperties }) => (
     <div
@@ -20,7 +21,7 @@ const ExhibitorsCta = () => {
     return (
         <>
         <section className="relative w-full overflow-hidden bg-[#fcfcf0] py-2 border-t border-gray-100 font-inter">
-            <div className="container mx-auto max-w-[1400px] px-6 relative z-10">
+            <SectionContainer className="relative z-10">
                 {/* Top Block: Info & CTAs */}
                 <Reveal>
                     <div className="flex flex-col lg:flex-row items-center justify-between gap-6">
@@ -95,12 +96,12 @@ const ExhibitorsCta = () => {
                         </div>
                     </div>
                 </Reveal>
-            </div>
+            </SectionContainer>
         </section>
 
         {/* Bottom Stats Band */}
         <section className="bg-[#1b5e20] py-3 md:py-4 font-inter relative z-10">
-            <div className="container mx-auto max-w-[1400px] px-6">
+            <SectionContainer>
                 <div className="flex flex-nowrap items-center justify-between gap-2 md:gap-0 overflow-x-auto scrollbar-hide">
                     {BOTTOM_STATS.map((stat, idx) => (
                         <React.Fragment key={stat.label}>
@@ -121,7 +122,7 @@ const ExhibitorsCta = () => {
                         </React.Fragment>
                     ))}
                 </div>
-            </div>
+            </SectionContainer>
         </section>
         </>
     );

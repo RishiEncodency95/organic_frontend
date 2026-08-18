@@ -6,6 +6,7 @@ import { Mail, Phone, ChevronDown, Store, Briefcase, Users, UserPlus, Globe, Awa
 import { motion, AnimatePresence } from "framer-motion";
 
 import { SITE_CONFIG } from "@/app/constants/siteConfig";
+import SectionContainer from "@/app/components/layout/SectionContainer";
 
 const cn = (...classes: (string | undefined | null | false)[]) => classes.filter(Boolean).join(" ");
 
@@ -106,7 +107,7 @@ const Topbar = () => {
             <motion.div
                 className="bg-black border-b border-[#3b8c2a]/30 text-slate-200 text-[11px] relative z-[150] py-1 shadow-md shadow-black/20"
             >
-                <div className="container mx-auto max-w-[1400px] flex items-center justify-between px-6 py-1 flex-nowrap gap-x-4">
+                <SectionContainer className="flex items-center justify-between py-1 flex-nowrap gap-x-4">
                     {/* Left Section - Contact Info (Compact on mobile) */}
                     <div className="flex items-center justify-center md:justify-start gap-4 md:gap-6 w-full md:w-auto overflow-hidden flex-shrink-0 pl-1">
                         <a
@@ -263,7 +264,7 @@ const Topbar = () => {
                             </div>
                         </div>
                     </div>
-                </div>
+                </SectionContainer>
             </motion.div>
         </>
     );

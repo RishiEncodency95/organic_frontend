@@ -317,11 +317,13 @@ const SponsorshipCategories = () => {
                 <input
                   type="text"
                   placeholder="Full Name*"
+                  aria-label="Full Name"
                   className="w-full text-[13px] md:text-[14px] px-3 py-2.5 rounded-md border border-gray-300 focus:outline-none focus:border-[#3b8c2a] focus:ring-1 focus:ring-[#3b8c2a]/30"
                 />
                 <input
                   type="text"
                   placeholder="Company Name*"
+                  aria-label="Company Name"
                   className="w-full text-[13px] md:text-[14px] px-3 py-2.5 rounded-md border border-gray-300 focus:outline-none focus:border-[#3b8c2a] focus:ring-1 focus:ring-[#3b8c2a]/30"
                 />
               </div>
@@ -330,9 +332,10 @@ const SponsorshipCategories = () => {
                 <input
                   type="email"
                   placeholder="Email Address*"
+                  aria-label="Email Address"
                   className="w-full text-[13px] md:text-[14px] px-3 py-2.5 rounded-md border border-gray-300 focus:outline-none focus:border-[#3b8c2a] focus:ring-1 focus:ring-[#3b8c2a]/30 pr-20"
                 />
-                <button type="button" className="absolute right-1 top-1 bottom-1 px-3 bg-gray-100 hover:bg-gray-200 text-gray-700 text-[11px] font-bold rounded">
+                <button type="button" aria-label="Send Email OTP" className="absolute right-1 top-1 bottom-1 px-3 bg-gray-100 hover:bg-gray-200 text-gray-700 text-[11px] font-bold rounded">
                   Send OTP
                 </button>
               </div>
@@ -341,15 +344,19 @@ const SponsorshipCategories = () => {
                 <input
                   type="tel"
                   placeholder="WhatsApp Number*"
+                  aria-label="WhatsApp Number"
                   className="w-full text-[13px] md:text-[14px] px-3 py-2.5 rounded-md border border-gray-300 focus:outline-none focus:border-[#3b8c2a] focus:ring-1 focus:ring-[#3b8c2a]/30 pr-20"
                 />
-                <button type="button" className="absolute right-1 top-1 bottom-1 px-3 bg-gray-100 hover:bg-gray-200 text-gray-700 text-[11px] font-bold rounded">
+                <button type="button" aria-label="Send WhatsApp OTP" className="absolute right-1 top-1 bottom-1 px-3 bg-gray-100 hover:bg-gray-200 text-gray-700 text-[11px] font-bold rounded">
                   Send OTP
                 </button>
               </div>
 
               <div className="relative">
-                <select className="w-full text-[13px] md:text-[14px] px-3 py-2.5 rounded-md border border-gray-300 focus:outline-none focus:border-[#3b8c2a] focus:ring-1 focus:ring-[#3b8c2a]/30 appearance-none text-gray-600">
+                <select
+                  aria-label="Interested Sponsorship Category"
+                  className="w-full text-[13px] md:text-[14px] px-3 py-2.5 rounded-md border border-gray-300 focus:outline-none focus:border-[#3b8c2a] focus:ring-1 focus:ring-[#3b8c2a]/30 appearance-none text-gray-600"
+                >
                   <option value="">Interested Sponsorship Category*</option>
                   <option value="title">Title Sponsor</option>
                   <option value="powered">Powered By Sponsor</option>
@@ -361,6 +368,7 @@ const SponsorshipCategories = () => {
 
               <textarea
                 placeholder="Message (Optional)"
+                aria-label="Message"
                 rows={2}
                 className="w-full text-[13px] md:text-[14px] px-3 py-2.5 rounded-md border border-gray-300 focus:outline-none focus:border-[#3b8c2a] focus:ring-1 focus:ring-[#3b8c2a]/30 resize-none"
               ></textarea>

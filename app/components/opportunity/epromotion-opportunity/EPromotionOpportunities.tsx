@@ -1,6 +1,7 @@
 "use client";
 import React, { useState } from "react";
 import { Check, Settings } from "lucide-react";
+import SectionContainer from "@/app/components/layout/SectionContainer";
 import PartnershipPopup from "../../popups/PartnershipPopup";
 import leafIcon from "../../../assets/icons/leafs.png";
 import z1og from "../../../assets/icons/z1og.png";
@@ -105,7 +106,7 @@ export default function EPromotionOpportunities() {
         }
       `}</style>
       <section className="pt-8 pb-4 bg-[#f4f7f6] font-inter">
-      <div className="container mx-auto px-4 max-w-7xl">
+      <SectionContainer>
         
         {/* Section Header */}
         <div className="flex items-center gap-2 justify-center mb-8">
@@ -162,14 +163,14 @@ export default function EPromotionOpportunities() {
             </div>
           ))}
         </div>
-      </div>
+      </SectionContainer>
     </section>
 
     {/* Custom Packages Footer */}
     <section className="pt-4 pb-0 bg-white font-inter relative">
       <img src={sleaf.src} alt="Leaf" className="absolute left-0 top-1/2 -translate-y-1/2 w-16 md:w-24 opacity-100 pointer-events-none z-0" />
       <img src={p1Img.src} alt="Right Decor" className="absolute right-0 top-[60%] -translate-y-1/2 w-16 md:w-24 opacity-100 pointer-events-none z-0" />
-      <div className="container mx-auto px-4 max-w-7xl relative z-10">
+      <SectionContainer className="relative z-10">
         <div className="relative bg-transparent rounded-xl overflow-hidden p-4 md:p-6 lg:px-10 lg:py-5 flex flex-col md:flex-row items-center justify-between gap-6">
           <div className="flex flex-col md:flex-row items-center gap-5 relative z-10 w-full md:w-auto text-center md:text-left">
             <img src={ebotog.src} alt="Custom Packages" className="w-[60px] h-[60px] md:w-[70px] md:h-[70px] shrink-0 object-contain" />
@@ -199,7 +200,7 @@ export default function EPromotionOpportunities() {
             </a>
           </div>
         </div>
-      </div>
+      </SectionContainer>
     </section>
 
     <PartnershipPopup 

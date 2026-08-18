@@ -1,5 +1,6 @@
 import React from 'react';
 import { GraduationCap, Stethoscope, Landmark, Leaf, Globe, Building2 } from 'lucide-react';
+import SectionContainer from "@/app/components/layout/SectionContainer";
 
 const AudienceStrip = () => {
   const items = [
@@ -43,7 +44,7 @@ const AudienceStrip = () => {
 
   return (
     <div className="bg-[#3B8D2A] w-full py-1.5 md:py-3 border-t border-b border-white/10 shadow-inner overflow-x-auto hide-scrollbar font-inter">
-      <div className="max-w-[1600px] mx-auto px-4 md:px-11">
+      <SectionContainer>
         <div className="flex items-center justify-between min-w-[1000px]">
           {items.map((item, index) => (
             <React.Fragment key={index}>
@@ -68,7 +69,7 @@ const AudienceStrip = () => {
             </React.Fragment>
           ))}
         </div>
-      </div>
+      </SectionContainer>
       <style>{`
         .hide-scrollbar::-webkit-scrollbar {
           display: none;

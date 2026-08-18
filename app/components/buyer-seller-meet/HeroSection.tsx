@@ -157,12 +157,12 @@ export default function HeroSection() {
                 style={{ textShadow: "1px 1px 2px rgba(0,0,0,0.4)" }}
               >
                 <span className="block overflow-hidden">
-                  <span ref={line1Ref} style={{ opacity: 0, display: "block" }} className="text-[#1b5e20] text-3xl md:text-4xl lg:text-[56px] font-semibold mb-1.5">
+                  <span ref={line1Ref} style={{ opacity: 0, display: "block" }} className="text-[#1b5e20] text-3xl sm:text-4xl md:text-5xl lg:text-[64px] font-semibold mb-1">
                     BUYER-SELLER
                   </span>
                 </span>
                 <span className="block overflow-hidden">
-                  <span ref={line2Ref} style={{ opacity: 0, display: "block" }} className="text-[#4B1426] text-2xl sm:text-3xl md:text-[36px] lg:text-[56px] font-semibold tracking-tight whitespace-nowrap">
+                  <span ref={line2Ref} style={{ opacity: 0, display: "block" }} className="text-[#4B1426] text-3xl sm:text-4xl md:text-5xl lg:text-[64px] font-semibold tracking-tight whitespace-nowrap">
                     MEET 2027
                   </span>
                 </span>
@@ -197,9 +197,9 @@ export default function HeroSection() {
               {/* Buttons */}
               <div ref={btnsRef} className="flex flex-wrap items-center justify-start gap-3">
                 <div className="relative w-full sm:w-auto">
-                  <Sparkle color="#3b82f6" shadow="#28396C" style={{ top: "-12px", left: "10%", animationDelay: "0.2s" }} />
-                  <Sparkle color="#3b82f6" shadow="#28396C" style={{ top: "-15px", left: "50%", animationDelay: "0.6s" }} />
-                  <Sparkle color="#3b82f6" shadow="#28396C" style={{ top: "-10px", right: "10%", animationDelay: "1s" }} />
+                  <Sparkle color="#4ade80" shadow="#1b5e20" style={{ top: "-12px", left: "10%", animationDelay: "0.2s" }} />
+                  <Sparkle color="#4ade80" shadow="#1b5e20" style={{ top: "-15px", left: "50%", animationDelay: "0.6s" }} />
+                  <Sparkle color="#4ade80" shadow="#1b5e20" style={{ top: "-10px", right: "10%", animationDelay: "1s" }} />
                   <Link
                     href="/registration/buyer-registration"
                     className="blue-btn-hero text-white px-4 py-2 rounded-lg font-semibold text-[10px] uppercase tracking-widest flex items-center justify-start gap-2 transition-all active:scale-95 shadow-lg relative z-10 w-full sm:w-auto"

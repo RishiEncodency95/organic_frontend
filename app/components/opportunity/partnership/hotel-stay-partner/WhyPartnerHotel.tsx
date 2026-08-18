@@ -3,6 +3,7 @@ import React, { useState } from "react";
 import { ArrowRight, Mail, Phone, Globe, MapPin } from "lucide-react";
 import leafsImg from "@/app/assets/icons/leafs.png";
 import hotelog from "@/app/assets/icons/hotelog.png";
+import SectionContainer from "@/app/components/layout/SectionContainer";
 
 export default function WhyPartnerHotel() {
   const [stateVal, setStateVal] = useState("");
@@ -32,7 +33,7 @@ export default function WhyPartnerHotel() {
         className="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-1/4 w-32 md:w-48 object-contain pointer-events-none z-10 opacity-100" 
       />
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+      <SectionContainer className="relative z-10">
         
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch">
           
@@ -210,7 +211,7 @@ export default function WhyPartnerHotel() {
             </div>
           </div>
         </div>
-      </div>
+      </SectionContainer>
     </section>
   );
 }

@@ -7,6 +7,7 @@ import s2og from "../../../assets/icons/s2og.png";
 import s3og from "../../../assets/icons/s3og.png";
 import s4og from "../../../assets/icons/s4og.png";
 import s5og from "../../../assets/icons/s5og.png";
+import SectionContainer from "@/app/components/layout/SectionContainer";
 
 export default function SponsorshipPackages() {
   const packages = [
@@ -97,7 +98,7 @@ export default function SponsorshipPackages() {
 
   return (
     <section className="pt-10 pb-2 bg-white font-inter">
-      <div className="container mx-auto px-4 max-w-7xl">
+      <SectionContainer>
         {/* Header */}
         <div className="flex flex-col items-center text-center mb-8">
           <h2 className="text-xl md:text-2xl font-semibold text-[#1b5e20] uppercase leading-[1.1] font-poppins mb-1">
@@ -119,32 +120,32 @@ export default function SponsorshipPackages() {
                 backgroundColor: pkg.lightBg
               }}
             >
-              <div className="p-5 flex flex-col items-center text-center relative z-10 pb-6 border-b border-gray-100/30">
+              <div className="p-3 pt-4 flex flex-col items-center text-center relative z-10 pb-1.5 border-b border-gray-100/30">
                 {/* Image instead of SVG wrapper */}
                 <Image 
                   src={pkg.iconSrc} 
                   alt={pkg.name.replace('\n', ' ')}
                   width={64}
                   height={64}
-                  className="w-16 h-16 object-contain mb-4"
+                  className="w-12 h-12 object-contain mb-1"
                 />
                 
                 <h3 
-                  className="text-sm font-bold uppercase font-poppins tracking-wide leading-tight whitespace-pre-line mb-1"
+                  className="text-sm font-bold uppercase font-poppins tracking-wide leading-tight whitespace-pre-line mb-0.5"
                   style={{ color: pkg.color }}
                 >
                   {pkg.name}
                 </h3>
-                <p className="text-[10px] text-gray-600 font-semibold mb-3">{pkg.type}</p>
+                <p className="text-[10px] text-gray-600 font-semibold mb-1">{pkg.type}</p>
                 <div 
-                  className="text-xl font-semibold font-poppins"
+                  className="text-lg font-bold font-poppins"
                   style={{ color: pkg.color }}
                 >
                   {pkg.price}
                 </div>
               </div>
               
-              <div className="px-5 pb-4 pt-1 flex-1 flex flex-col">
+              <div className="px-4 pb-3 pt-1.5 flex-1 flex flex-col">
                 <ul className="text-left w-full space-y-2 mb-3 mt-0">
                   {pkg.features.map((feature, fIdx) => (
                     <li key={fIdx} className="flex items-start gap-2 text-[11px] text-gray-800 font-medium leading-snug">
@@ -175,7 +176,7 @@ export default function SponsorshipPackages() {
         <div className="mt-5 text-center text-xs md:text-sm font-semibold text-[#4B1426]">
           Packages can be customized as per your branding and engagement objectives.
         </div>
-      </div>
+      </SectionContainer>
     </section>
   );
 }

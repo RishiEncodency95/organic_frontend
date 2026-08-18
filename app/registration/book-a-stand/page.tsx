@@ -2008,7 +2008,7 @@ const BookAStand = () => {
 
 export default function BookAStandPage() {
     return (
-        <Suspense fallback={<div>Loading...</div>}>
+        <Suspense fallback={<div className="min-h-screen flex items-center justify-center bg-[#f7faf5] text-[#3b8c2a] font-bold">Loading...</div>}>
             <BookAStand />
         </Suspense>
     );

@@ -5,6 +5,7 @@ import Topbar from "./components/layout/Topbar";
 import Navbar from "./components/layout/Navbar";
 import Footer from "./components/layout/Footer";
 import SocialSidebar from "./components/layout/SocialSidebar";
+import SmoothScroll from "./components/SmoothScroll";
 
 const poppins = Poppins({
   subsets: ["latin"],
@@ -96,13 +97,15 @@ export default function RootLayout({
         />
       </head>
       <body suppressHydrationWarning className="min-h-full flex flex-col font-inter text-[16px] md:text-[18px] leading-[1.6] overflow-x-hidden w-full">
-        <Topbar />
-        <Navbar />
-        <main className="flex-grow overflow-x-hidden w-full">
-          {children}
-        </main>
-        <Footer />
-        <SocialSidebar />
+        <SmoothScroll>
+          <Topbar />
+          <Navbar />
+          <main className="flex-grow overflow-x-hidden w-full">
+            {children}
+          </main>
+          <Footer />
+          <SocialSidebar />
+        </SmoothScroll>
       </body>
     </html>
   );

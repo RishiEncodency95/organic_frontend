@@ -6,6 +6,7 @@ import {
   Mic, Ticket, HeartHandshake, Eye, Sparkles, Monitor
 } from "lucide-react";
 import footerRightImg from "@/app/assets/icons/footerright.webp";
+import SectionContainer from "@/app/components/layout/SectionContainer";
 
 export default function Deliverables() {
   const deliverables = [
@@ -110,7 +111,7 @@ export default function Deliverables() {
         className="absolute top-10 -right-3 md:top-20 md:-right-5 w-24 md:w-36 object-contain pointer-events-none z-20 opacity-80" 
       />
 
-      <div className="max-w-[1400px] mx-auto px-4 sm:px-6 md:px-8 lg:px-8 relative z-10">
+      <SectionContainer className="relative z-10">
         
         <div 
           className="bg-white rounded-2xl pt-5 pb-4 px-6 md:pt-6 md:pb-6 md:px-8"
@@ -150,7 +151,7 @@ export default function Deliverables() {
           </div>
         </div>
 
-      </div>
+      </SectionContainer>
     </section>
   );
 }

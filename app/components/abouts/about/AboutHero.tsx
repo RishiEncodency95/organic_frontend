@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import aboutBanner from "../../../assets/about/about1.png";
+import aboutBanner from "../../../assets/about/about1.webp";
 import { Sprout, Users, Globe2, Heart, ArrowRight, Sun } from "lucide-react";
 import Link from "next/link";
 import Image from "next/image";
@@ -114,10 +114,10 @@ const AboutHero = () => {
             className="font-black leading-[1.05] mb-4 text-left font-poppins"
             style={{ textShadow: "1px 1px 2px rgba(0,0,0,0.4)" }}
           >
-            <div className="text-[#1b5e20] text-[32px] md:text-[40px] lg:text-[48px] tracking-tight block" style={{ fontWeight: 600 }}>
+            <div className="text-[#1b5e20] text-[36px] md:text-[46px] lg:text-[56px] tracking-tight block" style={{ fontWeight: 600 }}>
               BHARAT ORGANIC
             </div>
-            <div className="text-[#ea580c] text-[36px] md:text-[46px] lg:text-[54px] tracking-tight block" style={{ fontWeight: 600 }}>
+            <div className="text-[#ea580c] text-[42px] md:text-[52px] lg:text-[62px] tracking-tight block" style={{ fontWeight: 600 }}>
               EXPO 2027
             </div>
           </h1>

@@ -3,12 +3,13 @@ import React, { useState } from "react";
 import { ArrowRight, Mail, Phone, Globe, MapPin } from "lucide-react";
 import hogImg from "@/app/assets/icons/hog.png";
 import rightRightImg from "@/app/assets/icons/leafright.png";
+import SectionContainer from "@/app/components/layout/SectionContainer";
 
 export default function EnquiryForm() {
   const [category, setCategory] = useState("");
   return (
-    <section className="pt-4 pb-6 bg-white">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <section className="pt-4 pb-6 bg-white font-inter">
+      <SectionContainer>
         <div 
           className="grid grid-cols-1 lg:grid-cols-3 gap-0 rounded-2xl overflow-hidden"
           style={{ boxShadow: "rgba(0, 0, 0, 0.12) 0px 1px 3px, rgba(0, 0, 0, 0.24) 0px 1px 2px" }}
@@ -219,7 +220,7 @@ export default function EnquiryForm() {
           </div>
         </div>
         
-      </div>
+      </SectionContainer>
     </section>
   );
 }

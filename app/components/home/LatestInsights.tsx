@@ -132,7 +132,7 @@ const LatestInsights = () => {
 
         {/* Pagination/Controls */}
         <div className="flex items-center justify-center gap-4">
-          <button className="w-10 h-10 rounded-full bg-white border border-gray-200 flex items-center justify-center text-gray-600 hover:bg-[#f4fcf6] hover:text-[#3b8c2a] hover:border-[#3b8c2a] transition-all shadow-sm">
+          <button aria-label="Previous articles" className="w-10 h-10 rounded-full bg-white border border-gray-200 flex items-center justify-center text-gray-600 hover:bg-[#f4fcf6] hover:text-[#3b8c2a] hover:border-[#3b8c2a] transition-all shadow-sm">
             <ChevronLeft className="w-5 h-5" />
           </button>
 
@@ -142,7 +142,7 @@ const LatestInsights = () => {
             <div className="w-2 h-2 rounded-full bg-gray-300"></div>
           </div>
 
-          <button className="w-10 h-10 rounded-full bg-white border border-gray-200 flex items-center justify-center text-gray-600 hover:bg-[#f4fcf6] hover:text-[#3b8c2a] hover:border-[#3b8c2a] transition-all shadow-sm">
+          <button aria-label="Next articles" className="w-10 h-10 rounded-full bg-white border border-gray-200 flex items-center justify-center text-gray-600 hover:bg-[#f4fcf6] hover:text-[#3b8c2a] hover:border-[#3b8c2a] transition-all shadow-sm">
             <ChevronRight className="w-5 h-5" />
           </button>
         </div>
