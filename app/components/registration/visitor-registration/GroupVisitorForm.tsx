@@ -33,7 +33,7 @@ export default function GroupVisitorForm() {
   const [states, setStates] = useState<any[]>([]);
   const [cities, setCities] = useState<any[]>([]);
 
-  const defaultEventName = "9th Edition of International Health & Wellness Expo 2026";
+  const defaultEventName = "Organic Expo 2026";
   const [company, setCompany] = useState({ ...defaultCompany, registrationFor: defaultEventName });
   const [persons, setPersons] = useState<Person[]>(Array.from({ length: MIN_PERSONS }, emptyPerson));
 
