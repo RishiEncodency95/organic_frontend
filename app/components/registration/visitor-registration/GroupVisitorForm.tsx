@@ -467,7 +467,7 @@ export default function GroupVisitorForm() {
             </label>
           </div>
 
-          <div className="pt-4 border-t border-slate-100 mt-4">
+          <div className="pt-2 border-t border-slate-100 mt-2">
             <label className="flex items-center gap-3 cursor-pointer group w-fit">
               <input type="checkbox" name="subscribeNewsletter" checked={company.subscribeNewsletter} onChange={handleCompanyChange} className="w-4 h-4 text-[#4d7f1d] accent-[#4d7f1d] border-slate-300 rounded-sm" />
               <span className="text-[10px] font-bold text-slate-500">
@@ -476,7 +476,7 @@ export default function GroupVisitorForm() {
             </label>
           </div>
 
-          <div className="pt-6 mt-4 flex flex-col-reverse items-center justify-center gap-4">
+          <div className="pt-3 mt-2 flex flex-col-reverse items-center justify-center gap-2">
             <p className="text-[10px] text-slate-400 font-bold uppercase tracking-[0.2em] flex items-center gap-2">
               <ShieldCheck size={12} className="text-[#4d7f1d]" />
               Secure Registration Portal
