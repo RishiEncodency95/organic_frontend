@@ -1,6 +1,6 @@
 // @ts-nocheck
 "use client";
-import React, { useState, useEffect, useMemo, useRef } from "react";
+import React, { useState, useEffect, useMemo, useRef, Suspense } from "react";
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
@@ -2006,4 +2006,10 @@ const BookAStand = () => {
     );
 };
 
-export default BookAStand;
+export default function BookAStandPage() {
+    return (
+        <Suspense fallback={<div>Loading...</div>}>
+            <BookAStand />
+        </Suspense>
+    );
+}
