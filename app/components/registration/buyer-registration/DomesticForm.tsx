@@ -310,7 +310,7 @@ export default function DomesticBuyerForm() {
 
       <div>
         <div className={sectionTitleWrapperClasses}><h3 className={sectionTitleClasses}>1. Personal & Company Information</h3></div>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-x-3 gap-y-3">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-6 gap-x-3 gap-y-3">
           <div><label className={labelClasses}>Full Name *</label><input required name="fullName" value={formData.fullName} onChange={handleChange} placeholder="As per ID Proof" className={inputClasses} /></div>
           <div><label className={labelClasses}>Designation *</label><input required name="designation" value={formData.designation} onChange={handleChange} placeholder="Current Position" className={inputClasses} /></div>
           <div><label className={labelClasses}>Company Name *</label><input required name="companyName" value={formData.companyName} onChange={handleChange} placeholder="Full Registered Name" className={inputClasses} /></div>
@@ -332,13 +332,13 @@ export default function DomesticBuyerForm() {
 
       <div>
         <div className={sectionTitleWrapperClasses}><h3 className={sectionTitleClasses}>2. Contact Information</h3></div>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-x-3 gap-y-3">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-x-3 gap-y-3">
           <div className="space-y-1">
             <label className={labelClasses}>Mobile Number (10 digits) *</label>
-            <div className="flex gap-2 h-[34px]">
+            <div className="flex gap-2 h-7">
               <input required type="tel" name="mobileNumber" value={formData.mobileNumber} onChange={handleChange} placeholder="10-digit number" className={`${inputClasses} h-full`} disabled={otpVerified.mobile} />
               {!otpVerified.mobile && !otpSent.mobile && (
-                <button type="button" onClick={() => handleSimulateOtp('mobile')} className={`bg-[#23471d] text-white px-3 rounded-[2px] transition hover:bg-[#1a3516] h-full ${buttonTextClasses}`}>
+                <button type="button" onClick={() => handleSimulateOtp('mobile')} disabled={!formData.mobileNumber || isVerifying.mobile} className={`bg-[#4d7f1d] text-white px-3 rounded text-[10px] uppercase font-bold transition hover:bg-[#3b6315] h-full disabled:opacity-50`}>
                   {isVerifying.mobile ? <Loader2 className="animate-spin" size={14} /> : 'OTP'}
                 </button>
               )}
@@ -356,10 +356,10 @@ export default function DomesticBuyerForm() {
           <div><label className={labelClasses}>Alternate Number *</label><input required type="tel" name="alternateNumber" value={formData.alternateNumber} onChange={handleChange} placeholder="Alternate number" className={inputClasses} /></div>
           <div className="space-y-1">
             <label className={labelClasses}>Email Address (OTP) *</label>
-            <div className="flex gap-2 h-[34px]">
+            <div className="flex gap-2 h-7">
               <input required type="email" name="emailAddress" value={formData.emailAddress} onChange={handleChange} placeholder="Work Email" className={`${inputClasses} h-full`} disabled={otpVerified.email} />
               {!otpVerified.email && !otpSent.email && (
-                <button type="button" onClick={() => handleSimulateOtp('email')} className={`bg-[#23471d] text-white px-3 rounded-[2px] transition hover:bg-[#1a3516] h-full ${buttonTextClasses}`}>
+                <button type="button" onClick={() => handleSimulateOtp('email')} disabled={!formData.emailAddress || isVerifying.email} className={`bg-[#4d7f1d] text-white px-3 rounded text-[10px] uppercase font-bold transition hover:bg-[#3b6315] h-full disabled:opacity-50`}>
                   {isVerifying.email ? <Loader2 className="animate-spin" size={14} /> : 'OTP'}
                 </button>
               )}
@@ -375,10 +375,10 @@ export default function DomesticBuyerForm() {
             )}
           </div>
           <div><label className={labelClasses}>Website (Optional)</label><input type="url" name="website" value={formData.website} onChange={handleChange} placeholder="https://..." className={inputClasses} /></div>
+          <div><label className={labelClasses}>Registered Address *</label><input required name="registeredAddress" value={formData.registeredAddress} onChange={handleChange} placeholder="Full Corporate Address" className={inputClasses} /></div>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-x-3 gap-y-3 mt-4">
-          <div><label className={labelClasses}>Registered Address *</label><input required name="registeredAddress" value={formData.registeredAddress} onChange={handleChange} placeholder="Full Corporate Address" className={inputClasses} /></div>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-x-3 gap-y-3 mt-4">
           <div><label className={labelClasses}>State/Province *</label><input required name="stateProvince" value={formData.stateProvince} onChange={handleChange} placeholder="e.g. Maharashtra" className={inputClasses} /></div>
           <div><label className={labelClasses}>City *</label><input required name="city" value={formData.city} onChange={handleChange} placeholder="e.g. Mumbai" className={inputClasses} /></div>
           <div><label className={labelClasses}>Country *</label><input required name="country" value={formData.country} onChange={handleChange} placeholder="e.g. India" className={inputClasses} /></div>
@@ -402,7 +402,7 @@ export default function DomesticBuyerForm() {
 
       <div>
         <div className={sectionTitleWrapperClasses}><h3 className={sectionTitleClasses}>4. Sourcing & Buying Interests</h3></div>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-x-3 gap-y-3">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-6 gap-x-3 gap-y-3">
           <div><label className={labelClasses}>Primary Product Interest *</label><select required name="primaryProductInterest" value={formData.primaryProductInterest} onChange={handleChange} className={inputClasses}><option value="">Choose Interest</option>{mockConfig.primaryProductInterests.map((i: string) => <option key={i} value={i}>{i}</option>)}</select></div>
           <div className="space-y-1 z-40">
             <label className={labelClasses}>Secondary Product Categories</label>
@@ -475,7 +475,7 @@ export default function DomesticBuyerForm() {
           <div><label className={labelClasses}>Number of Meetings</label><select name="numberOfMeetingsInterested" value={formData.numberOfMeetingsInterested} onChange={handleChange} className={inputClasses}><option value="">Select Count</option><option value="3-5 Meetings">3-5 Meetings</option><option value="5-10 Meetings">5-10 Meetings</option></select></div>
           <div className="md:col-span-2 lg:col-span-2">
             <label className={labelClasses}>Specific Meeting Requirements</label>
-            <textarea name="meetingRequirements" value={formData.meetingRequirements} onChange={handleChange} placeholder="Mention specific expectations..." className={`${inputClasses} h-auto py-2 resize-none`} rows={2}></textarea>
+            <textarea name="meetingRequirements" value={formData.meetingRequirements} onChange={handleChange} placeholder="Mention specific expectations..." className={`${inputClasses} h-auto py-2 resize-none`} rows={1}></textarea>
           </div>
         </div>
       </div>
