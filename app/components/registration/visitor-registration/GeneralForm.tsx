@@ -212,9 +212,10 @@ export default function GeneralForm() {
     setLoading(false);
   };
 
-  const inputClasses = "w-full h-[34px] px-3 py-1.5 rounded-[2px] border border-slate-400 bg-white text-left text-[12px] font-medium text-slate-900 outline-none transition-all focus:border-[#4d7f1d] focus:ring-1 focus:ring-[#4d7f1d]/20 placeholder:text-slate-400 font-inter";
-  const labelClasses = "text-[12px] font-semibold text-slate-900 mb-1 block text-left font-inter";
-  const sectionTitleClasses = "text-[14px] font-bold text-[#4d7f1d] pb-2 border-b border-[#4d7f1d]/20 flex items-center gap-2 mb-4 uppercase tracking-wide font-poppins mt-8";
+  const inputClasses = "rounded border border-slate-400 h-7 focus:border-[#23471d] focus:ring-[#23471d]/10 transition-all text-[12px] bg-white placeholder:text-slate-400 text-slate-900 font-normal shadow-none outline-none px-3 w-full text-left";
+  const labelClasses = "text-[11px] font-medium uppercase text-slate-800 mb-1 block text-left";
+  const sectionTitleClasses = "text-[12px] font-medium text-[#4d7f1d] uppercase tracking-[0.05em]";
+  const sectionTitleWrapperClasses = "pb-1 border-b border-slate-500 mb-3 mt-6 flex justify-between items-end";
   const buttonTextClasses = "text-[12px] font-bold uppercase tracking-wider font-inter";
 
   if (submitted) {
@@ -244,13 +245,13 @@ export default function GeneralForm() {
       </div>
 
       <div>
-        <div className="flex flex-col sm:flex-row sm:items-center justify-between border-b border-[#4d7f1d]/20 pb-1.5 mb-4 gap-2 mt-8">
-          <h3 className="text-[14px] font-bold text-[#4d7f1d] uppercase tracking-wide font-poppins">
+        <div className={sectionTitleWrapperClasses}>
+          <h3 className={sectionTitleClasses}>
             Personal Information
           </h3>
           <span className="text-[10px] font-bold bg-[#4d7f1d]/10 text-[#4d7f1d] px-2 py-1 rounded tracking-widest uppercase w-fit">Step 1 of 2</span>
         </div>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-x-3 gap-y-3">
           <div><label className={labelClasses}>First Name *</label><input required name="firstName" value={formData.firstName} onChange={handleChange} className={inputClasses} placeholder="Enter First Name" /></div>
           <div><label className={labelClasses}>Last Name *</label><input required name="lastName" value={formData.lastName} onChange={handleChange} className={inputClasses} placeholder="Enter Last Name" /></div>
           <div><label className={labelClasses}>Gender *</label><select required name="gender" value={formData.gender} onChange={handleChange} className={inputClasses}><option value="">Select</option><option value="Male">Male</option><option value="Female">Female</option><option value="Other">Other</option></select></div>
@@ -303,13 +304,13 @@ export default function GeneralForm() {
       </div>
 
       <div>
-        <div className="flex flex-col sm:flex-row sm:items-center justify-between border-b border-[#4d7f1d]/20 pb-1.5 mb-4 gap-2 mt-8">
-          <h3 className="text-[14px] font-bold text-[#4d7f1d] uppercase tracking-wide font-poppins">
+        <div className={sectionTitleWrapperClasses}>
+          <h3 className={sectionTitleClasses}>
             Additional Details
           </h3>
           <span className="text-[10px] font-bold bg-[#4d7f1d]/10 text-[#4d7f1d] px-2 py-1 rounded tracking-widest uppercase w-fit">Step 2 of 2</span>
         </div>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-x-3 gap-y-3">
           <div>
             <label className={labelClasses}>Country *</label>
             <select required name="country" value={formData.country} onChange={handleChange} className={inputClasses}>
@@ -333,10 +334,10 @@ export default function GeneralForm() {
           </div>
           <div><label className={labelClasses}>Pincode / Zip Code</label><input name="companyPincode" value={formData.companyPincode} onChange={handleChange} className={inputClasses} placeholder="Enter Pincode" /></div>
           <div className="md:col-span-2 lg:col-span-4 mt-4">
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-              <div className="space-y-4 bg-white p-5 border border-slate-200 rounded-sm shadow-sm">
-                <label className="text-[11px] font-bold text-[#4d7f1d] uppercase tracking-wider block border-b border-slate-200 pb-2">Purpose of Visit <span className=" text-red-500">*</span></label>
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-1">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-x-3 gap-y-3 mt-6">
+              <div className="space-y-3 bg-white p-4 border border-slate-200 rounded-sm shadow-sm">
+                <label className="text-[11px] font-medium uppercase text-[#d26019] tracking-[0.05em] block border-b border-slate-200 pb-1">Purpose of Visit <span className="text-red-500">*</span></label>
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 pt-1">
                   {PURPOSE_GENERAL.map(option => (
                     <label key={option} className="flex items-start gap-2 cursor-pointer group">
                       <input
@@ -356,9 +357,9 @@ export default function GeneralForm() {
                 </div>
               </div>
 
-              <div className="space-y-4 bg-white p-5 border border-slate-200 rounded-sm shadow-sm">
-                <label className="text-[11px] font-bold text-[#4d7f1d] uppercase tracking-wider block border-b border-slate-200 pb-2">Area of Interest <span className=" text-red-500">*</span></label>
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-1">
+              <div className="space-y-3 bg-white p-4 border border-slate-200 rounded-sm shadow-sm">
+                <label className="text-[11px] font-medium uppercase text-[#d26019] tracking-[0.05em] block border-b border-slate-200 pb-1">Area of Interest <span className=" text-red-500">*</span></label>
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 pt-1">
                   {INTEREST_GENERAL.map(option => (
                     <label key={option} className="flex items-start gap-2 cursor-pointer group">
                       <input
@@ -389,7 +390,7 @@ export default function GeneralForm() {
         </label>
       </div>
 
-      <div className="pt-6 mt-4 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+      <div className="pt-6 mt-4 flex flex-col-reverse items-center justify-center gap-4">
         <p className="text-[10px] text-slate-400 font-bold uppercase tracking-[0.2em] flex items-center gap-2">
           <ShieldCheck size={12} className="text-[#4d7f1d]" />
           Secure Registration Portal
