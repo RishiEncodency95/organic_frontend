@@ -1,18 +1,13 @@
-"use client";
-
 import React from "react";
-import {
-  Leaf,
-  ClipboardList,
-  ClipboardCheck,
-  Users,
-  Award,
-  UserCheck,
-  Trophy,
-  ArrowRight,
-} from "lucide-react";
+import { Leaf, ArrowRight } from "lucide-react";
+import Image from "next/image";
 import { Reveal } from "../shared/Reveal";
 import SectionContainer from "@/app/components/layout/SectionContainer";
+import nominationImg from "@/app/assets/awards/nomination.png";
+import eligibilityImg from "@/app/assets/awards/eligibility.png";
+import evaluationImg from "@/app/assets/awards/evaluation-jury.png";
+import shortlistingImg from "@/app/assets/awards/shortlisting.png";
+import recognitionImg from "@/app/assets/awards/recognition.png";
 
 function SectionHeading({ children }: { children: React.ReactNode }) {
   return (
@@ -28,38 +23,32 @@ function SectionHeading({ children }: { children: React.ReactNode }) {
 
 const PROCESS_STEPS = [
   {
-    icon: ClipboardList,
-    num: "01",
+    image: nominationImg,
     title: "Nomination",
     desc: "Submit your nomination online in the relevant category.",
   },
   {
-    icon: ClipboardCheck,
-    num: "02",
+    image: eligibilityImg,
     title: "Eligibility Check",
     desc: "Our team verifies eligibility and supporting documents.",
   },
   {
-    icon: Users,
-    num: "03",
+    image: evaluationImg,
     title: "Evaluation",
     desc: "Nominations are evaluated by our expert jury panel based on defined criteria.",
   },
   {
-    icon: Award,
-    num: "04",
+    image: shortlistingImg,
     title: "Shortlisting",
     desc: "Top nominees are shortlisted in each category.",
   },
   {
-    icon: UserCheck,
-    num: "05",
+    image: evaluationImg,
     title: "Jury Assessment",
     desc: "Final assessment by the jury to select the award winners.",
   },
   {
-    icon: Trophy,
-    num: "06",
+    image: recognitionImg,
     title: "Recognition",
     desc: "Winners are honoured at the Bharat Organic Expo 2027.",
   },
@@ -67,33 +56,39 @@ const PROCESS_STEPS = [
 
 const AwardsProcess = () => {
   return (
-    <section className="bg-[#f9f9f9] py-8 md:py-12 font-inter">
+    <section className="bg-[#f9f9f9] py-4 font-inter">
       <SectionContainer>
         <SectionHeading>Our Evaluation Process</SectionHeading>
 
-        <div className="mt-6 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-6">
+        <div className="mt-8 flex flex-col gap-6 md:flex-row md:items-start md:justify-center">
           {PROCESS_STEPS.map((step, i) => {
-            const Icon = step.icon;
             return (
-              <Reveal key={step.num} delay={i * 90} className="relative h-full">
-                <div
-                  className="group flex flex-col items-center text-center bg-white p-4 rounded-xl hover:shadow-md transition-shadow h-full"
-                  style={{ boxShadow: "rgba(0, 0, 0, 0.02) 0px 1px 3px 0px, rgba(27, 31, 35, 0.15) 0px 0px 0px 1px" }}
-                >
-                  <span className="relative flex h-10 w-10 items-center justify-center rounded-lg bg-[#1b5e20] text-white shadow-sm transition-transform duration-300 group-hover:scale-105 mb-2">
-                    <Icon className="h-5 w-5" />
-                    <span className="absolute -top-1.5 -right-1.5 flex h-4.5 w-4.5 items-center justify-center rounded-full bg-[#ea580c] text-[9px] font-bold text-white">
-                      {step.num}
+              <React.Fragment key={step.title}>
+                <Reveal delay={i * 90} className="relative w-full md:w-[140px]">
+                  <div className="group flex flex-col items-center text-center h-full">
+                    <span className="relative flex h-16 w-16 items-center justify-center rounded-lg mb-3">
+                      <Image
+                        src={step.image}
+                        alt={step.title}
+                        width={40}
+                        height={40}
+                        className="h-12 w-12 object-contain transition-transform duration-300 group-hover:scale-105"
+                      />
                     </span>
-                  </span>
-                  <h3 className="text-xs sm:text-sm font-semibold text-[#1b5e20] uppercase font-poppins leading-tight mb-1.5">
-                    {step.title}
-                  </h3>
-                  <p className="text-[10px] sm:text-xs text-gray-900 font-medium leading-relaxed">
-                    {step.desc}
-                  </p>
-                </div>
-              </Reveal>
+                    <h3 className="text-xs sm:text-sm font-semibold text-[#1b5e20] uppercase font-poppins leading-tight mb-1.5">
+                      {step.title}
+                    </h3>
+                    <p className="text-[10px] sm:text-xs text-gray-900 font-medium leading-relaxed">
+                      {step.desc}
+                    </p>
+                  </div>
+                </Reveal>
+                {i < PROCESS_STEPS.length - 1 && (
+                  <div className="hidden md:flex items-center justify-center pt-5 px-2">
+                    <ArrowRight className="h-6 w-6 text-[#1b5e20]/30" />
+                  </div>
+                )}
+              </React.Fragment>
             );
           })}
         </div>
