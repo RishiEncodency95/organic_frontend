@@ -43,20 +43,29 @@ const AudienceStrip = () => {
   ];
 
   return (
-    <div className="bg-[#3B8D2A] w-full py-1.5 md:py-3 border-t border-b border-white/10 shadow-inner overflow-x-auto hide-scrollbar font-inter">
+    <div
+      className="w-full py-2.5 md:py-3.5 border-t border-b border-white/10 shadow-md overflow-x-auto hide-scrollbar font-poppins"
+      style={{ backgroundColor: "#1b5e20" }}
+    >
       <SectionContainer>
         <div className="flex items-center justify-between min-w-[1000px]">
           {items.map((item, index) => (
             <React.Fragment key={index}>
-              <div className="flex items-center gap-2 md:gap-3 group cursor-pointer hover:scale-105 transition-transform duration-300">
-                <div className="w-6 h-6 md:w-8 md:h-8 bg-white rounded-full flex items-center justify-center shadow-lg group-hover:shadow-xl transition-shadow">
-                  <item.icon className={`w-3.5 h-3.5 md:w-6 md:h-6 ${item.color}`} />
+              <div className="flex items-center gap-2.5 md:gap-3.5 group cursor-pointer hover:scale-105 transition-transform duration-300">
+                <div className="w-7 h-7 md:w-9 md:h-9 bg-white/10 backdrop-blur-sm border border-white/20 rounded-full flex items-center justify-center shadow-md group-hover:bg-white transition-all duration-300">
+                  <item.icon className="w-4 h-4 md:w-5 md:h-5 text-[#facc15] group-hover:text-[#1b5e20] transition-colors" />
                 </div>
                 <div className="flex flex-col">
-                  <span className="text-white font-bold text-[12px] md:text-[14px] leading-[1.1] tracking-wider uppercase">
+                  <span
+                    className="text-white font-semibold text-[12px] md:text-[14px] leading-[1.15] tracking-wide uppercase font-poppins"
+                    style={{ textShadow: "1px 1px 2px rgba(0,0,0,0.4)" }}
+                  >
                     {item.title}
                   </span>
-                  <span className="text-slate-300 font-medium text-[12px] md:text-[14px] leading-[1.1] tracking-wide uppercase mt-1" >
+                  <span
+                    className="text-[#facc15] font-semibold text-[11px] md:text-[13px] leading-[1.15] tracking-wider uppercase mt-0.5 font-poppins"
+                    style={{ textShadow: "1px 1px 2px rgba(0,0,0,0.3)" }}
+                  >
                     {item.subtitle}
                   </span>
                 </div>
@@ -64,12 +73,13 @@ const AudienceStrip = () => {
 
               {/* Separator Line */}
               {index < items.length - 1 && (
-                <div className="w-px h-6 bg-white/20 mx-2 md:mx-3" />
+                <div className="w-px h-7 bg-white/20 mx-2 md:mx-3" />
               )}
             </React.Fragment>
           ))}
         </div>
       </SectionContainer>
+
       <style>{`
         .hide-scrollbar::-webkit-scrollbar {
           display: none;
