@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
 import {
@@ -141,8 +142,12 @@ const Navbar = () => {
                         <div className="relative z-[150] h-full flex items-center gap-2">
                             <div className="relative h-full flex items-center min-w-[140px] xl:min-w-[180px] mr-4">
                                 <Link href="/" className="absolute top-1 xl:top-1 left-0 flex items-center justify-center transition-opacity hover:opacity-90 z-[200]">
-                                    <img loading="lazy" decoding="async" src={navbarLogo.src}
+                                    <Image
+                                        src={navbarLogo}
                                         alt="Organic Expo Logo"
+                                        width={200}
+                                        height={105}
+                                        priority
                                         className="h-[80px] xl:h-[105px] w-auto object-contain drop-shadow-md"
                                     />
                                 </Link>
@@ -235,8 +240,12 @@ const Navbar = () => {
                     <div className="flex xl:hidden items-center justify-between h-[60px] relative">
                         <div className="relative z-[150] h-full flex items-center min-w-[110px]">
                             <Link href="/" className="absolute top-1 left-0 flex items-center justify-center transition-opacity active:opacity-75 z-[200]">
-                                <img loading="lazy" decoding="async" src={navbarLogo.src}
+                                <Image
+                                    src={navbarLogo}
                                     alt="Organic Expo Logo"
+                                    width={140}
+                                    height={70}
+                                    priority
                                     className="h-[70px] w-auto object-contain drop-shadow-sm"
                                 />
                             </Link>

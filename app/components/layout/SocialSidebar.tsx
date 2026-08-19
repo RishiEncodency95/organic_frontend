@@ -313,7 +313,7 @@ const SocialSidebar = () => {
         }
       `}</style>
 
-      <div className="flex flex-col gap-2 fixed right-2 top-[45%] lg:top-1/2 -translate-y-1/2 z-50">
+      <div className="hidden sm:flex flex-col gap-2 fixed right-2 top-[45%] lg:top-1/2 -translate-y-1/2 z-50">
         {socialData.map((social, index) => {
           const Icon = social.icon;
 

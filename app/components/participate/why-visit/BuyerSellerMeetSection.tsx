@@ -16,7 +16,7 @@ import {
   Sparkles,
 } from "lucide-react";
 
-import vb2bbg from "@/app/assets/banner/vb2bbg.png";
+import vb2bbg from "@/app/assets/banner/vb2bbg.webp";
 import b1og from "@/app/assets/icons/b1og.png";
 import b2og from "@/app/assets/icons/b2og.png";
 import b3og from "@/app/assets/icons/b3og.png";

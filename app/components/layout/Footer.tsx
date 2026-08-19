@@ -2,6 +2,7 @@
 
 import React from "react";
 import Link from "next/link";
+import Image from "next/image";
 import footerLogo from "../../assets/logos/footerlogo.png";
 import footerBottomImg from "../../assets/logos/footerimg.png";
 import namoLogo from "../../assets/logos/namo1.png";
@@ -103,7 +104,7 @@ export default function Footer() {
       <div className="container mx-auto max-w-[1536px] relative z-10 flex flex-col lg:flex-row">
 
         {/* Column 1: Cream Area Content */}
-        <div className="w-full lg:w-[28%] bg-[#F1DEC4] lg:bg-transparent rounded-br-[80px] lg:rounded-none px-6 pt-4 pb-6 text-gray-900 flex flex-col items-center text-center font-inter relative">
+        <div className="w-full lg:w-[28%] bg-[#F1DEC4] lg:bg-transparent rounded-b-3xl lg:rounded-none px-6 pt-6 pb-6 text-gray-900 flex flex-col items-center text-center font-inter relative mb-4 lg:mb-0">
           
           {/* Logo with Sparkles */}
           <div className="relative inline-block w-48 md:w-56 mb-4">
@@ -113,10 +114,10 @@ export default function Footer() {
             <Sparkle color="#d68523" style={{ bottom: '10px', left: '5%', animationDelay: '0.2s' }} />
             <Sparkle color="#d68523" style={{ bottom: '-10px', right: '20%', animationDelay: '0.6s' }} />
             
-            <img src={footerLogo.src} alt="Bharat Organic Expo" className="w-full h-auto object-contain" style={{ filter: "drop-shadow(0 0 1px rgba(255,255,255,0.6))" }} />
+            <Image src={footerLogo} alt="Bharat Organic Expo" width={224} height={90} className="w-full h-auto object-contain" style={{ filter: "drop-shadow(0 0 1px rgba(255,255,255,0.6))" }} />
           </div>
 
-          <p className="text-[14px] font-semibold leading-relaxed max-w-[340px] text-black text-center mx-auto">
+          <p className="text-[13.5px] sm:text-[14px] font-semibold leading-relaxed max-w-[340px] text-black text-center mx-auto">
             A global platform uniting over <span className="font-extrabold text-[#4B1426]">500+ exhibitors</span><br />
             from across the organic value chain, showcasing<br />
             certified products, advanced agritech,<br />
@@ -124,20 +125,20 @@ export default function Footer() {
             traditional wellness. Discover organic living<br />
             with conferences and B2B opportunities.
           </p>
-          <img src={foot2ogImg.src} alt="Decoration" className="w-full max-w-[320px] h-auto object-contain relative top-2 -mb-14 pointer-events-none" />
+          <Image src={foot2ogImg} alt="Decoration" width={320} height={120} quality={70} className="hidden lg:block w-full max-w-[320px] h-auto object-contain relative top-2 -mb-14 pointer-events-none" />
         </div>
 
         {/* Right Area (Dark Green) */}
-        <div className="w-full lg:w-[72%] grid grid-cols-1 md:grid-cols-2 lg:grid-cols-[auto_1fr_1.1fr_1fr] gap-x-6 gap-y-8 px-6 pt-4 pb-6 font-inter">
+        <div className="w-full lg:w-[72%] grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-[auto_1fr_1.1fr_1fr] gap-x-6 gap-y-8 px-4 sm:px-6 pt-4 pb-6 font-inter">
 
           {/* Quick Links */}
           <div className="lg:border-r lg:border-white/10 lg:pr-8">
-            <h4 className="font-poppins font-semibold text-[#F3B71B] uppercase text-[13px] tracking-wider mb-1 ml-3">
+            <h4 className="font-poppins font-semibold text-[#F3B71B] uppercase text-[13px] tracking-wider mb-1 ml-1 sm:ml-3">
               QUICK LINKS
             </h4>
             <img src={uuogImg.src} alt="divider" className="h-3.5 w-auto -mt-1.5 mb-2.5 object-contain" />
 
-            <ul className="space-y-1.5 text-[14px] text-gray-200 font-medium">
+            <ul className="grid grid-cols-2 sm:grid-cols-1 lg:grid-cols-1 gap-x-3 gap-y-2 text-[13px] sm:text-[14px] text-gray-200 font-medium">
               {quickLinks.map((link, i) => (
                 <li key={i}>
                   <Link
@@ -147,7 +148,7 @@ export default function Footer() {
                     className="hover:text-white transition-colors flex items-center gap-1.5 group font-inter"
                   >
                     <ChevronRight size={14} className="text-[#F3B71B] group-hover:translate-x-1 transition-transform shrink-0" />
-                    {link.name}
+                    <span className="truncate">{link.name}</span>
                   </Link>
                 </li>
               ))}
@@ -178,12 +179,12 @@ export default function Footer() {
 
           {/* Get In Touch */}
           <div className="lg:border-r lg:border-white/10 lg:pr-4">
-            <h4 className="font-poppins font-semibold text-[#F3B71B] uppercase text-[13px] tracking-wider mb-1 ml-3">
+            <h4 className="font-poppins font-semibold text-[#F3B71B] uppercase text-[13px] tracking-wider mb-1 ml-1 sm:ml-3">
               GET IN TOUCH
             </h4>
             <img src={uuogImg.src} alt="divider" className="h-3.5 w-auto -mt-1.5 mb-2.5 object-contain" />
 
-            <div className="text-[12px] text-gray-200 font-medium space-y-1.5 mb-4 whitespace-nowrap">
+            <div className="text-[12px] text-gray-200 font-medium space-y-1.5 mb-4 break-all md:whitespace-nowrap">
               <p>
                 <span className="text-gray-400 font-medium">Phone:</span>{" "}
                 <a href="tel:+919654900525" className="hover:text-[#F3B71B] transition-colors">
@@ -230,8 +231,8 @@ export default function Footer() {
           </div>
 
           {/* Organised By & Connect */}
-          <div className="flex flex-col">
-            <h4 className="font-poppins font-semibold text-[#F3B71B] uppercase text-[13px] tracking-wider mb-1 ml-3">
+          <div className="flex flex-col items-center sm:items-start text-center sm:text-left">
+            <h4 className="font-poppins font-semibold text-[#F3B71B] uppercase text-[13px] tracking-wider mb-1">
               Organised by:
             </h4>
 
@@ -242,18 +243,20 @@ export default function Footer() {
               <Sparkle color="#FFFFFF" style={{ top: '-10px', right: '15%', animationDelay: '0.8s' }} />
               <Sparkle color="#FFFFFF" style={{ bottom: '4px', left: '5%', animationDelay: '0.2s' }} />
               <Sparkle color="#FFFFFF" style={{ bottom: '-8px', right: '10%', animationDelay: '0.6s' }} />
-              <img src={namoLogo.src} alt="Namo Gange Wellness" className="w-full h-auto object-contain" />
+              <Image src={namoLogo} alt="Namo Gange Wellness" width={176} height={60} className="w-full h-auto object-contain mx-auto sm:mx-0" />
             </div>
 
-            <p className="text-gray-200 text-[11px] mb-3 leading-relaxed font-medium">
-              Your conference companion for<br/>agenda, updates and networking.
+            <p className="text-gray-200 text-[11.5px] mb-3 leading-relaxed font-medium max-w-[280px]">
+              Your conference companion for agenda, updates and networking.
             </p>
 
             {/* Nature's Bounty Image */}
-            <img src={footogImg.src} alt="Nature's Bounty" className="w-full h-24 object-cover rounded-lg mb-4" />
+            <div className="w-full max-w-[280px] sm:max-w-none overflow-hidden rounded-xl border border-white/10 shadow-md mb-4">
+              <Image src={footogImg} alt="Nature's Bounty" width={300} height={96} quality={75} className="w-full h-24 object-cover" />
+            </div>
 
             <h5 className="font-poppins font-semibold text-[#F3B71B] uppercase mb-2 text-[12px] tracking-wider">CONNECT WITH US</h5>
-            <div className="flex gap-2">
+            <div className="flex items-center justify-center sm:justify-start gap-2.5">
               {[
                 { Icon: Facebook, label: "Facebook" },
                 { Icon: Twitter, label: "Twitter" },
@@ -261,8 +264,8 @@ export default function Footer() {
                 { Icon: Instagram, label: "Instagram" },
                 { Icon: Youtube, label: "YouTube" }
               ].map(({ Icon, label }, idx) => (
-                <a key={idx} href="#" aria-label={label} className="w-7 h-7 rounded-md flex items-center justify-center text-white hover:text-[#F3B71B] transition-colors">
-                  <Icon size={14} />
+                <a key={idx} href="#" aria-label={label} className="w-8 h-8 rounded-lg bg-white/5 border border-white/10 flex items-center justify-center text-[#f3b71b] hover:bg-[#f3b71b] hover:text-[#001810] transition-all duration-300 shadow-sm">
+                  <Icon size={15} />
                 </a>
               ))}
             </div>
@@ -272,8 +275,8 @@ export default function Footer() {
       </div>
 
       {/* Bottom Legal Bar */}
-      <div className="border-t border-white/20 py-2.5 bg-[#00100a] relative z-20 font-inter">
-        <div className="container mx-auto max-w-[1536px] px-4 md:px-8 xl:px-12 flex flex-col lg:flex-row items-center justify-between gap-4 text-[12px] text-gray-300 font-medium">
+      <div className="border-t border-white/20 py-3 pb-16 md:pb-3 bg-[#00100a] relative z-20 font-inter">
+        <div className="container mx-auto max-w-[1536px] px-4 md:px-8 xl:px-12 flex flex-col sm:flex-row flex-wrap items-center justify-between gap-3 text-[11px] sm:text-[12px] text-gray-300 font-medium text-center sm:text-left">
           
           <div className="flex items-center gap-3">
             <span className="text-white font-normal tracking-wide">Bharat Organic Expo</span>

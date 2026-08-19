@@ -17,7 +17,7 @@ import {
   Globe,
 } from "lucide-react";
 
-import award2 from "@/app/assets/banner/award2.png";
+import award2 from "@/app/assets/banner/award2.webp";
 import hosog from "@/app/assets/banner/hosog.png";
 import SectionContainer from "@/app/components/layout/SectionContainer";
 

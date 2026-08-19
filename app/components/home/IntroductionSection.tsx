@@ -1,6 +1,7 @@
 "use client";
 import introImg from "../../assets/home/homeIntro.png";
 import leafog from "@/app/assets/icons/leafs.png";
+import Image from "next/image";
 
 
 import { motion, useInView, animate } from "framer-motion";
@@ -89,8 +90,8 @@ const IntroductionSection = () => {
       <div className="absolute top-0 right-0 w-[600px] h-[600px] bg-[#3b8c2a]/5 rounded-full blur-[100px] -z-10 translate-x-1/3 -translate-y-1/4"></div>
       <div className="absolute bottom-0 left-0 w-[400px] h-[400px] bg-[#3b6fd4]/5 rounded-full blur-[80px] -z-10 -translate-x-1/4 translate-y-1/4"></div>
 
-      <div className="w-full px-6 lg:px-11 relative z-10">
-        <div className="flex flex-col lg:flex-row gap-2 lg:gap-6 items-center mb-2">
+      <div className="w-full px-4 sm:px-6 lg:px-11 relative z-10">
+        <div className="flex flex-col lg:flex-row gap-6 items-center mb-2">
 
           {/* LEFT: Content */}
           <motion.div
@@ -101,15 +102,15 @@ const IntroductionSection = () => {
             className="w-full lg:w-[60%]"
           >
             {/* Introduction Badge */}
-            <div className="inline-flex items-center gap-2 px-4 py-1 rounded-full bg-gradient-to-r from-[#3b8c2a]/10 to-[#F2B40E]/10 border border-[#3b8c2a]/20 shadow-[0_4px_15px_rgba(59,140,42,0.06)] mb-2 transform hover:scale-105 transition-transform duration-300">
+            <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-gradient-to-r from-[#3b8c2a]/10 to-[#F2B40E]/10 border border-[#3b8c2a]/20 shadow-[0_4px_15px_rgba(59,140,42,0.06)] mb-2 transform hover:scale-105 transition-transform duration-300">
               <span className="w-2 h-2 rounded-full bg-[#F2B40E] animate-pulse"></span>
-              <span className="text-[11px] md:text-[14px] font-semibold uppercase tracking-[0.25em] text-[#1a6b3a]">
+              <span className="text-[11px] md:text-[14px] font-semibold uppercase tracking-[0.2em] md:tracking-[0.25em] text-[#1a6b3a]">
                 INTRODUCTION
               </span>
             </div>
 
             {/* Title */}
-            <h2 className="text-[28px] md:text-[32px] lg:text-[36px] font-semibold font-poppins text-slate-900 leading-[1.3] md:leading-[1.4] mb-4 tracking-tight">
+            <h2 className="text-[24px] sm:text-[28px] md:text-[32px] lg:text-[36px] font-semibold font-poppins text-slate-900 leading-[1.3] md:leading-[1.4] mb-4 tracking-tight">
               WELCOME TO{" "}
               <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#3b8c2a] to-[#1a6b3a] relative inline-block">
                 BHARAT ORGANIC EXPO{" "}
@@ -117,27 +118,29 @@ const IntroductionSection = () => {
                 <svg className="absolute w-full h-3 -bottom-1 left-0 text-[#F2B40E]/40" viewBox="0 0 100 10" preserveAspectRatio="none"><path d="M0 5 Q 50 10 100 5" stroke="currentColor" strokeWidth="4" fill="transparent" /></svg>
               </span>
               {" "}
-              <span className="text-[15px] md:text-[18px] font-medium text-black mt-4 block tracking-normal">
-                {/* A Global Platform for Organic & Sustainable Living */}
+              <span className="text-[14px] sm:text-[15px] md:text-[18px] font-medium text-black mt-2 sm:mt-4 block tracking-normal">
                 India's Premier Platform for Organic Products, Sustainable Agriculture & Natural Living
               </span>
             </h2>
 
-            <div className="mb-4 space-y-4">
-              <p className="text-[15px] md:text-[16px] leading-[1.7] text-slate-700 font-medium border-l-4 border-[#F2B40E] pl-5 bg-gradient-to-r from-[#F2B40E]/5 to-transparent py-4 rounded-r-xl shadow-sm">
+            <div className="mb-4 space-y-3 sm:space-y-4">
+              <p className="text-[14px] sm:text-[15px] md:text-[16px] leading-[1.7] text-slate-700 font-medium border-l-4 border-[#F2B40E] pl-3.5 sm:pl-5 bg-gradient-to-r from-[#F2B40E]/5 to-transparent py-3 sm:py-4 rounded-r-xl shadow-sm">
                 <strong className="text-[#1a6b3a] font-bold">Bharat Organic Expo 2027</strong>{" "}
                 is India's leading international exhibition dedicated to organic products, sustainable agriculture, natural wellness, eco-friendly innovations, and green business opportunities. The Expo brings together manufacturers, exhibitors, buyers, importers, exporters, investors, government organizations, industry experts, startups, researchers, and global delegates under one dynamic platform.
               </p>
-              <p className="text-[14px] md:text-[16px] leading-[1.7] text-slate-600">
+              <p className="text-[13.5px] sm:text-[14px] md:text-[16px] leading-[1.7] text-slate-600">
                 Designed to foster business growth, knowledge sharing, innovation, and international collaboration, Bharat Organic Expo serves as the perfect destination for discovering new products, building strategic partnerships, expanding global markets, and promoting a sustainable future.
               </p>
             </div>
 
-            {/* Action Buttons (Optional) */}
-            <div className="flex items-center gap-4 ">
-              <button className="px-6 py-2 bg-[#3b8c2a] border-2 border-[#F2B40E] hover:bg-[#F2B40E] hover:text-[#0b2912] text-white text-[12px] font-bold uppercase tracking-wider rounded-full shadow-[0_10px_20px_rgba(59,140,42,0.2)] hover:shadow-[0_15px_30px_rgba(59,140,42,0.3)] hover:-translate-y-0.5 transition-all duration-300">
+            {/* Action Buttons */}
+            <div className="flex items-center gap-4 pt-1">
+              <a
+                href="/about"
+                className="w-full sm:w-auto text-center px-6 py-2.5 bg-[#3b8c2a] border-2 border-[#F2B40E] hover:bg-[#F2B40E] hover:text-[#0b2912] text-white text-[12px] font-bold uppercase tracking-wider rounded-full shadow-[0_10px_20px_rgba(59,140,42,0.2)] hover:shadow-[0_15px_30px_rgba(59,140,42,0.3)] transition-all duration-300"
+              >
                 Explore Exhibition
-              </button>
+              </a>
             </div>
           </motion.div>
 
@@ -147,29 +150,29 @@ const IntroductionSection = () => {
             whileInView={{ opacity: 1, scale: 1 }}
             viewport={{ once: true }}
             transition={{ duration: 1, ease: "easeOut" }}
-            className="w-full lg:w-[40%] flex flex-col items-center gap-2 relative mt-2 lg:mt-0"
+            className="w-full lg:w-[40%] flex flex-col items-center gap-4 relative mt-4 lg:mt-0"
           >
-            {/* Highly Highlighted White Countdown Timer (Top Center) */}
-            <div className="w-fit self-center bg-white rounded-xl p-1.5 sm:p-2 shadow-[0_15px_40px_rgba(59,140,42,0.25)] border-2 border-[#3b8c2a] flex flex-col items-center justify-center transform hover:-translate-y-1 transition-all duration-500 group relative z-20 overflow-hidden">
+            {/* Highly Highlighted White Countdown Timer */}
+            <div className="w-full sm:w-fit self-center bg-white rounded-xl p-2 sm:p-2.5 shadow-[0_15px_40px_rgba(59,140,42,0.25)] border-2 border-[#3b8c2a] flex flex-col items-center justify-center transform hover:-translate-y-1 transition-all duration-500 group relative z-20 overflow-hidden">
               {/* Soft decorative glow inside the card */}
               <div className="absolute top-0 right-0 w-32 h-32 bg-[#F2B40E] opacity-10 blur-2xl rounded-full"></div>
               <div className="absolute bottom-0 left-0 w-32 h-32 bg-[#3b8c2a] opacity-10 blur-2xl rounded-full"></div>
 
-              <div className="text-[#3b8c2a] text-[9px] md:text-[14px] font-semibold tracking-[0.25em] uppercase mb-1 flex items-center justify-center gap-1.5 w-full relative z-10 drop-shadow-sm">
+              <div className="text-[#3b8c2a] text-[10px] md:text-[14px] font-semibold tracking-[0.2em] md:tracking-[0.25em] uppercase mb-1.5 flex items-center justify-center gap-1.5 w-full relative z-10 drop-shadow-sm">
                 <span className="w-1.5 h-1.5 rounded-full bg-[#F2B40E] animate-pulse"></span>
                 EVENT BEGINS IN
                 <span className="w-1.5 h-1.5 rounded-full bg-[#F2B40E] animate-pulse"></span>
               </div>
 
-              <div className="flex justify-center gap-4 sm:gap-2 w-full relative z-10">
+              <div className="flex justify-center gap-1.5 sm:gap-2.5 w-full relative z-10">
                 {['DAYS', 'HOURS', 'MINS', 'SECS'].map((label, idx) => {
                   const value = idx === 0 ? timeLeft.days : idx === 1 ? timeLeft.hours : idx === 2 ? timeLeft.mins : timeLeft.secs;
                   return (
-                    <div key={label} className="bg-gradient-to-b from-[#f6fbf7] to-white border border-[#3b8c2a]/30 rounded-lg px-2 py-0.5 sm:px-3 sm:py-1 min-w-[60px] sm:min-w-[65px] flex flex-col items-center justify-center shadow-inner group-hover:border-[#F2B40E] group-hover:shadow-[0_4px_15px_rgba(242,180,14,0.2)] transition-all duration-300">
-                      <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#1a6b3a] to-[#3b8c2a] text-xl sm:text-xl font-semibold leading-none tracking-tighter drop-shadow-[0_2px_2px_rgba(0,0,0,0.1)]">
+                    <div key={label} className="bg-gradient-to-b from-[#f6fbf7] to-white border border-[#3b8c2a]/30 rounded-lg px-1.5 py-1 sm:px-3 sm:py-1 min-w-[54px] sm:min-w-[65px] flex flex-col items-center justify-center shadow-inner group-hover:border-[#F2B40E] group-hover:shadow-[0_4px_15px_rgba(242,180,14,0.2)] transition-all duration-300">
+                      <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#1a6b3a] to-[#3b8c2a] text-lg sm:text-xl font-semibold leading-none tracking-tighter drop-shadow-[0_2px_2px_rgba(0,0,0,0.1)]">
                         {value.toString().padStart(2, '0')}
                       </span>
-                      <span className="text-[#F2B40E] text-[14px] sm:text-[14px] font-semibold uppercase mt-0.5">
+                      <span className="text-[#F2B40E] text-[10px] sm:text-[12px] font-semibold uppercase mt-0.5">
                         {label}
                       </span>
                     </div>
@@ -181,13 +184,13 @@ const IntroductionSection = () => {
             {/* Image Container */}
             <div className="relative z-10 p-2 md:p-3 rounded-[1.5rem] bg-white/60 backdrop-blur-md border border-white shadow-[0_15px_40px_rgba(0,0,0,0.06)] w-full">
               {staticData.image ? (
-                <img
-                  loading="lazy"
-                  decoding="async"
-                  src={staticData.image.src}
+                <Image
+                  src={staticData.image}
                   alt="ORGANIC EXPO Introduction"
-                  width={800}
-                  height={600}
+                  width={640}
+                  height={480}
+                  sizes="(max-width: 768px) 100vw, 40vw"
+                  quality={75}
                   className="w-full h-auto object-cover rounded-2xl"
                 />
               ) : (
