@@ -158,3 +158,25 @@ export const buyerApi = {
 export const policyApi = {
     getByPage: async (page: string) => apiCall(`/policies/${page}`)
 };
+
+export const contactEnquiryApi = {
+    submitEnquiry: async (payload: any) => {
+        const response = await fetch(`${API_URL}/contact-enquiry`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(payload)
+        });
+        return await response.json();
+    },
+    getAll: async () => {
+        const response = await fetch(`${API_URL}/contact-enquiry`);
+        const data = await response.json();
+        return data.success ? data.data : [];
+    },
+    delete: async (id: string) => {
+        const response = await fetch(`${API_URL}/contact-enquiry/${id}`, {
+            method: 'DELETE'
+        });
+        return await response.json();
+    }
+};

@@ -15,7 +15,7 @@ const Topbar = () => {
     const topbarEmail = SITE_CONFIG.email;
     const topbarPhone = SITE_CONFIG.phone;
     const marqueeText = `${SITE_CONFIG.stats.speakers} SPEAKERS CONFIRMED • EARLY BIRD DISCOUNT ENDING SOON! • JOIN ${SITE_CONFIG.stats.visitors} PROFESSIONALS FROM ${SITE_CONFIG.stats.countries} COUNTRIES`;
-
+    const deligate = SITE_CONFIG.deligate;
     return (
         <>
             <style>{`
@@ -160,7 +160,7 @@ const Topbar = () => {
                                                 {[
                                                     { to: "/registration/book-a-stand", icon: Store, label: "BOOK A\nSTALL", color: "orange" },
                                                     { to: "/registration/visitor-registration", icon: UserPlus, label: "REGISTER AS\nVISITOR", color: "green" },
-                                                    { to: "/conference", icon: Globe, label: "DELEGATE\nREGISTRATION", color: "orange" },
+                                                    { to: deligate, icon: Globe, label: "DELEGATE\nREGISTRATION", color: "orange" },
                                                     { to: "/registration/buyer-registration", icon: Users, label: "REGISTER AS\nBUYER", color: "green" },
                                                     { to: "/sponsership", icon: Award, label: "SPONSORSHIP\nOPPORTUNITIES", color: "orange" },
                                                     { to: "tel:+919654900525", icon: Phone, label: "TALK TO EXPO\nADVISOR", color: "green" },

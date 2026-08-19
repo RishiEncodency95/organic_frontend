@@ -1,7 +1,7 @@
 "use client";
 import React, { useRef, useEffect } from "react";
 import { CalendarDays, MapPin, ArrowRight } from "lucide-react";
-import bgImage from "../../../assets/banner/b2rrog.webp";
+import bgImage from "../../../assets/banner/visitor_reg.webp";
 import footerLogo from "../../../assets/logos/footerlogo.png";
 import gsap from "gsap";
 import SectionContainer from "../../layout/SectionContainer";

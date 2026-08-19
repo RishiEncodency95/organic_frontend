@@ -5,7 +5,7 @@ export const SITE_CONFIG = {
     rawPhone: "+919876543210",
     address: "Pragati Maidan, New Delhi, India",
     website: "www.namogangewellness.com",
-
+    deligate: "https://arogya.namogange.org/register-now",
     // Approved Event Metrics
     stats: {
         exhibitors: "200+",
