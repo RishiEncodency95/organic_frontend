@@ -551,18 +551,19 @@ const HeroSection = () => {
 
                   {/* Book Your Stall */}
                   <div className="relative shrink-0">
-                    <Sparkle color="#ffc107" shadow="#4B1426" style={{ top: "-12px", left: "5%", animationDelay: "0s" }} />
-                    <Sparkle color="#ff9800" shadow="#4B1426" style={{ top: "-15px", left: "28%", animationDelay: "0.3s" }} />
-                    <Sparkle color="#ffdd00" shadow="#4B1426" style={{ top: "-13px", left: "50%", animationDelay: "0.6s" }} />
-                    <Sparkle color="#ff9800" shadow="#4B1426" style={{ top: "-15px", left: "72%", animationDelay: "0.9s" }} />
-                    <Sparkle color="#ffc107" shadow="#4B1426" style={{ top: "-12px", right: "5%", animationDelay: "1.2s" }} />
+                    <Sparkle color="#f97316" shadow="#c2410c" style={{ top: "-12px", left: "5%", animationDelay: "0s" }} />
+                    <Sparkle color="#fdba74" shadow="#c2410c" style={{ top: "-15px", left: "28%", animationDelay: "0.3s" }} />
+                    <Sparkle color="#ffedd5" shadow="#c2410c" style={{ top: "-13px", left: "50%", animationDelay: "0.6s" }} />
+                    <Sparkle color="#fdba74" shadow="#c2410c" style={{ top: "-15px", left: "72%", animationDelay: "0.9s" }} />
+                    <Sparkle color="#f97316" shadow="#c2410c" style={{ top: "-12px", right: "5%", animationDelay: "1.2s" }} />
                     <Link
                       href="/registration/book-a-stand"
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="group relative inline-flex items-center justify-start gap-2 px-4 py-2.5 md:px-5 md:py-2.5 rounded-lg font-bold text-xs uppercase tracking-widest text-white hover:bg-[#360e1b] transition-all active:scale-95 relative z-10 w-full sm:w-auto overflow-hidden shadow-md border border-white/10"
+                      className="group relative inline-flex items-center justify-start gap-2 px-4 py-2.5 md:px-5 md:py-2.5 rounded-lg font-bold text-xs uppercase tracking-widest text-white hover:bg-[#c2410c] transition-all active:scale-95 relative z-10 w-full sm:w-auto overflow-hidden shadow-md border border-white/10"
                       style={{
-                        background: "#4B1426",
+                        background: "linear-gradient(135deg, #ea580c 0%, #c2410c 100%)",
+                        boxShadow: "0 4px 20px rgba(194,65,12,0.4), 0 0 12px rgba(249,115,22,0.25)",
                       }}
                     >
                       <span className="absolute inset-0 bg-white/15 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-500 skew-x-12" />

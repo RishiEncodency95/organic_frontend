@@ -11,6 +11,7 @@ import img28 from "../../assets/icons/28og.png";
 import img29 from "../../assets/icons/29og.png";
 import leafsImg from "../../assets/icons/leafs.png";
 import footerRightImg from "../../assets/icons/footerright.png";
+import SectionContainer from "@/app/components/layout/SectionContainer";
 
 export default function WhoCanParticipate() {
   const cards = [
@@ -68,7 +69,7 @@ export default function WhoCanParticipate() {
         <img src={leafsImg.src} alt="Leaf Decoration" className="w-full h-auto object-contain -translate-x-1/4" />
       </div>
 
-      <div className="container mx-auto px-4 max-w-7xl relative z-10">
+      <SectionContainer className="relative z-10">
         <div className="text-center mb-6 flex flex-col items-center justify-center">
           <h2 className="text-xl md:text-2xl font-semibold text-[#1b5e20] uppercase leading-[1.1] font-poppins relative inline-block mb-2">
             WHO CAN PARTICIPATE AS A BUYER?
@@ -81,31 +82,31 @@ export default function WhoCanParticipate() {
         <div className="flex flex-col lg:flex-row gap-6">
           <div className="lg:w-3/4 flex flex-col gap-4">
             {/* First Row: 5 Cards */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4 font-inter">
               {cards.slice(0, 5).map((card, i) => (
                 <div 
                   key={i} 
-                  className="bg-white p-4 rounded-xl text-center hover:shadow-md transition-shadow"
+                  className="bg-white p-4 rounded-xl text-center hover:shadow-md transition-shadow flex flex-col items-center"
                   style={{ boxShadow: "rgba(0, 0, 0, 0.02) 0px 1px 3px 0px, rgba(27, 31, 35, 0.15) 0px 0px 0px 1px" }}
                 >
                   {card.icon}
-                  <h3 className="text-xs font-semibold text-[#1b5e20] mb-2 leading-tight">{card.title}</h3>
-                  <p className="text-[10px] text-gray-900 font-medium leading-relaxed">{card.desc}</p>
+                  <h3 className="text-[12px] font-semibold text-[#1b5e20] mb-2 leading-tight font-poppins">{card.title}</h3>
+                  <p className="text-[11px] text-slate-800 font-semibold leading-snug">{card.desc}</p>
                 </div>
               ))}
             </div>
             
             {/* Second Row: 4 Cards (centered, slightly wider than top row but less than full 25%) */}
-            <div className="flex flex-wrap justify-center gap-4">
+            <div className="flex flex-wrap justify-center gap-4 font-inter">
               {cards.slice(5).map((card, i) => (
                 <div 
                   key={i + 5} 
-                  className="bg-white p-4 rounded-xl text-center hover:shadow-md transition-shadow w-full sm:w-[calc(50%-0.5rem)] lg:w-[22.5%]"
+                  className="bg-white p-4 rounded-xl text-center hover:shadow-md transition-shadow w-full sm:w-[calc(50%-0.5rem)] lg:w-[22.5%] flex flex-col items-center"
                   style={{ boxShadow: "rgba(0, 0, 0, 0.02) 0px 1px 3px 0px, rgba(27, 31, 35, 0.15) 0px 0px 0px 1px" }}
                 >
                   {card.icon}
-                  <h3 className="text-xs font-semibold text-[#1b5e20] mb-2 leading-tight">{card.title}</h3>
-                  <p className="text-[10px] text-gray-900 font-medium leading-relaxed">{card.desc}</p>
+                  <h3 className="text-[12px] font-semibold text-[#1b5e20] mb-2 leading-tight font-poppins">{card.title}</h3>
+                  <p className="text-[11px] text-slate-800 font-semibold leading-snug">{card.desc}</p>
                 </div>
               ))}
             </div>
@@ -127,7 +128,7 @@ export default function WhoCanParticipate() {
             </div>
           </div>
         </div>
-      </div>
+      </SectionContainer>
     </section>
   );
 }

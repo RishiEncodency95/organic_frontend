@@ -96,22 +96,22 @@ const BuyerSellerMeetSection = () => {
             </div>
 
             {/* 4 FEATURE CARDS GRID */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-2.5 sm:gap-3 max-w-[660px] mx-auto mb-3.5">
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-2.5 sm:gap-3 max-w-[720px] mx-auto mb-3.5 font-inter">
               {/* Card 1 */}
               <div
-                className="bg-[#FAFBF6] rounded-xl py-3.5 px-2 sm:px-2.5 border border-slate-200/80 hover:shadow-md transition-shadow text-center flex flex-col items-center justify-start min-h-[165px]"
+                className="bg-[#FAFBF6] rounded-xl py-3.5 px-2 sm:px-2.5 border border-slate-200/80 hover:shadow-md transition-shadow text-center flex flex-col items-center justify-start min-h-[175px]"
                 style={{ boxShadow: "rgba(0, 0, 0, 0.02) 0px 1px 3px 0px, rgba(27, 31, 35, 0.15) 0px 0px 0px 1px" }}
               >
                 <img
                   src={b1og.src}
                   alt="Pre-scheduled Meetings"
-                  className="w-16 h-16 sm:w-20 sm:h-20 object-contain -mt-1.5 mb-1.5"
+                  className="w-14 h-14 sm:w-16 sm:h-16 object-contain -mt-1.5 mb-1.5"
                 />
-                <h3 className="font-poppins font-semibold text-xs sm:text-sm md:text-[14px] text-[#001810] leading-tight mb-1">
+                <h3 className="font-poppins font-semibold text-[13px] md:text-[14px] text-[#001810] leading-tight mb-1">
                   Pre-scheduled <br /> Meetings
                 </h3>
                 <div className="w-5 h-[1.5px] bg-[#1b5e20]/40 my-1" />
-                <p className="font-inter text-[10px] text-black font-semibold leading-relaxed mt-0.5">
+                <p className="font-inter text-[10px] md:text-[11px] text-slate-800 font-semibold leading-snug mt-0.5">
                   We connect you with <br />
                   relevant exhibitors <br />
                   before the expo.
@@ -120,19 +120,19 @@ const BuyerSellerMeetSection = () => {
 
               {/* Card 2 */}
               <div
-                className="bg-[#FAFBF6] rounded-xl py-3.5 px-2 sm:px-2.5 border border-slate-200/80 hover:shadow-md transition-shadow text-center flex flex-col items-center justify-start min-h-[165px]"
+                className="bg-[#FAFBF6] rounded-xl py-3.5 px-2 sm:px-2.5 border border-slate-200/80 hover:shadow-md transition-shadow text-center flex flex-col items-center justify-start min-h-[170px]"
                 style={{ boxShadow: "rgba(0, 0, 0, 0.02) 0px 1px 3px 0px, rgba(27, 31, 35, 0.15) 0px 0px 0px 1px" }}
               >
                 <img
                   src={b2og.src}
                   alt="Quality Connections"
-                  className="w-16 h-16 sm:w-20 sm:h-20 object-contain -mt-1.5 mb-1.5"
+                  className="w-14 h-14 sm:w-16 sm:h-16 object-contain -mt-1.5 mb-1.5"
                 />
-                <h3 className="font-poppins font-semibold text-xs sm:text-sm md:text-[14px] text-[#001810] leading-tight mb-1">
+                <h3 className="font-poppins font-semibold text-[13px] md:text-[14px] text-[#001810] leading-tight mb-1">
                   Quality <br /> Connections
                 </h3>
                 <div className="w-5 h-[1.5px] bg-[#1b5e20]/40 my-1" />
-                <p className="font-inter text-[10px] text-black font-semibold leading-relaxed mt-0.5">
+                <p className="font-inter text-[10px] md:text-[11px] text-slate-800 font-semibold leading-snug mt-0.5">
                   Meet verified <br />
                   manufacturers, <br />
                   suppliers & brands.
@@ -141,19 +141,19 @@ const BuyerSellerMeetSection = () => {
 
               {/* Card 3 */}
               <div
-                className="bg-[#FAFBF6] rounded-xl py-3.5 px-2 sm:px-2.5 border border-slate-200/80 hover:shadow-md transition-shadow text-center flex flex-col items-center justify-start min-h-[165px]"
+                className="bg-[#FAFBF6] rounded-xl py-3.5 px-2 sm:px-2.5 border border-slate-200/80 hover:shadow-md transition-shadow text-center flex flex-col items-center justify-start min-h-[170px]"
                 style={{ boxShadow: "rgba(0, 0, 0, 0.02) 0px 1px 3px 0px, rgba(27, 31, 35, 0.15) 0px 0px 0px 1px" }}
               >
                 <img
                   src={b3og.src}
                   alt="Save Time, Close Deals"
-                  className="w-16 h-16 sm:w-20 sm:h-20 object-contain -mt-1.5 mb-1.5"
+                  className="w-14 h-14 sm:w-16 sm:h-16 object-contain -mt-1.5 mb-1.5"
                 />
-                <h3 className="font-poppins font-semibold text-xs sm:text-sm md:text-[14px] text-[#001810] leading-tight mb-1">
+                <h3 className="font-poppins font-semibold text-[13px] md:text-[14px] text-[#001810] leading-tight mb-1">
                   Save Time, <br /> Close Deals
                 </h3>
                 <div className="w-5 h-[1.5px] bg-[#1b5e20]/40 my-1" />
-                <p className="font-inter text-[10px] text-black font-semibold leading-relaxed mt-0.5">
+                <p className="font-inter text-[10px] md:text-[11px] text-slate-800 font-semibold leading-snug mt-0.5">
                   One-to-one meetings <br />
                   that help you discover, <br />
                   compare & decide.
@@ -162,19 +162,19 @@ const BuyerSellerMeetSection = () => {
 
               {/* Card 4 */}
               <div
-                className="bg-[#FAFBF6] rounded-xl py-3.5 px-2 sm:px-2.5 border border-slate-200/80 hover:shadow-md transition-shadow text-center flex flex-col items-center justify-start min-h-[165px]"
+                className="bg-[#FAFBF6] rounded-xl py-3.5 px-2 sm:px-2.5 border border-slate-200/80 hover:shadow-md transition-shadow text-center flex flex-col items-center justify-start min-h-[170px]"
                 style={{ boxShadow: "rgba(0, 0, 0, 0.02) 0px 1px 3px 0px, rgba(27, 31, 35, 0.15) 0px 0px 0px 1px" }}
               >
                 <img
                   src={b4og.src}
                   alt="Grow Your Business"
-                  className="w-16 h-16 sm:w-20 sm:h-20 object-contain -mt-1.5 mb-1.5"
+                  className="w-14 h-14 sm:w-16 sm:h-16 object-contain -mt-1.5 mb-1.5"
                 />
-                <h3 className="font-poppins font-semibold text-xs sm:text-sm md:text-[14px] text-[#001810] leading-tight mb-1">
+                <h3 className="font-poppins font-semibold text-[13px] md:text-[14px] text-[#001810] leading-tight mb-1">
                   Grow Your <br /> Business
                 </h3>
                 <div className="w-5 h-[1.5px] bg-[#1b5e20]/40 my-1" />
-                <p className="font-inter text-[10px] text-black font-semibold leading-relaxed mt-0.5">
+                <p className="font-inter text-[10px] md:text-[11px] text-slate-800 font-semibold leading-snug mt-0.5">
                   Explore new products, <br />
                   expand your portfolio <br />
                   & increase margins.
@@ -212,7 +212,7 @@ const BuyerSellerMeetSection = () => {
             </div>
 
             {/* STATS ROW */}
-            <div className="bg-white/95 backdrop-blur-md rounded-xl p-2.5 sm:p-3.5 border border-slate-200/80 shadow-sm mb-3">
+            <div className="bg-white/95 backdrop-blur-md rounded-xl p-2.5 sm:p-3.5 border border-slate-200/80 shadow-sm mb-3 font-inter">
               <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4 divide-y sm:divide-y-0 sm:divide-x divide-slate-200/80">
                 <div className="flex items-center gap-2.5 px-1.5">
                   <div className="w-8 h-8 rounded-full bg-[#e8f3e7] text-[#1b5e20] flex items-center justify-center shrink-0">
@@ -220,8 +220,8 @@ const BuyerSellerMeetSection = () => {
                   </div>
                   <div className="text-left">
                     <h4 className="font-poppins font-semibold text-base text-[#001810] leading-tight">200+</h4>
-                    <p className="font-inter font-semibold text-[10px] text-[#001810] uppercase">EXHIBITORS</p>
-                    <p className="font-inter font-semibold text-[9px] text-gray-700 leading-tight">Across the Organic Ecosystem</p>
+                    <p className="font-inter font-semibold text-[11px] text-[#001810] uppercase tracking-wide">EXHIBITORS</p>
+                    <p className="font-inter font-semibold text-[10px] sm:text-[11px] text-slate-700 leading-tight">Across the Organic Ecosystem</p>
                   </div>
                 </div>
 
@@ -231,8 +231,8 @@ const BuyerSellerMeetSection = () => {
                   </div>
                   <div className="text-left">
                     <h4 className="font-poppins font-semibold text-base text-[#001810] leading-tight">150+</h4>
-                    <p className="font-inter font-semibold text-[10px] text-[#001810] uppercase">SPEAKERS</p>
-                    <p className="font-inter font-semibold text-[9px] text-gray-700 leading-tight">Industry Leaders & Experts</p>
+                    <p className="font-inter font-semibold text-[11px] text-[#001810] uppercase tracking-wide">SPEAKERS</p>
+                    <p className="font-inter font-semibold text-[10px] sm:text-[11px] text-slate-700 leading-tight">Industry Leaders & Experts</p>
                   </div>
                 </div>
 
@@ -242,8 +242,8 @@ const BuyerSellerMeetSection = () => {
                   </div>
                   <div className="text-left">
                     <h4 className="font-poppins font-semibold text-base text-[#001810] leading-tight">8,000+</h4>
-                    <p className="font-inter font-semibold text-[10px] text-[#001810] uppercase">BUSINESS VISITORS</p>
-                    <p className="font-inter font-semibold text-[9px] text-gray-700 leading-tight">Traders, Buyers, Retailers & More</p>
+                    <p className="font-inter font-semibold text-[11px] text-[#001810] uppercase tracking-wide">BUSINESS VISITORS</p>
+                    <p className="font-inter font-semibold text-[10px] sm:text-[11px] text-slate-700 leading-tight">Traders, Buyers, Retailers & More</p>
                   </div>
                 </div>
 
@@ -253,8 +253,8 @@ const BuyerSellerMeetSection = () => {
                   </div>
                   <div className="text-left">
                     <h4 className="font-poppins font-semibold text-sm text-[#001810] leading-tight">GLOBAL</h4>
-                    <p className="font-inter font-semibold text-[10px] text-[#001810] uppercase">PARTICIPATION</p>
-                    <p className="font-inter font-semibold text-[9px] text-gray-700 leading-tight">Connecting India with the World</p>
+                    <p className="font-inter font-semibold text-[11px] text-[#001810] uppercase tracking-wide">PARTICIPATION</p>
+                    <p className="font-inter font-semibold text-[10px] sm:text-[11px] text-slate-700 leading-tight">Connecting India with the World</p>
                   </div>
                 </div>
               </div>

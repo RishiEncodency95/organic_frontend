@@ -3,11 +3,12 @@ import React from "react";
 import Link from "next/link";
 import { ArrowRight, UserPlus, HelpCircle } from "lucide-react";
 import imgPlaceholder from "../../assets/image/footog.png";
+import SectionContainer from "@/app/components/layout/SectionContainer";
 
 export default function CtaBanner() {
   return (
     <section className="bg-[#0f2115] relative overflow-hidden font-inter border-b-4 border-green-700">
-      <div className="container mx-auto max-w-7xl">
+      <SectionContainer>
         <div className="flex flex-col md:flex-row items-center">
 
           <div className="w-full md:w-1/4 lg:w-[22%] h-48 md:h-auto self-stretch relative hidden md:block">
@@ -57,7 +58,7 @@ export default function CtaBanner() {
 
           </div>
         </div>
-      </div>
+      </SectionContainer>
     </section>
   );
 }

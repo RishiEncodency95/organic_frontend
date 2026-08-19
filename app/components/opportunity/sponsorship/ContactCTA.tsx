@@ -32,6 +32,8 @@ export default function ContactCTA() {
           <div className="relative z-10 w-full md:w-auto mt-4 md:mt-0">
             <a 
               href="/contact"
+              target="_blank"
+              rel="noopener noreferrer"
               className="flex items-center justify-center gap-2 px-8 py-3.5 bg-[#ea580c] hover:bg-[#c2410c] text-white text-[10px] md:text-xs font-bold uppercase tracking-wider rounded-lg transition-colors shadow-md w-full md:w-auto font-poppins"
             >
               CONTACT US TODAY
