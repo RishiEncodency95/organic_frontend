@@ -68,7 +68,7 @@ const BuyerSellerMeet = () => {
 
               {/* Title */}
               <div className="flex items-center gap-2 mb-2">
-                <h2 className="text-[28px] md:text-[34px] lg:text-[40px] font-bold leading-[1.2] text-[#1a1a1a] uppercase tracking-tight">
+                <h2 className="text-[18px] md:text-[28px] lg:text-[32px] font-semibold leading-[1.2] text-[#1a1a1a] uppercase tracking-tight">
                   BUYER-SELLER{' '}
                   <span className="bg-gradient-to-r from-[#00643b] to-[#f58220] bg-clip-text text-transparent">MEET 2027</span>
                 </h2>
@@ -188,8 +188,8 @@ const BuyerSellerMeet = () => {
               <Users className="w-4 h-4" strokeWidth={2.5} />
             </div>
             <div className="flex flex-col text-left">
-              <span className="text-[14px] lg:text-[15px] font-black text-white leading-tight uppercase">GROW TOGETHER.</span>
-              <span className="text-[11px] lg:text-[12px] font-bold text-teal-50 uppercase tracking-wider">MEET. CONNECT.</span>
+              <span className="text-[14px] lg:text-[15px] font-semibold text-white leading-tight uppercase">GROW TOGETHER.</span>
+              <span className="text-[11px] lg:text-[12px] font-semibold text-teal-50 uppercase tracking-wider">MEET. CONNECT.</span>
             </div>
           </div>
 
@@ -201,8 +201,8 @@ const BuyerSellerMeet = () => {
               <CalendarDays className="w-4 h-4" strokeWidth={2.5} />
             </div>
             <div className="flex flex-col text-left">
-              <span className="text-[14px] lg:text-[15px] font-black text-white leading-tight uppercase">19 &ndash; 21 FEBRUARY</span>
-              <span className="text-[11px] lg:text-[12px] font-bold text-teal-50 uppercase tracking-wider">2027</span>
+              <span className="text-[14px] lg:text-[15px] font-semibold text-white leading-tight uppercase">19 &ndash; 21 FEBRUARY</span>
+              <span className="text-[11px] lg:text-[12px] font-semibold text-teal-50 uppercase tracking-wider">2027</span>
             </div>
           </div>
 
@@ -214,8 +214,8 @@ const BuyerSellerMeet = () => {
               <MapPin className="w-4 h-4" strokeWidth={2.5} />
             </div>
             <div className="flex flex-col text-left">
-              <span className="text-[14px] lg:text-[15px] font-black text-white leading-tight uppercase">PRAGATI MAIDAN</span>
-              <span className="text-[11px] lg:text-[12px] font-bold text-teal-50 uppercase tracking-wider">NEW DELHI, INDIA</span>
+              <span className="text-[14px] lg:text-[15px] font-semibold text-white leading-tight uppercase">PRAGATI MAIDAN</span>
+              <span className="text-[11px] lg:text-[12px] font-semibold text-teal-50 uppercase tracking-wider">NEW DELHI, INDIA</span>
             </div>
           </div>
 

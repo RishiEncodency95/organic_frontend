@@ -75,39 +75,35 @@ const BeyondExhibition = () => {
   return (
     <section className="bg-white py-2 lg:py-6 overflow-hidden border-y border-[#3b8c2a]/10 font-inter">
       <div className=" w-full px-4 sm:px-6 lg:px-11">
-        
+
         {/* Main Container */}
         <div className="flex flex-col lg:flex-row bg-white rounded-3xl overflow-hidden shadow-2xl border border-slate-100">
-          
+
           {/* Left Hero Panel with Image Background */}
-          <div className="w-full lg:w-[35%] relative p-8 lg:p-12 flex flex-col justify-end overflow-hidden text-center lg:text-left min-h-[450px] group">
-            {/* Background Image with Slow Zoom */}
-            <div className="absolute inset-0 z-0 overflow-hidden">
-              <Image 
-                src={seminarsImg} 
-                alt="Conferences & Seminars" 
-                fill 
-                className="object-cover group-hover:scale-110 transition-transform duration-[10s] ease-out"
-              />
-            </div>
-            
-            {/* Subtle base overlay and Bottom Gradient for text readability */}
-            <div className="absolute inset-0 bg-black/20 z-0"></div>
-            <div className="absolute inset-0 bg-gradient-to-t from-[#1a3821]/95 via-[#1a3821]/50 to-transparent z-0"></div>
-            
-            {/* Text Content Directly on Image */}
-            <div className="relative z-10 mt-auto">
-              <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-white/20 border border-white/30 mb-5 w-fit mx-auto lg:mx-0 shadow-sm backdrop-blur-sm">
-                <span className="w-2 h-2 rounded-full bg-[#F2B40E] animate-pulse"></span>
-                <span className="text-[10px] md:text-[11px] font-bold tracking-widest uppercase text-white drop-shadow-sm">Global Organic Platform</span>
+          <div className="w-full lg:w-[35%] relative p-8 lg:p-12 flex flex-col justify-center overflow-hidden text-center lg:text-left min-h-[400px]">
+            {/* Background Image */}
+            <Image
+              src={seminarsImg}
+              alt="Conferences & Seminars"
+              fill
+              className="object-cover absolute inset-0 z-0"
+            />
+            {/* Gradient Overlays */}
+            <div className="absolute inset-0 bg-[#1a3821]/10 mix-blend-multiply z-0"></div>
+            <div className="absolute inset-0 bg-gradient-to-r from-[#1a3821]/10 via-[#1a3821]/30 to-transparent z-0"></div>
+
+            <div className="relative z-10">
+              <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-black/10 border border-white/30 mb-6 w-fit mx-auto lg:mx-0 shadow-md backdrop-blur-md">
+                <span className="w-1.5 h-1.5 rounded-full bg-[#F2B40E] animate-pulse"></span>
+                <span className="text-[11px] font-bold tracking-widest uppercase text-white drop-shadow-md">Global Organic Platform</span>
               </div>
 
-              <h2 className="text-[28px] md:text-[36px] lg:text-[40px] font-extrabold text-white leading-[1.1] tracking-tight mb-4 font-poppins drop-shadow-lg" style={{ textShadow: '0 4px 12px rgba(0,0,0,0.5)' }}>
+              <h2 className="text-[18px] md:text-[32px] font-semibold text-white leading-[1.1] tracking-tight mb-5 font-poppins drop-shadow-lg" style={{ textShadow: '0 4px 12px rgba(0,0,0,0.5)' }}>
                 Beyond An <br className="hidden lg:block" />
                 <span className="text-[#F2B40E]">Exhibition</span>
               </h2>
-              <p className="text-white/95 text-[14px] md:text-[15px] lg:text-[16px] leading-[1.6] font-medium max-w-md mx-auto lg:mx-0 drop-shadow-lg" style={{ textShadow: '0 2px 8px rgba(0,0,0,0.6)' }}>
-                Join India's most powerful ecosystem for the organic industry. From high-impact B2B matchmaking to leadership summits, we provide everything you need to scale your business.
+              <p className="text-white/95 text-[15px] md:text-[16.5px] leading-[1.6] font-medium max-w-md mx-auto lg:mx-0 drop-shadow-lg" style={{ textShadow: '0 2px 8px rgba(0,0,0,0.6)' }}>
+                Join India's most powerful ecosystem for the organic industry. From high-impact B2B matchmaking and leadership summits to global networking, we provide everything you need to scale your business.
               </p>
             </div>
           </div>
@@ -125,10 +121,10 @@ const BeyondExhibition = () => {
                   className="flex items-center gap-4 p-4 bg-white rounded-2xl shadow-sm border border-slate-100 hover:shadow-md hover:border-[#3b8c2a]/30 hover:-translate-y-1 transition-all duration-300 group cursor-default"
                 >
                   <div className="w-14 h-14 rounded-xl bg-gradient-to-br from-[#f8fdf9] to-[#eef5f0] flex items-center justify-center shrink-0 border border-[#d5ebd9] text-[#f58220] group-hover:bg-[#3b8c2a] group-hover:text-white transition-all duration-500 shadow-sm">
-                     {item.icon}
+                    {item.icon}
                   </div>
                   <div className="flex flex-col flex-1">
-                    <h4 className="text-[14px] lg:text-[15px] font-bold text-[#1a3821] uppercase tracking-wide group-hover:text-[#3b8c2a] transition-colors leading-[1.3] mb-1">
+                    <h4 className="text-[14px] lg:text-[15px] font-semibold text-[#1a3821] uppercase tracking-wide group-hover:text-[#3b8c2a] transition-colors leading-[1.3] mb-1">
                       {item.title} {item.title2}
                     </h4>
                     <p className="text-[12.5px] text-slate-500 font-medium leading-[1.5]">
