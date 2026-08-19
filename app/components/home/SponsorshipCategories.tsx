@@ -319,13 +319,13 @@ const SponsorshipCategories = () => {
                   type="text"
                   placeholder="Full Name*"
                   aria-label="Full Name"
-                  className="w-full text-[13px] md:text-[14px] px-3 py-2.5 rounded-md border border-gray-300 focus:outline-none focus:border-[#3b8c2a] focus:ring-1 focus:ring-[#3b8c2a]/30"
+                  className="w-full text-[13px] md:text-[14px] px-3 py-2.5 rounded-md border border-gray-300 focus:outline-none focus:border-[#3b8c2a] focus:ring-1 focus:ring-[#3b8c2a]/30 placeholder:text-black"
                 />
                 <input
                   type="text"
                   placeholder="Company Name*"
                   aria-label="Company Name"
-                  className="w-full text-[13px] md:text-[14px] px-3 py-2.5 rounded-md border border-gray-300 focus:outline-none focus:border-[#3b8c2a] focus:ring-1 focus:ring-[#3b8c2a]/30"
+                  className="w-full text-[13px] md:text-[14px] px-3 py-2.5 rounded-md border border-gray-300 focus:outline-none focus:border-[#3b8c2a] focus:ring-1 focus:ring-[#3b8c2a]/30 placeholder:text-black"
                 />
               </div>
 
@@ -334,7 +334,7 @@ const SponsorshipCategories = () => {
                   type="email"
                   placeholder="Email Address*"
                   aria-label="Email Address"
-                  className="w-full text-[13px] md:text-[14px] px-3 py-2.5 rounded-md border border-gray-300 focus:outline-none focus:border-[#3b8c2a] focus:ring-1 focus:ring-[#3b8c2a]/30 pr-20"
+                  className="w-full text-[13px] md:text-[14px] px-3 py-2.5 rounded-md border border-gray-300 focus:outline-none focus:border-[#3b8c2a] focus:ring-1 focus:ring-[#3b8c2a]/30 pr-20 placeholder:text-black"
                 />
                 <button type="button" aria-label="Send Email OTP" className="absolute right-1 top-1 bottom-1 px-3 bg-gray-100 hover:bg-gray-200 text-gray-700 text-[11px] font-bold rounded">
                   Send OTP
@@ -346,7 +346,7 @@ const SponsorshipCategories = () => {
                   type="tel"
                   placeholder="WhatsApp Number*"
                   aria-label="WhatsApp Number"
-                  className="w-full text-[13px] md:text-[14px] px-3 py-2.5 rounded-md border border-gray-300 focus:outline-none focus:border-[#3b8c2a] focus:ring-1 focus:ring-[#3b8c2a]/30 pr-20"
+                  className="w-full text-[13px] md:text-[14px] px-3 py-2.5 rounded-md border border-gray-300 focus:outline-none focus:border-[#3b8c2a] focus:ring-1 focus:ring-[#3b8c2a]/30 pr-20 placeholder:text-black"
                 />
                 <button type="button" aria-label="Send WhatsApp OTP" className="absolute right-1 top-1 bottom-1 px-3 bg-gray-100 hover:bg-gray-200 text-gray-700 text-[11px] font-bold rounded">
                   Send OTP
@@ -356,7 +356,7 @@ const SponsorshipCategories = () => {
               <div className="relative">
                 <select
                   aria-label="Interested Sponsorship Category"
-                  className="w-full text-[13px] md:text-[14px] px-3 py-2.5 rounded-md border border-gray-300 focus:outline-none focus:border-[#3b8c2a] focus:ring-1 focus:ring-[#3b8c2a]/30 appearance-none text-gray-600"
+                  className="w-full text-[13px] md:text-[14px] px-3 py-2.5 rounded-md border border-gray-300 focus:outline-none focus:border-[#3b8c2a] focus:ring-1 focus:ring-[#3b8c2a]/30 appearance-none text-black font-normal"
                 >
                   <option value="">Interested Sponsorship Category*</option>
                   <option value="title">Title Sponsor</option>
@@ -364,14 +364,14 @@ const SponsorshipCategories = () => {
                   <option value="associate">Associate Sponsor</option>
                   <option value="conference">Conference Sponsor</option>
                 </select>
-                <ChevronDown className="absolute right-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400 pointer-events-none" />
+                <ChevronDown className="absolute right-3 top-1/2 -translate-y-1/2 w-4 h-4 text-black pointer-events-none" />
               </div>
 
               <textarea
                 placeholder="Message (Optional)"
                 aria-label="Message"
                 rows={2}
-                className="w-full text-[13px] md:text-[14px] px-3 py-2.5 rounded-md border border-gray-300 focus:outline-none focus:border-[#3b8c2a] focus:ring-1 focus:ring-[#3b8c2a]/30 resize-none"
+                className="w-full text-[13px] md:text-[14px] px-3 py-2.5 rounded-md border border-gray-300 focus:outline-none focus:border-[#3b8c2a] focus:ring-1 focus:ring-[#3b8c2a]/30 resize-none placeholder:text-black"
               ></textarea>
 
               <button type="button" className="w-full py-3 bg-[#cbd5e1] hover:bg-[#3b8c2a] text-white transition-colors text-[12px] md:text-[13px] font-black uppercase rounded-md tracking-wider">

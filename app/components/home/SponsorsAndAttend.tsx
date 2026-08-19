@@ -1,6 +1,7 @@
 "use client";
 
 import React from 'react';
+import Link from 'next/link';
 import { motion } from 'framer-motion';
 import {
   Lightbulb, Handshake, TrendingUp, BookOpen, PackageSearch, Zap,
@@ -345,14 +346,19 @@ const SponsorsAndAttend = () => {
           <div className="hidden xl:block w-[1px] h-8 bg-white/10"></div>
 
           {/* Register Button */}
-          <button className="flex items-center gap-2 bg-gradient-to-r from-[#F2B40E] to-[#f58220] hover:from-[#f58220] hover:to-[#F2B40E] px-6 py-2.5 rounded-full shadow-[0_4px_15px_rgba(242,180,14,0.3)] transition-all duration-300 transform hover:-translate-y-0.5 shrink-0 group">
+          <Link
+            href="/registration/visitor-registration"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="flex items-center gap-2 bg-gradient-to-r from-[#F2B40E] to-[#f58220] hover:from-[#f58220] hover:to-[#F2B40E] px-6 py-2.5 rounded-full shadow-[0_4px_15px_rgba(242,180,14,0.3)] transition-all duration-300 transform hover:-translate-y-0.5 shrink-0 group"
+          >
             <span className="text-[#0b2912] font-semibold text-[13px] lg:text-[14px] tracking-widest uppercase">
               REGISTER AS VISITOR!
             </span>
             <div className="w-6 h-6 bg-[#0b2912]/10 rounded-full flex items-center justify-center text-[#0b2912] group-hover:bg-[#0b2912] group-hover:text-[#F2B40E] transition-colors">
               <ArrowRight className="w-3.5 h-3.5" strokeWidth={3} />
             </div>
-          </button>
+          </Link>
 
         </div>
       </section>

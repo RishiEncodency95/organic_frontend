@@ -111,7 +111,9 @@ const BuyerSellerMeet = () => {
               {/* Buttons */}
               <div className="flex flex-wrap items-center gap-16">
                 <Link
-                  href="/buyer-registration"
+                  href="/registration/buyer-registration"
+                  target="_blank"
+                  rel="noopener noreferrer"
                   className="bg-[#3b8c2a] hover:bg-[#2d7a2d] text-white px-6 py-2 rounded-md font-semibold text-[12px] md:text-[14px] tracking-widest uppercase transition-colors flex items-center gap-2 shadow-lg shadow-green-600/20 min-h-[44px]"
                 >
                   <CalendarCheck className="w-5 h-5" />
@@ -221,7 +223,9 @@ const BuyerSellerMeet = () => {
 
           {/* Right Side Button */}
           <Link
-            href="/buyer-registration"
+            href="/registration/buyer-registration"
+            target="_blank"
+            rel="noopener noreferrer"
             className="bg-[#f58220] hover:bg-[#d97017] text-white px-6 py-2 lg:py-2 rounded-md font-semibold text-[12px] md:text-[14px] tracking-widest uppercase transition-transform hover:scale-105 flex items-center justify-center gap-2 shadow-md shadow-[#f58220]/30 shrink-0"
           >
             <CalendarCheck className="w-5 h-5" strokeWidth={2.5} />

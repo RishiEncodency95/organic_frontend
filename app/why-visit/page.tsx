@@ -5,6 +5,7 @@ import WhyVisitMatters from "@/app/components/participate/why-visit/WhyVisitMatt
 import IndustrySegments from "@/app/components/participate/why-visit/IndustrySegments";
 import BuyerSellerMeetSection from "@/app/components/participate/why-visit/BuyerSellerMeetSection";
 import AwardsHealthCamp from "@/app/components/participate/why-visit/AwardsHealthCamp";
+import NeedHelpSupport from "@/app/components/participate/why-visit/NeedHelpSupport";
 
 export const metadata: Metadata = {
   title: "Why Visit | Bharat Organic Expo 2027",
@@ -27,6 +28,7 @@ export default function WhyVisitPage() {
       <IndustrySegments />
       <BuyerSellerMeetSection />
       <AwardsHealthCamp />
+      <NeedHelpSupport />
     </main>
   );
 }
