@@ -125,7 +125,7 @@ export default function Footer() {
             traditional wellness. Discover organic living<br />
             with conferences and B2B opportunities.
           </p>
-          <Image src={foot2ogImg} alt="Decoration" width={320} height={120} quality={70} className="hidden lg:block w-full max-w-[320px] h-auto object-contain relative top-2 -mb-14 pointer-events-none" />
+          <Image src={foot2ogImg} alt="Decoration" width={320} height={120} quality={75} className="hidden lg:block w-full max-w-[320px] h-auto object-contain relative top-2 -mb-14 pointer-events-none" />
         </div>
 
         {/* Right Area (Dark Green) */}
