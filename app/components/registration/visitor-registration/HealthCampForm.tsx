@@ -30,7 +30,7 @@ export default function HealthCampForm() {
   const [states, setStates] = useState<any[]>([]);
   const [cities, setCities] = useState<any[]>([]);
 
-  const defaultEventName = "Organic Expo 2026";
+  const defaultEventName = process.env.NEXT_PUBLIC_EVENT_NAME || "BOE2026";
 
   const [formData, setFormData] = useState({
     registrationFor: defaultEventName,
