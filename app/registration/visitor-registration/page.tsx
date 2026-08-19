@@ -7,6 +7,7 @@ import DomesticVisitorForm from "../../components/registration/visitor-registrat
 import InternationalVisitorForm from "../../components/registration/visitor-registration/InternationalVisitorForm";
 import GroupVisitorForm from "../../components/registration/visitor-registration/GroupVisitorForm";
 import { ShieldCheck } from "lucide-react";
+import SectionContainer from "@/app/components/layout/SectionContainer";
 
 export default function VisitorRegistrationPage() {
   const [visitorType, setVisitorType] = useState<"domestic" | "international" | "group" | null>(null);
@@ -34,7 +35,7 @@ export default function VisitorRegistrationPage() {
       <div ref={formRef} className="scroll-mt-10">
         {visitorType && (
           <section className="w-full bg-white pb-8">
-            <div className="max-w-[1410px] mx-auto px-4 md:px-8">
+            <SectionContainer>
               {/* Form card */}
               <div
                 className="bg-white border border-slate-500 shadow-2xl overflow-hidden rounded-sm"
@@ -54,7 +55,7 @@ export default function VisitorRegistrationPage() {
                   {visitorType === "domestic" ? <DomesticVisitorForm /> : visitorType === "international" ? <InternationalVisitorForm /> : <GroupVisitorForm />}
                 </div>
               </div>
-            </div>
+            </SectionContainer>
           </section>
         )}
       </div>

@@ -6,6 +6,7 @@ import CategorySelect from "../../components/registration/buyer-registration/Cat
 import DomesticForm from "../../components/registration/buyer-registration/DomesticForm";
 import InternationalForm from "../../components/registration/buyer-registration/InternationalForm";
 import { ShieldCheck } from "lucide-react";
+import SectionContainer from "@/app/components/layout/SectionContainer";
 
 export default function BuyerRegistrationPage() {
   const [buyerType, setBuyerType] = useState<"domestic" | "international" | null>(null);
@@ -33,7 +34,7 @@ export default function BuyerRegistrationPage() {
       <div ref={formRef} className="scroll-mt-10">
         {buyerType && (
           <section className="w-full bg-white pb-8">
-            <div className="max-w-[1410px] mx-auto px-4 md:px-8">
+            <SectionContainer>
               {/* Form card */}
               <div
                 className="bg-white border border-slate-500 shadow-2xl overflow-hidden rounded-sm"
@@ -53,7 +54,7 @@ export default function BuyerRegistrationPage() {
                   {buyerType === "domestic" ? <DomesticForm /> : <InternationalForm />}
                 </div>
               </div>
-            </div>
+            </SectionContainer>
           </section>
         )}
       </div>
