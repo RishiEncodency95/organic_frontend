@@ -26,6 +26,7 @@ import t2 from "@/app/assets/icons/t2.png";
 import t3 from "@/app/assets/icons/t3.png";
 import t4 from "@/app/assets/icons/t4.png";
 import t5 from "@/app/assets/icons/t5.png";
+import tleaf from "@/app/assets/icons/tleaf.png";
 
 const valueCards = [
   {
@@ -63,6 +64,13 @@ const valueCards = [
 const AwardsHealthCamp = () => {
   return (
     <section className="py-2.5 sm:py-3.5 bg-white font-inter relative overflow-hidden flex items-center min-h-[380px] sm:min-h-[420px]">
+      {/* Top Left Leaf Decor Asset */}
+      <img
+        src={tleaf.src}
+        alt=""
+        className="absolute top-0 left-0 w-32 sm:w-44 md:w-56 lg:w-64 h-auto object-contain pointer-events-none z-0 opacity-80"
+      />
+
       <SectionContainer className="relative z-10 py-0.5">
         <div className="w-full">
           {/* HEADER SECTION WITH RIGHT SIDE AWARD TROPHY IMAGE */}
@@ -105,79 +113,34 @@ const AwardsHealthCamp = () => {
             />
           </div>
 
-          {/* MIDDLE GRID: 5 VALUE CARDS LEFT + FREE HEALTH CAMP RIGHT */}
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-3.5 items-start mb-2">
-            
-            {/* LEFT: 5 VALUE CARDS IN WHITE BACKDROP CONTAINER */}
-            <div className="lg:col-span-8 bg-white/95 backdrop-blur-md rounded-2xl p-3.5 sm:p-4 border border-slate-200/80 shadow-sm flex flex-col justify-center -mt-12 sm:-mt-18 lg:-mt-28 relative z-20">
-              <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-2.5 divide-y sm:divide-y-0 lg:divide-x divide-slate-200/60">
-                {valueCards.map((card, idx) => {
-                  return (
-                    <div
-                      key={idx}
-                      className={`text-center flex flex-col items-center justify-start px-1 pt-2 sm:pt-0 ${
-                        idx !== 0 ? "lg:pl-2.5" : ""
-                      }`}
-                    >
-                      <img
-                        src={card.image.src}
-                        alt=""
-                        className="w-12 h-12 sm:w-14 sm:h-14 object-contain mb-2 mx-auto shrink-0"
-                      />
-                      <h3 className="font-poppins font-semibold text-[13.5px] sm:text-[15px] text-[#001810] mb-1.5 leading-tight flex flex-col items-center justify-center">
-                        <span className="block">{card.titleLine1}</span>
-                        <span className="block">{card.titleLine2}</span>
-                      </h3>
-                      <div className="w-5 h-[1.5px] bg-[#1b5e20]/40 mb-1.5" />
-                      <p className="font-inter text-[10px] text-gray-700 font-semibold leading-tight">
-                        {card.desc}
-                      </p>
-                    </div>
-                  );
-                })}
-              </div>
+          {/* 5 VALUE CARDS IN WHITE BACKDROP CONTAINER */}
+          <div className="max-w-4xl ml-0 mr-auto bg-white/95 backdrop-blur-md rounded-2xl p-3 sm:p-3.5 border border-slate-300 shadow-sm flex flex-col justify-center -mt-12 sm:-mt-18 lg:-mt-28 relative z-20">
+            <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-2 divide-y sm:divide-y-0 lg:divide-x divide-slate-300">
+              {valueCards.map((card, idx) => {
+                return (
+                  <div
+                    key={idx}
+                    className={`text-center flex flex-col items-center justify-start px-2 pt-2.5 sm:pt-0 ${
+                      idx !== 0 ? "lg:pl-3" : ""
+                    }`}
+                  >
+                    <img
+                      src={card.image.src}
+                      alt=""
+                      className="w-11 h-11 sm:w-13 sm:h-13 object-contain mb-2 mx-auto shrink-0"
+                    />
+                    <h3 className="font-poppins font-semibold text-[13px] sm:text-[14.5px] text-[#001810] mb-1.5 leading-tight flex flex-col items-center justify-center">
+                      <span className="block">{card.titleLine1}</span>
+                      <span className="block">{card.titleLine2}</span>
+                    </h3>
+                    <div className="w-6 h-[1.5px] bg-[#1b5e20]/50 mb-1.5" />
+                    <p className="font-inter text-[10px] text-gray-700 font-semibold leading-tight">
+                      {card.desc}
+                    </p>
+                  </div>
+                );
+              })}
             </div>
-
-            {/* RIGHT: FREE HEALTH CAMP CARD */}
-            <div className="lg:col-span-4 bg-[#f2f8f1] rounded-2xl p-3 sm:p-3.5 border border-[#1b5e20]/20 shadow-sm flex flex-col justify-between text-center relative overflow-hidden">
-              <div>
-                {/* Top Badge */}
-                <div className="inline-flex items-center justify-center gap-1.5 bg-white text-[#1b5e20] px-3 py-0.5 rounded-full font-poppins font-semibold text-[10.5px] uppercase tracking-wider shadow-xs mb-2 border border-[#1b5e20]/15">
-                  <HeartPulse className="w-3.5 h-3.5 text-[#1b5e20]" />
-                  <span>FREE HEALTH CAMP</span>
-                </div>
-
-                {/* Health Camp Image Banner */}
-                <div className="w-full h-24 sm:h-26 rounded-xl overflow-hidden mb-2 border border-slate-200/80 shadow-xs">
-                  <img
-                    src={hosog.src}
-                    alt="Free Health Camp"
-                    className="w-full h-full object-cover"
-                  />
-                </div>
-
-                {/* Subtitle */}
-                <h4 className="font-poppins font-semibold text-xs sm:text-[13px] text-[#1b5e20] leading-tight mb-1">
-                  Promoting Preventive Health for a Better Tomorrow
-                </h4>
-
-                {/* Description */}
-                <p className="font-inter text-[10px] text-gray-700 font-semibold leading-tight mb-2">
-                  Free health check-ups, consultations and awareness for all visitors and participants.
-                </p>
-              </div>
-
-              {/* Card Footer: COMPLIMENTARY ACCESS & HALL 12 */}
-              <div className="pt-2 border-t border-[#1b5e20]/15 flex items-center justify-between text-[10px]">
-                <span className="font-poppins font-semibold text-[#1b5e20] tracking-wider">
-                  COMPLIMENTARY ACCESS
-                </span>
-                <span className="bg-[#1b5e20] text-white px-2.5 py-0.5 rounded-md font-poppins font-semibold shadow-xs">
-                  HALL 12
-                </span>
-              </div>
-            </div>
-
           </div>
 
 

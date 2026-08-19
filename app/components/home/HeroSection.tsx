@@ -4,12 +4,12 @@ import Link from "next/link";
 import { CalendarDays, MapPin, ChevronLeft, ChevronRight, ArrowRight } from "lucide-react";
 import gsap from "gsap";
 import SectionContainer from "@/app/components/layout/SectionContainer";
-import home1 from "../../assets/home/home11.png";
-import home2 from "../../assets/home/home22.png";
-import home3 from "../../assets/home/home33.png";
-import home4 from "../../assets/home/home44.png";
-import home5 from "../../assets/home/home55.png";
-import home6 from "../../assets/home/home1.jpg";
+import home1 from "../../assets/home/home11.webp";
+import home2 from "../../assets/home/home22.webp";
+import home3 from "../../assets/home/home33.webp";
+import home4 from "../../assets/home/home44.webp";
+import home5 from "../../assets/home/home55.webp";
+import home6 from "../../assets/home/home1.webp";
 
 // -------------------------------------------------------------
 // NOTE: run `npm install gsap` in your project before using this.
