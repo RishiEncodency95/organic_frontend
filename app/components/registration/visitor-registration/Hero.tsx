@@ -4,6 +4,7 @@ import { CalendarDays, MapPin, ArrowRight } from "lucide-react";
 import bgImage from "../../../assets/banner/b2rrog.webp";
 import footerLogo from "../../../assets/logos/footerlogo.png";
 import gsap from "gsap";
+import SectionContainer from "../../layout/SectionContainer";
 
 const Sparkle = ({
   style,
@@ -152,7 +153,7 @@ export default function VisitorRegistrationHero() {
           />
         </div>
 
-        <div className="w-full max-w-[1400px] mx-auto px-4 sm:px-6 md:px-8 lg:px-12 relative z-20 pt-16 md:pt-20 pb-4 [perspective:800px]">
+        <SectionContainer className="relative z-20 pt-16 md:pt-20 pb-4 [perspective:800px]">
           <div className="flex flex-col lg:flex-row items-center justify-start">
             <div className="w-full lg:w-[65%] xl:w-[55%] text-left shrink-0 ml-0 lg:ml-4 xl:ml-6">
 
@@ -223,8 +224,7 @@ export default function VisitorRegistrationHero() {
                 <div className="flex items-center gap-2">
                   <MapPin size={18} className="shrink-0 text-[#ea580c]" />
                   <div className="flex flex-col leading-tight">
-                    <span>Hall 12, Bharat Mandapam,</span>
-                    <span>New Delhi, India</span>
+                    <span>PRAGATI MAIDAN, NEW DELHI</span>
                   </div>
                 </div>
               </div>
@@ -245,7 +245,7 @@ export default function VisitorRegistrationHero() {
 
             </div>
           </div>
-        </div>
+        </SectionContainer>
       </section>
     </>
   );
