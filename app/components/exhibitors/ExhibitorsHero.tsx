@@ -75,22 +75,23 @@ const ExhibitorsHero = () => {
 
         {/* Content */}
         <SectionContainer className="relative z-10">
-          <div className="max-w-2xl -translate-y-2 md:-translate-y-4 lg:-translate-y-5 ml-0 lg:ml-8 xl:ml-12">
+          <div className="max-w-2xl -translate-y-2 md:-translate-y-4 lg:-translate-y-5">
 
-            {/* Trust Badge */}
-            <div className="inline-flex items-center gap-2 mb-4 rounded-full bg-[#063f25] border border-[#a8cf22]/30 px-3.5 py-1.5 shadow-[0_8px_30px_rgba(0,0,0,0.12)]">
-              <Leaf className="w-3.5 h-3.5 text-[#a8cf22]" strokeWidth={2.5} />
-              <span className="text-[9px] md:text-[10px] uppercase tracking-[0.22em] font-extrabold text-[#d8eb7a]">
-                Trusted By
-              </span>
+            {/* Tagline Badge */}
+            <div className="flex items-center justify-start gap-2.5 mb-2">
+              <span className="w-8 h-[2.5px] bg-[#c2410c] shrink-0" />
+              <p className="text-[#c2410c] text-[13px] md:text-[15px] lg:text-[16px] font-bold uppercase tracking-[0.18em] text-left">
+                TRUSTED BY
+              </p>
+              <span className="w-8 h-[2.5px] bg-[#c2410c] shrink-0" />
             </div>
 
             {/* Heading */}
             <h1 className="font-semibold leading-[1.05] mb-4 font-poppins" style={{ textShadow: "1px 1px 2px rgba(0,0,0,0.4)" }}>
-              <span className="text-4xl md:text-5xl lg:text-[60px] text-[#001810] block mb-1">
+              <span className="text-4xl md:text-5xl lg:text-[38px] text-[#001810] block mb-1">
                 150+{" "}<span className="text-[#3b8c2a]">Leading</span>
               </span>
-              <span className="text-3xl md:text-4xl lg:text-[46px] text-[#001810] block">
+              <span className="text-3xl md:text-4xl lg:text-[38px] text-[#001810] block">
                 Health &amp; Wellness Brands
               </span>
             </h1>
