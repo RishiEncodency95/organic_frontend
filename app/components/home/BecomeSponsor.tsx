@@ -6,7 +6,7 @@ import { Users, ShieldCheck, Target, Megaphone, Star, Globe } from 'lucide-react
 import { motion } from 'framer-motion';
 
 const SponsorFeatures = [
-  { icon: Users, title: 'Showcase your brand to', highlight: '10,000+ targeted visitors' },
+  { icon: Users, title: 'Showcase your brand to', highlight: '8,000+ targeted visitors' },
   { icon: Megaphone, title: 'Multi-channel promotion', highlight: '(digital + on-ground)' },
   { icon: ShieldCheck, title: 'Build authority in the', highlight: 'organic & natural ecosystem' },
   { icon: Star, title: 'Premium branding across', highlight: 'expo touchpoints' },
@@ -16,12 +16,12 @@ const SponsorFeatures = [
 
 const BecomeSponsor = () => {
   return (
-    <section className="w-full bg-white relative px-2 lg:px-11 py-2 lg:py-6 overflow-hidden border-y border-gray-100 shadow-sm">
+    <section className="w-full bg-white font-inter relative px-2 lg:px-11 py-2 lg:py-6 overflow-hidden border-y border-gray-100 shadow-sm">
       {/* Decorative background shapes */}
       <div className="absolute top-0 right-0 w-64 h-64 bg-[#F2B40E]/5 rounded-full blur-3xl pointer-events-none -translate-y-1/2 translate-x-1/4"></div>
       <div className="absolute bottom-0 left-0 w-96 h-96 bg-[#3b8c2a]/5 rounded-full blur-3xl pointer-events-none translate-y-1/3 -translate-x-1/3"></div>
 
-      <div className="w-full  relative z-10">
+      <div className="w-full relative z-10">
         <div className="flex flex-col xl:flex-row items-center justify-between gap-1 lg:gap-2">
 
           {/* LEFT: CONTENT */}
@@ -77,10 +77,10 @@ const BecomeSponsor = () => {
 
               {/* Overlay Text */}
               <div className="absolute bottom-5 left-5 right-5 text-left transform translate-y-2 group-hover:translate-y-0 transition-transform duration-300">
-                <div className="inline-block px-2 py-0.5 bg-[#F2B40E] text-[#0b2912] text-[12px] font-black uppercase tracking-wider rounded-sm mb-1.5">
+                <div className="inline-block px-2 py-0.5 bg-[#F2B40E] text-[#0b2912] text-[12px] font-black uppercase tracking-wider rounded-sm mb-1.5 font-poppins">
                   Premium Booths
                 </div>
-                <p className="text-white font-black text-[18px] md:text-[20px] leading-tight drop-shadow-md">
+                <p className="text-white font-black text-[18px] md:text-[20px] leading-tight drop-shadow-md font-poppins">
                   STRONGER TOGETHER FOR A HEALTHIER TOMORROW
                 </p>
               </div>
@@ -93,12 +93,12 @@ const BecomeSponsor = () => {
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true, margin: "-50px" }}
             transition={{ duration: 0.7, delay: 0.4 }}
-            className="flex-1 w-full  bg-white rounded-3xl shadow-[0_8px_30px_rgba(0,0,0,0.08)] border border-gray-100 overflow-hidden flex flex-col"
+            className="flex-1 w-full  bg-white rounded-3xl shadow-[0_8px_30px_rgba(0,0,0,0.08)] border border-gray-100 overflow-hidden flex flex-col font-inter"
           >
             {/* Header */}
             <div className="bg-gradient-to-r from-[#0b2912] via-[#154726] to-[#0b2912] text-white p-2.5 md:px-4 md:py-2 text-center relative overflow-hidden shrink-0 border-b-2 border-[#F2B40E]">
               <div className="absolute inset-0 opacity-10 bg-[radial-gradient(circle_at_center,_white_1px,_transparent_1px)] bg-[size:10px_10px]"></div>
-              <h3 className="text-[15px] md:text-[17px] font-semibold uppercase tracking-widest relative z-10 text-white drop-shadow-md">
+              <h3 className="text-[15px] md:text-[17px] font-semibold uppercase tracking-widest relative z-10 text-white drop-shadow-md font-poppins">
                 WHY SPONSOR <span className="text-[#F2B40E]">BHARAT ORGANIC EXPO?</span>
               </h3>
             </div>
@@ -110,9 +110,9 @@ const BecomeSponsor = () => {
                   <div className="w-5 h-5 md:w-8 md:h-8 rounded-xl bg-[#f4fbf6] border border-[#e6f2e8] flex items-center justify-center shrink-0 group-hover:bg-[#F2B40E] group-hover:border-[#F2B40E] transition-colors duration-300 shadow-sm">
                     <feature.icon className="w-3 h-3 text-[#3b8c2a] group-hover:text-[#0b2912] transition-colors duration-300" strokeWidth={2} />
                   </div>
-                  <div className="flex flex-col flex-1">
+                  <div className="flex flex-col flex-1 font-inter">
                     <span className="text-[11.5px] md:text-[12px] text-gray-500 font-medium leading-[1.3] mb-0.5">{feature.title}</span>
-                    <span className="text-[13px] md:text-[14px] text-[#0b2912] font-semibold leading-[1.2]">{feature.highlight}</span>
+                    <span className="text-[13px] md:text-[14px] text-[#1b5e20] font-semibold leading-[1.2]">{feature.highlight}</span>
                   </div>
                 </div>
               ))}

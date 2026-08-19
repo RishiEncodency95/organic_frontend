@@ -107,12 +107,12 @@ const ExpoCategories = () => {
                 {/* Bottom Half: Content */}
                 <div className="px-3 py-3 md:px-4 md:py-4 relative z-10 flex flex-col flex-grow items-start text-left bg-white rounded-b-2xl w-full">
                   {/* Title */}
-                  <h3 className="text-[13.5px] md:text-[16px] font-medium text-[#1a3821] leading-[1.2] mb-2.5 group-hover:text-[#3b8c2a] transition-colors line-clamp-2 w-full">
+                  <h3 className="text-[13.5px] md:text-[16px] font-semibold text-[#3b8c2a] leading-[1.2] mb-2.5 line-clamp-2 w-full">
                     {item.title}
                   </h3>
 
                   {/* Description */}
-                  <p className="text-[11.5px] md:text-[14px] text-slate-600 leading-[1.4] mb-3 flex-grow line-clamp-3 w-full text-justify">
+                  <p className="text-[11.5px] md:text-[14px] text-gray-700 font-normal leading-[1.4] mb-3 flex-grow line-clamp-3 w-full text-left">
                     {item.desc}
                   </p>
 

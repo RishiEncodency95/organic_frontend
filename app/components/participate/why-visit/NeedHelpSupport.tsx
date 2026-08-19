@@ -19,23 +19,24 @@ import {
   Leaf,
 } from "lucide-react";
 import callog from "@/app/assets/icons/callog.png";
+import g1 from "@/app/assets/icons/g1.png";
+import g2 from "@/app/assets/icons/g2.png";
+import g3 from "@/app/assets/icons/g3.png";
+import g4 from "@/app/assets/icons/g4.png";
+import leafright from "@/app/assets/icons/leafright.png";
+import pog from "@/app/assets/icons/pog.png";
 import SectionContainer from "@/app/components/layout/SectionContainer";
 
 const NeedHelpSupport = () => {
   return (
     <section className="pt-1 sm:pt-2 pb-6 sm:pb-8 bg-[#fafdfa] font-inter relative overflow-hidden">
-      {/* Background Decorative Leaf Accent */}
-      <div className="absolute top-0 right-0 w-64 h-64 pointer-events-none opacity-5 flex items-start justify-end p-4">
-        <Leaf className="w-48 h-48 text-[#0b4d26]" />
-      </div>
-
       <SectionContainer className="relative z-10">
         <div className="w-full">
           {/* TOP ROW: HEADER LEFT + WAYS TO CONNECT RIGHT */}
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-5 mb-5 items-stretch">
             
             {/* LEFT HEADER & COMMITMENT BOX */}
-            <div className="lg:col-span-5 flex flex-col justify-between gap-4">
+            <div className="lg:col-span-4 flex flex-col justify-between gap-4">
               <div>
                 <h2
                   className="font-poppins font-semibold text-4xl sm:text-5xl md:text-[50px] lg:text-[54px] text-[#001810] leading-[1.05] uppercase mb-1"
@@ -55,7 +56,7 @@ const NeedHelpSupport = () => {
               </div>
 
               {/* OUR COMMITMENT BOX */}
-              <div className="bg-[#eef6ed] border border-[#1b5e20]/20 rounded-2xl p-3 sm:p-3.5 flex items-center justify-start gap-3 sm:gap-4 shadow-xs">
+              <div className="bg-[#eef6ed] border border-[#1b5e20]/20 rounded-2xl p-3 sm:p-3.5 inline-flex items-center justify-start gap-3 sm:gap-4 shadow-xs w-fit max-w-full">
                 <img
                   src={callog.src}
                   alt="Our Commitment Support"
@@ -75,8 +76,17 @@ const NeedHelpSupport = () => {
             </div>
 
             {/* RIGHT: WAYS TO CONNECT WITH US */}
-            <div className="lg:col-span-7 flex flex-col justify-end">
-              <div className="relative bg-white border border-[#023911] rounded-2xl p-4 sm:p-5 shadow-xs mt-3.5 sm:mt-4">
+            <div className="lg:col-span-8 flex flex-col justify-end">
+              <div className="relative bg-white border border-[#023911] rounded-2xl p-4 sm:p-5 lg:p-6 shadow-xs -top-3 lg:-top-6">
+                {/* Top Right Overlapping Leaf Accent */}
+                <div className="absolute -top-6 -right-4 sm:-top-8 sm:-right-6 pointer-events-none z-20">
+                  <img
+                    src={leafright.src}
+                    alt="Decorative Leaf Accent"
+                    className="w-16 sm:w-20 md:w-24 lg:w-28 h-auto object-contain opacity-95"
+                  />
+                </div>
+
                 {/* Top Pill Badge */}
                 <div className="absolute -top-3.5 left-1/2 -translate-x-1/2 bg-[#023911] text-white px-4 py-1 rounded-full font-poppins font-semibold text-[11px] uppercase tracking-widest flex items-center gap-1.5 shadow-sm whitespace-nowrap">
                   <Leaf className="w-3 h-3 text-lime-300" />
@@ -88,34 +98,41 @@ const NeedHelpSupport = () => {
                 <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 sm:gap-2 divide-y sm:divide-y-0 sm:divide-x divide-slate-200 pt-3 sm:pt-2">
                   {/* Email Us */}
                   <div className="text-center px-1 pt-2 sm:pt-0 flex flex-col items-center">
-                    <div className="w-11 h-11 rounded-full bg-[#f0f7f0] border border-[#1b5e20]/20 flex items-center justify-center mb-2 shrink-0">
-                      <Mail className="w-5 h-5 text-[#1b5e20]" />
-                    </div>
-                    <h5 className="font-poppins font-semibold text-xs text-[#1b5e20] uppercase tracking-wider mb-1">
+                    <img
+                      src={g1.src}
+                      alt="Email Us"
+                      className="w-11 h-11 sm:w-12 sm:h-12 object-contain mb-2 shrink-0"
+                    />
+                    <h5 className="font-poppins font-semibold text-[13px] sm:text-sm text-[#001810] uppercase tracking-wider mb-1">
                       EMAIL US
                     </h5>
-                    <p className="font-inter text-[11px] font-semibold text-gray-800 break-all leading-tight mb-1">
-                      msme.support@
-                      <br className="hidden sm:block" />
-                      bharatorganicexpo.in
-                    </p>
-                    <p className="font-inter text-[10px] text-gray-500 font-medium leading-tight mt-auto">
-                      We typically reply within 24 hours.
+                    <a
+                      href="mailto:info@namogangewellness.com"
+                      className="font-inter text-[10px] sm:text-[11px] font-semibold text-blue-600 hover:text-blue-800 hover:underline whitespace-nowrap leading-tight mb-1"
+                    >
+                      info@namogangewellness.com
+                    </a>
+                    <p className="font-inter text-[11px] sm:text-xs text-black font-medium leading-tight mt-auto">
+                      We typically reply
+                      <br />
+                      within 24 hours.
                     </p>
                   </div>
 
                   {/* Call Us */}
                   <div className="text-center px-1 pt-2 sm:pt-0 sm:pl-2 flex flex-col items-center">
-                    <div className="w-11 h-11 rounded-full bg-[#f0f7f0] border border-[#1b5e20]/20 flex items-center justify-center mb-2 shrink-0">
-                      <Phone className="w-5 h-5 text-[#1b5e20]" />
-                    </div>
-                    <h5 className="font-poppins font-semibold text-xs text-[#1b5e20] uppercase tracking-wider mb-1">
+                    <img
+                      src={g2.src}
+                      alt="Call Us"
+                      className="w-11 h-11 sm:w-12 sm:h-12 object-contain mb-2 shrink-0"
+                    />
+                    <h5 className="font-poppins font-semibold text-[13px] sm:text-sm text-[#001810] uppercase tracking-wider mb-1">
                       CALL US
                     </h5>
                     <p className="font-inter text-[11px] font-semibold text-gray-800 leading-tight mb-1">
-                      +91 11 4308 3738
+                      +91-9654900525
                     </p>
-                    <p className="font-inter text-[10px] text-gray-500 font-medium leading-tight mt-auto">
+                    <p className="font-inter text-[11px] sm:text-xs text-black font-medium leading-tight mt-auto">
                       Mon – Sat
                       <br />
                       10:00 AM – 6:00 PM
@@ -124,32 +141,41 @@ const NeedHelpSupport = () => {
 
                   {/* WhatsApp */}
                   <div className="text-center px-1 pt-2 sm:pt-0 sm:pl-2 flex flex-col items-center">
-                    <div className="w-11 h-11 rounded-full bg-[#f0f7f0] border border-[#1b5e20]/20 flex items-center justify-center mb-2 shrink-0">
-                      <MessageSquare className="w-5 h-5 text-[#1b5e20]" />
-                    </div>
-                    <h5 className="font-poppins font-semibold text-xs text-[#1b5e20] uppercase tracking-wider mb-1">
+                    <img
+                      src={g3.src}
+                      alt="WhatsApp"
+                      className="w-11 h-11 sm:w-12 sm:h-12 object-contain mb-2 shrink-0"
+                    />
+                    <h5 className="font-poppins font-semibold text-[13px] sm:text-sm text-[#001810] uppercase tracking-wider mb-1">
                       WHATSAPP
                     </h5>
                     <p className="font-inter text-[11px] font-semibold text-gray-800 leading-tight mb-1">
-                      +91 11 4308 3738
+                      +91-9654900525
                     </p>
-                    <p className="font-inter text-[10px] text-gray-500 font-medium leading-tight mt-auto">
+                    <p className="font-inter text-[11px] sm:text-xs text-black font-medium leading-tight mt-auto">
                       Quick responses during working hours.
                     </p>
                   </div>
 
                   {/* Visit Website */}
                   <div className="text-center px-1 pt-2 sm:pt-0 sm:pl-2 flex flex-col items-center">
-                    <div className="w-11 h-11 rounded-full bg-[#f0f7f0] border border-[#1b5e20]/20 flex items-center justify-center mb-2 shrink-0">
-                      <Globe className="w-5 h-5 text-[#1b5e20]" />
-                    </div>
-                    <h5 className="font-poppins font-semibold text-xs text-[#1b5e20] uppercase tracking-wider mb-1">
+                    <img
+                      src={g4.src}
+                      alt="Visit Website"
+                      className="w-11 h-11 sm:w-12 sm:h-12 object-contain mb-2 shrink-0"
+                    />
+                    <h5 className="font-poppins font-semibold text-[13px] sm:text-sm text-[#001810] uppercase tracking-wider mb-1">
                       VISIT WEBSITE
                     </h5>
-                    <p className="font-inter text-[11px] font-semibold text-gray-800 break-all leading-tight mb-1">
-                      www.bharatorganicexpo.in
-                    </p>
-                    <p className="font-inter text-[10px] text-gray-500 font-medium leading-tight mt-auto">
+                    <a
+                      href="https://bharatorganicexpo.com/"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="font-inter text-[10px] sm:text-[11px] font-semibold text-blue-600 hover:text-blue-800 hover:underline whitespace-nowrap leading-tight mb-1"
+                    >
+                      www.bharatorganicexpo.com
+                    </a>
+                    <p className="font-inter text-[11px] sm:text-xs text-black font-medium leading-tight mt-auto">
                       Explore PMS details, guidelines & more.
                     </p>
                   </div>
@@ -163,8 +189,8 @@ const NeedHelpSupport = () => {
             
             {/* LEFT: WHY REACH OUT TO US? */}
             <div className="lg:col-span-6 bg-white border border-slate-200 rounded-2xl p-5 shadow-xs flex flex-col sm:flex-row justify-between items-center gap-4">
-              <div className="w-full sm:w-7/12">
-                <h4 className="font-poppins font-semibold text-xs sm:text-sm text-[#1b5e20] uppercase tracking-wider mb-3 flex items-center gap-1.5">
+              <div className="w-full sm:w-8/12">
+                <h4 className="font-poppins font-semibold text-sm sm:text-base text-[#1b5e20] uppercase tracking-wider mb-3 flex items-center gap-1.5">
                   <span>WHY REACH OUT TO US?</span>
                   <span className="text-[#1b5e20] font-extrabold">&lt;&lt;</span>
                 </h4>
@@ -179,7 +205,7 @@ const NeedHelpSupport = () => {
                   ].map((item, idx) => (
                     <li key={idx} className="flex items-start gap-2">
                       <CheckCircle2 className="w-4 h-4 text-[#1b5e20] shrink-0 mt-0.5" />
-                      <span className="font-inter text-[11px] sm:text-xs text-gray-700 font-medium leading-tight">
+                      <span className="font-inter text-[12px] sm:text-[13px] text-black font-medium leading-tight whitespace-nowrap">
                         {item}
                       </span>
                     </li>
@@ -187,23 +213,13 @@ const NeedHelpSupport = () => {
                 </ul>
               </div>
 
-              {/* Smartphone Illustration Box */}
-              <div className="w-full sm:w-5/12 flex items-center justify-center p-2">
-                <div className="relative w-28 h-40 sm:w-32 sm:h-44 bg-[#001810] rounded-[24px] border-4 border-slate-800 shadow-md p-1.5 flex flex-col justify-between overflow-hidden">
-                  {/* Top Notch */}
-                  <div className="w-12 h-2 bg-slate-800 rounded-full mx-auto mb-1"></div>
-                  {/* Screen Content */}
-                  <div className="w-full h-full bg-[#eef6ed] rounded-[16px] flex flex-col items-center justify-center p-2 text-center relative overflow-hidden">
-                    {/* Decorative Leaves inside screen */}
-                    <Leaf className="w-10 h-10 text-[#1b5e20] opacity-20 absolute -bottom-1 -left-1" />
-                    <Leaf className="w-8 h-8 text-[#1b5e20] opacity-20 absolute -top-1 -right-1" />
-                    <div className="w-10 h-10 rounded-full bg-[#1b5e20] flex items-center justify-center text-white mb-1 shadow-sm">
-                      <MessageSquare className="w-5 h-5" />
-                    </div>
-                    <div className="w-12 h-1.5 bg-[#1b5e20]/40 rounded-full mb-1"></div>
-                    <div className="w-8 h-1.5 bg-[#1b5e20]/30 rounded-full"></div>
-                  </div>
-                </div>
+              {/* POG Image Illustration */}
+              <div className="w-full sm:w-4/12 flex items-center justify-center p-2">
+                <img
+                  src={pog.src}
+                  alt="Why Reach Out Support"
+                  className="w-28 sm:w-36 md:w-40 h-auto max-h-44 object-contain"
+                />
               </div>
             </div>
 
@@ -214,10 +230,10 @@ const NeedHelpSupport = () => {
                   <Users className="w-6 h-6" />
                 </div>
                 <div>
-                  <h4 className="font-poppins font-semibold text-xs sm:text-sm text-[#1b5e20] uppercase tracking-wide mb-0.5">
+                  <h4 className="font-poppins font-semibold text-sm sm:text-base text-[#1b5e20] uppercase tracking-wide mb-0.5">
                     DEDICATED RELATIONSHIP MANAGERS
                   </h4>
-                  <p className="font-inter text-xs text-gray-600 font-medium leading-relaxed">
+                  <p className="font-inter text-[13px] text-black font-medium leading-relaxed">
                     Personalised assistance from start to finish.
                     <br className="hidden sm:block" />
                     Your success is our priority.

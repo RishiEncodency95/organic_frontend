@@ -551,21 +551,21 @@ const HeroSection = () => {
 
                   {/* Book Your Stall */}
                   <div className="relative shrink-0">
-                    <Sparkle color="#ffc107" shadow="#ea580c" style={{ top: "-12px", left: "5%", animationDelay: "0s" }} />
-                    <Sparkle color="#ff9800" shadow="#c2410c" style={{ top: "-15px", left: "28%", animationDelay: "0.3s" }} />
-                    <Sparkle color="#ffdd00" shadow="#ea580c" style={{ top: "-13px", left: "50%", animationDelay: "0.6s" }} />
-                    <Sparkle color="#ff9800" shadow="#c2410c" style={{ top: "-15px", left: "72%", animationDelay: "0.9s" }} />
-                    <Sparkle color="#ffc107" shadow="#ea580c" style={{ top: "-12px", right: "5%", animationDelay: "1.2s" }} />
+                    <Sparkle color="#ffc107" shadow="#4B1426" style={{ top: "-12px", left: "5%", animationDelay: "0s" }} />
+                    <Sparkle color="#ff9800" shadow="#4B1426" style={{ top: "-15px", left: "28%", animationDelay: "0.3s" }} />
+                    <Sparkle color="#ffdd00" shadow="#4B1426" style={{ top: "-13px", left: "50%", animationDelay: "0.6s" }} />
+                    <Sparkle color="#ff9800" shadow="#4B1426" style={{ top: "-15px", left: "72%", animationDelay: "0.9s" }} />
+                    <Sparkle color="#ffc107" shadow="#4B1426" style={{ top: "-12px", right: "5%", animationDelay: "1.2s" }} />
                     <Link
                       href="/registration/book-a-stand"
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="group relative inline-flex items-center justify-start gap-2 px-4 py-2.5 md:px-5 md:py-2.5 rounded-lg font-bold text-xs uppercase tracking-widest text-white transition-all active:scale-95 relative z-10 w-full sm:w-auto overflow-hidden shadow-md"
+                      className="group relative inline-flex items-center justify-start gap-2 px-4 py-2.5 md:px-5 md:py-2.5 rounded-lg font-bold text-xs uppercase tracking-widest text-white hover:bg-[#360e1b] transition-all active:scale-95 relative z-10 w-full sm:w-auto overflow-hidden shadow-md border border-white/10"
                       style={{
-                        background: "linear-gradient(135deg, #ea580c, #c2410c)",
+                        background: "#4B1426",
                       }}
                     >
-                      <span className="absolute inset-0 bg-white/10 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-500 skew-x-12" />
+                      <span className="absolute inset-0 bg-white/15 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-500 skew-x-12" />
                       Book Your Stall <ArrowRight size={15} className="group-hover:translate-x-1 transition-transform" />
                     </Link>
                   </div>
