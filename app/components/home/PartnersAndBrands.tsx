@@ -73,7 +73,7 @@ const PartnersAndBrands = () => {
           <p className="text-[10px] md:text-[14px] font-bold text-gray-500 tracking-[0.2em] uppercase mb-0.5">
             Trusted By
           </p>
-          <h2 className="text-2xl md:text-3xl font-semibold text-[#1a5a2a] tracking-tight">
+          <h2 className="text-2xl md:text-[28px] font-semibold text-[#1a5a2a] tracking-tight">
             INDUSTRY LEADERS
           </h2>
           {/* <Divider /> */}
@@ -284,7 +284,7 @@ const PartnersAndBrands = () => {
           <div className="absolute w-full h-[2px] bg-gradient-to-r from-transparent via-[#3b8c2a]/80 to-transparent"></div>
           <div className="bg-[#fafaf9] px-6 py-1.5 relative z-10 flex items-center gap-3 border border-[#3b8c2a]/80 rounded-full shadow-sm">
             <Leaf size={14} className="text-[#3b8c2a]/80 transform -rotate-12" />
-            <h3 className="text-[11px] md:text-[13px] font-black text-[#1a5a2a] tracking-[0.2em] uppercase">
+            <h3 className="text-[11px] md:text-[13px] font-bold text-[#1a5a2a] tracking-[0.2em] uppercase">
               EMERGING ORGANIC BRANDS
             </h3>
             <Leaf size={14} className="text-[#3b8c2a]/80 transform rotate-12" />

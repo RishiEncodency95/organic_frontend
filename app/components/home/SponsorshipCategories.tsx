@@ -116,59 +116,60 @@ const SponsorshipCategories = () => {
 
         {/* HEADER */}
         <div className="flex items-center justify-center gap-3 mb-6">
-          <div className="h-[1px] w-12 bg-[#3b8c2a]/30"></div>
+          <div className="h-[2px] w-12 bg-[#3b8c2a]/60"></div>
           <Leaf className="w-4 h-4 text-[#3b8c2a]" />
-          <h2 className="text-[16px] md:text-[20px] font-black text-[#0b2912] uppercase tracking-widest">
+          <h2 className="text-[16px] md:text-[20px] font-semibold text-[#0b2912] uppercase tracking-widest">
             SPONSORSHIP OPPORTUNITIES
           </h2>
           <Leaf className="w-4 h-4 text-[#3b8c2a] scale-x-[-1]" />
-          <div className="h-[1px] w-12 bg-[#3b8c2a]/30"></div>
+          <div className="h-[2px] w-12 bg-[#3b8c2a]/60"></div>
         </div>
 
         {/* TOP GRID: CATEGORIES */}
-        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-3 mb-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-2 mb-5">
           {SponsorTypes.map((sponsor, idx) => {
-            // Softened pastel gradients and colors
-            const multiColors = [
-              { bg: 'from-orange-50 via-orange-50/50 to-red-50', text: 'text-orange-400', border: 'border-orange-100', strip: 'from-orange-200 via-red-200 to-rose-300' },
-              { bg: 'from-blue-50 via-cyan-50/50 to-teal-50', text: 'text-blue-400', border: 'border-blue-100', strip: 'from-blue-200 via-cyan-200 to-teal-300' },
-              { bg: 'from-fuchsia-50 via-purple-50/50 to-pink-50', text: 'text-purple-400', border: 'border-purple-100', strip: 'from-fuchsia-200 via-purple-200 to-pink-300' },
-              { bg: 'from-emerald-50 via-green-50/50 to-teal-50', text: 'text-emerald-400', border: 'border-emerald-100', strip: 'from-emerald-200 via-green-200 to-teal-300' },
-              { bg: 'from-rose-50 via-pink-50/50 to-red-50', text: 'text-rose-400', border: 'border-rose-100', strip: 'from-rose-200 via-pink-200 to-red-300' },
-              { bg: 'from-indigo-50 via-blue-50/50 to-cyan-50', text: 'text-indigo-400', border: 'border-indigo-100', strip: 'from-indigo-200 via-blue-200 to-cyan-300' },
-              { bg: 'from-lime-50 via-green-50/50 to-emerald-50', text: 'text-lime-500', border: 'border-lime-100', strip: 'from-lime-300 via-green-300 to-emerald-300' },
-              { bg: 'from-cyan-50 via-sky-50/50 to-blue-50', text: 'text-cyan-400', border: 'border-cyan-100', strip: 'from-cyan-200 via-sky-200 to-blue-300' },
-            ];
-            const colorTheme = multiColors[idx % multiColors.length];
+            // Use properties from SponsorTypes or defaults
+            const isExclusive = sponsor.exclusive;
+            const iconBg = isExclusive ? 'bg-[#F2B40E]/10' : 'bg-[#f4fbf6]';
+            const iconBorder = isExclusive ? 'border-[#F2B40E]/30' : 'border-[#e6f2e8]';
+            const iconColor = isExclusive ? 'text-[#F2B40E]' : 'text-[#3b8c2a]';
+            const hoverBg = isExclusive ? 'group-hover:bg-[#F2B40E]' : 'group-hover:bg-[#3b8c2a]';
+            const hoverIconColor = isExclusive ? 'group-hover:text-[#0b2912]' : 'group-hover:text-white';
+            const hoverBorder = isExclusive ? 'hover:border-[#F2B40E]/50' : 'hover:border-[#3b8c2a]/30';
 
             return (
               <motion.div
                 key={idx}
                 initial={{ opacity: 0, y: 15 }}
                 whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.3, delay: idx * 0.05 }}
-                className="bg-white rounded-xl p-3 flex flex-col items-center text-center justify-between border border-gray-100 shadow-sm hover:shadow-md hover:-translate-y-1 transition-all duration-300 group relative overflow-hidden min-h-[160px]"
+                viewport={{ once: true, margin: "-50px" }}
+                transition={{ duration: 0.4, delay: idx * 0.05 }}
+                className={`bg-white rounded-2xl p-2 lg:px-4 lg:py-3 flex flex-col sm:flex-row items-start sm:items-center gap-4 border border-gray-200 shadow-[0_4px_20px_rgba(0,0,0,0.03)] hover:shadow-[0_12px_35px_rgba(11,41,18,0.08)] ${hoverBorder} hover:-translate-y-1.5 transition-all duration-300 group relative overflow-hidden cursor-pointer`}
               >
-                {/* Vivid Multi-color Gradient Bottom Border */}
-                <div className={`absolute bottom-0 left-0 right-0 h-[4px] bg-gradient-to-r ${colorTheme.strip} group-hover:h-[6px] transition-all duration-300`}></div>
-
-                {sponsor.exclusive && (
-                  <div className="absolute top-0 right-0 bg-yellow-400 text-black text-[9px] md:text-[10px] font-black px-2 py-0.5 rounded-bl-md uppercase tracking-wider z-10">
+                {/* Exclusive Badge */}
+                {isExclusive && (
+                  <div className="absolute top-0 right-0 bg-gradient-to-r from-[#F2B40E] to-[#f58220] text-[#0b2912] text-[10px] font-black px-3 py-1 rounded-bl-lg uppercase tracking-widest z-10 shadow-sm">
                     Exclusive
                   </div>
                 )}
 
-                <div className={`w-12 h-12 rounded-full mb-2 flex items-center justify-center relative overflow-hidden shadow-inner border bg-gradient-to-br ${colorTheme.bg} ${colorTheme.border}`}>
-                  <sponsor.icon className={`w-6 h-6 relative z-10 ${colorTheme.text} group-hover:scale-110 transition-transform duration-300`} strokeWidth={1.5} />
+                {/* Icon Container */}
+                <div className={`w-14 h-14 rounded-[14px] ${iconBg} ${iconBorder} border flex items-center justify-center shrink-0 ${hoverBg} group-hover:scale-105 group-hover:-rotate-3 group-hover:shadow-md transition-all duration-300 shadow-sm relative z-10`}>
+                  <sponsor.icon className={`w-6 h-6 ${iconColor} ${hoverIconColor} group-hover:scale-110 transition-all duration-300`} strokeWidth={1.5} />
                 </div>
 
-                <h4 className="text-[14px] md:text-[15px] font-bold text-gray-900 leading-[1.1] mb-1 uppercase tracking-wide group-hover:text-black transition-colors z-10 relative">
-                  {sponsor.title}
-                </h4>
-                <p className="text-[13px] md:text-[14px] text-gray-500 leading-[1.3] font-medium z-10 relative">
-                  {sponsor.desc}
-                </p>
+                {/* Content */}
+                <div className="flex flex-col z-10 flex-1">
+                  <h4 className={`text-[14px] font-semibold text-[#0b2912] leading-[1.2] mb-1 uppercase tracking-wide transition-colors ${isExclusive ? 'group-hover:text-[#f58220]' : 'group-hover:text-[#3b8c2a]'}`}>
+                    {sponsor.title}
+                  </h4>
+                  <p className="text-[12.5px] text-gray-500 leading-[1.4] font-medium pr-2">
+                    {sponsor.desc}
+                  </p>
+                </div>
+
+                {/* Subtle Hover Gradient Background */}
+                <div className={`absolute -bottom-12 -right-12 w-32 h-32 rounded-full blur-2xl pointer-events-none transition-opacity duration-500 opacity-0 group-hover:opacity-100 ${isExclusive ? 'bg-[#F2B40E]/10' : 'bg-[#3b8c2a]/5'}`}></div>
               </motion.div>
             );
           })}
@@ -180,22 +181,22 @@ const SponsorshipCategories = () => {
           {/* LEFT: INFO & STATS */}
           <div className="flex-1 flex flex-col gap-3">
             {/* Alert Banner */}
-            <div className="bg-[#f2f8f4] border border-[#3b8c2a]/20 rounded-xl p-3 flex flex-col sm:flex-row items-center sm:items-start gap-4">
-              <div className="flex items-center gap-3 w-full sm:w-auto">
-                <div className="w-10 h-10 rounded bg-[#0b2912] flex items-center justify-center shrink-0">
-                  <Calendar className="w-5 h-5 text-white" />
+            <div className="w-full bg-[#f2f8f4] border border-[#3b8c2a]/20 rounded-xl p-3 flex flex-col sm:flex-row items-center sm:items-start gap-4">
+              <div className="flex items-center gap-3 w-[50%]">
+                <div className="w-11 h-11 rounded-xl bg-gradient-to-br from-[#F2B40E] to-[#f58220] flex items-center justify-center shrink-0 shadow-[0_4px_15px_rgba(242,180,14,0.3)] border border-[#F2B40E]/50">
+                  <Calendar className="w-5 h-5 text-[#0b2912]" strokeWidth={2.5} />
                 </div>
-                <div>
-                  <h4 className="text-[14px] font-black text-[#0b2912] uppercase leading-tight">LIMITED SPONSORSHIP SLOTS AVAILABLE</h4>
+                <div className='flex flex-col gap-1'>
+                  <h4 className="text-[14px] font-semibold text-[#0b2912] uppercase leading-tight">LIMITED SPONSORSHIP SLOTS AVAILABLE</h4>
                   <p className="text-[13px] md:text-[14px] text-gray-600 font-medium leading-tight">Secure your category before it's gone!</p>
                 </div>
               </div>
               <div className="hidden sm:block w-[1px] h-10 bg-gray-300"></div>
-              <div className="flex items-center gap-2">
+              <div className="flex items-center gap-4 w-[50%]">
                 <div className="w-8 h-8 rounded bg-white flex items-center justify-center shrink-0 border border-gray-200">
                   <Star className="w-4 h-4 text-[#3b8c2a]" />
                 </div>
-                <p className="text-[13px] md:text-[14px] text-gray-700 font-medium leading-snug max-w-[200px]">
+                <p className="text-[13px] md:text-[14px] text-gray-700 font-medium leading-snug">
                   Featured sponsors get exclusive media coverage & brand promotions.
                 </p>
               </div>
@@ -309,7 +310,7 @@ const SponsorshipCategories = () => {
 
           {/* RIGHT: CONTACT FORM */}
           <div className="w-full lg:w-[400px] bg-white rounded-xl shadow-md border border-gray-200 p-4 shrink-0">
-            <h3 className="text-[16px] md:text-[18px] font-black text-[#0b2912] uppercase text-center mb-1">INTERESTED IN SPONSORING?</h3>
+            <h3 className="text-[16px] md:text-[18px] font-semibold text-[#0b2912] uppercase text-center mb-1">INTERESTED IN SPONSORING?</h3>
             <div className="w-12 h-1 bg-[#3b8c2a] mx-auto mb-4"></div>
 
             <form className="flex flex-col gap-3">
