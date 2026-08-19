@@ -202,6 +202,8 @@ export default function HeroSection() {
                   <Sparkle color="#4ade80" shadow="#1b5e20" style={{ top: "-10px", right: "10%", animationDelay: "1s" }} />
                   <Link
                     href="/registration/buyer-registration"
+                    target="_blank"
+                    rel="noopener noreferrer"
                     className="blue-btn-hero text-white px-4 py-2 rounded-lg font-semibold text-[10px] uppercase tracking-widest flex items-center justify-start gap-2 transition-all active:scale-95 shadow-lg relative z-10 w-full sm:w-auto"
                   >
                     REGISTER AS A BUYER <ArrowRight size={14} />
@@ -212,7 +214,9 @@ export default function HeroSection() {
                   <Sparkle color="#f97316" shadow="#c2410c" style={{ top: "-15px", left: "50%", animationDelay: "0.4s" }} />
                   <Sparkle color="#f97316" shadow="#c2410c" style={{ top: "-10px", right: "10%", animationDelay: "0.8s" }} />
                   <Link
-                    href="/book-a-stand"
+                    href="/participate-as-exhibitor"
+                    target="_blank"
+                    rel="noopener noreferrer"
                     className="group relative inline-flex items-center justify-start gap-2 px-4 py-2 rounded-lg font-semibold text-[10px] uppercase tracking-widest text-white transition-all active:scale-95 shadow-2xl z-10 w-full sm:w-auto overflow-hidden"
                     style={{
                       background: "linear-gradient(135deg, #ea580c, #c2410c)",

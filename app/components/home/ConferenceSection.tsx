@@ -175,7 +175,7 @@ const ConferenceSeminars = () => {
                 <OrangeSparkle style={{ bottom: '-11px', right: '28%', animationDelay: '0.55s' }} />
               </div>
 
-              <Link href="/conference" target="_blank" className="relative z-10">
+              <Link href="https://arogya.namogange.org/" target="_blank" rel="noopener noreferrer" className="relative z-10">
                 <button className="flex items-center justify-center gap-2 px-8 py-2 rounded-xl bg-gradient-to-r from-[#f58634] to-[#ff9b4f] hover:from-[#e67929] hover:to-[#f58634] text-white font-semibold uppercase tracking-wider shadow-[0_5px_15px_rgba(245,134,52,0.3)] hover:shadow-[0_8px_25px_rgba(245,134,52,0.4)] transition-all duration-300 hover:-translate-y-1 min-h-[44px] group">
                   <span className="text-[12px] md:text-[14px]">View Conference Schedule</span>
                   <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />

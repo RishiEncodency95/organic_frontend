@@ -29,7 +29,13 @@ export default function sitemap(): MetadataRoute.Sitemap {
       priority: 0.8,
     },
     {
-      url: `${baseUrl}/conference`,
+      url: `${baseUrl}/buyer-seller-meet`,
+      lastModified: new Date(),
+      changeFrequency: 'monthly',
+      priority: 0.8,
+    },
+    {
+      url: `${baseUrl}/participate-as-exhibitor`,
       lastModified: new Date(),
       changeFrequency: 'monthly',
       priority: 0.8,

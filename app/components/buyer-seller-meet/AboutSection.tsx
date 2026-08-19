@@ -17,11 +17,11 @@ export default function AboutSection() {
   ];
 
   const links = [
-    { label: "Register as Buyer", icon: <User size={16} />, href: "/registration/buyer-registration" },
-    { label: "Participate as Exhibitor", icon: <Briefcase size={16} />, href: "/conference" },
+    { label: "Register as Buyer", icon: <User size={16} />, href: "/registration/buyer-registration", target: "_blank" },
+    { label: "Participate as Exhibitor", icon: <Briefcase size={16} />, href: "/participate-as-exhibitor", target: "_blank" },
     { label: "How it Works", icon: <HelpCircle size={16} />, href: "#how-it-works" },
     { label: "Who Can Participate", icon: <Users size={16} />, href: "#who-can-participate" },
-    { label: "Contact Us", icon: <Phone size={16} />, href: "/contact" },
+    { label: "Contact Us", icon: <Phone size={16} />, href: "/contact", target: "_blank" },
   ];
 
   return (
@@ -111,7 +111,13 @@ export default function AboutSection() {
                     {content}
                   </a>
                 ) : (
-                  <Link key={i} href={link.href} {...commonProps}>
+                  <Link
+                    key={i}
+                    href={link.href}
+                    target={link.target}
+                    rel={link.target === "_blank" ? "noopener noreferrer" : undefined}
+                    {...commonProps}
+                  >
                     {content}
                   </Link>
                 );

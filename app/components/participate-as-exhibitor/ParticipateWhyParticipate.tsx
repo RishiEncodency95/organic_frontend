@@ -16,7 +16,7 @@ const whyBuyers = [
   "Find reliable suppliers and quality products",
 ];
 
-const ConferenceWhyParticipate = () => {
+const ParticipateWhyParticipate = () => {
   return (
     <section className="container mx-auto max-w-[1400px] px-6 py-2 md:py-4">
       <div className="rounded-2xl border border-gray-200/60 bg-[#fcfcf0] p-6 sm:p-8">
@@ -78,4 +78,4 @@ const ConferenceWhyParticipate = () => {
   );
 };
 
-export default ConferenceWhyParticipate;
+export default ParticipateWhyParticipate;

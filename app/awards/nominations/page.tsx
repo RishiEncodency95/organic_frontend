@@ -22,6 +22,7 @@ import {
   Leaf,
   Link2,
   ArrowRight,
+  Check,
 } from "lucide-react";
 import nominationBg from "../../assets/awards/nomination.webp";
 import bharatOrganicLogo from "../../assets/awards/bharat_organic.webp";
@@ -277,7 +278,7 @@ function SectionBadge({ n, title }: { n: number; title: string }) {
 function SidebarCheck({ text }: { text: string }) {
   return (
     <li className="flex items-start gap-2 text-[13px] text-emerald-50/90">
-      <CheckCircle2 className="mt-0.5 h-4 w-4 shrink-0 text-lime-400 transition-transform duration-200 group-hover:scale-110" />
+      <Check className="mt-0.5 h-4 w-4 shrink-0 text-lime-400 transition-transform duration-200 group-hover:scale-110" />
       <span>{text}</span>
     </li>
   );
@@ -887,7 +888,7 @@ export default function BharatOrganicAwards() {
                 "Individuals & Professionals",
               ].map((t) => (
                 <li key={t} className="flex items-center gap-2">
-                  <CheckCircle2 className="h-3.5 w-3.5 shrink-0 text-lime-600" />
+                  <Check className="h-3.5 w-3.5 shrink-0 text-lime-600" />
                   {t}
                 </li>
               ))}

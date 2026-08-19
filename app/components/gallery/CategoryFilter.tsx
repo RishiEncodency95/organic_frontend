@@ -56,7 +56,7 @@ const CategoryFilter: React.FC<CategoryFilterProps> = ({ activeCategory = 'Inaug
               <button
                 key={category.name}
                 onClick={() => onCategoryChange?.(category.name)}
-                className={`flex items-center gap-1.5 px-2 py-1.5 rounded-md text-[11.5px] lg:text-[12.5px] font-semibold transition-all border whitespace-nowrap ${
+                className={`flex items-center gap-1.5 px-2 py-1.5 rounded-md text-[10.5px] lg:text-[12px] font-semibold transition-all border whitespace-nowrap ${
                   isActive
                     ? 'bg-[#c2410c] text-white border-[#c2410c]'
                     : 'bg-white text-black border-gray-200 hover:border-[#c2410c] hover:text-[#c2410c]'
