@@ -66,7 +66,7 @@ const AwardsHero = () => {
         }
       `}</style>
 
-      <section className="relative flex items-center pt-3 md:pt-5 pb-4 md:pb-6 overflow-hidden min-h-[380px] sm:min-h-[420px] md:min-h-[450px] lg:min-h-[470px] bg-[#fcfcf0] font-inter border-b-4 border-[#ea580c]">
+      <section className="relative flex items-center pt-3 md:pt-5 pb-4 md:pb-6 overflow-hidden h-[68vh] md:h-[72vh] lg:h-[78vh] min-h-[400px] bg-[#fcfcf0] font-inter border-b-4 border-[#ea580c]">
         {/* Background Image */}
         <div className="absolute inset-0 z-0 overflow-hidden">
           <img
@@ -78,7 +78,7 @@ const AwardsHero = () => {
 
         <SectionContainer className="relative z-20 py-1 md:py-2">
           <div
-            className={`max-w-2xl transition-all duration-700 ease-out pl-3 md:pl-10 lg:pl-14 ${
+            className={`max-w-2xl transition-all duration-700 ease-out ${
               mounted ? "translate-y-0 opacity-100" : "translate-y-6 opacity-0"
             }`}
           >
