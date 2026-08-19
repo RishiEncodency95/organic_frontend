@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
-import { ArrowRight, Newspaper, Sprout, Apple, Package, Recycle, Lightbulb, MessageCircle, FileText, BookOpen, Mail } from "lucide-react";
+import { ArrowRight, Newspaper, Sprout, Apple, Package, Recycle, Lightbulb, FileText, BookOpen, Mail } from "lucide-react";
 import { Reveal } from "./BlogReveal";
 
 const categories = [
@@ -28,12 +28,13 @@ const BlogSidebar = () => {
   };
 
   return (
-    <aside className="space-y-5 lg:sticky lg:top-24 self-start">
+    <aside className="space-y-5 lg:sticky lg:top-24 self-start font-inter">
       <Reveal>
-        <div className="bg-[#fcfdfc] rounded-2xl border border-gray-200/60 shadow-sm p-5">
-          <h3
-            className="text-[18px] font-extrabold text-[#154726] mb-2 tracking-tight"
-          >
+        <div
+          className="bg-white rounded-xl p-5 font-inter"
+          style={{ boxShadow: "rgba(0, 0, 0, 0.02) 0px 1px 3px 0px, rgba(27, 31, 35, 0.15) 0px 0px 0px 1px" }}
+        >
+          <h3 className="font-poppins font-semibold text-[17px] sm:text-[18px] text-[#1b5e20] mb-3 tracking-tight">
             Explore Categories
           </h3>
           <ul className="space-y-0.5">
@@ -42,21 +43,21 @@ const BlogSidebar = () => {
                 <li>
                   <a
                     href="#"
-                    className="group flex items-center justify-between py-1.5 px-2 -mx-2 rounded-lg hover:bg-[#f4fcf6] transition-colors duration-250"
+                    className="group flex items-center justify-between py-1.5 px-2 -mx-2 rounded-lg hover:bg-[#f4fcf6] transition-colors duration-250 font-inter"
                   >
-                    <span className="flex items-center gap-2.5 text-[13px] font-medium text-gray-600 group-hover:text-[#154726] transition-colors">
+                    <span className="flex items-center gap-2.5 text-[13px] font-medium text-gray-700 group-hover:text-[#1b5e20] transition-colors">
                       <span className={`w-7 h-7 rounded-full flex items-center justify-center ${c.color} transition-transform duration-300 group-hover:scale-110 group-hover:rotate-6`}>
                         <c.icon className="w-3.5 h-3.5" />
                       </span>
                       {c.label}
                     </span>
-                    <span className="text-xs text-gray-400 font-medium">{c.count}</span>
+                    <span className="text-xs text-gray-500 font-medium font-inter">{c.count}</span>
                   </a>
                 </li>
               </Reveal>
             ))}
           </ul>
-          <a href="#" className="group mt-2 flex items-center gap-1 text-[12px] font-bold uppercase tracking-wider text-[#3b8c2a]">
+          <a href="#" className="group mt-3 flex items-center gap-1 text-[12px] font-semibold uppercase tracking-wider text-[#3b8c2a] font-poppins">
             View all categories
             <ArrowRight className="w-3.5 h-3.5 transition-transform duration-300 group-hover:translate-x-1" />
           </a>
@@ -64,44 +65,41 @@ const BlogSidebar = () => {
       </Reveal>
 
       <Reveal delay={100}>
-        <div className="relative overflow-hidden bg-gradient-to-br from-[#0b2912] to-[#154726] rounded-2xl p-5 text-white shadow-lg">
+        <div className="relative overflow-hidden bg-gradient-to-br from-[#0b2912] to-[#154726] rounded-xl p-5 text-white shadow-lg font-inter">
           <div className="absolute -right-6 -top-6 w-24 h-24 rounded-full bg-white/5" />
           <div className="absolute -right-2 -bottom-8 w-28 h-28 rounded-full bg-white/5" />
-          <div className="flex items-start gap-4">
+          <div className="flex items-start gap-4 mb-3">
             <div className="shrink-0 w-11 h-11 rounded-xl bg-[#F2B40E]/15 border border-[#F2B40E]/40 flex items-center justify-center">
               <Mail className="w-5 h-5 text-[#F2B40E]" />
             </div>
             <div className="min-w-0 flex-1">
-              <h3
-                className="text-[18px] font-extrabold mb-1 tracking-tight"
-              >
+              <h3 className="font-poppins font-semibold text-[18px] mb-1 tracking-tight">
                 Stay Ahead.
               </h3>
-              <p className="text-[13px] text-white/70 mb-3 leading-relaxed">
+              <p className="text-[12px] text-white/80 leading-relaxed font-inter">
                 Get the latest organic industry news, sustainability insights and Bharat Organic
                 Expo updates in your inbox.
               </p>
-           
             </div>
           </div>
           <div>
-               <form onSubmit={handleSubscribe} className="space-y-2 relative z-10">
-                <input
-                  type="email"
-                  required
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  placeholder="Enter your email"
-                  className="w-full px-3.5 py-2.5 rounded-md text-sm text-gray-800 bg-white placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-[#F2B40E] transition-shadow duration-300"
-                />
-                <button
-                  type="submit"
-                  className="w-full py-2.5 rounded-md bg-[#F2B40E] text-[#0b2912] text-[12px] font-bold uppercase tracking-wider hover:bg-[#ffc533] transition-all duration-300 hover:shadow-lg active:scale-95"
-                >
-                  {subscribed ? "Subscribed ✓" : "Subscribe"}
-                </button>
-              </form>
-              <p className="text-[11px] text-white/50 mt-2">No spam. Unsubscribe anytime.</p>
+            <form onSubmit={handleSubscribe} className="space-y-2 relative z-10 font-inter">
+              <input
+                type="email"
+                required
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                placeholder="Enter your email"
+                className="w-full px-3.5 py-2.5 rounded-md text-sm text-gray-800 bg-white placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-[#F2B40E] transition-shadow duration-300 font-inter"
+              />
+              <button
+                type="submit"
+                className="w-full py-2.5 rounded-md bg-[#F2B40E] text-[#0b2912] text-[12px] font-bold uppercase tracking-wider hover:bg-[#ffc533] transition-all duration-300 hover:shadow-lg active:scale-95 font-poppins"
+              >
+                {subscribed ? "Subscribed ✓" : "Subscribe"}
+              </button>
+            </form>
+            <p className="text-[11px] text-white/50 mt-2 font-inter">No spam. Unsubscribe anytime.</p>
           </div>
         </div>
       </Reveal>

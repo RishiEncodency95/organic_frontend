@@ -28,31 +28,33 @@ const latestUpdates = [
 
 const BlogLatest = () => {
   return (
-    <section className="container mx-auto max-w-[1400px] px-6 lg:px-0 py-2 md:py-4">
+    <section className="container mx-auto max-w-[1400px] px-6 lg:px-0 py-2 md:py-4 font-inter">
       <SectionHeading action="View all">Latest from Bharat Organic Expo</SectionHeading>
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
         {latestUpdates.map((u, i) => (
           <Reveal key={u.title} delay={i * 100} direction={i % 2 === 0 ? "left" : "right"}>
-            <a href="#" className="group block rounded-2xl overflow-hidden bg-[#fcfdfc] border border-gray-200/60 shadow-[rgba(0,0,0,0.02)_0px_1px_3px_0px,rgba(27,31,35,0.15)_0px_0px_0px_1px] hover:shadow-[0_15px_40px_rgba(0,0,0,0.1)] transition-all duration-400 hover:-translate-y-1">
-              <div className="relative overflow-hidden h-[160px]">
+            <a
+              href="#"
+              className="group block rounded-xl overflow-hidden bg-white transition-all duration-300 hover:-translate-y-1 font-inter"
+              style={{ boxShadow: "rgba(0, 0, 0, 0.02) 0px 1px 3px 0px, rgba(27, 31, 35, 0.15) 0px 0px 0px 1px" }}
+            >
+              <div className="relative overflow-hidden h-[160px] bg-gray-100">
                 <img src={u.img} alt={u.title} className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-[1.03]" />
-                <span className="absolute top-2 left-2 bg-[#1b5e20] text-white text-[9px] font-bold uppercase tracking-wider px-2 py-1 rounded">
+                <span className="absolute top-2 left-2 bg-[#1b5e20] text-white text-[9px] font-bold uppercase tracking-wider px-2 py-1 rounded font-poppins">
                   {u.tag}
                 </span>
               </div>
-              <div className="p-3">
-                <p
-                  className="text-[13px] md:text-[14px] font-bold text-[#0f5c2e] leading-snug line-clamp-2 group-hover:text-[#3b8c2a] transition-colors"
-                >
+              <div className="p-3.5">
+                <h4 className="font-poppins font-semibold text-[15px] sm:text-[16px] text-[#1b5e20] leading-snug line-clamp-2 group-hover:text-[#3b8c2a] transition-colors">
                   {u.title}
-                </p>
-                <p className="text-[16px] text-gray-500 leading-relaxed line-clamp-2 mt-1">{u.desc}</p>
-                <div className="flex items-center gap-3 mt-2 text-[10px] text-gray-500 font-medium">
+                </h4>
+                <p className="font-inter text-[13px] text-black leading-relaxed line-clamp-2 mt-1">{u.desc}</p>
+                <div className="flex items-center gap-3 mt-3 text-[11px] text-gray-500 font-medium font-inter pt-2 border-t border-gray-100">
                   <span className="flex items-center gap-1">
-                    <Calendar className="w-3 h-3 text-[#3b8c2a]" /> {u.date}
+                    <Calendar className="w-3.5 h-3.5 text-[#3b8c2a]" /> {u.date}
                   </span>
                   <span className="flex items-center gap-1">
-                    <Clock className="w-3 h-3 text-gray-400" /> {u.read}
+                    <Clock className="w-3.5 h-3.5 text-gray-400" /> {u.read}
                   </span>
                 </div>
               </div>

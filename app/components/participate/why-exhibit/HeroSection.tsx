@@ -115,7 +115,9 @@ const HeroSection = () => (
               <Sparkle color="#f97316" shadow="#c2410c" style={{ top: "-15px", left: "50%", animationDelay: "0.4s" }} />
               <Sparkle color="#f97316" shadow="#c2410c" style={{ top: "-10px", right: "10%", animationDelay: "0.8s" }} />
               <Link
-                href="/book-a-stand"
+                href="/registration/book-a-stand"
+                target="_blank"
+                rel="noopener noreferrer"
                 className="group relative inline-flex items-center justify-start gap-2 px-5 py-2.5 rounded-lg font-black text-[11px] uppercase tracking-widest text-white transition-all active:scale-95 shadow-2xl relative z-10 w-full sm:w-auto overflow-hidden"
                 style={{
                   background: "linear-gradient(135deg, #ea580c, #c2410c)",
@@ -133,6 +135,7 @@ const HeroSection = () => (
               <Link
                 href="/pdf.pdf"
                 target="_blank"
+                rel="noopener noreferrer"
                 className="blue-btn-hero text-white px-5 py-2.5 rounded-lg font-black text-[11px] uppercase tracking-widest flex items-center justify-start gap-2 transition-all active:scale-95 shadow-lg relative z-10 w-full sm:w-auto"
               >
                 Download Brochure <Download size={14} />

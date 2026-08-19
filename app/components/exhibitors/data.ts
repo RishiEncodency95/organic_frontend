@@ -80,15 +80,15 @@ export const fallbackExhibitors: ApiExhibitor[] = [
 ];
 
 export const HERO_STATS = [
-    { value: "150+", label: "Exhibiting Brands" },
-    { value: "20,000+", label: "Trade Visitors" },
+    { value: "200+", label: "Exhibiting Brands" },
+    { value: "8,000+", label: "Trade Visitors" },
     { value: "50+", label: "Expert Speakers" },
     { value: "2 Days", label: "Of Networking & Business" },
 ];
 
 export const BOTTOM_STATS = [
-    { value: "150+", label: "Exhibitors" },
-    { value: "20,000+", label: "Visitors" },
+    { value: "200+", label: "Exhibitors" },
+    { value: "8,000+", label: "Visitors" },
     { value: "2 Days", label: "Expo Duration" },
     { value: "PAN India", label: "Participation" },
     { value: "B2B + B2C", label: "Business Opportunity" },

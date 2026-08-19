@@ -18,27 +18,28 @@ const experts = [
 
 const BlogExperts = () => {
   return (
-    <section className="mt-4 md:mt-4">
+    <section className="mt-6 md:mt-8 font-inter">
       <SectionHeading action="View all experts">Voices of Experts</SectionHeading>
       <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-4">
         {experts.map((e, i) => (
           <Reveal key={e.name} delay={i * 80} direction={i % 2 === 0 ? "left" : "right"}>
-            <div className="bg-[#fcfdfc] rounded-2xl border border-gray-200/60 p-4 shadow-sm hover:shadow-lg hover:-translate-y-1 transition-all duration-400 h-full flex flex-col">
+            <div
+              className="bg-white rounded-xl p-4 transition-all duration-300 hover:-translate-y-1 h-full flex flex-col font-inter"
+              style={{ boxShadow: "rgba(0, 0, 0, 0.02) 0px 1px 3px 0px, rgba(27, 31, 35, 0.15) 0px 0px 0px 1px" }}
+            >
               <img
                 src={e.img}
                 alt={e.name}
                 className="w-12 h-12 rounded-full object-cover mb-3 ring-2 ring-[#e8f2eb]"
               />
-              <p
-                className="text-[14px] font-bold text-[#154726] leading-tight"
-              >
+              <h4 className="font-poppins font-semibold text-[14px] sm:text-[15px] text-[#1b5e20] leading-snug">
                 {e.name}
-              </p>
-              <p className="text-[11px] text-gray-400 mb-2 font-medium">{e.role}</p>
-              <p className="text-xs text-gray-500 italic leading-relaxed flex-1">"{e.quote}"</p>
-              <a href="#" className="group mt-3 text-xs font-bold text-[#3b8c2a] uppercase tracking-wider flex items-center gap-1">
+              </h4>
+              <p className="text-[11px] sm:text-[12px] text-gray-500 mb-2 font-medium font-inter">{e.role}</p>
+              <p className="text-[12px] text-gray-600 italic leading-relaxed flex-1 font-inter">"{e.quote}"</p>
+              <a href="#" className="group mt-3 text-[11px] sm:text-[12px] font-semibold text-[#3b8c2a] uppercase tracking-wider flex items-center gap-1 font-poppins">
                 Read More
-                <ArrowRight className="w-3 h-3 transition-transform duration-300 group-hover:translate-x-1" />
+                <ArrowRight className="w-3.5 h-3.5 transition-transform duration-300 group-hover:translate-x-1" />
               </a>
             </div>
           </Reveal>

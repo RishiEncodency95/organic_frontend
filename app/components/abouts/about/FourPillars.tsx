@@ -42,8 +42,11 @@ const FourPillars = () => {
   return (
     <section className="pt-4 pb-6 bg-white border-t border-gray-100 font-inter">
       <SectionContainer>
-        <div className="text-center mb-4">
-          <h2 className="font-bold text-[18px] text-[#23471d] uppercase tracking-[0.2em]">
+        <div className="text-center mb-5">
+          <h2 
+            className="font-semibold text-[18px] md:text-[22px] text-[#23471d] uppercase tracking-[0.18em] font-poppins"
+            style={{ textShadow: "1px 1px 2px rgba(0,0,0,0.4)" }}
+          >
             ONE PLATFORM. FOUR POWERFUL PILLARS.
           </h2>
         </div>
@@ -55,7 +58,7 @@ const FourPillars = () => {
               className="bg-white border-[1.5px] rounded-[1.25rem] flex flex-col group transition-all duration-300 hover:shadow-xl relative"
               style={{ borderColor: `${pillar.themeColor}55` }}
             >
-              {/* Image Area - Minimized gap from border */}
+              {/* Image Area */}
               <div className="p-[4px]">
                 <div className="relative h-[160px] overflow-hidden rounded-[1rem]">
                   <Image
@@ -78,15 +81,15 @@ const FourPillars = () => {
               </div>
 
               {/* Content Area */}
-              <div className="pt-6 pb-3 px-5 text-center flex flex-col flex-1">
+              <div className="pt-6 pb-4 px-5 text-center flex flex-col flex-1">
                 <h3
-                  className="font-extrabold text-[13px] leading-[1.3] uppercase tracking-wide mb-4 flex flex-col items-center justify-center"
+                  className="font-semibold text-[13px] md:text-[14px] leading-[1.3] uppercase tracking-wide mb-3 flex flex-col items-center justify-center font-poppins"
                   style={{ color: pillar.themeColor }}
                 >
                   <span>{pillar.title[0]}</span>
                   <span>{pillar.title[1]}</span>
                 </h3>
-                <p className="text-gray-600 text-[11px] leading-relaxed font-medium text-justify">
+                <p className="text-gray-900 text-[12px] leading-[1.6] font-semibold text-justify font-inter">
                   {pillar.desc}
                 </p>
               </div>

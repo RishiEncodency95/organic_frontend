@@ -58,7 +58,7 @@ const reasons = [
 ];
 
 const ReasonsSection = () => (
-  <section className="mt-4 pt-4 pb-4 relative overflow-hidden" style={{ backgroundColor: "#fbf8f3" }}>
+  <section className="mt-4 pt-4 pb-4 relative overflow-hidden font-inter" style={{ backgroundColor: "#fbf8f3" }}>
     {/* Decorative right image */}
     <img
       loading="lazy"
@@ -73,9 +73,9 @@ const ReasonsSection = () => (
       <div className="text-center mb-4">
         <div className="flex items-center justify-center gap-4 mb-4">
           <span className="w-12 h-[2px] bg-[#1b5e20]" />
-          <span className="text-[#0c0c3e] font-semibold text-lg md:text-xl uppercase tracking-[0.1em] font-inter">
+          <h2 className="text-[#1b5e20] font-semibold text-lg md:text-xl uppercase tracking-[0.08em] font-poppins">
             Top Reasons to Exhibit at Bharat Organic Expo 2027
-          </span>
+          </h2>
           <span className="w-12 h-[2px] bg-[#1b5e20]" />
         </div>
       </div>
@@ -84,7 +84,7 @@ const ReasonsSection = () => (
         {reasons.map((reason, i) => (
           <div
             key={i}
-            className="bg-white p-3 md:p-5 rounded-2xl border border-transparent flex flex-col items-center text-center group transition-all duration-300 hover:shadow-2xl hover:-translate-y-1"
+            className="bg-white p-3 md:p-4 rounded-xl border border-transparent flex flex-col items-center text-center group transition-all duration-300 hover:shadow-2xl hover:-translate-y-1 font-inter"
             style={{ boxShadow: "rgba(0, 0, 0, 0.05) 0px 0px 0px 1px, rgb(209, 213, 219) 0px 0px 0px 1px inset" }}
           >
             {/* Direct Image Icon without container div */}
@@ -96,20 +96,20 @@ const ReasonsSection = () => (
               className="mb-2 h-10 md:h-14 w-auto object-contain transition-transform group-hover:scale-110 flex-shrink-0"
             />
 
-            <h3 className="text-[10px] md:text-[12px] font-semibold text-[#1b5e20] mb-2 tracking-tight leading-tight uppercase min-h-[32px] md:min-h-[40px] flex flex-col items-center justify-center font-poppins">
+            <h3 className="text-[12px] md:text-[13px] font-semibold text-[#1b5e20] mb-2 tracking-tight leading-tight uppercase min-h-[32px] md:min-h-[38px] flex flex-col items-center justify-center font-poppins">
               <span>{reason.title1}</span>
               <span>{reason.title2}</span>
             </h3>
 
-            <div className="text-slate-900 text-[8px] md:text-[10px] leading-tight mb-3 font-bold flex-1 flex flex-col items-center justify-center font-inter">
+            <div className="text-slate-800 text-[11px] md:text-[12px] font-semibold leading-snug mb-3 flex-1 flex flex-col items-center justify-center font-inter">
               {reason.descLines.map((line, idx) => (
                 <p key={idx}>{line}</p>
               ))}
             </div>
 
-            <ul className="space-y-1 w-full text-left border-t border-slate-100 pt-3 mt-auto">
+            <ul className="space-y-1 w-full text-left border-t border-slate-100 pt-2.5 mt-auto font-inter">
               {reason.points.map((point, idx) => (
-                <li key={idx} className="flex items-start gap-1.5 text-[8px] md:text-[9px] font-bold text-slate-700 font-inter">
+                <li key={idx} className="flex items-start gap-1.5 text-[10px] md:text-[11px] font-semibold text-slate-700 font-inter">
                   <span className="w-1 h-1 rounded-full bg-slate-400 mt-1.5 shrink-0" />
                   {point}
                 </li>

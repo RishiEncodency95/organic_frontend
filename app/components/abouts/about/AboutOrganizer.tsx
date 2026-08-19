@@ -1,6 +1,7 @@
 import React from 'react';
 import Image from 'next/image';
 import organImg from '@/app/assets/about/organi.png';
+import footerRightImg from '@/app/assets/icons/footerright.png';
 import { Clock, Star, Flag } from 'lucide-react';
 import SectionContainer from '@/app/components/layout/SectionContainer';
 
@@ -11,10 +12,10 @@ const AboutOrganizer = () => {
       {/* ABOUT THE ORGANIZER SECTION */}
       <section className="pt-10 pb-6 bg-[#FFFDF1] border-t border-gray-100">
         <SectionContainer>
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-16 divide-y lg:divide-y-0 lg:divide-x divide-gray-200">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 divide-y lg:divide-y-0 lg:divide-x divide-gray-200 items-center">
             
             {/* LEFT - About the Organizer */}
-            <div className="pt-4 lg:pt-0 lg:pr-10">
+            <div className="pt-4 lg:pt-0 lg:pr-6">
               <p className="flex items-center gap-2 text-[#d26019] font-semibold text-[11px] uppercase tracking-[0.22em] mb-2">
                 <span className="inline-block w-6 h-[1.5px] bg-[#d26019]" />
                 ABOUT THE ORGANIZER
@@ -61,18 +62,18 @@ const AboutOrganizer = () => {
               </div>
             </div>
 
-            {/* RIGHT - Image with 9th IHWE styling & badge */}
-            <div className="lg:pl-12 pt-6 lg:pt-0 flex items-center justify-center">
-              <div className="relative w-full max-w-md h-[350px] md:h-[380px]">
+            {/* RIGHT - Image with wider max-width */}
+            <div className="lg:pl-8 pt-6 lg:pt-0 flex items-center justify-center w-full">
+              <div className="relative w-full max-w-xl h-[360px] md:h-[400px] lg:h-[420px]">
 
                 {/* Dot pattern top-right */}
                 <div 
-                  className="absolute -top-4 -right-4 w-24 h-24 z-0 pointer-events-none"
+                  className="absolute -top-4 -right-4 w-28 h-28 z-0 pointer-events-none"
                   style={{ backgroundImage: 'radial-gradient(circle, #d26019 1.2px, transparent 1.2px)', backgroundSize: '9px 9px', opacity: 0.25 }} 
                 />
                 {/* Dot pattern bottom-left */}
                 <div 
-                  className="absolute -bottom-4 -left-4 w-24 h-24 z-0 pointer-events-none"
+                  className="absolute -bottom-4 -left-4 w-28 h-28 z-0 pointer-events-none"
                   style={{ backgroundImage: 'radial-gradient(circle, #23471d 1.2px, transparent 1.2px)', backgroundSize: '9px 9px', opacity: 0.2 }} 
                 />
 
@@ -85,7 +86,7 @@ const AboutOrganizer = () => {
                     src={organImg}
                     alt="Namo Gange Wellness Pvt. Ltd."
                     fill
-                    sizes="(max-width: 768px) 100vw, 50vw"
+                    sizes="(max-width: 1024px) 100vw, 50vw"
                     className="object-cover transition-transform duration-500 group-hover:scale-105"
                   />
                   <div className="absolute bottom-0 left-0 w-full h-[4px] bg-[#d26019]" />
@@ -95,12 +96,12 @@ const AboutOrganizer = () => {
                 {/* Badge */}
                 <div 
                   className="absolute z-20 flex flex-col items-center justify-center text-center p-2"
-                  style={{ bottom: '0px', right: '0px', minWidth: '80px', minHeight: '80px', background: '#d26019', border: '3px solid #fff', boxShadow: '0 6px 24px rgba(210,96,25,0.4)' }}
+                  style={{ bottom: '0px', right: '0px', minWidth: '85px', minHeight: '85px', background: '#d26019', border: '3px solid #fff', boxShadow: '0 6px 24px rgba(210,96,25,0.4)' }}
                 >
-                  <span className="font-black text-[20px] text-white leading-none">
+                  <span className="font-black text-[22px] text-white leading-none">
                     10+
                   </span>
-                  <span className="font-bold text-[7px] text-[#ffe0c8] uppercase tracking-[0.1em] mt-1">
+                  <span className="font-bold text-[8px] text-[#ffe0c8] uppercase tracking-[0.1em] mt-1">
                     YEARS
                   </span>
                 </div>
@@ -112,9 +113,18 @@ const AboutOrganizer = () => {
         </SectionContainer>
       </section>
 
-      {/* OUR JOURNEY & FLAGSHIP EVENTS SECTION */}
-      <section className="pt-4 pb-8 bg-[#FFFDF1] border-t border-gray-100">
-        <SectionContainer>
+      {/* OUR JOURNEY & FLAGSHIP EVENTS SECTION WITH DECORATIVE FOOTER RIGHT IMAGE */}
+      <section className="pt-4 pb-8 bg-[#FFFDF1] border-t border-gray-100 relative overflow-hidden">
+        {/* Right Decorative Image */}
+        <div className="absolute right-0 bottom-0 pointer-events-none opacity-30 md:opacity-40 w-48 md:w-64 lg:w-80 z-0">
+          <Image 
+            src={footerRightImg} 
+            alt="Decoration" 
+            className="w-full h-auto object-contain translate-x-6 translate-y-6" 
+          />
+        </div>
+
+        <SectionContainer className="relative z-10">
 
           {/* Header */}
           <div className="mb-5">
@@ -130,16 +140,16 @@ const AboutOrganizer = () => {
               A LEGACY OF GROWTH & INNOVATION
             </h2>
             
-            <p className="text-gray-900 text-[13px] leading-[1.7] mt-1">
+            <p className="text-gray-900 text-[13px] leading-[1.7] mt-1 font-medium">
               With a proven legacy of delivering result-oriented exhibitions, we forge lasting business relationships and accelerate industry growth.
             </p>
           </div>
 
           {/* 3-col grid */}
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-5 relative z-10">
 
             {/* Timeline card */}
-            <div className="bg-white border border-gray-200 rounded-xl p-5 shadow-sm">
+            <div className="bg-white/95 backdrop-blur-sm border border-gray-200 rounded-xl p-5 shadow-sm">
               <div className="flex items-center gap-2 mb-4">
                 <div className="w-7 h-7 rounded-lg bg-[#fef0e6] flex items-center justify-center shrink-0">
                   <Clock size={16} className="text-[#d26019]" strokeWidth={2} />
@@ -164,7 +174,7 @@ const AboutOrganizer = () => {
             </div>
 
             {/* Core Sectors card */}
-            <div className="bg-white border border-gray-200 rounded-xl p-5 shadow-sm">
+            <div className="bg-white/95 backdrop-blur-sm border border-gray-200 rounded-xl p-5 shadow-sm">
               <div className="flex items-center gap-2 mb-4">
                 <div className="w-7 h-7 rounded-lg bg-[#fef0e6] flex items-center justify-center shrink-0">
                   <Star size={16} className="text-[#d26019]" strokeWidth={2} />
@@ -192,7 +202,7 @@ const AboutOrganizer = () => {
             </div>
 
             {/* Flagship Events card */}
-            <div className="bg-white border border-gray-200 rounded-xl p-5 shadow-sm">
+            <div className="bg-white/95 backdrop-blur-sm border border-gray-200 rounded-xl p-5 shadow-sm">
               <div className="flex items-center gap-2 mb-4">
                 <div className="w-7 h-7 rounded-lg bg-[#fef0e6] flex items-center justify-center shrink-0">
                   <Flag size={16} className="text-[#d26019]" strokeWidth={2} />

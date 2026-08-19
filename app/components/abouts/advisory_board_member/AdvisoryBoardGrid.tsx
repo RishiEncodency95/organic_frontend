@@ -10,14 +10,13 @@ import jagdishImg from "../../../assets/about/advisory_board_member/jagdish.png"
 import dnsharmaImg from "../../../assets/about/advisory_board_member/dnsharma.png";
 import rohitImg from "../../../assets/about/advisory_board_member/rohit.png";
 
-// Placeholder for board members. The user can replace with actual images.
-const placeholderImg = "https://images.unsplash.com/photo-1560250097-0b93528c311a?q=80&w=400&auto=format&fit=crop";
+import SectionContainer from "@/app/components/layout/SectionContainer";
 
 const boardMembers = [
     {
         name: "Prof. Dr. G.S. Tomar",
         designation: "PRESIDENT",
-        organization: "International President of Vishwa Ayurveda Mission, National Vice-President Arogya Bharti.",
+        organization: "International President of Our Ayurveda Mission, National Vice-President Arogya Bharti.",
         location: "India",
         image: tomarImg.src,
     },
@@ -81,67 +80,67 @@ const boardMembers = [
 
 const AdvisoryBoardGrid = () => {
     return (
-        <section className="w-full py-2 md:py-4 bg-[#FAF7EF]">
-            <div className="w-full px-5 lg:px-11">
+        <section className="w-full py-6 md:py-8 bg-[#FAF7EF] font-inter">
+            <SectionContainer>
 
-                {/* Section header — a pressed-seal mark rather than a pill badge,
-                    echoing the certificate/charter language of institutional trust. */}
-                <div className="w-full flex flex-col items-center text-center mb-2 md:mb-4">
-                    <span className="flex items-center gap-2 text-[#8a7a4f] text-[11px] font-semibold tracking-[0.3em] uppercase mb-3">
-                        <Leaf size={14} strokeWidth={2.5} />
-                        Vishwa Ayurveda Mission
+                {/* Section header */}
+                <div className="w-full flex flex-col items-center text-center mb-4 md:mb-6">
+                    <span className="flex items-center gap-2 text-[#d26019] text-[15px] md:text-[17px] font-semibold tracking-[0.18em] uppercase mb-2 font-poppins">
+                        <Leaf size={16} strokeWidth={2.2} className="text-[#3b8c2a] fill-[#3b8c2a]" />
+                        Our Ayurveda Mission
+                        <Leaf size={16} strokeWidth={2.2} className="text-[#3b8c2a] fill-[#3b8c2a]" />
                     </span>
-                    <h2 className="font-serif text-[#173822] text-[14px] sm:text-[16px] lg:text-[28px] leading-[1.1] tracking-tight">
+                    <h2 className="font-poppins font-semibold text-[#23471d] text-[22px] sm:text-[26px] lg:text-[30px] leading-[1.2]">
                         Our Esteemed Advisory Board
                     </h2>
-                    <div className="mt-2 h-px w-16 bg-gradient-to-r from-transparent via-[#C9982E] to-transparent" />
+                    <div className="mt-2 h-px w-20 bg-gradient-to-r from-transparent via-[#d26019] to-transparent" />
                 </div>
 
-                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-2">
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-3">
                     {boardMembers.map((member, index) => (
                         <article
                             key={index}
-                            className="group relative flex flex-col bg-white rounded-[4px] border border-[#173822]/10 overflow-hidden transition-shadow duration-300 hover:shadow-[0_20px_40px_-16px_rgba(23,56,34,0.25)]"
+                            className="group relative flex flex-col bg-white rounded-xl overflow-hidden transition-all duration-300 hover:shadow-md"
+                            style={{ boxShadow: "rgba(0, 0, 0, 0.02) 0px 1px 3px 0px, rgba(27, 31, 35, 0.15) 0px 0px 0px 1px" }}
                         >
-                            {/* Portrait */}
-                            <div className="relative w-full aspect-[4/5] overflow-hidden bg-[#EFE9D8]">
+                            {/* Portrait without overlay */}
+                            <div className="relative w-full aspect-[4/4.2] overflow-hidden bg-gray-100">
                                 <img
                                     src={member.image}
                                     alt={member.name}
-                                    className="w-full h-full object-cover object-top grayscale-[15%] group-hover:grayscale-0 group-hover:scale-[1.04] transition-all duration-700 ease-out"
+                                    className="w-full h-full object-cover object-top group-hover:scale-[1.04] transition-all duration-700 ease-out"
                                 />
-                                <div className="absolute inset-0 bg-gradient-to-t from-[#0F2417]/85 via-[#0F2417]/10 to-transparent" />
 
-                                {/* Designation sits on the image, seal-style */}
+                                {/* Designation sits on the image with solid badge */}
                                 {member.designation && (
-                                    <span className="absolute left-4 bottom-4 inline-flex items-center text-[14px] font-bold tracking-[0.18em] uppercase text-[#F4E3A1] border-l-2 border-[#C9982E] pl-2">
+                                    <span className="absolute left-2 bottom-2 inline-flex items-center text-[9px] font-bold tracking-[0.1em] uppercase text-white bg-[#23471d]/90 backdrop-blur-sm px-2 py-0.5 rounded font-poppins shadow-sm">
                                         {member.designation}
                                     </span>
                                 )}
                             </div>
 
                             {/* Content */}
-                            <div className="flex flex-col flex-grow px-5 pt-4 pb-5">
-                                <h3 className="font-serif text-[#173822] text-[18px] leading-snug mb-1.5 line-clamp-2">
+                            <div className="flex flex-col flex-grow p-3">
+                                <h3 className="font-poppins font-semibold text-[#23471d] text-[13px] sm:text-[14px] leading-tight mb-1 line-clamp-2">
                                     {member.name}
                                 </h3>
 
-                                <p className="text-[#5b6b5e] text-[13px] leading-relaxed mb-4 flex-grow line-clamp-3">
+                                <p className="text-[#4B1426] font-medium text-[11px] leading-snug mb-2 flex-grow line-clamp-3 font-inter">
                                     {member.organization || "\u00A0"}
                                 </p>
 
-                                <div className="flex items-center justify-between pt-4 border-t border-[#173822]/8">
-                                    <span className="flex items-center gap-1.5 text-[#5b6b5e] text-[14px] font-semibold">
-                                        <MapPin size={20} className="text-[#C9982E]" />
+                                <div className="flex items-center justify-between pt-2 border-t border-gray-100 mt-auto">
+                                    <span className="flex items-center gap-1 text-gray-600 text-[11px] font-semibold font-inter">
+                                        <MapPin size={13} className="text-[#d26019]" />
                                         {member.location}
                                     </span>
 
                                     <button
                                         type="button"
-                                        className="flex items-center gap-1 text-[#173822] text-[14px] font-semibold tracking-wide hover:text-[#C9982E] transition-colors"
+                                        className="flex items-center gap-0.5 text-[#23471d] text-[11px] font-semibold tracking-wide hover:text-[#d26019] transition-colors font-inter"
                                     >
                                         View profile
-                                        <ArrowUpRight size={14} className="group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
+                                        <ArrowUpRight size={12} className="group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
                                     </button>
                                 </div>
                             </div>
@@ -149,7 +148,7 @@ const AdvisoryBoardGrid = () => {
                     ))}
                 </div>
 
-            </div>
+            </SectionContainer>
         </section>
     );
 };

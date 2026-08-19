@@ -3,14 +3,15 @@
 import React, { useEffect, useState } from "react";
 import { Building2, Users, Mic, Leaf, Calendar, Globe } from "lucide-react";
 import { Reveal, useInView } from "./BlogReveal";
+import SectionContainer from "@/app/components/layout/SectionContainer";
 
 const stats = [
-  { icon: Building2, value: 300, suffix: "+", label: "Exhibitors" },
-  { icon: Users, value: 2500, suffix: "+", label: "Visitors & Buyers" },
-  { icon: Mic, value: 150, suffix: "+", label: "Expert Speakers" },
-  { icon: Leaf, value: 100, suffix: "+", label: "Organic & Natural Brands" },
-  { icon: Calendar, value: 3, suffix: "", label: "Days of Exhibition" },
-  { icon: Globe, value: 1000, suffix: "+", label: "Global Buyers" },
+  { icon: Building2, value: 200, suffix: "+", label: "EXHIBITORS" },
+  { icon: Users, value: 8000, suffix: "+", label: "VISITORS & BUYERS" },
+  { icon: Mic, value: 150, suffix: "+", label: "EXPERT SPEAKERS" },
+  { icon: Leaf, value: 100, suffix: "+", label: "ORGANIC & NATURAL BRANDS" },
+  { icon: Calendar, value: 3, suffix: "", label: "DAYS OF EXHIBITION" },
+  { icon: Globe, value: 1000, suffix: "+", label: "GLOBAL BUYERS" },
 ];
 
 function CountUp({
@@ -51,20 +52,27 @@ function CountUp({
 
 const BlogStats = () => {
   return (
-    <section className="bg-[#0b2912] py-2 md:py-4 ">
-      <div className="container mx-auto max-w-[1400px] px-6 grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-6 text-center">
-        {stats.map((s, i) => (
-          <Reveal key={s.label} delay={i * 70} direction={i % 2 === 0 ? "zoom" : "up"}>
-            <div className="flex flex-col items-center gap-1.5 group">
-              <s.icon className="w-6 h-6 text-[#F2B40E] transition-transform duration-300 group-hover:scale-125 group-hover:-rotate-6" />
-              <p className="text-[16px] font-extrabold text-white">
-                <CountUp target={s.value} suffix={s.suffix} />
-              </p>
-              <p className="text-[11px] sm:text-xs text-[#b8d9b9] uppercase tracking-wide font-medium">{s.label}</p>
-            </div>
-          </Reveal>
-        ))}
-      </div>
+    <section className="bg-[#1b5e20] py-2 md:py-2.5 font-inter shadow-md">
+      <SectionContainer>
+        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-y-2 gap-x-2 items-center justify-between text-center lg:divide-x lg:divide-white/20">
+          {stats.map((s, i) => {
+            const IconComponent = s.icon;
+            return (
+              <Reveal key={s.label} delay={i * 70} direction={i % 2 === 0 ? "zoom" : "up"}>
+                <div className="flex flex-col items-center justify-center gap-0.5 group px-1 py-0.5">
+                  <IconComponent className="w-4 h-4 text-white stroke-[1.75] transition-transform duration-300 group-hover:scale-110" />
+                  <h4 className="text-[15px] sm:text-[17px] md:text-[18px] font-semibold text-white leading-none font-inter mb-0.5">
+                    <CountUp target={s.value} suffix={s.suffix} />
+                  </h4>
+                  <p className="text-[8px] sm:text-[9px] font-bold text-[#F2B40E] uppercase tracking-widest leading-tight font-inter">
+                    {s.label}
+                  </p>
+                </div>
+              </Reveal>
+            );
+          })}
+        </div>
+      </SectionContainer>
     </section>
   );
 };

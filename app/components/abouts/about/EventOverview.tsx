@@ -1,4 +1,6 @@
 import React from 'react';
+import Image from 'next/image';
+import leafogImg from '@/app/assets/icons/leafog.png';
 import { HeartPulse, Sprout, User, Monitor, Plane, Leaf } from 'lucide-react';
 import SectionContainer from '@/app/components/layout/SectionContainer';
 
@@ -13,8 +15,17 @@ const EventOverview = () => {
   ];
 
   return (
-    <section className="pt-8 pb-8 bg-white relative z-10 border-t border-gray-100" style={{ fontFamily: "'Inter', sans-serif" }}>
-      <SectionContainer>
+    <section className="pt-8 pb-8 bg-white relative z-10 border-t border-gray-100 font-inter overflow-hidden">
+      {/* Decorative Left Corner Leaf (leafog.png) - Reduced Opacity */}
+      <div className="absolute left-0 top-0 pointer-events-none opacity-40 w-32 sm:w-44 md:w-56 lg:w-[240px] z-0">
+        <Image
+          src={leafogImg}
+          alt="Organic Leaf Decoration Left"
+          className="w-full h-auto object-contain -translate-x-1/6 -translate-y-1/6"
+        />
+      </div>
+
+      <SectionContainer className="relative z-10">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
           
           {/* LEFT - Event Overview */}
@@ -30,15 +41,15 @@ const EventOverview = () => {
               A Global Platform Connecting Healthcare, Wellness & Business Opportunities
             </h2>
             
-            <p className="text-gray-900 text-sm leading-[1.6] mb-3 text-justify">
+            <p className="text-gray-900 text-sm leading-[1.6] mb-3 text-justify font-semibold">
               <strong className="font-semibold text-[#1a2e1a]">Bharat Organic Expo 2027</strong> stands as India's most influential international platform dedicated to organic excellence, wellness innovation, and sustainable living. Entering its prestigious edition, the Expo represents a strategic evolution—from a conventional trade exhibition into a powerful global ecosystem for business growth, policy exchange, knowledge sharing, and international collaboration.
             </p>
             
-            <p className="text-gray-900 text-sm leading-[1.6] mb-3 text-justify">
+            <p className="text-gray-900 text-sm leading-[1.6] mb-3 text-justify font-semibold">
               With a strong legacy of 10+ years and 8 successfully executed editions, the Expo has established itself as a trusted meeting ground for organic leaders, wellness brands, sustainable technology providers, investors, policymakers, researchers, startups, and global delegations from across the world.
             </p>
             
-            <p className="text-gray-900 text-sm leading-[1.6] text-justify">
+            <p className="text-gray-900 text-sm leading-[1.6] text-justify font-semibold">
               Scheduled from <strong className="font-semibold text-[#1a2e1a]">19th – 21st February 2027</strong> in <strong className="font-semibold text-[#1a2e1a]">New Delhi</strong>, the expo is strategically designed to enable business growth, industry collaboration, and global trade opportunities in one high-impact environment.
             </p>
           </div>
