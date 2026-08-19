@@ -32,13 +32,17 @@ export default function CtaBanner() {
             <div className="flex flex-col items-center xl:items-end gap-3 shrink-0 w-full xl:w-auto">
               <div className="flex flex-col sm:flex-row items-center justify-center xl:justify-end gap-3 w-full">
                 <Link
-                  href="/visitor-registration"
+                  href="/registration/buyer-registration"
+                  target="_blank"
+                  rel="noopener noreferrer"
                   className="flex items-center justify-center gap-2 bg-[#1b5e20] hover:bg-[#144a18] text-white px-5 py-2.5 rounded-lg font-bold text-xs uppercase tracking-wide transition-colors w-full sm:w-auto"
                 >
                   REGISTER AS A BUYER <ArrowRight size={16} />
                 </Link>
                 <Link
-                  href="/book-a-stand"
+                  href="/participate-as-exhibitor"
+                  target="_blank"
+                  rel="noopener noreferrer"
                   className="flex items-center justify-center gap-2 bg-gradient-to-r from-[#ea580c] to-[#c2410c] hover:opacity-90 text-white px-5 py-2.5 rounded-lg font-bold text-xs uppercase tracking-wide transition-opacity shadow-lg w-full sm:w-auto"
                 >
                   PARTICIPATE AS AN EXHIBITOR <ArrowRight size={16} />
