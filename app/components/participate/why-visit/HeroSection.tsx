@@ -7,6 +7,7 @@ import gsap from "gsap";
 import { useInView, animate } from "framer-motion";
 
 import visitBanner from "@/app/assets/banner/visitog.png";
+import leafImg from "@/app/assets/icons/leafs.png";
 import SectionContainer from "@/app/components/layout/SectionContainer";
 
 const Sparkle = ({
@@ -218,28 +219,37 @@ export default function HeroSection() {
           }}
         />
 
-        {/* Content - Nudged up slightly */}
+        {/* Floating Organic Leaf - Lower opacity */}
+        <div className="absolute -left-14 sm:-left-10 lg:-left-8 top-[10%] sm:top-[12%] z-20 pointer-events-none w-28 sm:w-36 md:w-44 lg:w-[170px]">
+          <img
+            src={leafImg.src}
+            alt="Organic Leaf"
+            className="w-full h-auto object-contain filter drop-shadow-[0_5px_10px_rgba(0,0,0,0.15)] opacity-30"
+          />
+        </div>
+
+        {/* Content */}
         <SectionContainer className="relative z-10">
-          <div className="max-w-2xl -translate-y-1 sm:-translate-y-2 md:-translate-y-3 ml-0 lg:ml-8 xl:ml-12">
+          <div className="max-w-2xl -translate-y-1 sm:-translate-y-2 md:-translate-y-3">
 
             {/* Tagline */}
-            <div className="flex items-center justify-start gap-2 mt-1.5 translate-y-0.5 mb-1">
-              <span className="w-6 h-[2.5px] bg-[#1b5e20] shrink-0" />
-              <p className="text-[#1b5e20] text-xs sm:text-sm font-bold uppercase tracking-widest text-left font-poppins">
+            <div className="flex items-center justify-start gap-2 mt-1.5 translate-y-0.5 mb-1.5">
+              <span className="w-8 h-[2.5px] bg-[#c2410c] shrink-0" />
+              <p className="text-[#c2410c] text-xs sm:text-sm md:text-[15px] font-bold uppercase tracking-[0.18em] text-left font-poppins">
                 WHY VISIT BHARAT ORGANIC EXPO 2027
               </p>
             </div>
 
             {/* Heading - 3 separate stacked lines */}
             <h1
-              className="font-semibold leading-[1.08] mb-3 font-poppins"
+              className="font-semibold leading-[1.05] mb-3 font-poppins"
               style={{ textShadow: "1px 1px 2px rgba(0,0,0,0.4)" }}
             >
               <span className="block overflow-hidden mb-0.5">
                 <span
                   ref={line1Ref}
                   style={{ opacity: 0, display: "block" }}
-                  className="text-3xl sm:text-4xl md:text-[42px] lg:text-[48px] text-[#001810] font-semibold"
+                  className="text-3xl sm:text-4xl md:text-[46px] lg:text-[52px] text-[#001810] font-semibold"
                 >
                   Source Better.
                 </span>
@@ -249,7 +259,7 @@ export default function HeroSection() {
                 <span
                   ref={line2Ref}
                   style={{ opacity: 0, display: "block" }}
-                  className="text-3xl sm:text-4xl md:text-[42px] lg:text-[48px] text-[#001810] font-semibold"
+                  className="text-3xl sm:text-4xl md:text-[46px] lg:text-[52px] text-[#001810] font-semibold"
                 >
                   Connect Directly.
                 </span>
@@ -259,7 +269,7 @@ export default function HeroSection() {
                 <span
                   ref={line3Ref}
                   style={{ opacity: 0, display: "block" }}
-                  className="text-3xl sm:text-4xl md:text-[42px] lg:text-[48px] text-[#3b8c2a] font-semibold"
+                  className="text-3xl sm:text-4xl md:text-[46px] lg:text-[52px] text-[#3b8c2a] font-semibold"
                 >
                   Grow Your Business.
                 </span>
@@ -270,27 +280,12 @@ export default function HeroSection() {
             <p
               ref={subtitleRef}
               style={{ opacity: 0 }}
-              className="text-black text-sm md:text-[15px] font-bold leading-relaxed max-w-lg mt-3 mb-4 font-inter"
+              className="text-black text-sm md:text-[15.5px] font-bold leading-relaxed max-w-lg mt-3 mb-4 font-inter"
             >
               Discover new products, meet manufacturers and suppliers, explore sourcing opportunities and build valuable business connections across India&apos;s growing organic, natural and sustainable ecosystem.
             </p>
 
-            {/* Date & Venue */}
-            <div
-              ref={metaRef}
-              style={{ opacity: 0 }}
-              className="flex flex-col sm:flex-row items-start sm:items-center gap-3 sm:gap-4 mb-5 text-[#4B1426] text-sm md:text-[15px] font-bold font-inter"
-            >
-              <div className="flex items-center gap-2">
-                <CalendarDays size={18} className="shrink-0 text-[#ea580c]" />
-                <span>19-21 February 2027</span>
-              </div>
-              <div className="hidden sm:block w-px h-5 bg-[#4B1426]/30"></div>
-              <div className="flex items-center gap-2">
-                <MapPin size={18} className="shrink-0 text-[#ea580c]" />
-                <span>Hall 12, Bharat Mandapam, New Delhi</span>
-              </div>
-            </div>
+
 
             {/* Buttons */}
             <div ref={btnsRef} className="flex flex-wrap items-center justify-start gap-3">
@@ -302,11 +297,11 @@ export default function HeroSection() {
                 <Sparkle color="#3b82f6" shadow="#28396C" style={{ top: "-10px", right: "10%", animationDelay: "1s" }} />
                 <Link
                   href="/registration/buyer-registration"
-                  className="blue-btn-hero-exh text-white px-4 py-2 rounded-lg font-semibold text-[10px] uppercase tracking-widest flex items-center justify-start gap-2 transition-all active:scale-95 shadow-lg relative z-10 w-full sm:w-auto font-poppins"
+                  className="blue-btn-hero-exh text-white px-5 py-2.5 rounded-lg font-semibold text-xs uppercase tracking-widest flex items-center justify-start gap-2 transition-all active:scale-95 shadow-lg relative z-10 w-full sm:w-auto font-poppins"
                 >
-                  <UserCheck size={14} />
+                  <UserCheck size={15} />
                   <span>REGISTER AS A BUYER</span>
-                  <ArrowRight size={14} />
+                  <ArrowRight size={15} />
                 </Link>
               </div>
 
@@ -317,16 +312,16 @@ export default function HeroSection() {
                 <Sparkle color="#f97316" shadow="#c2410c" style={{ top: "-10px", right: "10%", animationDelay: "0.8s" }} />
                 <Link
                   href="/registration/visitor-registration"
-                  className="group relative inline-flex items-center justify-start gap-2 px-4 py-2 rounded-lg font-semibold text-[10px] uppercase tracking-widest text-white transition-all active:scale-95 shadow-2xl z-10 w-full sm:w-auto overflow-hidden font-poppins"
+                  className="group relative inline-flex items-center justify-start gap-2 px-5 py-2.5 rounded-lg font-semibold text-xs uppercase tracking-widest text-white transition-all active:scale-95 shadow-2xl z-10 w-full sm:w-auto overflow-hidden font-poppins"
                   style={{
                     background: "linear-gradient(135deg, #ea580c, #c2410c)",
                     boxShadow: "0 4px 20px rgba(194,65,12,0.5), 0 0 12px rgba(249,115,22,0.3)",
                   }}
                 >
                   <span className="absolute inset-0 bg-white/10 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-500 skew-x-12" />
-                  <Users size={14} />
+                  <Users size={15} />
                   <span>REGISTER AS A VISITOR</span>
-                  <ArrowRight size={14} className="group-hover:translate-x-1 transition-transform" />
+                  <ArrowRight size={15} className="group-hover:translate-x-1 transition-transform" />
                 </Link>
               </div>
 
@@ -337,7 +332,7 @@ export default function HeroSection() {
       </section>
 
       {/* Stats Counter Band right after Hero Banner */}
-      <div className="relative z-20 -mt-6 md:-mt-8 font-inter mb-6">
+      <div className="relative z-20 -mt-6 md:-mt-8 font-inter mb-2 md:mb-3">
         <SectionContainer>
           <div
             ref={bandRef}
