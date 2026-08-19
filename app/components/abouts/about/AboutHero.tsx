@@ -105,7 +105,7 @@ const AboutHero = () => {
           <div className="flex items-center justify-start gap-2.5 mb-2">
             <span className="w-8 h-[2.5px] bg-[#c2410c] shrink-0" />
             <p className="text-[#c2410c] text-[13px] md:text-[15px] lg:text-[16px] font-bold uppercase tracking-[0.18em] text-left">
-              ABOUT BHARAT ORGANIC EXPO
+              ABOUT US
             </p>
           </div>
 
@@ -137,32 +137,36 @@ const AboutHero = () => {
           </p>
 
           {/* Buttons */}
-          <div className="flex flex-wrap items-center justify-start gap-3 mt-4 relative w-full">
+          <div className="flex flex-wrap items-center justify-start gap-2.5 mt-3 relative w-full">
             <div className="relative w-full sm:w-auto">
-              <Sparkle color="#3b82f6" shadow="#28396C" style={{ top: "-12px", left: "10%", animationDelay: "0.2s" }} />
-              <Sparkle color="#3b82f6" shadow="#28396C" style={{ top: "-15px", left: "50%", animationDelay: "0.6s" }} />
-              <Sparkle color="#3b82f6" shadow="#28396C" style={{ top: "-10px", right: "10%", animationDelay: "1s" }} />
+              <Sparkle color="#3b82f6" shadow="#28396C" style={{ top: "-10px", left: "10%", animationDelay: "0.2s" }} />
+              <Sparkle color="#3b82f6" shadow="#28396C" style={{ top: "-12px", left: "50%", animationDelay: "0.6s" }} />
+              <Sparkle color="#3b82f6" shadow="#28396C" style={{ top: "-8px", right: "10%", animationDelay: "1s" }} />
               <Link
-                href="/visitor-registration"
-                className="blue-btn-hero text-white px-4 py-2 rounded-lg font-semibold text-[9px] uppercase tracking-widest flex items-center justify-start gap-2 transition-all active:scale-95 shadow-lg relative z-10 w-full sm:w-auto"
+                href="/registration/visitor-registration"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="blue-btn-hero text-white px-3.5 py-1.5 md:py-2 rounded-md font-semibold text-[9px] md:text-[10px] uppercase tracking-wider flex items-center justify-center gap-1.5 transition-all active:scale-95 shadow-md relative z-10 w-full sm:w-auto"
               >
-                REGISTER AS A VISITOR <ArrowRight size={14} />
+                REGISTER AS A VISITOR <ArrowRight size={12} />
               </Link>
             </div>
             <div className="relative w-full sm:w-auto">
-              <Sparkle color="#f97316" shadow="#c2410c" style={{ top: "-12px", left: "10%", animationDelay: "0s" }} />
-              <Sparkle color="#f97316" shadow="#c2410c" style={{ top: "-15px", left: "50%", animationDelay: "0.4s" }} />
-              <Sparkle color="#f97316" shadow="#c2410c" style={{ top: "-10px", right: "10%", animationDelay: "0.8s" }} />
+              <Sparkle color="#f97316" shadow="#c2410c" style={{ top: "-10px", left: "10%", animationDelay: "0s" }} />
+              <Sparkle color="#f97316" shadow="#c2410c" style={{ top: "-12px", left: "50%", animationDelay: "0.4s" }} />
+              <Sparkle color="#f97316" shadow="#c2410c" style={{ top: "-8px", right: "10%", animationDelay: "0.8s" }} />
               <Link
-                href="/book-a-stand"
-                className="group relative inline-flex items-center justify-start gap-2 px-4 py-2 rounded-lg font-semibold text-[9px] uppercase tracking-widest text-white transition-all active:scale-95 shadow-2xl z-10 w-full sm:w-auto overflow-hidden"
+                href="/registration/book-a-stand"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="group relative inline-flex items-center justify-center gap-1.5 px-3.5 py-1.5 md:py-2 rounded-md font-semibold text-[9px] md:text-[10px] uppercase tracking-wider text-white transition-all active:scale-95 shadow-xl z-10 w-full sm:w-auto overflow-hidden"
                 style={{
                   background: "linear-gradient(135deg, #ea580c, #c2410c)",
                   boxShadow: "0 4px 20px rgba(194,65,12,0.5), 0 0 12px rgba(249,115,22,0.3)",
                 }}
               >
                 <span className="absolute inset-0 bg-white/10 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-500 skew-x-12" />
-                BOOK YOUR STALL <ArrowRight size={14} className="group-hover:translate-x-1 transition-transform" />
+                BOOK YOUR STALL <ArrowRight size={12} className="group-hover:translate-x-1 transition-transform" />
               </Link>
             </div>
           </div>

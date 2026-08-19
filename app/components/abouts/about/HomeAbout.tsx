@@ -1,93 +1,79 @@
 "use client";
-import aboutImg from "../../../assets/home/homeabout.png";
-
-
+import aboutImg from "@/app/assets/banner/about.png";
 import React from 'react';
-import { Globe, Users, Award, Store, ArrowRight, Sun } from 'lucide-react';
-import { motion } from 'framer-motion';
 import Image from 'next/image';
-
-// You might want to replace this with the actual image path you have
+import SectionContainer from '@/app/components/layout/SectionContainer';
 
 const HomeAbout = () => {
-    return (
-        <section className="py-2 md:py-4 lg:py-4 relative bg-[#fafafa] overflow-hidden">
-            {/* Decorative Dots Top Right - Triangle shape like the image */}
-            <div className="absolute top-8 right-10 lg:right-4 hidden lg:flex flex-col gap-1.5 items-end opacity-60">
-                <div className="flex gap-1.5"><div className="w-1 h-1 rounded-full bg-[#3b8c2a]" /></div>
-                <div className="flex gap-1.5"><div className="w-1 h-1 rounded-full bg-[#3b8c2a]" /><div className="w-1 h-1 rounded-full bg-[#3b8c2a]" /></div>
-                <div className="flex gap-1.5"><div className="w-1 h-1 rounded-full bg-[#3b8c2a]" /><div className="w-1 h-1 rounded-full bg-[#3b8c2a]" /><div className="w-1 h-1 rounded-full bg-[#3b8c2a]" /></div>
-                <div className="flex gap-1.5"><div className="w-1 h-1 rounded-full bg-[#3b8c2a]" /><div className="w-1 h-1 rounded-full bg-[#3b8c2a]" /><div className="w-1 h-1 rounded-full bg-[#3b8c2a]" /><div className="w-1 h-1 rounded-full bg-[#3b8c2a]" /></div>
+  return (
+    <section className="py-8 bg-white relative overflow-hidden border-t border-gray-100" style={{ fontFamily: "'Inter', sans-serif" }}>
+      <SectionContainer>
+        <div className="grid grid-cols-1 lg:grid-cols-[450px_1fr] xl:grid-cols-[480px_1fr] gap-8 lg:gap-12 items-center">
+          
+          {/* Left Column: Image with 9th IHWE outline and glow styling */}
+          <div className="w-full relative flex items-center">
+            <div className="relative w-full h-[340px] md:h-[400px]">
+              {/* Dot pattern top-right */}
+              <div 
+                className="absolute -top-4 -right-4 w-24 h-24 z-0 pointer-events-none"
+                style={{ backgroundImage: 'radial-gradient(circle, #d26019 1.2px, transparent 1.2px)', backgroundSize: '9px 9px', opacity: 0.25 }} 
+              />
+              {/* Dot pattern bottom-left */}
+              <div 
+                className="absolute -bottom-4 -left-4 w-24 h-24 z-0 pointer-events-none"
+                style={{ backgroundImage: 'radial-gradient(circle, #23471d 1.2px, transparent 1.2px)', backgroundSize: '9px 9px', opacity: 0.2 }} 
+              />
+
+              {/* Main Image */}
+              <div 
+                className="relative z-10 w-full h-full overflow-hidden group rounded-xl shadow-lg"
+                style={{ outline: '2px solid #d26019', outlineOffset: '-2px' }}
+              >
+                <Image
+                  src={aboutImg}
+                  alt="Bharat Organic Expo - Who We Are"
+                  fill
+                  sizes="(max-width: 1024px) 100vw, 480px"
+                  className="object-cover transition-transform duration-500 group-hover:scale-105"
+                />
+                <div className="absolute bottom-0 left-0 w-full h-[4px] bg-[#d26019]" />
+                <div className="absolute top-0 left-0 h-full w-[4px] bg-[#23471d]" />
+              </div>
             </div>
+          </div>
 
-            <div className="w-full px-4 md:px-11">
-                <div className="flex flex-col lg:flex-row items-center justify-between gap-4 lg:gap-6">
+          {/* Right Column: Simple, clear language with expanded word count */}
+          <div className="w-full flex flex-col justify-center">
+            <p className="text-[#d26019] font-bold text-[13px] uppercase tracking-[0.22em] mb-2">
+              ABOUT ORGANIC EXPO
+            </p>
 
-                    {/* Left Side: Images */}
-                    <div className="w-full lg:w-[40%] relative flex-shrink-0">
-                        {/* The main rounded image with premium logo-themed gradient border and glow */}
-                        <div className="relative z-10 rounded-[1.8rem] p-[4px] bg-gradient-to-br from-[#F2B40E] via-[#3b8c2a] to-[#1f471b] shadow-[0_20px_50px_rgba(242,180,14,0.25)] w-full h-[400px] md:h-[500px] lg:h-[550px] group">
-                            <div className="rounded-[1.6rem] overflow-hidden w-full h-full relative">
-                                <Image
-                                    src={aboutImg}
-                                    alt="Bharat Organic Expo Exhibition - Who we are"
-                                    fill
-                                    sizes="(max-width: 1024px) 100vw, 40vw"
-                                    className="object-cover absolute inset-0 group-hover:scale-105 transition-transform duration-700"
-                                />
-                                {/* Inner glow overlay */}
-                                <div className="absolute inset-0 shadow-[inset_0_0_20px_rgba(0,0,0,0.1)] pointer-events-none rounded-[1.6rem]"></div>
-                            </div>
-                        </div>
+            <h2 
+              className="font-semibold text-[28px] leading-[1.2] mb-3 text-[#23471d] font-poppins"
+              style={{ textShadow: "1px 1px 2px rgba(0,0,0,0.4)" }}
+            >
+              WHO WE ARE
+            </h2>
 
+            <div className="space-y-3">
+              <p className="text-gray-900 text-sm leading-[1.6] text-justify">
+                <strong className="font-semibold text-[#1a2e1a]">Bharat Organic Expo 2027</strong> is India's premier international exhibition and conference dedicated to organic farming, natural healthcare, Ayurveda, and eco-friendly living. Our main objective is to bring together farmers, organic producers, wellness brands, trade buyers, and industry experts onto one common platform to promote a healthy and sustainable lifestyle across the globe.
+              </p>
 
+              <p className="text-gray-900 text-sm leading-[1.6] text-justify">
+                As a comprehensive platform for organic agriculture and natural wellness, we connect grassroots farmers and eco-friendly innovators directly with large wholesale buyers, grocery store chains, exporters, and investors. We aim to help organic producers expand their market reach, introduce innovative natural products, and create genuine business opportunities for local producers on a global stage.
+              </p>
 
-                        {/* Decorative Leaves (Bottom Left) */}
-                        <div className="absolute -bottom-10 -left-10 w-32 h-32 bg-[url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxMDAgMTAwIj48cGF0aCBkPSJNMTAgOTBDMzAgOTAgNTAgNzAgNTAgNTBDNTAgMzAgMzAgMTAgMTAgMTBDMTAgMzAgMzAgNTAgNTAgNzBDNTAgOTAgMzAgMTAwIDEwIDkwWiIgZmlsbD0iIzNiOGMyYSIgZmlsbC1vcGFjaXR5PSIwLjEiLz48L3N2Zz4=')] bg-no-repeat bg-contain -z-10" />
-                    </div>
-
-                    {/* Right Side: Content */}
-                    <div className="w-full lg:w-[60%] flex flex-col justify-center mt-4 lg:mt-0 py-2">
-                        <div className="mb-6">
-                            <div className="inline-flex items-center gap-2 px-4 py-1.5 bg-gradient-to-r from-[#F2B40E]/10 to-[#f58220]/10 font-bold text-[12px] md:text-[13px] lg:text-[14px] tracking-[0.2em] uppercase mb-4 rounded-full shadow-[0_0_15px_rgba(242,180,14,0.3)] border border-[#F2B40E]/40 w-max">
-                                <Sun className="w-4 h-4 text-[#f58220] animate-[spin_8s_linear_infinite]" fill="currentColor" />
-                                <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#d97706] to-[#b45309]">ABOUT ORGANIC EXPO</span>
-                            </div>
-
-                            <h2 className="text-[18px] md:text-[28px] lg:text-[28px] font-semibold text-[#111827] leading-[1.2] mb-4 tracking-tight">
-                                WHO WE <span className="text-[#f58220]">ARE</span>
-                            </h2>
-
-                            <div className="space-y-4 max-w-[760px]">
-                                <p className="text-[#4b5563] text-[16px] md:text-[18px] leading-[1.6] border-l-4 border-[#F2B40E] pl-4">
-                                    <strong className="text-[#111827] font-bold">Bharat Organic Expo 2027</strong> is India's most influential international exhibition & conference dedicated to organic products, wellness, Ayurveda, and sustainable living. We bring together global brands, innovators, buyers, and policymakers to build connections and create transformative opportunities.
-                                </p>
-
-                                <p className="text-[#4b5563] text-[16px] md:text-[18px] leading-[1.6]">
-                                    As a comprehensive platform for organic agriculture and natural healthcare, we unite a diverse community of eco-friendly innovators and traditional farmers. Our mission is to promote wellness through nature, foster responsible networking, and ensure economic growth for grassroots producers on a global stage.
-                                </p>
-
-                                <p className="text-[#4b5563] text-[16px] md:text-[18px] leading-[1.6]">
-                                    Every year, thousands of passionate visitors, wholesale buyers, and visionary investors converge at our event. Together, they participate in groundbreaking discussions, discover new market trends, and form lasting partnerships to actively build a cleaner, greener, and more sustainable future.
-                                </p>
-                            </div>
-                        </div>
-
-                        {/* Stats Grid Removed */}
-
-                        {/* CTA Button */}
-                        <div>
-                            <button className="inline-flex items-center gap-2 px-6 py-2 rounded-full border-2 border-[#F2B40E] bg-[#3b8c2a] text-white font-semibold text-[12px] md:text-[14px] uppercase tracking-wide hover:bg-[#F2B40E] hover:text-[#0b2912] transition-colors duration-300 group shadow-md hover:shadow-lg">
-                                KNOW MORE ABOUT US
-                                <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" strokeWidth={2.5} />
-                            </button>
-                        </div>
-                    </div>
-
-                </div>
+              <p className="text-gray-900 text-sm leading-[1.6] text-justify">
+                Every year, thousands of passionate visitors, business owners, healthcare experts, and visionary investors gather at our event. They participate in interactive discussions, discover the latest market trends, and form strong business partnerships to actively support organic farming, protect the environment, and build a cleaner, greener, and healthier future for everyone.
+              </p>
             </div>
-        </section>
-    );
+          </div>
+
+        </div>
+      </SectionContainer>
+    </section>
+  );
 };
 
 export default HomeAbout;

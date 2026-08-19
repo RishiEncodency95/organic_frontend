@@ -5,99 +5,95 @@ import intlExhibImg from '@/app/assets/about/international_Exhibition.png';
 import confKnowledgeImg from '@/app/assets/about/conference_knowledge.png';
 import globalExcellenceImg from '@/app/assets/about/global_excellence.png';
 import b2bImg from '@/app/assets/about/B2B.png';
+import SectionContainer from '@/app/components/layout/SectionContainer';
 
 const pillars = [
   {
-    title: "INTERNATIONAL EXHIBITION",
-    description: "Spanning 40,000+ sq ft across three halls, featuring 200+ exhibitors from 8 key sectors including Medical, AYUSH, Wellness, and Digital Health. Witness live demos, finalize deals, and explore global innovations in dedicated country pavilions for specialized high-level networking and business growth.",
-    color: "#2563eb", // Blue
-    icon: <Globe size={22} className="text-white" />,
-    imageBg: "bg-[#e0e7ff]/30", // Light Blue placeholder
-    image: intlExhibImg
+    title: ["INTERNATIONAL", "EXHIBITION"],
+    themeColor: "#1e40af",
+    desc: "Spanning 40,000+ sq ft across three halls, featuring 200+ exhibitors from 8 key sectors including Medical, AYUSH, Wellness, and Digital Health. Witness live demos, finalize deals, and explore global innovations in dedicated country pavilions for specialized high-level networking and business growth.",
+    icon: <Globe className="w-5 h-5 text-white" />,
+    img: intlExhibImg,
   },
   {
-    title: "CONFERENCE & KNOWLEDGE SUMMIT",
-    description: "The 18th Edition, Arogya Sangoshthi, offers 30+ insightful sessions over 3 days, with 150+ distinguished speakers including government officials and industry CEOs. Explore critical discussions across 6 thematic tracks, attracting 2,000+ delegates for knowledge exchange and policy dialogue.",
-    color: "#16a34a", // Green
-    icon: <GraduationCap size={22} className="text-white" />,
-    imageBg: "bg-[#dcfce7]/30", // Light Green placeholder
-    image: confKnowledgeImg
+    title: ["CONFERENCE &", "KNOWLEDGE SUMMIT"],
+    themeColor: "#16a34a",
+    desc: "The 18th Edition, Arogya Sangoshthi, offers 30+ insightful sessions over 3 days, with 150+ distinguished speakers including government officials and industry CEOs. Explore critical discussions across 6 thematic tracks, attracting 2,000+ delegates for knowledge exchange and policy dialogue.",
+    icon: <GraduationCap className="w-5 h-5 text-white" />,
+    img: confKnowledgeImg,
   },
   {
-    title: "GLOBAL EXCELLENCE AWARDS",
-    description: "Our prestigious 3rd Edition program, a formal evening ceremony on Day 2, recognizes ground breaking achievements and fosters brand authority. Categories include Best Healthcare Innovation, Excellence in AYUSH, and Wellness Entrepreneur of the Year, acknowledging pioneering start ups and influential industry leaders.",
-    color: "#ea580c", // Orange
-    icon: <Trophy size={22} className="text-white" />,
-    imageBg: "bg-[#ffedd5]/30", // Light Orange placeholder
-    image: globalExcellenceImg
+    title: ["GLOBAL EXCELLENCE", "AWARDS"],
+    themeColor: "#d97706",
+    desc: "Our prestigious 3rd Edition program, a formal evening ceremony on Day 2, recognizes ground breaking achievements and fosters brand authority. Categories include Best Healthcare Innovation, Excellence in AYUSH, and Wellness Entrepreneur of the Year, acknowledging pioneering start ups and influential industry leaders.",
+    icon: <Trophy className="w-5 h-5 text-white" />,
+    img: globalExcellenceImg,
   },
   {
-    title: "B2B BUYER-SELLER MEET",
-    description: "Designed to forge powerful partnerships and drive global commerce, this pillar facilitates pre-scheduled 1-on-1 meetings within dedicated business lounges. We host international buyer delegations from key markets, offering professional matchmaking services with a target of 500+ impactful B2B meetings.",
-    color: "#9333ea", // Purple
-    icon: <Handshake size={22} className="text-white" />,
-    imageBg: "bg-[#f3e8ff]/30", // Light Purple placeholder
-    image: b2bImg
-  }
+    title: ["B2B BUYER-SELLER", "MEET"],
+    themeColor: "#7c3aed",
+    desc: "Designed to forge powerful partnerships and drive global commerce, this pillar facilitates pre-scheduled 1-on-1 meetings within dedicated business lounges. We host international buyer delegations from key markets, offering professional matchmaking services with a target of 500+ impactful B2B meetings.",
+    icon: <Handshake className="w-5 h-5 text-white" />,
+    img: b2bImg,
+  },
 ];
 
 const FourPillars = () => {
   return (
-    <section className="w-full bg-white py-2 md:py-4 lg:py-4">
-      <div className="w-full px-4 md:px-11">
-        <h3 className="text-center text-[22px] md:text-[26px] lg:text-[30px] font-semibold text-[#113d29] leading-[1.2] py-4 mb-3">
-          One Platform. Four Powerful Pillars.
-        </h3>
+    <section className="pt-4 pb-6 bg-white border-t border-gray-100 font-inter">
+      <SectionContainer>
+        <div className="text-center mb-4">
+          <h2 className="font-bold text-[18px] text-[#23471d] uppercase tracking-[0.2em]">
+            ONE PLATFORM. FOUR POWERFUL PILLARS.
+          </h2>
+        </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-2 xl:gap-4">
-          {pillars.map((pillar, index) => (
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-8">
+          {pillars.map((pillar, i) => (
             <div
-              key={index}
-              className="group relative flex flex-col bg-white rounded-[24px] overflow-hidden shadow-lg hover:-translate-y-3 hover:shadow-[0_25px_50px_-12px_rgba(0,0,0,0.25)] transition-all duration-500 transform-gpu"
-              style={{ borderColor: pillar.color, borderWidth: '1px', borderBottomWidth: '6px' }}
+              key={i}
+              className="bg-white border-[1.5px] rounded-[1.25rem] flex flex-col group transition-all duration-300 hover:shadow-xl relative"
+              style={{ borderColor: `${pillar.themeColor}55` }}
             >
-              {/* Glass Shine Hover Effect */}
-              <div className="absolute inset-0 z-30 pointer-events-none overflow-hidden rounded-[24px]">
-                <div className="absolute top-0 -left-[150%] w-[150%] h-[150%] bg-gradient-to-r from-transparent via-white/40 to-transparent skew-x-[-25deg] group-hover:left-[150%] transition-all duration-[1200ms] ease-in-out"></div>
-              </div>
-
-              {/* Image Placeholder or Actual Image */}
-              <div className={`w-full h-[160px] md:h-[180px] ${pillar.imageBg} relative overflow-hidden`}>
-                {pillar.image && (
+              {/* Image Area - Minimized gap from border */}
+              <div className="p-[4px]">
+                <div className="relative h-[160px] overflow-hidden rounded-[1rem]">
                   <Image
-                    src={pillar.image}
-                    alt={pillar.title}
+                    src={pillar.img}
+                    alt={pillar.title.join(" ")}
                     fill
                     sizes="(max-width: 768px) 100vw, 25vw"
-                    className="object-cover transition-transform duration-500 hover:scale-105"
+                    className="object-cover group-hover:scale-110 transition-transform duration-700"
                   />
-                )}
+                  <div className="absolute inset-0 bg-black/10" />
+                </div>
               </div>
 
-              {/* Icon overlapping image */}
+              {/* Overlapping Icon */}
               <div
-                className="absolute top-[160px] md:top-[180px] left-1/2 -translate-x-1/2 -translate-y-1/2 w-14 h-14 rounded-full flex items-center justify-center border-[4px] border-white z-10 shadow-sm"
-                style={{ backgroundColor: pillar.color }}
+                className="absolute top-[137px] left-1/2 -translate-x-1/2 w-12 h-12 rounded-full border-[3px] border-white flex items-center justify-center shadow-md z-30 transition-transform duration-300 group-hover:scale-110"
+                style={{ backgroundColor: pillar.themeColor }}
               >
                 {pillar.icon}
               </div>
 
-              {/* Content */}
-              <div className={`pt-8 pb-4 px-4 flex flex-col flex-1 ${pillar.imageBg}`}>
+              {/* Content Area */}
+              <div className="pt-6 pb-3 px-5 text-center flex flex-col flex-1">
                 <h3
-                  className="text-[18px] md:text-[20px] font-bold uppercase tracking-wide leading-[1.3] mb-3 text-center"
-                  style={{ color: pillar.color }}
+                  className="font-extrabold text-[13px] leading-[1.3] uppercase tracking-wide mb-4 flex flex-col items-center justify-center"
+                  style={{ color: pillar.themeColor }}
                 >
-                  {pillar.title}
+                  <span>{pillar.title[0]}</span>
+                  <span>{pillar.title[1]}</span>
                 </h3>
-                <p className="text-[14px] md:text-[15px] text-gray-600 leading-[1.6] text-justify">
-                  {pillar.description}
+                <p className="text-gray-600 text-[11px] leading-relaxed font-medium text-justify">
+                  {pillar.desc}
                 </p>
               </div>
             </div>
           ))}
         </div>
-      </div>
+      </SectionContainer>
     </section>
   );
 };

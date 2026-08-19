@@ -5,6 +5,7 @@ import Topbar from "./components/layout/Topbar";
 import Navbar from "./components/layout/Navbar";
 import Footer from "./components/layout/Footer";
 import SocialSidebar from "./components/layout/SocialSidebar";
+import WhatsAppFloat from "./components/layout/WhatsAppFloat";
 import SmoothScroll from "./components/SmoothScroll";
 
 const poppins = Poppins({
@@ -105,6 +106,7 @@ export default function RootLayout({
           </main>
           <Footer />
           <SocialSidebar />
+          <WhatsAppFloat />
         </SmoothScroll>
       </body>
     </html>

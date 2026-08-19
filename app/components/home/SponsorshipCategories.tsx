@@ -1,6 +1,7 @@
 "use client";
 
 import React from 'react';
+import Link from 'next/link';
 import { motion } from 'framer-motion';
 import {
   Trophy, Zap, Users, Mic, UserCheck,
@@ -8,6 +9,24 @@ import {
   Star, Download, MessageCircle, PhoneCall,
   ChevronDown, Target, Globe, ShieldCheck
 } from 'lucide-react';
+
+const Sparkle = ({ style, color = "#ffc107", shadow = "#4B1426" }: { style?: React.CSSProperties; color?: string; shadow?: string }) => (
+  <span
+    style={{
+      position: "absolute",
+      pointerEvents: "none",
+      fontSize: "11px",
+      color,
+      textShadow: shadow ? `0 0 4px ${shadow}, 0 0 8px ${shadow}` : undefined,
+      animation: "sparkleAnim 1.6s ease-in-out infinite",
+      opacity: 0,
+      zIndex: 25,
+      ...style,
+    }}
+  >
+    ✦
+  </span>
+);
 
 const SponsorTypes = [
   {
@@ -111,14 +130,20 @@ const SponsorTypes = [
 
 const SponsorshipCategories = () => {
   return (
-    <section className="w-full bg-[#EFF7EE] relative px-2 lg:px-11 py-4 lg:py-6 overflow-hidden border-b border-gray-100">
+    <section className="w-full bg-[#EFF7EE] font-inter relative px-2 lg:px-11 py-4 lg:py-6 overflow-hidden border-b border-gray-100">
+      <style>{`
+        @keyframes sparkleAnim {
+          0%, 100% { opacity: 0; transform: scale(0.4) rotate(0deg); }
+          50% { opacity: 1; transform: scale(1.2) rotate(180deg); }
+        }
+      `}</style>
       <div className="max-w-[1500px] mx-auto relative z-10">
 
         {/* HEADER */}
         <div className="flex items-center justify-center gap-3 mb-6">
           <div className="h-[2px] w-12 bg-[#3b8c2a]/60"></div>
           <Leaf className="w-4 h-4 text-[#3b8c2a]" />
-          <h2 className="text-[16px] md:text-[20px] font-semibold text-[#0b2912] uppercase tracking-widest">
+          <h2 className="text-[16px] md:text-[20px] font-semibold text-[#0b2912] uppercase tracking-widest font-poppins">
             SPONSORSHIP OPPORTUNITIES
           </h2>
           <Leaf className="w-4 h-4 text-[#3b8c2a] scale-x-[-1]" />
@@ -138,39 +163,47 @@ const SponsorshipCategories = () => {
             const hoverBorder = isExclusive ? 'hover:border-[#F2B40E]/50' : 'hover:border-[#3b8c2a]/30';
 
             return (
-              <motion.div
+              <Link
                 key={idx}
-                initial={{ opacity: 0, y: 15 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, margin: "-50px" }}
-                transition={{ duration: 0.4, delay: idx * 0.05 }}
-                className={`bg-white rounded-2xl p-2 lg:px-4 lg:py-3 flex flex-col sm:flex-row items-start sm:items-center gap-4 border border-gray-200 shadow-[0_4px_20px_rgba(0,0,0,0.03)] hover:shadow-[0_12px_35px_rgba(11,41,18,0.08)] ${hoverBorder} hover:-translate-y-1.5 transition-all duration-300 group relative overflow-hidden cursor-pointer`}
+                href="/sponsership"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="block"
               >
-                {/* Exclusive Badge */}
-                {isExclusive && (
-                  <div className="absolute top-0 right-0 bg-gradient-to-r from-[#F2B40E] to-[#f58220] text-[#0b2912] text-[10px] font-black px-3 py-1 rounded-bl-lg uppercase tracking-widest z-10 shadow-sm">
-                    Exclusive
+                <motion.div
+                  initial={{ opacity: 0, y: 15 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true, margin: "-50px" }}
+                  transition={{ duration: 0.4, delay: idx * 0.05 }}
+                  className={`bg-white rounded-2xl p-2 lg:px-4 lg:py-3 flex flex-col sm:flex-row items-start sm:items-center gap-4 border border-gray-200 ${hoverBorder} hover:-translate-y-1.5 transition-all duration-300 group relative overflow-hidden cursor-pointer`}
+                  style={{ boxShadow: "rgba(0, 0, 0, 0.02) 0px 1px 3px 0px, rgba(27, 31, 35, 0.15) 0px 0px 0px 1px" }}
+                >
+                  {/* Exclusive Badge */}
+                  {isExclusive && (
+                    <div className="absolute top-0 right-0 bg-gradient-to-r from-[#F2B40E] to-[#f58220] text-[#0b2912] text-[10px] font-black px-3 py-1 rounded-bl-lg uppercase tracking-widest z-10 shadow-sm">
+                      Exclusive
+                    </div>
+                  )}
+
+                  {/* Icon Container */}
+                  <div className={`w-14 h-14 rounded-[14px] ${iconBg} ${iconBorder} border flex items-center justify-center shrink-0 ${hoverBg} group-hover:scale-105 group-hover:-rotate-3 group-hover:shadow-md transition-all duration-300 shadow-sm relative z-10`}>
+                    <sponsor.icon className={`w-6 h-6 ${iconColor} ${hoverIconColor} group-hover:scale-110 transition-all duration-300`} strokeWidth={1.5} />
                   </div>
-                )}
 
-                {/* Icon Container */}
-                <div className={`w-14 h-14 rounded-[14px] ${iconBg} ${iconBorder} border flex items-center justify-center shrink-0 ${hoverBg} group-hover:scale-105 group-hover:-rotate-3 group-hover:shadow-md transition-all duration-300 shadow-sm relative z-10`}>
-                  <sponsor.icon className={`w-6 h-6 ${iconColor} ${hoverIconColor} group-hover:scale-110 transition-all duration-300`} strokeWidth={1.5} />
-                </div>
+                  {/* Content */}
+                  <div className="flex flex-col z-10 flex-1 font-inter">
+                    <h4 className={`text-[13px] sm:text-[14px] font-semibold text-[#1b5e20] leading-tight mb-1 uppercase tracking-wide transition-colors ${isExclusive ? 'group-hover:text-[#f58220]' : 'group-hover:text-[#3b8c2a]'}`}>
+                      {sponsor.title}
+                    </h4>
+                    <p className="text-[11.5px] sm:text-[12px] text-gray-700 leading-relaxed font-medium pr-2">
+                      {sponsor.desc}
+                    </p>
+                  </div>
 
-                {/* Content */}
-                <div className="flex flex-col z-10 flex-1">
-                  <h4 className={`text-[14px] font-semibold text-[#0b2912] leading-[1.2] mb-1 uppercase tracking-wide transition-colors ${isExclusive ? 'group-hover:text-[#f58220]' : 'group-hover:text-[#3b8c2a]'}`}>
-                    {sponsor.title}
-                  </h4>
-                  <p className="text-[12.5px] text-gray-500 leading-[1.4] font-medium pr-2">
-                    {sponsor.desc}
-                  </p>
-                </div>
-
-                {/* Subtle Hover Gradient Background */}
-                <div className={`absolute -bottom-12 -right-12 w-32 h-32 rounded-full blur-2xl pointer-events-none transition-opacity duration-500 opacity-0 group-hover:opacity-100 ${isExclusive ? 'bg-[#F2B40E]/10' : 'bg-[#3b8c2a]/5'}`}></div>
-              </motion.div>
+                  {/* Subtle Hover Gradient Background */}
+                  <div className={`absolute -bottom-12 -right-12 w-32 h-32 rounded-full blur-2xl pointer-events-none transition-opacity duration-500 opacity-0 group-hover:opacity-100 ${isExclusive ? 'bg-[#F2B40E]/10' : 'bg-[#3b8c2a]/5'}`}></div>
+                </motion.div>
+              </Link>
             );
           })}
         </div>
@@ -238,13 +271,13 @@ const SponsorshipCategories = () => {
               </div>
 
               {/* Content on Left (relative z-20) */}
-              <div className="relative z-20 p-5 lg:p-6 w-full lg:w-[55%] flex flex-col justify-between pointer-events-auto">
+              <div className="relative z-20 p-5 lg:p-6 w-full lg:w-[55%] flex flex-col justify-between pointer-events-auto font-inter">
                 <div>
-                  <h3 className="text-[22px] lg:text-[28px] font-black text-white uppercase leading-[1.1] mb-2 tracking-tight">
+                  <h3 className="text-[20px] md:text-[24px] lg:text-[26px] font-semibold text-white uppercase leading-[1.2] mb-2 tracking-tight font-poppins">
                     ELEVATE YOUR BRAND PRESENCE <br />
                     <span className="text-[#F2B40E]">AT BHARAT ORGANIC EXPO 2027</span>
                   </h3>
-                  <p className="text-[14px] lg:text-[15px] text-gray-300 font-medium leading-relaxed max-w-[360px] mb-4">
+                  <p className="text-[13px] md:text-[14px] text-gray-200 font-normal leading-[1.6] max-w-[360px] mb-4">
                     meaningful connections and grow your business with India's biggest organic show.
                   </p>
                 </div>
@@ -256,8 +289,8 @@ const SponsorshipCategories = () => {
                       <Users className="w-4 h-4 text-[#F2B40E]" strokeWidth={2} />
                     </div>
                     <div className="flex flex-col">
-                      <span className="text-[15px] md:text-[16px] font-bold text-white leading-none mb-0.5">10,000+</span>
-                      <span className="text-[12px] font-medium text-gray-400 leading-tight">Visitors / Delegates</span>
+                      <span className="text-[16px] md:text-[18px] font-semibold text-[#F2B40E] leading-none mb-1">8,000+</span>
+                      <span className="text-[11px] md:text-[12px] font-bold text-gray-300 uppercase tracking-widest leading-tight">Visitors / Delegates</span>
                     </div>
                   </div>
                   <div className="flex w-full items-center gap-2.5 bg-white/5 border border-white/10 rounded-lg px-3 py-2 hover:bg-white/10 transition-colors">
@@ -265,8 +298,8 @@ const SponsorshipCategories = () => {
                       <Target className="w-4 h-4 text-[#F2B40E]" strokeWidth={2} />
                     </div>
                     <div className="flex flex-col">
-                      <span className="text-[15px] md:text-[16px] font-bold text-white leading-none mb-0.5">200+</span>
-                      <span className="text-[12px] font-medium text-gray-400 leading-tight">Exhibitors</span>
+                      <span className="text-[16px] md:text-[18px] font-semibold text-[#F2B40E] leading-none mb-1">200+</span>
+                      <span className="text-[11px] md:text-[12px] font-bold text-gray-300 uppercase tracking-widest leading-tight">Exhibitors</span>
                     </div>
                   </div>
                   <div className="flex w-full items-center gap-2.5 bg-white/5 border border-white/10 rounded-lg px-3 py-2 hover:bg-white/10 transition-colors">
@@ -274,8 +307,8 @@ const SponsorshipCategories = () => {
                       <Globe className="w-4 h-4 text-[#F2B40E]" strokeWidth={2} />
                     </div>
                     <div className="flex flex-col">
-                      <span className="text-[15px] md:text-[16px] font-bold text-white leading-none mb-0.5">1,000+</span>
-                      <span className="text-[12px] font-medium text-gray-400 leading-tight">Global Buyers</span>
+                      <span className="text-[16px] md:text-[18px] font-semibold text-[#F2B40E] leading-none mb-1">1,000+</span>
+                      <span className="text-[11px] md:text-[12px] font-bold text-gray-300 uppercase tracking-widest leading-tight">Global Buyers</span>
                     </div>
                   </div>
                   <div className="flex w-full items-center gap-2.5 bg-white/5 border border-white/10 rounded-lg px-3 py-2 hover:bg-white/10 transition-colors">
@@ -283,26 +316,34 @@ const SponsorshipCategories = () => {
                       <Zap className="w-4 h-4 text-[#F2B40E]" strokeWidth={2} />
                     </div>
                     <div className="flex flex-col">
-                      <span className="text-[15px] md:text-[16px] font-bold text-white leading-none mb-0.5">Unlimited</span>
-                      <span className="text-[12px] font-medium text-gray-400 leading-tight">Opportunities</span>
+                      <span className="text-[16px] md:text-[18px] font-semibold text-[#F2B40E] leading-none mb-1">Unlimited</span>
+                      <span className="text-[11px] md:text-[12px] font-bold text-gray-300 uppercase tracking-widest leading-tight">Opportunities</span>
                     </div>
                   </div>
                 </div>
 
                 {/* Buttons horizontally aligned */}
-                <div className="flex flex-nowrap items-center gap-2 mt-auto w-full">
-                  <button className="flex items-center justify-center gap-1.5 px-3 lg:px-4 py-2 border border-[#3b8c2a]/80 hover:border-[#3b8c2a] rounded-full text-white hover:bg-[#3b8c2a]/10 transition-colors flex-1 min-w-0">
-                    <Download className="w-3.5 h-3.5 shrink-0" />
-                    <span className="text-[9px] xl:text-[11px] font-bold uppercase tracking-wider whitespace-nowrap overflow-hidden text-ellipsis">DOWNLOAD BROCHURE</span>
-                  </button>
-                  <button className="flex items-center justify-center gap-1.5 px-3 lg:px-4 py-2 bg-[#3b8c2a] hover:bg-[#2f7121] border border-[#3b8c2a] rounded-full text-white transition-colors shadow-lg flex-1 min-w-0">
-                    <MessageCircle className="w-3.5 h-3.5 shrink-0" />
-                    <span className="text-[9px] xl:text-[11px] font-bold uppercase tracking-wider whitespace-nowrap overflow-hidden text-ellipsis">ANY QUERY?</span>
-                  </button>
-                  <button className="flex items-center justify-center gap-1.5 px-3 lg:px-4 py-2 border border-[#3b8c2a]/80 hover:border-[#3b8c2a] rounded-full text-white hover:bg-[#3b8c2a]/10 transition-colors flex-1 min-w-0">
-                    <PhoneCall className="w-3.5 h-3.5 shrink-0" />
-                    <span className="text-[9px] xl:text-[11px] font-bold uppercase tracking-wider whitespace-nowrap overflow-hidden text-ellipsis">TALK TO US</span>
-                  </button>
+                <div className="flex flex-nowrap items-center gap-1.5 mt-auto w-full">
+                  {/* BROCHURE Button with #4B1426 bg & Sparkles */}
+                  <div className="relative shrink-0 flex-1 min-w-0">
+                    <Sparkle color="#ffc107" shadow="#4B1426" style={{ top: "-10px", left: "5%", animationDelay: "0s" }} />
+                    <Sparkle color="#ff9800" shadow="#4B1426" style={{ top: "-12px", left: "45%", animationDelay: "0.5s" }} />
+                    <Sparkle color="#ffc107" shadow="#4B1426" style={{ top: "-10px", right: "5%", animationDelay: "1s" }} />
+                    <button className="group relative w-full flex items-center justify-center gap-1 px-2.5 py-1.5 bg-[#4B1426] hover:bg-[#360e1b] border border-white/20 rounded-full text-white transition-colors shadow-md overflow-hidden">
+                      <span className="absolute inset-0 bg-white/15 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-500 skew-x-12" />
+                      <Download className="w-3 h-3 shrink-0 relative z-10 text-white" />
+                      <span className="text-[9px] xl:text-[11px] font-bold uppercase tracking-wider whitespace-nowrap overflow-hidden text-ellipsis relative z-10 text-white">BROCHURE</span>
+                    </button>
+                  </div>
+
+                  <Link href="/contact" target="_blank" rel="noopener noreferrer" className="flex items-center justify-center gap-1 px-2.5 py-1.5 bg-[#3b8c2a] hover:bg-[#2f7121] border border-[#3b8c2a] rounded-full text-white transition-colors shadow-lg flex-1 min-w-0">
+                    <MessageCircle className="w-3 h-3 shrink-0" />
+                    <span className="text-[8.5px] xl:text-[10px] font-bold uppercase tracking-wider whitespace-nowrap overflow-hidden text-ellipsis">ANY QUERY?</span>
+                  </Link>
+                  <a href="tel:+919654900525" className="flex items-center justify-center gap-1 px-2.5 py-1.5 border border-[#3b8c2a]/80 hover:border-[#3b8c2a] rounded-full text-white hover:bg-[#3b8c2a]/10 transition-colors flex-1 min-w-0">
+                    <PhoneCall className="w-3 h-3 shrink-0" />
+                    <span className="text-[8.5px] xl:text-[10px] font-bold uppercase tracking-wider whitespace-nowrap overflow-hidden text-ellipsis">TALK TO US</span>
+                  </a>
                 </div>
               </div>
             </div>

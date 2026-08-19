@@ -163,7 +163,7 @@ const TestimonialCard = ({ item, expandedCardId, setExpandedCardId }: { item: an
 
   return (
     <div
-      className="relative flex flex-col w-[250px] md:w-[230px] flex-shrink-0 font-inter"
+      className="relative flex flex-col w-[280px] md:w-[270px] flex-shrink-0 font-inter"
       style={{ paddingTop: '32px' }}
     >
       {/* ── Floating Logo Circle ── */}
@@ -182,7 +182,7 @@ const TestimonialCard = ({ item, expandedCardId, setExpandedCardId }: { item: an
         className="relative bg-white rounded-[22px] border border-slate-100 flex flex-col overflow-hidden group hover:shadow-[0_20px_40px_-10px_rgba(0,0,0,0.15)] transition-all duration-500"
         style={{
           boxShadow: "rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 1px 3px 1px",
-          height: '280px',
+          height: '310px',
         }}
       >
         {/* ── Expanded Full-Text Overlay ── */}
@@ -203,11 +203,11 @@ const TestimonialCard = ({ item, expandedCardId, setExpandedCardId }: { item: an
               >
                 <div className="flex items-center gap-1.5">
                   <Quote className="w-4 h-4 text-[#458a16] transform -scale-x-100" />
-                  <span className="text-[10px] font-bold text-slate-500 uppercase tracking-widest">Full Review</span>
+                  <span className="text-[11px] font-bold text-slate-500 uppercase tracking-widest">Full Review</span>
                 </div>
                 <button
                   onClick={(e) => { e.stopPropagation(); setIsExpanded(false); }}
-                  className="flex items-center gap-1 text-[10px] font-black uppercase tracking-widest px-2.5 py-1 rounded-full transition-all duration-200"
+                  className="flex items-center gap-1 text-[10.5px] font-black uppercase tracking-widest px-2.5 py-1 rounded-full transition-all duration-200"
                   style={{
                     color: '#23471d',
                     background: '#f0faf0',
@@ -219,30 +219,30 @@ const TestimonialCard = ({ item, expandedCardId, setExpandedCardId }: { item: an
               </div>
 
               {/* Expanded Content */}
-              <div className="flex-1 overflow-y-auto px-4 py-3">
-                <p className="text-slate-800 text-[11.5px] font-medium leading-relaxed">
+              <div className="flex-1 overflow-y-auto px-4 py-3 font-inter">
+                <p className="text-slate-800 text-[13px] font-medium leading-relaxed">
                   {item.quote}
                 </p>
               </div>
 
               {/* Company info footer */}
               <div
-                className="flex items-center gap-2.5 px-4 py-3 border-t border-slate-100 flex-shrink-0"
+                className="flex items-center gap-2.5 px-4 py-3 border-t border-slate-100 flex-shrink-0 font-inter"
                 style={{ background: "#fafafa" }}
               >
-                <div className="w-8 h-8 rounded-full bg-slate-100 flex items-center justify-center text-[6px] font-black flex-shrink-0" style={{ color: item.color || '#23471d' }}>
+                <div className="w-8 h-8 rounded-full bg-slate-100 flex items-center justify-center text-[9px] font-black flex-shrink-0" style={{ color: item.color || '#23471d' }}>
                   {item.company1?.substring(0, 2)}
                 </div>
                 <div className="min-w-0 flex-1">
-                  <div className="font-bold text-[10px] leading-tight" style={{ color: item.color || '#23471d' }}>
+                  <div className="font-bold text-[12px] leading-tight" style={{ color: item.color || '#23471d' }}>
                     {item.company1}
                   </div>
                   {item.company2 && (
-                    <div className="font-semibold text-[9px] leading-tight opacity-80 mt-0.5" style={{ color: item.color || '#23471d' }}>
+                    <div className="font-semibold text-[10.5px] leading-tight opacity-80 mt-0.5" style={{ color: item.color || '#23471d' }}>
                       {item.company2}
                     </div>
                   )}
-                  <div className="flex items-center gap-1 text-slate-400 text-[8.5px] mt-1">
+                  <div className="flex items-center gap-1 text-slate-500 text-[10px] mt-1">
                     <MapPin className="w-2.5 h-2.5 text-[#d26019] flex-shrink-0" />
                     {item.location}
                   </div>
@@ -253,44 +253,44 @@ const TestimonialCard = ({ item, expandedCardId, setExpandedCardId }: { item: an
         </AnimatePresence>
 
         {/* ── Top: Company Info (below floating logo) ── */}
-        <div className="pt-[52px] px-4 pb-0 text-center flex-shrink-0 min-h-[82px]">
+        <div className="pt-[50px] px-4 pb-0 text-center flex-shrink-0 min-h-[86px]">
           {/* Company 1 Slot */}
-          <div className="h-[16px] mb-0.5">
-            <div className="font-bold text-[11.5px] leading-tight px-1 flex items-center justify-center" style={{ color: item.color || '#23471d' }}>
-              <span className={item.company1.length > 25 ? "truncate max-w-[190px]" : ""}>{item.company1}</span>
+          <div className="min-h-[18px] mb-0.5">
+            <div className="font-bold text-[13px] leading-tight px-1 flex items-center justify-center" style={{ color: item.color || '#23471d' }}>
+              <span className={item.company1.length > 25 ? "truncate max-w-[220px]" : ""}>{item.company1}</span>
             </div>
           </div>
 
           {/* Company 2 / Title Slot */}
-          <div className="h-[16px]">
-            <div className="font-bold text-[10.5px] leading-tight px-1 opacity-90 flex items-center justify-center" style={{ color: item.color || '#23471d' }}>
+          <div className="min-h-[18px]">
+            <div className="font-bold text-[11.5px] leading-tight px-1 opacity-90 flex items-center justify-center" style={{ color: item.color || '#23471d' }}>
               {item.company2 ? (
-                <span className={item.company2.length > 30 ? "truncate max-w-[190px]" : ""}>{item.company2}</span>
+                <span className={item.company2.length > 30 ? "truncate max-w-[220px]" : ""}>{item.company2}</span>
               ) : ""}
             </div>
           </div>
 
           {/* Location Slot */}
-          <div className="flex items-center justify-center gap-1 text-slate-500 text-[9.5px] mt-2">
-            <MapPin className="w-2.5 h-2.5 flex-shrink-0 text-[#d26019]" />
-            <span className="truncate max-w-[150px]">{item.location}</span>
+          <div className="flex items-center justify-center gap-1 text-slate-500 text-[10.5px] mt-1.5">
+            <MapPin className="w-3 h-3 flex-shrink-0 text-[#d26019]" />
+            <span className="truncate max-w-[180px]">{item.location}</span>
           </div>
         </div>
 
         {/* ── Gradient Divider ── */}
         <div
-          className="h-[1.5px] mx-4 mt-3 rounded-full flex-shrink-0"
+          className="h-[1.5px] mx-4 mt-2.5 rounded-full flex-shrink-0"
           style={{ background: `linear-gradient(90deg, ${item.color || '#23471d'}, #d26019)` }}
         />
 
         {/* ── Quote Section ── */}
-        <div className="flex flex-col flex-1 px-4 pt-3 pb-3 relative min-h-0">
-          <Quote className="w-5 h-5 text-[#458a16] transform -scale-x-100 opacity-70 mb-1.5 flex-shrink-0" />
+        <div className="flex flex-col flex-1 px-4 pt-2.5 pb-3 relative min-h-0 font-inter">
+          <Quote className="w-4 h-4 text-[#458a16] transform -scale-x-100 opacity-70 mb-1 flex-shrink-0" />
 
           <div className="flex-1 overflow-hidden">
-            <p className="text-slate-700 text-[11px] font-medium leading-relaxed">
+            <p className="text-slate-700 text-[13px] font-medium leading-relaxed">
               {isLong
-                ? `${quoteText.substring(0, CHAR_LIMIT).trim()}…`
+                ? `${quoteText.substring(0, 125).trim()}…`
                 : quoteText
               }
             </p>
@@ -304,7 +304,7 @@ const TestimonialCard = ({ item, expandedCardId, setExpandedCardId }: { item: an
                   e.stopPropagation();
                   setIsExpanded(true);
                 }}
-                className="flex items-center gap-0.5 text-[8px] font-black uppercase tracking-widest px-2 py-0.5 rounded-full transition-all duration-200 hover:gap-1"
+                className="flex items-center gap-1 text-[10px] font-black uppercase tracking-widest px-2.5 py-1 rounded-full transition-all duration-200 hover:gap-1.5"
                 style={{
                   color: '#23471d',
                   background: 'linear-gradient(90deg, #eaf5e2 0%, #fff6ee 100%)',
@@ -312,7 +312,7 @@ const TestimonialCard = ({ item, expandedCardId, setExpandedCardId }: { item: an
                 }}
               >
                 Read more
-                <span style={{ fontSize: '8px' }}>→</span>
+                <span className="text-[10px]">→</span>
               </button>
             )}
           </div>
@@ -334,7 +334,7 @@ const VideoCard = ({ item }: { item: any }) => {
   return (
     <div
       onClick={() => window.open(item.videoUrl, '_blank')}
-      className="relative rounded-2xl overflow-hidden flex-1 min-w-full sm:min-w-[280px] md:min-w-0 h-48 md:h-40 group cursor-pointer shadow-lg font-inter"
+      className="relative rounded-2xl overflow-hidden flex-1 min-w-full sm:min-w-[280px] md:min-w-0 h-56 md:h-52 group cursor-pointer shadow-lg font-inter"
     >
       <div className="absolute inset-0" style={{ background: bg }}>
         {item.thumbnail && (
@@ -348,8 +348,8 @@ const VideoCard = ({ item }: { item: any }) => {
         </div>
       </div>
       <div className="absolute bottom-0 left-0 right-0 p-4 bg-gradient-to-t from-black/90 to-transparent">
-        <div className="text-white font-bold text-xs truncate font-poppins">{item.title}</div>
-        <div className="text-white/60 text-[10px] font-medium">{item.location}</div>
+        <div className="text-white font-semibold text-xs md:text-sm truncate font-poppins">{item.title}</div>
+        <div className="text-white/70 text-[11px] font-medium mt-0.5">{item.location}</div>
       </div>
     </div>
   );
