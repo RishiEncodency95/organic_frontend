@@ -185,14 +185,14 @@ const BuyerSellerMeetSection = () => {
             {/* CTA BUTTON & SIDE SUBTEXT */}
             <div className="flex flex-wrap items-center justify-center gap-3 sm:gap-5 mb-3">
               <div className="relative">
-                <Sparkle color="#facc15" shadow="#4B1426" style={{ top: "-12px", left: "10%", animationDelay: "0.2s" }} />
-                <Sparkle color="#facc15" shadow="#4B1426" style={{ top: "-15px", left: "50%", animationDelay: "0.6s" }} />
-                <Sparkle color="#facc15" shadow="#4B1426" style={{ top: "-10px", right: "10%", animationDelay: "1s" }} />
+                <Sparkle color="#007979" shadow="#004d4d" style={{ top: "-12px", left: "10%", animationDelay: "0.2s" }} />
+                <Sparkle color="#007979" shadow="#004d4d" style={{ top: "-15px", left: "50%", animationDelay: "0.6s" }} />
+                <Sparkle color="#007979" shadow="#004d4d" style={{ top: "-10px", right: "10%", animationDelay: "1s" }} />
                 <Link
                   href="/registration/buyer-registration"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="bg-[#4B1426] hover:bg-[#380e1c] text-white font-poppins font-semibold text-xs tracking-wider uppercase px-6 py-2 rounded-full shadow-md flex items-center gap-2 transition-all duration-300 hover:shadow-lg hover:-translate-y-0.5 relative z-10"
+                  className="bg-[#007979] hover:bg-[#005f5f] text-white font-poppins font-semibold text-xs tracking-wider uppercase px-6 py-2 rounded-full shadow-md flex items-center gap-2 transition-all duration-300 hover:shadow-lg hover:-translate-y-0.5 relative z-10"
                 >
                   <UserCircle2 className="w-4 h-4 text-amber-300" />
                   <span>REGISTER AS BUYER</span>

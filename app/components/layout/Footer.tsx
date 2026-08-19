@@ -53,19 +53,19 @@ export default function Footer() {
   const quickLinks = [
     { name: "Home", path: "/" },
     { name: "About Us", path: "/about" },
-    { name: "Exhibitor Registration", path: "/registration" },
-    { name: "Delegate Registration", path: "https://arogya.namogange.org/", isExternal: true },
-    { name: "Conference Tracks", path: "https://arogya.namogange.org/", isExternal: true },
-    { name: "Speakers", path: "/speakers" },
-    { name: "Agenda", path: "/agenda" },
-    { name: "Exhibition", path: "/exhibitors" },
+    { name: "Exhibitor Registration", path: "/registration/book-a-stand" },
+    { name: "Delegate Registration", path: "https://arogya.namogange.org/" },
+    { name: "Conference Tracks", path: "https://arogya.namogange.org/" },
+    { name: "Buyer Seller Meet", path: "/buyer-seller-meet" },
+    { name: "Exhibitor List", path: "/exhibitors" },
+    { name: "Blogs", path: "/blog" },
     { name: "Awards", path: "/awards" },
     { name: "Contact Us", path: "/contact" }
   ];
 
   const subLinks = [
-    { name: "Speakers", path: "/speakers" },
-    { name: "Agenda", path: "/agenda" },
+    { name: "Speakers", path: "/conference" },
+    { name: "Agenda", path: "/conference" },
     { name: "Exhibition", path: "/exhibitors" },
     { name: "Awards", path: "/awards" },
     { name: "Contact Us", path: "/contact" }
@@ -142,9 +142,9 @@ export default function Footer() {
                 <li key={i}>
                   <Link
                     href={link.path}
-                    target={link.isExternal ? "_blank" : undefined}
-                    rel={link.isExternal ? "noopener noreferrer" : undefined}
-                    className="hover:text-white transition-colors flex items-center gap-1.5 group"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="hover:text-white transition-colors flex items-center gap-1.5 group font-inter"
                   >
                     <ChevronRight size={14} className="text-[#F3B71B] group-hover:translate-x-1 transition-transform shrink-0" />
                     {link.name}
@@ -184,9 +184,29 @@ export default function Footer() {
             <img src={uuogImg.src} alt="divider" className="h-3.5 w-auto -mt-1.5 mb-2.5 object-contain" />
 
             <div className="text-[12px] text-gray-200 font-medium space-y-1.5 mb-4 whitespace-nowrap">
-              <p><span className="text-gray-400 font-medium">Phone:</span> +91 96549 00525</p>
-              <p><span className="text-gray-400 font-medium">Email:</span> info@bharatorganicexpo.com</p>
-              <p><span className="text-gray-400 font-medium">Web:</span> www.bharatorganicexpo.com</p>
+              <p>
+                <span className="text-gray-400 font-medium">Phone:</span>{" "}
+                <a href="tel:+919654900525" className="hover:text-[#F3B71B] transition-colors">
+                  +91 96549 00525
+                </a>
+              </p>
+              <p>
+                <span className="text-gray-400 font-medium">Email:</span>{" "}
+                <a href="mailto:info@namogangewellness.com" className="hover:text-[#F3B71B] transition-colors">
+                  info@namogangewellness.com
+                </a>
+              </p>
+              <p>
+                <span className="text-gray-400 font-medium">Web:</span>{" "}
+                <a
+                  href="/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="hover:text-[#F3B71B] transition-colors underline decoration-white/20"
+                >
+                  www.bharatorganicexpo.com
+                </a>
+              </p>
             </div>
 
             <h5 className="font-poppins font-semibold text-gray-400 uppercase mb-1 text-[11px] tracking-widest">ADDRESS:</h5>
@@ -198,12 +218,15 @@ export default function Footer() {
             </button>
 
             <h5 className="font-poppins font-semibold text-gray-400 uppercase mb-1.5 text-[11px] tracking-widest">CONFERENCE HELPLINE</h5>
-            <div className="flex items-center gap-2 text-white font-semibold text-[14px] font-poppins">
+            <a
+              href="tel:+919654900525"
+              className="flex items-center gap-2 text-white font-semibold text-[14px] font-poppins hover:opacity-90 transition-opacity"
+            >
               <div className="w-7 h-7 rounded-full border border-[#F3B71B] flex items-center justify-center text-[#F3B71B] bg-[#F3B71B]/10">
                 <Phone size={14} />
               </div>
               <span className="text-[#F3B71B]">+91 96549 00525</span>
-            </div>
+            </a>
           </div>
 
           {/* Organised By & Connect */}

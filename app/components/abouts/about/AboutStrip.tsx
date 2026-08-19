@@ -43,7 +43,7 @@ const AboutStrip = () => {
   const items = [
     {
       title: SITE_CONFIG.stats.exhibitors,
-      subtitle: "TOP EXHIBITORS",
+      subtitle: "EXHIBITORS",
       icon: Building2,
       color: "text-orange-500"
     },
@@ -54,7 +54,7 @@ const AboutStrip = () => {
       color: "text-[#3b8c2a]"
     },
     {
-      title: "15,000 Sqm",
+      title: "5,000 Sqm",
       subtitle: "EXHIBITION AREA",
       icon: Map,
       color: "text-blue-500"

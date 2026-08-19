@@ -10,6 +10,24 @@ import {
   CalendarDays, MapPin, Trophy, ArrowRight, Sparkles
 } from 'lucide-react';
 
+const Sparkle = ({ style, color = "#facc15", shadow = "#4B1426" }: { style?: React.CSSProperties; color?: string; shadow?: string }) => (
+  <span
+    style={{
+      position: "absolute",
+      pointerEvents: "none",
+      fontSize: "13px",
+      color,
+      textShadow: `0 0 6px ${shadow}, 0 0 12px ${shadow}`,
+      animation: "sparkleAnim 1.6s ease-in-out infinite",
+      opacity: 0,
+      zIndex: 25,
+      ...style,
+    }}
+  >
+    ✦
+  </span>
+);
+
 const WhyAttendItemsLeft = [
   {
     title: "DISCOVER",
@@ -286,21 +304,27 @@ const SponsorsAndAttend = () => {
       </section>
 
       {/* PREMIUM FULL WIDTH BAND */}
-      <section className="w-full bg-[#3b8c2a] relative z-20 py-1 lg:py-2 border-y border-[#F2B40E]/20 shadow-[0_10px_40px_rgba(0,0,0,0.15)] overflow-hidden">
+      <section className="w-full bg-[#1b5e20] font-inter relative z-30 py-2.5 lg:py-3 border-y border-[#facc15]/20 shadow-[0_10px_40px_rgba(0,0,0,0.15)] overflow-visible">
+        <style>{`
+          @keyframes sparkleAnim {
+            0%, 100% { opacity: 0; transform: scale(0.4) rotate(0deg); }
+            50% { opacity: 1; transform: scale(1.2) rotate(180deg); }
+          }
+        `}</style>
         {/* Subtle Background Glow */}
-        <div className="absolute top-1/2 left-1/4 w-96 h-96 bg-[#3b8c2a]/20 rounded-full blur-[100px] -translate-y-1/2 pointer-events-none"></div>
-        <div className="absolute top-1/2 right-1/4 w-96 h-96 bg-[#F2B40E]/10 rounded-full blur-[100px] -translate-y-1/2 pointer-events-none"></div>
+        <div className="absolute top-1/2 left-1/4 w-96 h-96 bg-[#1b5e20]/20 rounded-full blur-[100px] -translate-y-1/2 pointer-events-none"></div>
+        <div className="absolute top-1/2 right-1/4 w-96 h-96 bg-[#facc15]/10 rounded-full blur-[100px] -translate-y-1/2 pointer-events-none"></div>
 
         <div className=" px-4 md:px-11 flex flex-col xl:flex-row items-center justify-between gap-6 xl:gap-4 relative z-10">
 
           {/* Item 1: Date */}
           <div className="flex items-center gap-3 group">
-            <div className="w-10 h-10 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-[#F2B40E] shadow-sm group-hover:bg-[#F2B40E] group-hover:text-[#0b2912] transition-colors duration-300 shrink-0">
+            <div className="w-10 h-10 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-[#facc15] shadow-sm group-hover:bg-[#facc15] group-hover:text-[#0b2912] transition-colors duration-300 shrink-0">
               <CalendarDays className="w-5 h-5" strokeWidth={2} />
             </div>
-            <div className="flex flex-col text-left">
-              <span className="text-[14px] lg:text-[16px] font-bold text-white leading-none mb-1">19 &ndash; 21</span>
-              <span className="text-[11px] lg:text-[12px] font-semibold text-white/60 uppercase tracking-widest leading-none">FEBRUARY 2027</span>
+            <div className="flex flex-col text-left font-inter">
+              <span className="text-[14px] lg:text-[16px] font-semibold text-white leading-none mb-1">19 &ndash; 21</span>
+              <span className="text-[11px] lg:text-[12px] font-semibold text-[#facc15] uppercase tracking-widest leading-none">FEBRUARY 2027</span>
             </div>
           </div>
 
@@ -308,12 +332,12 @@ const SponsorsAndAttend = () => {
 
           {/* Item 2: Location */}
           <div className="flex items-center gap-3 group">
-            <div className="w-10 h-10 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-[#F2B40E] shadow-sm group-hover:bg-[#F2B40E] group-hover:text-[#0b2912] transition-colors duration-300 shrink-0">
+            <div className="w-10 h-10 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-[#facc15] shadow-sm group-hover:bg-[#facc15] group-hover:text-[#0b2912] transition-colors duration-300 shrink-0">
               <MapPin className="w-5 h-5" strokeWidth={2} />
             </div>
-            <div className="flex flex-col text-left">
-              <span className="text-[14px] lg:text-[16px] font-medium text-white leading-none mb-1 uppercase">PRAGATI MAIDAN</span>
-              <span className="text-[11px] lg:text-[12px] font-semibold text-white/60 uppercase tracking-widest leading-none">NEW DELHI, INDIA</span>
+            <div className="flex flex-col text-left font-inter">
+              <span className="text-[14px] lg:text-[16px] font-semibold text-white leading-none mb-1 uppercase">PRAGATI MAIDAN</span>
+              <span className="text-[11px] lg:text-[12px] font-semibold text-[#facc15] uppercase tracking-widest leading-none">NEW DELHI, INDIA</span>
             </div>
           </div>
 
@@ -321,12 +345,12 @@ const SponsorsAndAttend = () => {
 
           {/* Item 3: Global Edition */}
           <div className="flex items-center gap-3 group">
-            <div className="w-10 h-10 rounded-full bg-[#F2B40E]/10 border border-[#F2B40E]/30 flex items-center justify-center text-[#F2B40E] shadow-sm group-hover:bg-[#F2B40E] group-hover:text-[#0b2912] transition-colors duration-300 shrink-0">
+            <div className="w-10 h-10 rounded-full bg-[#facc15]/10 border border-[#facc15]/30 flex items-center justify-center text-[#facc15] shadow-sm group-hover:bg-[#facc15] group-hover:text-[#0b2912] transition-colors duration-300 shrink-0">
               <Globe className="w-5 h-5" strokeWidth={2} />
             </div>
-            <div className="flex flex-col text-left">
-              <span className="text-[14px] lg:text-[16px] font-medium text-white leading-none mb-1 uppercase">GLOBAL EDITION</span>
-              <span className="text-[10px] lg:text-[11px] font-semibold text-[#F2B40E] uppercase tracking-wider leading-none">CONNECTING THE WORLD<br />OF ORGANIC & NATURAL</span>
+            <div className="flex flex-col text-left font-inter">
+              <span className="text-[14px] lg:text-[16px] font-semibold text-white leading-none mb-1 uppercase">GLOBAL EDITION</span>
+              <span className="text-[10px] lg:text-[11px] font-semibold text-[#facc15] uppercase tracking-wider leading-none">CONNECTING THE WORLD<br />OF ORGANIC & NATURAL</span>
             </div>
           </div>
 
@@ -334,31 +358,39 @@ const SponsorsAndAttend = () => {
 
           {/* Trophy Info */}
           <div className="flex items-center gap-3 group">
-            <div className="w-10 h-10 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-[#F2B40E] shadow-sm group-hover:bg-[#F2B40E] group-hover:text-[#0b2912] transition-colors duration-300 shrink-0">
+            <div className="w-10 h-10 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-[#facc15] shadow-sm group-hover:bg-[#facc15] group-hover:text-[#0b2912] transition-colors duration-300 shrink-0">
               <Trophy className="w-5 h-5" strokeWidth={2} />
             </div>
-            <div className="flex flex-col text-left">
-              <span className="text-[12px] lg:text-[13px] font-semibold text-white/80 leading-none mb-1 uppercase tracking-wide">BE PART OF INDIA'S BIGGEST</span>
-              <span className="text-[13px] lg:text-[15px] font-semibold text-[#F2B40E] uppercase leading-none">ORGANIC & NATURAL SHOW!</span>
+            <div className="flex flex-col text-left font-inter">
+              <span className="text-[12px] lg:text-[13px] font-semibold text-white/90 leading-none mb-1 uppercase tracking-wide">BE PART OF INDIA'S BIGGEST</span>
+              <span className="text-[13px] lg:text-[15px] font-semibold text-[#facc15] uppercase leading-none">ORGANIC & NATURAL SHOW!</span>
             </div>
           </div>
 
           <div className="hidden xl:block w-[1px] h-8 bg-white/10"></div>
 
           {/* Register Button */}
-          <Link
-            href="/registration/visitor-registration"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="flex items-center gap-2 bg-gradient-to-r from-[#F2B40E] to-[#f58220] hover:from-[#f58220] hover:to-[#F2B40E] px-6 py-2.5 rounded-full shadow-[0_4px_15px_rgba(242,180,14,0.3)] transition-all duration-300 transform hover:-translate-y-0.5 shrink-0 group"
-          >
-            <span className="text-[#0b2912] font-semibold text-[13px] lg:text-[14px] tracking-widest uppercase">
-              REGISTER AS VISITOR!
-            </span>
-            <div className="w-6 h-6 bg-[#0b2912]/10 rounded-full flex items-center justify-center text-[#0b2912] group-hover:bg-[#0b2912] group-hover:text-[#F2B40E] transition-colors">
-              <ArrowRight className="w-3.5 h-3.5" strokeWidth={3} />
-            </div>
-          </Link>
+          <div className="relative shrink-0 z-30">
+            <Sparkle color="#4B1426" shadow="#ffffff" style={{ top: "-12px", left: "5%", animationDelay: "0s" }} />
+            <Sparkle color="#4B1426" shadow="#ffffff" style={{ top: "-15px", left: "28%", animationDelay: "0.3s" }} />
+            <Sparkle color="#4B1426" shadow="#ffffff" style={{ top: "-13px", left: "50%", animationDelay: "0.6s" }} />
+            <Sparkle color="#4B1426" shadow="#ffffff" style={{ top: "-15px", left: "72%", animationDelay: "0.9s" }} />
+            <Sparkle color="#4B1426" shadow="#ffffff" style={{ top: "-12px", right: "5%", animationDelay: "1.2s" }} />
+            <Link
+              href="/registration/visitor-registration"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="group relative inline-flex items-center justify-start gap-2.5 bg-[#4B1426] hover:bg-[#360e1b] text-white px-6 py-2.5 rounded-full shadow-[0_4px_20px_rgba(75,20,38,0.6)] transition-all duration-300 transform hover:-translate-y-0.5 shrink-0 font-inter overflow-hidden border border-white/20"
+            >
+              <span className="absolute inset-0 bg-white/15 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-500 skew-x-12" />
+              <span className="text-white font-semibold text-[13px] lg:text-[14px] tracking-widest uppercase relative z-10">
+                REGISTER AS VISITOR!
+              </span>
+              <div className="w-6 h-6 bg-white/20 rounded-full flex items-center justify-center text-white group-hover:bg-white group-hover:text-[#4B1426] transition-colors relative z-10">
+                <ArrowRight className="w-3.5 h-3.5" strokeWidth={3} />
+              </div>
+            </Link>
+          </div>
 
         </div>
       </section>

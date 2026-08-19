@@ -24,9 +24,8 @@ const navLinks = [
     { label: "Home", path: "/" },
     {
         label: "About Us",
-        path: "/about",
         dropdown: [
-            { label: "About Expo", path: "/about", icon: Info, description: "Learn about the mission and vision of IHWE" },
+            { label: "About Expo", path: "/about", icon: Info, description: "Learn about the mission and vision of Bharat Organic Expo" },
             // { label: "Support & Services", path: "/support", icon: Briefcase, description: "Explore our global network of collaborators" },
             { label: "Advisory Board Members", path: "/about/advisory_board_member", icon: Users, description: "Meet the experts behind the exhibition" },
             { label: "Blogs", path: "/blog", icon: Layout, description: "Latest news and insights from the wellness industry" },
@@ -160,7 +159,10 @@ const Navbar = () => {
                                         onMouseLeave={() => link.dropdown && setActiveDropdown(null)}
                                     >
                                         <Link
-                                            href={link.path || "#"}
+                                            href={link.path && !link.dropdown ? link.path : "#"}
+                                            onClick={(e) => {
+                                                if (link.dropdown) e.preventDefault();
+                                            }}
                                             target={link.isExternal ? "_blank" : undefined}
                                             rel={link.isExternal ? "noopener noreferrer" : undefined}
                                             style={{ fontFamily: "'Poppins', sans-serif" }}
