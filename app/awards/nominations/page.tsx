@@ -5,6 +5,8 @@ import {
   ClipboardList,
   ClipboardCheck,
   Users,
+  Building2,
+  Map,
   Award,
   Medal,
   Star,
@@ -28,6 +30,7 @@ import nominationBg from "../../assets/awards/nomination.webp";
 import bharatOrganicLogo from "../../assets/awards/bharat_organic.webp";
 import beTheLeft from "../../assets/exhibitors/be_the_left.png";
 import beTheRight from "../../assets/exhibitors/be_the_right.png";
+import SectionContainer from "@/app/components/layout/SectionContainer";
 
 interface FormState {
   applicantType: string;
@@ -99,27 +102,28 @@ function Reveal({
   const [visible, setVisible] = useState(false);
 
   useEffect(() => {
-    const el = ref.current;
-    if (!el) return;
-    const io = new IntersectionObserver(
+    const element = ref.current;
+    if (!element) return;
+    const observer = new IntersectionObserver(
       ([entry]) => {
         if (entry.isIntersecting) {
           setVisible(true);
-          io.disconnect();
+          observer.disconnect();
         }
       },
       { threshold: 0.15 }
     );
-    io.observe(el);
-    return () => io.disconnect();
+    observer.observe(element);
+    return () => observer.disconnect();
   }, []);
 
   return (
     <div
       ref={ref}
       style={{ transitionDelay: visible ? `${delay}ms` : "0ms" }}
-      className={`transition-all duration-700 ease-out will-change-transform ${visible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6"
-        } ${className}`}
+      className={`transition-all duration-700 ease-out will-change-transform ${
+        visible ? "opacity-100 scale-100" : "opacity-0 scale-95"
+      } ${className}`}
     >
       {children}
     </div>
@@ -244,12 +248,12 @@ function UploadRow({
     <div>
       <div className="mb-1">
         <p className="text-[13px] font-medium text-emerald-950">{label}</p>
-        <p className="text-[11px] text-emerald-950/50">{subLabel}</p>
+        <p className="text-[11px] text-black">{subLabel}</p>
       </div>
-      <label className="flex cursor-pointer items-center gap-2 rounded-md border border-dashed border-amber-500/50 bg-amber-50 px-3 py-2 text-xs text-emerald-950/70 transition-colors duration-200 hover:bg-amber-100">
+      <label className="flex cursor-pointer items-center gap-2 rounded-md border border-dashed border-amber-500/50 bg-amber-50 px-3 py-2 text-xs text-black transition-colors duration-200 hover:bg-amber-100">
         <Upload className="h-4 w-4 shrink-0 text-amber-600" />
         Upload File
-        <span className="truncate text-emerald-950/40">
+        <span className="truncate text-black">
           {fileName || "No file chosen"}
         </span>
         <input
@@ -325,6 +329,40 @@ const processSteps = [
     Icon: Trophy,
   },
 ];
+
+const bannerStats = [
+  { value: "200+", label: "EXHIBITORS", icon: Building2 },
+  { value: "8,000+", label: "TRADE VISITORS", icon: Users },
+  { value: "5,000 Sqm", label: "EXHIBITION AREA", icon: Map },
+  { value: "10+ Years", label: "PROVEN EXPERIENCE", icon: Award },
+];
+
+function StatCounter({ value }: { value: string }) {
+  const match = value.match(/^([\d,]+)(.*)$/);
+  const target = match ? Number(match[1].replace(/,/g, "")) : 0;
+  const suffix = match?.[2] || "";
+  const [count, setCount] = useState(0);
+
+  useEffect(() => {
+    if (!match) return;
+
+    const duration = 1800;
+    const startTime = performance.now();
+    let frameId: number;
+
+    const animateCount = (time: number) => {
+      const progress = Math.min((time - startTime) / duration, 1);
+      const easedProgress = 1 - Math.pow(1 - progress, 3);
+      setCount(Math.floor(target * easedProgress));
+      if (progress < 1) frameId = requestAnimationFrame(animateCount);
+    };
+
+    frameId = requestAnimationFrame(animateCount);
+    return () => cancelAnimationFrame(frameId);
+  }, [target]);
+
+  return <>{count.toLocaleString()}{suffix}</>;
+}
 
 const APPLICANT_TYPES = ["Individual", "Organization", "Startup"];
 
@@ -430,7 +468,7 @@ export default function BharatOrganicAwards() {
   }
 
   return (
-    <div className="w-full min-h-screen overflow-x-clip bg-[#f7f5ec] font-sans">
+    <div className="w-full overflow-x-hidden bg-[#f7f5ec] font-sans">
       {/* ================= HERO ================= */}
       <section className="relative flex h-[68vh] min-h-[400px] w-full items-center overflow-hidden bg-[#f7f5ec] pt-3 font-inter md:h-[72vh] md:pt-5 lg:h-[78vh] border-b-4 border-[#ea580c] pb-4 md:pb-6">
         {/* full-width background image */}
@@ -469,6 +507,7 @@ export default function BharatOrganicAwards() {
             <p className="text-black max-w-xl font-semibold">
               Honouring the changemakers, organizations and innovations during india's organic, natural and sustainable future.
             </p>
+
             <div className="mt-5 flex flex-wrap items-center gap-3">
               <button
                 onClick={() => {
@@ -510,9 +549,35 @@ export default function BharatOrganicAwards() {
                 </div>
               </div>
             </div>
+
           </div>
         </div>
       </section>
+
+      <div className="relative z-20 -mt-6 font-inter md:-mt-8">
+        <SectionContainer>
+          <div className="relative overflow-hidden rounded-2xl border border-white/10 bg-[#1b5e20] p-0.5 shadow-[0_8px_20px_-10px_rgba(0,0,0,0.3)] md:px-3 md:py-2">
+            <div className="grid grid-cols-2 items-center justify-center gap-x-2 gap-y-3 sm:grid-cols-4 md:flex md:flex-nowrap md:justify-between md:gap-0">
+              {bannerStats.map(({ value, label, icon: Icon }, index) => (
+                <React.Fragment key={label}>
+                  <div className="group flex flex-1 flex-col items-center py-1 text-center">
+                    <Icon className="mb-1 h-4 w-4 stroke-[1.75] text-white md:h-5 md:w-5" />
+                    <h4 className="mb-0.5 font-inter text-[11px] font-semibold leading-none text-white sm:text-[13px] md:text-sm">
+                      <StatCounter value={value} />
+                    </h4>
+                    <p className="mt-0.5 font-inter text-[8px] font-bold uppercase leading-tight tracking-widest text-[#facc15] md:text-[9px]">
+                      {label}
+                    </p>
+                  </div>
+                  {index < bannerStats.length - 1 && (
+                    <div className="hidden h-6 w-px bg-white/20 md:block" />
+                  )}
+                </React.Fragment>
+              ))}
+            </div>
+          </div>
+        </SectionContainer>
+      </div>
 
       {/* ================= PROCESS ================= */}
       <section className="w-full px-4 py-2 md:px-11 md:py-4 my-4">
@@ -740,7 +805,7 @@ export default function BharatOrganicAwards() {
             {/* 5. Supporting documents */}
             <div className="mt-6">
               <SectionBadge n={5} title="SUPPORTING DOCUMENTS" />
-              <p className="mb-3 text-[11px] text-emerald-950/50">
+              <p className="mb-3 text-[11px] text-black">
                 Upload supporting documents (PDF, DOC, JPG, PNG – Max size 10MB each)
               </p>
               <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
@@ -764,8 +829,8 @@ export default function BharatOrganicAwards() {
                 />
                 <div>
                   <div className="mb-1">
-                    <p className="text-[13px] font-medium text-emerald-950">Social Links</p>
-                    <p className="text-[11px] text-emerald-950/50">Website / Social Links</p>
+                    <p className="text-[13px] font-medium text-black">Social Links</p>
+                    <p className="text-[11px] text-black">Website / Social Links</p>
                   </div>
                   <div className="relative">
                     <Link2 className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-amber-600" />
@@ -779,7 +844,7 @@ export default function BharatOrganicAwards() {
                   </div>
                 </div>
               </div>
-              <p className="mt-3 text-[11px] italic text-emerald-950/40">
+              <p className="mt-3 text-[11px] italic text-black">
                 You can upload multiple files after submission.
               </p>
             </div>
@@ -787,7 +852,7 @@ export default function BharatOrganicAwards() {
             {/* 6. Declaration */}
             <div className="mt-6">
               <SectionBadge n={6} title="DECLARATION" />
-              <label className="flex items-start gap-2 rounded-md bg-emerald-50/60 p-2.5 text-sm text-emerald-950/70 cursor-pointer sm:text-[15px]">
+              <label className="flex items-start gap-2 rounded-md bg-emerald-50/60 p-2.5 text-sm text-black cursor-pointer sm:text-[15px]">
                 <input
                   type="checkbox"
                   checked={form.declaration}
@@ -814,7 +879,7 @@ export default function BharatOrganicAwards() {
                 <Send className="h-4 w-4 transition-transform duration-300 group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
                 {submitting ? "SUBMITTING..." : "SUBMIT NOMINATION"}
               </button>
-              <p className="mt-3 text-sm text-emerald-950/60 sm:text-[15px]">
+              <p className="mt-3 text-sm text-black sm:text-[15px]">
                 <ShieldCheck className="mr-1 inline h-3.5 w-3.5 text-amber-600" />
                 Your information is secure and will be kept confidential.
               </p>
