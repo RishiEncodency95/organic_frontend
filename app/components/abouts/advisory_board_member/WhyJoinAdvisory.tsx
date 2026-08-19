@@ -8,27 +8,51 @@ const WhyJoinAdvisory = () => {
         {
             icon: Target,
             title: "Shape the Future",
-            description: "Contribute to strategic discussions and help build a healthier world."
+            description: "Contribute to strategic discussions and help build a healthier world.",
+            color: "text-[#3b8c2a]",
+            bgLight: "bg-[#f3faef]",
+            borderColor: "border-[#e2f0d9]",
+            borderBottom: "border-b-[#3b8c2a]",
+            hoverShadow: "hover:shadow-[0_12px_25px_rgba(59,140,42,0.15)]",
+            hoverBg: "group-hover:bg-[#3b8c2a]"
         },
         {
             icon: Globe2,
             title: "Global Influence",
-            description: "Engage with leaders and experts from across the globe."
+            description: "Engage with leaders and experts from across the globe.",
+            color: "text-[#0284c7]",
+            bgLight: "bg-[#f0f9ff]",
+            borderColor: "border-[#e0f2fe]",
+            borderBottom: "border-b-[#0284c7]",
+            hoverShadow: "hover:shadow-[0_12px_25px_rgba(2,132,199,0.15)]",
+            hoverBg: "group-hover:bg-[#0284c7]"
         },
         {
             icon: Lightbulb,
             title: "Thought Leadership",
-            description: "Position yourself as a trusted voice in the health & organic ecosystem."
+            description: "Position yourself as a trusted voice in the health & organic ecosystem.",
+            color: "text-[#f97316]",
+            bgLight: "bg-[#fff4ed]",
+            borderColor: "border-[#ffe4d1]",
+            borderBottom: "border-b-[#f97316]",
+            hoverShadow: "hover:shadow-[0_12px_25px_rgba(249,115,22,0.15)]",
+            hoverBg: "group-hover:bg-[#f97316]"
         },
         {
             icon: ShieldCheck,
             title: "Drive Impact",
-            description: "Catalyze innovation, sustainability, and industry growth."
+            description: "Catalyze innovation, sustainability, and industry growth.",
+            color: "text-[#1a4731]",
+            bgLight: "bg-[#eff7f3]",
+            borderColor: "border-[#d1e8dc]",
+            borderBottom: "border-b-[#1a4731]",
+            hoverShadow: "hover:shadow-[0_12px_25px_rgba(26,71,49,0.15)]",
+            hoverBg: "group-hover:bg-[#1a4731]"
         }
     ];
 
     return (
-        <section className="w-full py-2 lg:py-4 bg-[#EFF7EE] relative">
+        <section className="w-full py-2 lg:py-6 bg-[#EFF7EE] relative">
             <div className="w-full px-4 md:px-11">
 
                 {/* Top Section: Why Join & Cards */}
@@ -36,13 +60,18 @@ const WhyJoinAdvisory = () => {
 
                     {/* Left: Text Block */}
                     <div className="w-full lg:w-1/3 xl:w-1/4 flex flex-col pt-2">
-                        <span className="text-[#1f471b] font-bold text-[12px] md:text-[16px] tracking-widest uppercase mb-1">
-                            WHY JOIN
-                        </span>
-                        <h2 className="text-[#1f471b] font-black text-[28px] md:text-[34px] leading-tight mb-4">
-                            THE ADVISORY BOARD?
+                        <div className="flex items-center gap-3 mb-3">
+                            <div className="w-8 h-[2px] bg-[#f97316]"></div>
+                            <Leaf size={14} className="text-[#3b8c2a] fill-[#3b8c2a]" />
+                            <span className="text-[#f97316] text-[12px] md:text-[14px] font-bold tracking-[0.2em] uppercase">
+                                WHY JOIN
+                            </span>
+                            <Leaf size={14} className="text-[#3b8c2a] fill-[#3b8c2a]" />
+                            <div className="w-8 h-[2px] bg-[#f97316]"></div>
+                        </div>
+                        <h2 className="font-serif text-[#113d29] font-semibold text-[18px] sm:text-[22px] lg:text-[28px] leading-[1.2] tracking-tight mb-4">
+                            The Advisory Board?
                         </h2>
-                        <div className="w-12 h-[2px] bg-[#f58220] mb-6"></div>
                         <p className="text-[#4a4a4a] font-medium text-[15px] md:text-[16px] leading-relaxed">
                             Be at the forefront of transformative initiatives in the Health & Organic Wellness industry.
                         </p>
@@ -54,14 +83,14 @@ const WhyJoinAdvisory = () => {
                             {benefits.map((benefit, index) => {
                                 const Icon = benefit.icon;
                                 return (
-                                    <div key={index} className="bg-white rounded-2xl p-6 shadow-[0_4px_12px_rgba(0,0,0,0.03)] border border-gray-100 hover:shadow-[0_12px_40px_rgba(59,140,42,0.15)] hover:-translate-y-2 transform transition-all duration-300 group cursor-default">
-                                        <div className="w-12 h-12 rounded-full border border-[#3b8c2a]/30 bg-[#f8fcf6] flex items-center justify-center text-[#1f471b] mb-5 group-hover:bg-[#3b8c2a] group-hover:border-[#3b8c2a] group-hover:text-white transition-all duration-300">
-                                            <Icon size={22} strokeWidth={2} />
+                                    <div key={index} className={`${benefit.bgLight} rounded-2xl px-4 py-5 shadow-sm border ${benefit.borderColor} border-b-[3px] ${benefit.borderBottom} ${benefit.hoverShadow} hover:-translate-y-1.5 transform transition-all duration-300 group cursor-default flex flex-col items-center text-center`}>
+                                        <div className={`w-9 h-9 md:w-12 md:h-12 rounded-full bg-white shadow-sm flex items-center justify-center mb-3 ${benefit.color} group-hover:scale-110 ${benefit.hoverBg} group-hover:text-white transition-all duration-300`}>
+                                            <Icon size={24} strokeWidth={1.5} />
                                         </div>
-                                        <h3 className="text-[#1f471b] font-bold text-[15px] mb-3 group-hover:text-[#3b8c2a] transition-colors duration-300">
+                                        <h3 className="text-[#111] font-semibold text-[14px] md:text-[15px] mb-1.5 leading-snug">
                                             {benefit.title}
                                         </h3>
-                                        <p className="text-[#666] text-[13px] leading-relaxed group-hover:text-[#444] transition-colors duration-300">
+                                        <p className="text-[#555] text-[13px] leading-snug">
                                             {benefit.description}
                                         </p>
                                     </div>
@@ -90,18 +119,20 @@ const WhyJoinAdvisory = () => {
 
                         {/* Left Side: Banner Text */}
                         <div className="w-full md:w-2/3 flex flex-col items-start md:pr-10">
-                            <div className="inline-flex items-center gap-2 px-3 py-1 bg-white rounded-full text-[#3b8c2a] font-bold text-[10px] md:text-[11px] tracking-widest uppercase mb-2 shadow-sm border border-gray-100">
-                                <Leaf size={14} className="fill-[#3b8c2a]" />
-                                BE PART OF A TRANSFORMATIVE JOURNEY
-                            </div>
-                            <h2 className="text-[#333] font-serif text-[18px] md:text-[28px] lg:text-[32px] leading-[1.1] mb-2">
-                                Nominate for the <br />
-                                <span className="font-sans font-black text-[#1f471b] tracking-tight text-[36px] md:text-[48px] lg:text-[56px] uppercase">
-                                    Advisory Board
+                            <div className="flex items-center gap-3 mb-2">
+                                <div className="w-8 h-[2px] bg-[#f97316]"></div>
+                                <Leaf size={14} className="text-[#3b8c2a] fill-[#3b8c2a]" />
+                                <span className="text-[#f97316] text-[10px] md:text-[12px] font-bold tracking-[0.2em] uppercase">
+                                    BE PART OF A TRANSFORMATIVE JOURNEY
                                 </span>
+                                <Leaf size={14} className="text-[#3b8c2a] fill-[#3b8c2a]" />
+                                <div className="hidden sm:block w-8 h-[2px] bg-[#f97316]"></div>
+                            </div>
+                            <h2 className="font-serif text-[#113d29] font-semibold text-[22px] sm:text-[26px] lg:text-[32px] leading-[1.2] tracking-tight mb-3">
+                                Nominate for the <span className="text-[#3b8c2a]">Advisory Board</span>
                             </h2>
-                            <p className="text-[#555] font-medium text-[13px] md:text-[15px] max-w-[450px] mb-3 leading-relaxed">
-                                Help us bring the right leaders together to catalyze innovation, sustainability, and industry growth.
+                            <p className="text-[#555] font-medium text-[13px] md:text-[15px] max-w-[580px] mb-4 leading-relaxed">
+                                Help us bring the right leaders together to catalyze innovation, sustainability, and industry growth. By nominating experts to our Advisory Board, you contribute directly to shaping the future of organic wellness, driving impactful policies, and fostering a global network dedicated to a sustainable tomorrow.
                             </p>
 
                             {/* 4 Feature Icons Row */}

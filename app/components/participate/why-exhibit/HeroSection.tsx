@@ -53,10 +53,10 @@ const HeroSection = () => (
 
     {/* Max Width Container aligned with Navbar */}
     <SectionContainer className="relative z-10 py-1 md:py-2">
-      <div className="flex flex-col lg:flex-row items-center justify-between gap-6 lg:gap-8">
+      <div className="flex flex-col lg:flex-row  justify-between gap-6 lg:gap-8">
 
         {/* Left Content Column - Positioned to start far left */}
-        <div className="w-full lg:w-[50%] xl:w-[46%] text-left shrink-0 -ml-0 lg:-ml-1 -translate-y-1 lg:-translate-y-2">
+        <div className="w-full lg:w-[50%] xl:w-[46%] text-left shrink-0">
 
           {/* Green Line & Tagline */}
           <div className="flex items-center justify-start gap-2.5 mb-2">
@@ -66,14 +66,15 @@ const HeroSection = () => (
             >
               INDIA&apos;S PREMIER ORGANIC & WELLNESS EVENT
             </p>
+            <span className="w-8 h-[2.5px] bg-[#c2410c] shrink-0" />
           </div>
 
           {/* Main Titles */}
           <h1
-            className="text-2xl md:text-3xl lg:text-4xl font-black leading-[1.1] mb-2 text-left font-poppins"
+            className="text-2xl md:text-3xl lg:text-4xl font-semibold leading-[1.1] mb-2 text-left font-poppins"
           >
             <span className="text-[#1b5e20] text-xl md:text-[26px] lg:text-[32px] block mb-0.5">CONNECT. COLLABORATE.</span>
-            <span className="text-[#4B1426] text-lg sm:text-[22px] md:text-[26px] lg:text-[30px] block font-black tracking-tight whitespace-nowrap">CULTIVATE A HEALTHIER TOMORROW.</span>
+            <span className="text-[#4B1426] text-lg sm:text-[22px] md:text-[26px] lg:text-[30px] block font-semibold tracking-tight whitespace-nowrap">CULTIVATE A HEALTHIER TOMORROW.</span>
           </h1>
 
           {/* Subtitle */}
@@ -141,7 +142,7 @@ const HeroSection = () => (
         </div>
 
         {/* Right Info Card */}
-        <div className="w-fit sm:w-[170px] lg:w-[165px] mx-auto lg:ml-auto lg:mr-0 xl:mr-2 shrink-0">
+        <div className="w-fit sm:w-[170px] lg:w-[165px]">
           <div className="bg-white/80 backdrop-blur-md px-3.5 py-3 lg:py-3.5 rounded-xl shadow-xl border border-white/60 flex flex-col gap-2 lg:gap-2.5 w-full">
 
             {/* Date */}

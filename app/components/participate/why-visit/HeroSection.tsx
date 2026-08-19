@@ -76,11 +76,11 @@ export default function HeroSection() {
   const dividerRefs = useRef<(HTMLDivElement | null)[]>([]);
 
   const stats = [
-    { icon: Users,     val: "8,000+", label: "VISITORS / DELEGATES" },
-    { icon: Building2, val: "200+",   label: "EXHIBITORS" },
-    { icon: Globe,     val: "1,000+", label: "GLOBAL BUYERS" },
-    { icon: Mic,       val: "150+",   label: "EXPERT SPEAKERS" },
-    { icon: Handshake, val: "B2B",    label: "MEETINGS" },
+    { icon: Users, val: "8,000+", label: "VISITORS / DELEGATES" },
+    { icon: Building2, val: "200+", label: "EXHIBITORS" },
+    { icon: Globe, val: "1,000+", label: "GLOBAL BUYERS" },
+    { icon: Mic, val: "150+", label: "EXPERT SPEAKERS" },
+    { icon: Handshake, val: "B2B", label: "MEETINGS" },
   ];
 
   itemRefs.current = [];
@@ -220,7 +220,7 @@ export default function HeroSection() {
 
         {/* Content - Nudged up slightly */}
         <SectionContainer className="relative z-10">
-          <div className="max-w-2xl -translate-y-1 sm:-translate-y-2 md:-translate-y-3 ml-0 lg:ml-8 xl:ml-12">
+          <div className="max-w-2xl -translate-y-1 sm:-translate-y-2 md:-translate-y-3 ">
 
             {/* Tagline */}
             <div className="flex items-center justify-start gap-2 mt-1.5 translate-y-0.5 mb-1">
@@ -294,7 +294,7 @@ export default function HeroSection() {
 
             {/* Buttons */}
             <div ref={btnsRef} className="flex flex-wrap items-center justify-start gap-3">
-              
+
               {/* Button 1: REGISTER AS A BUYER */}
               <div className="relative w-full sm:w-auto">
                 <Sparkle color="#3b82f6" shadow="#28396C" style={{ top: "-12px", left: "10%", animationDelay: "0.2s" }} />
