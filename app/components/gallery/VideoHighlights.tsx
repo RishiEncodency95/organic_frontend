@@ -135,14 +135,13 @@ const VideoHighlights: React.FC<VideoHighlightsProps> = ({ dbVideos = EMPTY_VIDE
 
   const getDoubledVideos = () => {
     if (loadedVideos.length === 0) return [];
-    if (loadedVideos.length < 4) {
-      const repeated: any[] = [];
-      while (repeated.length < 8) {
-        repeated.push(...loadedVideos);
-      }
-      return repeated;
+    let base = [...loadedVideos];
+    // Ensure base has enough items to fill the screen width
+    while (base.length < 6) {
+      base = [...base, ...loadedVideos];
     }
-    return [...loadedVideos, ...loadedVideos];
+    // Duplicate exactly once to create two identical halves for the -50% trick
+    return [...base, ...base];
   };
 
   const doubledVideos = getDoubledVideos();
@@ -155,7 +154,7 @@ const VideoHighlights: React.FC<VideoHighlightsProps> = ({ dbVideos = EMPTY_VIDE
           100% { transform: translateX(calc(-50% - 10px)); }
         }
         .animate-scroll {
-          animation: scrollMarquee 20s linear infinite;
+          animation: scrollMarquee 40s linear infinite;
         }
         .animate-scroll:hover {
           animation-play-state: paused;
@@ -164,9 +163,9 @@ const VideoHighlights: React.FC<VideoHighlightsProps> = ({ dbVideos = EMPTY_VIDE
       <section ref={sectionRef} className="w-full pb-12 pt-0 -mt-2 relative z-10 font-inter perspective-1000">
         <SectionContainer>
           {rightLeaf && (
-            <img 
-              src={getImgSrc(rightLeaf)} 
-              alt="" 
+            <img
+              src={getImgSrc(rightLeaf)}
+              alt=""
               className="absolute -right-8 top-0 md:-top-4 lg:-top-6 h-48 md:h-72 lg:h-[400px] w-auto opacity-100 pointer-events-none z-0 object-contain"
             />
           )}
@@ -178,28 +177,28 @@ const VideoHighlights: React.FC<VideoHighlightsProps> = ({ dbVideos = EMPTY_VIDE
             <HeartbeatLine isLeft={false} />
           </div>
 
-          <div className="grid grid-cols-1 lg:grid-cols-5 gap-5 items-stretch max-w-[1250px] mx-auto relative z-10">
-            
+          <div className="grid grid-cols-1 lg:grid-cols-4 gap-5 items-stretch relative z-10">
+
             <div className="lg:col-span-4 overflow-hidden py-1 relative video-marquee-container" style={{ willChange: 'transform, opacity, filter' }}>
               <div className="absolute left-0 top-0 bottom-0 w-4 md:w-8 bg-gradient-to-r from-white/80 to-transparent z-10 pointer-events-none"></div>
               <div className="absolute right-0 top-0 bottom-0 w-4 md:w-8 bg-gradient-to-l from-white/80 to-transparent z-10 pointer-events-none"></div>
-              
-              <div className="flex animate-scroll w-max gap-4 lg:gap-5 h-full">
+
+              <div className="flex animate-scroll w-max gap-5 h-full">
                 {doubledVideos.map((video, idx) => {
                   const videoTitle = video.title || 'Highlights';
                   const videoThumbnail = getImgSrc(video.thumbnail);
                   const embedUrl = video.videoUrl;
 
                   return (
-                    <div 
-                      key={idx} 
+                    <div
+                      key={idx}
                       onClick={() => embedUrl && setActiveVideo(embedUrl)}
                       className="w-[220px] md:w-[190px] lg:w-[200px] xl:w-[210px] h-full shrink-0 flex flex-col rounded-xl overflow-hidden cursor-pointer shadow-sm bg-white transition-transform duration-300 hover:scale-[1.02] border border-gray-200"
                     >
                       <div className="relative flex-1 w-full overflow-hidden">
-                        <img 
-                          src={videoThumbnail} 
-                          alt={videoTitle} 
+                        <img
+                          src={videoThumbnail}
+                          alt={videoTitle}
                           className="w-full h-full object-cover"
                         />
                         <div className="absolute inset-0 bg-black/20 transition-colors duration-300 hover:bg-black/30" />
@@ -220,46 +219,24 @@ const VideoHighlights: React.FC<VideoHighlightsProps> = ({ dbVideos = EMPTY_VIDE
               </div>
             </div>
 
-            <div className="share-box lg:col-span-1 bg-gradient-to-b from-[#f0f7f2] to-[#e4f1e7] rounded-xl p-5 flex flex-col justify-between border border-[#c3dec7] relative overflow-hidden h-full shadow-sm" style={{ willChange: 'transform, opacity' }}>
-              <Leaf className="absolute -top-6 -left-6 text-[#d1e8d6] rotate-45" size={90} fill="currentColor" opacity={0.6} />
-              <Leaf className="absolute bottom-10 -right-6 text-[#d1e8d6] -rotate-12" size={70} fill="currentColor" opacity={0.6} />
-              
-              <div className="flex flex-col gap-3 relative z-10 mb-4 mt-1">
-                <div className="flex flex-row md:flex-col lg:flex-row items-center lg:items-start gap-3">
-                  <img src={getImgSrc(camm)} alt="Camera" className="w-16 h-16 object-contain shrink-0 drop-shadow-sm transition-transform hover:scale-105" />
-                  <div className="flex flex-col text-left lg:mt-1">
-                    <h3 className="text-[15px] font-semibold text-[#0e3b1c] mb-1">Share Your Moments</h3>
-                    <p className="text-[12px] text-gray-900 font-medium leading-relaxed">
-                      Were you part of Organic Expo?<br className="hidden lg:block"/>
-                      Share your photos!
-                    </p>
-                  </div>
-                </div>
-              </div>
-
-              <button className="w-full bg-[#1b5e20] hover:bg-[#134216] text-white py-2.5 rounded-lg font-semibold flex items-center justify-center gap-2 transition-colors text-[13px] relative z-10 shadow-md mt-auto">
-                Upload Your Photos
-                <UploadCloud size={16} />
-              </button>
-            </div>
 
           </div>
 
           {activeVideo && typeof document !== 'undefined' && createPortal(
             <div className="fixed inset-0 z-[99999] flex items-center justify-center p-4 bg-black/90 backdrop-blur-sm" onClick={() => setActiveVideo(null)}>
               <div className="relative w-full max-w-5xl aspect-video bg-black rounded-xl overflow-hidden shadow-2xl flex flex-col" onClick={e => e.stopPropagation()}>
-                <button 
+                <button
                   className="absolute top-3 right-3 text-white hover:text-gray-300 bg-black/50 hover:bg-black/80 w-8 h-8 rounded-full flex items-center justify-center font-bold text-sm z-50 transition-colors"
                   onClick={() => setActiveVideo(null)}
                   aria-label="Close Video Modal"
                 >
                   ✕
                 </button>
-                <iframe 
-                  src={activeVideo} 
-                  title="YouTube video player" 
-                  frameBorder="0" 
-                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
+                <iframe
+                  src={activeVideo}
+                  title="YouTube video player"
+                  frameBorder="0"
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
                   allowFullScreen
                   className="w-full h-full"
                 />

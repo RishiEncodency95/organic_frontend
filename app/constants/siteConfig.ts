@@ -10,8 +10,8 @@ export const SITE_CONFIG = {
     stats: {
         exhibitors: "200+",
         exhibitorsCount: 200,
-        visitors: "10,000+",
-        visitorsCount: 10000,
+        visitors: "8,000+",
+        visitorsCount: 8000,
         speakers: "50+",
         speakersCount: 50,
         delegates: "5,000+",
