@@ -19,14 +19,14 @@ function SectionHeading({ children }: { children: React.ReactNode }) {
 
 const AwardsAbout = () => {
   return (
-    <section className="bg-white py-6 md:py-8 font-inter">
+    <section className="bg-white py-4 font-inter">
       <SectionContainer>
-        <div className="mx-auto max-w-3xl">
+        <div className="mx-auto max-w-4xl">
           <SectionHeading>About the Awards</SectionHeading>
           <Reveal delay={100}>
             <div
-              className="bg-white p-6 rounded-xl text-center hover:shadow-md transition-shadow"
-              style={{ boxShadow: "rgba(0, 0, 0, 0.02) 0px 1px 3px 0px, rgba(27, 31, 35, 0.15) 0px 0px 0px 1px" }}
+              className="bg-white p-4 rounded-xl text-center"
+              // style={{ boxShadow: "rgba(0, 0, 0, 0.02) 0px 1px 3px 0px, rgba(27, 31, 35, 0.15) 0px 0px 0px 1px" }}
             >
               <p className="text-xs sm:text-sm leading-relaxed text-gray-900 font-medium">
                 Bharat Organic Excellence Awards 2027 recognise outstanding
