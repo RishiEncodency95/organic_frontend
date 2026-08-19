@@ -591,7 +591,7 @@ export default function BharatOrganicAwards() {
           </div>
         </Reveal>
 
-        <div className="grid grid-cols-3 gap-x-2 gap-y-6 sm:grid-cols-6 sm:gap-x-8">
+        <div className="grid grid-cols-2 sm:grid-cols-3 gap-x-2 gap-y-6 md:grid-cols-6 sm:gap-x-8">
           {processSteps.map((s, i) => (
             <Reveal key={s.n} delay={i * 100}>
               <div className="group relative flex flex-col items-center text-center">

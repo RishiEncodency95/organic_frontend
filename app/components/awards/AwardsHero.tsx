@@ -72,7 +72,7 @@ const AwardsHero = () => {
           <img
             src={bannerImg.src}
             alt="Bharat Organic Excellence Awards 2027 Banner"
-            className="hero-bg-img w-full h-full object-cover"
+            className="hero-bg-img w-full h-full object-left md:object-center object-cover"
           />
         </div>
 

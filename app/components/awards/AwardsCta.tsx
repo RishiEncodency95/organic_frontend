@@ -14,15 +14,14 @@ const AwardsCta = () => {
       <SectionContainer>
         <Reveal>
           <div
-            className="relative mx-auto flex flex-col items-center gap-4 overflow-hidden rounded-xl bg-[#0d2a1b] text-center sm:flex-row sm:items-center sm:justify-between sm:text-left pl-8"
-            style={{ boxShadow: "rgba(0, 0, 0, 0.02) 0px 1px 3px 0px, rgba(27, 31, 35, 0.15) 0px 0px 0px 1px" }}
+            className="relative mx-auto flex flex-col items-center gap-4 overflow-hidden rounded-xl bg-[#0d2a1b] px-4 py-5 text-center sm:flex-row sm:items-center sm:justify-between sm:gap-6 sm:px-8 sm:py-4 sm:text-left"
           >
             {/* Background Decoration */}
           
             <div className="absolute -right-10 -top-10 h-40 w-40 rounded-full bg-white/5" />
             <div className="absolute -bottom-12 -left-10 h-44 w-44 rounded-full bg-white/5" />
 
-            <div className="relative flex shrink-0 items-center justify-center h-30">
+            <div className="relative flex h-24 w-full shrink-0 items-center justify-center sm:h-30 sm:w-auto">
               <Image
                 src={award}
                 alt="Award"
@@ -32,24 +31,20 @@ const AwardsCta = () => {
               />
             </div>
 
-            <div className="relative flex">
-              <h3 className="text-base md:text-lg font-semibold uppercase leading-snug tracking-wide text-white font-poppins ">
-                Be Recognised.<br/> Be Celebrated.{" "}
-                <p className="text-[#ea580c]">
-                  Be Part of India&apos;s
-                </p>
-                 Organic Revolution.
+            <div className="relative flex w-full flex-col items-center sm:flex-1 sm:items-start">
+              <h3 className="text-base font-semibold uppercase leading-snug tracking-wide text-white font-poppins md:text-lg">
+                Be Recognised.<br />
+                Be Celebrated.<br />
+                <span className="text-[#ea580c]">Be Part of India&apos;s</span><br />
+                Organic Revolution.
               </h3>
-              <div className="flex items-center justify-center">
-
-              <p className="mt-1 text-xs sm:text-sm text-white/80 font-medium leading-relaxed border-x border-white/20 px-4 sm:px-6 sm:mx-6 h-auto text-xs max-w-sm">
+              <p className="mt-3 max-w-sm py-2 text-right text-xs font-medium leading-relaxed text-white/80 sm:border-x sm:border-white/20 sm:px-4 sm:py-0 sm:text-left sm:text-sm">
                 Nominate yourself or someone who inspires change in the organic
                 and sustainable world.
               </p>
-              </div>
             </div>
 
-            <div className="relative flex shrink-0 flex-col items-center gap-1.5 sm:items-end">
+            <div className="relative flex w-full shrink-0 flex-col items-center gap-1.5 sm:w-auto sm:items-end">
               <a
                 href="/awards/nominations"
                 target="_blank"
@@ -63,12 +58,13 @@ const AwardsCta = () => {
                 Deadline: 31 December 2026
               </span>
             </div>
-              <Image
+
+            <Image
               src={right_plant}
               alt=""
               width={100}
               height={100}
-              className="pointer-events-none "
+              className="pointer-events-none absolute bottom-0 right-0 h-20 w-auto object-contain sm:h-24"
             />
           </div>
         </Reveal>
