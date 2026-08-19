@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
-import { CalendarDays, MapPin, ArrowRight, Award, Medal } from "lucide-react";
+import { CalendarDays, MapPin, ArrowRight, Award, Medal, Calendar } from "lucide-react";
 import bannerImg from "../../assets/awards/banner2.webp";
 import SectionContainer from "@/app/components/layout/SectionContainer";
 
@@ -85,7 +85,7 @@ const AwardsHero = () => {
             {/* Top Tagline */}
             <div className="flex items-center gap-2 mb-2">
               <span className="w-[3px] h-4.5 bg-[#0b3b18] inline-block rounded-xs" />
-              <span className="text-[#0b3b18] text-xs sm:text-sm font-bold uppercase tracking-[0.18em]">
+              <span className="text-[#0b3b18] text-base sm:text-md font-bold uppercase tracking-[0.18em]">
                 BHARAT ORGANIC
               </span>
             </div>
@@ -113,25 +113,33 @@ const AwardsHero = () => {
             </p>
 
             {/* Description */}
-            <p className="text-[#131730] font-medium text-xs sm:text-[13.5px] md:text-sm leading-relaxed max-w-lg mb-4">
+            <p className="text-[#131730] font-medium text-xs sm:text-[13.5px] md:text-sm leading-relaxed max-w-lg mb-2">
               Honouring the changemakers, organisations and innovations driving India&apos;s organic, natural and sustainable future.
             </p>
 
             {/* Date & Venue */}
-            <div className="flex flex-col sm:flex-row items-start sm:items-center gap-3 sm:gap-4 mb-5 text-[#4B1426] text-xs sm:text-sm md:text-[14px] font-bold">
-              <div className="flex items-center gap-2">
-                <CalendarDays size={17} className="shrink-0 text-[#ea580c]" />
-                <span>19 – 21 February 2027</span>
+             <div className="mt-5 flex flex-col items-start gap-3 text-xs font-bold text-[#4B1426] sm:flex-row sm:items-center sm:gap-4 sm:text-sm md:text-[14px]">
+              <div className="flex items-center gap-3">
+                <Calendar className="h-[25px] w-[25px] shrink-0 text-emerald-900" />
+                <div>
+                  
+                <p>19 - 21</p>
+                <p className="uppercase">February 2027</p>
+                </div>
               </div>
-              <div className="hidden sm:block w-px h-4.5 bg-[#4B1426]/30"></div>
-              <div className="flex items-center gap-2">
-                <MapPin size={17} className="shrink-0 text-[#ea580c]" />
-                <span>Hall 12, Bharat Mandapam, New Delhi</span>
+              <span className="hidden h-4 w-px bg-[#4B1426]/30 sm:block" />
+              <div className="flex items-center gap-3">
+                <MapPin className="h-[25px] w-[25px] shrink-0 text-emerald-900" />
+                <div>
+                  
+                <p>Hall 12, Bharat Mandapam</p>
+                <p className="uppercase">PRAGATI MAIDAN, NEW DELHI, INDIA</p>
+                </div>
               </div>
             </div>
 
             {/* Buttons */}
-            <div className="flex flex-wrap items-center justify-start gap-3">
+            <div className="flex flex-wrap items-center justify-start gap-3 my-4">
               <div className="relative w-full sm:w-auto">
                 <Sparkle color="#4ade80" shadow="#1b5e20" style={{ top: "-12px", left: "10%", animationDelay: "0.2s" }} />
                 <Sparkle color="#86efac" shadow="#16a34a" style={{ top: "-15px", left: "50%", animationDelay: "0.6s" }} />

@@ -447,14 +447,14 @@ export default function BharatOrganicAwards() {
 
         <div className="relative z-20 w-full px-4 py-1 md:px-11 md:py-2">
           <div className="max-w-2xl text-left">
-            <img
+            {/* <img
               src={bharatOrganicLogo.src}
               alt="Bharat Organic Logo"
               className="mb-3 h-14 w-auto object-contain md:mb-4 md:h-16"
-            />
+            /> */}
 
             <h1 className="mb-3 font-poppins text-4xl font-semibold uppercase leading-[1.02] tracking-tight text-[#0b3b18] sm:text-5xl md:text-[56px] lg:text-[66px]" style={{ textShadow: "1px 1px 2px rgba(0,0,0,0.2)" }}>
-              <span className="block text-4xl font-semibold tracking-tight sm:text-5xl md:text-[56px] lg:text-[66px]">Bharat Organic</span>
+              <span className="block text-[26px] font-semibold tracking-tight sm:text-[26px] md:text-[26px] lg:text-[36px]">Bharat Organic</span>
               <span className="block font-semibold tracking-tight">Excellence</span>
               <span className="block font-semibold tracking-tight text-[#ea580c]">Awards 2027</span>
             </h1>
@@ -466,7 +466,9 @@ export default function BharatOrganicAwards() {
               <span className="text-sm text-[#ea580c]">•</span>
               <span>Sustainability</span>
             </p>
-
+            <p className="text-black max-w-xl font-semibold">
+              Honouring the changemakers, organizations and innovations during india's organic, natural and sustainable future.
+            </p>
             <div className="mt-5 flex flex-wrap items-center gap-3">
               <button
                 onClick={() => {
@@ -490,22 +492,30 @@ export default function BharatOrganicAwards() {
             </div>
 
             <div className="mt-5 flex flex-col items-start gap-3 text-xs font-bold text-[#4B1426] sm:flex-row sm:items-center sm:gap-4 sm:text-sm md:text-[14px]">
-              <span className="flex items-center gap-3">
-                <Calendar className="h-[17px] w-[17px] shrink-0 text-[#ea580c]" />
-                <span>31 December 2026 · Nominations Close</span>
-              </span>
+              <div className="flex items-center gap-3">
+                <Calendar className="h-[25px] w-[25px] shrink-0 text-emerald-900" />
+                <div>
+                  
+                <p>19 - 21</p>
+                <p className="uppercase">February 2027</p>
+                </div>
+              </div>
               <span className="hidden h-4 w-px bg-[#4B1426]/30 sm:block" />
-              <span className="flex items-center gap-3">
-                <MapPin className="h-[17px] w-[17px] shrink-0 text-[#ea580c]" />
-                <span>19 – 21 February 2027 · Awards Ceremony</span>
-              </span>
+              <div className="flex items-center gap-3">
+                <MapPin className="h-[25px] w-[25px] shrink-0 text-emerald-900" />
+                <div>
+                  
+                <p>Hall 12, Bharat Mandapam</p>
+                <p className="uppercase">PRAGATI MAIDAN, NEW DELHI, INDIA</p>
+                </div>
+              </div>
             </div>
           </div>
         </div>
       </section>
 
       {/* ================= PROCESS ================= */}
-      <section className="w-full px-4 py-2 md:px-11 md:py-4">
+      <section className="w-full px-4 py-2 md:px-11 md:py-4 my-4">
         <Reveal>
           <div className="mb-6 flex items-center justify-center gap-2 text-emerald-900">
             <Sprout className="h-4 w-4 text-lime-600" />
