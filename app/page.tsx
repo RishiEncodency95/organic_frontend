@@ -39,7 +39,7 @@ const Index = () => {
         <PartnersAndBrands />
         {/* <ExploreSectors /> */}
         <BuyerSellerMeet />
-        <IndustryLeaders />
+        {/* <IndustryLeaders /> */}
         <VoicesOfImpact />
         <LatestInsights />
       </Suspense>

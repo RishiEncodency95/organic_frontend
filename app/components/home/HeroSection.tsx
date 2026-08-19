@@ -493,13 +493,13 @@ const HeroSection = () => {
               ref={(el) => {
                 panels.current[slide.id] = el;
               }}
-              className="col-start-1 row-start-1 w-full max-w-xl mt-16 md:mt-0"
+              className="col-start-1 row-start-1 w-full max-w-2xl lg:max-w-3xl mt-12 md:mt-0"
               style={{
                 visibility: cur === slide.id ? "visible" : "hidden",
                 pointerEvents: cur === slide.id ? "auto" : "none",
               }}
             >
-              <div className="flex flex-col w-full max-w-2xl">
+              <div className="flex flex-col w-full">
                 {/* Tagline */}
                 <div data-anim="1" className="flex items-center gap-2 mb-2">
                   <div className="w-7 h-[2px] bg-[#c2410c]/80" />
@@ -512,29 +512,29 @@ const HeroSection = () => {
                 {/* Title */}
                 <h1 
                   data-anim="2" 
-                  className="text-3xl md:text-4xl lg:text-[56px] font-semibold leading-[1.05] font-poppins mb-3"
+                  className="text-3xl md:text-4xl lg:text-[54px] font-semibold leading-[1.06] font-poppins mb-3"
                   style={{ textShadow: "1px 1px 2px rgba(0,0,0,0.4)" }}
                 >
                   <div className="text-[#1b5e20] tracking-tight">
                     {slide.titlePrimary}
                   </div>
-                  <div className="text-[#F6A919] tracking-tight mt-1">
+                  <div className="text-[#F6A919] tracking-tight mt-0.5">
                     {slide.titleSecondary}
                   </div>
                 </h1>
 
                 {/* Subtitle */}
-                <p data-anim="3" className="text-[#131730] font-bold text-sm md:text-base leading-relaxed mb-2 font-inter">
+                <p data-anim="3" className="text-[#131730] font-bold text-sm md:text-base lg:text-lg leading-relaxed mb-2 font-inter">
                   {slide.subtitle}
                 </p>
 
                 {/* Description */}
-                <p data-anim="4" className="text-[#131730] font-bold text-sm md:text-[15px] leading-relaxed max-w-lg mb-5 font-inter">
+                <p data-anim="4" className="text-[#131730] font-bold text-sm md:text-[15px] lg:text-base leading-relaxed max-w-lg mb-4 md:mb-5 font-inter">
                   {slide.description}
                 </p>
 
                 {/* Date / Location */}
-                <div data-anim="5" className="flex flex-wrap items-center gap-3 sm:gap-4 text-[#4B1426] text-sm md:text-[15px] font-bold mb-6">
+                <div data-anim="5" className="flex flex-wrap items-center gap-3 sm:gap-4 text-[#4B1426] text-sm md:text-[15px] lg:text-base font-bold mb-1 md:mb-1.5">
                   <div className="flex items-center gap-2">
                     <CalendarDays size={18} className="shrink-0 text-[#ea580c]" />
                     <span>{slide.date}</span>
@@ -547,46 +547,48 @@ const HeroSection = () => {
                 </div>
 
                 {/* Buttons */}
-                <div data-anim="6" className="flex flex-nowrap items-center gap-2 sm:gap-3 pt-2 relative overflow-visible w-full overflow-x-auto hide-scrollbar pb-2">
+                <div data-anim="6" className="flex flex-wrap sm:flex-nowrap items-center gap-2.5 pt-3 pb-2 relative overflow-visible w-full">
 
-                  {/* Book Your Stall — orange gradient matching why-exhibit */}
+                  {/* Book Your Stall */}
                   <div className="relative shrink-0">
-                    <Sparkle color="#ffc107" shadow="#ea580c" style={{ top: "-14px", left: "5%", animationDelay: "0s" }} />
-                    <Sparkle color="#ff9800" shadow="#c2410c" style={{ top: "-18px", left: "28%", animationDelay: "0.3s" }} />
-                    <Sparkle color="#ffdd00" shadow="#ea580c" style={{ top: "-15px", left: "50%", animationDelay: "0.6s" }} />
-                    <Sparkle color="#ff9800" shadow="#c2410c" style={{ top: "-18px", left: "72%", animationDelay: "0.9s" }} />
-                    <Sparkle color="#ffc107" shadow="#ea580c" style={{ top: "-14px", right: "5%", animationDelay: "1.2s" }} />
+                    <Sparkle color="#ffc107" shadow="#ea580c" style={{ top: "-12px", left: "5%", animationDelay: "0s" }} />
+                    <Sparkle color="#ff9800" shadow="#c2410c" style={{ top: "-15px", left: "28%", animationDelay: "0.3s" }} />
+                    <Sparkle color="#ffdd00" shadow="#ea580c" style={{ top: "-13px", left: "50%", animationDelay: "0.6s" }} />
+                    <Sparkle color="#ff9800" shadow="#c2410c" style={{ top: "-15px", left: "72%", animationDelay: "0.9s" }} />
+                    <Sparkle color="#ffc107" shadow="#ea580c" style={{ top: "-12px", right: "5%", animationDelay: "1.2s" }} />
                     <Link
                       href="/registration/book-a-stand"
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="group relative inline-flex items-center justify-start gap-2 px-4 py-2 rounded-lg font-semibold text-[10px] uppercase tracking-widest text-white transition-all active:scale-95 relative z-10 w-full sm:w-auto overflow-hidden"
+                      className="group relative inline-flex items-center justify-start gap-2 px-4 py-2.5 md:px-5 md:py-2.5 rounded-lg font-bold text-xs uppercase tracking-widest text-white transition-all active:scale-95 relative z-10 w-full sm:w-auto overflow-hidden shadow-md"
                       style={{
                         background: "linear-gradient(135deg, #ea580c, #c2410c)",
                       }}
                     >
                       <span className="absolute inset-0 bg-white/10 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-500 skew-x-12" />
-                      Book Your Stall <ArrowRight size={14} className="group-hover:translate-x-1 transition-transform" />
+                      Book Your Stall <ArrowRight size={15} className="group-hover:translate-x-1 transition-transform" />
                     </Link>
                   </div>
 
-                  {/* Register as Visitor — green styling matching blue-btn-hero bg */}
+                  {/* Register as Visitor */}
                   <div className="relative shrink-0">
-                    <Sparkle color="#4ade80" shadow="#1b5e20" style={{ top: "-14px", left: "10%", animationDelay: "0.2s" }} />
-                    <Sparkle color="#86efac" shadow="#16a34a" style={{ top: "-18px", left: "50%", animationDelay: "0.6s" }} />
-                    <Sparkle color="#4ade80" shadow="#1b5e20" style={{ top: "-14px", right: "10%", animationDelay: "1s" }} />
+                    <Sparkle color="#4ade80" shadow="#1b5e20" style={{ top: "-12px", left: "10%", animationDelay: "0.2s" }} />
+                    <Sparkle color="#86efac" shadow="#16a34a" style={{ top: "-15px", left: "50%", animationDelay: "0.6s" }} />
+                    <Sparkle color="#4ade80" shadow="#1b5e20" style={{ top: "-12px", right: "10%", animationDelay: "1s" }} />
                     <Link
                       href="/registration/visitor-registration"
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="blue-btn-hero text-white px-4 py-2 rounded-lg font-semibold text-[10px] uppercase tracking-widest flex items-center justify-start gap-2 transition-all active:scale-95 relative z-10 w-full sm:w-auto whitespace-nowrap"
+                      className="blue-btn-hero text-white px-4 py-2.5 md:px-5 md:py-2.5 rounded-lg font-bold text-xs uppercase tracking-widest flex items-center justify-start gap-2 transition-all active:scale-95 relative z-10 w-full sm:w-auto whitespace-nowrap shadow-md"
                     >
-                      Register as Visitor <ArrowRight size={14} />
+                      Register as Visitor <ArrowRight size={15} />
                     </Link>
                   </div>
                 </div>
+
               </div>
             </div>
+
           ))}
         </SectionContainer>
 

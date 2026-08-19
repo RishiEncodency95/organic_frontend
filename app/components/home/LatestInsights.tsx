@@ -36,51 +36,40 @@ const articles = [
 
 const LatestInsights = () => {
   return (
-    <section className="relative w-full bg-white py-4 md:py-6 overflow-hidden border-t border-gray-100 font-inter">
+    <section className="relative w-full py-3 md:py-5 overflow-hidden border-t border-gray-100 font-inter" style={{ backgroundColor: "#F7F8F0" }}>
 
       <div className="w-full px-4 md:px-11 relative z-10">
 
-        {/* Header Section */}
-        <div className="flex flex-col mb-6">
-
-          <div className="flex flex-col items-center text-center w-full relative">
-            <div className="flex items-center gap-2 text-[#1b5e20] font-semibold text-xs md:text-sm uppercase tracking-widest mb-2 font-poppins">
-              <Leaf className="w-4 h-4" />
-              <span>LATEST INSIGHTS</span>
-              <Leaf className="w-4 h-4" />
+        {/* BRANDED HEADING (Matching WhoCanParticipate font-poppins & font-semibold) */}
+        <div className="flex flex-col md:flex-row md:items-end justify-between mb-4 md:mb-5 gap-3 md:gap-4">
+          <div>
+            <div className="flex items-center gap-3 mb-1.5">
+              <div className="h-px w-8 bg-[#1b5e20]" />
+              <span className="uppercase tracking-[0.3em] md:tracking-[0.4em] text-[#1b5e20] font-bold text-[10px] md:text-xs font-poppins">
+                LATEST INSIGHTS
+              </span>
             </div>
-
-            <h2 className="text-xl md:text-2xl lg:text-3xl font-semibold text-[#1b5e20] uppercase leading-[1.1] font-poppins relative inline-block mb-3">
-              Organic Industry <span className="text-[#3b8c2a]">Perspectives</span>
+            <h2 className="text-xl md:text-2xl lg:text-3xl font-semibold text-[#1b5e20] uppercase leading-[1.1] font-poppins">
+              Organic Industry <span className="text-[#d26019]">Perspectives</span>
             </h2>
 
-            {/* Title Divider */}
-            <div className="flex items-center justify-center gap-2 mb-3">
-              <div className="w-10 h-px bg-gray-300"></div>
-              <Leaf className="w-4 h-4 text-[#3b8c2a] fill-[#3b8c2a] opacity-80" />
-              <div className="w-10 h-px bg-gray-300"></div>
-            </div>
-
-            <div className="flex flex-col md:flex-row items-center justify-between w-full text-left gap-6">
-              <p className="text-sm md:text-base text-gray-800 font-semibold max-w-[600px] leading-relaxed text-center md:text-left font-inter">
-                Stay informed with the latest trends, insights and innovations <br className="hidden md:block" />
-                shaping the future of the organic and sustainable sectors.
-              </p>
-
-              <Link href="/blog" className="bg-[#1b5e20] hover:bg-[#144417] text-white px-5 py-2.5 rounded-md font-semibold text-xs tracking-widest uppercase transition-colors flex items-center gap-2 shadow-md group whitespace-nowrap min-h-[40px] font-poppins">
-                View all articles
-                <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
-              </Link>
-            </div>
           </div>
+          <Link
+            href="/blog"
+            className="flex items-center gap-2 text-[#d26019] font-poppins font-bold text-[11px] md:text-xs uppercase tracking-widest hover:gap-4 transition-all w-fit"
+          >
+            Explore All <ArrowRight className="w-4 h-4" />
+          </Link>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8 font-inter">
-          {articles.map((article) => (
-            <div key={article.id} className="relative bg-[#fcfdfc] rounded-[20px] overflow-hidden shadow-[0_4px_15px_rgba(0,0,0,0.05)] border border-gray-200/60 flex flex-col group cursor-pointer transition-all duration-300 ease-out hover:-translate-y-1 hover:shadow-lg">
 
-              {/* Inner 3D Emboss Highlight */}
-              <div className="absolute inset-0 rounded-[20px] shadow-[inset_0_2px_4px_rgba(255,255,255,0.9),inset_0_-2px_6px_rgba(0,0,0,0.03)] pointer-events-none z-30"></div>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 mb-4 font-inter">
+          {articles.map((article) => (
+            <div
+              key={article.id}
+              className="relative bg-white rounded-xl overflow-hidden flex flex-col group cursor-pointer transition-all duration-300 ease-out hover:-translate-y-1 hover:shadow-md"
+              style={{ boxShadow: "rgba(0, 0, 0, 0.02) 0px 1px 3px 0px, rgba(27, 31, 35, 0.15) 0px 0px 0px 1px" }}
+            >
 
               {/* Image Container */}
               <div className="relative h-[200px] md:h-[220px] w-full overflow-hidden">
