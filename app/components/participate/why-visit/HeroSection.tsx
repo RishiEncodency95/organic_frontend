@@ -239,7 +239,7 @@ export default function HeroSection() {
                 <span
                   ref={line1Ref}
                   style={{ opacity: 0, display: "block" }}
-                  className="text-3xl sm:text-4xl md:text-[42px] lg:text-[48px] text-[#001810] font-semibold"
+                  className="text-xl md:text-[26px] lg:text-[32px] text-[#001810] font-semibold"
                 >
                   Source Better.
                 </span>
@@ -249,7 +249,7 @@ export default function HeroSection() {
                 <span
                   ref={line2Ref}
                   style={{ opacity: 0, display: "block" }}
-                  className="text-3xl sm:text-4xl md:text-[42px] lg:text-[48px] text-[#001810] font-semibold"
+                  className="text-xl md:text-[26px] lg:text-[32px] text-[#001810] font-semibold"
                 >
                   Connect Directly.
                 </span>
@@ -259,7 +259,7 @@ export default function HeroSection() {
                 <span
                   ref={line3Ref}
                   style={{ opacity: 0, display: "block" }}
-                  className="text-3xl sm:text-4xl md:text-[42px] lg:text-[48px] text-[#3b8c2a] font-semibold"
+                  className="text-lg sm:text-[22px] md:text-[26px] lg:text-[30px] text-[#3b8c2a] font-semibold tracking-tight"
                 >
                   Grow Your Business.
                 </span>
