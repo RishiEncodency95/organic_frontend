@@ -4,7 +4,7 @@ import React from "react";
 import Link from "next/link";
 import footerLogo from "../../assets/logos/footerlogo.png";
 import footerBottomImg from "../../assets/logos/footerimg.png";
-import namoLogo from "../../assets/logos/namo.png";
+import namoLogo from "../../assets/logos/namo1.png";
 import placeholderImg from "../../assets/image/image1.webp";
 import footogImg from "../../assets/image/bottog.png";
 import foot1ogImg from "../../assets/icons/foot1og.png";
@@ -54,8 +54,13 @@ export default function Footer() {
     { name: "Home", path: "/" },
     { name: "About Us", path: "/about" },
     { name: "Exhibitor Registration", path: "/registration" },
-    { name: "Delegate Registration", path: "/delegate" },
-    { name: "Conference Tracks", path: "/conference" }
+    { name: "Delegate Registration", path: "https://arogya.namogange.org/", isExternal: true },
+    { name: "Conference Tracks", path: "https://arogya.namogange.org/", isExternal: true },
+    { name: "Speakers", path: "/speakers" },
+    { name: "Agenda", path: "/agenda" },
+    { name: "Exhibition", path: "/exhibitors" },
+    { name: "Awards", path: "/awards" },
+    { name: "Contact Us", path: "/contact" }
   ];
 
   const subLinks = [
@@ -108,7 +113,7 @@ export default function Footer() {
             <Sparkle color="#d68523" style={{ bottom: '10px', left: '5%', animationDelay: '0.2s' }} />
             <Sparkle color="#d68523" style={{ bottom: '-10px', right: '20%', animationDelay: '0.6s' }} />
             
-            <img src={footerLogo.src} alt="Bharat Organic Expo" className="w-full h-auto object-contain" style={{ filter: "drop-shadow(0 2px 5px rgba(0,0,0,0.2))" }} />
+            <img src={footerLogo.src} alt="Bharat Organic Expo" className="w-full h-auto object-contain" style={{ filter: "drop-shadow(0 0 1px rgba(255,255,255,0.6))" }} />
           </div>
 
           <p className="text-[14px] font-semibold leading-relaxed max-w-[340px] text-black text-center mx-auto">
@@ -127,7 +132,7 @@ export default function Footer() {
 
           {/* Quick Links */}
           <div className="lg:border-r lg:border-white/10 lg:pr-8">
-            <h4 className="font-poppins font-semibold text-[#F3B71B] uppercase text-[13px] tracking-wider mb-1">
+            <h4 className="font-poppins font-semibold text-[#F3B71B] uppercase text-[13px] tracking-wider mb-1 ml-3">
               QUICK LINKS
             </h4>
             <img src={uuogImg.src} alt="divider" className="h-3.5 w-auto -mt-1.5 mb-2.5 object-contain" />
@@ -135,16 +140,13 @@ export default function Footer() {
             <ul className="space-y-1.5 text-[14px] text-gray-200 font-medium">
               {quickLinks.map((link, i) => (
                 <li key={i}>
-                  <Link href={link.path} className="hover:text-white transition-colors flex items-center gap-1.5 group">
+                  <Link
+                    href={link.path}
+                    target={link.isExternal ? "_blank" : undefined}
+                    rel={link.isExternal ? "noopener noreferrer" : undefined}
+                    className="hover:text-white transition-colors flex items-center gap-1.5 group"
+                  >
                     <ChevronRight size={14} className="text-[#F3B71B] group-hover:translate-x-1 transition-transform shrink-0" />
-                    {link.name}
-                  </Link>
-                </li>
-              ))}
-              {subLinks.map((link, i) => (
-                <li key={`sub-${i}`}>
-                  <Link href={link.path} className="flex items-center gap-1.5 hover:text-white transition-colors">
-                    <ChevronRight size={12} className="text-[#F3B71B]" />
                     {link.name}
                   </Link>
                 </li>
@@ -176,7 +178,7 @@ export default function Footer() {
 
           {/* Get In Touch */}
           <div className="lg:border-r lg:border-white/10 lg:pr-4">
-            <h4 className="font-poppins font-semibold text-[#F3B71B] uppercase text-[13px] tracking-wider mb-1">
+            <h4 className="font-poppins font-semibold text-[#F3B71B] uppercase text-[13px] tracking-wider mb-1 ml-3">
               GET IN TOUCH
             </h4>
             <img src={uuogImg.src} alt="divider" className="h-3.5 w-auto -mt-1.5 mb-2.5 object-contain" />
@@ -206,7 +208,7 @@ export default function Footer() {
 
           {/* Organised By & Connect */}
           <div className="flex flex-col">
-            <h4 className="font-poppins font-semibold text-[#F3B71B] uppercase text-[13px] tracking-wider mb-1">
+            <h4 className="font-poppins font-semibold text-[#F3B71B] uppercase text-[13px] tracking-wider mb-1 ml-3">
               Organised by:
             </h4>
 
@@ -217,7 +219,7 @@ export default function Footer() {
               <Sparkle color="#FFFFFF" style={{ top: '-10px', right: '15%', animationDelay: '0.8s' }} />
               <Sparkle color="#FFFFFF" style={{ bottom: '4px', left: '5%', animationDelay: '0.2s' }} />
               <Sparkle color="#FFFFFF" style={{ bottom: '-8px', right: '10%', animationDelay: '0.6s' }} />
-              <img src={namoLogo.src} alt="Namo Gange Wellness" className="w-full h-auto object-contain" style={{ filter: "drop-shadow(0 0 1px rgba(255,255,255,0.3))" }} />
+              <img src={namoLogo.src} alt="Namo Gange Wellness" className="w-full h-auto object-contain" />
             </div>
 
             <p className="text-gray-200 text-[11px] mb-3 leading-relaxed font-medium">
@@ -229,8 +231,14 @@ export default function Footer() {
 
             <h5 className="font-poppins font-semibold text-[#F3B71B] uppercase mb-2 text-[12px] tracking-wider">CONNECT WITH US</h5>
             <div className="flex gap-2">
-              {[Facebook, Twitter, Linkedin, Instagram, Youtube].map((Icon, idx) => (
-                <a key={idx} href="#" className="w-7 h-7 rounded-md flex items-center justify-center text-white hover:text-[#F3B71B] transition-colors">
+              {[
+                { Icon: Facebook, label: "Facebook" },
+                { Icon: Twitter, label: "Twitter" },
+                { Icon: Linkedin, label: "LinkedIn" },
+                { Icon: Instagram, label: "Instagram" },
+                { Icon: Youtube, label: "YouTube" }
+              ].map(({ Icon, label }, idx) => (
+                <a key={idx} href="#" aria-label={label} className="w-7 h-7 rounded-md flex items-center justify-center text-white hover:text-[#F3B71B] transition-colors">
                   <Icon size={14} />
                 </a>
               ))}

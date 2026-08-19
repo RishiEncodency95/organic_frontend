@@ -68,7 +68,7 @@ const BuyerSellerMeet = () => {
 
               {/* Title */}
               <div className="flex items-center gap-2 mb-2">
-                <h2 className="text-[28px] md:text-[34px] lg:text-[40px] font-bold leading-[1.2] text-[#1a1a1a] uppercase tracking-tight">
+                <h2 className="text-[18px] md:text-[28px] lg:text-[32px] font-semibold leading-[1.2] text-[#1a1a1a] uppercase tracking-tight">
                   BUYER-SELLER{' '}
                   <span className="bg-gradient-to-r from-[#00643b] to-[#f58220] bg-clip-text text-transparent">MEET 2027</span>
                 </h2>
@@ -111,7 +111,9 @@ const BuyerSellerMeet = () => {
               {/* Buttons */}
               <div className="flex flex-wrap items-center gap-16">
                 <Link
-                  href="/buyer-registration"
+                  href="/registration/buyer-registration"
+                  target="_blank"
+                  rel="noopener noreferrer"
                   className="bg-[#3b8c2a] hover:bg-[#2d7a2d] text-white px-6 py-2 rounded-md font-semibold text-[12px] md:text-[14px] tracking-widest uppercase transition-colors flex items-center gap-2 shadow-lg shadow-green-600/20 min-h-[44px]"
                 >
                   <CalendarCheck className="w-5 h-5" />
@@ -188,8 +190,8 @@ const BuyerSellerMeet = () => {
               <Users className="w-4 h-4" strokeWidth={2.5} />
             </div>
             <div className="flex flex-col text-left">
-              <span className="text-[14px] lg:text-[15px] font-black text-white leading-tight uppercase">GROW TOGETHER.</span>
-              <span className="text-[11px] lg:text-[12px] font-bold text-teal-50 uppercase tracking-wider">MEET. CONNECT.</span>
+              <span className="text-[14px] lg:text-[15px] font-semibold text-white leading-tight uppercase">GROW TOGETHER.</span>
+              <span className="text-[11px] lg:text-[12px] font-semibold text-teal-50 uppercase tracking-wider">MEET. CONNECT.</span>
             </div>
           </div>
 
@@ -201,8 +203,8 @@ const BuyerSellerMeet = () => {
               <CalendarDays className="w-4 h-4" strokeWidth={2.5} />
             </div>
             <div className="flex flex-col text-left">
-              <span className="text-[14px] lg:text-[15px] font-black text-white leading-tight uppercase">19 &ndash; 21 FEBRUARY</span>
-              <span className="text-[11px] lg:text-[12px] font-bold text-teal-50 uppercase tracking-wider">2027</span>
+              <span className="text-[14px] lg:text-[15px] font-semibold text-white leading-tight uppercase">19 &ndash; 21 FEBRUARY</span>
+              <span className="text-[11px] lg:text-[12px] font-semibold text-teal-50 uppercase tracking-wider">2027</span>
             </div>
           </div>
 
@@ -214,14 +216,16 @@ const BuyerSellerMeet = () => {
               <MapPin className="w-4 h-4" strokeWidth={2.5} />
             </div>
             <div className="flex flex-col text-left">
-              <span className="text-[14px] lg:text-[15px] font-black text-white leading-tight uppercase">PRAGATI MAIDAN</span>
-              <span className="text-[11px] lg:text-[12px] font-bold text-teal-50 uppercase tracking-wider">NEW DELHI, INDIA</span>
+              <span className="text-[14px] lg:text-[15px] font-semibold text-white leading-tight uppercase">PRAGATI MAIDAN</span>
+              <span className="text-[11px] lg:text-[12px] font-semibold text-teal-50 uppercase tracking-wider">NEW DELHI, INDIA</span>
             </div>
           </div>
 
           {/* Right Side Button */}
           <Link
-            href="/buyer-registration"
+            href="/registration/buyer-registration"
+            target="_blank"
+            rel="noopener noreferrer"
             className="bg-[#f58220] hover:bg-[#d97017] text-white px-6 py-2 lg:py-2 rounded-md font-semibold text-[12px] md:text-[14px] tracking-widest uppercase transition-transform hover:scale-105 flex items-center justify-center gap-2 shadow-md shadow-[#f58220]/30 shrink-0"
           >
             <CalendarCheck className="w-5 h-5" strokeWidth={2.5} />

@@ -13,6 +13,7 @@ import {
     Store, UserPlus, Globe, Award
 } from "lucide-react";
 import navbarLogo from "../../assets/logos/navbarlogo1.png";
+import SectionContainer from "@/app/components/layout/SectionContainer";
 
 // Local cn utility since @/lib/utils is missing
 const cn = (...classes: (string | undefined | null | false)[]) => classes.filter(Boolean).join(" ");
@@ -50,28 +51,28 @@ const navLinks = [
         label: "Opportunities",
         dropdown: [
             { label: "Sponsorship", path: "/sponsership", icon: FileCheck, description: "Get your complimentary visitor pass today" },
-            { label: "Branding Opportunities", path: "/e-promotion-web", icon: ShoppingBag, description: "Explore opportunities as a domestic or international buyer" },
+            { label: "E-Promotion Opportunity", path: "/e-promotion-web", icon: ShoppingBag, description: "Explore opportunities as a domestic or international buyer" },
             { label: "Partnership / Collaboration", path: "/partnership", icon: Sparkles, description: "Experience the latest in health & wellness" },
         ],
     },
     { label: "Glimpses", path: "/gallery" },
-    { label: "Conference", path: "/conference" },
+    { label: "Conference", path: "https://arogya.namogange.org/", isExternal: true },
     { label: "Awards", path: "/awards" },
     { label: "Contact", path: "/contact" },
 ];
 
 const bottomTabs = [
     { label: "Home", path: "/", icon: Home },
-    { label: "Conference", path: "/conference", icon: Mic },
+    { label: "Conference", path: "https://arogya.namogange.org/", icon: Mic, isExternal: true },
     { label: "Award", path: "/awards", icon: Trophy },
     { label: "Contact", path: "/contact", icon: Phone },
 ];
 
 const registrationOptions = [
-    { label: "BOOK A STALL", path: "/book-a-stand", icon: Store, color: "green" },
-    { label: "REGISTER AS VISITOR", path: "/visitor-registration", icon: UserPlus, color: "orange" },
-    { label: "DELEGATE REGISTRATION", path: "/conference", icon: Globe, color: "green" },
-    { label: "REGISTER AS BUYER", path: "/buyer-registration", icon: Users, color: "orange" },
+    { label: "BOOK A STALL", path: "/registration/book-a-stand", icon: Store, color: "green" },
+    { label: "REGISTER AS VISITOR", path: "/registration/visitor-registration", icon: UserPlus, color: "orange" },
+    { label: "DELEGATE REGISTRATION", path: "https://arogya.namogange.org/", icon: Globe, color: "green", isExternal: true },
+    { label: "REGISTER AS BUYER", path: "/registration/buyer-registration", icon: Users, color: "orange" },
     { label: "SPONSORSHIP OPPORTUNITIES", path: "/sponsership", icon: Award, color: "green" },
     { label: "TALK TO EXPO ADVISOR", path: "tel:+919654900525", icon: Phone, color: "orange" },
 ];
@@ -95,7 +96,7 @@ const dropdownIcons: Record<string, React.ElementType> = {
 // Standalone links (non-dropdown)
 const standaloneLinks = [
     { label: "Glimpses", path: "/gallery", icon: Camera },
-    { label: "Conference", path: "/conference", icon: Mic },
+    { label: "Conference", path: "https://arogya.namogange.org/", icon: Mic, isExternal: true },
     { label: "Awards", path: "/awards", icon: Star },
     { label: "Contact", path: "/contact", icon: Phone },
 ];
@@ -134,13 +135,13 @@ const Navbar = () => {
                     : "relative z-[100] bg-white border-b border-slate-200 py-1 shadow-sm"
                     } transition-all duration-500`}
             >
-                <div className="container mx-auto px-6 max-w-[1400px]">
+                <SectionContainer>
 
                     {/* ─── DESKTOP NAV (unchanged) ─── */}
                     <div className="hidden xl:flex items-center justify-between py-0 relative h-14">
                         <div className="relative z-[150] h-full flex items-center gap-2">
                             <div className="relative h-full flex items-center min-w-[140px] xl:min-w-[180px] mr-4">
-                                <Link href="/" className="absolute top-1 xl:top-1.5 left-0 flex items-center justify-center transition-opacity hover:opacity-90 z-[200]">
+                                <Link href="/" className="absolute top-1 xl:top-1 left-0 flex items-center justify-center transition-opacity hover:opacity-90 z-[200]">
                                     <img loading="lazy" decoding="async" src={navbarLogo.src}
                                         alt="Organic Expo Logo"
                                         className="h-[80px] xl:h-[105px] w-auto object-contain drop-shadow-md"
@@ -149,8 +150,8 @@ const Navbar = () => {
                             </div>
                         </div>
 
-                        <div className="flex-1 flex items-center">
-                            <div className="flex-1 flex items-center justify-center gap-1 xl:gap-1.5">
+                        <div className=" flex items-center">
+                            <div className=" flex items-center justify-end xl:justify-center gap-1 lg:gap-4">
                                 {navLinks.map((link) => (
                                     <div
                                         key={link.label}
@@ -160,15 +161,17 @@ const Navbar = () => {
                                     >
                                         <Link
                                             href={link.path || "#"}
-                                            style={{ fontFamily: "'Poppins', sans-serif", fontWeight: 500 }}
-                                            className={`px-2 py-1.5 text-[11px] xl:text-[11.5px] font-medium tracking-[0.02em] uppercase transition-all duration-300 flex items-center gap-1 relative group whitespace-nowrap ${pathname === link.path ? "text-[#c2410c]" : "text-slate-900 hover:text-[#c2410c]"
+                                            target={link.isExternal ? "_blank" : undefined}
+                                            rel={link.isExternal ? "noopener noreferrer" : undefined}
+                                            style={{ fontFamily: "'Poppins', sans-serif" }}
+                                            className={`px-1.5 2xl:px-2.5 py-2 text-[13px] lg:text-[12.5px] font-medium tracking-wide uppercase transition-all duration-300 flex items-center gap-1 relative group whitespace-nowrap ${pathname === link.path ? "text-[#3b8c2a]" : "text-slate-800 hover:text-[#3b8c2a]"
                                                 }`}
                                         >
                                             {link.label}
                                             {link.dropdown && (
                                                 <ChevronDown className={`w-3 h-3 transition-transform duration-300 ${activeDropdown === link.label ? "rotate-180" : ""}`} />
                                             )}
-                                            <span className={`absolute bottom-0 left-1.5 right-1.5 h-[2px] bg-[#276F27] transition-transform duration-300 origin-left ${pathname === link.path ? "scale-x-100" : "scale-x-0 group-hover:scale-x-100"}`} />
+                                            <span className={`absolute bottom-0 left-1.5 right-1.5 h-[2px] bg-[#ea580c] transition-transform duration-300 origin-left ${pathname === link.path ? "scale-x-100" : "scale-x-0 group-hover:scale-x-100"}`} />
                                         </Link>
 
                                         {link.dropdown && (
@@ -222,83 +225,7 @@ const Navbar = () => {
                                 ))}
                             </div>
 
-                            <div className="flex items-center gap-2 flex-shrink-0">
-                                <div
-                                    className="relative"
-                                    onMouseEnter={() => setActiveDropdown("registration")}
-                                    onMouseLeave={() => setActiveDropdown(null)}
-                                >
-                                    <button
-                                        style={{ fontFamily: "'Poppins', sans-serif", fontWeight: 600 }}
-                                        className="group relative inline-flex items-center justify-center gap-1 px-3.5 py-1.5 overflow-hidden rounded-lg border-2 border-[#c2410c] text-[#c2410c] font-semibold text-[9.5px] uppercase tracking-wider transition-colors duration-300 hover:text-white shadow-sm flex-shrink-0 whitespace-nowrap"
-                                    >
-                                        <span className="absolute top-full left-full w-36 h-36 bg-[#c2410c] rounded-full transition-all duration-500 ease-in-out group-hover:-top-6 group-hover:-left-6 pointer-events-none" />
-                                        <span className="relative z-10 flex items-center gap-1">
-                                            Register Now
-                                            <ChevronDown className={cn("w-3 h-3 transition-transform duration-300", activeDropdown === "registration" ? "rotate-180" : "")} />
-                                        </span>
-                                    </button>
-
-                                    <AnimatePresence>
-                                        {activeDropdown === "registration" && (
-                                            <div className="absolute top-[calc(100%-8px)] right-0 pt-4 w-[260px] z-50">
-                                                <div className="absolute top-[10px] right-10 w-4 h-4 bg-white border-t border-l border-slate-100 rotate-45 z-10" />
-                                                <motion.div
-                                                    initial={{ opacity: 0, scale: 0.9, y: 15 }}
-                                                    animate={{ opacity: 1, scale: 1, y: 0 }}
-                                                    exit={{ opacity: 0, scale: 0.9, y: 10 }}
-                                                    transition={{ type: "spring" as const, damping: 25, stiffness: 300 }}
-                                                    className="relative bg-white rounded-2xl shadow-[0_15px_45px_rgba(0,0,0,0.15)] border border-slate-100 p-1 overflow-hidden z-20"
-                                                >
-                                                    <div className="grid grid-cols-2">
-                                                        {[
-                                                            { to: "/book-a-stand", icon: Store, label: "BOOK A\nSTALL", color: "orange", click: "Registration: Book A Stall" },
-                                                            { to: "/visitor-registration", icon: UserPlus, label: "REGISTER AS\nVISITOR", color: "green", click: "Registration: Visitor Pass" },
-                                                            { to: "/conference", icon: Globe, label: "DELEGATE\nREGISTRATION", color: "orange", click: "Registration: Delegates Register" },
-                                                            { to: "/buyer-registration", icon: Users, label: "REGISTER AS\nBUYER", color: "green", click: "Registration: Buyer Register" },
-                                                            { to: "/sponsership", icon: Award, label: "SPONSORSHIP\nOPPORTUNITIES", color: "orange", click: "Registration: Sponsorship" },
-                                                            { to: "tel:+919654900525", icon: Phone, label: "TALK TO EXPO\nADVISOR", color: "green", click: "Registration: Expo Advisor" },
-                                                        ].map((item, idx) => {
-                                                            const commonProps = {
-                                                                onClick: () => setActiveDropdown(null),
-                                                                className: cn(
-                                                                    "flex items-center gap-1.5 px-2 py-2 hover:bg-slate-50 text-left transition-all group relative z-20 border-b border-slate-100",
-                                                                    idx % 2 === 0 ? "border-r" : ""
-                                                                )
-                                                            };
-
-                                                            const Content = (
-                                                                <>
-                                                                    <div className={cn(
-                                                                        "w-6 h-6 flex-shrink-0 rounded-lg flex items-center justify-center transition-all duration-300 shadow-sm",
-                                                                        item.color === "orange"
-                                                                            ? "bg-[#f59e0b]/5 text-[#f59e0b] group-hover:bg-[#f59e0b] group-hover:text-white"
-                                                                            : "bg-[#3b8c2a]/5 text-[#3b8c2a] group-hover:bg-[#3b8c2a] group-hover:text-white"
-                                                                    )}>
-                                                                        <item.icon className="w-3 h-3" />
-                                                                    </div>
-                                                                    <span style={{ fontFamily: "'Poppins', sans-serif" }} className={cn(
-                                                                        "text-[9.5px] font-semibold text-slate-800 uppercase tracking-wider transition-colors leading-tight whitespace-pre-line",
-                                                                        item.color === "orange" ? "group-hover:text-[#f59e0b]" : "group-hover:text-[#3b8c2a]"
-                                                                    )}>
-                                                                        {item.label}
-                                                                    </span>
-                                                                </>
-                                                            );
-
-                                                            return item.to.startsWith("tel:") ? (
-                                                                <a key={item.to} href={item.to} {...commonProps}>{Content}</a>
-                                                            ) : (
-                                                                <Link key={item.to} href={item.to} target="_blank" rel="noopener noreferrer" {...commonProps}>{Content}</Link>
-                                                            );
-                                                        })}
-                                                    </div>
-                                                </motion.div>
-                                            </div>
-                                        )}
-                                    </AnimatePresence>
-                                </div>
-                            </div>
+                            {/* Removed Register Now from here */}
                         </div>
                     </div>
 
@@ -339,7 +266,7 @@ const Navbar = () => {
                             </button>
                         </div>
                     </div>
-                </div>
+                </SectionContainer>
             </motion.nav>
 
             {/* ─── MOBILE BOTTOM TAB BAR ─── */}
@@ -351,6 +278,8 @@ const Navbar = () => {
                             <Link
                                 key={tab.path}
                                 href={tab.path}
+                                target={tab.isExternal ? "_blank" : undefined}
+                                rel={tab.isExternal ? "noopener noreferrer" : undefined}
                                 className="flex flex-col items-center gap-0.5 px-3 py-1.5 rounded-xl transition-all"
                             >
                                 <div className={cn(
@@ -464,7 +393,7 @@ const Navbar = () => {
                                     <div className="w-9 h-9 rounded-xl bg-slate-100 flex items-center justify-center flex-shrink-0">
                                         <Home className={cn("w-4 h-4", pathname === "/" ? "text-[#3b8c2a]" : "text-slate-500")} />
                                     </div>
-                                    <span className={cn("text-[13px] font-semibold flex-1", pathname === "/" ? "text-[#3b8c2a]" : "text-slate-900")}>
+                                    <span className={cn("text-[13px] font-medium flex-1", pathname === "/" ? "text-[#3b8c2a]" : "text-slate-900")}>
                                         Home
                                     </span>
                                     {pathname === "/" && <div className="w-1.5 h-1.5 rounded-full bg-[#3b8c2a]" />}
@@ -483,7 +412,7 @@ const Navbar = () => {
                                                 <div className="w-9 h-9 rounded-xl bg-slate-100 flex items-center justify-center flex-shrink-0">
                                                     <ParentIcon className={cn("w-4 h-4 transition-colors", isOpen ? "text-[#3b8c2a]" : "text-slate-500")} />
                                                 </div>
-                                                <span className={cn("text-[13px] font-semibold flex-1 text-left transition-colors", isOpen ? "text-[#3b8c2a]" : "text-slate-900")}>
+                                                <span className={cn("text-[13px] font-medium flex-1 text-left transition-colors", isOpen ? "text-[#3b8c2a]" : "text-slate-900")}>
                                                     {link.label}
                                                 </span>
                                                 <ChevronDown className={cn("w-4 h-4 transition-transform duration-300", isOpen ? "rotate-180 text-[#3b8c2a]" : "text-slate-400")} />
@@ -533,6 +462,8 @@ const Navbar = () => {
                                     <Link
                                         key={link.path}
                                         href={link.path}
+                                        target={link.isExternal ? "_blank" : undefined}
+                                        rel={link.isExternal ? "noopener noreferrer" : undefined}
                                         onClick={() => setMobileOpen(false)}
                                         className={cn(
                                             "flex items-center gap-3 py-3 px-3 rounded-xl border-b border-slate-50 transition-all",
@@ -542,7 +473,7 @@ const Navbar = () => {
                                         <div className="w-9 h-9 rounded-xl bg-slate-100 flex items-center justify-center flex-shrink-0">
                                             <link.icon className={cn("w-4 h-4", pathname === link.path ? "text-[#3b8c2a]" : "text-slate-500")} />
                                         </div>
-                                        <span className={cn("text-[13px] font-semibold flex-1", pathname === link.path ? "text-[#3b8c2a]" : "text-slate-900")}>
+                                        <span className={cn("text-[13px] font-medium flex-1", pathname === link.path ? "text-[#3b8c2a]" : "text-slate-900")}>
                                             {link.label}
                                         </span>
                                         {pathname === link.path && <div className="w-1.5 h-1.5 rounded-full bg-[#3b8c2a]" />}
@@ -596,9 +527,9 @@ const Navbar = () => {
                                         target="_blank"
                                         rel="noopener noreferrer"
                                         onClick={() => setMobileOpen(false)}
-                                        className="uiverse-btn uiverse-btn-user uiverse-btn-mobile"
+                                        className="uiverse-btn uiverse-btn-user uiverse-btn-mobile text-center"
                                     >
-                                        User Login
+                                        LOGIN
                                     </a>
                                 </div>
                             </div>

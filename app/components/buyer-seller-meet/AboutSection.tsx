@@ -17,8 +17,8 @@ export default function AboutSection() {
   ];
 
   const links = [
-    { label: "Register as Buyer", icon: <User size={16} />, href: "/visitor-registration" },
-    { label: "Participate as Exhibitor", icon: <Briefcase size={16} />, href: "/book-a-stand" },
+    { label: "Register as Buyer", icon: <User size={16} />, href: "/registration/buyer-registration" },
+    { label: "Participate as Exhibitor", icon: <Briefcase size={16} />, href: "/conference" },
     { label: "How it Works", icon: <HelpCircle size={16} />, href: "#how-it-works" },
     { label: "Who Can Participate", icon: <Users size={16} />, href: "#who-can-participate" },
     { label: "Contact Us", icon: <Phone size={16} />, href: "/contact" },
@@ -33,7 +33,7 @@ export default function AboutSection() {
 
       <div className="container mx-auto px-4 max-w-7xl relative z-10">
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-12 items-start">
-          
+
           {/* Left Column - About */}
           <div className="lg:col-span-1">
             <div className="mb-6">
@@ -50,7 +50,7 @@ export default function AboutSection() {
                 The platform enables participants to explore:
               </p>
             </div>
-            
+
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-y-3 gap-x-4">
               {points.map((point, i) => (
                 <div key={i} className="flex items-center gap-2">
@@ -62,14 +62,14 @@ export default function AboutSection() {
           </div>
 
           {/* Middle Column - Graphic */}
-          <img 
-            src={b2bImg.src} 
-            alt="B2B Meet" 
-            className="w-full h-auto max-w-[320px] object-cover rounded-xl lg:col-span-1 place-self-center" 
+          <img
+            src={b2bImg.src}
+            alt="B2B Meet"
+            className="w-full h-auto max-w-[320px] object-cover rounded-xl lg:col-span-1 place-self-center"
           />
 
           {/* Right Column - Quick Links */}
-          <div 
+          <div
             className="lg:col-span-1 bg-white rounded-xl overflow-hidden relative"
             style={{ boxShadow: "rgba(0, 0, 0, 0.02) 0px 1px 3px 0px, rgba(27, 31, 35, 0.15) 0px 0px 0px 1px" }}
           >
@@ -80,31 +80,42 @@ export default function AboutSection() {
 
             {/* Header (thead) */}
             <div className="bg-gray-100 px-6 py-4 border-b border-gray-200 relative z-10">
-              <h3 
+              <h3
                 className="text-base font-semibold text-[#4B1426] uppercase tracking-wider font-poppins m-0"
                 style={{ textShadow: "1px 1px 1px rgba(0,0,0,0.1)" }}
               >
                 QUICK LINKS
               </h3>
             </div>
-            
+
             {/* Links List */}
             <div className="flex flex-col relative z-10">
-              {links.map((link, i) => (
-                <Link
-                  key={i}
-                  href={link.href}
-                  className={`flex items-center justify-between px-6 py-4 bg-transparent hover:bg-gray-50/80 transition-colors group ${
-                    i !== links.length - 1 ? "border-b border-gray-200" : ""
-                  }`}
-                >
-                  <div className="flex items-center gap-3 text-[#1b5e20] transition-colors">
-                    {link.icon}
-                    <span className="text-sm font-semibold text-black">{link.label}</span>
-                  </div>
-                  <ChevronRight size={18} className="text-[#1b5e20] group-hover:translate-x-1 transition-transform" />
-                </Link>
-              ))}
+              {links.map((link, i) => {
+                const commonProps = {
+                  className: `flex items-center justify-between px-6 py-4 bg-transparent hover:bg-gray-50/80 transition-colors group ${i !== links.length - 1 ? "border-b border-gray-200" : ""
+                    }`
+                };
+
+                const content = (
+                  <>
+                    <div className="flex items-center gap-3 text-[#1b5e20] transition-colors">
+                      {link.icon}
+                      <span className="text-sm font-semibold text-black">{link.label}</span>
+                    </div>
+                    <ChevronRight size={18} className="text-[#1b5e20] group-hover:translate-x-1 transition-transform" />
+                  </>
+                );
+
+                return link.href.startsWith("#") ? (
+                  <a key={i} href={link.href} {...commonProps}>
+                    {content}
+                  </a>
+                ) : (
+                  <Link key={i} href={link.href} {...commonProps}>
+                    {content}
+                  </Link>
+                );
+              })}
             </div>
           </div>
 

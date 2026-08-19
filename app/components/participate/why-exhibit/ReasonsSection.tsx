@@ -74,7 +74,7 @@ const ReasonsSection = () => (
         <div className="flex items-center justify-center gap-4 mb-4">
           <span className="w-12 h-[2px] bg-[#1b5e20]" />
           <span className="text-[#0c0c3e] font-semibold text-lg md:text-xl uppercase tracking-[0.1em] font-inter">
-            Top Reasons to Exhibit at Organic Expo 2027
+            Top Reasons to Exhibit at Bharat Organic Expo 2027
           </span>
           <span className="w-12 h-[2px] bg-[#1b5e20]" />
         </div>

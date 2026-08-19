@@ -3,12 +3,13 @@ import React, { useState, useEffect, useRef, useCallback } from "react";
 import Link from "next/link";
 import { CalendarDays, MapPin, ChevronLeft, ChevronRight, ArrowRight } from "lucide-react";
 import gsap from "gsap";
-import home1 from "../../assets/home/home11.png";
-import home2 from "../../assets/home/home22.png";
-import home3 from "../../assets/home/home33.png";
-import home4 from "../../assets/home/home44.png";
-import home5 from "../../assets/home/home55.png";
-import home6 from "../../assets/home/home1.jpg";
+import SectionContainer from "@/app/components/layout/SectionContainer";
+import home1 from "../../assets/home/home11.webp";
+import home2 from "../../assets/home/home22.webp";
+import home3 from "../../assets/home/home33.webp";
+import home4 from "../../assets/home/home44.webp";
+import home5 from "../../assets/home/home55.webp";
+import home6 from "../../assets/home/home1.webp";
 
 // -------------------------------------------------------------
 // NOTE: run `npm install gsap` in your project before using this.
@@ -22,12 +23,12 @@ const Sparkle = ({ style, color = "#F2B40E", shadow }: { style?: React.CSSProper
     style={{
       position: "absolute",
       pointerEvents: "none",
-      fontSize: "13px",
+      fontSize: "15px",
       color,
-      textShadow: shadow ? `0 0 6px ${shadow}` : undefined,
+      textShadow: shadow ? `0 0 8px ${shadow}, 0 0 16px ${shadow}` : undefined,
       animation: "sparkleAnim 1.6s ease-in-out infinite",
       opacity: 0,
-      zIndex: 20,
+      zIndex: 25,
       ...style,
     }}
   >
@@ -247,36 +248,44 @@ const HeroSection = () => {
       tl.add(() => contentOut(prevIdx), 0);
 
       // 2. lens flare burst
-      tl.fromTo(
-        lensRef.current,
-        { opacity: 0, scale: 0.3, x: "-50%", y: "-50%" },
-        { opacity: 0.5, scale: 2.2, duration: 0.22, ease: "power2.out" },
-        0.05
-      ).to(lensRef.current, { opacity: 0, scale: 3, duration: 0.4, ease: "power2.in" }, 0.22);
+      if (lensRef.current) {
+        tl.fromTo(
+          lensRef.current,
+          { opacity: 0, scale: 0.3, x: "-50%", y: "-50%" },
+          { opacity: 0.5, scale: 2.2, duration: 0.22, ease: "power2.out" },
+          0.05
+        ).to(lensRef.current, { opacity: 0, scale: 3, duration: 0.4, ease: "power2.in" }, 0.22);
+      }
 
       // 3. vignette pulse
-      tl.fromTo(
-        vigRef.current,
-        { opacity: 0 },
-        { opacity: 0.5, duration: 0.25, ease: "power2.out", yoyo: true, repeat: 1 },
-        0
-      );
+      if (vigRef.current) {
+        tl.fromTo(
+          vigRef.current,
+          { opacity: 0 },
+          { opacity: 0.5, duration: 0.25, ease: "power2.out", yoyo: true, repeat: 1 },
+          0
+        );
+      }
 
       // 4. reveal bar wipe + next image clip-path unclip
       gsap.set(nextBg, { zIndex: 4 });
       gsap.set(nextImg, { scale: 1.1, filter: "brightness(0.92) saturate(0.85)" });
 
-      tl.set(revealBar.current, { scaleX: 0, transformOrigin: "left center", opacity: 1 }, 0.08);
-      tl.to(revealBar.current, { scaleX: 1, duration: 0.55, ease: "power4.inOut" }, 0.08);
+      if (revealBar.current) {
+        tl.set(revealBar.current, { scaleX: 0, transformOrigin: "left center", opacity: 1 }, 0.08);
+        tl.to(revealBar.current, { scaleX: 1, duration: 0.55, ease: "power4.inOut" }, 0.08);
+      }
 
       gsap.set(nextBg, { clipPath: "inset(0 100% 0 0)" });
       tl.to(nextBg, { clipPath: "inset(0 0% 0 0)", duration: 0.55, ease: "power4.inOut" }, 0.08);
 
-      tl.to(
-        revealBar.current,
-        { scaleX: 0, transformOrigin: "right center", duration: 0.4, ease: "power4.in", opacity: 0 },
-        0.6
-      );
+      if (revealBar.current) {
+        tl.to(
+          revealBar.current,
+          { scaleX: 0, transformOrigin: "right center", duration: 0.4, ease: "power4.in", opacity: 0 },
+          0.6
+        );
+      }
 
       // 5. prev slide drifts away
       tl.to(prevBg, { x: "-6%", opacity: 0, duration: 0.5, ease: "power2.in" }, 0.12);
@@ -287,8 +296,8 @@ const HeroSection = () => {
       // 7. state update + content in
       tl.add(() => {
         setCur(targetIdx);
-        gsap.set(prevBg, { x: 0 });
-        gsap.set(nextBg, { zIndex: 2 });
+        if (prevBg) gsap.set(prevBg, { x: 0 });
+        if (nextBg) gsap.set(nextBg, { zIndex: 2 });
       }, 0.55);
 
       tl.add(() => contentIn(targetIdx), 0.6);
@@ -320,9 +329,9 @@ const HeroSection = () => {
       gsap.set(items, { opacity: 0, y: 40, filter: "blur(4px)" });
     });
 
-    gsap.set(lensRef.current, { opacity: 0, xPercent: -50, yPercent: -50 });
-    gsap.set(vigRef.current, { opacity: 0 });
-    gsap.set(revealBar.current, { scaleX: 0, opacity: 0 });
+    if (lensRef.current) gsap.set(lensRef.current, { opacity: 0, xPercent: -50, yPercent: -50 });
+    if (vigRef.current) gsap.set(vigRef.current, { opacity: 0 });
+    if (revealBar.current) gsap.set(revealBar.current, { scaleX: 0, opacity: 0 });
 
     const initPanel = panels.current[0];
     if (initPanel) {
@@ -411,7 +420,7 @@ const HeroSection = () => {
 
       <section
         ref={sectionRef}
-        className="relative w-full overflow-hidden bg-[#fcfcf0] h-[510px] sm:h-[430px] md:h-[490px] lg:h-[530px] flex items-center font-inter"
+        className="relative w-full overflow-hidden bg-[#fcfcf0] h-[68vh] md:h-[72vh] lg:h-[78vh] min-h-[400px] flex items-center font-inter"
       >
         {/* ── BACKGROUND LAYERS ── */}
         {SLIDES.map(({ id, img }) => (
@@ -431,6 +440,9 @@ const HeroSection = () => {
               alt={`Bharat Organic Expo slide ${id + 1}`}
               className="w-full h-full object-cover select-none"
               style={{ willChange: "transform, filter" }}
+              fetchPriority={id === 0 ? "high" : "low"}
+              loading={id === 0 ? "eager" : "lazy"}
+              decoding={id === 0 ? "sync" : "async"}
             />
           </div>
         ))}
@@ -467,9 +479,12 @@ const HeroSection = () => {
           }}
         />
 
+        {/* ── BACKGROUND GRADIENT (Left to Right Fade) ── */}
+        <div className="absolute inset-0 bg-gradient-to-r from-[#fcfcf0]/60 via-[#fcfcf0]/0 to-transparent z-10 pointer-events-none" />
+
         {/* ── CONTENT PANELS ── */}
-        <div
-          className="relative container mx-auto max-w-[1400px] px-6 h-full grid items-center justify-items-start"
+        <SectionContainer
+          className="relative z-20 h-full grid items-center justify-items-start"
           style={{ zIndex: 20 }}
         >
           {SLIDES.map((slide) => (
@@ -478,107 +493,123 @@ const HeroSection = () => {
               ref={(el) => {
                 panels.current[slide.id] = el;
               }}
-              className="col-start-1 row-start-1 w-full max-w-xl mt-16 md:mt-0"
+              className="col-start-1 row-start-1 w-full max-w-2xl lg:max-w-3xl mt-12 md:mt-0"
               style={{
                 visibility: cur === slide.id ? "visible" : "hidden",
                 pointerEvents: cur === slide.id ? "auto" : "none",
               }}
             >
-              <div className="space-y-3 w-full max-w-2xl">
+              <div className="flex flex-col w-full">
                 {/* Tagline */}
-                <div data-anim="1" className="flex items-center gap-2 mb-1">
-                  <div className="w-7 h-[2px] bg-[#c2410c]/60" />
-                  <span className="text-[#c2410c] text-[11px] md:text-[12px] font-bold tracking-[0.14em] uppercase">
+                <div data-anim="1" className="flex items-center gap-2 mb-2">
+                  <div className="w-7 h-[2px] bg-[#c2410c]/80" />
+                  <span className="text-[#c2410c] text-xs md:text-sm font-bold tracking-[0.14em] uppercase">
                     {slide.tagline}
                   </span>
-                  <div className="w-7 h-[2px] bg-[#c2410c]/60" />
+                  <div className="w-7 h-[2px] bg-[#c2410c]/80" />
                 </div>
 
                 {/* Title */}
-                <h1 data-anim="2" className="leading-[1.15] font-bold uppercase pb-1">
-                  <div className="text-[#1f471b] text-[26px] md:text-[38px] lg:text-[48px] tracking-tight">
+                <h1 
+                  data-anim="2" 
+                  className="text-3xl md:text-4xl lg:text-[54px] font-semibold leading-[1.06] font-poppins mb-3"
+                  style={{ textShadow: "1px 1px 2px rgba(0,0,0,0.4)" }}
+                >
+                  <div className="text-[#1b5e20] tracking-tight">
                     {slide.titlePrimary}
                   </div>
-                  <div className="text-[#7ca142] text-[26px] md:text-[38px] lg:text-[48px] tracking-tight mt-0.5">
+                  <div className="text-[#F6A919] tracking-tight mt-0.5">
                     {slide.titleSecondary}
                   </div>
                 </h1>
 
                 {/* Subtitle */}
-                <p data-anim="3" className="text-[#1f471b] font-medium text-[17px] md:text-[20px] lg:text-[23px] leading-[1.3]">
+                <p data-anim="3" className="text-[#131730] font-bold text-sm md:text-base lg:text-lg leading-relaxed mb-2 font-inter">
                   {slide.subtitle}
                 </p>
 
                 {/* Description */}
-                <p data-anim="4" className="text-black font-medium text-[14px] md:text-[16px] leading-relaxed max-w-[560px] mb-2">
+                <p data-anim="4" className="text-[#131730] font-bold text-sm md:text-[15px] lg:text-base leading-relaxed max-w-lg mb-4 md:mb-5 font-inter">
                   {slide.description}
                 </p>
 
                 {/* Date / Location */}
-                <div data-anim="5" className="flex flex-wrap items-center gap-x-4 gap-y-2 text-[#2b5825] font-bold text-[11px] sm:text-[12px] uppercase mb-1">
+                <div data-anim="5" className="flex flex-wrap items-center gap-3 sm:gap-4 text-[#4B1426] text-sm md:text-[15px] lg:text-base font-bold mb-1 md:mb-1.5">
                   <div className="flex items-center gap-2">
-                    <CalendarDays size={16} className="shrink-0" />
+                    <CalendarDays size={18} className="shrink-0 text-[#ea580c]" />
                     <span>{slide.date}</span>
                   </div>
-                  <span className="hidden sm:inline opacity-40">|</span>
+                  <div className="hidden sm:block w-px h-5 bg-[#4B1426]/30"></div>
                   <div className="flex items-center gap-2">
-                    <MapPin size={16} className="shrink-0" />
+                    <MapPin size={18} className="shrink-0 text-[#ea580c]" />
                     <span>{slide.location}</span>
                   </div>
                 </div>
 
                 {/* Buttons */}
-                <div data-anim="6" className="flex flex-nowrap items-center gap-2 sm:gap-3 pt-2 relative overflow-visible w-full overflow-x-auto hide-scrollbar pb-2">
-                  <Sparkle color="#f97316" shadow="#c2410c" style={{ top: "-12px", left: "10%", animationDelay: "0s" }} />
-                  <Sparkle color="#f97316" shadow="#c2410c" style={{ top: "-15px", left: "50%", animationDelay: "0.4s" }} />
-                  <Sparkle color="#f97316" shadow="#c2410c" style={{ top: "-10px", right: "10%", animationDelay: "0.8s" }} />
+                <div data-anim="6" className="flex flex-wrap sm:flex-nowrap items-center gap-2.5 pt-3 pb-2 relative overflow-visible w-full">
 
-                  {/* Book Your Stall — orange gradient matching why-exhibit */}
+                  {/* Book Your Stall */}
                   <div className="relative shrink-0">
+                    <Sparkle color="#ffc107" shadow="#ea580c" style={{ top: "-12px", left: "5%", animationDelay: "0s" }} />
+                    <Sparkle color="#ff9800" shadow="#c2410c" style={{ top: "-15px", left: "28%", animationDelay: "0.3s" }} />
+                    <Sparkle color="#ffdd00" shadow="#ea580c" style={{ top: "-13px", left: "50%", animationDelay: "0.6s" }} />
+                    <Sparkle color="#ff9800" shadow="#c2410c" style={{ top: "-15px", left: "72%", animationDelay: "0.9s" }} />
+                    <Sparkle color="#ffc107" shadow="#ea580c" style={{ top: "-12px", right: "5%", animationDelay: "1.2s" }} />
                     <Link
-                      href="/book-a-stand"
-                      className="group relative inline-flex items-center justify-start gap-2 px-5 py-2.5 rounded-lg font-semibold text-[11px] uppercase tracking-widest text-white transition-all active:scale-95 relative z-10 w-full sm:w-auto overflow-hidden"
+                      href="/registration/book-a-stand"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="group relative inline-flex items-center justify-start gap-2 px-4 py-2.5 md:px-5 md:py-2.5 rounded-lg font-bold text-xs uppercase tracking-widest text-white transition-all active:scale-95 relative z-10 w-full sm:w-auto overflow-hidden shadow-md"
                       style={{
                         background: "linear-gradient(135deg, #ea580c, #c2410c)",
                       }}
                     >
                       <span className="absolute inset-0 bg-white/10 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-500 skew-x-12" />
-                      Book Your Stall <ArrowRight size={14} className="group-hover:translate-x-1 transition-transform" />
+                      Book Your Stall <ArrowRight size={15} className="group-hover:translate-x-1 transition-transform" />
                     </Link>
                   </div>
 
-                  {/* Register as Visitor — blue styling matching Download Brochure */}
+                  {/* Register as Visitor */}
                   <div className="relative shrink-0">
-                    <Sparkle color="#3b82f6" shadow="#28396C" style={{ top: "-12px", left: "10%", animationDelay: "0.2s" }} />
-                    <Sparkle color="#3b82f6" shadow="#28396C" style={{ top: "-15px", left: "50%", animationDelay: "0.6s" }} />
-                    <Sparkle color="#3b82f6" shadow="#28396C" style={{ top: "-10px", right: "10%", animationDelay: "1s" }} />
+                    <Sparkle color="#4ade80" shadow="#1b5e20" style={{ top: "-12px", left: "10%", animationDelay: "0.2s" }} />
+                    <Sparkle color="#86efac" shadow="#16a34a" style={{ top: "-15px", left: "50%", animationDelay: "0.6s" }} />
+                    <Sparkle color="#4ade80" shadow="#1b5e20" style={{ top: "-12px", right: "10%", animationDelay: "1s" }} />
                     <Link
-                      href="/visitor-registration"
-                      className="blue-btn-hero text-white px-5 py-2.5 rounded-lg font-semibold text-[11px] uppercase tracking-widest flex items-center justify-start gap-2 transition-all active:scale-95 relative z-10 w-full sm:w-auto whitespace-nowrap"
+                      href="/registration/visitor-registration"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="blue-btn-hero text-white px-4 py-2.5 md:px-5 md:py-2.5 rounded-lg font-bold text-xs uppercase tracking-widest flex items-center justify-start gap-2 transition-all active:scale-95 relative z-10 w-full sm:w-auto whitespace-nowrap shadow-md"
                     >
-                      Register as Visitor <ArrowRight size={14} />
+                      Register as Visitor <ArrowRight size={15} />
                     </Link>
                   </div>
                 </div>
+
               </div>
             </div>
+
           ))}
-        </div>
+        </SectionContainer>
 
         {/* ── PROGRESS BAR ── */}
         <ProgressBar cur={cur} duration={SLIDE_DURATION} key={cur} />
 
         {/* ── DOTS ── */}
-        <div className="absolute bottom-3 left-1/2 -translate-x-1/2 z-30 flex gap-1.5">
+        <div className="absolute bottom-3 left-1/2 -translate-x-1/2 z-30 flex items-center gap-1">
           {SLIDES.map(({ id }) => (
             <button
               key={id}
               onClick={() => goTo(id)}
-              className={`rounded-full border border-[#2b5825]/30 transition-all duration-400 ${
-                cur === id ? "w-5 h-2 bg-[#2b5825] dot-active-hero" : "w-2 h-2 bg-[#2b5825]/40 hover:bg-[#2b5825]/70"
-              }`}
+              className="p-2 flex items-center justify-center cursor-pointer focus:outline-none"
               aria-label={`Go to slide ${id + 1}`}
-            />
+            >
+              <span
+                className={`block rounded-full border border-[#2b5825]/30 transition-all duration-400 ${
+                  cur === id ? "w-5 h-2 bg-[#2b5825] dot-active-hero" : "w-2 h-2 bg-[#2b5825]/40 hover:bg-[#2b5825]/70"
+                }`}
+              />
+            </button>
           ))}
         </div>
       </section>

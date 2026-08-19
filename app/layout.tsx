@@ -5,6 +5,7 @@ import Topbar from "./components/layout/Topbar";
 import Navbar from "./components/layout/Navbar";
 import Footer from "./components/layout/Footer";
 import SocialSidebar from "./components/layout/SocialSidebar";
+import SmoothScroll from "./components/SmoothScroll";
 
 const poppins = Poppins({
   subsets: ["latin"],
@@ -32,6 +33,11 @@ export const metadata: Metadata = {
     url: "https://bharatorganicexpo.com",
     siteName: "Bharat Organic Expo 2027",
     type: "website",
+  },
+  icons: {
+    icon: "/favicon.ico",
+    shortcut: "/favicon-16x16.png",
+    apple: "/apple-touch-icon.png",
   },
 };
 
@@ -90,6 +96,7 @@ export default function RootLayout({
           dangerouslySetInnerHTML={{ __html: JSON.stringify(orgSchema) }}
         />
       </head>
+<<<<<<< HEAD
       <body suppressHydrationWarning className="min-h-full flex flex-col font-inter text-[16px] md:text-[18px] leading-[1.6] overflow-x-clip w-full">
         <Topbar />
         <Navbar />
@@ -98,6 +105,18 @@ export default function RootLayout({
         </main>
         <Footer />
         <SocialSidebar />
+=======
+      <body suppressHydrationWarning className="min-h-full flex flex-col font-inter text-[16px] md:text-[18px] leading-[1.6] overflow-x-hidden w-full">
+        <SmoothScroll>
+          <Topbar />
+          <Navbar />
+          <main className="flex-grow overflow-x-hidden w-full">
+            {children}
+          </main>
+          <Footer />
+          <SocialSidebar />
+        </SmoothScroll>
+>>>>>>> 467be4d3e8a1afbeebaa621db28932406bf79535
       </body>
     </html>
   );

@@ -1,42 +1,98 @@
 "use client";
-
-import { ArrowRight, MapPin, Phone, Mail } from "lucide-react";
-import contactBgImg from "../../assets/contact/contact.png";
+import React from 'react';
+import Image from 'next/image';
+import { MapPin, Mail, Phone, Clock, Send } from 'lucide-react';
+import contactbg from '@/app/assets/banner/contactbgog.webp';
+import SectionContainer from '@/app/components/layout/SectionContainer';
+import { SITE_CONFIG } from '@/app/constants/siteConfig';
 
 const ContactHero = () => {
+  const defaultContactInfo = [
+    {
+      icon: <MapPin size={20} className="text-[#032e1c]" />,
+      title: 'Visit Us',
+      lines: ['Pragati Maidan,', 'New Delhi - 110001, India']
+    },
+    {
+      icon: <Mail size={20} className="text-[#032e1c]" />,
+      title: 'Email Us',
+      lines: [SITE_CONFIG.email, 'info@namogangewellness.com']
+    },
+    {
+      icon: <Phone size={20} className="text-[#032e1c]" />,
+      title: 'Call Us',
+      lines: [SITE_CONFIG.phone, '+91 11 1234 5678']
+    },
+    {
+      icon: <Clock size={20} className="text-[#032e1c]" />,
+      title: 'Office Hours',
+      lines: ['Mon - Sat: 9:00 AM - 6:00 PM', 'Sunday: Closed']
+    }
+  ];
+
+  const contactInfo = defaultContactInfo;
+
   return (
-    <section className="relative w-full min-h-[350px] md:min-h-[500px] flex items-center bg-[#0a1f12] overflow-hidden">
-      {/* Background Image */}
-      <img
-        src={contactBgImg.src}
-        alt="Contact Us Background"
-        className="absolute inset-0 w-full h-full object-cover z-0 opacity-80"
-      />
-      {/* <div className="absolute inset-0 z-0 bg-gradient-to-r from-[#051c0e] via-[#051c0e]/80 to-transparent"></div> */}
+    <section className="relative w-full pb-20 pt-0 bg-[#fbfcf7]">
+      {/* Hero Banner Section */}
+      <div className="w-full h-[320px] md:h-[420px] relative overflow-hidden flex items-center">
+        {/* Background Image */}
+        <div
+          className="absolute inset-0 z-0 bg-no-repeat bg-cover bg-right md:bg-center"
+          style={{ backgroundImage: `url(${(contactbg as any)?.src || contactbg})` }}
+        >
+        </div>
 
-      <div className="max-w-7xl w-full mx-auto px-4 md:px-8 relative z-10 py-16 md:py-0">
-        <div className="flex flex-col md:flex-row items-center justify-between gap-10">
+        {/* Hero Content */}
+        <SectionContainer className="relative z-10 w-full">
+          <div className="max-w-xl -mt-4 md:-mt-8 ml-4 md:ml-8">
+            {/* Badge */}
+            <div className="inline-flex items-center gap-2 bg-[#e9f0cd] text-[#032e1c] px-4 py-1.5 rounded-full text-xs font-bold tracking-wider mb-3 border border-[#dce3ca]">
+              <Send size={14} className="-rotate-45" /> CONTACT US
+            </div>
 
-          {/* Left Content */}
-          <div className="w-full md:w-3/5 text-white">
-            <h1 className="text-[30px] md:text-[40px] lg:text-[46px] xl:text-[52px] font-bold leading-[1.1] mb-4 drop-shadow-xl [text-shadow:_0_4px_12px_rgba(0,0,0,0.6)]">
-              Let's Grow <br /> Organic Together
+            {/* Heading */}
+            <h1 
+              className="text-3xl md:text-4xl lg:text-6xl font-[600] text-[#03221c] leading-tight mb-4"
+              style={{ fontFamily: "'Playfair Display', serif" }}
+            >
+              Let's Grow <br /><span className="text-[#fe7c0c]">Organic</span> Together
             </h1>
-            <p className="text-white text-[16px] md:text-[18px] font-normal leading-[1.6] max-w-xl mb-8 drop-shadow-lg [text-shadow:_0_2px_8px_rgba(0,0,0,0.8)]">
+
+            {/* Decoration line */}
+            <svg width="60" height="10" viewBox="0 0 60 10" className="mb-4" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M0 5C10 -2 20 12 30 5C40 -2 50 12 60 5" stroke="#fe7c0c" strokeWidth="2" strokeLinecap="round" />
+            </svg>
+
+            {/* Subtitle */}
+            <p className="text-black text-sm md:text-base max-w-md leading-relaxed">
               We're here to answer your questions, help exhibitors, guide visitors, and support partners.
             </p>
-            <div className="flex flex-wrap items-center gap-4">
-              <button className="bg-[#3b8c2a] hover:bg-[#aae639] hover:text-[#0b2912] text-white px-6 py-3 rounded-md text-[15px] md:text-[16px] font-bold uppercase tracking-wider transition-all duration-300 flex items-center gap-2 group shadow-[0_4px_14px_rgba(0,0,0,0.3)] min-h-[44px]">
-                CONTACT US
-                <ArrowRight size={16} className="group-hover:translate-x-1 transition-transform" />
-              </button>
-              <button className="bg-black/30 backdrop-blur-sm border-2 border-white hover:bg-white hover:text-black text-white px-6 py-3 rounded-md text-[15px] md:text-[16px] font-bold uppercase tracking-wider transition-all duration-300 shadow-[0_4px_14px_rgba(0,0,0,0.3)] min-h-[44px]">
-                BOOK YOUR STALL
-              </button>
-            </div>
           </div>
-        </div>
+        </SectionContainer>
       </div>
+
+      {/* Contact Info Bar */}
+      <SectionContainer className="relative z-20 -mt-6 md:-mt-8">
+        <div className="bg-[#fefefe] rounded-2xl shadow-lg border border-gray-100 py-4 px-6 md:py-5 md:px-8 flex flex-col md:flex-row items-center justify-between gap-6 md:gap-0">
+
+          {contactInfo.map((info, idx) => (
+            <div key={idx} className="flex items-start justify-start md:justify-center gap-3 xl:gap-4 flex-1 w-full border-b md:border-b-0 md:border-r border-gray-200 pb-4 md:pb-0 md:px-4 first:pl-0 last:border-0 last:pb-0 md:last:pr-0">
+              <div className="w-10 h-10 xl:w-12 xl:h-12 rounded-full bg-[#e9f0cd] flex items-center justify-center shrink-0 border border-[#dce3ca]">
+                {info.icon}
+              </div>
+              <div className="flex flex-col">
+                <h4 className="font-[600] text-[#032e1c] text-sm mb-1">{info.title}</h4>
+                {info.lines.map((line, i) => (
+                  <p key={i} className="text-black text-[11px] xl:text-xs font-medium leading-tight">{line}</p>
+                ))}
+              </div>
+            </div>
+          ))}
+
+        </div>
+      </SectionContainer>
+
     </section>
   );
 };

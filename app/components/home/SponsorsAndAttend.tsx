@@ -1,6 +1,7 @@
 "use client";
 
 import React from 'react';
+import Link from 'next/link';
 import { motion } from 'framer-motion';
 import {
   Lightbulb, Handshake, TrendingUp, BookOpen, PackageSearch, Zap,
@@ -61,7 +62,7 @@ const WhoShouldAttendItems = [
 const SponsorsAndAttend = () => {
   return (
     <>
-      <section className="w-full relative z-10 py-2 md:py-4 lg:py-4 overflow-hidden bg-[#EFF7EE]">
+      <section className="w-full relative z-10 py-2 md:py-6 lg:py-6 overflow-hidden bg-[#EFF7EE]">
         <div className="w-full px-4 md:px-11 grid grid-cols-1 xl:grid-cols-12 gap-2 xl:gap-4 items-start">
 
           {/* LEFT: WHY ATTEND */}
@@ -72,15 +73,15 @@ const SponsorsAndAttend = () => {
             transition={{ duration: 0.7, delay: 0.1 }}
             className="xl:col-span-5"
           >
-            <div className="flex flex-col md:flex-row items-start gap-1 mb-1 text-left">
+            <div className="flex flex-col md:flex-row items-start gap-1 mb-2 text-left">
               <div className="flex items-center gap-1.5">
-                <h2 className="text-[28px] md:text-[34px] lg:text-[40px] font-bold text-[#1a1a1a] tracking-tight leading-[1.2]">
+                <h2 className="text-[18px] md:text-[24px] lg:text-[30px] font-semibold text-[#1a1a1a] tracking-tight leading-[1.2]">
                   WHY <span className="bg-gradient-to-r from-[#00643b] to-[#f58220] bg-clip-text text-transparent">ATTEND?</span>
                 </h2>
                 <Leaf className="w-6 h-6 md:w-8 md:h-8 text-[#f58220] fill-[#f58220]" />
               </div>
             </div>
-            <p className="text-[16px] md:text-[18px] text-gray-700 font-normal mb-2 leading-[1.6] max-w-[500px] text-left">
+            <p className="text-[16px] md:text-[18px] text-gray-700 font-normal mb-4 leading-[1.6] max-w-[500px] text-left">
               Explore innovations, build connections and gain insights that drive better health and stronger businesses.
             </p>
 
@@ -103,7 +104,7 @@ const SponsorsAndAttend = () => {
                       {React.cloneElement(item.icon as React.ReactElement<{ className?: string }>, { className: 'w-5 h-5 text-[#f58220]' })}
                     </div>
                     <div className="flex-1">
-                      <h3 className="text-[16px] md:text-[18px] font-bold text-[#00643b] mb-1 leading-none pt-1.5">{item.title}</h3>
+                      <h3 className="text-[16px] md:text-[18px] font-semibold text-[#00643b] mb-1 leading-none pt-1.5">{item.title}</h3>
                       <p className="text-[14px] md:text-[15px] text-gray-600 font-normal leading-[1.6]">{item.desc}</p>
                     </div>
                   </div>
@@ -116,7 +117,7 @@ const SponsorsAndAttend = () => {
                       {React.cloneElement(item.icon as React.ReactElement<{ className?: string }>, { className: 'w-5 h-5 text-[#f58220]' })}
                     </div>
                     <div className="flex-1">
-                      <h3 className="text-[16px] md:text-[18px] font-bold text-[#00643b] mb-1 leading-none pt-1.5">{item.title}</h3>
+                      <h3 className="text-[16px] md:text-[18px] font-semibold text-[#00643b] mb-1 leading-none pt-1.5">{item.title}</h3>
                       <p className="text-[14px] md:text-[15px] text-gray-600 font-normal leading-[1.6]">{item.desc}</p>
                     </div>
                   </div>
@@ -131,7 +132,7 @@ const SponsorsAndAttend = () => {
                       {React.cloneElement(item.icon as React.ReactElement<{ className?: string }>, { className: 'w-5 h-5 text-[#f58220]' })}
                     </div>
                     <div className="flex-1">
-                      <h3 className="text-[16px] md:text-[18px] font-bold text-[#00643b] mb-1 leading-none pt-1.5">{item.title}</h3>
+                      <h3 className="text-[16px] md:text-[18px] font-semibold text-[#00643b] mb-1 leading-none pt-1.5">{item.title}</h3>
                       <p className="text-[14px] md:text-[15px] text-gray-600 font-normal leading-[1.6]">{item.desc}</p>
                     </div>
                   </div>
@@ -144,7 +145,7 @@ const SponsorsAndAttend = () => {
                       {React.cloneElement(item.icon as React.ReactElement<{ className?: string }>, { className: 'w-5 h-5 text-[#f58220]' })}
                     </div>
                     <div className="flex-1">
-                      <h3 className="text-[16px] md:text-[18px] font-bold text-[#00643b] mb-1 leading-none pt-1.5">{item.title}</h3>
+                      <h3 className="text-[16px] md:text-[18px] font-semibold text-[#00643b] mb-1 leading-none pt-1.5">{item.title}</h3>
                       <p className="text-[14px] md:text-[15px] text-gray-600 font-normal leading-[1.6]">{item.desc}</p>
                     </div>
                   </div>
@@ -159,7 +160,7 @@ const SponsorsAndAttend = () => {
                       {React.cloneElement(item.icon as React.ReactElement<{ className?: string }>, { className: 'w-5 h-5 text-[#f58220]' })}
                     </div>
                     <div className="flex-1">
-                      <h3 className="text-[16px] md:text-[18px] font-bold text-[#00643b] mb-1 leading-none pt-1.5">{item.title}</h3>
+                      <h3 className="text-[16px] md:text-[18px] font-semibold text-[#00643b] mb-1 leading-none pt-1.5">{item.title}</h3>
                       <p className="text-[14px] md:text-[15px] text-gray-600 font-normal leading-[1.6]">{item.desc}</p>
                     </div>
                   </div>
@@ -172,7 +173,7 @@ const SponsorsAndAttend = () => {
                       {React.cloneElement(item.icon as React.ReactElement<{ className?: string }>, { className: 'w-5 h-5 text-[#f58220]' })}
                     </div>
                     <div className="flex-1">
-                      <h3 className="text-[16px] md:text-[18px] font-bold text-[#00643b] mb-1 leading-none pt-1.5">{item.title}</h3>
+                      <h3 className="text-[16px] md:text-[18px] font-semibold text-[#00643b] mb-1 leading-none pt-1.5">{item.title}</h3>
                       <p className="text-[14px] md:text-[15px] text-gray-600 font-normal leading-[1.6]">{item.desc}</p>
                     </div>
                   </div>
@@ -254,17 +255,17 @@ const SponsorsAndAttend = () => {
               <div className="bg-[#3b8c2a] text-white p-2 flex items-center justify-center relative">
                 <div className="flex items-center gap-2">
                   <Users className="w-4 h-4 text-[#f58220]" />
-                  <span className="text-[16px] md:text-[18px] font-bold uppercase tracking-wider">WHO SHOULD ATTEND?</span>
+                  <span className="text-[16px] md:text-[18px] font-semibold uppercase tracking-wider">WHO SHOULD ATTEND?</span>
                 </div>
               </div>
 
               <div className="px-3 py-0 md:py-0">
                 {WhoShouldAttendItems.map((item, index) => (
-                  <div key={index} className="flex items-center gap-3 py-[3px] border-b border-gray-100 last:border-0 group cursor-default">
-                    <div className="w-5 h-5 rounded bg-[#fff8f2] flex items-center justify-center text-[#f58220] group-hover:bg-[#f58220] group-hover:text-white transition-all duration-300 border border-[#feeddf] shrink-0">
-                      {React.cloneElement(item.icon as React.ReactElement<{ className?: string }>, { className: 'w-3 h-3' })}
+                  <div key={index} className="flex items-center gap-3 py-1 border-b border-gray-100 last:border-0 group cursor-default">
+                    <div className="w-6 h-6 rounded bg-[#fff8f2] flex items-center justify-center text-[#f58220] group-hover:bg-[#f58220] group-hover:text-white transition-all duration-300 border border-[#feeddf] shrink-0">
+                      {React.cloneElement(item.icon as React.ReactElement<{ className?: string }>, { className: 'w-3.5 h-3.5' })}
                     </div>
-                    <span className="text-[13px] md:text-[14px] text-gray-700 font-bold group-hover:text-[#00643b] transition-colors leading-[1.4]">{item.label}</span>
+                    <span className="text-[13px] md:text-[14px] text-gray-700 font-medium group-hover:text-[#00643b] transition-colors leading-[1.5]">{item.label}</span>
                   </div>
                 ))}
               </div>
@@ -274,7 +275,7 @@ const SponsorsAndAttend = () => {
                 <div className="w-6 h-6 bg-[#f58220] rounded-full flex items-center justify-center shrink-0 shadow-sm">
                   <Star className="w-3.5 h-3.5 text-white" />
                 </div>
-                <p className="text-[14px] text-[#00643b] font-bold leading-[1.4]">
+                <p className="text-[14px] text-[#00643b] font-semibold leading-[1.4]">
                   Whether you're sourcing, learning or networking — this is the place to be!
                 </p>
               </div>
@@ -284,79 +285,80 @@ const SponsorsAndAttend = () => {
         </div>
       </section>
 
-      {/* NEW FULL WIDTH BAND */}
-      <section className="w-full bg-[#3b8c2a] relative z-20 py-1.5 lg:py-2 border-y border-[#164429] shadow-2xl overflow-hidden">
-        {/* Background Sparkles */}
-        <Sparkles className="absolute top-2 left-10 w-4 h-4 text-white opacity-40 animate-pulse" />
-        <Sparkles className="absolute bottom-2 left-1/4 w-6 h-6 text-white opacity-40 animate-pulse delay-300" />
-        <Sparkles className="absolute top-3 right-1/3 w-3 h-3 text-white opacity-40 animate-pulse delay-700" />
-        <Sparkles className="absolute bottom-3 right-10 w-5 h-5 text-white opacity-40 animate-pulse delay-500" />
+      {/* PREMIUM FULL WIDTH BAND */}
+      <section className="w-full bg-[#3b8c2a] relative z-20 py-1 lg:py-2 border-y border-[#F2B40E]/20 shadow-[0_10px_40px_rgba(0,0,0,0.15)] overflow-hidden">
+        {/* Subtle Background Glow */}
+        <div className="absolute top-1/2 left-1/4 w-96 h-96 bg-[#3b8c2a]/20 rounded-full blur-[100px] -translate-y-1/2 pointer-events-none"></div>
+        <div className="absolute top-1/2 right-1/4 w-96 h-96 bg-[#F2B40E]/10 rounded-full blur-[100px] -translate-y-1/2 pointer-events-none"></div>
 
-        {/* Abstract Shape Overlay */}
-        <div className="absolute -top-10 -left-10 w-48 h-48 bg-white opacity-10 rounded-full blur-2xl pointer-events-none"></div>
-        <div className="absolute -bottom-10 -right-10 w-48 h-48 bg-white opacity-10 rounded-full blur-2xl pointer-events-none"></div>
-
-        <div className="w-full px-4 md:px-8 flex flex-col xl:flex-row items-center justify-between gap-4 relative z-10 w-full">
+        <div className=" px-4 md:px-11 flex flex-col xl:flex-row items-center justify-between gap-6 xl:gap-4 relative z-10">
 
           {/* Item 1: Date */}
-          <div className="flex items-center gap-2 group">
-            <div className="w-8 h-8 rounded-lg bg-white flex items-center justify-center text-teal-600 shadow-md group-hover:scale-105 transition-transform duration-300 shrink-0">
-              <CalendarDays className="w-4 h-4" strokeWidth={2.5} />
+          <div className="flex items-center gap-3 group">
+            <div className="w-10 h-10 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-[#F2B40E] shadow-sm group-hover:bg-[#F2B40E] group-hover:text-[#0b2912] transition-colors duration-300 shrink-0">
+              <CalendarDays className="w-5 h-5" strokeWidth={2} />
             </div>
             <div className="flex flex-col text-left">
-              <span className="text-[14px] lg:text-[15px] font-black text-white leading-tight">19 &ndash; 21</span>
-              <span className="text-[11px] lg:text-[12px] font-bold text-teal-50 uppercase tracking-wider">FEBRUARY 2027</span>
+              <span className="text-[14px] lg:text-[16px] font-bold text-white leading-none mb-1">19 &ndash; 21</span>
+              <span className="text-[11px] lg:text-[12px] font-semibold text-white/60 uppercase tracking-widest leading-none">FEBRUARY 2027</span>
             </div>
           </div>
 
-          <div className="hidden xl:block w-[1px] h-6 bg-white/40"></div>
+          <div className="hidden xl:block w-[1px] h-8 bg-white/10"></div>
 
           {/* Item 2: Location */}
-          <div className="flex items-center gap-2 group">
-            <div className="w-8 h-8 rounded-lg bg-white flex items-center justify-center text-teal-600 shadow-md group-hover:scale-105 transition-transform duration-300 shrink-0">
-              <MapPin className="w-4 h-4" strokeWidth={2.5} />
+          <div className="flex items-center gap-3 group">
+            <div className="w-10 h-10 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-[#F2B40E] shadow-sm group-hover:bg-[#F2B40E] group-hover:text-[#0b2912] transition-colors duration-300 shrink-0">
+              <MapPin className="w-5 h-5" strokeWidth={2} />
             </div>
             <div className="flex flex-col text-left">
-              <span className="text-[14px] lg:text-[15px] font-black text-white leading-tight uppercase">PRAGATI MAIDAN</span>
-              <span className="text-[11px] lg:text-[12px] font-bold text-teal-50 uppercase tracking-wider">NEW DELHI, INDIA</span>
+              <span className="text-[14px] lg:text-[16px] font-medium text-white leading-none mb-1 uppercase">PRAGATI MAIDAN</span>
+              <span className="text-[11px] lg:text-[12px] font-semibold text-white/60 uppercase tracking-widest leading-none">NEW DELHI, INDIA</span>
             </div>
           </div>
 
-          <div className="hidden xl:block w-[1px] h-6 bg-white/40"></div>
+          <div className="hidden xl:block w-[1px] h-8 bg-white/10"></div>
 
           {/* Item 3: Global Edition */}
-          <div className="flex items-center gap-2 group">
-            <div className="w-8 h-8 rounded-lg bg-[#f58220] flex items-center justify-center text-white shadow-md shadow-[#f58220]/30 group-hover:scale-105 transition-transform duration-300 shrink-0">
-              <Globe className="w-4 h-4" strokeWidth={2.5} />
+          <div className="flex items-center gap-3 group">
+            <div className="w-10 h-10 rounded-full bg-[#F2B40E]/10 border border-[#F2B40E]/30 flex items-center justify-center text-[#F2B40E] shadow-sm group-hover:bg-[#F2B40E] group-hover:text-[#0b2912] transition-colors duration-300 shrink-0">
+              <Globe className="w-5 h-5" strokeWidth={2} />
             </div>
             <div className="flex flex-col text-left">
-              <span className="text-[14px] lg:text-[15px] font-black text-white leading-tight uppercase">GLOBAL EDITION</span>
-              <span className="text-[10px] lg:text-[11px] font-bold text-teal-50 uppercase leading-tight tracking-wide">CONNECTING THE WORLD<br />OF ORGANIC & NATURAL</span>
+              <span className="text-[14px] lg:text-[16px] font-medium text-white leading-none mb-1 uppercase">GLOBAL EDITION</span>
+              <span className="text-[10px] lg:text-[11px] font-semibold text-[#F2B40E] uppercase tracking-wider leading-none">CONNECTING THE WORLD<br />OF ORGANIC & NATURAL</span>
             </div>
           </div>
 
-          <div className="hidden xl:block w-[1px] h-6 bg-white/40"></div>
+          <div className="hidden xl:block w-[1px] h-8 bg-white/10"></div>
 
           {/* Trophy Info */}
-          <div className="flex items-center gap-2 group">
-            <Trophy className="w-6 h-6 text-yellow-300 group-hover:scale-110 transition-transform duration-300 drop-shadow-[0_0_8px_rgba(250,204,21,0.6)] shrink-0" strokeWidth={2} />
+          <div className="flex items-center gap-3 group">
+            <div className="w-10 h-10 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-[#F2B40E] shadow-sm group-hover:bg-[#F2B40E] group-hover:text-[#0b2912] transition-colors duration-300 shrink-0">
+              <Trophy className="w-5 h-5" strokeWidth={2} />
+            </div>
             <div className="flex flex-col text-left">
-              <span className="text-[12px] lg:text-[13px] font-bold text-white leading-tight uppercase">BE PART OF INDIA'S BIGGEST</span>
-              <span className="text-[13px] lg:text-[14px] font-black text-[#f58220] uppercase leading-tight">ORGANIC & NATURAL SHOW!</span>
+              <span className="text-[12px] lg:text-[13px] font-semibold text-white/80 leading-none mb-1 uppercase tracking-wide">BE PART OF INDIA'S BIGGEST</span>
+              <span className="text-[13px] lg:text-[15px] font-semibold text-[#F2B40E] uppercase leading-none">ORGANIC & NATURAL SHOW!</span>
             </div>
           </div>
 
-          <div className="hidden xl:block w-[1px] h-6 bg-white/40"></div>
+          <div className="hidden xl:block w-[1px] h-8 bg-white/10"></div>
 
           {/* Register Button */}
-          <button className="flex items-center gap-3 bg-[#F2B40E] hover:bg-[#0b2912] px-6 py-2 rounded-full shadow-[0_0_15px_rgba(242,180,14,0.4)] hover:shadow-[0_0_20px_rgba(11,41,18,0.5)] transition-all duration-300 transform hover:scale-105 shrink-0 border-2 border-[#0b2912] group min-h-[44px]">
-            <span className="text-[#0b2912] group-hover:text-white font-bold text-[14px] lg:text-[15px] tracking-wide uppercase transition-colors">
+          <Link
+            href="/registration/visitor-registration"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="flex items-center gap-2 bg-gradient-to-r from-[#F2B40E] to-[#f58220] hover:from-[#f58220] hover:to-[#F2B40E] px-6 py-2.5 rounded-full shadow-[0_4px_15px_rgba(242,180,14,0.3)] transition-all duration-300 transform hover:-translate-y-0.5 shrink-0 group"
+          >
+            <span className="text-[#0b2912] font-semibold text-[13px] lg:text-[14px] tracking-widest uppercase">
               REGISTER AS VISITOR!
             </span>
-            <div className="w-5 h-5 bg-[#0b2912] rounded-full flex items-center justify-center text-[#F2B40E] group-hover:bg-white group-hover:text-[#0b2912] shrink-0 transition-colors">
-              <ArrowRight className="w-3 h-3" strokeWidth={3} />
+            <div className="w-6 h-6 bg-[#0b2912]/10 rounded-full flex items-center justify-center text-[#0b2912] group-hover:bg-[#0b2912] group-hover:text-[#F2B40E] transition-colors">
+              <ArrowRight className="w-3.5 h-3.5" strokeWidth={3} />
             </div>
-          </button>
+          </Link>
 
         </div>
       </section>
