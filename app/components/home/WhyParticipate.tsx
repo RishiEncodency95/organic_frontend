@@ -169,7 +169,8 @@ const WhyParticipate = () => {
 
               <a
                 href="/download/invited card.pdf"
-                download="invited card.pdf"
+                target="_blank"
+                rel="noopener noreferrer"
                 className="blue-btn-wp flex items-center gap-1.5 px-4 h-8 rounded-lg relative z-10 hover:scale-[1.02] transition-transform"
               >
                 <FileDown className="w-[14px] h-[14px] text-white shrink-0" />
