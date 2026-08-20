@@ -49,7 +49,7 @@ export default function WhyParticipateSection() {
         {/* Heading */}
         <h2
           id="why-participate-heading"
-          className="mt-4 max-w-4xl text-balance text-center text-3xl font-semibold leading-tight text-slate-900 sm:text-4xl md:text-5xl lg:text-6xl"
+          className="mt-4 max-w-4xl text-balance text-center text-2xl font-semibold leading-tight text-slate-900 sm:text-3xl md:text-4xl"
         >
           More Than an{" "}
           <span className="relative inline-block text-emerald-700">

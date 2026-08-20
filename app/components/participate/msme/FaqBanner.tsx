@@ -109,7 +109,7 @@ export default function FAQBanner() {
               <span className="hidden h-px w-16 bg-green-700/40 sm:block" aria-hidden="true" />
               <h2
                 id="faq-heading"
-                className="text-4xl font-semibold tracking-tight text-green-900 sm:text-5xl lg:text-6xl"
+                className="text-3xl font-semibold tracking-tight text-green-900 sm:text-4xl"
               >
                 FAQ
               </h2>
