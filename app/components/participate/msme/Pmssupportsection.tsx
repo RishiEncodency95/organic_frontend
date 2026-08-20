@@ -81,9 +81,9 @@ export default function PmsSupportSection() {
   return (
     <section
       aria-labelledby="pms-support-heading"
-      className="relative w-full bg-gradient-to-br from-green-50 via-emerald-50/60 to-white px-4 py-10 sm:px-6 sm:py-14 lg:px-10 lg:py-16"
+      className="relative w-full bg-gradient-to-br from-green-50 via-emerald-50/60 to-white px-4 py-10 md:px-11 sm:py-14 lg:py-16"
     >
-      <div className="mx-auto flex max-w-7xl flex-col gap-8 sm:gap-10 lg:gap-12">
+      <div className="mx-auto flex w-full flex-col gap-8 sm:gap-10 lg:gap-12">
         {/* ---------- Top block: heading + hero image ---------- */}
         <div className="grid grid-cols-1 gap-8 lg:grid-cols-2 lg:items-center lg:gap-10">
           {/* Left: heading + intro + highlight cards */}

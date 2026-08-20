@@ -81,8 +81,8 @@ const FEATURES: Feature[] = [
 
 export default function ReasonToVisitBanner() {
   return (
-    <section className="relative w-full overflow-hidden bg-[#F8F6F0] px-4 py-10 sm:px-8 sm:py-14 lg:px-12">
-      <div className="mx-auto max-w-7xl">
+    <section className="relative w-full overflow-hidden bg-[#F8F6F0] px-4 py-10 md:px-11 sm:py-14">
+      <div className="mx-auto w-full">
         {/* ===================== TOP: heading + photo collage ===================== */}
         <div className="grid grid-cols-1 items-center gap-10 lg:grid-cols-2 lg:gap-8">
           {/* ---------- Left: copy ---------- */}

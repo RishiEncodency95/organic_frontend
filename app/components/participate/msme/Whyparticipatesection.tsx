@@ -36,9 +36,9 @@ export default function WhyParticipateSection() {
   return (
     <section
       aria-labelledby="why-participate-heading"
-      className="relative w-full overflow-hidden px-4 py-14 sm:px-8 sm:py-20"
+      className="relative w-full overflow-hidden px-4 py-14 md:px-11 sm:py-20"
     >
-      <div className="relative mx-auto flex max-w-6xl flex-col items-center">
+      <div className="relative mx-auto flex w-full flex-col items-center">
         {/* Eyebrow badge */}
         <span className="inline-flex items-center gap-2 rounded-full border border-emerald-200 bg-white/80 px-5 py-2 text-xs font-bold tracking-widest text-emerald-800 shadow-sm sm:text-sm">
           <Leaf className="h-4 w-4 text-emerald-600" aria-hidden="true" />

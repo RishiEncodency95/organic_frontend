@@ -70,9 +70,9 @@ export default function WhatsNextBanner() {
   return (
     <section
       aria-labelledby="whats-next-heading"
-      className="w-full py-10 sm:py-14 lg:py-16"
+      className="w-full px-4 py-10 md:px-11 sm:py-14 lg:py-16"
     >
-      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+      <div className="mx-auto w-full">
         {/* ============ TOP: Heading+Intro  |  Logo+Benefits ============ */}
         <div className="grid grid-cols-1 gap-8 lg:grid-cols-12 lg:gap-10">
           {/* Left: heading + intro copy */}

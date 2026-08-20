@@ -17,7 +17,7 @@ export default function MsmePmsBanner({
       aria-labelledby="msme-pms-heading"
       className="relative w-full overflow-hidden bg-[#F8F6EF]"
     >
-      <div className="mx-auto grid max-w-7xl grid-cols-1 items-center gap-10 px-4 py-10 sm:px-6 sm:py-14 lg:grid-cols-2 lg:gap-8 lg:px-10 lg:py-16">
+      <div className="mx-auto grid w-full grid-cols-1 items-center gap-10 px-4 py-10 md:px-11 sm:py-14 lg:grid-cols-2 lg:gap-8 lg:py-16">
         {/* ---------------- Left column ---------------- */}
         <div className="flex flex-col">
           {/* Eyebrow */}

@@ -67,7 +67,7 @@ export default function FAQBanner() {
   return (
     <section
       aria-labelledby="faq-heading"
-      className="relative w-full overflow-hidden bg-gradient-to-b from-green-50/60 to-white py-12 sm:py-16 lg:py-20"
+      className="relative w-full overflow-hidden bg-gradient-to-b from-green-50/60 to-white px-4 py-12 md:px-11 sm:py-16 lg:py-20"
     >
       {/* Decorative leaf accent, top right */}
       <Leaf
@@ -76,7 +76,7 @@ export default function FAQBanner() {
         aria-hidden="true"
       />
 
-      <div className="mx-auto grid max-w-7xl grid-cols-1 items-center gap-10 px-4 sm:px-6 lg:grid-cols-[minmax(0,420px)_minmax(0,1fr)] lg:gap-12 lg:px-8">
+      <div className="mx-auto grid w-full grid-cols-1 items-center gap-10 lg:grid-cols-[minmax(0,420px)_minmax(0,1fr)] lg:gap-12">
         {/* Left: image panel — bg image is supplied separately, this is just the frame */}
         <div className="relative mx-auto w-full max-w-md lg:mx-0 lg:max-w-none">
           <div

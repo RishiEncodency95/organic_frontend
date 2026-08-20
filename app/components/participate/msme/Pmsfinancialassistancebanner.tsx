@@ -87,6 +87,7 @@ const PMSFinancialAssistanceBanner: FC = () => {
       className="relative w-full overflow-hidden border-y-4 border-[#0B5D34] bg-[#FAF8F2]"
     >
       {/* ============ Hero ============ */}
+      <div className="mx-auto w-full px-4 md:px-11">
       <div className="relative flex flex-col lg:flex-row">
         {/* Left: hero photo placeholder + empowering badge */}
         <div
@@ -215,9 +216,10 @@ const PMSFinancialAssistanceBanner: FC = () => {
           </div>
         </div>
       </div>
+      </div>
 
       {/* ============ Footer strip ============ */}
-      <div className="relative px-4 pb-8 pt-2 sm:px-8 lg:px-14">
+      <div className="relative px-4 pb-8 pt-2 md:px-11">
         <div className="relative overflow-hidden rounded-2xl bg-[#F1EEE3]">
           <div className="grid grid-cols-1 items-center gap-6 px-6 py-8 sm:px-10 sm:py-9 md:grid-cols-[1fr_auto_1fr_auto] md:gap-8">
             {/* Important note */}

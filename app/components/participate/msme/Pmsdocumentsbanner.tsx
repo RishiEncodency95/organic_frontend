@@ -103,7 +103,7 @@ export default function PMSDocumentsBanner() {
   return (
     <section
       aria-labelledby="pms-documents-heading"
-      className="relative isolate overflow-hidden bg-white px-4 py-12 sm:px-6 sm:py-16 lg:px-10 lg:py-20"
+      className="relative isolate overflow-hidden bg-white px-4 py-12 md:px-11 sm:py-16 lg:py-20"
     >
       {/* Header */}
       <header className="relative mx-auto mb-10 max-w-3xl text-center sm:mb-14">

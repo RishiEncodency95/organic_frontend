@@ -48,9 +48,9 @@ export default function MsmePmsScheme() {
   return (
     <section
       aria-labelledby="msme-pms-heading"
-      className="w-full py-14 px-4 sm:px-6 lg:px-10"
+      className="w-full py-14 px-4 md:px-11"
     >
-      <div className="mx-auto max-w-6xl">
+      <div className="mx-auto w-full">
         {/* Eyebrow */}
         <div className="mb-6 flex items-center justify-center gap-3 sm:gap-4">
           <span className="h-px flex-1 max-w-[180px] sm:max-w-[320px] bg-gradient-to-r from-transparent via-amber-600/60 to-amber-600/60" />

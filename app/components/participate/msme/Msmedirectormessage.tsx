@@ -36,9 +36,9 @@ export default function OfficialMessageBanner({
   return (
     <section
       aria-labelledby="msme-director-message-heading"
-      className="w-full bg-[#faf6ee] px-4 py-12 sm:px-6 sm:py-16 lg:px-10"
+      className="w-full bg-[#faf6ee] px-4 py-12 md:px-11 sm:py-16"
     >
-      <div className="mx-auto max-w-6xl">
+      <div className="mx-auto w-full">
         {/* Eyebrow */}
         <div className="mb-4 flex items-center justify-center gap-3 sm:mb-5">
           <span className="h-px w-8 bg-[#2f6b3a]/40 sm:w-14" aria-hidden="true" />
