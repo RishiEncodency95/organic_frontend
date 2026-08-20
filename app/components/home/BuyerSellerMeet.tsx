@@ -86,7 +86,7 @@ const BuyerSellerMeet = () => {
 
               {/* Title */}
               <div className="flex items-center gap-2 mb-2">
-                <h2 
+                <h2
                   className="text-[18px] md:text-[28px] lg:text-[32px] font-semibold leading-[1.2] text-[#1a1a1a] uppercase tracking-tight font-poppins"
                   style={{ textShadow: "1px 1px 2px rgba(0,0,0,0.4)" }}
                 >
@@ -171,7 +171,7 @@ const BuyerSellerMeet = () => {
               {[
                 { icon: Users, val: '8,000+', label: 'TRADE VISITORS' },
                 { icon: Store, val: '200+', label: 'ORGANIC EXHIBITORS' },
-                { icon: Globe, val: '1,000+', label: 'GLOBAL BUYERS' },
+                { icon: Globe, val: 'GLOBAL', label: 'BUYERS' },
                 { icon: CalendarDays, val: '3 DAYS', label: 'OF NETWORKING' },
               ].map((stat, i, arr) => (
                 <React.Fragment key={i}>
