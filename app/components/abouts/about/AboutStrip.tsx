@@ -119,7 +119,7 @@ const AboutStrip = () => {
         <div
           ref={bandRef}
           style={{ opacity: 0, backgroundColor: "#1b5e20", boxShadow: "0 8px 20px -10px rgba(0,0,0,0.3)" }}
-          className="rounded-2xl border border-white/10 p-2.5 sm:p-3 md:py-2.5 md:px-4 relative overflow-hidden [perspective:1000px]"
+          className="rounded-2xl border border-white/10 p-2 sm:py-2 md:py-2 md:px-4 relative overflow-hidden [perspective:1000px]"
         >
           {/* Shimmer overlay */}
           <div
@@ -136,16 +136,16 @@ const AboutStrip = () => {
                   <div
                     ref={(el) => { itemRefs.current[i] = el; }}
                     style={{ opacity: 0 }}
-                    className="flex flex-row items-center justify-center gap-2.5 sm:gap-3 group flex-1 py-2 px-2 bg-white/5 md:bg-transparent rounded-xl border border-white/10 md:border-none"
+                    className="flex flex-row items-center justify-center gap-2 sm:gap-2.5 group flex-1 py-1 px-1.5 bg-white/5 md:bg-transparent rounded-xl border border-white/10 md:border-none"
                   >
                     <div className="w-8 h-8 md:w-9 md:h-9 rounded-full bg-white/10 flex items-center justify-center shrink-0 border border-white/15">
                       <IconComponent className="w-4 h-4 md:w-5 md:h-5 text-[#facc15] stroke-[2]" />
                     </div>
-                    <div className="flex flex-col text-left">
-                      <h4 className="text-[13px] sm:text-[14px] md:text-sm font-semibold text-white leading-tight font-inter">
+                    <div className="flex flex-col text-left justify-center">
+                      <h4 className="text-[15px] sm:text-[16px] md:text-[17px] font-semibold text-white leading-none font-inter mb-0.5">
                         <StatCounter value={item.title} />
                       </h4>
-                      <p className="text-[8.5px] md:text-[9px] font-bold text-[#facc15] uppercase tracking-wider leading-tight font-inter">
+                      <p className="text-[9.5px] sm:text-[10px] md:text-[10.5px] font-semibold text-[#facc15] uppercase tracking-wider leading-none font-inter">
                         {item.subtitle}
                       </p>
                     </div>
