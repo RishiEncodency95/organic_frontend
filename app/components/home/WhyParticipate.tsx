@@ -167,10 +167,9 @@ const WhyParticipate = () => {
               <Sparkle color="#28396C" style={{ bottom: '-10px', left: '25%', animationDelay: '0.3s' }} />
               <Sparkle color="#28396C" style={{ bottom: '-12px', right: '30%', animationDelay: '0.7s' }} />
 
-              <Link
-                href="/registration/visitor-registration"
-                target="_blank"
-                rel="noopener noreferrer"
+              <a
+                href="/download/invited card.pdf"
+                download="invited card.pdf"
                 className="blue-btn-wp flex items-center gap-1.5 px-4 h-8 rounded-lg relative z-10 hover:scale-[1.02] transition-transform"
               >
                 <FileDown className="w-[14px] h-[14px] text-white shrink-0" />
@@ -178,7 +177,7 @@ const WhyParticipate = () => {
                   Download Brochure
                 </span>
                 <ArrowRight className="w-3 h-3 text-white group-hover/btn:translate-x-1 transition-transform" />
-              </Link>
+              </a>
             </div>
 
             {/* ── More Info Button ── */}
