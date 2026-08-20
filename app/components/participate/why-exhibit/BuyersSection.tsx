@@ -70,13 +70,15 @@ const BuyersSection = () => (
             <Sparkle color="#ffdd00" shadow="#ffa500" style={{ top: "-12px", left: "10%", animationDelay: "0s" }} />
             <Sparkle color="#ffdd00" shadow="#ffa500" style={{ top: "-15px", left: "50%", animationDelay: "0.4s" }} />
             <Sparkle color="#ffdd00" shadow="#ffa500" style={{ top: "-10px", right: "10%", animationDelay: "0.8s" }} />
-            <Link
-              href="/book-a-stand"
-              className="golden-btn-hero text-[#050A1A] px-6 py-2.5 rounded-lg font-black text-[11px] uppercase tracking-widest flex items-center gap-2 transition-all active:scale-95 shadow-2xl relative z-10"
+            <a
+              href="/registration/book-a-stand"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="golden-btn-hero text-[#050A1A] px-6 py-2.5 rounded-lg font-black text-[11px] uppercase tracking-widest flex items-center gap-2 transition-all active:scale-95 shadow-2xl relative z-10 group"
             >
               Book Your Stall
               <ArrowRight size={14} className="group-hover:translate-x-1 transition-transform" />
-            </Link>
+            </a>
           </div>
         </div>
 

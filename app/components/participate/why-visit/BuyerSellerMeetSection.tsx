@@ -274,13 +274,15 @@ const BuyerSellerMeetSection = () => {
                 </div>
               </div>
 
-              <Link
+              <a
                 href="/registration/visitor-registration"
-                className="bg-[#a3e635] hover:bg-[#84cc16] text-[#0c240f] font-poppins font-bold text-[11px] px-4 py-1.5 rounded-full flex items-center gap-1.5 transition-all shadow-md shrink-0"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="bg-[#a3e635] hover:bg-[#84cc16] text-[#0c240f] font-poppins font-bold text-[11px] px-4 py-1.5 rounded-full flex items-center gap-1.5 transition-all shadow-md shrink-0 group"
               >
                 <span>PLAN YOUR VISIT NOW</span>
-                <ArrowRight className="w-3.5 h-3.5" />
-              </Link>
+                <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
+              </a>
             </div>
 
           </div>
