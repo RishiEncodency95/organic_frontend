@@ -89,8 +89,8 @@ export default function CorporateForm() {
 
   useEffect(() => {
     settingsApi.getSettings().then((res: any) => {
-      if (res && res.success && res.data && res.data.requireOtpForVisitorRegistration) {
-        setRequireOtp(res.data.requireOtpForVisitorRegistration);
+      if (res && res.requireOtpForVisitorRegistration !== undefined) {
+        setRequireOtp(res.requireOtpForVisitorRegistration);
       }
     }).catch((err: any) => console.error(err));
   }, []);
