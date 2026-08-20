@@ -79,8 +79,8 @@ export default function HeroSection() {
   const stats = [
     { icon: Users, val: "8,000+", label: "VISITORS / DELEGATES" },
     { icon: Building2, val: "200+", label: "EXHIBITORS" },
-    { icon: Globe, val: "1,000+", label: "GLOBAL BUYERS" },
-    { icon: Mic, val: "150+", label: "EXPERT SPEAKERS" },
+    { icon: Globe, val: "GLOBAL", label: "PERSPECTIVES" },
+    { icon: Mic, val: "100+", label: "EXPERT SPEAKERS" },
     { icon: Handshake, val: "B2B", label: "MEETINGS" },
   ];
 

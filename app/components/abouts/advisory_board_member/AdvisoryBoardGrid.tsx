@@ -132,7 +132,7 @@ const AdvisoryBoardGrid = () => {
                                             {/* Designation Badge */}
                                             {member.designation && (
                                                 <div className="absolute bottom-2 left-2">
-                                                    <span className="inline-flex items-center text-[9px] font-semibold tracking-wider uppercase text-white bg-[#23471d]/90 backdrop-blur-md px-2 py-0.5 rounded shadow-sm font-poppins">
+                                                    <span className="inline-flex items-center text-[10.5px] font-semibold tracking-wider uppercase text-white bg-[#23471d]/90 backdrop-blur-md px-2.5 py-1 rounded shadow-sm font-poppins">
                                                         {member.designation}
                                                     </span>
                                                 </div>
@@ -140,27 +140,27 @@ const AdvisoryBoardGrid = () => {
                                         </div>
 
                                         {/* Content */}
-                                        <div className="flex flex-col p-3.5 flex-grow text-left">
-                                            <h3 className="font-poppins font-semibold text-[#23471d] text-[13px] leading-snug mb-1 line-clamp-2">
+                                        <div className="flex flex-col p-4 flex-grow text-left">
+                                            <h3 className="font-poppins font-semibold text-[#23471d] text-[17px] leading-snug mb-1.5 line-clamp-2">
                                                 {member.name}
                                             </h3>
 
-                                            <p className="text-[#4B1426] font-medium text-[11px] leading-relaxed mb-3 flex-grow font-inter line-clamp-3">
+                                            <p className="text-[#4B1426] font-medium text-[13px] leading-relaxed mb-4 flex-grow font-inter line-clamp-4">
                                                 {member.organization || "\u00A0"}
                                             </p>
 
-                                            <div className="flex items-center justify-between pt-2.5 border-t border-gray-100 mt-auto">
-                                                <span className="flex items-center gap-1 text-gray-500 text-[10px] font-medium font-inter">
-                                                    <MapPin size={12} className="text-[#d26019]" />
+                                            <div className="flex items-center justify-between pt-3 border-t border-gray-100 mt-auto">
+                                                <span className="flex items-center gap-1.5 text-gray-500 text-[12px] font-medium font-inter">
+                                                    <MapPin size={14} className="text-[#d26019]" />
                                                     {member.location}
                                                 </span>
 
                                                 <button
                                                     type="button"
-                                                    className="flex items-center gap-1 text-[#23471d] text-[10.5px] font-semibold hover:text-[#d26019] transition-colors"
+                                                    className="flex items-center gap-1 text-[#23471d] text-[12.5px] font-semibold hover:text-[#d26019] transition-colors"
                                                 >
                                                     View Profile
-                                                    <ArrowUpRight size={12} className="group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
+                                                    <ArrowUpRight size={14} className="group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
                                                 </button>
                                             </div>
                                         </div>

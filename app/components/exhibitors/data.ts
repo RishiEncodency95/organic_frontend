@@ -89,7 +89,7 @@ export const HERO_STATS = [
 export const BOTTOM_STATS = [
     { value: "200+", label: "Exhibitors" },
     { value: "8,000+", label: "Visitors" },
-    { value: "2 Days", label: "Expo Duration" },
+    { value: "3 Days", label: "Of Knowledge" },
     { value: "PAN India", label: "Participation" },
     { value: "B2B + B2C", label: "Business Opportunity" },
 ];
