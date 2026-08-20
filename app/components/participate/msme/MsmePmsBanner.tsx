@@ -3,7 +3,7 @@
 import { useRef, useEffect, useState } from "react";
 import { Handshake, CheckCircle2, Calendar, MapPin, Building2, Headset, ChevronRight, Users, Award } from "lucide-react";
 import { useInView, animate } from "framer-motion";
-import bannerImg from "@/app/assets/participate/msme/home-banner.png";
+import bannerImg from "@/app/assets/participate/msme/home-banner.jpeg";
 
 interface MsmePmsBannerProps {
   eligibilityHref?: string;
