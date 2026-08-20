@@ -53,7 +53,8 @@ const ContactForm = () => {
 
     try {
       setSendingOtp(true);
-      const res = await verifyApi.sendPhoneOtp(formData.phone, 'CONTACT_ENQUIRY', formData.name);
+      const eventName = process.env.NEXT_PUBLIC_EVENT_NAME || "BOE2026";
+      const res = await verifyApi.sendPhoneOtp(formData.phone, 'CONTACT_ENQUIRY', formData.name, eventName);
       if (res.success) {
         setOtpSent(true);
         setResendTimer(30);

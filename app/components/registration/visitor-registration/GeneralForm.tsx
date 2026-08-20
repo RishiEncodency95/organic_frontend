@@ -1,7 +1,7 @@
 "use client";
 import React, { useState, useEffect } from "react";
 import { User, CheckCircle2, Loader2, CheckCircle, X, ChevronsUpDown, ShieldCheck } from "lucide-react";
-import { crmApi, verifyApi, visitorApi } from "../../../../lib/api";
+import { crmApi, verifyApi, visitorApi , settingsApi } from "../../../../lib/api";
 import Swal from 'sweetalert2';
 
 // Helper component for multi-select
@@ -83,6 +83,17 @@ export default function GeneralForm() {
   const [cities, setCities] = useState<any[]>([]);
 
   const defaultEventName = process.env.NEXT_PUBLIC_EVENT_NAME || "BOE2026";
+  const [requireOtp, setRequireOtp] = useState(true);
+
+  useEffect(() => {
+    settingsApi.getSettings().then((res: any) => {
+      if (res && res.success && res.data && res.data.requireOtpForVisitorRegistration !== undefined) {
+        setRequireOtp(res.data.requireOtpForVisitorRegistration);
+      }
+    }).catch((err: any) => console.error(err));
+  }, []);
+
+
 
   const [formData, setFormData] = useState({
     registrationFor: defaultEventName,
@@ -194,7 +205,7 @@ export default function GeneralForm() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!otpVerified.email || !otpVerified.mobile) {
+    if (requireOtp && (!otpVerified.email || !otpVerified.mobile)) {
       Swal.fire({ scrollbarPadding: false, icon: 'warning', title: 'Verification Required', text: 'Please verify both Email and WhatsApp number.' });
       return;
     }
@@ -261,12 +272,12 @@ export default function GeneralForm() {
             <label className={labelClasses}>WhatsApp Number *</label>
             <div className="flex gap-2 h-[34px]">
               <input required type="tel" name="mobileNo" value={formData.mobileNo} onChange={handleChange} className={`${inputClasses} h-full`} disabled={otpVerified.mobile || otpSent.mobile} placeholder="Enter WhatsApp Number" />
-              {!otpVerified.mobile && !otpSent.mobile && (
+              {requireOtp && !otpVerified.mobile && !otpSent.mobile && (
                 <button type="button" onClick={() => handleRequestOtp('mobile')} disabled={!formData.mobileNo || isVerifying.mobile} className={`bg-[#4d7f1d] text-white px-3 rounded-[2px] transition hover:bg-[#3b6315] h-full ${buttonTextClasses} disabled:opacity-50`}>
                   {isVerifying.mobile ? <Loader2 className="animate-spin" size={14} /> : 'OTP'}
                 </button>
               )}
-              {otpSent.mobile && !otpVerified.mobile && (
+              {requireOtp && otpSent.mobile && !otpVerified.mobile && (
                 <>
                   <input type="text" maxLength={6} value={mobileOtp} onChange={(e) => setMobileOtp(e.target.value.replace(/\D/g, ''))} className={`${inputClasses} h-full w-[100px] text-center tracking-widest`} placeholder="OTP" />
                   <button type="button" onClick={() => handleVerifyOtp('mobile')} className={`bg-[#4d7f1d] text-white px-3 rounded-[2px] transition hover:bg-[#3b6315] h-full ${buttonTextClasses}`}>
@@ -274,7 +285,7 @@ export default function GeneralForm() {
                   </button>
                 </>
               )}
-              {otpVerified.mobile && <CheckCircle size={18} className="text-[#4d7f1d] self-center shrink-0 ml-2" />}
+              {requireOtp && otpVerified.mobile && <CheckCircle size={18} className="text-[#4d7f1d] self-center shrink-0 ml-2" />}
             </div>
           </div>
 
@@ -284,12 +295,12 @@ export default function GeneralForm() {
             <label className={labelClasses}>Email Address *</label>
             <div className="flex gap-2 h-[34px]">
               <input required type="email" name="email" value={formData.email} onChange={handleChange} className={`${inputClasses} h-full`} disabled={otpVerified.email || otpSent.email} placeholder="Enter Email Address" />
-              {!otpVerified.email && !otpSent.email && (
+              {requireOtp && !otpVerified.email && !otpSent.email && (
                 <button type="button" onClick={() => handleRequestOtp('email')} disabled={!formData.email || isVerifying.email} className={`bg-[#4d7f1d] text-white px-3 rounded-[2px] transition hover:bg-[#3b6315] h-full ${buttonTextClasses} disabled:opacity-50`}>
                   {isVerifying.email ? <Loader2 className="animate-spin" size={14} /> : 'OTP'}
                 </button>
               )}
-              {otpSent.email && !otpVerified.email && (
+              {requireOtp && otpSent.email && !otpVerified.email && (
                 <>
                   <input type="text" maxLength={6} value={emailOtp} onChange={(e) => setEmailOtp(e.target.value.replace(/\D/g, ''))} className={`${inputClasses} h-full w-[100px] text-center tracking-widest`} placeholder="OTP" />
                   <button type="button" onClick={() => handleVerifyOtp('email')} className={`bg-[#4d7f1d] text-white px-3 rounded-[2px] transition hover:bg-[#3b6315] h-full ${buttonTextClasses}`}>
@@ -297,7 +308,7 @@ export default function GeneralForm() {
                   </button>
                 </>
               )}
-              {otpVerified.email && <CheckCircle size={18} className="text-[#4d7f1d] self-center shrink-0 ml-2" />}
+              {requireOtp && otpVerified.email && <CheckCircle size={18} className="text-[#4d7f1d] self-center shrink-0 ml-2" />}
             </div>
           </div>
         </div>

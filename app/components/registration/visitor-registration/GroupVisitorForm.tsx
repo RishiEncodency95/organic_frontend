@@ -1,7 +1,7 @@
 "use client";
 import React, { useState, useEffect } from "react";
 import { Users, Plus, Trash2, CheckCircle2, Globe2, Loader2, CheckCircle, X, ChevronsUpDown, ShieldCheck } from "lucide-react";
-import { crmApi, verifyApi, visitorApi } from "../../../../lib/api";
+import { crmApi, verifyApi, visitorApi , settingsApi } from "../../../../lib/api";
 import Swal from 'sweetalert2';
 
 const MIN_PERSONS = 5;
@@ -34,6 +34,17 @@ export default function GroupVisitorForm() {
   const [cities, setCities] = useState<any[]>([]);
 
   const defaultEventName = process.env.NEXT_PUBLIC_EVENT_NAME || "BOE2026";
+  const [requireOtp, setRequireOtp] = useState(true);
+
+  useEffect(() => {
+    settingsApi.getSettings().then((res: any) => {
+      if (res && res.success && res.data && res.data.requireOtpForVisitorRegistration !== undefined) {
+        setRequireOtp(res.data.requireOtpForVisitorRegistration);
+      }
+    }).catch((err: any) => console.error(err));
+  }, []);
+
+
   const [company, setCompany] = useState({ ...defaultCompany, registrationFor: defaultEventName });
   const [persons, setPersons] = useState<Person[]>(Array.from({ length: MIN_PERSONS }, emptyPerson));
 
@@ -142,7 +153,7 @@ export default function GroupVisitorForm() {
     if (!company.confirmInfo || !company.agreeTerms || !company.acceptPrivacy || !company.agreeRules) {
       alert("Please accept all declarations."); return;
     }
-    if (!otpVerified.email || !otpVerified.mobile) {
+    if (requireOtp && (!otpVerified.email || !otpVerified.mobile)) {
       Swal.fire({ scrollbarPadding: false, icon: 'warning', title: 'Verification Required', text: 'Please verify the Primary Contact (Person 1) Email and Mobile number.' });
       return;
     }
@@ -312,12 +323,12 @@ export default function GroupVisitorForm() {
                       <label className={labelClasses}>Email Address *</label>
                       <div className="flex gap-2 h-7">
                         <input required type="email" value={person.email} onChange={e => handlePersonChange(idx, "email", e.target.value)} className={`${inputClasses} h-full`} placeholder="Email" disabled={idx === 0 && (otpVerified.email || otpSent.email)} />
-                        {idx === 0 && !otpVerified.email && !otpSent.email && (
+                        {requireOtp && idx === 0 && !otpVerified.email && !otpSent.email && (
                           <button type="button" onClick={() => handleRequestOtp('email')} disabled={!person.email || isVerifying.email} className={`bg-[#4d7f1d] text-white px-3 rounded text-[10px] uppercase font-bold transition hover:bg-[#3b6315] h-full disabled:opacity-50`}>
                             {isVerifying.email ? <Loader2 className="animate-spin" size={14} /> : 'OTP'}
                           </button>
                         )}
-                        {idx === 0 && otpSent.email && !otpVerified.email && (
+                        {requireOtp && idx === 0 && otpSent.email && !otpVerified.email && (
                           <>
                             <input type="text" maxLength={6} value={emailOtp} onChange={(e) => setEmailOtp(e.target.value.replace(/\D/g, ''))} className={`${inputClasses} h-full w-[80px] text-center tracking-widest`} placeholder="OTP" />
                             <button type="button" onClick={() => handleVerifyOtp('email')} className={`bg-[#4d7f1d] text-white px-3 rounded text-[10px] uppercase font-bold transition hover:bg-[#3b6315] h-full`}>
@@ -325,19 +336,19 @@ export default function GroupVisitorForm() {
                             </button>
                           </>
                         )}
-                        {idx === 0 && otpVerified.email && <CheckCircle size={18} className="text-[#4d7f1d] self-center shrink-0 ml-2" />}
+                        {requireOtp && idx === 0 && otpVerified.email && <CheckCircle size={18} className="text-[#4d7f1d] self-center shrink-0 ml-2" />}
                       </div>
                     </div>
                     <div className={`relative ${idx === 0 ? "md:col-span-2" : ""}`}>
                       <label className={labelClasses}>WhatsApp No. *</label>
                       <div className="flex gap-2 h-7">
                         <input required type="tel" value={person.mobileNo} onChange={e => handlePersonChange(idx, "mobileNo", e.target.value)} className={`${inputClasses} h-full w-full`} placeholder="Mobile" disabled={idx === 0 && (otpVerified.mobile || otpSent.mobile)} />
-                        {idx === 0 && !otpVerified.mobile && !otpSent.mobile && (
+                        {requireOtp && idx === 0 && !otpVerified.mobile && !otpSent.mobile && (
                           <button type="button" onClick={() => handleRequestOtp('mobile')} disabled={!person.mobileNo || isVerifying.mobile} className={`bg-[#4d7f1d] text-white px-3 rounded text-[10px] uppercase font-bold transition hover:bg-[#3b6315] h-full disabled:opacity-50 shrink-0`}>
                             {isVerifying.mobile ? <Loader2 className="animate-spin" size={14} /> : 'OTP'}
                           </button>
                         )}
-                        {idx === 0 && otpSent.mobile && !otpVerified.mobile && (
+                        {requireOtp && idx === 0 && otpSent.mobile && !otpVerified.mobile && (
                           <>
                             <input type="text" maxLength={6} value={mobileOtp} onChange={(e) => setMobileOtp(e.target.value.replace(/\D/g, ''))} className={`${inputClasses} h-full w-[80px] text-center tracking-widest shrink-0`} placeholder="OTP" />
                             <button type="button" onClick={() => handleVerifyOtp('mobile')} className={`bg-[#4d7f1d] text-white px-3 rounded text-[10px] uppercase font-bold transition hover:bg-[#3b6315] h-full shrink-0`}>
@@ -345,7 +356,7 @@ export default function GroupVisitorForm() {
                             </button>
                           </>
                         )}
-                        {idx === 0 && otpVerified.mobile && <CheckCircle size={18} className="text-[#4d7f1d] self-center shrink-0 ml-2" />}
+                        {requireOtp && idx === 0 && otpVerified.mobile && <CheckCircle size={18} className="text-[#4d7f1d] self-center shrink-0 ml-2" />}
                         {persons.length > MIN_PERSONS && (
                           <button type="button" onClick={() => removePerson(idx)} className="h-7 w-7 shrink-0 flex items-center justify-center bg-red-50 text-red-500 rounded border border-red-200 hover:bg-red-100 transition-colors">
                             <Trash2 size={14} />

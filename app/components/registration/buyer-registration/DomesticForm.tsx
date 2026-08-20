@@ -1,7 +1,7 @@
 "use client";
 import React, { useState, useRef, useEffect } from "react";
 import { CheckCircle2, CheckCircle, ShieldCheck, User, Globe, Store, Factory, Laptop, HeartPulse, Leaf, Hotel, Briefcase, ChevronsUpDown, Loader2, X, AlertTriangle } from "lucide-react";
-import { verifyApi, buyerApi } from "@/lib/api";
+import { verifyApi, buyerApi, settingsApi } from "@/lib/api";
 import Swal from "sweetalert2";
 
 // Mock Data
@@ -231,7 +231,15 @@ export default function DomesticBuyerForm() {
     registrationCategory: "",
     registrationFee: ""
   });
+  const [requireOtp, setRequireOtp] = useState(true);
 
+  useEffect(() => {
+    settingsApi.getSettings().then((res: any) => {
+      if (res && res.success && res.data && res.data.requireOtpForVisitorRegistration !== undefined) {
+        setRequireOtp(res.data.requireOtpForVisitorRegistration);
+      }
+    }).catch((err: any) => console.error(err));
+  }, []);
   const handleChange = (e: any) => {
     setFormData((prev) => ({ ...prev, [e.target.name]: e.target.value }));
   };
@@ -297,7 +305,7 @@ export default function DomesticBuyerForm() {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    if (!otpVerified.email || !otpVerified.mobile) {
+    if (requireOtp && (!otpVerified.email || !otpVerified.mobile)) {
       alert("Please verify OTP for both Email and Mobile.");
       return;
     }
@@ -368,19 +376,19 @@ export default function DomesticBuyerForm() {
             <label className={labelClasses}>Mobile Number (10 digits) *</label>
             <div className="flex gap-2 h-7">
               <input required type="tel" name="mobileNumber" value={formData.mobileNumber} onChange={handleChange} placeholder="10-digit number" className={`${inputClasses} h-full`} disabled={otpVerified.mobile} />
-              {!otpVerified.mobile && !otpSent.mobile && (
+              {requireOtp && !otpVerified.mobile && !otpSent.mobile && (
                 <button type="button" onClick={() => handleSimulateOtp('mobile')} disabled={!formData.mobileNumber || isVerifying.mobile} className={`bg-[#4d7f1d] text-white px-3 rounded text-[10px] uppercase font-bold transition hover:bg-[#3b6315] h-full disabled:opacity-50`}>
                   {isVerifying.mobile ? <Loader2 className="animate-spin" size={14} /> : 'OTP'}
                 </button>
               )}
-              {otpSent.mobile && !otpVerified.mobile && (
+              {requireOtp && otpSent.mobile && !otpVerified.mobile && (
                 <button type="button" onClick={() => handleVerifyOtp('mobile')} className={`bg-[#23471d] text-white px-3 rounded-[2px] transition hover:bg-[#1a3516] h-full ${buttonTextClasses}`}>
                   {isVerifying.mobile ? <Loader2 className="animate-spin" size={14} /> : 'Verify'}
                 </button>
               )}
-              {otpVerified.mobile && <CheckCircle size={18} className="text-emerald-600 self-center shrink-0 ml-2" />}
+              {requireOtp && otpVerified.mobile && <CheckCircle size={18} className="text-emerald-600 self-center shrink-0 ml-2" />}
             </div>
-            {otpSent.mobile && !otpVerified.mobile && (
+            {requireOtp && otpSent.mobile && !otpVerified.mobile && (
               <input type="text" placeholder="Enter OTP" value={otpValue.mobile} onChange={e => setOtpValue(p => ({ ...p, mobile: e.target.value }))} className={`${inputClasses} mt-2 text-center tracking-widest`} />
             )}
           </div>
@@ -389,19 +397,19 @@ export default function DomesticBuyerForm() {
             <label className={labelClasses}>Email Address (OTP) *</label>
             <div className="flex gap-2 h-7">
               <input required type="email" name="emailAddress" value={formData.emailAddress} onChange={handleChange} placeholder="Work Email" className={`${inputClasses} h-full`} disabled={otpVerified.email} />
-              {!otpVerified.email && !otpSent.email && (
+              {requireOtp && !otpVerified.email && !otpSent.email && (
                 <button type="button" onClick={() => handleSimulateOtp('email')} disabled={!formData.emailAddress || isVerifying.email} className={`bg-[#4d7f1d] text-white px-3 rounded text-[10px] uppercase font-bold transition hover:bg-[#3b6315] h-full disabled:opacity-50`}>
                   {isVerifying.email ? <Loader2 className="animate-spin" size={14} /> : 'OTP'}
                 </button>
               )}
-              {otpSent.email && !otpVerified.email && (
+              {requireOtp && otpSent.email && !otpVerified.email && (
                 <button type="button" onClick={() => handleVerifyOtp('email')} className={`bg-[#23471d] text-white px-3 rounded-[2px] transition hover:bg-[#1a3516] h-full ${buttonTextClasses}`}>
                   {isVerifying.email ? <Loader2 className="animate-spin" size={14} /> : 'Verify'}
                 </button>
               )}
-              {otpVerified.email && <CheckCircle size={18} className="text-emerald-600 self-center shrink-0 ml-2" />}
+              {requireOtp && otpVerified.email && <CheckCircle size={18} className="text-emerald-600 self-center shrink-0 ml-2" />}
             </div>
-            {otpSent.email && !otpVerified.email && (
+            {requireOtp && otpSent.email && !otpVerified.email && (
               <input type="text" placeholder="Enter OTP" value={otpValue.email} onChange={e => setOtpValue(p => ({ ...p, email: e.target.value }))} className={`${inputClasses} mt-2 text-center tracking-widest`} />
             )}
           </div>
