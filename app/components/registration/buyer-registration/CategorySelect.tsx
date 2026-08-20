@@ -158,3 +158,4 @@ export default function CategorySelect({ buyerType, onChange }: CategorySelectPr
     </section>
   );
 }
+
