@@ -1,7 +1,7 @@
 "use client";
 import React from "react";
-import domBg from "../../../assets/image/domog.png";
-import intBg from "../../../assets/image/dom1og.png";
+import domBg from "../../../assets/image/domog.webp";
+import intBg from "../../../assets/image/dom1og.webp";
 import domIcon from "../../../assets/icons/domog.png";
 import intIcon from "../../../assets/icons/dom2og.png";
 import { ArrowRight } from "lucide-react";

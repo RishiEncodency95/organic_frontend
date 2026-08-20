@@ -1,11 +1,11 @@
 "use client";
 import React from "react";
-import img1 from "../../assets/image/11og.png";
-import img2 from "../../assets/image/12og.png";
-import img3 from "../../assets/image/13og.png";
-import img4 from "../../assets/image/14og.png";
-import img5 from "../../assets/image/15og.png";
-import img6 from "../../assets/image/16og.png";
+import img1 from "../../assets/image/11og.webp";
+import img2 from "../../assets/image/12og.webp";
+import img3 from "../../assets/image/13og.webp";
+import img4 from "../../assets/image/14og.webp";
+import img5 from "../../assets/image/15og.webp";
+import img6 from "../../assets/image/16og.webp";
 import footerRightImg from "../../assets/icons/footerright.png";
 
 import SectionContainer from "@/app/components/layout/SectionContainer";

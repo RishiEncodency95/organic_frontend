@@ -7,7 +7,7 @@ import { motion } from 'framer-motion';
 import { CheckCircle2, FileDown, ArrowRight, Leaf, Store, Info } from 'lucide-react';
 import SectionContainer from '../layout/SectionContainer';
 
-import meetingImg from "../../assets/home/bs_meet.png";
+import meetingImg from "../../assets/home/bs_meet.webp";
 
 // ── Sparkle Component (same as Footer) ──
 const Sparkle = ({ style, color = '#fff176' }: { style?: React.CSSProperties; color?: string }) => (
@@ -211,6 +211,7 @@ const WhyParticipate = () => {
             <Image
               src={meetingImg}
               alt="Business Meeting at Expo"
+              sizes="(max-width: 1024px) 100vw, 50vw"
               className="w-full h-[280px] md:h-[330px] object-cover"
             />
 

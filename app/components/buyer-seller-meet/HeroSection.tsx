@@ -134,6 +134,9 @@ export default function HeroSection() {
           />
         </div>
 
+        {/* Mobile-only gradient overlay for text readability (desktop remains untouched) */}
+        <div className="absolute inset-0 z-[1] bg-gradient-to-r from-white/95 via-white/85 to-transparent/30 md:hidden pointer-events-none" />
+
         {/* Leaf */}
         <div
           ref={leafRef}
@@ -154,16 +157,16 @@ export default function HeroSection() {
 
               {/* Heading */}
               <h1
-                className="text-4xl md:text-5xl lg:text-[68px] font-semibold leading-[1.05] mb-4 text-left font-poppins"
+                className="text-2xl sm:text-4xl md:text-5xl lg:text-[68px] font-semibold leading-[1.05] mb-3 md:mb-4 text-left font-poppins"
                 style={{ textShadow: "1px 1px 2px rgba(0,0,0,0.4)" }}
               >
                 <span className="block overflow-hidden">
-                  <span ref={line1Ref} style={{ opacity: 0, display: "block" }} className="text-[#1b5e20] text-3xl sm:text-4xl md:text-5xl lg:text-[64px] font-semibold mb-1">
+                  <span ref={line1Ref} style={{ opacity: 0, display: "block" }} className="text-[#1b5e20] text-2xl sm:text-4xl md:text-5xl lg:text-[64px] font-semibold mb-1">
                     BUYER-SELLER
                   </span>
                 </span>
                 <span className="block overflow-hidden">
-                  <span ref={line2Ref} style={{ opacity: 0, display: "block" }} className="text-[#4B1426] text-3xl sm:text-4xl md:text-5xl lg:text-[64px] font-semibold tracking-tight whitespace-nowrap">
+                  <span ref={line2Ref} style={{ opacity: 0, display: "block" }} className="text-[#4B1426] text-2xl sm:text-4xl md:text-5xl lg:text-[64px] font-semibold tracking-tight whitespace-nowrap">
                     MEET 2027
                   </span>
                 </span>
@@ -173,7 +176,7 @@ export default function HeroSection() {
               <p
                 ref={subtitleRef}
                 style={{ opacity: 0 }}
-                className="text-[#131730] text-sm md:text-base max-w-lg mb-5 font-bold leading-relaxed text-left"
+                className="text-slate-950 text-xs sm:text-sm md:text-base max-w-lg mb-4 md:mb-5 font-bold leading-relaxed text-left"
               >
                 Connect with the Right Businesses. Create Real Opportunities. A focused B2B networking platform at Bharat Organic Expo 2027.
               </p>
@@ -182,22 +185,22 @@ export default function HeroSection() {
               <div
                 ref={metaRef}
                 style={{ opacity: 0 }}
-                className="flex flex-col sm:flex-row items-start sm:items-center gap-3 sm:gap-4 mb-6 text-[#4B1426] text-sm md:text-[15px] font-bold"
+                className="flex flex-col sm:flex-row items-start sm:items-center gap-2.5 sm:gap-4 mb-5 md:mb-6 text-[#4B1426] text-xs sm:text-sm md:text-[15px] font-extrabold"
               >
                 <div className="flex items-center gap-2">
-                  <CalendarDays size={18} className="shrink-0 text-[#ea580c]" />
+                  <CalendarDays size={17} className="shrink-0 text-[#ea580c]" />
                   <span>19-21 February 2027</span>
                 </div>
                 <div className="hidden sm:block w-px h-5 bg-[#4B1426]/30"></div>
                 <div className="flex items-center gap-2">
-                  <MapPin size={18} className="shrink-0 text-[#ea580c]" />
+                  <MapPin size={17} className="shrink-0 text-[#ea580c]" />
                   <span>Hall 12, Bharat Mandapam, New Delhi</span>
                 </div>
               </div>
 
               {/* Buttons */}
-              <div ref={btnsRef} className="flex flex-wrap items-center justify-start gap-3">
-                <div className="relative w-full sm:w-auto">
+              <div ref={btnsRef} className="flex flex-col sm:flex-row items-start sm:items-center justify-start gap-3">
+                <div className="relative w-fit sm:w-auto">
                   <Sparkle color="#4ade80" shadow="#1b5e20" style={{ top: "-12px", left: "10%", animationDelay: "0.2s" }} />
                   <Sparkle color="#4ade80" shadow="#1b5e20" style={{ top: "-15px", left: "50%", animationDelay: "0.6s" }} />
                   <Sparkle color="#4ade80" shadow="#1b5e20" style={{ top: "-10px", right: "10%", animationDelay: "1s" }} />
@@ -205,12 +208,12 @@ export default function HeroSection() {
                     href="/registration/buyer-registration"
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="blue-btn-hero text-white px-4 py-2 rounded-lg font-semibold text-[10px] uppercase tracking-widest flex items-center justify-start gap-2 transition-all active:scale-95 shadow-lg relative z-10 w-full sm:w-auto"
+                    className="blue-btn-hero text-white px-4 py-2 rounded-lg font-semibold text-[10px] uppercase tracking-widest flex items-center justify-center gap-2 transition-all active:scale-95 shadow-lg relative z-10 w-fit sm:w-auto"
                   >
                     REGISTER AS A BUYER <ArrowRight size={14} />
                   </Link>
                 </div>
-                <div className="relative w-full sm:w-auto">
+                <div className="relative w-fit sm:w-auto">
                   <Sparkle color="#f97316" shadow="#c2410c" style={{ top: "-12px", left: "10%", animationDelay: "0s" }} />
                   <Sparkle color="#f97316" shadow="#c2410c" style={{ top: "-15px", left: "50%", animationDelay: "0.4s" }} />
                   <Sparkle color="#f97316" shadow="#c2410c" style={{ top: "-10px", right: "10%", animationDelay: "0.8s" }} />
@@ -218,7 +221,7 @@ export default function HeroSection() {
                     href="/participate_as_exhibiture"
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="group relative inline-flex items-center justify-start gap-2 px-4 py-2 rounded-lg font-semibold text-[10px] uppercase tracking-widest text-white transition-all active:scale-95 shadow-2xl z-10 w-full sm:w-auto overflow-hidden"
+                    className="group relative inline-flex items-center justify-center gap-2 px-4 py-2 rounded-lg font-semibold text-[10px] uppercase tracking-widest text-white transition-all active:scale-95 shadow-2xl z-10 w-fit sm:w-auto overflow-hidden"
                     style={{
                       background: "linear-gradient(135deg, #ea580c, #c2410c)",
                       boxShadow: "0 4px 20px rgba(194,65,12,0.5), 0 0 12px rgba(249,115,22,0.3)",

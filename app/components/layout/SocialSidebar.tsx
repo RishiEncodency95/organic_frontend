@@ -341,6 +341,7 @@ const SocialSidebar = () => {
                 href={social.url}
                 target="_blank"
                 rel="noopener noreferrer"
+                aria-label={`Visit our ${social.label} page`}
                 className="social-button"
                 style={{ borderColor: social.color }}
               >

@@ -3,11 +3,12 @@
 import React from "react";
 import Link from "next/link";
 import Image from "next/image";
+import { SITE_CONFIG } from "@/app/constants/siteConfig";
 import footerLogo from "../../assets/logos/footerlogo.png";
 import footerBottomImg from "../../assets/logos/footerimg.png";
 import namoLogo from "../../assets/logos/namo1.png";
 import placeholderImg from "../../assets/image/image1.webp";
-import footogImg from "../../assets/image/bottog.png";
+import footogImg from "../../assets/image/bottog.webp";
 import foot1ogImg from "../../assets/icons/foot1og.png";
 import foot2ogImg from "../../assets/icons/foot2og.png";
 import foot3ogImg from "../../assets/icons/foot3og.png";
@@ -258,13 +259,13 @@ export default function Footer() {
             <h5 className="font-poppins font-semibold text-[#F3B71B] uppercase mb-2 text-[12px] tracking-wider">CONNECT WITH US</h5>
             <div className="flex items-center justify-center sm:justify-start gap-2.5">
               {[
-                { Icon: Facebook, label: "Facebook" },
-                { Icon: Twitter, label: "Twitter" },
-                { Icon: Linkedin, label: "LinkedIn" },
-                { Icon: Instagram, label: "Instagram" },
-                { Icon: Youtube, label: "YouTube" }
-              ].map(({ Icon, label }, idx) => (
-                <a key={idx} href="#" aria-label={label} className="w-8 h-8 rounded-lg bg-white/5 border border-white/10 flex items-center justify-center text-[#f3b71b] hover:bg-[#f3b71b] hover:text-[#001810] transition-all duration-300 shadow-sm">
+                { Icon: Facebook, label: "Facebook", url: SITE_CONFIG.socialLinks.facebook },
+                { Icon: Twitter, label: "Twitter", url: SITE_CONFIG.socialLinks.twitter },
+                { Icon: Linkedin, label: "LinkedIn", url: SITE_CONFIG.socialLinks.linkedin },
+                { Icon: Instagram, label: "Instagram", url: SITE_CONFIG.socialLinks.instagram },
+                { Icon: Youtube, label: "YouTube", url: SITE_CONFIG.socialLinks.youtube }
+              ].map(({ Icon, label, url }, idx) => (
+                <a key={idx} href={url} target="_blank" rel="noopener noreferrer" aria-label={label} className="w-8 h-8 rounded-lg bg-white/5 border border-white/10 flex items-center justify-center text-[#f3b71b] hover:bg-[#f3b71b] hover:text-[#001810] transition-all duration-300 shadow-sm">
                   <Icon size={15} />
                 </a>
               ))}

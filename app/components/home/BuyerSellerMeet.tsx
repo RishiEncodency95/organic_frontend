@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 import {
   CalendarDays,
   Users,
@@ -16,7 +17,7 @@ import {
 } from 'lucide-react';
 import { useInView, animate } from 'framer-motion';
 import rightImageBg from '../../assets/home/rightimage1.jpeg';
-import bs_meet from '../../assets/home/bs_meet.png';
+import bs_meet from '../../assets/home/bs_meet.webp';
 
 const StatCounter = ({ value }: { value: string }) => {
   const [displayValue, setDisplayValue] = useState(0);
@@ -155,9 +156,13 @@ const BuyerSellerMeet = () => {
             {/* Right: Image Card */}
             <div className="flex-1 w-full lg:max-w-[50%] relative">
               <div className="relative w-full h-[300px] lg:h-[530px] rounded-[16px] lg:rounded-[24px] overflow-hidden shadow-[0_20px_50px_rgba(0,0,0,0.15)] border-[6px] border-white">
-                <img
-                  src={bs_meet.src}
-                  alt="Buyer Seller Meet"
+                <Image
+                  src={bs_meet}
+                  alt="Business Meeting at Expo"
+                  fill
+                  priority
+                  quality={80}
+                  sizes="(max-width: 1024px) 100vw, 50vw"
                   className="w-full h-full object-cover object-center block"
                 />
               </div>

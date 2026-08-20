@@ -7,10 +7,10 @@ import SectionContainer from "@/app/components/layout/SectionContainer";
 
 const stats = [
   { icon: Building2, value: 200, suffix: "+", label: "EXHIBITORS" },
-  { icon: Users, value: 8000, suffix: "+", label: "VISITORS & BUYERS" },
+  { icon: Users, value: 8000, suffix: "+", label: "VISITORS " },
   { icon: Mic, value: 100, suffix: "+", label: "EXPERT SPEAKERS" },
   { icon: Leaf, value: 100, suffix: "+", label: "ORGANIC & NATURAL BRANDS" },
-  { icon: Calendar, value: 3, suffix: "", label: "DAYS OF EXHIBITION" },
+  { icon: Calendar, value: 3, suffix: "+", label: "DAYS OF EXHIBITION" },
   { icon: Globe, value: 1000, suffix: "+", label: "GLOBAL BUYERS" },
 ];
 

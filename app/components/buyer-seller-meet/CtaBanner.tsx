@@ -2,7 +2,7 @@
 import React from "react";
 import Link from "next/link";
 import { ArrowRight, UserPlus, HelpCircle } from "lucide-react";
-import imgPlaceholder from "../../assets/image/footog.png";
+import imgPlaceholder from "../../assets/image/footog.webp";
 import SectionContainer from "@/app/components/layout/SectionContainer";
 
 export default function CtaBanner() {
