@@ -35,7 +35,7 @@ const ContactHero = () => {
   return (
     <section className="relative w-full pb-20 pt-0 bg-[#fbfcf7]">
       {/* Hero Banner Section */}
-      <div className="w-full h-[320px] md:h-[420px] relative overflow-hidden flex items-center">
+      <div className="w-full h-[360px] md:h-[420px] relative overflow-hidden flex items-center">
         {/* Background Image */}
         <div
           className="absolute inset-0 z-0 bg-no-repeat bg-cover bg-right md:bg-center"
@@ -43,9 +43,12 @@ const ContactHero = () => {
         >
         </div>
 
+        {/* Soft overlay gradient for high text readability on mobile & desktop */}
+        <div className="absolute inset-0 z-[1] bg-gradient-to-r from-white/95 via-white/85 to-white/30 md:from-white/90 md:via-white/50 md:to-transparent pointer-events-none" />
+
         {/* Hero Content */}
         <SectionContainer className="relative z-10 w-full">
-          <div className="max-w-xl -mt-4 md:-mt-8 ml-4 md:ml-8">
+          <div className="max-w-xl -mt-2 md:-mt-8 ml-0 sm:ml-4 md:ml-8 p-4 sm:p-0 bg-white/60 sm:bg-transparent backdrop-blur-md sm:backdrop-blur-none rounded-2xl border border-white/80 sm:border-0 shadow-sm sm:shadow-none">
             {/* Badge */}
             <div className="inline-flex items-center gap-2 bg-[#e9f0cd] text-[#032e1c] px-4 py-1.5 rounded-full text-xs font-bold tracking-wider mb-3 border border-[#dce3ca]">
               <Send size={14} className="-rotate-45" /> CONTACT US
@@ -53,19 +56,18 @@ const ContactHero = () => {
 
             {/* Heading */}
             <h1 
-              className="text-3xl md:text-4xl lg:text-6xl font-[600] text-[#03221c] leading-tight mb-4"
-              style={{ fontFamily: "'Playfair Display', serif" }}
+              className="text-3xl md:text-4xl lg:text-6xl font-[700] text-[#03221c] leading-tight mb-3 font-poppins"
             >
               Let's Grow <br /><span className="text-[#fe7c0c]">Organic</span> Together
             </h1>
 
             {/* Decoration line */}
-            <svg width="60" height="10" viewBox="0 0 60 10" className="mb-4" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <svg width="60" height="10" viewBox="0 0 60 10" className="mb-3" fill="none" xmlns="http://www.w3.org/2000/svg">
               <path d="M0 5C10 -2 20 12 30 5C40 -2 50 12 60 5" stroke="#fe7c0c" strokeWidth="2" strokeLinecap="round" />
             </svg>
 
             {/* Subtitle */}
-            <p className="text-black text-sm md:text-base max-w-md leading-relaxed">
+            <p className="text-slate-800 text-sm md:text-base max-w-md leading-relaxed font-semibold">
               We're here to answer your questions, help exhibitors, guide visitors, and support partners.
             </p>
           </div>
