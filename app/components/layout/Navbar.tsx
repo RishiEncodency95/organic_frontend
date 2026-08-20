@@ -40,7 +40,7 @@ const navLinks = [
             { label: "Why Visit ORGANIC EXPO", path: "/why-visit", icon: Layout, description: "Secure your premium space at ORGANIC EXPO 2026" },
             // { label: "Buyer-Seller Meet", path: "/buyer-seller-meet", icon: Users, description: "Connect with buyers and sellers at ORGANIC EXPO" },
             // { label: "MSME PMS Scheme", path: "/msme-pms-scheme", icon: ShieldCheck, description: "Government subsidy for MSME exhibitors" },
-            { label: "MSME PMS Scheme", path: "/government-msme-pms-schemes", icon: ShieldCheck, description: "Government subsidy for MSME exhibitors" },
+            { label: "MSME PMS Scheme", path: "/participate/msme", icon: ShieldCheck, description: "Government subsidy for MSME exhibitors" },
         ],
     },
 
