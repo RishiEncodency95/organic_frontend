@@ -86,34 +86,37 @@ export default function HeroSection() {
       >
       </div>
 
+      {/* Mobile-only gradient overlay for text readability (desktop remains untouched) */}
+      <div className="absolute inset-0 z-[1] bg-gradient-to-r from-white/95 via-white/85 to-transparent/30 md:hidden pointer-events-none" />
+
       {/* Content Container */}
       <SectionContainer className="relative z-10">
-        <div className="pl-3 md:pl-10 lg:pl-14">
+        <div className="pl-1 sm:pl-3 md:pl-10 lg:pl-14">
           <div className="max-w-2xl pt-2 md:pt-4 lg:pt-5">
-            <h1 className="text-5xl md:text-6xl lg:text-[64px] font-bold text-[#001810] leading-none mb-2 font-poppins tracking-tight">
+            <h1 className="text-3xl sm:text-4xl md:text-6xl lg:text-[64px] font-bold text-[#001810] leading-tight md:leading-none mb-2 font-poppins tracking-tight">
               E-PROMOTION <br />
               <span className="text-[#7ea82a]">OPPORTUNITIES</span>
             </h1>
             
-            <div className="flex items-center gap-3 mb-3 pl-1">
-              <div className="w-16 h-[2px] bg-[#d97706]"></div>
-              <Leaf className="text-[#d97706] w-4 h-4 fill-[#d97706] -rotate-12" />
-              <span className="text-[#d97706] font-semibold text-lg tracking-wide font-poppins">
+            <div className="flex items-center gap-2 md:gap-3 mb-2 md:mb-3 pl-0.5">
+              <div className="w-10 md:w-16 h-[2px] bg-[#d97706]"></div>
+              <Leaf className="text-[#d97706] w-3.5 h-3.5 md:w-4 md:h-4 fill-[#d97706] -rotate-12" />
+              <span className="text-[#d97706] font-semibold text-sm sm:text-base md:text-lg tracking-wide font-poppins">
                 Promote. Engage. Inspire.
               </span>
             </div>
 
-            <p className="text-gray-800 text-lg md:text-xl font-medium leading-relaxed max-w-lg mb-6">
-              <span className="font-medium text-black">Maximize your brand visibility and</span><br />
-              connect with a highly <span className="font-bold text-[#4B1426]">targeted audience</span><br />
+            <p className="text-gray-900 text-sm sm:text-base md:text-xl font-medium leading-relaxed max-w-lg mb-4 md:mb-6">
+              <span className="font-semibold text-black">Maximize your brand visibility and</span>{" "}
+              connect with a highly <span className="font-bold text-[#4B1426]">targeted audience</span>{" "}
               before, during and after the event.
             </p>
           </div>
 
           {/* Stats Bar - Aligned directly underneath the description text */}
-          <div className="pt-2 pb-2 flex flex-wrap lg:flex-nowrap justify-between lg:justify-start items-center gap-4 lg:gap-10">
+          <div className="pt-2 pb-2 flex flex-wrap lg:flex-nowrap justify-start items-center gap-3 sm:gap-4 lg:gap-10">
             {stats.map((stat, idx) => (
-              <div key={idx} className="flex flex-col items-center text-center relative w-1/3 lg:w-auto">
+              <div key={idx} className="flex flex-col items-center text-center relative w-[30%] sm:w-auto">
                 {/* Divider */}
                 {idx !== stats.length - 1 && (
                   <div className="hidden lg:block absolute -right-5 top-1/2 -translate-y-1/2 w-[1px] h-11 bg-gray-300"></div>
@@ -122,10 +125,10 @@ export default function HeroSection() {
                 <div className="mb-1">
                   {stat.icon}
                 </div>
-                <span className="text-sm md:text-base lg:text-[17px] font-semibold text-[#d97706] font-poppins leading-none mb-0.5">
+                <span className="text-xs sm:text-sm md:text-base lg:text-[17px] font-semibold text-[#d97706] font-poppins leading-none mb-0.5">
                   <AnimatedCounter value={stat.number} />
                 </span>
-                <span className="text-[8px] md:text-[8.5px] font-bold text-gray-800 uppercase tracking-widest whitespace-pre-line leading-tight font-inter">
+                <span className="text-[7.5px] sm:text-[8px] md:text-[8.5px] font-bold text-gray-800 uppercase tracking-widest whitespace-pre-line leading-tight font-inter">
                   {stat.label}
                 </span>
               </div>

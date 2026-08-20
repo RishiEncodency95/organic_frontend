@@ -43,29 +43,32 @@ const ContactHero = () => {
         >
         </div>
 
+        {/* Mobile-only gradient overlay for text readability (desktop remains untouched) */}
+        <div className="absolute inset-0 z-[1] bg-gradient-to-r from-white/95 via-white/85 to-transparent/30 md:hidden pointer-events-none" />
+
         {/* Hero Content */}
         <SectionContainer className="relative z-10 w-full">
-          <div className="max-w-xl -mt-4 md:-mt-8 ml-4 md:ml-8">
+          <div className="max-w-xl -mt-2 md:-mt-8 ml-1 sm:ml-4 md:ml-8">
             {/* Badge */}
-            <div className="inline-flex items-center gap-2 bg-[#e9f0cd] text-[#032e1c] px-4 py-1.5 rounded-full text-xs font-bold tracking-wider mb-3 border border-[#dce3ca]">
-              <Send size={14} className="-rotate-45" /> CONTACT US
+            <div className="inline-flex items-center gap-2 bg-[#e9f0cd] text-[#032e1c] px-3.5 py-1 md:px-4 md:py-1.5 rounded-full text-[11px] md:text-xs font-bold tracking-wider mb-2 md:mb-3 border border-[#dce3ca] shadow-sm">
+              <Send size={13} className="-rotate-45" /> CONTACT US
             </div>
 
             {/* Heading */}
             <h1 
-              className="text-3xl md:text-4xl lg:text-6xl font-[600] text-[#03221c] leading-tight mb-4"
+              className="text-2xl sm:text-3xl md:text-4xl lg:text-6xl font-[700] text-[#03221c] leading-tight mb-2 md:mb-4"
               style={{ fontFamily: "'Playfair Display', serif" }}
             >
               Let's Grow <br /><span className="text-[#fe7c0c]">Organic</span> Together
             </h1>
 
             {/* Decoration line */}
-            <svg width="60" height="10" viewBox="0 0 60 10" className="mb-4" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <svg width="60" height="10" viewBox="0 0 60 10" className="mb-2 md:mb-4" fill="none" xmlns="http://www.w3.org/2000/svg">
               <path d="M0 5C10 -2 20 12 30 5C40 -2 50 12 60 5" stroke="#fe7c0c" strokeWidth="2" strokeLinecap="round" />
             </svg>
 
             {/* Subtitle */}
-            <p className="text-black text-sm md:text-base max-w-md leading-relaxed">
+            <p className="text-slate-900 font-semibold text-xs sm:text-sm md:text-base max-w-md leading-relaxed">
               We're here to answer your questions, help exhibitors, guide visitors, and support partners.
             </p>
           </div>

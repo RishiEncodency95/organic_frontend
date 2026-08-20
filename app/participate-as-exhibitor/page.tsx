@@ -1,7 +1,7 @@
 import { Metadata } from "next";
 import ParticipateHero from "@/app/components/participate-as-exhibitor/ParticipateHero";
 import ParticipateFeatureStrip from "@/app/components/participate-as-exhibitor/ParticipateFeatureStrip";
-import ParticipateBuyerTypes from "@/app/components/participate-as-exhibitor/ParticipateBuyerTypes";
+import WhoCanParticipate from "@/app/components/buyer-seller-meet/WhoCanParticipate";
 import ParticipateWhyParticipate from "@/app/components/participate-as-exhibitor/ParticipateWhyParticipate";
 import ParticipateCta from "@/app/components/participate-as-exhibitor/ParticipateCta";
 import ParticipateStats from "@/app/components/participate-as-exhibitor/ParticipateStats";
@@ -19,7 +19,7 @@ const ParticipateAsExhibitorPage = () => {
         <div className="min-h-screen bg-white font-sans text-neutral-800 overflow-x-clip">
             <ParticipateHero />
             <ParticipateFeatureStrip />
-            <ParticipateBuyerTypes />
+            <WhoCanParticipate />
             <ParticipateWhyParticipate />
             <ParticipateCta />
             <ParticipateStats />

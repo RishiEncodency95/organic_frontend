@@ -80,11 +80,27 @@ const boardMembers = [
 
 const AdvisoryBoardGrid = () => {
     return (
-        <section className="w-full py-6 md:py-8 bg-[#FAF7EF] font-inter">
-            <SectionContainer>
+        <section className="w-full py-6 md:py-6 bg-[#FAF7EF] font-inter relative overflow-hidden">
+            <style>{`
+                @keyframes marqueeScrollRTL {
+                    0% { transform: translate3d(0, 0, 0); }
+                    100% { transform: translate3d(-50%, 0, 0); }
+                }
+                .marquee-wrapper-board {
+                    display: flex;
+                    width: max-content;
+                    will-change: transform;
+                    animation: marqueeScrollRTL 120s linear infinite;
+                }
+                .marquee-wrapper-board:hover {
+                    animation-play-state: paused;
+                }
+            `}</style>
+
+            <SectionContainer className="relative z-10">
 
                 {/* Section header */}
-                <div className="w-full flex flex-col items-center text-center mb-4 md:mb-6">
+                <div className="w-full flex flex-col items-center text-center ">
                     <span className="flex items-center gap-2 text-[#d26019] text-[15px] md:text-[17px] font-semibold tracking-[0.18em] uppercase mb-2 font-poppins">
                         <Leaf size={16} strokeWidth={2.2} className="text-[#3b8c2a] fill-[#3b8c2a]" />
                         Our Ayurveda Mission
@@ -95,59 +111,65 @@ const AdvisoryBoardGrid = () => {
                     </h2>
                     <div className="mt-2 h-px w-20 bg-gradient-to-r from-transparent via-[#d26019] to-transparent" />
                 </div>
-
-                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-3">
-                    {boardMembers.map((member, index) => (
-                        <article
-                            key={index}
-                            className="group relative flex flex-col bg-white rounded-xl overflow-hidden transition-all duration-300 hover:shadow-md"
-                            style={{ boxShadow: "rgba(0, 0, 0, 0.02) 0px 1px 3px 0px, rgba(27, 31, 35, 0.15) 0px 0px 0px 1px" }}
-                        >
-                            {/* Portrait without overlay */}
-                            <div className="relative w-full aspect-[4/4.2] overflow-hidden bg-gray-100">
-                                <img
-                                    src={member.image}
-                                    alt={member.name}
-                                    className="w-full h-full object-cover object-top group-hover:scale-[1.04] transition-all duration-700 ease-out"
-                                />
-
-                                {/* Designation sits on the image with solid badge */}
-                                {member.designation && (
-                                    <span className="absolute left-2 bottom-2 inline-flex items-center text-[9px] font-bold tracking-[0.1em] uppercase text-white bg-[#23471d]/90 backdrop-blur-sm px-2 py-0.5 rounded font-poppins shadow-sm">
-                                        {member.designation}
-                                    </span>
-                                )}
-                            </div>
-
-                            {/* Content */}
-                            <div className="flex flex-col flex-grow p-3">
-                                <h3 className="font-poppins font-semibold text-[#23471d] text-[13px] sm:text-[14px] leading-tight mb-1 line-clamp-2">
-                                    {member.name}
-                                </h3>
-
-                                <p className="text-[#4B1426] font-medium text-[11px] leading-snug mb-2 flex-grow line-clamp-3 font-inter">
-                                    {member.organization || "\u00A0"}
-                                </p>
-
-                                <div className="flex items-center justify-between pt-2 border-t border-gray-100 mt-auto">
-                                    <span className="flex items-center gap-1 text-gray-600 text-[11px] font-semibold font-inter">
-                                        <MapPin size={13} className="text-[#d26019]" />
-                                        {member.location}
-                                    </span>
-
-                                    <button
-                                        type="button"
-                                        className="flex items-center gap-0.5 text-[#23471d] text-[11px] font-semibold tracking-wide hover:text-[#d26019] transition-colors font-inter"
+                <div className="w-full overflow-hidden mt-2 relative z-10">
+                    <div className="marquee-wrapper-board gap-4 py-4">
+                        {[1, 2, 3, 4].map((set) => (
+                            <div key={set} className="flex gap-2 pr-4">
+                                {boardMembers.map((member, index) => (
+                                    <article
+                                        key={`${set}-${index}`}
+                                        className="w-[240px] flex-shrink-0 group relative flex flex-col bg-white rounded-xl overflow-hidden transition-all duration-300 hover:-translate-y-1.5 hover:shadow-[0_15px_30px_rgba(0,0,0,0.1)] border border-gray-100"
+                                        style={{ boxShadow: "rgba(0, 0, 0, 0.04) 0px 4px 12px" }}
                                     >
-                                        View profile
-                                        <ArrowUpRight size={12} className="group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
-                                    </button>
-                                </div>
-                            </div>
-                        </article>
-                    ))}
-                </div>
+                                        {/* Portrait */}
+                                        <div className="relative w-full aspect-[4/3.5] overflow-hidden bg-gray-50 border-b border-gray-100">
+                                            <img
+                                                src={member.image}
+                                                alt={member.name}
+                                                className="w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-500"
+                                            />
 
+                                            {/* Designation Badge */}
+                                            {member.designation && (
+                                                <div className="absolute bottom-2 left-2">
+                                                    <span className="inline-flex items-center text-[10.5px] font-semibold tracking-wider uppercase text-white bg-[#23471d]/90 backdrop-blur-md px-2.5 py-1 rounded shadow-sm font-poppins">
+                                                        {member.designation}
+                                                    </span>
+                                                </div>
+                                            )}
+                                        </div>
+
+                                        {/* Content */}
+                                        <div className="flex flex-col p-4 flex-grow text-left">
+                                            <h3 className="font-poppins font-semibold text-[#23471d] text-[17px] leading-snug mb-1.5 line-clamp-2">
+                                                {member.name}
+                                            </h3>
+
+                                            <p className="text-[#4B1426] font-medium text-[13px] leading-relaxed mb-4 flex-grow font-inter line-clamp-4">
+                                                {member.organization || "\u00A0"}
+                                            </p>
+
+                                            <div className="flex items-center justify-between pt-3 border-t border-gray-100 mt-auto">
+                                                <span className="flex items-center gap-1.5 text-gray-500 text-[12px] font-medium font-inter">
+                                                    <MapPin size={14} className="text-[#d26019]" />
+                                                    {member.location}
+                                                </span>
+
+                                                <button
+                                                    type="button"
+                                                    className="flex items-center gap-1 text-[#23471d] text-[12.5px] font-semibold hover:text-[#d26019] transition-colors"
+                                                >
+                                                    View Profile
+                                                    <ArrowUpRight size={14} className="group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </article>
+                                ))}
+                            </div>
+                        ))}
+                    </div>
+                </div>
             </SectionContainer>
         </section>
     );

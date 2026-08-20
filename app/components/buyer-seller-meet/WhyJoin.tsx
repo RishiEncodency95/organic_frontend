@@ -1,7 +1,7 @@
 "use client";
 import React from "react";
 import { CheckCircle2, ShoppingCart, User, Laptop } from "lucide-react";
-import a3ogImg from "../../assets/image/a3og.png";
+import a3ogImg from "../../assets/image/a3og.webp";
 import a1ogImg from "../../assets/image/a1og.png";
 import a2ogImg from "../../assets/image/a2og.png";
 import leafsImg from "../../assets/icons/leafs.png";

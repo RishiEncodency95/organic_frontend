@@ -38,7 +38,7 @@ const NeedHelpSupport = () => {
         <div className="w-full">
           {/* TOP ROW: HEADER LEFT + WAYS TO CONNECT RIGHT */}
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-5 mb-5 items-stretch">
-            
+
             {/* LEFT HEADER & COMMITMENT BOX */}
             <div className="lg:col-span-4 flex flex-col justify-between gap-4">
               <div>
@@ -190,7 +190,7 @@ const NeedHelpSupport = () => {
 
           {/* MIDDLE ROW: WHY REACH OUT TO US LEFT + DEDICATED RELATIONSHIP MANAGERS RIGHT */}
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-5 mb-5">
-            
+
             {/* LEFT: WHY REACH OUT TO US? */}
             <div className="lg:col-span-6 bg-white border border-slate-200 rounded-2xl p-5 shadow-xs flex flex-col sm:flex-row justify-between items-center gap-4">
               <div className="w-full sm:w-8/12">
@@ -327,13 +327,15 @@ const NeedHelpSupport = () => {
                 </div>
               </div>
 
-              <Link
-                href="/participate"
+              <a
+                href="/registration/book-a-stand"
+                target="_blank"
+                rel="noopener noreferrer"
                 className="bg-[#1b5e20] hover:bg-[#144718] text-white font-poppins font-semibold text-xs sm:text-sm px-5 py-3 rounded-xl flex items-center gap-2 shadow-sm transition-all shrink-0 whitespace-nowrap group"
               >
                 <span>START YOUR APPLICATION</span>
                 <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
-              </Link>
+              </a>
             </div>
           </div>
 

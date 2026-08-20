@@ -7,9 +7,10 @@ import {
   Globe, Users, Handshake, Leaf, Building2, Store, Calendar, HeartPulse, Mic
 } from 'lucide-react';
 import Link from 'next/link';
+import Image from 'next/image';
 import SectionContainer from '../layout/SectionContainer';
 
-import testImg from "../../assets/banner/testbg.png";
+import testImg from "../../assets/banner/testbg.webp";
 import leafPng from "../../assets/home/leaf.webp";
 
 // ─── Sparkle component for golden button ───
@@ -504,8 +505,12 @@ const TestimonialsCarousel = () => {
       {/* ─── TOP HERO BANNER ─── */}
       <div className="relative w-full min-h-[420px] md:min-h-[380px] flex items-center overflow-hidden py-10 md:py-4">
         <div className="absolute inset-0 z-0">
-          <img
-            src={testImg.src}
+          <Image
+            src={testImg}
+            fill
+            priority
+            quality={75}
+            sizes="100vw"
             className="w-full h-full object-cover opacity-60 md:opacity-100"
             style={{ objectPosition: "center 40%" }}
             alt="Bharat Organic Expo Background"
@@ -564,7 +569,7 @@ const TestimonialsCarousel = () => {
       <div className="relative pt-8 pb-6">
         <SectionContainer className="relative z-10">
           <div className="w-full overflow-hidden">
-            <div 
+            <div
               className="marquee-wrapper-cards gap-6"
               style={{ animationDuration: `${Math.max(total * 10, 25)}s` }}
             >
@@ -572,8 +577,8 @@ const TestimonialsCarousel = () => {
                 <div key={set} className="flex gap-6">
                   {TESTIMONIALS_DATA.map((item: any, i: number) => (
                     <div key={`${set}-${i}`} className="flex-shrink-0">
-                      <TestimonialCard 
-                        item={item} 
+                      <TestimonialCard
+                        item={item}
                         expandedCardId={expandedCardId}
                         setExpandedCardId={setExpandedCardId}
                       />
@@ -595,7 +600,7 @@ const TestimonialsCarousel = () => {
         <SectionContainer className="relative z-10">
           <div className="flex flex-col md:flex-row items-stretch">
             <div className="w-full overflow-hidden">
-              <div 
+              <div
                 className="marquee-wrapper-videos gap-4"
                 style={{ animationDuration: `${Math.max(totalVideos * 10, 20)}s` }}
               >

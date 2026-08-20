@@ -2,7 +2,7 @@ export const SITE_CONFIG = {
     name: "Bharat Organic Expo 2027",
     email: "info@namogangewellness.com",
     phone: "+91-9654900525",
-    rawPhone: "+919876543210",
+    rawPhone: "+919654900525",
     address: "Pragati Maidan, New Delhi, India",
     website: "www.namogangewellness.com",
     deligate: "https://arogya.namogange.org/register-now",

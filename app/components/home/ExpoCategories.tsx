@@ -101,7 +101,7 @@ const ExpoCategories = () => {
 
                 {/* Top Half: Image */}
                 <div className="relative w-full h-[140px] lg:h-[180px] shrink-0 overflow-hidden rounded-t-[15px] bg-gray-200">
-                  <Image src={item.image} alt={item.title} fill className="object-cover group-hover:scale-110 transition-transform duration-700" />
+                  <Image src={item.image} alt={item.title} fill sizes="(max-width: 640px) 50vw, (max-width: 1024px) 25vw, 20vw" className="object-cover group-hover:scale-110 transition-transform duration-700" />
                 </div>
 
                 {/* Bottom Half: Content */}

@@ -65,12 +65,12 @@ export default function EPromoteBand() {
   }, []);
 
   return (
-    <div className="relative z-20 -mt-6 md:-mt-8 font-inter">
+    <div className="relative z-20 -mt-2 md:-mt-8 font-inter">
       <SectionContainer>
         <div
           ref={bandRef}
           style={{ opacity: 0, backgroundColor: "#1b5e20", boxShadow: "0 8px 20px -10px rgba(0,0,0,0.3)" }}
-          className="rounded-2xl border border-white/10 p-0.5 md:py-2 md:px-3 relative overflow-hidden [perspective:1000px]"
+          className="rounded-2xl border border-white/10 p-2 md:py-2 md:px-3 relative overflow-hidden [perspective:1000px]"
         >
           {/* Shimmer overlay */}
           <div
@@ -79,7 +79,7 @@ export default function EPromoteBand() {
             style={{ background: "linear-gradient(100deg, transparent, rgba(255,255,255,0.18), transparent)", opacity: 0 }}
           />
 
-          <div className="grid grid-cols-2 sm:grid-cols-3 md:flex md:flex-nowrap items-center justify-center md:justify-between gap-y-3 gap-x-2 md:gap-0">
+          <div className="grid grid-cols-2 sm:grid-cols-3 md:flex md:flex-nowrap items-center justify-center md:justify-between gap-2 md:gap-0">
             {features.map((item, i) => {
               const IconComponent = item.icon;
               return (
@@ -87,15 +87,21 @@ export default function EPromoteBand() {
                   <div
                     ref={(el) => { itemRefs.current[i] = el; }}
                     style={{ opacity: 0 }}
-                    className="flex flex-col items-center text-center group flex-1 py-1"
+                    className={`flex flex-row items-center justify-center gap-2 sm:gap-2.5 group flex-1 py-1.5 px-2 bg-white/5 md:bg-transparent rounded-xl border border-white/10 md:border-none ${
+                      i === 4 ? "col-span-2 sm:col-span-1 md:col-span-1" : ""
+                    }`}
                   >
-                    <IconComponent className="w-4 h-4 md:w-5 md:h-5 mb-1 text-white stroke-[1.75]" />
-                    <h4 className="text-[11px] sm:text-[13px] md:text-sm font-semibold text-white leading-none font-inter mb-0.5">
-                      {item.title}
-                    </h4>
-                    <p className="text-[8px] md:text-[9px] font-bold text-[#facc15] uppercase tracking-widest leading-tight mt-0.5 font-inter">
-                      {item.subtitle}
-                    </p>
+                    <div className="w-7 h-7 md:w-8 md:h-8 rounded-full bg-white/10 flex items-center justify-center shrink-0 border border-white/15">
+                      <IconComponent className="w-3.5 h-3.5 md:w-4 md:h-4 text-[#facc15] stroke-[2]" />
+                    </div>
+                    <div className="flex flex-col text-left">
+                      <h4 className="text-[11px] sm:text-[12.5px] md:text-[13px] font-semibold text-white leading-tight font-inter">
+                        {item.title}
+                      </h4>
+                      <p className="text-[8px] md:text-[8.5px] font-bold text-[#facc15] uppercase tracking-wider leading-tight font-inter">
+                        {item.subtitle}
+                      </p>
+                    </div>
                   </div>
                   {i < features.length - 1 && (
                     <div

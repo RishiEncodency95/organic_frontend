@@ -7,7 +7,7 @@ import { motion } from 'framer-motion';
 import { CheckCircle2, FileDown, ArrowRight, Leaf, Store, Info } from 'lucide-react';
 import SectionContainer from '../layout/SectionContainer';
 
-import meetingImg from "../../assets/home/bs_meet.png";
+import meetingImg from "../../assets/home/bs_meet.webp";
 
 // ── Sparkle Component (same as Footer) ──
 const Sparkle = ({ style, color = '#fff176' }: { style?: React.CSSProperties; color?: string }) => (
@@ -167,8 +167,8 @@ const WhyParticipate = () => {
               <Sparkle color="#28396C" style={{ bottom: '-10px', left: '25%', animationDelay: '0.3s' }} />
               <Sparkle color="#28396C" style={{ bottom: '-12px', right: '30%', animationDelay: '0.7s' }} />
 
-              <Link
-                href="/registration/visitor-registration"
+              <a
+                href="/download/invited card.pdf"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="blue-btn-wp flex items-center gap-1.5 px-4 h-8 rounded-lg relative z-10 hover:scale-[1.02] transition-transform"
@@ -178,7 +178,7 @@ const WhyParticipate = () => {
                   Download Brochure
                 </span>
                 <ArrowRight className="w-3 h-3 text-white group-hover/btn:translate-x-1 transition-transform" />
-              </Link>
+              </a>
             </div>
 
             {/* ── More Info Button ── */}
@@ -211,6 +211,7 @@ const WhyParticipate = () => {
             <Image
               src={meetingImg}
               alt="Business Meeting at Expo"
+              sizes="(max-width: 1024px) 100vw, 50vw"
               className="w-full h-[280px] md:h-[330px] object-cover"
             />
 

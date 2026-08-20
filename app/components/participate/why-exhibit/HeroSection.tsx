@@ -132,14 +132,14 @@ const HeroSection = () => (
               <Sparkle color="#3b82f6" shadow="#28396C" style={{ top: "-12px", left: "10%", animationDelay: "0.2s" }} />
               <Sparkle color="#3b82f6" shadow="#28396C" style={{ top: "-15px", left: "50%", animationDelay: "0.6s" }} />
               <Sparkle color="#3b82f6" shadow="#28396C" style={{ top: "-10px", right: "10%", animationDelay: "1s" }} />
-              <Link
-                href="/pdf.pdf"
+              <a
+                href="/download/invited card.pdf"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="blue-btn-hero text-white px-5 py-2.5 rounded-lg font-black text-[11px] uppercase tracking-widest flex items-center justify-start gap-2 transition-all active:scale-95 shadow-lg relative z-10 w-full sm:w-auto"
               >
                 Download Brochure <Download size={14} />
-              </Link>
+              </a>
             </div>
           </div>
         </div>

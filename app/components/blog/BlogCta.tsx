@@ -20,46 +20,46 @@ const BlogCta = () => {
         <div className="flex flex-col items-center text-center gap-6 lg:flex-row lg:items-center lg:justify-between lg:text-left">
           <Reveal direction="left" className="w-full lg:max-w-xl">
             <div>
-              <span className="inline-flex items-center gap-2 mb-2 font-poppins">
-                <Leaf className="w-4 h-4 text-[#3b8c2a] fill-[#3b8c2a]" />
-                <span className="text-[#2b5825] text-[12px] md:text-[13px] font-bold tracking-widest uppercase">
-                  Charting India's Organic Future
-                </span>
-              </span>
+
               <h2 className="font-poppins font-semibold text-[22px] md:text-[26px] lg:text-[28px] text-[#1b5e20] mb-2 leading-[1.15] tracking-wide">
                 Exhibit. Attend. Connect. Grow.
               </h2>
               <p className="font-inter text-[15px] text-gray-600 max-w-xl mx-auto lg:mx-0 leading-relaxed">
-                Join farmers, brands, buyers, exporters, retailers and sustainability leaders shaping
-                India's organic and natural products economy.
+                Join farmers, brands, buyers, exporters, retailers and sustainability leaders shaping India's organic and natural products economy.
               </p>
             </div>
           </Reveal>
           <Reveal delay={150} direction="right" className="w-full lg:w-auto lg:flex-shrink-0">
             <div className="flex flex-col items-center lg:items-start gap-2.5">
               <div className="flex flex-wrap justify-center lg:justify-start gap-3">
-                <Link
-                  href="/visitor-registration"
-                  className="px-5 py-2.5 rounded-md bg-[#1b5e20] hover:bg-[#154726] text-white text-[11px] md:text-[12px] font-semibold uppercase tracking-wider shadow-md hover:shadow-lg transition-all duration-300 hover:-translate-y-0.5 font-poppins"
+                <a
+                  href="/registration/visitor-registration"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="px-5 py-2.5 rounded-md bg-[#1b5e20] hover:bg-[#154726] text-white text-[11px] md:text-[12px] font-semibold uppercase tracking-wider shadow-md hover:shadow-lg transition-all duration-300 hover:-translate-y-0.5 font-poppins text-center"
                 >
                   Register as Visitor
-                </Link>
-                <Link
-                  href="/book-a-stand"
-                  className="px-5 py-2.5 rounded-md bg-[#F2B40E] text-[#0b2912] text-[11px] md:text-[12px] font-semibold uppercase tracking-wider shadow-md hover:bg-[#ffc533] hover:shadow-lg transition-all duration-300 hover:-translate-y-0.5 font-poppins"
+                </a>
+                <a
+                  href="/registration/book-a-stand"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="px-5 py-2.5 rounded-md bg-[#F2B40E] text-[#0b2912] text-[11px] md:text-[12px] font-semibold uppercase tracking-wider shadow-md hover:bg-[#ffc533] hover:shadow-lg transition-all duration-300 hover:-translate-y-0.5 font-poppins text-center"
                 >
                   Register as Exhibitor
-                </Link>
-                <Link
-                  href="/buyer-registration"
-                  className="px-5 py-2.5 rounded-md border-2 border-[#1b5e20] text-[#1b5e20] text-[11px] md:text-[12px] font-semibold uppercase tracking-wider hover:bg-[#1b5e20] hover:text-white transition-all duration-300 hover:-translate-y-0.5 font-poppins"
+                </a>
+                <a
+                  href="/registration/buyer-registration"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="px-5 py-2.5 rounded-md border-2 border-[#1b5e20] text-[#1b5e20] text-[11px] md:text-[12px] font-semibold uppercase tracking-wider hover:bg-[#1b5e20] hover:text-white transition-all duration-300 hover:-translate-y-0.5 font-poppins text-center"
                 >
                   Register as Buyer
-                </Link>
+                </a>
               </div>
               <p className="text-[12px] md:text-[13px] text-gray-600 flex flex-wrap justify-center lg:justify-start items-center gap-5 font-medium font-inter">
                 <span className="flex items-center gap-1.5">
-                  <Calendar className="w-4 h-4 text-[#3b8c2a]" /> 27–29 November 2026
+                  <Calendar className="w-4 h-4 text-[#3b8c2a]" /> 19–21 February 2027
                 </span>
                 <span className="flex items-center gap-1.5">
                   <MapPin className="w-4 h-4 text-[#3b8c2a]" /> Pragati Maidan, New Delhi

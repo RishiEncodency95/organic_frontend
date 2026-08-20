@@ -230,7 +230,7 @@ const BuyerSellerMeetSection = () => {
                     <Mic className="w-4 h-4" />
                   </div>
                   <div className="text-left">
-                    <h4 className="font-poppins font-semibold text-base text-[#001810] leading-tight">150+</h4>
+                    <h4 className="font-poppins font-semibold text-base text-[#001810] leading-tight">100+</h4>
                     <p className="font-inter font-semibold text-[11px] text-[#001810] uppercase tracking-wide">SPEAKERS</p>
                     <p className="font-inter font-semibold text-[10px] sm:text-[11px] text-slate-700 leading-tight">Industry Leaders & Experts</p>
                   </div>
@@ -274,13 +274,15 @@ const BuyerSellerMeetSection = () => {
                 </div>
               </div>
 
-              <Link
+              <a
                 href="/registration/visitor-registration"
-                className="bg-[#a3e635] hover:bg-[#84cc16] text-[#0c240f] font-poppins font-bold text-[11px] px-4 py-1.5 rounded-full flex items-center gap-1.5 transition-all shadow-md shrink-0"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="bg-[#a3e635] hover:bg-[#84cc16] text-[#0c240f] font-poppins font-bold text-[11px] px-4 py-1.5 rounded-full flex items-center gap-1.5 transition-all shadow-md shrink-0 group"
               >
                 <span>PLAN YOUR VISIT NOW</span>
-                <ArrowRight className="w-3.5 h-3.5" />
-              </Link>
+                <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
+              </a>
             </div>
 
           </div>

@@ -41,7 +41,7 @@ export default function StatsBand() {
     { icon: Users,     val: "8,000+", label: "VISITORS / DELEGATES" },
     { icon: Building2, val: "200+",   label: "EXHIBITORS" },
     { icon: Globe,     val: "1,000+", label: "GLOBAL BUYERS" },
-    { icon: Mic,       val: "150+",   label: "EXPERT SPEAKERS" },
+    { icon: Mic,       val: "65+",    label: "EXPERT SPEAKERS" },
     { icon: Handshake, val: "B2B",    label: "MEETINGS" },
   ];
 
@@ -97,7 +97,7 @@ export default function StatsBand() {
         <div
           ref={bandRef}
           style={{ opacity: 0, backgroundColor: "#1b5e20", boxShadow: "0 8px 20px -10px rgba(0,0,0,0.3)" }}
-          className="rounded-2xl border border-white/10 p-0.5 md:py-2 md:px-3 relative overflow-hidden [perspective:1000px]"
+          className="rounded-2xl border border-white/10 p-2 sm:py-2 md:py-2 md:px-4 relative overflow-hidden [perspective:1000px]"
         >
           {/* Shimmer overlay */}
           <div
@@ -114,15 +114,19 @@ export default function StatsBand() {
                   <div
                     ref={(el) => { itemRefs.current[i] = el; }}
                     style={{ opacity: 0 }}
-                    className="flex flex-col items-center text-center group flex-1 py-1"
+                    className="flex flex-row items-center justify-center gap-2 sm:gap-2.5 group flex-1 py-1 px-1.5 bg-white/5 md:bg-transparent rounded-xl border border-white/10 md:border-none"
                   >
-                    <IconComponent className="w-4 h-4 md:w-5 md:h-5 mb-1 text-white stroke-[1.75]" />
-                    <h4 className="text-[11px] sm:text-[13px] md:text-sm font-semibold text-white leading-none font-inter mb-0.5">
-                      <StatCounter value={item.val} />
-                    </h4>
-                    <p className="text-[8px] md:text-[9px] font-bold text-[#facc15] uppercase tracking-widest leading-tight mt-0.5 font-inter">
-                      {item.label}
-                    </p>
+                    <div className="w-7 h-7 md:w-8 md:h-8 rounded-full bg-white/10 flex items-center justify-center shrink-0 border border-white/15">
+                      <IconComponent className="w-3.5 h-3.5 md:w-4 md:h-4 text-[#facc15] stroke-[2]" />
+                    </div>
+                    <div className="flex flex-col text-left justify-center">
+                      <h4 className="text-[14px] sm:text-[15px] md:text-[16px] font-semibold text-white leading-none font-inter mb-0.5">
+                        <StatCounter value={item.val} />
+                      </h4>
+                      <p className="text-[9px] sm:text-[9.5px] md:text-[10px] font-semibold text-[#facc15] uppercase tracking-wider leading-none font-inter">
+                        {item.label}
+                      </p>
+                    </div>
                   </div>
                   {i < stats.length - 1 && (
                     <div
