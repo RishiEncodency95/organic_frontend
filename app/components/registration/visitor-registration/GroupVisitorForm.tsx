@@ -1,7 +1,7 @@
 "use client";
 import React, { useState, useEffect } from "react";
 import { Users, Plus, Trash2, CheckCircle2, Globe2, Loader2, CheckCircle, X, ChevronsUpDown, ShieldCheck } from "lucide-react";
-import { crmApi, verifyApi, visitorApi , settingsApi } from "../../../../lib/api";
+import { crmApi, verifyApi, visitorApi, settingsApi } from "../../../../lib/api";
 import Swal from 'sweetalert2';
 
 const MIN_PERSONS = 5;
@@ -100,6 +100,19 @@ export default function GroupVisitorForm() {
   const [otpVerified, setOtpVerified] = useState({ email: false, mobile: false });
   const [emailOtp, setEmailOtp] = useState('');
   const [mobileOtp, setMobileOtp] = useState('');
+  const [resendTimers, setResendTimers] = useState({ email: 0, mobile: 0 });
+
+
+  useEffect(() => {
+    let emailInterval: NodeJS.Timeout, mobileInterval: NodeJS.Timeout;
+    if (resendTimers.email > 0) {
+      emailInterval = setInterval(() => setResendTimers(prev => ({ ...prev, email: prev.email - 1 })), 1000);
+    }
+    if (resendTimers.mobile > 0) {
+      mobileInterval = setInterval(() => setResendTimers(prev => ({ ...prev, mobile: prev.mobile - 1 })), 1000);
+    }
+    return () => { clearInterval(emailInterval); clearInterval(mobileInterval); };
+  }, [resendTimers]);
 
   const handleRequestOtp = async (type: 'email' | 'mobile') => {
     const value = type === 'email' ? persons[0].email : persons[0].mobileNo;
@@ -108,7 +121,7 @@ export default function GroupVisitorForm() {
     setIsVerifying(prev => ({ ...prev, [type]: true }));
     try {
       const res = type === 'email'
-        ? await verifyApi.sendEmailOtp(value, 'VISITOR')
+        ? await verifyApi.sendEmailOtp(value, 'VISITOR', persons[0].firstName)
         : await verifyApi.sendPhoneOtp(value, 'VISITOR', persons[0].firstName);
 
       if (res && res.success) {
@@ -320,7 +333,14 @@ export default function GroupVisitorForm() {
                       </select>
                     </div>
                     <div className={idx === 0 ? "md:col-span-2" : ""}>
-                      <label className={labelClasses}>Email Address *</label>
+                      <div className="flex justify-between items-end">
+                        <label className={`${labelClasses} mb-0`}>Email Address *</label>
+                        {requireOtp && idx === 0 && otpSent.email && !otpVerified.email && (
+                          <button type="button" onClick={() => handleRequestOtp('email')} disabled={resendTimers.email > 0 || isVerifying.email} className="text-[#4d7f1d] text-[10px] font-bold uppercase disabled:opacity-50 hover:underline">
+                            {resendTimers.email > 0 ? `Resend (${resendTimers.email}s)` : 'Resend'}
+                          </button>
+                        )}
+                      </div>
                       <div className="flex gap-2 h-7">
                         <input required type="email" value={person.email} onChange={e => handlePersonChange(idx, "email", e.target.value)} className={`${inputClasses} h-full`} placeholder="Email" disabled={idx === 0 && (otpVerified.email || otpSent.email)} />
                         {requireOtp && idx === 0 && !otpVerified.email && !otpSent.email && (
@@ -340,7 +360,14 @@ export default function GroupVisitorForm() {
                       </div>
                     </div>
                     <div className={`relative ${idx === 0 ? "md:col-span-2" : ""}`}>
-                      <label className={labelClasses}>WhatsApp No. *</label>
+                      <div className="flex justify-between items-end">
+                        <label className={`${labelClasses} mb-0`}>WhatsApp No. *</label>
+                        {requireOtp && idx === 0 && otpSent.mobile && !otpVerified.mobile && (
+                          <button type="button" onClick={() => handleRequestOtp('mobile')} disabled={resendTimers.mobile > 0 || isVerifying.mobile} className="text-[#4d7f1d] text-[10px] font-bold uppercase disabled:opacity-50 hover:underline">
+                            {resendTimers.mobile > 0 ? `Resend (${resendTimers.mobile}s)` : 'Resend'}
+                          </button>
+                        )}
+                      </div>
                       <div className="flex gap-2 h-7">
                         <input required type="tel" value={person.mobileNo} onChange={e => handlePersonChange(idx, "mobileNo", e.target.value)} className={`${inputClasses} h-full w-full`} placeholder="Mobile" disabled={idx === 0 && (otpVerified.mobile || otpSent.mobile)} />
                         {requireOtp && idx === 0 && !otpVerified.mobile && !otpSent.mobile && (
@@ -350,7 +377,7 @@ export default function GroupVisitorForm() {
                         )}
                         {requireOtp && idx === 0 && otpSent.mobile && !otpVerified.mobile && (
                           <>
-                            <input type="text" maxLength={6} value={mobileOtp} onChange={(e) => setMobileOtp(e.target.value.replace(/\D/g, ''))} className={`${inputClasses} h-full w-[80px] text-center tracking-widest shrink-0`} placeholder="OTP" />
+                            <input type="text" maxLength={6} value={mobileOtp} onChange={(e) => setMobileOtp(e.target.value.replace(/\D/g, ''))} className={`${inputClasses.replace('w-full', '')} h-full w-[80px] text-center tracking-widest shrink-0`} placeholder="OTP" />
                             <button type="button" onClick={() => handleVerifyOtp('mobile')} className={`bg-[#4d7f1d] text-white px-3 rounded text-[10px] uppercase font-bold transition hover:bg-[#3b6315] h-full shrink-0`}>
                               {isVerifying.mobile ? <Loader2 className="animate-spin" size={14} /> : 'Verify'}
                             </button>

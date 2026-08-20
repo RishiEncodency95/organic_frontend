@@ -156,12 +156,14 @@ export default function DomesticBuyerForm() {
   const [otpSent, setOtpSent] = useState({ email: false, mobile: false });
   const [otpVerified, setOtpVerified] = useState({ email: false, mobile: false });
   const [otpValue, setOtpValue] = useState({ email: "", mobile: "" });
+  const [resendTimers, setResendTimers] = useState({ email: 0, mobile: 0 });
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   const [companyProfileFile, setCompanyProfileFile] = useState<File | null>(null);
   const [paymentProofFile, setPaymentProofFile] = useState<File | null>(null);
 
   const [formData, setFormData] = useState({
+    eventName: process.env.NEXT_PUBLIC_EVENT_NAME || "BOE2026",
     fullName: "",
     designation: "",
     companyName: "",
@@ -260,6 +262,7 @@ export default function DomesticBuyerForm() {
 
       if (res && res.success) {
         setOtpSent(prev => ({ ...prev, [type]: true }));
+        setResendTimers(prev => ({ ...prev, [type]: 30 }));
         Swal.fire({ scrollbarPadding: false, icon: 'success', title: 'OTP Sent', text: `OTP sent to your ${type}.`, timer: 2000, showConfirmButton: false });
       } else {
         Swal.fire({ scrollbarPadding: false, icon: 'error', title: 'Error', text: res?.message || 'Failed to send OTP.' });
@@ -303,13 +306,77 @@ export default function DomesticBuyerForm() {
     }));
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (requireOtp && (!otpVerified.email || !otpVerified.mobile)) {
-      alert("Please verify OTP for both Email and Mobile.");
+
+    const form = e.currentTarget as HTMLFormElement;
+    if (!form.checkValidity()) {
+      form.classList.add('was-validated');
+      Swal.fire({
+        icon: 'warning',
+        title: 'Incomplete Form',
+        text: 'Please fill out all required fields before submitting.',
+        scrollbarPadding: false
+      });
       return;
     }
-    setSubmitted(true);
+
+    if (requireOtp && (!otpVerified.email || !otpVerified.mobile)) {
+      Swal.fire({
+        icon: 'warning',
+        title: 'Verification Required',
+        text: 'Please verify OTP for both Email and Mobile.',
+        scrollbarPadding: false
+      });
+      return;
+    }
+
+    setIsSubmitting(true);
+
+    try {
+      const payload = new FormData();
+      payload.append('buyerType', 'Domestic');
+
+      Object.keys(formData).forEach(key => {
+        let val = (formData as any)[key];
+
+        // Provide fallback for backend required fields if they are empty
+        if (key === 'paymentMode' && !val) val = 'Pending';
+        if (key === 'transactionId' && !val) val = 'N/A';
+
+        if (Array.isArray(val)) {
+          payload.append(key, JSON.stringify(val));
+        } else {
+          payload.append(key, val);
+        }
+      });
+
+      if (companyProfileFile) payload.append('companyProfileFile', companyProfileFile);
+      if (paymentProofFile) payload.append('paymentProofFile', paymentProofFile);
+
+      const res = await buyerApi.submitBuyer(payload);
+
+      if (res && res.success !== false) {
+        setSubmitted(true);
+      } else {
+        Swal.fire({
+          icon: 'error',
+          title: 'Submission Failed',
+          text: res?.message || 'Failed to submit registration. Please try again.',
+          scrollbarPadding: false
+        });
+      }
+    } catch (err) {
+      console.error("Error submitting domestic buyer form:", err);
+      Swal.fire({
+        icon: 'error',
+        title: 'Error',
+        text: 'An unexpected error occurred. Please try again later.',
+        scrollbarPadding: false
+      });
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   const inputClasses = "rounded border border-slate-400 h-7 focus:border-[#23471d] focus:ring-[#23471d]/10 transition-all text-[12px] bg-white placeholder:text-slate-400 text-slate-900 font-normal shadow-none outline-none px-3 w-full text-left";
@@ -336,7 +403,7 @@ export default function DomesticBuyerForm() {
   }
 
   return (
-    <form onSubmit={handleSubmit} className="w-full space-y-2 animate-in fade-in duration-500">
+    <form onSubmit={handleSubmit} onInvalid={(e) => (e.currentTarget as HTMLFormElement).classList.add('was-validated')} className="w-full space-y-2 animate-in fade-in duration-500">
       <div className="flex items-center gap-3 mb-6">
         <div className="w-10 h-10 rounded-full bg-[#4d7f1d] flex items-center justify-center shrink-0 shadow-md">
           <User size={18} className="text-white" />

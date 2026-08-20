@@ -156,11 +156,13 @@ export default function InternationalBuyerForm() {
   const [otpSent, setOtpSent] = useState({ email: false, mobile: false });
   const [otpVerified, setOtpVerified] = useState({ email: false, mobile: false });
   const [otpValue, setOtpValue] = useState({ email: "", mobile: "" });
+  const [resendTimers, setResendTimers] = useState({ email: 0, mobile: 0 });
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [companyProfileFile, setCompanyProfileFile] = useState<File | null>(null);
   const [paymentProofFile, setPaymentProofFile] = useState<File | null>(null);
 
   const [formData, setFormData] = useState({
+    eventName: process.env.NEXT_PUBLIC_EVENT_NAME || "BOE2026",
     fullName: "",
     designation: "",
     companyName: "",
@@ -259,6 +261,7 @@ export default function InternationalBuyerForm() {
 
       if (res && res.success) {
         setOtpSent(prev => ({ ...prev, [type]: true }));
+        setResendTimers(prev => ({ ...prev, [type]: 30 }));
         Swal.fire({ scrollbarPadding: false, icon: 'success', title: 'OTP Sent', text: `OTP sent to your ${type}.`, timer: 2000, showConfirmButton: false });
       } else {
         Swal.fire({ scrollbarPadding: false, icon: 'error', title: 'Error', text: res?.message || 'Failed to send OTP.' });
@@ -302,13 +305,62 @@ export default function InternationalBuyerForm() {
     }));
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (requireOtp && (!otpVerified.email || !otpVerified.mobile)) {
       alert("Please verify OTP for both Email and Mobile.");
       return;
     }
-    setSubmitted(true);
+    setIsSubmitting(true);
+    try {
+
+      const dataToSubmit = new FormData();
+
+      // Map flat formData to the InternationalBuyer backend schema
+      const mappedData = {
+        eventName: formData.eventName,
+        brandName: formData.companyName || 'N/A',
+        countryOfRegistration: formData.country || 'N/A',
+        address: formData.registeredAddress || 'N/A',
+        city: formData.city || 'N/A',
+        stateProvince: formData.stateProvince || 'N/A',
+        country: formData.country || 'N/A',
+        website: formData.website || '',
+        primaryContact: JSON.stringify({
+          fullName: formData.fullName || 'N/A',
+          designation: formData.designation || 'N/A',
+          mobileNumber: formData.mobileNumber || 'N/A',
+          emailId: formData.emailAddress || 'N/A'
+        })
+      };
+
+      Object.entries(mappedData).forEach(([key, value]) => {
+        dataToSubmit.append(key, value);
+      });
+
+      // Also append the original flattened data in case the backend needs it for emails
+      Object.entries(formData).forEach(([key, value]) => {
+        if (!Object.prototype.hasOwnProperty.call(mappedData, key) && key !== 'primaryContact') {
+          if (Array.isArray(value)) {
+            value.forEach(v => dataToSubmit.append(key + '[]', String(v)));
+          } else {
+            dataToSubmit.append(key, String(value));
+          }
+        }
+      });
+      if (companyProfileFile) dataToSubmit.append('companyBrochure', companyProfileFile);
+      if (paymentProofFile) dataToSubmit.append('paymentScreenshot', paymentProofFile);
+
+      const res = await buyerApi.submitInternationalBuyer(dataToSubmit);
+      if (res && res.success !== false) {
+        setSubmitted(true);
+      } else {
+        Swal.fire('Error', 'Submission failed', 'error');
+      }
+    } catch (err) {
+      Swal.fire('Error', 'Something went wrong', 'error');
+    }
+    setIsSubmitting(false);
   };
 
   const inputClasses = "rounded border border-slate-400 h-7 focus:border-[#23471d] focus:ring-[#23471d]/10 transition-all text-[12px] bg-white placeholder:text-slate-400 text-slate-900 font-normal shadow-none outline-none px-3 w-full text-left";
@@ -335,7 +387,7 @@ export default function InternationalBuyerForm() {
   }
 
   return (
-    <form onSubmit={handleSubmit} className="w-full space-y-2 animate-in fade-in duration-500">
+    <form onSubmit={handleSubmit} onInvalid={(e) => (e.currentTarget as HTMLFormElement).classList.add('was-validated')} className="w-full space-y-2 animate-in fade-in duration-500">
       <div className="flex items-center gap-3 mb-6">
         <div className="w-10 h-10 rounded-full bg-[#4d7f1d] flex items-center justify-center shrink-0 shadow-md">
           <Globe size={18} className="text-white" />
@@ -381,9 +433,14 @@ export default function InternationalBuyerForm() {
                 </button>
               )}
               {requireOtp && otpSent.mobile && !otpVerified.mobile && (
-                <button type="button" onClick={() => handleVerifyOtp('mobile')} className={`bg-[#23471d] text-white px-3 rounded-[2px] transition hover:bg-[#1a3516] h-full ${buttonTextClasses}`}>
-                  {isVerifying.mobile ? <Loader2 className="animate-spin" size={14} /> : 'Verify'}
-                </button>
+                <>
+                  <button type="button" onClick={() => handleVerifyOtp('mobile')} className={`bg-[#23471d] text-white px-3 rounded-[2px] transition hover:bg-[#1a3516] h-full ${buttonTextClasses}`}>
+                    {isVerifying.mobile ? <Loader2 className="animate-spin" size={14} /> : 'Verify'}
+                  </button>
+                  <button type="button" onClick={() => handleSimulateOtp('mobile')} disabled={resendTimers.mobile > 0 || isVerifying.mobile} className={`bg-gray-200 text-gray-700 px-3 rounded-[2px] transition hover:bg-gray-300 h-full ${buttonTextClasses || ''} disabled:opacity-50`}>
+                    {resendTimers.mobile > 0 ? `Resend (${resendTimers.mobile}s)` : 'Resend'}
+                  </button>
+                </>
               )}
               {requireOtp && otpVerified.mobile && <CheckCircle size={18} className="text-emerald-600 self-center shrink-0 ml-2" />}
             </div>
@@ -402,9 +459,14 @@ export default function InternationalBuyerForm() {
                 </button>
               )}
               {requireOtp && otpSent.email && !otpVerified.email && (
-                <button type="button" onClick={() => handleVerifyOtp('email')} className={`bg-[#23471d] text-white px-3 rounded-[2px] transition hover:bg-[#1a3516] h-full ${buttonTextClasses}`}>
-                  {isVerifying.email ? <Loader2 className="animate-spin" size={14} /> : 'Verify'}
-                </button>
+                <>
+                  <button type="button" onClick={() => handleVerifyOtp('email')} className={`bg-[#23471d] text-white px-3 rounded-[2px] transition hover:bg-[#1a3516] h-full ${buttonTextClasses}`}>
+                    {isVerifying.email ? <Loader2 className="animate-spin" size={14} /> : 'Verify'}
+                  </button>
+                  <button type="button" onClick={() => handleSimulateOtp('email')} disabled={resendTimers.email > 0 || isVerifying.email} className={`bg-gray-200 text-gray-700 px-3 rounded-[2px] transition hover:bg-gray-300 h-full ${buttonTextClasses || ''} disabled:opacity-50`}>
+                    {resendTimers.email > 0 ? `Resend (${resendTimers.email}s)` : 'Resend'}
+                  </button>
+                </>
               )}
               {requireOtp && otpVerified.email && <CheckCircle size={18} className="text-emerald-600 self-center shrink-0 ml-2" />}
             </div>

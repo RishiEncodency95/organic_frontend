@@ -1,7 +1,7 @@
 "use client";
 import React, { useState, useEffect } from "react";
 import { CheckCircle2, ShieldCheck, Globe2, Loader2, CheckCircle, X, ChevronsUpDown, Upload } from "lucide-react";
-import { crmApi, verifyApi, visitorApi , settingsApi } from "../../../../lib/api";
+import { crmApi, verifyApi, visitorApi, settingsApi } from "../../../../lib/api";
 import Swal from 'sweetalert2';
 
 // Helper component for multi-select
@@ -81,6 +81,7 @@ export default function InternationalVisitorForm() {
 
   const defaultEventName = process.env.NEXT_PUBLIC_EVENT_NAME || "BOE2026";
   const [requireOtp, setRequireOtp] = useState(true);
+  const [resendTimers, setResendTimers] = useState({ email: 0, mobile: 0 });
 
   useEffect(() => {
     settingsApi.getSettings().then((res: any) => {
@@ -173,7 +174,7 @@ export default function InternationalVisitorForm() {
     setIsVerifying(prev => ({ ...prev, [type]: true }));
     try {
       const res = type === 'email'
-        ? await verifyApi.sendEmailOtp(value, 'VISITOR')
+        ? await verifyApi.sendEmailOtp(value, 'VISITOR', formData.firstName)
         : await verifyApi.sendPhoneOtp(value, 'VISITOR', formData.firstName);
 
       if (res && res.success) {
@@ -235,7 +236,16 @@ export default function InternationalVisitorForm() {
     }
     setLoading(false);
   };
-
+  useEffect(() => {
+    let emailInterval: NodeJS.Timeout, mobileInterval: NodeJS.Timeout;
+    if (resendTimers.email > 0) {
+      emailInterval = setInterval(() => setResendTimers(prev => ({ ...prev, email: prev.email - 1 })), 1000);
+    }
+    if (resendTimers.mobile > 0) {
+      mobileInterval = setInterval(() => setResendTimers(prev => ({ ...prev, mobile: prev.mobile - 1 })), 1000);
+    }
+    return () => { clearInterval(emailInterval); clearInterval(mobileInterval); };
+  }, [resendTimers]);
   const inputClasses = "rounded border border-slate-400 h-7 focus:border-[#23471d] focus:ring-[#23471d]/10 transition-all text-[12px] bg-white placeholder:text-slate-400 text-slate-900 font-normal shadow-none outline-none px-3 w-full text-left";
   const labelClasses = "text-[11px] font-medium uppercase text-slate-800 mb-1 block text-left";
   const sectionTitleClasses = "text-[12px] font-medium text-[#4d7f1d] uppercase tracking-[0.05em]";
@@ -343,7 +353,14 @@ export default function InternationalVisitorForm() {
         </div>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-x-3 gap-y-3">
           <div className="space-y-1">
-            <label className={labelClasses}>Mobile No. (with Country Code) *</label>
+            <div className="flex justify-between items-end">
+              <label className={`${labelClasses} mb-0`}>Mobile No. (with Country Code) *</label>
+              {requireOtp && otpSent.mobile && !otpVerified.mobile && (
+                <button type="button" onClick={() => handleRequestOtp('mobile')} disabled={resendTimers.mobile > 0 || isVerifying.mobile} className="text-[#4d7f1d] text-[10px] font-bold uppercase disabled:opacity-50 hover:underline">
+                  {resendTimers.mobile > 0 ? `Resend (${resendTimers.mobile}s)` : 'Resend'}
+                </button>
+              )}
+            </div>
             <div className="flex gap-2 h-7">
               <input required type="tel" name="mobileNo" value={formData.mobileNo} onChange={handleChange} className={`${inputClasses} h-full`} disabled={otpVerified.mobile || otpSent.mobile} placeholder="+1 234 567 8900" />
               {requireOtp && !otpVerified.mobile && !otpSent.mobile && (
@@ -353,7 +370,7 @@ export default function InternationalVisitorForm() {
               )}
               {requireOtp && otpSent.mobile && !otpVerified.mobile && (
                 <>
-                  <input type="text" maxLength={6} value={mobileOtp} onChange={(e) => setMobileOtp(e.target.value.replace(/\D/g, ''))} className={`${inputClasses} h-full w-[100px] text-center tracking-widest`} placeholder="OTP" />
+                  <input type="text" maxLength={6} value={mobileOtp} onChange={(e) => setMobileOtp(e.target.value.replace(/\D/g, ''))} className={`${inputClasses.replace('w-full', '')} h-full w-[100px] text-center tracking-widest`} placeholder="OTP" />
                   <button type="button" onClick={() => handleVerifyOtp('mobile')} className={`bg-[#4d7f1d] text-white px-3 rounded text-[10px] uppercase font-bold transition hover:bg-[#3b6315] h-full`}>
                     {isVerifying.mobile ? <Loader2 className="animate-spin" size={14} /> : 'Verify'}
                   </button>
@@ -366,7 +383,14 @@ export default function InternationalVisitorForm() {
           <div><label className={labelClasses}>India Contact Number</label><input type="tel" name="indiaContactNo" value={formData.indiaContactNo} onChange={handleChange} className={inputClasses} placeholder="+91 123 456 7890" /></div>
 
           <div className="space-y-1">
-            <label className={labelClasses}>Official Email ID *</label>
+            <div className="flex justify-between items-end">
+              <label className={`${labelClasses} mb-0`}>Official Email ID *</label>
+              {requireOtp && otpSent.email && !otpVerified.email && (
+                <button type="button" onClick={() => handleRequestOtp('email')} disabled={resendTimers.email > 0 || isVerifying.email} className="text-[#4d7f1d] text-[10px] font-bold uppercase disabled:opacity-50 hover:underline">
+                  {resendTimers.email > 0 ? `Resend (${resendTimers.email}s)` : 'Resend'}
+                </button>
+              )}
+            </div>
             <div className="flex gap-2 h-7">
               <input required type="email" name="email" value={formData.email} onChange={handleChange} className={`${inputClasses} h-full`} disabled={otpVerified.email || otpSent.email} placeholder="Email Address" />
               {requireOtp && !otpVerified.email && !otpSent.email && (
@@ -376,7 +400,7 @@ export default function InternationalVisitorForm() {
               )}
               {requireOtp && otpSent.email && !otpVerified.email && (
                 <>
-                  <input type="text" maxLength={6} value={emailOtp} onChange={(e) => setEmailOtp(e.target.value.replace(/\D/g, ''))} className={`${inputClasses} h-full w-[100px] text-center tracking-widest`} placeholder="OTP" />
+                  <input type="text" maxLength={6} value={emailOtp} onChange={(e) => setEmailOtp(e.target.value.replace(/\D/g, ''))} className={`${inputClasses.replace('w-full', '')} h-full w-[100px] text-center tracking-widest`} placeholder="OTP" />
                   <button type="button" onClick={() => handleVerifyOtp('email')} className={`bg-[#4d7f1d] text-white px-3 rounded text-[10px] uppercase font-bold transition hover:bg-[#3b6315] h-full`}>
                     {isVerifying.email ? <Loader2 className="animate-spin" size={14} /> : 'Verify'}
                   </button>
