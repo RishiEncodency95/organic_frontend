@@ -138,3 +138,4 @@ export default function CategorySelect({ visitorType, onChange }: CategorySelect
     </section>
   );
 }
+

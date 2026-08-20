@@ -118,3 +118,4 @@ const BuyersSection = () => (
 );
 
 export default BuyersSection;
+
