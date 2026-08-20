@@ -4,9 +4,9 @@ import Link from "next/link";
 import { ArrowRight, Check } from "lucide-react";
 import SectionContainer from "@/app/components/layout/SectionContainer";
 
-import img1 from "@/app/assets/image/1og.png";
-import img2 from "@/app/assets/image/2og.png";
-import img3 from "@/app/assets/image/3og.png";
+import img1 from "@/app/assets/image/1og.webp";
+import img2 from "@/app/assets/image/2og.webp";
+import img3 from "@/app/assets/image/3og.webp";
 
 const getImgSrc = (src: any): string => (typeof src === "string" ? src : src?.src || src);
 

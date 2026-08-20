@@ -1,7 +1,7 @@
 "use client";
 import React, { useState } from 'react';
 import { motion, Variants } from 'framer-motion';
-import gallarybg from '@/app/assets/banner/gallog2.png';
+import gallarybg from '@/app/assets/banner/gallog2.webp';
 import { Leaf } from 'lucide-react';
 import SectionContainer from '@/app/components/layout/SectionContainer';
 
@@ -91,9 +91,12 @@ const Hero = () => {
         transition={{ duration: 1.8, ease: customEase }}
       />
 
+      {/* Mobile-only light overlay for text readability (desktop remains untouched) */}
+      <div className="absolute inset-0 z-[1] bg-gradient-to-b from-white/95 via-white/85 to-white/40 md:hidden pointer-events-none" />
+
       <SectionContainer className="relative z-10">
         <motion.div 
-          className="max-w-3xl mx-auto text-center flex flex-col items-center relative -left-8 md:-left-20 lg:-left-32 xl:-left-40"
+          className="max-w-3xl mx-auto text-center flex flex-col items-center relative left-0 md:-left-20 lg:-left-32 xl:-left-40 p-4 rounded-2xl bg-white/75 backdrop-blur-xs border border-white/50 shadow-sm md:bg-transparent md:p-0 md:backdrop-blur-none md:border-none md:shadow-none"
           variants={containerVariants}
           initial="hidden"
           whileInView="visible"
@@ -106,7 +109,7 @@ const Hero = () => {
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true }}
-            className="text-5xl md:text-6xl lg:text-7xl font-bold text-[#1b5e20] mb-2 tracking-tight uppercase flex justify-center"
+            className="text-3xl sm:text-4xl md:text-6xl lg:text-7xl font-bold text-[#1b5e20] mb-2 tracking-tight uppercase flex justify-center flex-wrap"
             style={{ textShadow: '2px 2px 4px rgba(255,255,255,0.7)' }}
           >
             {titleChars.map((char, index) => (
@@ -118,7 +121,7 @@ const Hero = () => {
 
           <motion.h2
             variants={itemVariants}
-            className="text-[22px] md:text-[28px] text-[#4B1426] font-medium mb-1 italic"
+            className="text-base sm:text-[20px] md:text-[28px] text-[#4B1426] font-bold mb-1.5 italic text-center"
             style={{ fontFamily: "'Playfair Display', serif" }}
           >
             {settings.subheading}
@@ -161,7 +164,7 @@ const Hero = () => {
 
           <motion.p
             variants={itemVariants}
-            className="text-gray-900 text-sm md:text-base max-w-3xl font-medium leading-relaxed whitespace-pre-line font-inter"
+            className="text-slate-900 text-xs sm:text-sm md:text-base max-w-3xl font-semibold leading-relaxed whitespace-pre-line font-inter text-center"
             style={{ fontFamily: "'Inter', sans-serif" }}
           >
             {settings.description}

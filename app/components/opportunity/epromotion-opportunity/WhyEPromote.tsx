@@ -98,8 +98,8 @@ export default function WhyEPromote() {
             </div>
             
             {/* Illustration */}
-            <div className="w-full sm:w-[180px] shrink-0">
-              <img ref={illustrationRef} src={epogImg.src} alt="E-Promotion Illustration" className="w-full h-auto object-contain scale-125 origin-center" style={{ opacity: 0 }} />
+            <div className="w-36 sm:w-[180px] shrink-0 mx-auto mt-2 sm:mt-0">
+              <img ref={illustrationRef} src={epogImg.src} alt="E-Promotion Illustration" className="w-full h-auto object-contain scale-100 md:scale-125 origin-center" style={{ opacity: 0 }} />
             </div>
           </div>
           
