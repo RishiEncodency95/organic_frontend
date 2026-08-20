@@ -1,7 +1,7 @@
 "use client";
 import React, { useState, useEffect } from "react";
 import { CheckCircle2, ShieldCheck, Store, Loader2, CheckCircle, X, ChevronsUpDown } from "lucide-react";
-import { crmApi, verifyApi, visitorApi } from "../../../../lib/api";
+import { crmApi, verifyApi, visitorApi, settingsApi } from "../../../../lib/api";
 import Swal from 'sweetalert2';
 // Helper component for multi-select
 const MultiSelectDropdown = ({ options, selected, onChange, placeholder = "Select options", error = false, accentColor = "emerald" }: any) => {
@@ -77,6 +77,7 @@ export default function CorporateForm() {
   const [otpVerified, setOtpVerified] = useState({ email: false, mobile: false });
   const [emailOtp, setEmailOtp] = useState('');
   const [mobileOtp, setMobileOtp] = useState('');
+  const [resendTimers, setResendTimers] = useState({ email: 0, mobile: 0 });
   const [loading, setLoading] = useState(false);
 
   const [countries, setCountries] = useState<any[]>([]);
@@ -84,6 +85,17 @@ export default function CorporateForm() {
   const [cities, setCities] = useState<any[]>([]);
 
   const defaultEventName = process.env.NEXT_PUBLIC_EVENT_NAME || "BOE2026";
+  const [requireOtp, setRequireOtp] = useState(true);
+
+  useEffect(() => {
+    settingsApi.getSettings().then((res: any) => {
+      if (res && res.success && res.data && res.data.requireOtpForVisitorRegistration) {
+        setRequireOtp(res.data.requireOtpForVisitorRegistration);
+      }
+    }).catch((err: any) => console.error(err));
+  }, []);
+
+
 
   const [formData, setFormData] = useState({
     registrationFor: defaultEventName,
@@ -148,6 +160,18 @@ export default function CorporateForm() {
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
+
+  useEffect(() => {
+    let emailInterval: NodeJS.Timeout, mobileInterval: NodeJS.Timeout;
+    if (resendTimers.email > 0) {
+      emailInterval = setInterval(() => setResendTimers(prev => ({ ...prev, email: prev.email - 1 })), 1000);
+    }
+    if (resendTimers.mobile > 0) {
+      mobileInterval = setInterval(() => setResendTimers(prev => ({ ...prev, mobile: prev.mobile - 1 })), 1000);
+    }
+    return () => { clearInterval(emailInterval); clearInterval(mobileInterval); };
+  }, [resendTimers]);
+
   const handleRequestOtp = async (type: 'email' | 'mobile') => {
     const value = type === 'email' ? formData.email : formData.mobileNo;
     if (!value) return;
@@ -155,11 +179,12 @@ export default function CorporateForm() {
     setIsVerifying(prev => ({ ...prev, [type]: true }));
     try {
       const res = type === 'email'
-        ? await verifyApi.sendEmailOtp(value, 'VISITOR')
+        ? await verifyApi.sendEmailOtp(value, 'VISITOR', formData.firstName)
         : await verifyApi.sendPhoneOtp(value, 'VISITOR', formData.firstName);
 
       if (res && res.success) {
         setOtpSent(prev => ({ ...prev, [type]: true }));
+        setResendTimers(prev => ({ ...prev, [type]: 30 }));
         Swal.fire({ scrollbarPadding: false, icon: 'success', title: 'OTP Sent', text: `OTP sent to your ${type}.`, timer: 2000, showConfirmButton: false });
       } else {
         Swal.fire({ scrollbarPadding: false, icon: 'error', title: 'Error', text: res?.message || 'Failed to send OTP.' });
@@ -197,7 +222,7 @@ export default function CorporateForm() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!otpVerified.email || !otpVerified.mobile) {
+    if (requireOtp && (!otpVerified.email || !otpVerified.mobile)) {
       Swal.fire({ scrollbarPadding: false, icon: 'warning', title: 'Verification Required', text: 'Please verify both Email and WhatsApp number.' });
       return;
     }
@@ -262,46 +287,60 @@ export default function CorporateForm() {
           <div><label className={labelClasses}>Designation *</label><input required name="designation" value={formData.designation} onChange={handleChange} className={inputClasses} placeholder="Enter Designation.." /></div>
 
           <div className="space-y-1">
-            <label className={labelClasses}>WhatsApp Number *</label>
+            <div className="flex justify-between items-end">
+              <label className={`${labelClasses} mb-0`}>WhatsApp Number *</label>
+              {requireOtp && otpSent.mobile && !otpVerified.mobile && (
+                <button type="button" onClick={() => handleRequestOtp('mobile')} disabled={resendTimers.mobile > 0 || isVerifying.mobile} className="text-[#23471d] text-[10px] font-bold uppercase disabled:opacity-50 hover:underline">
+                  {resendTimers.mobile > 0 ? `Resend (${resendTimers.mobile}s)` : 'Resend'}
+                </button>
+              )}
+            </div>
             <div className="flex gap-2 h-[34px]">
               <input required type="tel" name="mobileNo" value={formData.mobileNo} onChange={handleChange} className={`${inputClasses} h-full`} disabled={otpVerified.mobile || otpSent.mobile} placeholder="Enter WhatsApp Number" />
-              {!otpVerified.mobile && !otpSent.mobile && (
+              {requireOtp && !otpVerified.mobile && !otpSent.mobile && (
                 <button type="button" onClick={() => handleRequestOtp('mobile')} disabled={!formData.mobileNo || isVerifying.mobile} className={`bg-[#23471d] text-white px-3 rounded-[2px] transition hover:bg-[#1a3516] h-full ${buttonTextClasses} disabled:opacity-50`}>
                   {isVerifying.mobile ? <Loader2 className="animate-spin" size={14} /> : 'OTP'}
                 </button>
               )}
-              {otpSent.mobile && !otpVerified.mobile && (
+              {requireOtp && otpSent.mobile && !otpVerified.mobile && (
                 <>
-                  <input type="text" maxLength={6} value={mobileOtp} onChange={(e) => setMobileOtp(e.target.value.replace(/\D/g, ''))} className={`${inputClasses} h-full w-[100px] text-center tracking-widest`} placeholder="OTP" />
+                  <input type="text" maxLength={6} value={mobileOtp} onChange={(e) => setMobileOtp(e.target.value.replace(/\D/g, ''))} className={`${inputClasses.replace('w-full', '')} h-full w-[100px] text-center tracking-widest`} placeholder="OTP" />
                   <button type="button" onClick={() => handleVerifyOtp('mobile')} className={`bg-[#23471d] text-white px-3 rounded-[2px] transition hover:bg-[#1a3516] h-full ${buttonTextClasses}`}>
                     {isVerifying.mobile ? <Loader2 className="animate-spin" size={14} /> : 'Verify'}
                   </button>
                 </>
               )}
-              {otpVerified.mobile && <CheckCircle size={18} className="text-[#4d7f1d] self-center shrink-0 ml-2" />}
+              {requireOtp && otpVerified.mobile && <CheckCircle size={18} className="text-[#4d7f1d] self-center shrink-0 ml-2" />}
             </div>
           </div>
 
           <div><label className={labelClasses}>Alternate Number (Optional)</label><input type="tel" name="alternateNo" value={formData.alternateNo} onChange={handleChange} className={inputClasses} placeholder="Enter Alternate No." /></div>
 
           <div className="space-y-1">
-            <label className={labelClasses}>Email Address *</label>
+            <div className="flex justify-between items-end">
+              <label className={`${labelClasses} mb-0`}>Email Address *</label>
+              {requireOtp && otpSent.email && !otpVerified.email && (
+                <button type="button" onClick={() => handleRequestOtp('email')} disabled={resendTimers.email > 0 || isVerifying.email} className="text-[#23471d] text-[10px] font-bold uppercase disabled:opacity-50 hover:underline">
+                  {resendTimers.email > 0 ? `Resend (${resendTimers.email}s)` : 'Resend'}
+                </button>
+              )}
+            </div>
             <div className="flex gap-2 h-[34px]">
               <input required type="email" name="email" value={formData.email} onChange={handleChange} className={`${inputClasses} h-full`} disabled={otpVerified.email || otpSent.email} placeholder="Enter Email Address" />
-              {!otpVerified.email && !otpSent.email && (
+              {requireOtp && !otpVerified.email && !otpSent.email && (
                 <button type="button" onClick={() => handleRequestOtp('email')} disabled={!formData.email || isVerifying.email} className={`bg-[#23471d] text-white px-3 rounded-[2px] transition hover:bg-[#1a3516] h-full ${buttonTextClasses} disabled:opacity-50`}>
                   {isVerifying.email ? <Loader2 className="animate-spin" size={14} /> : 'OTP'}
                 </button>
               )}
-              {otpSent.email && !otpVerified.email && (
+              {requireOtp && otpSent.email && !otpVerified.email && (
                 <>
-                  <input type="text" maxLength={6} value={emailOtp} onChange={(e) => setEmailOtp(e.target.value.replace(/\D/g, ''))} className={`${inputClasses} h-full w-[100px] text-center tracking-widest`} placeholder="OTP" />
+                  <input type="text" maxLength={6} value={emailOtp} onChange={(e) => setEmailOtp(e.target.value.replace(/\D/g, ''))} className={`${inputClasses.replace('w-full', '')} h-full w-[100px] text-center tracking-widest`} placeholder="OTP" />
                   <button type="button" onClick={() => handleVerifyOtp('email')} className={`bg-[#23471d] text-white px-3 rounded-[2px] transition hover:bg-[#1a3516] h-full ${buttonTextClasses}`}>
                     {isVerifying.email ? <Loader2 className="animate-spin" size={14} /> : 'Verify'}
                   </button>
                 </>
               )}
-              {otpVerified.email && <CheckCircle size={18} className="text-[#4d7f1d] self-center shrink-0 ml-2" />}
+              {requireOtp && otpVerified.email && <CheckCircle size={18} className="text-[#4d7f1d] self-center shrink-0 ml-2" />}
             </div>
           </div>
 

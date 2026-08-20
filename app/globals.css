@@ -177,3 +177,52 @@ h1, h2, h3, h4, h5, h6 {
   width: 100%;
 }
 
+
+/* Form Validation Styles */
+.was-validated input:invalid,
+.was-validated select:invalid,
+.was-validated textarea:invalid {
+  border-color: #ef4444 !important;
+}
+
+.was-validated label:has(+ input:invalid),
+.was-validated label:has(+ select:invalid),
+.was-validated label:has(~ div > input:invalid) {
+  color: #ef4444;
+}
+
+/* Default "This field is required" */
+.was-validated div:has(> input:invalid):not(:has(> input[name="mobileNumber"])):not(:has(> input[name="mobileNo"])):not(:has(> input[name="emailAddress"])):not(:has(> input[name="email"])):not(.flex)::after,
+.was-validated div:has(> select:invalid):not(.flex)::after,
+.was-validated div:has(> textarea:invalid):not(.flex)::after {
+  content: "This field is required";
+  color: #ef4444;
+  font-size: 10px;
+  display: block;
+  margin-top: 4px;
+}
+
+/* Mobile Verification specific message */
+.was-validated div:has(> div > input[name="mobileNumber"]:invalid)::after,
+.was-validated div:has(> div > input[name="mobileNo"]:invalid)::after,
+.was-validated div:has(> input[name="mobileNumber"]:invalid):not(.flex)::after,
+.was-validated div:has(> input[name="mobileNo"]:invalid):not(.flex)::after {
+  content: "Please verify your mobile via OTP";
+  color: #ef4444;
+  font-size: 10px;
+  display: block;
+  margin-top: 4px;
+}
+
+/* Email Verification specific message */
+.was-validated div:has(> div > input[name="emailAddress"]:invalid)::after,
+.was-validated div:has(> div > input[name="email"]:invalid)::after,
+.was-validated div:has(> input[name="emailAddress"]:invalid):not(.flex)::after,
+.was-validated div:has(> input[name="email"]:invalid):not(.flex)::after {
+  content: "Please verify your email via OTP";
+  color: #ef4444;
+  font-size: 10px;
+  display: block;
+  margin-top: 4px;
+}
+
