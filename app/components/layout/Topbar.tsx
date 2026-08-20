@@ -256,7 +256,7 @@ const Topbar = () => {
                                             return item.external ? (
                                                 <a key={item.to} href={item.to} target="_blank" rel="noopener noreferrer" {...commonProps}>{Content}</a>
                                             ) : (
-                                                <Link key={item.to} href={item.to} {...commonProps}>{Content}</Link>
+                                                <Link key={item.to} href={item.to} prefetch={false} {...commonProps}>{Content}</Link>
                                             );
                                         })}
                                     </div>

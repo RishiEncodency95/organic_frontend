@@ -2,15 +2,16 @@
 
 import React from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { ArrowRight } from "lucide-react";
 import SectionContainer from "@/app/components/layout/SectionContainer";
 
-import x1 from "@/app/assets/image/x1.png";
-import x2 from "@/app/assets/image/x2.png";
-import x3 from "@/app/assets/image/x3.png";
-import x4 from "@/app/assets/image/x4.png";
-import x5 from "@/app/assets/image/x5.png";
-import x6 from "@/app/assets/image/x6.png";
+import x1 from "@/app/assets/image/x1.webp";
+import x2 from "@/app/assets/image/x2.webp";
+import x3 from "@/app/assets/image/x3.webp";
+import x4 from "@/app/assets/image/x4.webp";
+import x5 from "@/app/assets/image/x5.webp";
+import x6 from "@/app/assets/image/x6.webp";
 
 import x1og from "@/app/assets/icons/x1og.png";
 import x2og from "@/app/assets/icons/x2og.png";
@@ -183,10 +184,12 @@ export default function IndustrySegments() {
 
                 {/* Bottom Image Container */}
                 <div className="w-full h-32 sm:h-36 relative overflow-hidden mt-auto border-t border-slate-100">
-                  <img
-                    src={item.image.src}
+                  <Image
+                    src={item.image}
                     alt={item.title}
-                    className="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-500"
+                    fill
+                    sizes="(max-width: 640px) 100vw, (max-width: 1024px) 33vw, 16vw"
+                    className="object-cover object-center group-hover:scale-105 transition-transform duration-500"
                   />
                 </div>
               </div>

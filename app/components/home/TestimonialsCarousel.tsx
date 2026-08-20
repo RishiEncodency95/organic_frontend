@@ -7,9 +7,10 @@ import {
   Globe, Users, Handshake, Leaf, Building2, Store, Calendar, HeartPulse, Mic
 } from 'lucide-react';
 import Link from 'next/link';
+import Image from 'next/image';
 import SectionContainer from '../layout/SectionContainer';
 
-import testImg from "../../assets/banner/testbg.png";
+import testImg from "../../assets/banner/testbg.webp";
 import leafPng from "../../assets/home/leaf.webp";
 
 // ─── Sparkle component for golden button ───
@@ -504,8 +505,12 @@ const TestimonialsCarousel = () => {
       {/* ─── TOP HERO BANNER ─── */}
       <div className="relative w-full min-h-[420px] md:min-h-[380px] flex items-center overflow-hidden py-10 md:py-4">
         <div className="absolute inset-0 z-0">
-          <img
-            src={testImg.src}
+          <Image
+            src={testImg}
+            fill
+            priority
+            quality={75}
+            sizes="100vw"
             className="w-full h-full object-cover opacity-60 md:opacity-100"
             style={{ objectPosition: "center 40%" }}
             alt="Bharat Organic Expo Background"

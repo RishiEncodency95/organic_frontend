@@ -4,10 +4,10 @@ import { Camera, X, ChevronLeft, ChevronRight, ZoomIn } from 'lucide-react';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
-import image1 from '@/app/assets/image/gall1og.png';
-import image2 from '@/app/assets/image/gall2og.png';
-import image3 from '@/app/assets/image/gall3og.png';
-import image4 from '@/app/assets/image/gall4og.png';
+import image1 from '@/app/assets/image/gall1og.webp';
+import image2 from '@/app/assets/image/gall2og.webp';
+import image3 from '@/app/assets/image/gall3og.webp';
+import image4 from '@/app/assets/image/gall4og.webp';
 import image5 from '@/app/assets/image/image5.webp';
 import image6 from '@/app/assets/image/image6.webp';
 import image7 from '@/app/assets/image/image7.webp';

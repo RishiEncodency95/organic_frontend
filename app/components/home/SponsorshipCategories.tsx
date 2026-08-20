@@ -285,9 +285,9 @@ const SponsorshipCategories = () => {
 
                   {/* Content */}
                   <div className="flex flex-col z-10 flex-1 font-inter">
-                    <h4 className={`text-[13px] sm:text-[14px] font-semibold text-[#1b5e20] leading-tight mb-1 uppercase tracking-wide transition-colors ${isExclusive ? 'group-hover:text-[#f58220]' : 'group-hover:text-[#3b8c2a]'}`}>
+                    <h3 className={`text-[13px] sm:text-[14px] font-semibold text-[#1b5e20] leading-tight mb-1 uppercase tracking-wide transition-colors ${isExclusive ? 'group-hover:text-[#f58220]' : 'group-hover:text-[#3b8c2a]'}`}>
                       {sponsor.title}
-                    </h4>
+                    </h3>
                     <p className="text-[11.5px] sm:text-[12px] text-gray-700 leading-relaxed font-medium pr-2">
                       {sponsor.desc}
                     </p>
@@ -313,7 +313,7 @@ const SponsorshipCategories = () => {
                   <Calendar className="w-5 h-5 text-[#0b2912]" strokeWidth={2.5} />
                 </div>
                 <div className='flex flex-col gap-1'>
-                  <h4 className="text-[14px] font-semibold text-[#0b2912] uppercase leading-tight">LIMITED SPONSORSHIP SLOTS AVAILABLE</h4>
+                  <h3 className="text-[14px] font-semibold text-[#0b2912] uppercase leading-tight">LIMITED SPONSORSHIP SLOTS AVAILABLE</h3>
                   <p className="text-[13px] md:text-[14px] text-gray-600 font-medium leading-tight">Secure your category before it's gone!</p>
                 </div>
               </div>
