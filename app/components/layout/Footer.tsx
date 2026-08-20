@@ -114,7 +114,7 @@ export default function Footer() {
             <Sparkle color="#d68523" style={{ bottom: '10px', left: '5%', animationDelay: '0.2s' }} />
             <Sparkle color="#d68523" style={{ bottom: '-10px', right: '20%', animationDelay: '0.6s' }} />
             
-            <Image src={footerLogo} alt="Bharat Organic Expo" width={224} height={90} className="w-full h-auto object-contain" style={{ filter: "drop-shadow(0 0 1px rgba(255,255,255,0.6))" }} />
+            <Image src={footerLogo} alt="Bharat Organic Expo" width={224} height={90} className="w-full h-auto object-contain" style={{ width: "auto", height: "auto", filter: "drop-shadow(0 0 1px rgba(255,255,255,0.6))" }} />
           </div>
 
           <p className="text-[13.5px] sm:text-[14px] font-semibold leading-relaxed max-w-[340px] text-black text-center mx-auto">
@@ -125,7 +125,7 @@ export default function Footer() {
             traditional wellness. Discover organic living<br />
             with conferences and B2B opportunities.
           </p>
-          <Image src={foot2ogImg} alt="Decoration" width={320} height={120} quality={75} className="hidden lg:block w-full max-w-[320px] h-auto object-contain relative top-2 -mb-14 pointer-events-none" />
+          <Image src={foot2ogImg} alt="Decoration" width={320} height={120} quality={75} className="hidden lg:block w-full max-w-[320px] h-auto object-contain relative top-2 -mb-14 pointer-events-none" style={{ width: "auto", height: "auto" }} />
         </div>
 
         {/* Right Area (Dark Green) */}
@@ -220,13 +220,13 @@ export default function Footer() {
 
             <h5 className="font-poppins font-semibold text-gray-400 uppercase mb-1.5 text-[11px] tracking-widest">CONFERENCE HELPLINE</h5>
             <a
-              href="tel:+919654900525"
+              href="tel:+919818353841"
               className="flex items-center gap-2 text-white font-semibold text-[14px] font-poppins hover:opacity-90 transition-opacity"
             >
               <div className="w-7 h-7 rounded-full border border-[#F3B71B] flex items-center justify-center text-[#F3B71B] bg-[#F3B71B]/10">
                 <Phone size={14} />
               </div>
-              <span className="text-[#F3B71B]">+91 96549 00525</span>
+              <span className="text-[#F3B71B]">+91 98183 53841</span>
             </a>
           </div>
 
@@ -243,7 +243,7 @@ export default function Footer() {
               <Sparkle color="#FFFFFF" style={{ top: '-10px', right: '15%', animationDelay: '0.8s' }} />
               <Sparkle color="#FFFFFF" style={{ bottom: '4px', left: '5%', animationDelay: '0.2s' }} />
               <Sparkle color="#FFFFFF" style={{ bottom: '-8px', right: '10%', animationDelay: '0.6s' }} />
-              <Image src={namoLogo} alt="Namo Gange Wellness" width={176} height={60} className="w-full h-auto object-contain mx-auto sm:mx-0" />
+              <Image src={namoLogo} alt="Namo Gange Wellness" width={176} height={60} className="w-full h-auto object-contain mx-auto sm:mx-0" style={{ width: "auto", height: "auto" }} />
             </div>
 
             <p className="text-gray-200 text-[11.5px] mb-3 leading-relaxed font-medium max-w-[280px]">

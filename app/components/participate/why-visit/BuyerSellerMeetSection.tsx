@@ -230,7 +230,7 @@ const BuyerSellerMeetSection = () => {
                     <Mic className="w-4 h-4" />
                   </div>
                   <div className="text-left">
-                    <h4 className="font-poppins font-semibold text-base text-[#001810] leading-tight">150+</h4>
+                    <h4 className="font-poppins font-semibold text-base text-[#001810] leading-tight">100+</h4>
                     <p className="font-inter font-semibold text-[11px] text-[#001810] uppercase tracking-wide">SPEAKERS</p>
                     <p className="font-inter font-semibold text-[10px] sm:text-[11px] text-slate-700 leading-tight">Industry Leaders & Experts</p>
                   </div>

@@ -329,11 +329,16 @@ const SponsorshipCategories = () => {
                     <Sparkle color="#ffc107" shadow="#4B1426" style={{ top: "-10px", left: "5%", animationDelay: "0s" }} />
                     <Sparkle color="#ff9800" shadow="#4B1426" style={{ top: "-12px", left: "45%", animationDelay: "0.5s" }} />
                     <Sparkle color="#ffc107" shadow="#4B1426" style={{ top: "-10px", right: "5%", animationDelay: "1s" }} />
-                    <button className="group relative w-full flex items-center justify-center gap-1 px-2.5 py-1.5 bg-[#4B1426] hover:bg-[#360e1b] border border-white/20 rounded-full text-white transition-colors shadow-md overflow-hidden">
+                    <a
+                      href="/download/invited card.pdf"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="group relative w-full flex items-center justify-center gap-1 px-2.5 py-1.5 bg-[#4B1426] hover:bg-[#360e1b] border border-white/20 rounded-full text-white transition-colors shadow-md overflow-hidden"
+                    >
                       <span className="absolute inset-0 bg-white/15 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-500 skew-x-12" />
                       <Download className="w-3 h-3 shrink-0 relative z-10 text-white" />
                       <span className="text-[9px] xl:text-[11px] font-bold uppercase tracking-wider whitespace-nowrap overflow-hidden text-ellipsis relative z-10 text-white">BROCHURE</span>
-                    </button>
+                    </a>
                   </div>
 
                   <Link href="/contact" target="_blank" rel="noopener noreferrer" className="flex items-center justify-center gap-1 px-2.5 py-1.5 bg-[#3b8c2a] hover:bg-[#2f7121] border border-[#3b8c2a] rounded-full text-white transition-colors shadow-lg flex-1 min-w-0">

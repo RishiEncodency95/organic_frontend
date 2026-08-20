@@ -74,7 +74,7 @@ const ExhibitorsCta = () => {
                                     <Sparkle color="#4B1426" shadow="#2d0b17" style={{ top: "-15px", left: "50%", animationDelay: "0.6s" }} />
                                     <Sparkle color="#4B1426" shadow="#2d0b17" style={{ top: "-10px", right: "10%", animationDelay: "1s" }} />
                                     <a
-                                        href="/pdf.pdf"
+                                        href="/download/invited card.pdf"
                                         target="_blank"
                                         rel="noopener noreferrer"
                                         className="group relative inline-flex items-center justify-center gap-2 px-5 py-2.5 rounded-lg font-semibold text-[12px] md:text-[13px] uppercase tracking-wider text-white transition-all active:scale-95 shadow-2xl z-10 w-full sm:w-auto overflow-hidden font-poppins"

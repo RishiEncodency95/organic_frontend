@@ -149,6 +149,7 @@ const Navbar = () => {
                                         height={105}
                                         priority
                                         className="h-[80px] xl:h-[105px] w-auto object-contain drop-shadow-md"
+                                        style={{ width: "auto" }}
                                     />
                                 </Link>
                             </div>
@@ -247,6 +248,7 @@ const Navbar = () => {
                                     height={70}
                                     priority
                                     className="h-[70px] w-auto object-contain drop-shadow-sm"
+                                    style={{ width: "auto" }}
                                 />
                             </Link>
                         </div>
