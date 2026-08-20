@@ -55,11 +55,11 @@ export default function BottomOpportunities() {
               OTHER BRANDING OPPORTUNITIES
             </h3>
             
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-y-1.5 gap-x-2 flex-1 relative z-10">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-y-2 gap-x-2 flex-1 relative z-10 font-inter">
               {otherBranding.map((item, idx) => (
                 <div key={idx} className="flex items-center gap-2">
-                  <span className="text-[#ea580c]">{item.icon}</span>
-                  <span className="text-xs md:text-[12.5px] font-medium text-gray-800 font-inter">{item.text}</span>
+                  <span className="text-[#ea580c] shrink-0">{item.icon}</span>
+                  <span className="text-[12px] font-semibold text-slate-800 leading-snug">{item.text}</span>
                 </div>
               ))}
             </div>
@@ -85,7 +85,7 @@ export default function BottomOpportunities() {
                   <div className="w-9 h-9 flex items-center justify-center text-[#1b5e20]">
                     {item.icon}
                   </div>
-                  <span className="text-[10px] md:text-xs font-semibold text-gray-800 leading-tight">
+                  <span className="text-[13px] font-semibold text-slate-800 leading-tight font-inter">
                     {item.text}
                   </span>
                 </div>

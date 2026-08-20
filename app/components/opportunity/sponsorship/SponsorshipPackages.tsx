@@ -146,9 +146,9 @@ export default function SponsorshipPackages() {
               </div>
               
               <div className="px-4 pb-3 pt-1.5 flex-1 flex flex-col">
-                <ul className="text-left w-full space-y-2 mb-3 mt-0">
+                <ul className="text-left w-full space-y-2 mb-3 mt-0 font-inter">
                   {pkg.features.map((feature, fIdx) => (
-                    <li key={fIdx} className="flex items-start gap-2 text-[11px] text-gray-800 font-medium leading-snug">
+                    <li key={fIdx} className="flex items-start gap-2 text-[11px] text-slate-800 font-semibold leading-snug">
                       <Check className="w-3.5 h-3.5 mt-0.5 flex-shrink-0" style={{ color: pkg.color }} />
                       <span>{feature}</span>
                     </li>
@@ -158,6 +158,8 @@ export default function SponsorshipPackages() {
                 <div className="mt-auto pt-2">
                   <a 
                     href="/contact"
+                    target="_blank"
+                    rel="noopener noreferrer"
                     className={`block w-full py-2.5 text-white text-[10px] font-bold uppercase tracking-widest text-center rounded-md transition-colors flex items-center justify-center gap-1 ${pkg.buttonColor}`}
                   >
                     ENQUIRE NOW

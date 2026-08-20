@@ -69,62 +69,60 @@ const AdvisoryHero = () => {
             {/* Subtle overlay removed per user request */}
 
             {/* Content Overlay */}
-            <div className="relative z-20 w-full px-2 md:px-11 h-full flex flex-col justify-center">
-                <div className="max-w-xl text-left mt-16 md:mt-0 space-y-4 w-full max-w-2xl">
-
-
+            <div className="relative z-20 w-full px-3 md:px-11 h-full flex flex-col justify-center py-12 md:py-6">
+                <div className="max-w-xl text-left mt-6 md:mt-0 space-y-3.5 md:space-y-4 w-full bg-white/75 md:bg-transparent backdrop-blur-md md:backdrop-blur-none p-4 sm:p-6 md:p-0 rounded-2xl border border-white/60 md:border-none shadow-lg md:shadow-none">
 
                     {/* Title */}
                     <h1
-                        className="font-black leading-[1.05] mb-4 text-left font-poppins"
-                        style={{ textShadow: "1px 1px 2px rgba(0,0,0,0.4)" }}
+                        className="font-black leading-[1.05] mb-2 md:mb-4 text-left font-poppins"
+                        style={{ textShadow: "1px 1px 2px rgba(0,0,0,0.3)" }}
                     >
-                        <div className="text-[#1b5e20] text-[32px] md:text-[40px] lg:text-[48px] tracking-tight block" style={{ fontWeight: 600 }}>
+                        <div className="text-[#1b5e20] text-[28px] sm:text-[36px] md:text-[40px] lg:text-[48px] tracking-tight block font-semibold">
                             ADVISORY
                         </div>
-                        <div className="text-[#ea580c] text-[36px] md:text-[46px] lg:text-[54px] tracking-tight block" style={{ fontWeight: 600 }}>
+                        <div className="text-[#ea580c] text-[32px] sm:text-[42px] md:text-[46px] lg:text-[54px] tracking-tight block font-semibold">
                             BOARD MEMBERS
                         </div>
                     </h1>
 
                     {/* Subtitle */}
-                    <div className="flex items-center gap-3 ">
-                        <div className="w-12 h-1 bg-[#ea580c] rounded-full"></div>
-                        <span className="text-[#1b5e20] font-bold text-[14px] md:text-[16px] tracking-widest uppercase">
+                    <div className="flex items-center gap-2.5">
+                        <div className="w-8 md:w-12 h-1 bg-[#ea580c] rounded-full shrink-0"></div>
+                        <span className="text-[#1b5e20] font-bold text-[12px] sm:text-[14px] md:text-[16px] tracking-widest uppercase">
                             Meet The Leaders
                         </span>
-                        <div className="w-12 h-1 bg-[#ea580c] rounded-full"></div>
+                        <div className="w-8 md:w-12 h-1 bg-[#ea580c] rounded-full shrink-0"></div>
                     </div>
 
                     {/* Description */}
-                    <p className="text-[#131730] font-bold text-[13px] md:text-[14px] lg:text-[15px] leading-relaxed max-w-lg mt-4">
+                    <p className="text-[#131730] font-bold text-[12.5px] sm:text-[13.5px] md:text-[15px] leading-relaxed max-w-lg mt-2 font-inter">
                         Meet the distinguished leaders, industry experts, and visionary professionals shaping the strategic direction of <span className="text-[#4B1426] font-semibold">Bharat Organic Expo 2027.</span> Their collective wisdom, decades of experience, and unwavering commitment to sustainable agriculture ensure that our platform remains at the absolute forefront of the global organic movement.
                     </p>
 
                     {/* Buttons */}
-                    <div className="flex flex-wrap items-center justify-start gap-3 mt-4 relative w-full">
+                    <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-start gap-2.5 mt-4 relative w-full font-inter">
                         <div className="relative w-full sm:w-auto">
-                            <Sparkle color="#3b82f6" shadow="#28396C" style={{ top: "-12px", left: "10%", animationDelay: "0.2s" }} />
-                            <Sparkle color="#3b82f6" shadow="#28396C" style={{ top: "-15px", left: "50%", animationDelay: "0.6s" }} />
-                            <Sparkle color="#3b82f6" shadow="#28396C" style={{ top: "-10px", right: "10%", animationDelay: "1s" }} />
+                            <Sparkle color="#3b82f6" shadow="#28396C" style={{ top: "-10px", left: "10%", animationDelay: "0.2s" }} />
+                            <Sparkle color="#3b82f6" shadow="#28396C" style={{ top: "-12px", left: "50%", animationDelay: "0.6s" }} />
+                            <Sparkle color="#3b82f6" shadow="#28396C" style={{ top: "-8px", right: "10%", animationDelay: "1s" }} />
                             <Link
                                 href="/registration/visitor-registration"
                                 target="_blank"
                                 rel="noopener noreferrer"
-                                className="blue-btn-hero text-white px-4 py-2 rounded-lg font-semibold text-[9px] uppercase tracking-widest flex items-center justify-start gap-2 transition-all active:scale-95 shadow-lg relative z-10 w-full sm:w-auto"
+                                className="blue-btn-hero text-white px-5 py-2.5 rounded-full font-semibold text-[11px] md:text-[12px] uppercase tracking-wider flex items-center justify-center gap-2 transition-all active:scale-95 shadow-md relative z-10 w-full sm:w-auto"
                             >
                                 REGISTER AS A VISITOR <ArrowRight size={14} />
                             </Link>
                         </div>
                         <div className="relative w-full sm:w-auto">
-                            <Sparkle color="#f97316" shadow="#c2410c" style={{ top: "-12px", left: "10%", animationDelay: "0s" }} />
-                            <Sparkle color="#f97316" shadow="#c2410c" style={{ top: "-15px", left: "50%", animationDelay: "0.4s" }} />
-                            <Sparkle color="#f97316" shadow="#c2410c" style={{ top: "-10px", right: "10%", animationDelay: "0.8s" }} />
+                            <Sparkle color="#f97316" shadow="#c2410c" style={{ top: "-10px", left: "10%", animationDelay: "0s" }} />
+                            <Sparkle color="#f97316" shadow="#c2410c" style={{ top: "-12px", left: "50%", animationDelay: "0.4s" }} />
+                            <Sparkle color="#f97316" shadow="#c2410c" style={{ top: "-8px", right: "10%", animationDelay: "0.8s" }} />
                             <Link
                                 href="/registration/book-a-stand"
                                 target="_blank"
                                 rel="noopener noreferrer"
-                                className="group relative inline-flex items-center justify-start gap-2 px-4 py-2 rounded-lg font-semibold text-[9px] uppercase tracking-widest text-white transition-all active:scale-95 shadow-2xl z-10 w-full sm:w-auto overflow-hidden"
+                                className="group relative inline-flex items-center justify-center gap-2 px-5 py-2.5 rounded-full font-semibold text-[11px] md:text-[12px] uppercase tracking-wider text-white transition-all active:scale-95 shadow-xl z-10 w-full sm:w-auto overflow-hidden"
                                 style={{
                                     background: "linear-gradient(135deg, #ea580c, #c2410c)",
                                     boxShadow: "0 4px 20px rgba(194,65,12,0.5), 0 0 12px rgba(249,115,22,0.3)",

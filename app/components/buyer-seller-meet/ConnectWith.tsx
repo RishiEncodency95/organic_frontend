@@ -1,6 +1,7 @@
 "use client";
 import React from "react";
 import { Tag, Cog, Leaf, Truck, Globe2, ArrowRightLeft, Store, ShoppingBag, Building, MonitorSmartphone, UtensilsCrossed, Flag, Network } from "lucide-react";
+import SectionContainer from "@/app/components/layout/SectionContainer";
 
 export default function ConnectWith() {
   const icons = [
@@ -21,7 +22,7 @@ export default function ConnectWith() {
 
   return (
     <section className="py-8 bg-white font-inter text-center">
-      <div className="w-full px-4 md:px-8 xl:px-12">
+      <SectionContainer>
         {/* Title with Dividers */}
         <div className="flex items-center justify-center mb-6 w-full">
           <div className="h-[1px] bg-gray-200 flex-1"></div>
@@ -56,7 +57,7 @@ export default function ConnectWith() {
             </React.Fragment>
           ))}
         </div>
-      </div>
+      </SectionContainer>
     </section>
   );
 }

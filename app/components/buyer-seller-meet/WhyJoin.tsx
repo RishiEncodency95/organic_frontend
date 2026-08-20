@@ -5,6 +5,7 @@ import a3ogImg from "../../assets/image/a3og.png";
 import a1ogImg from "../../assets/image/a1og.png";
 import a2ogImg from "../../assets/image/a2og.png";
 import leafsImg from "../../assets/icons/leafs.png";
+import SectionContainer from "@/app/components/layout/SectionContainer";
 
 export default function WhyJoin() {
   const buyerPoints = [
@@ -30,7 +31,7 @@ export default function WhyJoin() {
         <img src={leafsImg.src} alt="Leaf Decoration" className="w-full h-auto object-contain -translate-x-1/4" />
       </div>
 
-      <div className="container mx-auto px-4 max-w-7xl relative z-10">
+      <SectionContainer className="relative z-10">
         
         {/* Removed central heading */}
 
@@ -87,7 +88,7 @@ export default function WhyJoin() {
           <img src={a3ogImg.src} alt="Exhibitor" className="hidden lg:block w-48 h-64 object-cover object-center shrink-0 self-center rounded-xl" />
 
         </div>
-      </div>
+      </SectionContainer>
     </section>
   );
 }

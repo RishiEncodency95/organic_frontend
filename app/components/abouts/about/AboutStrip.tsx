@@ -119,7 +119,7 @@ const AboutStrip = () => {
         <div
           ref={bandRef}
           style={{ opacity: 0, backgroundColor: "#1b5e20", boxShadow: "0 8px 20px -10px rgba(0,0,0,0.3)" }}
-          className="rounded-2xl border border-white/10 p-0.5 md:py-2 md:px-3 relative overflow-hidden [perspective:1000px]"
+          className="rounded-2xl border border-white/10 p-2.5 sm:p-3 md:py-2.5 md:px-4 relative overflow-hidden [perspective:1000px]"
         >
           {/* Shimmer overlay */}
           <div
@@ -128,7 +128,7 @@ const AboutStrip = () => {
             style={{ background: "linear-gradient(100deg, transparent, rgba(255,255,255,0.18), transparent)", opacity: 0 }}
           />
 
-          <div className="grid grid-cols-2 sm:grid-cols-4 md:flex md:flex-nowrap items-center justify-center md:justify-between gap-y-3 gap-x-2 md:gap-0">
+          <div className="grid grid-cols-2 sm:grid-cols-4 md:flex md:flex-nowrap items-center justify-center md:justify-between gap-2.5 md:gap-0">
             {items.map((item, i) => {
               const IconComponent = item.icon;
               return (
@@ -136,13 +136,13 @@ const AboutStrip = () => {
                   <div
                     ref={(el) => { itemRefs.current[i] = el; }}
                     style={{ opacity: 0 }}
-                    className="flex flex-col items-center text-center group flex-1 py-1"
+                    className="flex flex-col items-center text-center group flex-1 py-2 px-1 bg-white/5 md:bg-transparent rounded-xl border border-white/10 md:border-none"
                   >
-                    <IconComponent className="w-4 h-4 md:w-5 md:h-5 mb-1 text-white stroke-[1.75]" />
-                    <h4 className="text-[11px] sm:text-[13px] md:text-sm font-semibold text-white leading-none font-inter mb-0.5">
+                    <IconComponent className="w-4 h-4 md:w-5 md:h-5 mb-1.5 text-white stroke-[1.75]" />
+                    <h4 className="text-[13px] sm:text-[14px] md:text-sm font-extrabold text-white leading-none font-inter mb-1">
                       <StatCounter value={item.title} />
                     </h4>
-                    <p className="text-[8px] md:text-[9px] font-bold text-[#facc15] uppercase tracking-widest leading-tight mt-0.5 font-inter">
+                    <p className="text-[8.5px] md:text-[9px] font-bold text-[#facc15] uppercase tracking-wider leading-tight font-inter">
                       {item.subtitle}
                     </p>
                   </div>

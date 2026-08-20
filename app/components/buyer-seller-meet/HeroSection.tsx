@@ -5,6 +5,7 @@ import { CalendarDays, MapPin, ArrowRight } from "lucide-react";
 import bgImage from "../../assets/banner/b2b2og.png";
 import leafImg from "../../assets/icons/leafs.png";
 import gsap from "gsap";
+import SectionContainer from "@/app/components/layout/SectionContainer";
 
 const Sparkle = ({ style, color = "#F2B40E", shadow }: { style?: React.CSSProperties; color?: string; shadow?: string }) => (
   <span
@@ -147,7 +148,7 @@ export default function HeroSection() {
           />
         </div>
 
-        <div className="w-full max-w-[1400px] mx-auto px-4 sm:px-6 md:px-8 lg:px-8 relative z-20 py-1 md:py-2 [perspective:800px]">
+        <SectionContainer className="relative z-20 py-1 md:py-2 [perspective:800px]">
           <div className="flex flex-col lg:flex-row items-center justify-start">
             <div className="w-full lg:w-[60%] xl:w-[50%] text-left shrink-0 ml-0 lg:ml-8 xl:ml-12">
 
@@ -230,7 +231,7 @@ export default function HeroSection() {
               </div>
             </div>
           </div>
-        </div>
+        </SectionContainer>
       </section>
     </>
   );

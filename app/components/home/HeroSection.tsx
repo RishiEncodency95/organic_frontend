@@ -420,7 +420,7 @@ const HeroSection = () => {
 
       <section
         ref={sectionRef}
-        className="relative w-full overflow-hidden bg-[#fcfcf0] h-[68vh] md:h-[72vh] lg:h-[78vh] min-h-[400px] flex items-center font-inter"
+        className="relative w-full overflow-hidden bg-[#fcfcf0] min-h-[500px] md:min-h-[400px] h-auto py-10 md:py-0 md:h-[72vh] lg:h-[78vh] flex items-center font-inter"
       >
         {/* ── BACKGROUND LAYERS ── */}
         {SLIDES.map(({ id, img }) => (
@@ -479,8 +479,8 @@ const HeroSection = () => {
           }}
         />
 
-        {/* ── BACKGROUND GRADIENT (Left to Right Fade) ── */}
-        <div className="absolute inset-0 bg-gradient-to-r from-[#fcfcf0]/60 via-[#fcfcf0]/0 to-transparent z-10 pointer-events-none" />
+        {/* ── BACKGROUND GRADIENT (Subtle on mobile for image visibility) ── */}
+        <div className="absolute inset-0 bg-gradient-to-r from-[#fcfcf0]/30 via-[#fcfcf0]/10 to-transparent md:from-[#fcfcf0]/60 md:via-[#fcfcf0]/0 md:to-transparent z-10 pointer-events-none" />
 
         {/* ── CONTENT PANELS ── */}
         <SectionContainer
@@ -493,13 +493,13 @@ const HeroSection = () => {
               ref={(el) => {
                 panels.current[slide.id] = el;
               }}
-              className="col-start-1 row-start-1 w-full max-w-2xl lg:max-w-3xl mt-12 md:mt-0"
+              className="col-start-1 row-start-1 w-full max-w-2xl lg:max-w-3xl mt-4 md:mt-0"
               style={{
                 visibility: cur === slide.id ? "visible" : "hidden",
                 pointerEvents: cur === slide.id ? "auto" : "none",
               }}
             >
-              <div className="flex flex-col w-full">
+              <div className="flex flex-col w-full bg-white/35 md:bg-transparent backdrop-blur-md md:backdrop-blur-none p-3.5 sm:p-0 rounded-2xl border border-white/40 md:border-none shadow-md md:shadow-none">
                 {/* Tagline */}
                 <div data-anim="1" className="flex items-center gap-2 mb-2">
                   <div className="w-7 h-[2px] bg-[#c2410c]/80" />
@@ -547,22 +547,23 @@ const HeroSection = () => {
                 </div>
 
                 {/* Buttons */}
-                <div data-anim="6" className="flex flex-wrap sm:flex-nowrap items-center gap-2.5 pt-3 pb-2 relative overflow-visible w-full">
+                <div data-anim="6" className="flex flex-col sm:flex-row items-stretch sm:items-center gap-2.5 pt-3 pb-2 relative overflow-visible w-full max-w-xs sm:max-w-none">
 
                   {/* Book Your Stall */}
-                  <div className="relative shrink-0">
-                    <Sparkle color="#ffc107" shadow="#4B1426" style={{ top: "-12px", left: "5%", animationDelay: "0s" }} />
-                    <Sparkle color="#ff9800" shadow="#4B1426" style={{ top: "-15px", left: "28%", animationDelay: "0.3s" }} />
-                    <Sparkle color="#ffdd00" shadow="#4B1426" style={{ top: "-13px", left: "50%", animationDelay: "0.6s" }} />
-                    <Sparkle color="#ff9800" shadow="#4B1426" style={{ top: "-15px", left: "72%", animationDelay: "0.9s" }} />
-                    <Sparkle color="#ffc107" shadow="#4B1426" style={{ top: "-12px", right: "5%", animationDelay: "1.2s" }} />
+                  <div className="relative shrink-0 w-full sm:w-auto">
+                    <Sparkle color="#f97316" shadow="#c2410c" style={{ top: "-12px", left: "5%", animationDelay: "0s" }} />
+                    <Sparkle color="#fdba74" shadow="#c2410c" style={{ top: "-15px", left: "28%", animationDelay: "0.3s" }} />
+                    <Sparkle color="#ffedd5" shadow="#c2410c" style={{ top: "-13px", left: "50%", animationDelay: "0.6s" }} />
+                    <Sparkle color="#fdba74" shadow="#c2410c" style={{ top: "-15px", left: "72%", animationDelay: "0.9s" }} />
+                    <Sparkle color="#f97316" shadow="#c2410c" style={{ top: "-12px", right: "5%", animationDelay: "1.2s" }} />
                     <Link
                       href="/registration/book-a-stand"
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="group relative inline-flex items-center justify-start gap-2 px-4 py-2.5 md:px-5 md:py-2.5 rounded-lg font-bold text-xs uppercase tracking-widest text-white hover:bg-[#360e1b] transition-all active:scale-95 relative z-10 w-full sm:w-auto overflow-hidden shadow-md border border-white/10"
+                      className="group relative inline-flex items-center justify-center sm:justify-start gap-2 px-4 py-2.5 md:px-5 md:py-2.5 rounded-lg font-bold text-xs uppercase tracking-widest text-white hover:bg-[#c2410c] transition-all active:scale-95 relative z-10 w-full sm:w-auto overflow-hidden shadow-md border border-white/10"
                       style={{
-                        background: "#4B1426",
+                        background: "linear-gradient(135deg, #ea580c 0%, #c2410c 100%)",
+                        boxShadow: "0 4px 20px rgba(194,65,12,0.4), 0 0 12px rgba(249,115,22,0.25)",
                       }}
                     >
                       <span className="absolute inset-0 bg-white/15 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-500 skew-x-12" />
@@ -571,7 +572,7 @@ const HeroSection = () => {
                   </div>
 
                   {/* Register as Visitor */}
-                  <div className="relative shrink-0">
+                  <div className="relative shrink-0 w-full sm:w-auto">
                     <Sparkle color="#4ade80" shadow="#1b5e20" style={{ top: "-12px", left: "10%", animationDelay: "0.2s" }} />
                     <Sparkle color="#86efac" shadow="#16a34a" style={{ top: "-15px", left: "50%", animationDelay: "0.6s" }} />
                     <Sparkle color="#4ade80" shadow="#1b5e20" style={{ top: "-12px", right: "10%", animationDelay: "1s" }} />
@@ -579,7 +580,7 @@ const HeroSection = () => {
                       href="/registration/visitor-registration"
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="blue-btn-hero text-white px-4 py-2.5 md:px-5 md:py-2.5 rounded-lg font-bold text-xs uppercase tracking-widest flex items-center justify-start gap-2 transition-all active:scale-95 relative z-10 w-full sm:w-auto whitespace-nowrap shadow-md"
+                      className="blue-btn-hero text-white px-4 py-2.5 md:px-5 md:py-2.5 rounded-lg font-bold text-xs uppercase tracking-widest flex items-center justify-center sm:justify-start gap-2 transition-all active:scale-95 relative z-10 w-full sm:w-auto whitespace-nowrap shadow-md"
                     >
                       Register as Visitor <ArrowRight size={15} />
                     </Link>

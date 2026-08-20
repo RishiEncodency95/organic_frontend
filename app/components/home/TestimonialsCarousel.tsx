@@ -139,14 +139,14 @@ const VIDEOS_DATA = [
     title: "Exhibitors Speak: B2B Growth & Global Buyer Connections",
     location: "New Delhi, India",
     videoUrl: "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
-    thumbnail: "https://images.unsplash.com/photo-1556761175-5973dc0f32b7?q=80&w=800&auto=format&fit=crop"
+    thumbnail: "https://images.unsplash.com/photo-1511578314322-379afb476865?q=80&w=800&auto=format&fit=crop"
   },
   {
     _id: "v3",
     title: "Industry Leaders Panel: Insights into Organic & Eco Markets",
     location: "Hall 12, New Delhi",
     videoUrl: "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
-    thumbnail: "https://images.unsplash.com/photo-1558403194-611308249627?q=80&w=800&auto=format&fit=crop"
+    thumbnail: "https://images.unsplash.com/photo-1551836022-d5d88e9218df?q=80&w=800&auto=format&fit=crop"
   }
 ];
 
@@ -534,7 +534,7 @@ const TestimonialsCarousel = () => {
               <span className="block text-[#1b5e20] font-semibold mb-0.5">
                 WHAT GLOBAL EXPERTS SAY
               </span>
-              <span className="block text-[#4B1426] font-semibold tracking-tight whitespace-nowrap">
+              <span className="block text-[#4B1426] font-semibold tracking-tight md:whitespace-nowrap">
                 ABOUT BHARAT ORGANIC EXPO
               </span>
             </h1>
@@ -542,7 +542,7 @@ const TestimonialsCarousel = () => {
 
 
             {/* Subtitle */}
-            <p className="text-[#131730] text-sm md:text-base max-w-3xl mb-3 font-bold leading-relaxed text-left whitespace-nowrap">
+            <p className="text-[#131730] text-sm md:text-base max-w-3xl mb-3 font-bold leading-relaxed text-left">
               Bridging the gap between <span className="text-[#1b5e20]">Organic Buyers</span> and <span className="text-[#1b5e20]">Sustainable Brands</span>
             </p>
 

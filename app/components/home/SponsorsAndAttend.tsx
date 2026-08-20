@@ -315,7 +315,7 @@ const SponsorsAndAttend = () => {
         <div className="absolute top-1/2 left-1/4 w-96 h-96 bg-[#1b5e20]/20 rounded-full blur-[100px] -translate-y-1/2 pointer-events-none"></div>
         <div className="absolute top-1/2 right-1/4 w-96 h-96 bg-[#facc15]/10 rounded-full blur-[100px] -translate-y-1/2 pointer-events-none"></div>
 
-        <div className=" px-4 md:px-11 flex flex-col xl:flex-row items-center justify-between gap-6 xl:gap-4 relative z-10">
+        <div className="px-4 md:px-11 grid grid-cols-1 sm:grid-cols-2 xl:flex xl:items-center xl:justify-between gap-4 relative z-10">
 
           {/* Item 1: Date */}
           <div className="flex items-center gap-3 group">
@@ -370,7 +370,7 @@ const SponsorsAndAttend = () => {
           <div className="hidden xl:block w-[1px] h-8 bg-white/10"></div>
 
           {/* Register Button */}
-          <div className="relative shrink-0 z-30">
+          <div className="relative shrink-0 z-30 col-span-1 sm:col-span-2 xl:col-span-1 flex justify-center">
             <Sparkle color="#4B1426" shadow="#ffffff" style={{ top: "-12px", left: "5%", animationDelay: "0s" }} />
             <Sparkle color="#4B1426" shadow="#ffffff" style={{ top: "-15px", left: "28%", animationDelay: "0.3s" }} />
             <Sparkle color="#4B1426" shadow="#ffffff" style={{ top: "-13px", left: "50%", animationDelay: "0.6s" }} />

@@ -190,17 +190,17 @@ export default function WhyPartnerHotel() {
           <div className="hidden lg:block border-l border-gray-300 h-6 shrink-0" />
           <div className="flex items-center gap-2">
             <div className="w-8 h-8 rounded-full bg-[#d6a549] flex items-center justify-center text-white shrink-0"><Mail size={16} /></div>
-            <a href="mailto:partnership@bharatorganicexpo.in" className="text-xs lg:text-[13px] font-bold text-gray-900 hover:text-[#113217] transition-colors whitespace-nowrap">partnership@bharatorganicexpo.in</a>
+            <a href="mailto:info@namogangewellness.com" className="text-xs lg:text-[13px] font-bold text-gray-900 hover:text-[#113217] transition-colors whitespace-nowrap">info@namogangewellness.com</a>
           </div>
           <div className="hidden lg:block border-l border-gray-300 h-6 shrink-0" />
           <div className="flex items-center gap-2">
             <div className="w-8 h-8 rounded-full bg-[#d6a549] flex items-center justify-center text-white shrink-0"><Phone size={16} /></div>
-            <a href="tel:+917428991115" className="text-xs lg:text-[13px] font-bold text-gray-900 hover:text-[#113217] transition-colors whitespace-nowrap">+91 7428 99 1115</a>
+            <a href="tel:+919654900525" className="text-xs lg:text-[13px] font-bold text-gray-900 hover:text-[#113217] transition-colors whitespace-nowrap">+91-9654900525</a>
           </div>
           <div className="hidden lg:block border-l border-gray-300 h-6 shrink-0" />
           <div className="flex items-center gap-2">
             <div className="w-8 h-8 rounded-full bg-[#d6a549] flex items-center justify-center text-white shrink-0"><Globe size={16} /></div>
-            <a href="https://www.bharatorganicexpo.in" target="_blank" rel="noreferrer" className="text-xs lg:text-[13px] font-bold text-gray-900 hover:text-[#113217] transition-colors whitespace-nowrap">www.bharatorganicexpo.in</a>
+            <a href="https://bharatorganicexpo.com/" target="_blank" rel="noopener noreferrer" className="text-xs lg:text-[13px] font-bold text-blue-600 hover:underline transition-colors whitespace-nowrap">bharatorganicexpo.com</a>
           </div>
           <div className="hidden lg:block border-l border-gray-300 h-6 shrink-0" />
           <div className="flex items-center gap-2.5">

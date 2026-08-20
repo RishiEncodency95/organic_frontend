@@ -37,6 +37,7 @@ const ChairmanMessage = () => {
                                     src={vijayImg}
                                     alt="Mr. Vijay Sharma - Chairman"
                                     fill
+                                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 30vw, 250px"
                                     className="object-cover object-top group-hover:scale-105 transition-transform duration-500"
                                 />
                             </div>

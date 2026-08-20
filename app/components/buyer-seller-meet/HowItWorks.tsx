@@ -6,6 +6,7 @@ import h2og from "../../assets/icons/h2og.png";
 import h3og from "../../assets/icons/h3og.png";
 import h4og from "../../assets/icons/h4og.png";
 import h5og from "../../assets/icons/h5og.png";
+import SectionContainer from "@/app/components/layout/SectionContainer";
 
 export default function HowItWorks() {
   const steps = [
@@ -43,7 +44,7 @@ export default function HowItWorks() {
 
   return (
     <section id="how-it-works" className="pt-4 pb-4 bg-[#f9f9f9] font-inter text-center border-t border-gray-100 scroll-mt-28">
-      <div className="container mx-auto px-4 max-w-[1400px]">
+      <SectionContainer>
         <div className="flex items-center justify-center mb-6 w-full">
           <div className="h-[1px] bg-gray-200 flex-1"></div>
           <h2 className="px-4 text-[13px] md:text-sm font-semibold text-[#1b5e20] uppercase font-poppins">
@@ -75,7 +76,7 @@ export default function HowItWorks() {
             </React.Fragment>
           ))}
         </div>
-      </div>
+      </SectionContainer>
     </section>
   );
 }
