@@ -87,8 +87,8 @@ export default function GeneralForm() {
 
   useEffect(() => {
     settingsApi.getSettings().then((res: any) => {
-      if (res && res.success && res.data && res.data.requireOtpForVisitorRegistration !== undefined) {
-        setRequireOtp(res.data.requireOtpForVisitorRegistration);
+      if (res && res.requireOtpForVisitorRegistration !== undefined) {
+        setRequireOtp(res.requireOtpForVisitorRegistration);
       }
     }).catch((err: any) => console.error(err));
   }, []);
