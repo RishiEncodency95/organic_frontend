@@ -214,7 +214,7 @@ export default function HeroSection() {
                   <Sparkle color="#f97316" shadow="#c2410c" style={{ top: "-15px", left: "50%", animationDelay: "0.4s" }} />
                   <Sparkle color="#f97316" shadow="#c2410c" style={{ top: "-10px", right: "10%", animationDelay: "0.8s" }} />
                   <Link
-                    href="/participate-as-exhibitor"
+                    href="/participate_as_exhibiture"
                     target="_blank"
                     rel="noopener noreferrer"
                     className="group relative inline-flex items-center justify-start gap-2 px-4 py-2 rounded-lg font-semibold text-[10px] uppercase tracking-widest text-white transition-all active:scale-95 shadow-2xl z-10 w-full sm:w-auto overflow-hidden"

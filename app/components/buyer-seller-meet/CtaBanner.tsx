@@ -40,7 +40,7 @@ export default function CtaBanner() {
                   REGISTER AS A BUYER <ArrowRight size={16} />
                 </Link>
                 <Link
-                  href="/participate-as-exhibitor"
+                  href="/participate_as_exhibiture"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="flex items-center justify-center gap-2 bg-gradient-to-r from-[#ea580c] to-[#c2410c] hover:opacity-90 text-white px-5 py-2.5 rounded-lg font-bold text-xs uppercase tracking-wide transition-opacity shadow-lg w-full sm:w-auto"

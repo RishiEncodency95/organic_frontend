@@ -18,7 +18,7 @@ export default function AboutSection() {
 
   const links = [
     { label: "Register as Buyer", icon: <User size={16} />, href: "/registration/buyer-registration", target: "_blank" },
-    { label: "Participate as Exhibitor", icon: <Briefcase size={16} />, href: "/participate-as-exhibitor", target: "_blank" },
+    { label: "Participate as Exhibitor", icon: <Briefcase size={16} />, href: "/participate_as_exhibiture", target: "_blank" },
     { label: "How it Works", icon: <HelpCircle size={16} />, href: "#how-it-works" },
     { label: "Who Can Participate", icon: <Users size={16} />, href: "#who-can-participate" },
     { label: "Contact Us", icon: <Phone size={16} />, href: "/contact", target: "_blank" },
