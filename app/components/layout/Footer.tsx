@@ -220,13 +220,13 @@ export default function Footer() {
 
             <h5 className="font-poppins font-semibold text-gray-400 uppercase mb-1.5 text-[11px] tracking-widest">CONFERENCE HELPLINE</h5>
             <a
-              href="tel:+919654900525"
+              href="tel:+919818353841"
               className="flex items-center gap-2 text-white font-semibold text-[14px] font-poppins hover:opacity-90 transition-opacity"
             >
               <div className="w-7 h-7 rounded-full border border-[#F3B71B] flex items-center justify-center text-[#F3B71B] bg-[#F3B71B]/10">
                 <Phone size={14} />
               </div>
-              <span className="text-[#F3B71B]">+91 96549 00525</span>
+              <span className="text-[#F3B71B]">+91 98183 53841</span>
             </a>
           </div>
 
