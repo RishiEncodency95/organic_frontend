@@ -136,15 +136,19 @@ const AboutStrip = () => {
                   <div
                     ref={(el) => { itemRefs.current[i] = el; }}
                     style={{ opacity: 0 }}
-                    className="flex flex-col items-center text-center group flex-1 py-2 px-1 bg-white/5 md:bg-transparent rounded-xl border border-white/10 md:border-none"
+                    className="flex flex-row items-center justify-center gap-2.5 sm:gap-3 group flex-1 py-2 px-2 bg-white/5 md:bg-transparent rounded-xl border border-white/10 md:border-none"
                   >
-                    <IconComponent className="w-4 h-4 md:w-5 md:h-5 mb-1.5 text-white stroke-[1.75]" />
-                    <h4 className="text-[13px] sm:text-[14px] md:text-sm font-semibold text-white leading-none font-inter mb-1">
-                      <StatCounter value={item.title} />
-                    </h4>
-                    <p className="text-[8.5px] md:text-[9px] font-bold text-[#facc15] uppercase tracking-wider leading-tight font-inter">
-                      {item.subtitle}
-                    </p>
+                    <div className="w-8 h-8 md:w-9 md:h-9 rounded-full bg-white/10 flex items-center justify-center shrink-0 border border-white/15">
+                      <IconComponent className="w-4 h-4 md:w-5 md:h-5 text-[#facc15] stroke-[2]" />
+                    </div>
+                    <div className="flex flex-col text-left">
+                      <h4 className="text-[13px] sm:text-[14px] md:text-sm font-semibold text-white leading-tight font-inter">
+                        <StatCounter value={item.title} />
+                      </h4>
+                      <p className="text-[8.5px] md:text-[9px] font-bold text-[#facc15] uppercase tracking-wider leading-tight font-inter">
+                        {item.subtitle}
+                      </p>
+                    </div>
                   </div>
                   {i < items.length - 1 && (
                     <div
