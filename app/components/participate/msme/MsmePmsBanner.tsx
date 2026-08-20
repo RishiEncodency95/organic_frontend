@@ -33,14 +33,18 @@ const StatCounter = ({ value, label, icon: Icon }: { value: string; label: strin
   }, [isInView, numericValue]);
 
   return (
-    <div ref={ref} className="flex flex-col items-center gap-1 text-center">
-      <Icon className="h-5 w-5 text-[#D4A017]" aria-hidden="true" />
-      <span className="text-xl font-semibold text-emerald-900 sm:text-2xl">
-        {numericValue > 0 ? displayValue.toLocaleString() + suffix : value}
+    <div ref={ref} className="flex flex-row items-center justify-center gap-2 sm:gap-2.5 py-1 px-1.5">
+      <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-white/10 border border-white/15">
+        <Icon className="h-4 w-4 text-[#facc15]" aria-hidden="true" />
       </span>
-      <span className="text-[0.65rem] font-semibold uppercase tracking-wider text-emerald-900 sm:text-xs">
-        {label}
-      </span>
+      <div className="flex flex-col text-left justify-center">
+        <span className="text-[15px] font-semibold text-white leading-none sm:text-[16px]">
+          {numericValue > 0 ? displayValue.toLocaleString() + suffix : value}
+        </span>
+        <span className="text-[9.5px] font-semibold uppercase tracking-wider text-[#facc15] leading-none sm:text-[10px]">
+          {label}
+        </span>
+      </div>
     </div>
   );
 };
@@ -177,11 +181,23 @@ export default function MsmePmsBanner({
       </div>
 
       {/* ── Stats Strip (bottom of banner) ── */}
-      <div className="absolute bottom-0 left-0 z-10 w-full border-t border-emerald-900/10 bg-white/70 backdrop-blur-md">
-        <div className="mx-auto grid w-full grid-cols-2 gap-4 px-4 py-4 sm:grid-cols-4 sm:gap-0 sm:py-5 md:px-11">
-          {stats.map((stat) => (
-            <StatCounter key={stat.label} value={stat.value} label={stat.label} icon={stat.icon} />
-          ))}
+      <div className="absolute bottom-0 left-0 z-10 w-full">
+        <div className="mx-auto px-4 md:px-11">
+          <div
+            className="rounded-2xl border border-white/10 p-2 sm:py-2 md:py-2 md:px-4 relative overflow-hidden"
+            style={{ backgroundColor: "#1b5e20", boxShadow: "0 8px 20px -10px rgba(0,0,0,0.3)" }}
+          >
+            <div className="grid w-full grid-cols-2 gap-2.5 sm:grid-cols-4 sm:gap-0">
+              {stats.map((stat, i) => (
+                <div key={stat.label} className="flex items-center justify-center">
+                  <StatCounter value={stat.value} label={stat.label} icon={stat.icon} />
+                  {i < stats.length - 1 && (
+                    <span className="hidden sm:block w-px h-6 bg-white/20 ml-4" aria-hidden="true" />
+                  )}
+                </div>
+              ))}
+            </div>
+          </div>
         </div>
       </div>
     </section>
