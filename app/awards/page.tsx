@@ -19,7 +19,7 @@ export const metadata: Metadata = {
 
 const AwardsPage = () => {
     return (
-        <div className="min-h-screen bg-white font-sans text-neutral-800 overflow-x-clip">
+        <div className="overflow-x-hidden bg-white font-sans text-neutral-800">
             <AwardsHero />
             <AwardsStats />
             <AwardsAbout />
