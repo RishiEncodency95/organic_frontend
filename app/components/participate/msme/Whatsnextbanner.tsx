@@ -70,7 +70,7 @@ export default function WhatsNextBanner() {
   return (
     <section
       aria-labelledby="whats-next-heading"
-      className="w-full px-4 py-10 md:px-11 sm:py-14 lg:py-16"
+      className="w-full px-4 py-6 md:px-11"
     >
       <div className="mx-auto w-full">
         {/* ============ TOP: Heading+Intro  |  Logo+Benefits ============ */}
@@ -79,7 +79,7 @@ export default function WhatsNextBanner() {
           <div className="lg:col-span-5 flex flex-col justify-center">
             <h2
               id="whats-next-heading"
-              className="flex flex-wrap items-center gap-2 font-black uppercase leading-[0.95] tracking-tight text-emerald-800 text-4xl sm:text-5xl xl:text-6xl"
+              className="flex flex-wrap items-center gap-2 font-semibold uppercase leading-[0.95] tracking-tight text-emerald-800 text-4xl sm:text-5xl xl:text-6xl"
             >
               What&apos;s Next?
               <Leaf
@@ -87,7 +87,7 @@ export default function WhatsNextBanner() {
                 aria-hidden="true"
               />
             </h2>
-            <p className="mt-1 font-black uppercase leading-[0.95] tracking-tight text-slate-900 text-3xl sm:text-4xl xl:text-5xl">
+            <p className="mt-1 font-semibold uppercase leading-[0.95] tracking-tight text-slate-900 text-3xl sm:text-4xl xl:text-5xl">
               Take the Next Step Today
             </p>
 
@@ -98,7 +98,7 @@ export default function WhatsNextBanner() {
             </div>
 
             <p className="max-w-md text-base sm:text-lg leading-relaxed text-slate-700">
-              Join <span className="font-bold text-slate-900">Bharat Organic Expo 2027</span> and
+              Join <span className="font-semibold text-slate-900">Bharat Organic Expo 2027</span> and
               be part of India&apos;s fastest growing Organic &amp; Natural marketplace.
             </p>
           </div>
@@ -108,7 +108,7 @@ export default function WhatsNextBanner() {
             {/* Logo lockup */}
             <div className="flex items-center justify-start gap-3 lg:justify-end">
               <Leaf className="h-10 w-10 shrink-0 text-emerald-600" aria-hidden="true" />
-              <p className="text-2xl sm:text-3xl font-extrabold leading-tight text-emerald-800">
+              <p className="text-2xl sm:text-3xl font-semibold leading-tight text-emerald-800">
                 Bharat
                 <br />
                 Organic
@@ -128,7 +128,7 @@ export default function WhatsNextBanner() {
                     <span className="mb-3 flex h-16 w-16 items-center justify-center rounded-full bg-gray-100">
                       <Icon className="h-8 w-8 text-emerald-900" aria-hidden="true" />
                     </span>
-                    <h3 className="text-sm sm:text-base font-extrabold uppercase leading-tight text-emerald-800">
+                    <h3 className="text-sm sm:text-base font-semibold uppercase leading-tight text-emerald-800">
                       {title}
                     </h3>
                     <p className="mt-2 text-xs sm:text-sm leading-snug text-slate-600">
@@ -148,7 +148,7 @@ export default function WhatsNextBanner() {
             {/* Ribbon */}
             <div className="mb-8 flex items-center justify-center gap-3">
               <Leaf className="hidden h-6 w-6 -rotate-45 text-emerald-500 sm:block" aria-hidden="true" />
-              <div className="rounded-md bg-emerald-800 px-6 py-2.5 text-center text-sm sm:text-base font-extrabold uppercase tracking-wide text-white shadow">
+              <div className="rounded-md bg-emerald-800 px-6 py-2.5 text-center text-sm sm:text-base font-semibold uppercase tracking-wide text-white shadow">
                 Get Started in 3 Easy Steps
               </div>
               <Leaf className="hidden h-6 w-6 rotate-45 scale-x-[-1] text-emerald-500 sm:block" aria-hidden="true" />
@@ -170,12 +170,12 @@ export default function WhatsNextBanner() {
 
                   <span className="relative mb-4 flex h-20 w-20 items-center justify-center rounded-full bg-gray-100">
                     <Icon className="h-9 w-9 text-emerald-900" aria-hidden="true" />
-                    <span className="absolute -top-2 -left-1 flex h-7 w-7 items-center justify-center rounded-full bg-emerald-900 text-xs font-bold text-white ring-4 ring-white">
+                    <span className="absolute -top-2 -left-1 flex h-7 w-7 items-center justify-center rounded-full bg-emerald-900 text-xs font-semibold text-white ring-4 ring-white">
                       {number}
                     </span>
                   </span>
 
-                  <h3 className="text-sm sm:text-base font-extrabold uppercase leading-snug text-emerald-800">
+                  <h3 className="text-sm sm:text-base font-semibold uppercase leading-snug text-emerald-800">
                     {title}
                   </h3>
                   <span className="mt-1 mb-2 h-0.5 w-8 bg-emerald-700" aria-hidden="true" />
@@ -197,7 +197,7 @@ export default function WhatsNextBanner() {
               <span className="flex h-14 w-14 shrink-0 items-center justify-center rounded-full bg-emerald-700/70">
                 <Headset className="h-7 w-7 text-white" aria-hidden="true" />
               </span>
-              <h3 className="pt-1 text-2xl sm:text-3xl font-extrabold leading-tight">
+              <h3 className="pt-1 text-2xl sm:text-3xl font-semibold leading-tight">
                 We&apos;re Here to Help!
               </h3>
             </div>
@@ -256,7 +256,7 @@ export default function WhatsNextBanner() {
             <div className="flex items-center gap-3">
               <FileEdit className="h-8 w-8 shrink-0 text-emerald-800" aria-hidden="true" />
               <div>
-                <p className="text-sm sm:text-base font-extrabold uppercase leading-tight text-slate-900">
+                <p className="text-sm sm:text-base font-semibold uppercase leading-tight text-slate-900">
                   Ready to Take the Next Step?
                 </p>
                 <p className="mt-0.5 text-sm text-slate-600">
@@ -267,7 +267,7 @@ export default function WhatsNextBanner() {
 
             <a
               href="#apply"
-              className="inline-flex shrink-0 items-center justify-center gap-1 rounded-lg bg-emerald-900 px-6 py-3 text-sm sm:text-base font-bold uppercase tracking-wide text-white transition-colors hover:bg-emerald-800 focus:outline-none focus-visible:ring-2 focus-visible:ring-emerald-700 focus-visible:ring-offset-2"
+              className="inline-flex shrink-0 items-center justify-center gap-1 rounded-lg bg-emerald-900 px-6 py-3 text-sm sm:text-base font-semibold uppercase tracking-wide text-white transition-colors hover:bg-emerald-800 focus:outline-none focus-visible:ring-2 focus-visible:ring-emerald-700 focus-visible:ring-offset-2"
             >
               Apply Now
               <ChevronRight className="h-5 w-5" aria-hidden="true" />

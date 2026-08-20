@@ -31,7 +31,7 @@ const OptionCard: React.FC<OptionCardProps> = ({ icon, title, description }) => 
     <div className="mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-[#EAF3E7]">
       {icon}
     </div>
-    <h3 className="text-lg font-bold text-[#0F2A1D] sm:text-xl">{title}</h3>
+    <h3 className="text-lg font-semibold text-[#0F2A1D] sm:text-xl">{title}</h3>
     <span className="my-2 h-[3px] w-8 rounded-full bg-[#1B5E20]" />
     <p className="max-w-[22ch] text-sm leading-relaxed text-slate-600 sm:text-[15px]">
       {description}
@@ -55,18 +55,13 @@ const PMSFinalCTASection: React.FC = () => {
   return (
     <section
       aria-labelledby="pms-final-cta-heading"
-      className="relative w-full px-4 py-10 md:px-11 sm:py-14"
+      className="relative w-full px-4 py-6 md:px-11"
     >
       <div className="mx-auto flex w-full flex-col items-center">
-        {/* Eyebrow badge */}
-        <span className="mb-4 rounded-md bg-[#1B5E20] px-4 py-1.5 text-[11px] font-bold tracking-wider text-white sm:text-xs">
-          SECTION 11 — FINAL CTA
-        </span>
-
         {/* Heading */}
         <h2
           id="pms-final-cta-heading"
-          className="text-center text-3xl font-extrabold leading-tight text-[#0F2A44] sm:text-4xl lg:text-[42px]"
+          className="text-center text-3xl font-semibold leading-tight text-[#0F2A44] sm:text-4xl lg:text-[42px]"
         >
           Ready to Explore <span className="text-[#1B5E20]">PMS Support?</span>
         </h2>
@@ -90,13 +85,13 @@ const PMSFinalCTASection: React.FC = () => {
 
           {/* OR divider badge */}
           <span
-            className="absolute left-1/2 top-1/2 z-10 hidden h-11 w-11 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full bg-[#1B5E20] text-sm font-bold text-white ring-4 ring-white sm:flex"
+            className="absolute left-1/2 top-1/2 z-10 hidden h-11 w-11 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full bg-[#1B5E20] text-sm font-semibold text-white ring-4 ring-white sm:flex"
             aria-hidden="true"
           >
             OR
           </span>
           <div className="flex items-center justify-center sm:hidden" aria-hidden="true">
-            <span className="flex h-10 w-10 items-center justify-center rounded-full bg-[#1B5E20] text-sm font-bold text-white ring-4 ring-white">
+            <span className="flex h-10 w-10 items-center justify-center rounded-full bg-[#1B5E20] text-sm font-semibold text-white ring-4 ring-white">
               OR
             </span>
           </div>
@@ -112,14 +107,14 @@ const PMSFinalCTASection: React.FC = () => {
         <div className="mt-6 flex w-full flex-col gap-4 sm:flex-row">
           <button
             type="button"
-            className="flex flex-1 items-center justify-center gap-2 rounded-lg bg-[#1B5E20] px-6 py-3.5 text-sm font-bold uppercase tracking-wide text-white shadow-sm transition hover:bg-[#164C1A] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#1B5E20] sm:text-[15px]"
+            className="flex flex-1 items-center justify-center gap-2 rounded-lg bg-[#1B5E20] px-6 py-3.5 text-sm font-semibold uppercase tracking-wide text-white shadow-sm transition hover:bg-[#164C1A] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#1B5E20] sm:text-[15px]"
           >
             <Upload className="h-4 w-4" strokeWidth={2} aria-hidden="true" />
             Check Your PMS Eligibility
           </button>
           <button
             type="button"
-            className="flex flex-1 items-center justify-center gap-2 rounded-lg border-2 border-[#1B5E20] bg-white px-6 py-3.5 text-sm font-bold uppercase tracking-wide text-[#1B5E20] shadow-sm transition hover:bg-[#EAF3E7] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#1B5E20] sm:text-[15px]"
+            className="flex flex-1 items-center justify-center gap-2 rounded-lg border-2 border-[#1B5E20] bg-white px-6 py-3.5 text-sm font-semibold uppercase tracking-wide text-[#1B5E20] shadow-sm transition hover:bg-[#EAF3E7] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#1B5E20] sm:text-[15px]"
           >
             <CircleUserRound className="h-4 w-4" strokeWidth={2} aria-hidden="true" />
             Get Udyam Registration Guidance
@@ -129,7 +124,7 @@ const PMSFinalCTASection: React.FC = () => {
         {/* Talk to support link */}
         <a
           href="#pms-support-team"
-          className="mt-5 inline-flex items-center gap-1.5 text-sm font-bold text-[#1B5E20] underline-offset-4 hover:underline sm:text-base"
+          className="mt-5 inline-flex items-center gap-1.5 text-sm font-semibold text-[#1B5E20] underline-offset-4 hover:underline sm:text-base"
         >
           Talk to PMS Support Team
           <ArrowRight className="h-4 w-4" strokeWidth={2.25} aria-hidden="true" />
@@ -170,7 +165,7 @@ const PMSFinalCTASection: React.FC = () => {
         <div className="mt-7 flex w-full flex-col items-start gap-3 rounded-xl bg-white/95 p-4 shadow-sm ring-1 ring-black/5 sm:flex-row sm:items-start sm:gap-4 sm:p-5">
           <div className="flex shrink-0 flex-col items-center gap-1 sm:w-32">
             <ShieldAlert className="h-6 w-6 text-[#1B5E20]" strokeWidth={2} aria-hidden="true" />
-            <span className="text-center text-xs font-extrabold uppercase leading-tight text-[#1B5E20] sm:text-[13px]">
+            <span className="text-center text-xs font-semibold uppercase leading-tight text-[#1B5E20] sm:text-[13px]">
               Important
               <br className="hidden sm:block" /> Disclaimer
             </span>

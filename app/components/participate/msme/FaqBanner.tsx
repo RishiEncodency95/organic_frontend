@@ -67,7 +67,7 @@ export default function FAQBanner() {
   return (
     <section
       aria-labelledby="faq-heading"
-      className="relative w-full overflow-hidden bg-gradient-to-b from-green-50/60 to-white px-4 py-12 md:px-11 sm:py-16 lg:py-20"
+      className="relative w-full overflow-hidden bg-gradient-to-b from-green-50/60 to-white px-4 py-6 md:px-11"
     >
       {/* Decorative leaf accent, top right */}
       <Leaf
@@ -93,7 +93,7 @@ export default function FAQBanner() {
             <p className="text-[11px] font-semibold uppercase leading-tight text-green-900 sm:text-xs">
               Supporting
             </p>
-            <p className="text-sm font-extrabold uppercase leading-tight text-green-800 sm:text-base">
+            <p className="text-sm font-semibold uppercase leading-tight text-green-800 sm:text-base">
               MSMEs
             </p>
             <p className="text-[11px] font-semibold uppercase leading-tight text-green-900 sm:text-xs">
@@ -109,7 +109,7 @@ export default function FAQBanner() {
               <span className="hidden h-px w-16 bg-green-700/40 sm:block" aria-hidden="true" />
               <h2
                 id="faq-heading"
-                className="text-4xl font-extrabold tracking-tight text-green-900 sm:text-5xl lg:text-6xl"
+                className="text-4xl font-semibold tracking-tight text-green-900 sm:text-5xl lg:text-6xl"
               >
                 FAQ
               </h2>
@@ -155,7 +155,7 @@ export default function FAQBanner() {
 
                       {/* Question + answer */}
                       <span className="flex flex-1 flex-col justify-center gap-1 py-4 pr-4 sm:flex-row sm:items-center sm:gap-6 sm:py-5">
-                        <span className="flex-none text-base font-bold text-green-950 sm:w-56 sm:text-lg lg:w-64">
+                        <span className="flex-none text-base font-semibold text-green-950 sm:w-56 sm:text-lg lg:w-64">
                           {item.question}
                         </span>
                         <span className="hidden flex-none self-stretch border-l border-gray-200 sm:block" aria-hidden="true" />

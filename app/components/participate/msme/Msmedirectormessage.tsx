@@ -37,14 +37,14 @@ export default function OfficialMessageBanner({
   return (
     <section
       aria-labelledby="msme-director-message-heading"
-      className="w-full bg-[#faf6ee] px-4 py-12 md:px-11 sm:py-16"
+      className="w-full bg-[#faf6ee] px-4 py-6 md:px-11"
     >
       <div className="mx-auto w-full">
         {/* Eyebrow */}
         <div className="mb-4 flex items-center justify-center gap-3 sm:mb-5">
           <span className="h-px w-8 bg-[#2f6b3a]/40 sm:w-14" aria-hidden="true" />
           <Leaf className="h-4 w-4 -rotate-45 text-[#2f6b3a]" aria-hidden="true" />
-          <span className="text-xs font-bold tracking-[0.2em] text-[#2f6b3a] sm:text-sm">
+          <span className="text-xs font-semibold tracking-[0.2em] text-[#2f6b3a] sm:text-sm">
             HEAR FROM MSME LEADERSHIP
           </span>
           <Leaf className="h-4 w-4 rotate-[135deg] text-[#2f6b3a]" aria-hidden="true" />
@@ -54,7 +54,7 @@ export default function OfficialMessageBanner({
         {/* Heading */}
         <h1
           id="msme-director-message-heading"
-          className="text-balance text-center text-2xl font-extrabold leading-tight tracking-tight text-[#16233a] sm:text-3xl md:text-4xl lg:text-[2.75rem]"
+          className="text-balance text-center text-2xl font-semibold leading-tight tracking-tight text-[#16233a] sm:text-3xl md:text-4xl lg:text-[2.75rem]"
         >
           OFFICIAL MESSAGE{" "}
           <span className="text-[#2f6b3a]">FROM MSME DIRECTOR</span>
@@ -72,7 +72,7 @@ export default function OfficialMessageBanner({
         {/* Subheading */}
         <p className="mx-auto max-w-2xl text-balance text-center text-sm leading-relaxed text-[#3d4a5c] sm:text-base md:text-lg">
           A message of support and encouragement for all MSMEs participating in{" "}
-          <strong className="font-bold text-[#2f6b3a]">
+          <strong className="font-semibold text-[#2f6b3a]">
             Bharat Organic Expo 2027
           </strong>{" "}
           under the PMS Scheme.
@@ -153,7 +153,7 @@ export default function OfficialMessageBanner({
             </div>
 <div>
 
-            <h2 className="text-base font-extrabold tracking-wide text-[#16233a] sm:text-lg">
+            <h2 className="text-base font-semibold tracking-wide text-[#16233a] sm:text-lg">
               MESSAGE FROM MSME LEADERSHIP
             </h2>
             <div className="mt-1 flex items-center gap-2 sm:justify-start" aria-hidden="true">
@@ -181,7 +181,7 @@ export default function OfficialMessageBanner({
                   <User className="h-6 w-6 text-white" aria-hidden="true" />
                 </div>
                 <div>
-                  <p className="text-sm font-bold text-[#16233a] sm:text-base">
+                  <p className="text-sm font-semibold text-[#16233a] sm:text-base">
                     Shri. S. C. L. Das
                   </p>
                   <p className="text-xs leading-snug text-[#5c6773] sm:text-[13px]">
@@ -244,7 +244,7 @@ function FeatureItem({
         {icon}
       </div>
       <div>
-        <p className="text-sm font-bold text-[#16233a] sm:text-[15px]">{title}</p>
+        <p className="text-sm font-semibold text-[#16233a] sm:text-[15px]">{title}</p>
         <p className="mt-0.5 text-xs leading-snug text-[#5c6773] sm:text-[13px]">
           {description}
         </p>

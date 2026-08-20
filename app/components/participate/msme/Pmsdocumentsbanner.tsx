@@ -103,13 +103,13 @@ export default function PMSDocumentsBanner() {
   return (
     <section
       aria-labelledby="pms-documents-heading"
-      className="relative isolate overflow-hidden bg-white px-4 py-12 md:px-11 sm:py-16 lg:py-20"
+      className="relative isolate overflow-hidden bg-white px-4 py-6 md:px-11"
     >
       {/* Header */}
       <header className="relative mx-auto mb-10 max-w-3xl text-center sm:mb-14">
         <div className="mb-4 flex items-center justify-center gap-3">
           <span className="h-px w-8 bg-green-700 sm:w-12" aria-hidden="true" />
-          <span className="text-xs font-bold tracking-[0.2em] text-green-700 sm:text-sm">
+          <span className="text-xs font-semibold tracking-[0.2em] text-green-700 sm:text-sm">
             BE PREPARED
           </span>
           <span className="h-px w-8 bg-green-700 sm:w-12" aria-hidden="true" />
@@ -117,7 +117,7 @@ export default function PMSDocumentsBanner() {
 
         <h1
           id="pms-documents-heading"
-          className="text-3xl font-extrabold leading-tight tracking-tight text-slate-900 sm:text-4xl md:text-5xl lg:text-[3.25rem]"
+          className="text-3xl font-semibold leading-tight tracking-tight text-slate-900 sm:text-4xl md:text-5xl lg:text-[3.25rem]"
         >
           Keep Your <span className="text-green-700">PMS</span> Documents Ready
         </h1>
@@ -157,7 +157,7 @@ export default function PMSDocumentsBanner() {
                 />
               </span>
 
-              <h2 className="text-sm font-bold leading-snug text-slate-900 sm:text-base">
+              <h2 className="text-sm font-semibold leading-snug text-slate-900 sm:text-base">
                 {doc.id}. {doc.title}
               </h2>
 
@@ -191,7 +191,7 @@ export default function PMSDocumentsBanner() {
       <div className="mt-8 flex justify-center sm:mt-10">
         <a
           href="#complete-document-checklist"
-          className="inline-flex items-center gap-3 rounded-full bg-green-800 px-6 py-4 text-sm font-bold tracking-wide text-white shadow-md transition-colors duration-200 hover:bg-green-900 focus:outline-none focus-visible:ring-2 focus-visible:ring-green-700 focus-visible:ring-offset-2 sm:px-8 sm:text-base"
+          className="inline-flex items-center gap-3 rounded-full bg-green-800 px-6 py-4 text-sm font-semibold tracking-wide text-white shadow-md transition-colors duration-200 hover:bg-green-900 focus:outline-none focus-visible:ring-2 focus-visible:ring-green-700 focus-visible:ring-offset-2 sm:px-8 sm:text-base"
         >
           <FileEdit className="h-5 w-5" aria-hidden="true" />
           VIEW COMPLETE DOCUMENT CHECKLIST

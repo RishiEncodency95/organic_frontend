@@ -35,10 +35,10 @@ const StatCounter = ({ value, label, icon: Icon }: { value: string; label: strin
   return (
     <div ref={ref} className="flex flex-col items-center gap-1 text-center">
       <Icon className="h-5 w-5 text-[#D4A017]" aria-hidden="true" />
-      <span className="text-xl font-extrabold text-emerald-900 sm:text-2xl">
+      <span className="text-xl font-semibold text-emerald-900 sm:text-2xl">
         {numericValue > 0 ? displayValue.toLocaleString() + suffix : value}
       </span>
-      <span className="text-[0.65rem] font-bold uppercase tracking-wider text-emerald-900/70 sm:text-xs">
+      <span className="text-[0.65rem] font-semibold uppercase tracking-wider text-emerald-900 sm:text-xs">
         {label}
       </span>
     </div>
@@ -71,14 +71,14 @@ export default function MsmePmsBanner({
       </div>
 
       {/* Content */}
-      <div className="relative z-10 mx-auto grid w-full grid-cols-1 items-center gap-10 px-4 py-16 md:px-11 md:py-20 lg:grid-cols-2 lg:gap-8">
+      <div className="relative z-10 mx-auto grid w-full grid-cols-1 items-center gap-6 px-4 py-6 md:px-11 lg:grid-cols-2 lg:gap-8">
         {/* ---------------- Left column ---------------- */}
         <div className="flex flex-col">
           {/* Eyebrow */}
           <div className="mb-5 inline-flex w-fit flex-col">
             <div className="flex items-center gap-2 text-[#8FD19E]">
               <Handshake className="h-5 w-5 shrink-0" aria-hidden="true" />
-              <span className="text-xs font-bold tracking-wide sm:text-sm">
+              <span className="text-xs font-semibold tracking-wide sm:text-sm">
                 MSME PROCUREMENT &amp; MARKETING SUPPORT
               </span>
             </div>
@@ -88,7 +88,7 @@ export default function MsmePmsBanner({
           {/* Heading */}
           <h1
             id="msme-pms-heading"
-            className="text-[2.25rem] font-extrabold leading-[1.1] text-emerald-900 sm:text-5xl lg:text-[3.25rem]"
+            className="text-[2rem] font-semibold leading-[1.1] text-emerald-900 sm:text-4xl lg:text-[2.75rem]"
           >
             MSME PMS Scheme &amp; Exhibition Support
           </h1>
@@ -100,7 +100,7 @@ export default function MsmePmsBanner({
           <span className="mt-2 h-[3px] w-10 rounded-full bg-[#D4A017]" aria-hidden="true" />
 
           {/* Paragraph */}
-          <p className="mt-4 max-w-xl text-sm leading-relaxed text-emerald-900/80 sm:text-base">
+          <p className="mt-4 max-w-xl text-sm leading-relaxed text-emerald-900 sm:text-base">
             Eligible Micro &amp; Small Enterprises can explore financial assistance for
             participation in{" "}
             <span className="font-semibold text-[#0F5132]">Bharat Organic Expo 2027</span>{" "}
@@ -119,7 +119,7 @@ export default function MsmePmsBanner({
           </div>
 
           {/* Event details row */}
-          <div className="mt-6 flex flex-wrap items-center gap-x-5 gap-y-3 text-sm text-emerald-900/90 sm:text-base">
+          <div className="mt-6 flex flex-wrap items-center gap-x-5 gap-y-3 text-sm text-emerald-900 sm:text-base">
             <div className="flex items-center gap-2">
               <Calendar className="h-5 w-5 shrink-0 text-[#0F5132]" aria-hidden="true" />
               <span>
@@ -145,14 +145,14 @@ export default function MsmePmsBanner({
           <div className="mt-7 flex flex-col gap-3 sm:flex-row">
             <a
               href={eligibilityHref}
-              className="inline-flex items-center justify-center gap-1.5 rounded-md bg-[#0F5132] px-6 py-3.5 text-sm font-bold uppercase tracking-wide text-white transition-all hover:bg-[#0c3f27] hover:shadow-lg hover:-translate-y-0.5 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#0F5132] focus-visible:ring-offset-2 sm:text-base"
+              className="inline-flex items-center justify-center gap-1.5 rounded-md bg-[#0F5132] px-6 py-3.5 text-sm font-semibold uppercase tracking-wide text-white transition-all hover:bg-[#0c3f27] hover:shadow-lg hover:-translate-y-0.5 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#0F5132] focus-visible:ring-offset-2 sm:text-base"
             >
               Check Your PMS Eligibility
               <ChevronRight className="h-4 w-4" aria-hidden="true" />
             </a>
             <a
               href={supportHref}
-              className="inline-flex items-center justify-center gap-1.5 rounded-md border-2 border-[#0F5132] bg-white/60 px-6 py-3.5 text-sm font-bold uppercase tracking-wide text-[#0F5132] backdrop-blur-sm transition-all hover:bg-white/80 hover:shadow-lg hover:-translate-y-0.5 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#0F5132] focus-visible:ring-offset-2 sm:text-base"
+              className="inline-flex items-center justify-center gap-1.5 rounded-md border-2 border-[#0F5132] bg-white/60 px-6 py-3.5 text-sm font-semibold uppercase tracking-wide text-[#0F5132] backdrop-blur-sm transition-all hover:bg-white/80 hover:shadow-lg hover:-translate-y-0.5 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#0F5132] focus-visible:ring-offset-2 sm:text-base"
             >
               Get PMS Support
               <ChevronRight className="h-4 w-4" aria-hidden="true" />
@@ -164,8 +164,8 @@ export default function MsmePmsBanner({
             <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-[#0F5132]">
               <Headset className="h-4.5 w-4.5 text-white" aria-hidden="true" />
             </span>
-            <p className="text-sm text-emerald-900/90 sm:text-[0.9rem]">
-              <span className="font-bold text-emerald-900">New to MSME/PMS? </span>
+            <p className="text-sm text-emerald-900 sm:text-[0.9rem]">
+              <span className="font-semibold text-emerald-900">New to MSME/PMS? </span>
               Our team will guide you from registration &amp; eligibility to
               documentation, application and claim support.
             </p>

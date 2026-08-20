@@ -80,7 +80,7 @@ const FEATURES: Feature[] = [
 
 export default function ReasonToVisitBanner() {
   return (
-    <section className="relative w-full overflow-hidden bg-[#F8F6F0] px-4 py-10 md:px-11 sm:py-14">
+    <section className="relative w-full overflow-hidden bg-[#F8F6F0] px-4 py-6 md:px-11">
       <div className="mx-auto w-full">
         {/* ===================== TOP: heading + photo collage ===================== */}
         <div className="grid grid-cols-1 items-center gap-10 lg:grid-cols-2 lg:gap-8">
@@ -91,7 +91,7 @@ export default function ReasonToVisitBanner() {
                 className="h-5 w-5 shrink-0 -rotate-12 text-[#2F5E2F]"
                 strokeWidth={2}
               />
-              <p className="text-xs font-bold uppercase tracking-wide text-[#2F5E2F] sm:text-sm">
+              <p className="text-xs font-semibold uppercase tracking-wide text-[#2F5E2F] sm:text-sm">
                 Be part of India&rsquo;s leading{" "}
                 <span className="block text-[#14231A] sm:inline">
                   Organic &amp; Sustainable Future
@@ -99,10 +99,10 @@ export default function ReasonToVisitBanner() {
               </p>
             </div>
 
-            <h1 className="relative font-sans text-6xl font-black uppercase leading-[0.92] tracking-tight text-[#14231A] sm:text-7xl md:text-8xl">
+            <h1 className="relative font-sans text-3xl font-semibold uppercase leading-[1.1] tracking-tight text-[#14231A] sm:text-4xl md:text-5xl">
               Reason
               <Leaf
-                className="ml-1 inline-block h-8 w-8 -translate-y-6 rotate-45 text-[#2F5E2F] sm:h-10 sm:w-10"
+                className="ml-1 inline-block h-6 w-6 -translate-y-3 rotate-45 text-[#2F5E2F] sm:h-7 sm:w-7"
                 strokeWidth={2}
               />
               <br />
@@ -110,7 +110,7 @@ export default function ReasonToVisitBanner() {
             </h1>
 
             <div className="mt-5 max-w-md">
-              <h2 className="text-lg font-bold text-[#2F5E2F] sm:text-xl">
+              <h2 className="text-lg font-semibold text-[#2F5E2F] sm:text-xl">
                 More than an Expo. A Gateway to Growth.
               </h2>
               <span className="mt-1 block h-[3px] w-14 bg-[#2F5E2F]" />
@@ -145,13 +145,13 @@ export default function ReasonToVisitBanner() {
                 <span className="mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-[#EDEBE1] text-[#2F5E2F] sm:h-[4.5rem] sm:w-[4.5rem]">
                   {feature.icon}
                 </span>
-                <h3 className="text-xs font-extrabold uppercase leading-snug text-[#14231A] sm:text-sm">
+                <h3 className="text-xs font-semibold uppercase leading-snug text-[#14231A] sm:text-sm">
                   {feature.title}
                 </h3>
                 <p className="mt-2 text-[11px] leading-relaxed text-[#5B6B5E] sm:text-xs">
                   {feature.description}
                 </p>
-                <span className="mt-4 rounded-md bg-[#1E331E] px-3 py-1 text-xs font-bold text-white">
+                <span className="mt-4 rounded-md bg-[#1E331E] px-3 py-1 text-xs font-semibold text-white">
                   {feature.id}
                 </span>
               </article>
@@ -166,7 +166,7 @@ export default function ReasonToVisitBanner() {
               One Platform. Unlimited Opportunities.
             </span>
             <span className="hidden h-6 w-px bg-[#D7D2C2] sm:block" />
-            <span className="flex items-center gap-2 text-sm font-extrabold uppercase tracking-wide text-[#14231A] sm:text-base">
+            <span className="flex items-center gap-2 text-sm font-semibold uppercase tracking-wide text-[#14231A] sm:text-base">
               Don&rsquo;t Miss It!
               <Leaf className="h-4 w-4 shrink-0 rotate-90" strokeWidth={2} />
             </span>
@@ -174,7 +174,7 @@ export default function ReasonToVisitBanner() {
 
           <a
             href="#plan-your-visit"
-            className="group flex items-center justify-center gap-3 rounded-full bg-[#1E331E] px-6 py-3.5 text-sm font-bold uppercase tracking-wide text-white transition-colors hover:bg-[#2F5E2F] sm:text-base"
+            className="group flex items-center justify-center gap-3 rounded-full bg-[#1E331E] px-6 py-3.5 text-sm font-semibold uppercase tracking-wide text-white transition-colors hover:bg-[#2F5E2F] sm:text-base"
           >
             Plan Your Visit Now
             <span className="flex h-7 w-7 items-center justify-center rounded-full bg-white/15 transition-transform group-hover:translate-x-0.5">

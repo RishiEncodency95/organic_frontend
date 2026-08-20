@@ -48,7 +48,7 @@ export default function MsmePmsScheme() {
   return (
     <section
       aria-labelledby="msme-pms-heading"
-      className="w-full py-14 px-4 md:px-11"
+      className="w-full py-8 px-4 md:px-11"
     >
       <div className="mx-auto w-full">
         {/* Eyebrow */}
@@ -57,7 +57,7 @@ export default function MsmePmsScheme() {
           <span className="h-1.5 w-1.5 rounded-full bg-amber-600" aria-hidden="true" />
           <div className="flex items-center gap-2 rounded-full bg-emerald-50 px-4 py-2">
             <BookOpenCheck className="h-5 w-5 text-emerald-800" aria-hidden="true" />
-            <span className="text-xs sm:text-sm font-bold tracking-[0.15em] text-emerald-900 uppercase whitespace-nowrap">
+            <span className="text-xs sm:text-sm font-semibold tracking-[0.15em] text-emerald-900 uppercase whitespace-nowrap">
               Know The Scheme
             </span>
           </div>
@@ -68,7 +68,7 @@ export default function MsmePmsScheme() {
         {/* Heading */}
         <h2
           id="msme-pms-heading"
-          className="text-center text-3xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight text-emerald-950 text-balance"
+          className="text-center text-2xl sm:text-3xl lg:text-4xl font-semibold tracking-tight text-emerald-950 text-balance"
         >
           What is the MSME PMS Scheme?
         </h2>
@@ -82,14 +82,14 @@ export default function MsmePmsScheme() {
 
         {/* Intro paragraph */}
         <p className="mx-auto max-w-3xl text-center text-base sm:text-lg leading-relaxed text-neutral-700 text-balance">
-          The <strong className="font-bold text-neutral-900">Procurement &amp; Marketing Support (PMS) Scheme</strong> is
+          The <strong className="font-semibold text-neutral-900">Procurement &amp; Marketing Support (PMS) Scheme</strong> is
           an initiative of the Ministry of MSME aimed at improving market access for Micro
           &amp; Small Enterprises. Eligible MSEs can explore applicable financial assistance for
           participation in approved trade fairs and exhibitions.
         </p>
 
         {/* Feature cards */}
-        <ul className="mt-10 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 sm:gap-6">
+        <ul className="mt-10 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-5">
           {SCHEME_FEATURES.map((feature) => {
             const Icon = feature.icon;
             return (
@@ -101,7 +101,7 @@ export default function MsmePmsScheme() {
                   <Icon className="h-11 w-11 text-emerald-800" strokeWidth={1.75} aria-hidden="true" />
                 </div>
 
-                <h3 className="mt-5 text-lg sm:text-xl font-bold text-emerald-950">
+                <h3 className="mt-5 text-lg sm:text-xl font-semibold text-emerald-950">
                   {feature.title}
                 </h3>
 
@@ -119,7 +119,7 @@ export default function MsmePmsScheme() {
                   className="absolute bottom-0 left-1/2 h-14 w-32 -translate-x-1/2 translate-y-1/2 rounded-full bg-emerald-950"
                   aria-hidden="true"
                 />
-                <span className="absolute bottom-2 left-1/2 -translate-x-1/2 text-sm font-bold text-white">
+                <span className="absolute bottom-2 left-1/2 -translate-x-1/2 text-sm font-semibold text-white">
                   {feature.number}
                 </span>
               </li>
@@ -135,7 +135,7 @@ export default function MsmePmsScheme() {
           <p className="text-center sm:text-left text-base sm:text-lg text-neutral-800">
             The PMS Scheme empowers MSEs to participate, promote and prosper.{" "}
             <br />
-            <strong className="block sm:inline font-bold text-emerald-900">
+            <strong className="block sm:inline font-semibold text-emerald-900">
               More Participation. More Exposure. More Growth.
             </strong>
           </p>

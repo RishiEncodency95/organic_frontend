@@ -110,7 +110,7 @@ const PMSFinancialAssistanceBanner: FC = () => {
             </span>
             <p className="text-sm leading-snug text-white sm:text-base md:text-lg">
               <span className="block font-semibold">Empowering MSEs</span>
-              <span className="block font-bold text-[#8FD19E]">
+              <span className="block font-semibold text-[#8FD19E]">
                 for a stronger tomorrow
               </span>
             </p>
@@ -118,11 +118,11 @@ const PMSFinancialAssistanceBanner: FC = () => {
         </div>
 
         {/* Right: heading content */}
-        <div className="relative flex w-full flex-col justify-center px-6 py-10 sm:px-10 sm:py-12 lg:w-[64%] lg:px-16 lg:py-16">
+        <div className="relative flex w-full flex-col justify-center px-6 py-6 sm:px-10 sm:py-8 lg:w-[64%] lg:px-16 lg:py-10">
           {/* Decorative watermark leaves, top-right */}
           <Leaf
             aria-hidden="true"
-            className="pointer-events-none absolute -right-6 top-2 hidden h-40 w-40 rotate-[20deg] text-[#0B5D34]/[0.06] sm:block lg:h-56 lg:w-56"
+            className="pointer-events-none absolute -right-6 top-2 hidden h-40 w-40 rotate-[20deg] text-[#0B5D34] sm:block lg:h-56 lg:w-56"
           />
 
           {/* Eyebrow */}
@@ -131,10 +131,10 @@ const PMSFinancialAssistanceBanner: FC = () => {
               <HandCoins className="h-6 w-6 text-[#0B5D34] sm:h-7 sm:w-7" aria-hidden="true" />
             </span>
             <div>
-              <p className="text-base font-extrabold uppercase tracking-wide text-[#0B5D34] sm:text-lg">
+              <p className="text-base font-semibold uppercase tracking-wide text-[#0B5D34] sm:text-lg">
                 Financial Assistance
               </p>
-              <p className="text-sm text-[#1E293B]/80 sm:text-base">
+              <p className="text-sm text-[#1E293B] sm:text-base">
                 For Eligible MSEs
               </p>
             </div>
@@ -143,7 +143,7 @@ const PMSFinancialAssistanceBanner: FC = () => {
           {/* Heading */}
           <h1
             id="pms-banner-heading"
-            className="text-4xl font-extrabold leading-[1.08] tracking-tight sm:text-5xl md:text-6xl lg:text-[3.4rem] xl:text-[3.75rem]"
+            className="text-3xl font-semibold leading-[1.08] tracking-tight sm:text-4xl md:text-5xl lg:text-[2.5rem] xl:text-[3rem]"
           >
             <span className="block text-[#0B5D34]">How Much Support</span>
             <span className="relative inline-block text-[#152238]">
@@ -170,7 +170,7 @@ const PMSFinancialAssistanceBanner: FC = () => {
 
           {/* Supporting copy */}
           <p className="mt-6 max-w-2xl text-base leading-relaxed text-[#334155] sm:text-lg">
-            The <strong className="font-bold text-[#0B5D34]">PMS Scheme</strong>{" "}
+            The <strong className="font-semibold text-[#0B5D34]">PMS Scheme</strong>{" "}
             provides financial assistance to reduce your participation cost
             and help your business grow in new markets.
           </p>
@@ -192,19 +192,19 @@ const PMSFinancialAssistanceBanner: FC = () => {
                   </span>
 
                   <p
-                    className={`text-sm font-bold uppercase tracking-wide ${card.eyebrowColor}`}
+                    className={`text-sm font-semibold uppercase tracking-wide ${card.eyebrowColor}`}
                   >
                     {card.eyebrow}
                   </p>
                   <p
-                    className={`text-4xl font-extrabold leading-tight sm:text-[2.75rem] ${card.titleColor}`}
+                    className={`text-3xl font-semibold leading-tight sm:text-[2rem] ${card.titleColor}`}
                   >
                     {card.value}
                   </p>
 
                   <span className="my-3 h-px w-16 bg-[#0B5D34]/20" aria-hidden="true" />
 
-                  <h3 className={`text-base font-bold leading-snug ${card.titleColor}`}>
+                  <h3 className={`text-base font-semibold leading-snug ${card.titleColor}`}>
                     {card.title}
                   </h3>
                   <p className="mt-2 text-sm leading-relaxed text-[#64748B]">
@@ -233,7 +233,7 @@ const PMSFinancialAssistanceBanner: FC = () => {
                 <ShieldCheck className="h-6 w-6 text-white" aria-hidden="true" />
               </span>
               <p className="text-sm leading-relaxed text-[#334155]">
-                <strong className="font-bold text-[#152238]">
+                <strong className="font-semibold text-[#152238]">
                   *Important Note:
                 </strong>{" "}
                 Assistance is subject to applicable PMS guidelines,
@@ -252,7 +252,7 @@ const PMSFinancialAssistanceBanner: FC = () => {
                 <br />
                 Stronger Business.
                 <br />
-                <span className="font-extrabold text-[#0B5D34]">
+                <span className="font-semibold text-[#0B5D34]">
                   Sustainable Growth.
                 </span>
               </p>
@@ -268,11 +268,11 @@ const PMSFinancialAssistanceBanner: FC = () => {
             </div>
           </div>
 
-          {/* CTA button, overlapping bottom edge of the section */}
-          <div className="absolute bottom-0 left-1/2 z-20 w-full max-w-xs -translate-x-1/2 translate-y-1/2 px-4 sm:max-w-sm">
+          {/* CTA button centered */}
+          <div className="flex justify-center px-6 pb-6 pt-2">
             <a
               href="#eligibility"
-              className="flex w-full items-center justify-center gap-2.5 rounded-full bg-[#0B5D34] px-6 py-4 text-sm font-bold uppercase tracking-wide text-white shadow-lg shadow-[#0B5D34]/30 transition-colors hover:bg-[#0A4E2C] sm:text-base"
+              className="flex items-center justify-center gap-2.5 rounded-full bg-[#0B5D34] px-6 py-4 text-sm font-semibold uppercase tracking-wide text-white shadow-lg shadow-[#0B5D34]/30 transition-colors hover:bg-[#0A4E2C] sm:text-base"
             >
               <Target className="h-5 w-5" aria-hidden="true" />
               Check My Eligibility

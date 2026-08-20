@@ -36,18 +36,11 @@ export default function WhyParticipateSection() {
   return (
     <section
       aria-labelledby="why-participate-heading"
-      className="relative w-full overflow-hidden px-4 py-14 md:px-11 sm:py-20"
+      className="relative w-full overflow-hidden px-4 py-6 md:px-11"
     >
       <div className="relative mx-auto flex w-full flex-col items-center">
-        {/* Eyebrow badge */}
-        <span className="inline-flex items-center gap-2 rounded-full border border-emerald-200 bg-white/80 px-5 py-2 text-xs font-bold tracking-widest text-emerald-800 shadow-sm sm:text-sm">
-          <Leaf className="h-4 w-4 text-emerald-600" aria-hidden="true" />
-          SECTION 09 — WHY BHARAT ORGANIC EXPO?
-          <Leaf className="h-4 w-4 -scale-x-100 text-emerald-600" aria-hidden="true" />
-        </span>
-
         {/* Sub-eyebrow */}
-        <div className="mt-6 flex items-center gap-3 text-xs font-bold tracking-[0.2em] text-emerald-700 sm:text-sm">
+        <div className="mt-6 flex items-center gap-3 text-xs font-semibold tracking-[0.2em] text-emerald-700 sm:text-sm">
           <span className="h-px w-8 bg-emerald-600 sm:w-10" aria-hidden="true" />
           <span>WHY PARTICIPATE</span>
           <span className="h-px w-8 bg-emerald-600 sm:w-10" aria-hidden="true" />
@@ -56,7 +49,7 @@ export default function WhyParticipateSection() {
         {/* Heading */}
         <h2
           id="why-participate-heading"
-          className="mt-4 max-w-4xl text-balance text-center text-3xl font-extrabold leading-tight text-slate-900 sm:text-4xl md:text-5xl lg:text-6xl"
+          className="mt-4 max-w-4xl text-balance text-center text-3xl font-semibold leading-tight text-slate-900 sm:text-4xl md:text-5xl lg:text-6xl"
         >
           More Than an{" "}
           <span className="relative inline-block text-emerald-700">
@@ -90,7 +83,7 @@ export default function WhyParticipateSection() {
                 <div className="mb-5 flex h-24 w-24 items-center justify-center rounded-full border border-emerald-100 bg-emerald-50">
                   {feature.icon}
                 </div>
-                <h3 className="text-lg font-bold text-slate-900 sm:text-xl">
+                <h3 className="text-lg font-semibold text-slate-900 sm:text-xl">
                   {feature.title}
                 </h3>
                 <span
@@ -112,7 +105,7 @@ export default function WhyParticipateSection() {
         {/* CTA */}
         <a
           href="#book-stand"
-          className="mt-12 inline-flex items-center gap-3 rounded-full bg-gradient-to-r from-emerald-800 to-emerald-700 px-9 py-4 text-sm font-bold tracking-wide text-white shadow-lg shadow-emerald-900/20 transition-transform duration-200 hover:scale-[1.03] hover:shadow-emerald-900/30 sm:text-base"
+          className="mt-12 inline-flex items-center gap-3 rounded-full bg-gradient-to-r from-emerald-800 to-emerald-700 px-9 py-4 text-sm font-semibold tracking-wide text-white shadow-lg shadow-emerald-900/20 transition-transform duration-200 hover:scale-[1.03] hover:shadow-emerald-900/30 sm:text-base"
         >
           <Calendar className="h-5 w-5" aria-hidden="true" />
           BOOK YOUR STAND

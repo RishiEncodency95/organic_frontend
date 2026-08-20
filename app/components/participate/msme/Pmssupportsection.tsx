@@ -83,7 +83,7 @@ export default function PmsSupportSection() {
   return (
     <section
       aria-labelledby="pms-support-heading"
-      className="relative w-full bg-gradient-to-br from-green-50 via-emerald-50/60 to-white px-4 py-10 md:px-11 sm:py-14 lg:py-16"
+      className="relative w-full bg-gradient-to-br from-green-50 via-emerald-50/60 to-white px-4 py-6 md:px-11"
     >
       <div className="mx-auto flex w-full flex-col gap-8 sm:gap-10 lg:gap-12">
         {/* ---------- Top block: heading + hero image ---------- */}
@@ -91,14 +91,10 @@ export default function PmsSupportSection() {
           {/* Left: heading + intro + highlight cards */}
           <div className="flex flex-col gap-6 sm:gap-8">
             <div className="flex flex-col gap-3 sm:gap-4">
-              <span className="inline-flex w-fit items-center gap-2 rounded-md bg-emerald-950 px-3 py-1.5 text-xs font-bold tracking-wider text-white sm:text-sm">
-                SECTION 05
-                <Leaf className="h-4 w-4 text-lime-400" aria-hidden="true" />
-              </span>
 
               <h2
                 id="pms-support-heading"
-                className="text-3xl font-extrabold uppercase leading-[1.05] tracking-tight text-emerald-950 sm:text-4xl md:text-5xl"
+                className="text-3xl font-semibold uppercase leading-[1.05] tracking-tight text-emerald-950 sm:text-4xl md:text-5xl"
               >
                 How to Apply
                 <br />
@@ -120,7 +116,7 @@ export default function PmsSupportSection() {
                   <span className="flex h-11 w-11 items-center justify-center rounded-xl bg-emerald-100 sm:h-12 sm:w-12">
                     <Icon className="h-5 w-5 text-emerald-800 sm:h-6 sm:w-6" aria-hidden="true" />
                   </span>
-                  <h3 className="text-xs font-bold uppercase leading-tight text-emerald-950 sm:text-sm">
+                  <h3 className="text-xs font-semibold uppercase leading-tight text-emerald-950 sm:text-sm">
                     {title}
                   </h3>
                   <p className="text-xs leading-snug text-emerald-950/60 sm:text-sm">
@@ -143,7 +139,7 @@ export default function PmsSupportSection() {
             {/* Expo brand badge */}
             <div className="absolute right-3 top-3 flex items-center gap-2 rounded-lg bg-white/90 px-3 py-2 backdrop-blur-sm sm:right-4 sm:top-4">
               <Leaf className="h-6 w-6 shrink-0 text-emerald-700" aria-hidden="true" />
-              <span className="text-xs font-extrabold uppercase leading-tight text-emerald-950 sm:text-sm">
+              <span className="text-xs font-semibold uppercase leading-tight text-emerald-950 sm:text-sm">
                 Bharat
                 <br />
                 Organic
@@ -157,7 +153,7 @@ export default function PmsSupportSection() {
         {/* ---------- 4-step journey ---------- */}
         <div className="rounded-3xl bg-emerald-50/80 p-5 ring-1 ring-emerald-900/5 sm:p-8 lg:p-10">
           <div className="mb-8 flex justify-center sm:mb-10">
-            <h3 className="inline-flex items-center gap-2 rounded-full bg-emerald-950 px-5 py-2 text-xs font-bold uppercase tracking-widest text-white sm:px-6 sm:text-sm">
+            <h3 className="inline-flex items-center gap-2 rounded-full bg-emerald-950 px-5 py-2 text-xs font-semibold uppercase tracking-widest text-white sm:px-6 sm:text-sm">
               Your 4-Step Journey
             </h3>
           </div>
@@ -175,7 +171,7 @@ export default function PmsSupportSection() {
                   </span>
                 )}
 
-                <span className="mb-3 inline-flex h-8 w-8 items-center justify-center rounded-full bg-emerald-950 text-xs font-bold text-white">
+                <span className="mb-3 inline-flex h-8 w-8 items-center justify-center rounded-full bg-emerald-950 text-xs font-semibold text-white">
                   {number}
                 </span>
 
@@ -183,7 +179,7 @@ export default function PmsSupportSection() {
                   <Icon className="h-9 w-9 text-emerald-800 sm:h-10 sm:w-10" aria-hidden="true" />
                 </span>
 
-                <h4 className="mb-2 text-sm font-extrabold uppercase tracking-wide text-emerald-950 sm:text-base">
+                <h4 className="mb-2 text-sm font-semibold uppercase tracking-wide text-emerald-950 sm:text-base">
                   {title}
                 </h4>
                 <p className="max-w-[16rem] text-xs leading-relaxed text-emerald-950/60 sm:text-sm">
@@ -211,7 +207,7 @@ export default function PmsSupportSection() {
               </span>
               <div>
 
-              <h3 className="text-sm font-extrabold uppercase leading-tight sm:text-base">
+              <h3 className="text-sm font-semibold uppercase leading-tight sm:text-base">
                 Expert Support at Every Step
               </h3>
               <p className="text-xs leading-relaxed text-emerald-50/80 sm:text-sm">
@@ -231,7 +227,7 @@ export default function PmsSupportSection() {
             </span>
             <div>
 
-            <h3 className="text-sm font-extrabold uppercase leading-tight text-emerald-950 sm:text-base">
+            <h3 className="text-sm font-semibold uppercase leading-tight text-emerald-950 sm:text-base">
               Have Questions?
             </h3>
             <p className="text-xs leading-relaxed text-emerald-950/60 sm:text-sm">
@@ -262,7 +258,7 @@ export default function PmsSupportSection() {
                 <FileText className="h-6 w-6" aria-hidden="true" />
               </span>
               <div className="flex flex-col gap-2">
-                <h3 className="text-sm font-extrabold uppercase leading-tight sm:text-base">
+                <h3 className="text-sm font-semibold uppercase leading-tight sm:text-base">
                   Ready to Apply?
                 </h3>
                 <p className="text-xs leading-relaxed text-emerald-50/80 sm:text-sm">
@@ -274,7 +270,7 @@ export default function PmsSupportSection() {
 
             <button
               type="button"
-              className="inline-flex w-fit items-center gap-1.5 rounded-lg bg-amber-400 px-4 py-2.5 text-xs font-extrabold uppercase tracking-wide text-emerald-950 transition-colors hover:bg-amber-300 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-amber-400 sm:text-sm"
+              className="inline-flex w-fit items-center gap-1.5 rounded-lg bg-amber-400 px-4 py-2.5 text-xs font-semibold uppercase tracking-wide text-emerald-950 transition-colors hover:bg-amber-300 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-amber-400 sm:text-sm"
             >
               Start Your Application
               <ChevronRight className="h-4 w-4" aria-hidden="true" />
