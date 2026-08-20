@@ -97,8 +97,8 @@ export default function MsmePmsScheme() {
                 key={feature.id}
                 className="relative flex flex-col items-center rounded-2xl bg-white/90 pt-8 pb-14 px-5 text-center shadow-sm ring-1 ring-black/5 overflow-hidden"
               >
-                <div className="flex h-20 w-20 items-center justify-center rounded-full bg-emerald-50">
-                  <Icon className="h-9 w-9 text-emerald-800" strokeWidth={1.75} aria-hidden="true" />
+                <div className="flex h-24 w-24 items-center justify-center rounded-full border-2 border-gray-300 bg-gray-100">
+                  <Icon className="h-11 w-11 text-emerald-800" strokeWidth={1.75} aria-hidden="true" />
                 </div>
 
                 <h3 className="mt-5 text-lg sm:text-xl font-bold text-emerald-950">
@@ -134,6 +134,7 @@ export default function MsmePmsScheme() {
           </div>
           <p className="text-center sm:text-left text-base sm:text-lg text-neutral-800">
             The PMS Scheme empowers MSEs to participate, promote and prosper.{" "}
+            <br />
             <strong className="block sm:inline font-bold text-emerald-900">
               More Participation. More Exposure. More Growth.
             </strong>

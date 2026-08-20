@@ -164,6 +164,16 @@ export default function OfficialRecognitionBanner() {
                     </div>
                   </div>
                 </dl>
+
+                <div className="mt-5 h-px bg-gray-200" />
+
+                <button
+                  type="button"
+                  className="mt-5 flex w-full items-center justify-center gap-2 rounded-full bg-emerald-800 py-3 text-xs font-bold text-white transition-colors hover:bg-emerald-700 sm:text-sm"
+                >
+                  <Download className="h-4 w-4" aria-hidden="true" />
+                  DOWNLOAD APPROVAL LETTER (PDF)
+                </button>
               </div>
             </div>
           </div>
@@ -230,14 +240,6 @@ export default function OfficialRecognitionBanner() {
                 </div>
               </div>
             </div>
-
-            <button
-              type="button"
-              className="mt-4 flex w-full items-center justify-center gap-2 rounded-full border-2 border-emerald-800 py-3 text-xs font-bold text-emerald-800 transition-colors hover:bg-emerald-800 hover:text-white sm:text-sm"
-            >
-              <Download className="h-4 w-4" aria-hidden="true" />
-              DOWNLOAD APPROVAL LETTER (PDF)
-            </button>
           </div>
         </div>
 
