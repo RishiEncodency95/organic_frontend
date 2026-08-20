@@ -1,24 +1,21 @@
 "use client";
 
 import React from "react";
-import {
-  Globe2,
-  Truck,
-  ShoppingCart,
-  ShoppingBag,
-  Building2,
-  UtensilsCrossed,
-  Factory,
-  Users2,
-  Plane,
-  Leaf,
-} from "lucide-react";
-import { Reveal } from "../shared/Reveal";
+import img21 from "../../assets/icons/21og.png";
+import img22 from "../../assets/icons/22og.png";
+import img23 from "../../assets/icons/23og.png";
+import img24 from "../../assets/icons/24og.png";
+import img25 from "../../assets/icons/25og.png";
+import img26 from "../../assets/icons/26og.png";
+import img27 from "../../assets/icons/27og.png";
+import img28 from "../../assets/icons/28og.png";
+import img29 from "../../assets/icons/29og.png";
+import SectionContainer from "@/app/components/layout/SectionContainer";
 
 const buyerTypes = [
   {
-    icon: Globe2,
-    title: "Importers & Exporters",
+    icon: img21.src,
+    title: "IMPORTERS &\nEXPORTERS",
     bullets: [
       "Explore new products and innovative solutions",
       "Build international business partnerships",
@@ -27,8 +24,8 @@ const buyerTypes = [
     ],
   },
   {
-    icon: Truck,
-    title: "Distributors & Wholesalers",
+    icon: img22.src,
+    title: "DISTRIBUTORS &\nWHOLESALERS",
     bullets: [
       "Discover new brands and manufacturers",
       "Expand your product portfolios",
@@ -37,18 +34,18 @@ const buyerTypes = [
     ],
   },
   {
-    icon: ShoppingCart,
-    title: "Retail Chains & Supermarkets",
+    icon: img23.src,
+    title: "RETAIL CHAINS &\nSUPERMARKETS",
     bullets: [
       "Source high-quality organic and natural products",
       "Strengthen your retail assortment",
-      "Find new and emerging brands",
-      "Meet manufacturers directly",
+      "Find new and emerging\nbrands",
+      "Meet manufacturers\ndirectly",
     ],
   },
   {
-    icon: ShoppingBag,
-    title: "E-commerce & Marketplace Buyers",
+    icon: img24.src,
+    title: "E-COMMERCE &\nMARKETPLACE BUYERS",
     bullets: [
       "Discover D2C and emerging consumer brands",
       "Source unique and innovative products",
@@ -57,8 +54,8 @@ const buyerTypes = [
     ],
   },
   {
-    icon: Building2,
-    title: "Institutional Buyers",
+    icon: img25.src,
+    title: "INSTITUTIONAL\nBUYERS",
     bullets: [
       "Source products for large scale procurement",
       "Meet qualified and reliable manufacturers",
@@ -67,8 +64,8 @@ const buyerTypes = [
     ],
   },
   {
-    icon: UtensilsCrossed,
-    title: "Hotels, Restaurants & HoReCa",
+    icon: img26.src,
+    title: "HOTELS, RESTAURANTS\n& HORECA",
     bullets: [
       "Source food, beverages, wellness and sustainable products",
       "Find reliable suppliers for your business needs",
@@ -77,8 +74,8 @@ const buyerTypes = [
     ],
   },
   {
-    icon: Factory,
-    title: "Manufacturers & Private Label Buyers",
+    icon: img27.src,
+    title: "MANUFACTURERS &\nPRIVATE LABEL BUYERS",
     bullets: [
       "Find manufacturing partners for your brand",
       "Source raw materials, ingredients & packaging",
@@ -87,8 +84,8 @@ const buyerTypes = [
     ],
   },
   {
-    icon: Users2,
-    title: "Corporate Procurement Teams",
+    icon: img28.src,
+    title: "CORPORATE\nPROCUREMENT TEAMS",
     bullets: [
       "Identify relevant products and service providers",
       "Meet multiple suppliers in one place",
@@ -97,8 +94,8 @@ const buyerTypes = [
     ],
   },
   {
-    icon: Plane,
-    title: "International Trade Delegations",
+    icon: img29.src,
+    title: "INTERNATIONAL TRADE\nDELEGATIONS",
     bullets: [
       "Meet Indian manufacturers and exporters",
       "Explore export opportunities",
@@ -109,67 +106,102 @@ const buyerTypes = [
 ];
 
 function BuyerCard({
-  icon: Icon,
+  icon,
   title,
   bullets,
-  index,
 }: {
-  icon: React.ComponentType<{ className?: string; strokeWidth?: number }>;
+  icon: string;
   title: string;
   bullets: string[];
-  index: number;
 }) {
   return (
-    <Reveal delay={index * 70} direction={["left", "zoom", "right"][index % 3] as "left" | "zoom" | "right"} className="h-full">
-      <div className="group flex h-full flex-col items-center rounded-2xl border border-gray-200/60 bg-[#fcfdfc] p-6 shadow-[rgba(0,0,0,0.02)_0px_1px_3px_0px,rgba(27,31,35,0.15)_0px_0px_0px_1px] transition-all duration-300 ease-out hover:-translate-y-1 hover:border-green-300 hover:shadow-[0_15px_40px_rgba(0,0,0,0.1)]">
-        <div className="mb-4 flex h-14 w-14 items-center justify-center rounded-full bg-[#3b8c2a]/10 transition-all duration-300 ease-out group-hover:-rotate-6 group-hover:scale-110 group-hover:bg-[#2b5825]">
-          <Icon
-            className="h-7 w-7 text-[#2b5825] transition-colors duration-300 group-hover:text-white"
-            strokeWidth={1.75}
-          />
-        </div>
-        <h3 className="mb-3 text-center text-[16px] font-bold leading-snug text-[#154726]">
+    <div className="group h-full w-full flex flex-col items-center bg-white rounded-2xl border border-gray-200/80 p-4 sm:p-5 shadow-[0_2px_10px_rgba(0,0,0,0.03)] hover:shadow-[0_12px_28px_rgba(27,94,32,0.12)] hover:border-[#1b5e20]/40 transition-all duration-300 hover:-translate-y-1">
+      {/* Icon Badge Image */}
+      <div className="w-14 h-14 sm:w-16 sm:h-16 flex items-center justify-center mb-3 shrink-0 transition-transform duration-300 group-hover:scale-105">
+        <img
+          src={icon}
+          alt={title.replace("\n", " ")}
+          className="w-full h-full object-contain"
+        />
+      </div>
+
+      {/* Title - Dark Green Uppercase */}
+      <div className="min-h-[38px] sm:min-h-[42px] flex items-center justify-center mb-3 w-full text-center">
+        <h3 className="text-center text-[12px] sm:text-[13px] lg:text-[13.5px] font-bold leading-tight text-[#1b5e20] font-poppins uppercase whitespace-pre-line tracking-tight">
           {title}
         </h3>
-        <ul className="w-full space-y-2">
-          {bullets.map((b, i) => (
-            <li key={i} className="flex gap-2 text-[15px] leading-snug text-gray-600">
-              <span className="mt-1.5 h-1.5 w-1.5 flex-shrink-0 rounded-full bg-[#3b8c2a] transition-transform duration-300 group-hover:scale-150" />
-              <span>{b}</span>
-            </li>
-          ))}
-        </ul>
       </div>
-    </Reveal>
+
+      {/* Bullets List */}
+      <ul className="w-full space-y-2 sm:space-y-2.5 text-left mt-auto">
+        {bullets.map((b, i) => (
+          <li
+            key={i}
+            className="flex items-start gap-2 text-[11px] sm:text-[11.5px] lg:text-[12px] leading-snug text-gray-700 font-normal"
+          >
+            <span className="mt-1.5 h-1.5 w-1.5 flex-shrink-0 rounded-full bg-gray-800" />
+            <span className="whitespace-pre-line">{b}</span>
+          </li>
+        ))}
+      </ul>
+    </div>
   );
 }
 
 const ParticipateBuyerTypes = () => {
-  return (
-    <section className="container mx-auto max-w-[1400px] px-6 py-2 md:py-4">
-      <Reveal>
-        <div className="flex items-center justify-center gap-2 text-[#3b8c2a] font-bold text-[12px] md:text-[13px] uppercase tracking-widest mb-2">
-          <Leaf className="w-4 h-4" />
-          <span>Who Can Participate as a Buyer?</span>
-          <Leaf className="w-4 h-4" />
-        </div>
-        <p className="mt-2 mb-6 mx-auto max-w-2xl text-center text-[16px] text-gray-500 leading-relaxed">
-          The Buyer-Seller Meet is open to business professionals, procurement
-          teams and decision-makers actively looking for products, solutions,
-          suppliers and partnerships.
-        </p>
-      </Reveal>
+  const row1 = buyerTypes.slice(0, 5);
+  const row2 = buyerTypes.slice(5);
 
-      <div className="mt-4 flex flex-wrap justify-center gap-4">
-        {buyerTypes.map((b, i) => (
-          <div
-            key={b.title}
-            className="w-full sm:w-[calc(50%-8px)] lg:w-[calc(33.333%-10px)] xl:w-[calc(20%-13px)]"
-          >
-            <BuyerCard {...b} index={i} />
+  return (
+    <section className="py-4 md:py-6 font-inter bg-[#fafcf9]">
+      <SectionContainer>
+        {/* Section Header */}
+        <div className="text-center mb-2 md:mb-4">
+          {/* Top Tagline */}
+          <div className="flex items-center justify-center gap-2.5 mb-2.5">
+            <span className="w-8 h-[2px] bg-[#ea580c] shrink-0" />
+            <p className="text-[#ea580c] text-[12px] lg:text-[16px] font-semibold uppercase tracking-[0.18em]">
+              TARGETED AUDIENCE
+            </p>
+            <span className="w-8 h-[2px] bg-[#ea580c] shrink-0" />
           </div>
-        ))}
-      </div>
+
+          <h2
+            className="text-lg sm:text-2xl md:text-3xl font-semibold font-poppins uppercase tracking-tight mb-3"
+            style={{ textShadow: "1px 1px 2px rgba(0,0,0,0.06)" }}
+          >
+            <span className="text-[#1b5e20]">WHO CAN PARTICIPATE </span>
+            <span className="text-[#ea580c]">AS A BUYER?</span>
+          </h2>
+          <p className="max-w-2xl mx-auto text-sm md:text-[15px] text-gray-600 leading-relaxed font-normal">
+            The Buyer–Seller Meet is open to business professionals, procurement teams and decision-makers actively looking for products, solutions, suppliers and partnerships.
+          </p>
+        </div>
+
+        {/* 9 Cards: Row 1 has 5 Cards, Row 2 has 4 Cards Centered */}
+        <div className="flex flex-col gap-4 sm:gap-5">
+          {/* Row 1: 5 Cards */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4 sm:gap-5">
+            {row1.map((item, i) => (
+              <div key={i} className="flex">
+                <BuyerCard {...item} />
+              </div>
+            ))}
+          </div>
+
+          {/* Row 2: 4 Cards Centered with same card width as Row 1 */}
+          <div className="flex flex-wrap justify-center gap-4 sm:gap-5">
+            {row2.map((item, i) => (
+              <div
+                key={i}
+                className="w-full sm:w-[calc(50%-0.625rem)] md:w-[calc(33.333%-0.85rem)] lg:w-[calc((100%-4*1.25rem)/5)] flex"
+              >
+                <BuyerCard {...item} />
+              </div>
+            ))}
+          </div>
+        </div>
+      </SectionContainer>
     </section>
   );
 };

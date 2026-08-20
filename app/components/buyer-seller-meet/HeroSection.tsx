@@ -5,6 +5,7 @@ import { CalendarDays, MapPin, ArrowRight } from "lucide-react";
 import bgImage from "../../assets/banner/b2b2og.png";
 import leafImg from "../../assets/icons/leafs.png";
 import gsap from "gsap";
+import SectionContainer from "@/app/components/layout/SectionContainer";
 
 const Sparkle = ({ style, color = "#F2B40E", shadow }: { style?: React.CSSProperties; color?: string; shadow?: string }) => (
   <span
@@ -147,7 +148,7 @@ export default function HeroSection() {
           />
         </div>
 
-        <div className="w-full max-w-[1400px] mx-auto px-4 sm:px-6 md:px-8 lg:px-8 relative z-20 py-1 md:py-2 [perspective:800px]">
+        <SectionContainer className="relative z-20 py-1 md:py-2 [perspective:800px]">
           <div className="flex flex-col lg:flex-row items-center justify-start">
             <div className="w-full lg:w-[60%] xl:w-[50%] text-left shrink-0 ml-0 lg:ml-8 xl:ml-12">
 
@@ -214,7 +215,7 @@ export default function HeroSection() {
                   <Sparkle color="#f97316" shadow="#c2410c" style={{ top: "-15px", left: "50%", animationDelay: "0.4s" }} />
                   <Sparkle color="#f97316" shadow="#c2410c" style={{ top: "-10px", right: "10%", animationDelay: "0.8s" }} />
                   <Link
-                    href="/participate-as-exhibitor"
+                    href="/participate_as_exhibiture"
                     target="_blank"
                     rel="noopener noreferrer"
                     className="group relative inline-flex items-center justify-start gap-2 px-4 py-2 rounded-lg font-semibold text-[10px] uppercase tracking-widest text-white transition-all active:scale-95 shadow-2xl z-10 w-full sm:w-auto overflow-hidden"
@@ -230,7 +231,7 @@ export default function HeroSection() {
               </div>
             </div>
           </div>
-        </div>
+        </SectionContainer>
       </section>
     </>
   );

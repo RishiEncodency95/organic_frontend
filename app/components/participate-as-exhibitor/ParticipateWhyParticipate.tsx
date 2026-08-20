@@ -3,8 +3,6 @@
 import React from "react";
 import Link from "next/link";
 import { CheckCircle2, ArrowRight } from "lucide-react";
-import { Reveal } from "../shared/Reveal";
-import SectionHeading from "../shared/SectionHeading";
 import whyParticipateImg from "../../assets/conference/why_participate.webp";
 
 const whyBuyers = [
@@ -18,60 +16,57 @@ const whyBuyers = [
 
 const ParticipateWhyParticipate = () => {
   return (
-    <section className="container mx-auto max-w-[1400px] px-6 py-2 md:py-4">
-      <div className="rounded-2xl border border-gray-200/60 bg-[#fcfcf0] p-6 sm:p-8">
-        <div className="grid grid-cols-1 items-center gap-8 lg:grid-cols-3">
+    <section className="w-full py-2 font-inter">
+      <div className="rounded-2xl border border-gray-200/80 bg-[#f5f7f4] px-2 lg:px-11 shadow-[0_2px_12px_rgba(0,0,0,0.03)]">
+        <div className="grid grid-cols-1 items-center gap-8 lg:grid-cols-12">
           {/* Left: Why Buyers */}
-          <Reveal delay={0} direction="left" className="h-full">
-            <div>
-              <SectionHeading>Why Buyers Should Participate?</SectionHeading>
-              <ul className="mt-3 space-y-3">
-                {whyBuyers.map((w, i) => (
-                  <li
-                    key={w}
-                    className="flex items-start gap-3 text-[16px] text-gray-700 transition-transform duration-300 hover:translate-x-1"
-                  >
-                    <CheckCircle2 className="mt-0.5 h-5 w-5 flex-shrink-0 text-[#3b8c2a] transition-transform duration-300 group-hover:scale-125" />
-                    {w}
-                  </li>
-                ))}
-              </ul>
-            </div>
-          </Reveal>
+          <div className="lg:col-span-4">
+            <h3 className="text-base sm:text-lg md:text-[19px] font-extrabold text-gray-900 font-poppins uppercase tracking-tight mb-4">
+              WHY BUYERS SHOULD PARTICIPATE?
+            </h3>
+            <ul className="space-y-3.5">
+              {whyBuyers.map((w) => (
+                <li key={w} className="flex items-start gap-2.5 text-[13.5px] sm:text-[14px] text-gray-700 leading-snug font-medium">
+                  <CheckCircle2 className="mt-0.5 h-4 w-4 flex-shrink-0 text-[#1b5e20] fill-[#1b5e20]/20" />
+                  <span>{w}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
 
           {/* Center: Image */}
-          <Reveal delay={150} direction="zoom" className="h-full">
-            <div className="mx-auto w-full max-w-[540px]">
+          <div className="lg:col-span-4 flex justify-center items-center">
+            <div className="w-full max-w-[380px] lg:max-w-none">
               <img
                 src={whyParticipateImg.src}
-                alt="Who Can Participate at Buyer-Seller Meet 2027 - Bharat Organic Expo"
-                className="h-auto w-full rounded-2xl object-cover shadow-[rgba(0,0,0,0.02)_0px_1px_3px_0px,rgba(27,31,35,0.15)_0px_0px_0px_1px] transition-transform duration-500 hover:scale-[1.02]"
+                alt="Why Buyers and Exhibitors Participate - Bharat Organic Expo 2027"
+                className="h-auto w-full object-contain"
                 loading="lazy"
               />
             </div>
-          </Reveal>
+          </div>
 
           {/* Right: Exhibitors */}
-          <Reveal delay={300} direction="right" className="h-full">
-            <div>
-              <SectionHeading>Exhibitors: Connect with Relevant Buyers</SectionHeading>
-              <p className="mt-3 text-[16px] leading-relaxed text-gray-600">
-                Exhibitors at Bharat Organic Expo 2027 can use the
-                Buyer-Seller Meet platform to connect with highly relevant
-                business buyers and explore sourcing, distribution,
-                procurement and strategic partnership opportunities.
-              </p>
-              <Link
-                href="/registration/book-a-stand"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="group mt-5 inline-flex items-center gap-2 rounded-md bg-[#2b5825] px-5 py-2.5 text-[11px] font-bold uppercase tracking-wider text-white shadow-md transition-all duration-300 hover:bg-[#1f471b] hover:shadow-lg"
-              >
-                Participate as an Exhibitor
-                <ArrowRight className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" />
-              </Link>
-            </div>
-          </Reveal>
+          <div className="lg:col-span-4">
+            <h3 className="text-base sm:text-lg md:text-[19px] font-extrabold text-gray-900 font-poppins uppercase tracking-tight mb-3">
+              EXHIBITORS: CONNECT WITH RELEVANT BUYERS
+            </h3>
+            <p className="text-[13.5px] sm:text-[14px] leading-relaxed text-gray-600 font-normal mb-6">
+              Exhibitors at Bharat Organic Expo 2027 can use the Buyer–Seller
+              Meet platform to connect with highly relevant business buyers and
+              explore sourcing, distribution, procurement and strategic
+              partnership opportunities.
+            </p>
+            <Link
+              href="/registration/book-a-stand"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center justify-center gap-2 rounded-lg bg-[#ea580c] hover:bg-[#c2410c] px-6 py-3 text-xs sm:text-[13px] font-bold uppercase tracking-wider text-white shadow-md hover:shadow-lg hover:-translate-y-0.5 transition-all duration-200"
+            >
+              PARTICIPATE AS AN EXHIBITOR
+              <ArrowRight className="h-4 w-4" />
+            </Link>
+          </div>
         </div>
       </div>
     </section>

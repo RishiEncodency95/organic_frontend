@@ -12,7 +12,7 @@ const WhatsAppFloat: React.FC = () => {
     )}`;
 
     return (
-        <div className="fixed left-6 bottom-20 lg:bottom-8 z-[100] flex flex-col items-center gap-4">
+        <div className="hidden sm:flex fixed left-6 bottom-20 lg:bottom-8 z-[100] flex-col items-center gap-4">
             {/* Call Button */}
             <CallFloat />
 

@@ -163,7 +163,12 @@ export default function HeroSection() {
       >
         {/* Background Image */}
         <div className="absolute inset-0 z-0 overflow-hidden">
-          <img src={bgImg.src} alt="Partnership BG" className="part-bg-img w-full h-full object-cover" />
+          <img 
+            src={bgImg.src} 
+            alt="Partnership BG" 
+            className="part-bg-img w-full h-full object-cover" 
+            style={{ objectPosition: "center 20%" }}
+          />
         </div>
 
         {/* Left Corner Decorative Leaf Image */}
@@ -185,7 +190,7 @@ export default function HeroSection() {
               PARTNERSHIP / COLLABORATION
             </h4>
 
-            <h1 className="text-4xl md:text-[52px] lg:text-[58px] font-black text-[#1b5e20] leading-[1.05] mb-3 font-poppins tracking-tight">
+            <h1 className="text-4xl md:text-[58px] lg:text-[66px] font-black text-[#1b5e20] leading-[1.05] mb-3 font-poppins tracking-tight">
               <span className="block overflow-hidden">
                 <span ref={line1Ref} style={{ opacity: 0, display: "block", fontWeight: 600 }}>Let&apos;s Grow</span>
               </span>
@@ -193,7 +198,7 @@ export default function HeroSection() {
                 <span ref={line2Ref} style={{ opacity: 0, display: "block", fontWeight: 600 }}>Organic.</span>
               </span>
               <span className="block overflow-hidden">
-                <span ref={line3Ref} style={{ opacity: 0, display: "block" }} className="font-serif italic text-[#ea580c] font-bold tracking-normal text-3xl md:text-[44px] lg:text-[52px]">Together.</span>
+                <span ref={line3Ref} style={{ opacity: 0, display: "block" }} className="font-serif italic text-[#ea580c] font-bold tracking-normal text-4xl md:text-[50px] lg:text-[58px]">Together.</span>
               </span>
             </h1>
 

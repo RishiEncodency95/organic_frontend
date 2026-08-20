@@ -17,7 +17,7 @@ import {
   Globe,
 } from "lucide-react";
 
-import award2 from "@/app/assets/banner/award2.png";
+import award2 from "@/app/assets/banner/award2.webp";
 import hosog from "@/app/assets/banner/hosog.png";
 import SectionContainer from "@/app/components/layout/SectionContainer";
 
@@ -134,7 +134,7 @@ const AwardsHealthCamp = () => {
                       <span className="block">{card.titleLine2}</span>
                     </h3>
                     <div className="w-6 h-[1.5px] bg-[#1b5e20]/50 mb-1.5" />
-                    <p className="font-inter text-[10px] text-gray-700 font-semibold leading-tight">
+                    <p className="font-inter text-[11px] text-slate-800 font-semibold leading-snug">
                       {card.desc}
                     </p>
                   </div>

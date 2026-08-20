@@ -3,11 +3,12 @@ import React from "react";
 import Link from "next/link";
 import { ArrowRight, UserPlus, HelpCircle } from "lucide-react";
 import imgPlaceholder from "../../assets/image/footog.png";
+import SectionContainer from "@/app/components/layout/SectionContainer";
 
 export default function CtaBanner() {
   return (
     <section className="bg-[#0f2115] relative overflow-hidden font-inter border-b-4 border-green-700">
-      <div className="container mx-auto max-w-7xl">
+      <SectionContainer>
         <div className="flex flex-col md:flex-row items-center">
 
           <div className="w-full md:w-1/4 lg:w-[22%] h-48 md:h-auto self-stretch relative hidden md:block">
@@ -40,7 +41,7 @@ export default function CtaBanner() {
                   REGISTER AS A BUYER <ArrowRight size={16} />
                 </Link>
                 <Link
-                  href="/participate-as-exhibitor"
+                  href="/participate_as_exhibiture"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="flex items-center justify-center gap-2 bg-gradient-to-r from-[#ea580c] to-[#c2410c] hover:opacity-90 text-white px-5 py-2.5 rounded-lg font-bold text-xs uppercase tracking-wide transition-opacity shadow-lg w-full sm:w-auto"
@@ -57,7 +58,7 @@ export default function CtaBanner() {
 
           </div>
         </div>
-      </div>
+      </SectionContainer>
     </section>
   );
 }

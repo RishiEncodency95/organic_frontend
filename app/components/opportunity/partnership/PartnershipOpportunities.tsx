@@ -175,6 +175,8 @@ export default function PartnershipOpportunities() {
               {/* Button / Link */}
               <Link 
                 href={opp.link} 
+                target="_blank"
+                rel="noopener noreferrer"
                 className={`${opp.theme} text-white px-4 py-2 rounded-full text-xs font-bold inline-flex items-center gap-2 hover:opacity-90 transition-opacity relative z-10`}
               >
                 View Benefits <ArrowRight size={13} />

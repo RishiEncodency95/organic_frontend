@@ -31,7 +31,7 @@ const faqs = [
 ];
 
 const AboutFaq = () => {
-  const [openIndex, setOpenIndex] = useState(0);
+  const [openIndex, setOpenIndex] = useState<number | null>(null);
 
   const faqSchema = {
     "@context": "https://schema.org",
@@ -135,32 +135,38 @@ const AboutFaq = () => {
                     className={`border rounded-xl transition-all duration-300 overflow-hidden ${isOpen ? 'border-[#d26019] border-l-[4px] shadow-sm bg-white' : 'border-gray-200 bg-[#f8f9fa] hover:bg-white'}`}
                   >
                     <button
-                      onClick={() => setOpenIndex(isOpen ? -1 : index)}
-                      className="w-full flex items-center justify-between p-4 text-left focus:outline-none"
+                      onClick={() => setOpenIndex(isOpen ? null : index)}
+                      className="w-full flex items-center justify-between p-4 text-left focus:outline-none group"
                     >
                       <div className="flex items-center gap-3 pr-4">
-                        <div className={`w-7 h-7 rounded-full flex items-center justify-center shrink-0 ${isOpen ? 'bg-[#23471d] text-white' : 'bg-gray-100 text-gray-400'}`}>
+                        <div className={`w-7 h-7 rounded-full flex items-center justify-center shrink-0 transition-colors ${isOpen ? 'bg-[#23471d] text-white' : 'bg-orange-50 text-[#ea580c]'}`}>
                           <HelpCircle size={16} />
                         </div>
-                        <span className={`text-[14px] md:text-[15px] font-semibold leading-[1.3] ${isOpen ? 'text-[#23471d]' : 'text-gray-800'}`}>
+                        <span className={`text-[14px] md:text-[15px] font-semibold leading-[1.3] transition-colors ${isOpen ? 'text-[#23471d]' : 'text-gray-800 group-hover:text-[#ea580c]'}`}>
                           Q{index + 1}. {faq.question}
                         </span>
                       </div>
 
-                      <div className={`w-6 h-6 flex items-center justify-center shrink-0 rounded-md ${isOpen ? 'bg-[#d26019] text-white' : 'bg-white border border-gray-200 text-gray-400'}`}>
-                        {isOpen ? <Minus size={14} /> : <Plus size={14} />}
+                      <div className={`w-6 h-6 flex items-center justify-center shrink-0 rounded-md transition-all duration-300 ${isOpen ? 'bg-[#d26019] text-white rotate-180' : 'bg-[#fff5ee] border border-[#ea580c]/30 text-[#ea580c] group-hover:bg-[#ea580c] group-hover:text-white'}`}>
+                        {isOpen ? <Minus size={14} /> : <Plus size={14} className="text-[#ea580c] group-hover:text-white" />}
                       </div>
                     </button>
 
-                    {isOpen && (
-                      <div className="px-4 md:px-5 pb-4 pt-0">
-                        <div className="pl-10 border-t border-gray-100 pt-3">
-                          <p className="text-[13px] md:text-[14px] text-gray-700 leading-[1.6] font-medium text-justify">
-                            {faq.answer}
-                          </p>
+                    <div
+                      className={`grid transition-[grid-template-rows,opacity] duration-300 ease-in-out ${
+                        isOpen ? 'grid-rows-[1fr] opacity-100' : 'grid-rows-[0fr] opacity-0'
+                      }`}
+                    >
+                      <div className="overflow-hidden">
+                        <div className="px-4 md:px-5 pb-4 pt-0">
+                          <div className="pl-10 border-t border-gray-100 pt-3">
+                            <p className="text-[13px] md:text-[14px] text-gray-700 leading-[1.6] font-medium text-justify">
+                              {faq.answer}
+                            </p>
+                          </div>
                         </div>
                       </div>
-                    )}
+                    </div>
                   </div>
                 );
               })}

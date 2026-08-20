@@ -4,6 +4,7 @@ import React from 'react';
 import { Leaf, ArrowRight, Calendar, MapPin, Users, CheckCircle, Mic, BookOpen } from 'lucide-react';
 import { motion } from 'framer-motion';
 import Link from 'next/link';
+import Image from 'next/image';
 import global1 from '../../assets/home/global1.png';
 
 
@@ -222,8 +223,13 @@ const ConferenceSeminars = () => {
           className="w-full xl:w-[45%] shrink-0"
         >
           <div className="relative rounded-[24px] overflow-hidden border-[8px] border-white shadow-[0_20px_50px_rgba(0,0,0,0.15)] group h-[300px] md:h-[390px]">
-            <img loading="lazy" decoding="async" src={global1.src}
+            <Image
+              src={global1}
               alt="Conference and Seminars"
+              width={600}
+              height={400}
+              sizes="(max-width: 1280px) 100vw, 45vw"
+              quality={75}
               className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
             />
             <div className="absolute inset-0 bg-[#00643b]/10 group-hover:bg-transparent transition-colors duration-500"></div>

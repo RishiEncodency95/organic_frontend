@@ -1,6 +1,7 @@
 "use client";
+
 import React, { useRef, useEffect } from "react";
-import { Users, CheckCircle, Target, ArrowUpRight, TrendingUp } from "lucide-react";
+import { Users, ShieldCheck, Handshake, Target, TrendingUp } from "lucide-react";
 import gsap from "gsap";
 import SectionContainer from "@/app/components/layout/SectionContainer";
 
@@ -12,9 +13,9 @@ export default function ParticipateFeatureStrip() {
 
   const features = [
     { icon: Users, title: "Curated Meetings", subtitle: "Relevant Connections" },
-    { icon: CheckCircle, title: "Verified Business", subtitle: "Profiles" },
-    { icon: Target, title: "Industry Focused", subtitle: "Networking" },
-    { icon: ArrowUpRight, title: "New Opportunities", subtitle: "& Partnerships" },
+    { icon: ShieldCheck, title: "Verified Business", subtitle: "Profiles" },
+    { icon: Handshake, title: "Industry Focused", subtitle: "Networking" },
+    { icon: Target, title: "New Opportunities", subtitle: "& Partnerships" },
     { icon: TrendingUp, title: "Business Growth", subtitle: "& Expansion" },
   ];
 
@@ -24,10 +25,11 @@ export default function ParticipateFeatureStrip() {
   useEffect(() => {
     const ctx = gsap.context(() => {
       const tl = gsap.timeline({
-        delay: 1.2,
+        delay: 0.5,
         defaults: { ease: "power3.out" },
       });
 
+      // Band wipe reveal left→right
       tl.fromTo(
         bandRef.current,
         { opacity: 0, y: 20, clipPath: "inset(0% 100% 0% 0%)" },
@@ -35,6 +37,7 @@ export default function ParticipateFeatureStrip() {
         0
       );
 
+      // Shimmer sweep
       tl.fromTo(
         shimmerRef.current,
         { xPercent: -130, opacity: 0.8 },
@@ -42,6 +45,7 @@ export default function ParticipateFeatureStrip() {
         0.6
       );
 
+      // Dividers grow
       tl.fromTo(
         dividerRefs.current.filter(Boolean),
         { scaleY: 0 },
@@ -49,6 +53,7 @@ export default function ParticipateFeatureStrip() {
         0.55
       );
 
+      // Feature items 3D flip
       tl.fromTo(
         itemRefs.current.filter(Boolean),
         { opacity: 0, rotationX: -80, y: 20, transformOrigin: "top center" },
@@ -66,8 +71,9 @@ export default function ParticipateFeatureStrip() {
         <div
           ref={bandRef}
           style={{ opacity: 0, backgroundColor: "#1b5e20", boxShadow: "0 8px 20px -10px rgba(0,0,0,0.3)" }}
-          className="rounded-2xl border border-white/10 p-0.5 md:py-2 md:px-3 relative overflow-hidden [perspective:1000px]"
+          className="rounded-2xl border border-white/10 p-0.5 md:py-2.5 md:px-3 relative overflow-hidden [perspective:1000px]"
         >
+          {/* Shimmer overlay */}
           <div
             ref={shimmerRef}
             className="absolute inset-y-0 left-0 w-1/3 pointer-events-none"
@@ -85,7 +91,7 @@ export default function ParticipateFeatureStrip() {
                     className="flex flex-col items-center text-center group flex-1 py-1"
                   >
                     <IconComponent className="w-4 h-4 md:w-5 md:h-5 mb-1 text-white stroke-[1.75]" />
-                    <h4 className="text-[11px] sm:text-[13px] md:text-sm font-semibold text-[#fff] leading-none font-inter mb-0.5">
+                    <h4 className="text-[11px] sm:text-[13px] md:text-sm font-semibold text-white leading-none font-inter mb-0.5">
                       {item.title}
                     </h4>
                     <p className="text-[8px] md:text-[9px] font-bold text-[#facc15] uppercase tracking-widest leading-tight mt-0.5 font-inter">

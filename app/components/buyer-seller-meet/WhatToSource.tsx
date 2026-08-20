@@ -8,6 +8,8 @@ import img5 from "../../assets/image/15og.png";
 import img6 from "../../assets/image/16og.png";
 import footerRightImg from "../../assets/icons/footerright.png";
 
+import SectionContainer from "@/app/components/layout/SectionContainer";
+
 export default function WhatToSource() {
   const cards = [
     {
@@ -55,7 +57,7 @@ export default function WhatToSource() {
         <img src={footerRightImg.src} alt="Leaf Decoration" className="w-full h-auto object-contain translate-x-1/4" />
       </div>
 
-      <div className="container mx-auto px-4 max-w-7xl relative z-10">
+      <SectionContainer className="relative z-10">
         <div className="text-center mb-6 flex flex-col items-center justify-center">
           <h2 className="text-xl md:text-2xl font-semibold text-[#1b5e20] uppercase leading-[1.1] font-poppins relative inline-block mb-0">
             WHAT CAN BUYERS SOURCE?
@@ -77,12 +79,11 @@ export default function WhatToSource() {
                 <div className="absolute inset-0 bg-black/20" />
               </div>
               <div className="p-4 relative">
-                {/* Removed the number icon block as requested */}
-                <h3 className={`text-xs font-semibold ${card.color} mb-4 mt-0 h-auto min-h-[2rem] flex items-center uppercase text-center justify-center leading-tight whitespace-pre-line`}>{card.title}</h3>
-                <ul className="space-y-2">
+                <h3 className={`text-[13px] font-semibold ${card.color} mb-4 mt-0 h-auto min-h-[2rem] flex items-center uppercase text-center justify-center leading-tight whitespace-pre-line font-poppins`}>{card.title}</h3>
+                <ul className="space-y-2 font-inter">
                   {card.list.map((li, idx) => (
-                    <li key={idx} className="text-xs text-gray-900 font-medium flex items-center gap-2">
-                      <span className="w-1 h-1 rounded-full bg-gray-400" />
+                    <li key={idx} className="text-[12px] text-slate-800 font-semibold flex items-center gap-2">
+                      <span className="w-1 h-1 rounded-full bg-slate-400 shrink-0" />
                       {li}
                     </li>
                   ))}
@@ -91,7 +92,7 @@ export default function WhatToSource() {
             </div>
           ))}
         </div>
-      </div>
+      </SectionContainer>
     </section>
   );
 }

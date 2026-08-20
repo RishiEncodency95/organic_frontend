@@ -25,6 +25,10 @@ import g3 from "@/app/assets/icons/g3.png";
 import g4 from "@/app/assets/icons/g4.png";
 import leafright from "@/app/assets/icons/leafright.png";
 import pog from "@/app/assets/icons/pog.png";
+import v1 from "@/app/assets/icons/v1.png";
+import v2 from "@/app/assets/icons/v2.png";
+import v3 from "@/app/assets/icons/v3.png";
+import v4 from "@/app/assets/icons/v4.png";
 import SectionContainer from "@/app/components/layout/SectionContainer";
 
 const NeedHelpSupport = () => {
@@ -243,8 +247,8 @@ const NeedHelpSupport = () => {
 
               {/* 4 Stat Features */}
               <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 divide-y sm:divide-y-0 sm:divide-x divide-slate-200 pt-3 border-t border-slate-200/80">
-                <div className="text-center px-1 pt-1.5 sm:pt-0">
-                  <ShieldCheck className="w-5 h-5 text-[#1b5e20] mx-auto mb-1" />
+                <div className="text-center px-1 pt-1.5 sm:pt-0 flex flex-col items-center">
+                  <img src={v1.src} alt="Trusted Support" className="w-10 h-10 object-contain mb-1" />
                   <h6 className="font-poppins font-semibold text-[11px] text-[#1b5e20] uppercase tracking-wider mb-0.5">
                     TRUSTED
                   </h6>
@@ -253,8 +257,8 @@ const NeedHelpSupport = () => {
                   </p>
                 </div>
 
-                <div className="text-center px-1 pt-1.5 sm:pt-0 sm:pl-2">
-                  <Handshake className="w-5 h-5 text-[#1b5e20] mx-auto mb-1" />
+                <div className="text-center px-1 pt-1.5 sm:pt-0 sm:pl-2 flex flex-col items-center">
+                  <img src={v2.src} alt="Expert Guidance" className="w-10 h-10 object-contain mb-1" />
                   <h6 className="font-poppins font-semibold text-[11px] text-[#1b5e20] uppercase tracking-wider mb-0.5">
                     EXPERT
                   </h6>
@@ -263,8 +267,8 @@ const NeedHelpSupport = () => {
                   </p>
                 </div>
 
-                <div className="text-center px-1 pt-1.5 sm:pt-0 sm:pl-2">
-                  <Clock className="w-5 h-5 text-[#1b5e20] mx-auto mb-1" />
+                <div className="text-center px-1 pt-1.5 sm:pt-0 sm:pl-2 flex flex-col items-center">
+                  <img src={v3.src} alt="Timely Assistance" className="w-10 h-10 object-contain mb-1" />
                   <h6 className="font-poppins font-semibold text-[11px] text-[#1b5e20] uppercase tracking-wider mb-0.5">
                     TIMELY
                   </h6>
@@ -273,8 +277,8 @@ const NeedHelpSupport = () => {
                   </p>
                 </div>
 
-                <div className="text-center px-1 pt-1.5 sm:pt-0 sm:pl-2">
-                  <TrendingUp className="w-5 h-5 text-[#1b5e20] mx-auto mb-1" />
+                <div className="text-center px-1 pt-1.5 sm:pt-0 sm:pl-2 flex flex-col items-center">
+                  <img src={v4.src} alt="Better Outcomes" className="w-10 h-10 object-contain mb-1" />
                   <h6 className="font-poppins font-semibold text-[11px] text-[#1b5e20] uppercase tracking-wider mb-0.5">
                     BETTER
                   </h6>

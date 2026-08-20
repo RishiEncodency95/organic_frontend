@@ -1,149 +1,242 @@
 "use client";
 
-import React from "react";
-import Image from "next/image";
-import Link from "next/link";
-import {
-  Users, Target, Rocket, Globe, Megaphone, Handshake,
-  CalendarDays, Download, Store, Users as UsersIcon, TrendingUp
-} from "lucide-react";
+import React from 'react';
+import Link from 'next/link';
+import Image from 'next/image';
+import { motion } from 'framer-motion';
+import { CheckCircle2, FileDown, ArrowRight, Leaf, Store, Info } from 'lucide-react';
+import SectionContainer from '../layout/SectionContainer';
 
 import meetingImg from "../../assets/home/bs_meet.png";
 
-const listItems = [
-  {
-    title: "Meet Genuine Buyers",
-    desc: "Connect with top organic buyers, health distributors, natural retailers & wellness industry professionals."
-  },
-  {
-    title: "Generate Quality Leads",
-    desc: "Generate high-quality B2B & B2C leads in the organic and wellness sector with faster business conversions."
-  },
-  {
-    title: "Launch New Products",
-    desc: "Launch your new natural and Ayurvedic products with maximum visibility & market impact."
-  },
-  {
-    title: "Expand Your Network",
-    desc: "Expand your dealer, distributor, franchise & export network across the global organic ecosystem."
-  },
-  {
-    title: "Strengthen Brand Presence",
-    desc: "Strengthen your eco-friendly brand presence through live product demos & targeted media exposure."
-  },
-  {
-    title: "Connect with Decision Makers",
-    desc: "Connect with health investors, CEOs, holistic doctors & key decision-makers in the wellness industry."
-  }
+// ── Sparkle Component (same as Footer) ──
+const Sparkle = ({ style, color = '#fff176' }: { style?: React.CSSProperties; color?: string }) => (
+  <span
+    style={{
+      position: 'absolute',
+      pointerEvents: 'none',
+      fontSize: '12px',
+      color: color,
+      textShadow: `0 0 6px ${color}, 0 0 12px ${color}`,
+      animation: 'sparkleAnim 1.6s ease-in-out infinite',
+      opacity: 0,
+      zIndex: 20,
+      ...style,
+    }}
+  >
+    ✦
+  </span>
+);
+
+const points = [
+  "Meet genuine buyers, distributors, retailers, and healthcare professionals",
+  "Generate high-quality B2B & B2C leads with faster business conversions",
+  "Launch new products with maximum visibility and market impact",
+  "Expand your dealer, distributor, franchise, and export network",
+  "Strengthen brand presence through live demos and media exposure",
+  "Connect with investors, CEOs, doctors, and key decision-makers",
+  "Achieve higher ROI with direct customer engagement and trust building"
 ];
 
-const bottomStats = [
-  {
-    icon: <Store size={26} />,
-    title: "EXHIBIT",
-    desc: "Showcase your products to the right audience and gain maximum visibility."
-  },
-  {
-    icon: <UsersIcon size={26} />,
-    title: "CONNECT",
-    desc: "Network with buyers, investors & partners from across the world."
-  },
-  {
-    icon: <TrendingUp size={26} />,
-    title: "GROW",
-    desc: "Expand your business, build lasting relationships and grow globally."
-  }
-];
+const mainPoints = ["Exhibit", "Connect", "Grow"];
 
 const WhyParticipate = () => {
   return (
-    <section className="relative w-full bg-[#f4fbf4] py-2 lg:py-6 overflow-hidden font-inter border-y border-[#3b8c2a]/10">
+    <section className="bg-[#F9FCF9] pt-4 pb-12 overflow-hidden font-inter">
+      {/* ── Inject same keyframe animations as Footer ── */}
+      <style jsx global>{`
+        @keyframes goldShift {
+          0%   { background-position: 0% 50%; }
+          50%  { background-position: 100% 50%; }
+          100% { background-position: 0% 50%; }
+        }
+        @keyframes shimmer {
+          0% { transform: translateX(-150%) skewX(-20deg); }
+          100% { transform: translateX(300%) skewX(-20deg); }
+        }
+        @keyframes sparkleAnim {
+          0% { opacity: 0; transform: scale(0.5) translateY(0); }
+          40% { opacity: 1; transform: scale(1.2) translateY(-4px); }
+          80% { opacity: 0.6; transform: scale(0.9) translateY(-6px); }
+          100% { opacity: 0; transform: scale(0.5) translateY(-8px); }
+        }
+        .golden-btn-wp {
+          background: linear-gradient(135deg, #f5c842 0%, #ffdd00 30%, #ffa500 60%, #f5c842 100%);
+          background-size: 200% 200%;
+          animation: goldShift 2.5s ease infinite;
+          box-shadow: 0 0 16px 4px rgba(255,200,0,0.3), 0 4px 15px rgba(255,165,0,0.25);
+          position: relative;
+          overflow: hidden;
+        }
+        .golden-btn-wp::before {
+          content: '';
+          position: absolute;
+          top: -50%;
+          left: 0;
+          width: 50%;
+          height: 200%;
+          background: linear-gradient(to right, transparent, rgba(255,255,255,0.4), transparent);
+          animation: shimmer 2s infinite;
+        }
+        .blue-btn-wp {
+          background: linear-gradient(135deg, #28396C 0%, #3d528f 30%, #1e2a50 60%, #28396C 100%);
+          background-size: 200% 200%;
+          animation: goldShift 2.5s ease infinite;
+          box-shadow: 0 0 16px 4px rgba(40,57,108,0.3), 0 4px 15px rgba(40,57,108,0.25);
+          position: relative;
+          overflow: hidden;
+        }
+        .blue-btn-wp::before {
+          content: '';
+          position: absolute;
+          top: -50%;
+          left: 0;
+          width: 50%;
+          height: 200%;
+          background: linear-gradient(to right, transparent, rgba(255,255,255,0.3), transparent);
+          animation: shimmer 2s infinite;
+        }
+      `}</style>
 
-      <div className="w-full px-4 sm:px-6 lg:px-11 relative z-10 flex flex-col lg:flex-row gap-12 lg:gap-8 lg:items-stretch">
+      <SectionContainer className="flex flex-col lg:flex-row items-center gap-12 lg:gap-16">
 
-        {/* Left Content Column */}
-        <div className="w-full lg:w-[50%] flex flex-col relative z-20">
-
-          {/* Clean Badge */}
-          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white border border-[#3b8c2a]/20 mb-3 shadow-sm w-fit mx-auto lg:mx-0">
-            <span className="w-1.5 h-1.5 rounded-full bg-[#f58634] animate-pulse"></span>
-            <span className="text-[11px] md:text-[12px] font-bold tracking-[0.2em] uppercase text-[#3b8c2a]">
+        {/* LEFT CONTENT */}
+        <motion.div
+          initial={{ opacity: 0, x: -30 }}
+          whileInView={{ opacity: 1, x: 0 }}
+          transition={{ duration: 0.6 }}
+          viewport={{ once: true }}
+          className="w-full lg:w-1/2"
+        >
+          <div className="flex items-center gap-2 mb-2.5">
+            <Leaf className="w-5 h-5 text-[#1b5e20] shrink-0" fill="#1b5e20" />
+            <span className="font-poppins font-semibold text-sm sm:text-base text-[#1b5e20] tracking-widest uppercase">
               WHY PARTICIPATE
             </span>
           </div>
 
-          {/* Title */}
-          <h2 className="text-[#1a3821] text-[22px] md:text-[32px] lg:text-[38px] leading-[1.2] font-semibold mb-3 font-poppins tracking-tight text-center lg:text-left">
-            Your Gateway to <br />
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#3b8c2a] to-[#F2B40E]">Global Opportunities</span>
+          <h2 className="font-poppins font-semibold text-2xl sm:text-3xl md:text-[34px] lg:text-[38px] text-[#001810] leading-[1.1] mb-2.5 uppercase tracking-tight">
+            Your Gateway to <br className="hidden sm:block" />
+            <span className="text-[#f58220]">Global Opportunities</span>
           </h2>
 
-          {/* Description */}
-          <p className="text-slate-600 text-[15px] md:text-[17px] leading-[1.7] mb-4 font-medium text-center lg:text-left">
-            Bharat Organic Expo is India's most influential platform for organic products, innovation, and sustainable solutions—connecting you with the right people, partnerships, and possibilities.
+          <p className="font-inter text-sm sm:text-base font-bold text-[#131730] leading-relaxed mb-4 max-w-xl">
+            Bharat Organic Expo 2027 is a leading platform for organic products, natural health, fitness, Ayurveda, and sustainable innovation—bringing together top brands, buyers, investors, and industry leaders from India and worldwide.
           </p>
 
-          {/* Grid Items */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
-            {listItems.map((item, index) => (
-              <div key={index} className="flex flex-col gap-2 bg-white rounded-2xl p-5 shadow-[0_4px_20px_rgba(0,0,0,0.03)] border border-slate-100 transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_8px_25px_rgba(59,140,42,0.08)] group cursor-default">
-                <h4 className="text-[#1a3821] font-semibold text-[15px] md:text-[16px] leading-[1.3] group-hover:text-[#3b8c2a] transition-colors">{item.title}</h4>
-                <p className="text-slate-600 text-[13.5px] leading-[1.6]">{item.desc}</p>
+          <div className="space-y-3 mb-8 font-inter">
+            {points.map((point: string, index: number) => (
+              <div key={index} className="flex items-center gap-3">
+                <CheckCircle2 className="w-5 h-5 text-[#1b5e20] shrink-0" fill="#1b5e20" color="#fff" />
+                <span className="text-[13.5px] sm:text-[14px] font-bold text-[#131730]">{point}</span>
               </div>
             ))}
           </div>
 
-        </div>
+          {/* ── BUTTONS ROW ── */}
+          <div className="flex flex-wrap items-center gap-3 md:gap-4">
 
-        <div className="w-full lg:w-[50%] relative z-10 flex flex-col">
+            {/* ── GOLDEN "BOOK A STALL" BUTTON with sparkles ── */}
+            <div className="relative group/btn">
+              {/* Sparkles */}
+              <Sparkle style={{ top: '-10px', left: '10%', animationDelay: '0s' }} />
+              <Sparkle style={{ top: '-12px', left: '40%', animationDelay: '0.4s' }} />
+              <Sparkle style={{ top: '-8px', right: '15%', animationDelay: '0.8s' }} />
+              <Sparkle style={{ bottom: '-10px', left: '25%', animationDelay: '0.2s' }} />
+              <Sparkle style={{ bottom: '-12px', right: '30%', animationDelay: '0.6s' }} />
 
-          {/* Main Curved Image Container */}
-          <div className="relative w-full aspect-[4/3] lg:aspect-auto flex-1 overflow-hidden rounded-3xl shadow-2xl mb-4 group min-h-[300px]">
+              <Link
+                href="/registration/book-a-stand"
+                target="_blank"
+                className="golden-btn-wp flex items-center gap-1.5 px-4 h-8 rounded-lg relative z-10 hover:scale-[1.02] transition-transform"
+              >
+                <Store className="w-[14px] h-[14px] text-[#050A1A] shrink-0" />
+                <span className="font-bold text-[10px] tracking-widest text-[#050A1A] font-poppins uppercase">
+                  BOOK A STALL
+                </span>
+                <ArrowRight className="w-3 h-3 text-[#050A1A] group-hover/btn:translate-x-1 transition-transform" />
+              </Link>
+            </div>
+
+            {/* ── Blue "Download Brochure" BUTTON with sparkles ── */}
+            <div className="relative group/btn">
+              {/* Blue Sparkles */}
+              <Sparkle color="#28396C" style={{ top: '-10px', left: '10%', animationDelay: '0.1s' }} />
+              <Sparkle color="#28396C" style={{ top: '-12px', left: '40%', animationDelay: '0.5s' }} />
+              <Sparkle color="#28396C" style={{ top: '-8px', right: '15%', animationDelay: '0.9s' }} />
+              <Sparkle color="#28396C" style={{ bottom: '-10px', left: '25%', animationDelay: '0.3s' }} />
+              <Sparkle color="#28396C" style={{ bottom: '-12px', right: '30%', animationDelay: '0.7s' }} />
+
+              <Link
+                href="/registration/visitor-registration"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="blue-btn-wp flex items-center gap-1.5 px-4 h-8 rounded-lg relative z-10 hover:scale-[1.02] transition-transform"
+              >
+                <FileDown className="w-[14px] h-[14px] text-white shrink-0" />
+                <span className="font-bold text-[10px] tracking-widest text-white uppercase font-poppins">
+                  Download Brochure
+                </span>
+                <ArrowRight className="w-3 h-3 text-white group-hover/btn:translate-x-1 transition-transform" />
+              </Link>
+            </div>
+
+            {/* ── More Info Button ── */}
+            <Link
+              href="/why-exhibit"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center gap-1.5 px-3 h-8 rounded-lg border border-[#2f8f3a] bg-[#F9FCF9] text-[#2f8f3a] hover:bg-[#2f8f3a]/5 transition-all hover:scale-[1.02] shadow-sm relative z-10 font-poppins"
+            >
+              <Info className="w-[14px] h-[14px] shrink-0" />
+              <span className="font-bold text-[10px] tracking-widest uppercase">
+                Why Exhibit?
+              </span>
+            </Link>
+          </div>
+        </motion.div>
+
+        {/* RIGHT IMAGE SECTION */}
+        <motion.div
+          initial={{ opacity: 0, scale: 0.95 }}
+          whileInView={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 0.6, delay: 0.2 }}
+          viewport={{ once: true }}
+          className="w-full lg:w-1/2 relative"
+        >
+          {/* Green background block behind image */}
+          <div className="hidden md:block absolute bottom-[-18px] right-[-18px] w-[180px] h-[180px] bg-[#2f8f3a] rounded-[20px] z-0" />
+
+          <div className="relative rounded-[2rem] overflow-hidden shadow-2xl border-[7px] border-white/70 z-10">
             <Image
               src={meetingImg}
               alt="Business Meeting at Expo"
-              fill
-              className="object-cover transform group-hover:scale-105 transition-transform duration-700"
+              className="w-full h-[280px] md:h-[330px] object-cover"
             />
-            {/* Subtle Gradient Overlay */}
-            <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent"></div>
 
-            {/* Overlay Action Buttons inside Image */}
-            <div className="absolute bottom-6 left-0 right-0 flex flex-wrap justify-center gap-3 px-4">
-              <Link href="#" className="flex items-center gap-2 px-5 py-2.5 bg-[#3b8c2a] hover:bg-[#F2B40E] text-white hover:text-[#0b2912] text-[12px] md:text-[13px] font-bold uppercase tracking-wider rounded-full shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 backdrop-blur-md">
-                <CalendarDays size={16} />
-                BOOK A STALL
-              </Link>
-              <Link href="#" className="flex items-center gap-2 px-5 py-2.5 bg-white/90 text-[#3b8c2a] hover:bg-white text-[12px] md:text-[13px] font-bold uppercase tracking-wider rounded-full shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 backdrop-blur-md">
-                <Download size={16} />
-                BROCHURE
-              </Link>
+            {/* Floating Badge */}
+            <div className="absolute bottom-6 right-6 bg-white p-3 md:p-4 rounded-2xl shadow-xl border-l-[5px] border-[#2f8f3a] max-w-[170px] md:max-w-[190px] z-20 transform hover:-translate-y-2 transition-transform duration-300">
+              <div className="flex items-start gap-2 md:gap-3">
+                <Leaf className="w-3.5 h-3.5 md:w-4 md:h-4 text-[#2f8f3a] shrink-0 mt-[2px]" fill="#2f8f3a" />
+                <p className="text-[10px] md:text-[12px] font-bold text-[#071c3d] leading-tight whitespace-pre-line font-inter">
+                  {"Build Relationships.\nGenerate Leads.\nGrow Your Business."}
+                </p>
+              </div>
             </div>
           </div>
 
-          {/* Bottom Stats Grid */}
-          <div className="w-full grid grid-cols-1 sm:grid-cols-3 gap-4 mt-1">
-            {bottomStats.map((stat, index) => (
-              <div key={index} className="flex flex-col items-center text-center gap-3 bg-white p-5 rounded-2xl shadow-[0_8px_30px_rgba(0,0,0,0.04)] border border-slate-100 transition-all duration-300 hover:-translate-y-2 hover:shadow-[0_15px_40px_rgba(59,140,42,0.1)] group/item">
-                <div className="w-14 h-14 rounded-full bg-[#f4fbf4] flex items-center justify-center border border-[#d5ebd9] shadow-inner group-hover/item:bg-[#3b8c2a] group-hover/item:border-[#3b8c2a] transition-all duration-500">
-                  {React.cloneElement(stat.icon as React.ReactElement<{ className?: string }>, { className: "text-[#3b8c2a] group-hover/item:text-white transition-colors duration-500" })}
-                </div>
-                <div>
-                  <h3 className="text-[#1a3821] font-bold text-[15px] tracking-[0.1em] mb-1.5 uppercase group-hover/item:text-[#3b8c2a] transition-colors">
-                    {stat.title}
-                  </h3>
-                  <p className="text-slate-600 text-[13px] leading-[1.6]">
-                    {stat.desc}
-                  </p>
-                </div>
+          {/* 3-point bullets below image */}
+          <div className="flex flex-wrap justify-center md:justify-start items-center gap-4 md:gap-8 mt-6 md:mt-8 md:ml-6 font-poppins">
+            {mainPoints.map((point: string, index: number) => (
+              <div key={index} className="flex items-center gap-2">
+                <CheckCircle2 className="w-5 h-5 text-[#2f8f3a] shrink-0" fill="#2f8f3a" color="#fff" />
+                <span className="text-[13px] md:text-[14px] font-bold text-[#071c3d] tracking-tight uppercase">{point}</span>
               </div>
             ))}
           </div>
+        </motion.div>
 
-        </div>
-
-      </div>
-
+      </SectionContainer>
     </section>
   );
 };

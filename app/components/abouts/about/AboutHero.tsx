@@ -98,46 +98,46 @@ const AboutHero = () => {
       {/* Lightened dark gradient overlay removed as per user request */}
 
       {/* Content Overlay */}
-      <div className="relative z-20 w-full px-2 md:px-11 h-full flex flex-col justify-center">
-        <div className="max-w-xl text-left mt-16 md:mt-0 space-y-4 w-full max-w-2xl">
+      <div className="relative z-20 w-full px-3 md:px-11 h-full flex flex-col justify-center py-12 md:py-6">
+        <div className="max-w-xl text-left mt-6 md:mt-0 space-y-3.5 md:space-y-4 w-full bg-white/75 md:bg-transparent backdrop-blur-md md:backdrop-blur-none p-4 sm:p-6 md:p-0 rounded-2xl border border-white/60 md:border-none shadow-lg md:shadow-none">
 
           {/* Tagline */}
-          <div className="flex items-center justify-start gap-2.5 mb-2">
+          <div className="flex items-center justify-start gap-2.5 mb-1">
             <span className="w-8 h-[2.5px] bg-[#c2410c] shrink-0" />
-            <p className="text-[#c2410c] text-[13px] md:text-[15px] lg:text-[16px] font-bold uppercase tracking-[0.18em] text-left">
+            <p className="text-[#c2410c] text-[12px] md:text-[15px] lg:text-[16px] font-bold uppercase tracking-[0.18em] text-left">
               ABOUT US
             </p>
           </div>
 
           {/* Title */}
           <h1
-            className="font-black leading-[1.05] mb-4 text-left font-poppins"
-            style={{ textShadow: "1px 1px 2px rgba(0,0,0,0.4)" }}
+            className="font-black leading-[1.05] mb-2 md:mb-4 text-left font-poppins"
+            style={{ textShadow: "1px 1px 2px rgba(0,0,0,0.3)" }}
           >
-            <div className="text-[#1b5e20] text-[36px] md:text-[46px] lg:text-[56px] tracking-tight block" style={{ fontWeight: 600 }}>
+            <div className="text-[#1b5e20] text-[28px] sm:text-[36px] md:text-[46px] lg:text-[56px] tracking-tight block font-semibold">
               BHARAT ORGANIC
             </div>
-            <div className="text-[#ea580c] text-[42px] md:text-[52px] lg:text-[62px] tracking-tight block" style={{ fontWeight: 600 }}>
+            <div className="text-[#ea580c] text-[32px] sm:text-[42px] md:text-[52px] lg:text-[62px] tracking-tight block font-semibold">
               EXPO 2027
             </div>
           </h1>
 
           {/* Subtitle */}
-          <div className="flex items-center gap-3 ">
-            <div className="w-12 h-1 bg-[#ea580c] rounded-full"></div>
-            <span className="text-[#1b5e20] font-bold text-[14px] md:text-[16px] tracking-widest uppercase">
+          <div className="flex items-center gap-2.5">
+            <div className="w-8 md:w-12 h-1 bg-[#ea580c] rounded-full shrink-0"></div>
+            <span className="text-[#1b5e20] font-bold text-[12px] sm:text-[14px] md:text-[16px] tracking-widest uppercase">
               Our Mission & Vision
             </span>
-            <div className="w-12 h-1 bg-[#ea580c] rounded-full"></div>
+            <div className="w-8 md:w-12 h-1 bg-[#ea580c] rounded-full shrink-0"></div>
           </div>
 
           {/* Description */}
-          <p className="text-[#131730] font-bold text-[13px] md:text-[14px] lg:text-[15px] leading-relaxed max-w-lg mt-4">
+          <p className="text-[#131730] font-bold text-[12.5px] sm:text-[13.5px] md:text-[15px] leading-relaxed max-w-lg mt-2 font-inter">
             Discover the driving force behind Bharat Organic Expo. We are committed to fostering sustainable practices, nurturing conscious communities, and elevating India's organic industry to global standards.
           </p>
 
           {/* Buttons */}
-          <div className="flex flex-wrap items-center justify-start gap-2.5 mt-3 relative w-full">
+          <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-start gap-2.5 mt-4 relative w-full font-inter">
             <div className="relative w-full sm:w-auto">
               <Sparkle color="#3b82f6" shadow="#28396C" style={{ top: "-10px", left: "10%", animationDelay: "0.2s" }} />
               <Sparkle color="#3b82f6" shadow="#28396C" style={{ top: "-12px", left: "50%", animationDelay: "0.6s" }} />
@@ -146,9 +146,9 @@ const AboutHero = () => {
                 href="/registration/visitor-registration"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="blue-btn-hero text-white px-3.5 py-1.5 md:py-2 rounded-md font-semibold text-[9px] md:text-[10px] uppercase tracking-wider flex items-center justify-center gap-1.5 transition-all active:scale-95 shadow-md relative z-10 w-full sm:w-auto"
+                className="blue-btn-hero text-white px-5 py-2.5 rounded-full font-semibold text-[11px] md:text-[12px] uppercase tracking-wider flex items-center justify-center gap-2 transition-all active:scale-95 shadow-md relative z-10 w-full sm:w-auto"
               >
-                REGISTER AS A VISITOR <ArrowRight size={12} />
+                REGISTER AS A VISITOR <ArrowRight size={14} />
               </Link>
             </div>
             <div className="relative w-full sm:w-auto">
@@ -159,14 +159,14 @@ const AboutHero = () => {
                 href="/registration/book-a-stand"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="group relative inline-flex items-center justify-center gap-1.5 px-3.5 py-1.5 md:py-2 rounded-md font-semibold text-[9px] md:text-[10px] uppercase tracking-wider text-white transition-all active:scale-95 shadow-xl z-10 w-full sm:w-auto overflow-hidden"
+                className="group relative inline-flex items-center justify-center gap-2 px-5 py-2.5 rounded-full font-semibold text-[11px] md:text-[12px] uppercase tracking-wider text-white transition-all active:scale-95 shadow-xl z-10 w-full sm:w-auto overflow-hidden"
                 style={{
                   background: "linear-gradient(135deg, #ea580c, #c2410c)",
                   boxShadow: "0 4px 20px rgba(194,65,12,0.5), 0 0 12px rgba(249,115,22,0.3)",
                 }}
               >
                 <span className="absolute inset-0 bg-white/10 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-500 skew-x-12" />
-                BOOK YOUR STALL <ArrowRight size={12} className="group-hover:translate-x-1 transition-transform" />
+                BOOK YOUR STALL <ArrowRight size={14} className="group-hover:translate-x-1 transition-transform" />
               </Link>
             </div>
           </div>

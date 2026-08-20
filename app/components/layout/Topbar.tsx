@@ -109,7 +109,7 @@ const Topbar = () => {
             >
                 <SectionContainer className="flex items-center justify-between py-1 flex-nowrap gap-x-4">
                     {/* Left Section - Contact Info (Compact on mobile) */}
-                    <div className="flex items-center justify-center md:justify-start gap-4 md:gap-6 w-full md:w-auto overflow-hidden flex-shrink-0 pl-1">
+                    <div className="flex items-center justify-between md:justify-start gap-2 md:gap-6 w-full md:w-auto overflow-hidden flex-shrink-0 px-1">
                         <a
                             href={`mailto:${topbarEmail}`}
                             className="flex items-center gap-1.5 text-white hover:text-slate-200 transition-colors duration-300 font-semibold text-[9px] md:text-[11px] whitespace-nowrap group"

@@ -165,7 +165,7 @@ export default function IndustrySegments() {
                   />
 
                   {/* Segment Title */}
-                  <h3 className="font-poppins font-semibold text-xs sm:text-sm text-[#112a12] text-center mb-1.5 leading-snug min-h-[40px] flex items-center justify-center px-1 whitespace-pre-line">
+                  <h3 className="font-poppins font-semibold text-[13px] text-[#112a12] text-center mb-1.5 leading-snug min-h-[42px] flex items-center justify-center px-1 whitespace-pre-line">
                     {item.title}
                   </h3>
 
@@ -176,7 +176,7 @@ export default function IndustrySegments() {
                   />
 
                   {/* Subline Items */}
-                  <p className="font-inter font-medium text-[10px] sm:text-[11px] text-black text-center leading-tight mb-2 min-h-[32px] flex items-center justify-center px-1">
+                  <p className="font-inter font-semibold text-[13px] text-slate-800 text-center leading-tight mb-2 min-h-[34px] flex items-center justify-center px-1">
                     {item.items}
                   </p>
                 </div>

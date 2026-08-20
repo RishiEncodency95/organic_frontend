@@ -1,5 +1,5 @@
 "use client";
-import aboutImg from "@/app/assets/banner/about.png";
+import aboutImg from "@/app/assets/banner/about.webp";
 import vleafImg from "@/app/assets/icons/vleaf.png";
 import React from 'react';
 import Image from 'next/image';

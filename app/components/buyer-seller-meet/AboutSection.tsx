@@ -5,6 +5,7 @@ import { CheckCircle2, ChevronRight, User, Briefcase, HelpCircle, Users, Phone }
 import b2bImg from "../../assets/image/b2bog.png";
 import footerRightImg from "../../assets/icons/footerright.png";
 import blleafImg from "../../assets/icons/blleaf.png";
+import SectionContainer from "@/app/components/layout/SectionContainer";
 
 export default function AboutSection() {
   const points = [
@@ -18,7 +19,7 @@ export default function AboutSection() {
 
   const links = [
     { label: "Register as Buyer", icon: <User size={16} />, href: "/registration/buyer-registration", target: "_blank" },
-    { label: "Participate as Exhibitor", icon: <Briefcase size={16} />, href: "/participate-as-exhibitor", target: "_blank" },
+    { label: "Participate as Exhibitor", icon: <Briefcase size={16} />, href: "/participate_as_exhibiture", target: "_blank" },
     { label: "How it Works", icon: <HelpCircle size={16} />, href: "#how-it-works" },
     { label: "Who Can Participate", icon: <Users size={16} />, href: "#who-can-participate" },
     { label: "Contact Us", icon: <Phone size={16} />, href: "/contact", target: "_blank" },
@@ -31,7 +32,7 @@ export default function AboutSection() {
         <img src={footerRightImg.src} alt="Leaf Decoration" className="w-full h-auto object-contain" />
       </div>
 
-      <div className="container mx-auto px-4 max-w-7xl relative z-10">
+      <SectionContainer className="relative z-10">
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-12 items-start">
 
           {/* Left Column - About */}
@@ -126,7 +127,7 @@ export default function AboutSection() {
           </div>
 
         </div>
-      </div>
+      </SectionContainer>
     </section>
   );
 }
