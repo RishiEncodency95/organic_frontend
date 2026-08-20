@@ -112,16 +112,18 @@ export default function PmsSupportSection() {
             {/* Highlight cards */}
             <ul className="grid grid-cols-2 gap-x-4 gap-y-6 sm:grid-cols-4 sm:gap-x-3 lg:grid-cols-2 lg:gap-x-4 xl:grid-cols-4">
               {highlightCards.map(({ icon: Icon, title, description }) => (
-                <li key={title} className="flex flex-col gap-2 sm:gap-3">
-                  <span className="flex h-11 w-11 items-center justify-center rounded-xl bg-emerald-100 sm:h-12 sm:w-12">
+                <li key={title} className="flex flex-row items-start gap-3 sm:gap-4">
+                  <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-gray-200 sm:h-12 sm:w-12">
                     <Icon className="h-5 w-5 text-emerald-800 sm:h-6 sm:w-6" aria-hidden="true" />
                   </span>
-                  <h3 className="text-xs font-semibold uppercase leading-tight text-emerald-950 sm:text-sm">
-                    {title}
-                  </h3>
-                  <p className="text-xs leading-snug text-emerald-950/60 sm:text-sm">
-                    {description}
-                  </p>
+                  <div className="flex flex-col gap-1">
+                    <h3 className="text-xs font-semibold uppercase leading-tight text-emerald-950 sm:text-sm">
+                      {title}
+                    </h3>
+                    <p className="text-xs leading-snug text-emerald-950/60 sm:text-sm">
+                      {description}
+                    </p>
+                  </div>
                 </li>
               ))}
             </ul>
@@ -175,8 +177,8 @@ export default function PmsSupportSection() {
                   {number}
                 </span>
 
-                <span className="mb-4 flex h-20 w-20 items-center justify-center rounded-full bg-white shadow-sm sm:h-24 sm:w-24">
-                  <Icon className="h-9 w-9 text-emerald-800 sm:h-10 sm:w-10" aria-hidden="true" />
+                <span className="mb-4 flex h-14 w-14 items-center justify-center rounded-full bg-white shadow-sm sm:h-16 sm:w-16">
+                  <Icon className="h-6 w-6 text-emerald-800 sm:h-7 sm:w-7" aria-hidden="true" />
                 </span>
 
                 <h4 className="mb-2 text-sm font-semibold uppercase tracking-wide text-emerald-950 sm:text-base">

@@ -1,5 +1,6 @@
 import { Metadata } from "next";
 import MsmePmsBanner from "@/app/components/participate/msme/MsmePmsBanner";
+import FeatureStrip from "@/app/components/participate/msme/FeatureStrip";
 import OfficialRecognitionBanner from "@/app/components/participate/msme/OfficialRecognitionBanner";
 import MsmePmsScheme from "@/app/components/participate/msme/MsmePmsScheme";
 import Pmsfinancialassistancebanner from "@/app/components/participate/msme/Pmsfinancialassistancebanner";
@@ -25,6 +26,7 @@ const MsmePage = () => {
   return (
     <div className="min-h-screen bg-white font-sans text-neutral-800 overflow-x-clip">
       <MsmePmsBanner />
+      <FeatureStrip />
       <OfficialRecognitionBanner />
       <MsmePmsScheme />
       <Pmsfinancialassistancebanner />
