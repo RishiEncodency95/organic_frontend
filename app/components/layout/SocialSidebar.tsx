@@ -47,12 +47,13 @@ const SocialSidebar = () => {
     return () => clearTimeout(timer);
   }, []);
 
+  const config = SITE_CONFIG as any;
   const socialLinks = {
-    facebook: SITE_CONFIG.socialLinks?.facebook || "https://www.facebook.com/namogangewellness.event",
-    instagram: SITE_CONFIG.socialLinks?.instagram || "https://www.instagram.com/namogangewellness/",
+    facebook: config.socialLinks?.facebook || "https://www.facebook.com/namogangewellness.event",
+    instagram: config.socialLinks?.instagram || "https://www.instagram.com/namogangewellness/",
     twitter: "https://twitter.com",
-    youtube: SITE_CONFIG.socialLinks?.youtube || "https://www.youtube.com/@NamoGangeTrust",
-    linkedin: SITE_CONFIG.socialLinks?.linkedin || "https://in.linkedin.com/company/namogange",
+    youtube: config.socialLinks?.youtube || "https://www.youtube.com/@NamoGangeTrust",
+    linkedin: config.socialLinks?.linkedin || "https://in.linkedin.com/company/namogange",
   };
 
   // Static social media icons with dynamic links

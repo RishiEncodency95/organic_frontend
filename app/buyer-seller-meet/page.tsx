@@ -2,7 +2,7 @@ import React from "react";
 import HeroSection from "../components/buyer-seller-meet/HeroSection";
 import FeatureStrip from "../components/buyer-seller-meet/FeatureStrip";
 import AboutSection from "../components/buyer-seller-meet/AboutSection";
-import WhoCanParticipate from "../components/buyer-seller-meet/WhoCanParticipate";
+import ParticipateBuyerTypes from "../components/participate-as-exhibitor/ParticipateBuyerTypes";
 import WhatToSource from "../components/buyer-seller-meet/WhatToSource";
 import WhyJoin from "../components/buyer-seller-meet/WhyJoin";
 import HowItWorks from "../components/buyer-seller-meet/HowItWorks";
@@ -20,7 +20,7 @@ export default function BuyerSellerMeetPage() {
       <HeroSection />
       <FeatureStrip />
       <AboutSection />
-      <WhoCanParticipate />
+      <ParticipateBuyerTypes />
       <WhatToSource />
       <WhyJoin />
       <HowItWorks />
