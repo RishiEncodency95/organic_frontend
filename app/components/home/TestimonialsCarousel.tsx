@@ -564,7 +564,7 @@ const TestimonialsCarousel = () => {
       <div className="relative pt-8 pb-6">
         <SectionContainer className="relative z-10">
           <div className="w-full overflow-hidden">
-            <div 
+            <div
               className="marquee-wrapper-cards gap-6"
               style={{ animationDuration: `${Math.max(total * 10, 25)}s` }}
             >
@@ -572,8 +572,8 @@ const TestimonialsCarousel = () => {
                 <div key={set} className="flex gap-6">
                   {TESTIMONIALS_DATA.map((item: any, i: number) => (
                     <div key={`${set}-${i}`} className="flex-shrink-0">
-                      <TestimonialCard 
-                        item={item} 
+                      <TestimonialCard
+                        item={item}
                         expandedCardId={expandedCardId}
                         setExpandedCardId={setExpandedCardId}
                       />
@@ -595,7 +595,7 @@ const TestimonialsCarousel = () => {
         <SectionContainer className="relative z-10">
           <div className="flex flex-col md:flex-row items-stretch">
             <div className="w-full overflow-hidden">
-              <div 
+              <div
                 className="marquee-wrapper-videos gap-4"
                 style={{ animationDuration: `${Math.max(totalVideos * 10, 20)}s` }}
               >

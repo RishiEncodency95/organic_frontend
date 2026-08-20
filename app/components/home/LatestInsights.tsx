@@ -48,6 +48,7 @@ const LatestInsights = () => {
               <span className="uppercase tracking-[0.3em] md:tracking-[0.4em] text-[#1b5e20] font-bold text-[10px] md:text-xs font-poppins">
                 LATEST INSIGHTS
               </span>
+              <div className="h-px w-8 bg-[#1b5e20]" />
             </div>
             <h2 className="text-xl md:text-2xl lg:text-3xl font-semibold text-[#1b5e20] uppercase leading-[1.1] font-poppins">
               Organic Industry <span className="text-[#d26019]">Perspectives</span>
