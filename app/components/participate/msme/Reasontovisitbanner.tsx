@@ -8,9 +8,8 @@ import {
   Sprout,
   ArrowRight,
   Leaf,
-  Sun,
-  ImageIcon,
 } from "lucide-react";
+import reasonToVisitImg from "@/app/assets/participate/msme/reason_to_visit.png";
 
 /**
  * Bharat Organic Expo — "Reason to Visit" banner
@@ -123,50 +122,15 @@ export default function ReasonToVisitBanner() {
             </div>
           </div>
 
-          {/* ---------- Right: logo + photo collage ---------- */}
+          {/* ---------- Right: photo ---------- */}
           <div className="relative">
-            {/* Logo */}
-            <div className="mb-4 flex items-center justify-end gap-2.5">
-              <span className="relative flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-gradient-to-br from-[#F7B733] to-[#F5A623] sm:h-12 sm:w-12">
-                <Sun className="h-6 w-6 text-white sm:h-7 sm:w-7" strokeWidth={2} />
-                <Leaf
-                  className="absolute -right-1 -top-1 h-4 w-4 text-[#2F5E2F]"
-                  strokeWidth={2.5}
-                  fill="currentColor"
-                />
-              </span>
-              <p className="text-right leading-[1.05]">
-                <span className="block text-lg font-extrabold uppercase tracking-tight text-[#F5A623] sm:text-xl">
-                  Bharat
-                </span>
-                <span className="block text-lg font-extrabold uppercase tracking-tight text-[#14231A] sm:text-xl">
-                  Organic
-                </span>
-                <span className="block text-xs font-bold uppercase tracking-[0.35em] text-[#5B6B5E] sm:text-sm">
-                  — Expo
-                </span>
-              </p>
-            </div>
-
-            {/* Photo collage — replace the placeholder blocks with real <img> */}
-            <div className="grid grid-cols-2 gap-3 sm:gap-4">
-              {/* Big top image spanning both columns */}
-              <div className="col-span-2 aspect-[16/9] overflow-hidden rounded-[2.5rem] bg-gradient-to-br from-[#3B5B3B] to-[#1E331E]">
-                {/* <img src="/expo-hall.jpg" alt="Bharat Organic Expo exhibition hall with visitors browsing herbal & wellness stalls" className="h-full w-full object-cover" /> */}
-                <PlaceholderPhoto label="Expo hall — herbal & wellness stalls" />
-              </div>
-
-              {/* Bottom-left image */}
-              <div className="aspect-square overflow-hidden rounded-[2.5rem] bg-gradient-to-br from-[#4A6B3A] to-[#26401F]">
-                {/* <img src="/organic-products.jpg" alt="Organic wellness and skincare products on display" className="h-full w-full object-cover" /> */}
-                <PlaceholderPhoto label="Organic products display" />
-              </div>
-
-              {/* Bottom-right image */}
-              <div className="aspect-square overflow-hidden rounded-[2.5rem] bg-gradient-to-br from-[#8A6A4A] to-[#5C4530]">
-                {/* <img src="/sapling-hands.jpg" alt="Hands holding soil with a young sapling, symbolising sustainability" className="h-full w-full object-cover" /> */}
-                <PlaceholderPhoto label="Hands holding a sapling" />
-              </div>
+            {/* Photo */}
+            <div className="aspect-[16/9] overflow-hidden rounded-[2.5rem]">
+              <img
+                src={reasonToVisitImg.src}
+                alt="Bharat Organic Expo exhibition hall with visitors"
+                className="h-full w-full object-cover"
+              />
             </div>
           </div>
         </div>
@@ -195,9 +159,9 @@ export default function ReasonToVisitBanner() {
         </div>
 
         {/* ===================== BOTTOM CTA BAR ===================== */}
-        <div className="mt-10 flex flex-col gap-4 rounded-[2rem] border border-[#E1DDD0] bg-white/60 p-4 sm:flex-row sm:items-center sm:justify-between sm:gap-6 sm:p-5 lg:mt-12">
+        <div className="mt-10 flex flex-col gap-4 rounded-[2rem] border border-[#E1DDD0] bg-white/60 p-4 sm:flex-row sm:items-center sm:justify-center sm:gap-6 sm:p-5 lg:mt-12 gap-4">
           <div className="flex flex-col items-center gap-3 sm:flex-row sm:gap-4">
-            <span className="flex items-center gap-2 text-sm font-medium italic text-[#2F5E2F] sm:text-base">
+            <span className="flex items-center gap-2 text-sm font-medium text-[#2F5E2F] sm:text-base">
               <Leaf className="h-4 w-4 shrink-0" strokeWidth={2} />
               One Platform. Unlimited Opportunities.
             </span>
@@ -220,17 +184,5 @@ export default function ReasonToVisitBanner() {
         </div>
       </div>
     </section>
-  );
-}
-
-/** Simple placeholder used until real photos are wired in. Safe to delete. */
-function PlaceholderPhoto({ label }: { label: string }) {
-  return (
-    <div className="flex h-full w-full flex-col items-center justify-center gap-2 p-4 text-center text-white/70">
-      <ImageIcon className="h-6 w-6" strokeWidth={1.5} />
-      <span className="text-[10px] font-medium leading-tight sm:text-xs">
-        {label}
-      </span>
-    </div>
   );
 }

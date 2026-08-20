@@ -79,7 +79,7 @@ export default function WhatsNextBanner() {
           <div className="lg:col-span-5 flex flex-col justify-center">
             <h2
               id="whats-next-heading"
-              className="flex flex-wrap items-center gap-2 font-black uppercase italic leading-[0.95] tracking-tight text-emerald-800 text-4xl sm:text-5xl xl:text-6xl"
+              className="flex flex-wrap items-center gap-2 font-black uppercase leading-[0.95] tracking-tight text-emerald-800 text-4xl sm:text-5xl xl:text-6xl"
             >
               What&apos;s Next?
               <Leaf
@@ -87,7 +87,7 @@ export default function WhatsNextBanner() {
                 aria-hidden="true"
               />
             </h2>
-            <p className="mt-1 font-black uppercase italic leading-[0.95] tracking-tight text-slate-900 text-3xl sm:text-4xl xl:text-5xl">
+            <p className="mt-1 font-black uppercase leading-[0.95] tracking-tight text-slate-900 text-3xl sm:text-4xl xl:text-5xl">
               Take the Next Step Today
             </p>
 
@@ -125,8 +125,8 @@ export default function WhatsNextBanner() {
                     key={title}
                     className="flex flex-col items-center px-2 text-center sm:px-4"
                   >
-                    <span className="mb-3 flex h-16 w-16 items-center justify-center rounded-full bg-emerald-50">
-                      <Icon className="h-8 w-8 text-emerald-700" aria-hidden="true" />
+                    <span className="mb-3 flex h-16 w-16 items-center justify-center rounded-full bg-gray-100">
+                      <Icon className="h-8 w-8 text-emerald-900" aria-hidden="true" />
                     </span>
                     <h3 className="text-sm sm:text-base font-extrabold uppercase leading-tight text-emerald-800">
                       {title}
@@ -168,8 +168,8 @@ export default function WhatsNextBanner() {
                     </span>
                   )}
 
-                  <span className="relative mb-4 flex h-20 w-20 items-center justify-center rounded-full bg-emerald-50">
-                    <Icon className="h-9 w-9 text-emerald-800" aria-hidden="true" />
+                  <span className="relative mb-4 flex h-20 w-20 items-center justify-center rounded-full bg-gray-100">
+                    <Icon className="h-9 w-9 text-emerald-900" aria-hidden="true" />
                     <span className="absolute -top-2 -left-1 flex h-7 w-7 items-center justify-center rounded-full bg-emerald-900 text-xs font-bold text-white ring-4 ring-white">
                       {number}
                     </span>
@@ -241,7 +241,7 @@ export default function WhatsNextBanner() {
             </span>
             <span className="relative hidden h-10 w-px self-stretch bg-emerald-800/20 sm:block" aria-hidden="true" />
             <div className="relative">
-              <p className="font-serif text-xl sm:text-2xl italic font-semibold text-emerald-900">
+              <p className="font-serif text-xl sm:text-2xl font-semibold text-emerald-900">
                 Let&apos;s Grow Together
               </p>
               <p className="mt-1 max-w-xs text-sm text-slate-600">

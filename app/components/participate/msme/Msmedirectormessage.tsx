@@ -13,6 +13,7 @@ import {
   Users,
   Award,
 } from "lucide-react";
+import officialMessageImg from "@/app/assets/participate/msme/official_message.png";
 
 /**
  * OfficialMessageBanner
@@ -61,11 +62,11 @@ export default function OfficialMessageBanner({
 
         {/* Divider dots */}
         <div className="my-4 flex items-center justify-center gap-2" aria-hidden="true">
-          <span className="h-8 w-px bg-[#2f6b3a]/30 sm:w-16" />
+          <span className="h-px w-px bg-[#2f6b3a]/30 sm:w-16" />
           <span className="h-1.5 w-1.5 rounded-full bg-[#2f6b3a]" />
           <span className="h-1.5 w-1.5 rounded-full bg-[#2f6b3a]" />
           <span className="h-1.5 w-1.5 rounded-full bg-[#2f6b3a]" />
-          <span className="h-8 w-px bg-[#2f6b3a]/30 sm:w-16" />
+          <span className="h-px w-px bg-[#2f6b3a]/30 sm:w-16" />
         </div>
 
         {/* Subheading */}
@@ -78,24 +79,16 @@ export default function OfficialMessageBanner({
         </p>
 
         {/* Main content: video + quote card */}
-        <div className="mt-10 grid grid-cols-1 gap-6 lg:grid-cols-[1.55fr_1fr] lg:gap-8">
+        <div className="mt-6 grid grid-cols-1 gap-6 lg:grid-cols-[1.55fr_1fr] lg:gap-8">
           {/* Video card */}
           <div className="relative overflow-hidden rounded-2xl bg-[#0e1a2b] shadow-xl ring-1 ring-black/5">
-            {/* Thumbnail / placeholder area */}
+            {/* Thumbnail */}
             <div className="relative aspect-[16/10] w-full sm:aspect-[16/9]">
-              {videoThumbnailUrl ? (
-                <img
-                  src={videoThumbnailUrl}
-                  alt="MSME Director sharing an official video message"
-                  className="h-full w-full object-cover"
-                />
-              ) : (
-                <div className="flex h-full w-full items-center justify-center bg-gradient-to-br from-[#1b2a40] via-[#22344d] to-[#0e1a2b]">
-                  <span className="text-xs font-medium tracking-wide text-white/30">
-                    Video thumbnail
-                  </span>
-                </div>
-              )}
+              <img
+                src={officialMessageImg.src}
+                alt="MSME Director sharing an official video message"
+                className="h-full w-full object-cover"
+              />
 
               {/* Duration badge */}
               <div className="absolute left-3 top-3 flex items-center gap-1.5 rounded-full bg-[#1f4d2c]/90 px-3 py-1.5 text-[11px] font-semibold text-white shadow-sm backdrop-blur-sm sm:left-4 sm:top-4 sm:text-xs">
@@ -154,20 +147,24 @@ export default function OfficialMessageBanner({
           {/* Quote card */}
           <div className="relative flex flex-col overflow-hidden rounded-2xl border border-[#e7e1d3] bg-white p-6 shadow-sm sm:p-7">
             {/* Quote icon */}
-            <div className="flex h-11 w-11 items-center justify-center rounded-full bg-[#1f4d2c]">
+            <div className="flex flex-1 gap-4">
+            <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-[#1f4d2c]">
               <Quote className="h-5 w-5 fill-white text-white" aria-hidden="true" />
             </div>
+<div>
 
-            <h2 className="mt-4 text-center text-base font-extrabold tracking-wide text-[#16233a] sm:text-left sm:text-lg">
+            <h2 className="text-base font-extrabold tracking-wide text-[#16233a] sm:text-lg">
               MESSAGE FROM MSME LEADERSHIP
             </h2>
-            <div className="mt-2 flex items-center gap-2 sm:justify-start" aria-hidden="true">
+            <div className="mt-1 flex items-center gap-2 sm:justify-start" aria-hidden="true">
               <span className="h-px w-10 bg-[#2f6b3a]/40" />
               <Leaf className="h-3.5 w-3.5 -rotate-45 text-[#2f6b3a]" />
               <span className="h-px w-10 bg-[#2f6b3a]/40" />
-            </div>
+</div>
+</div>
+</div>
 
-            <blockquote className="mt-4 flex-1 text-sm leading-relaxed text-[#3d4a5c] sm:text-[15px]">
+            <blockquote className="mt-3 flex-1 text-sm leading-relaxed text-[#3d4a5c] sm:text-[15px]">
               “Government of India is committed to empowering MSMEs and
               creating more opportunities for their growth. We appreciate
               initiatives like{" "}
@@ -209,18 +206,18 @@ export default function OfficialMessageBanner({
         {/* Feature strip */}
         <div className="mt-8 grid grid-cols-1 gap-4 rounded-2xl border border-[#e7e1d3] bg-white/60 p-5 sm:grid-cols-3 sm:gap-6 sm:p-6">
           <FeatureItem
-            icon={<ShieldCheck className="h-5 w-5 text-[#1f4d2c]" aria-hidden="true" />}
+            icon={<ShieldCheck className="h-7 w-7 text-[#1f4d2c]" aria-hidden="true" />}
             title="Official Message"
             description="Direct message from MSME Leadership"
           />
           <FeatureItem
-            icon={<Users className="h-5 w-5 text-[#1f4d2c]" aria-hidden="true" />}
+            icon={<Users className="h-7 w-7 text-[#1f4d2c]" aria-hidden="true" />}
             title="For All MSMEs"
             description="Encouragement for every entrepreneur across India"
             className="sm:border-x sm:border-[#e7e1d3] sm:px-6"
           />
           <FeatureItem
-            icon={<Award className="h-5 w-5 text-[#1f4d2c]" aria-hidden="true" />}
+            icon={<Award className="h-7 w-7 text-[#1f4d2c]" aria-hidden="true" />}
             title="Government Support"
             description="Strong support for growth, competitiveness & global reach"
           />
@@ -243,7 +240,7 @@ function FeatureItem({
 }) {
   return (
     <div className={`flex items-start gap-3 ${className}`}>
-      <div className="flex h-11 w-11 flex-shrink-0 items-center justify-center rounded-full bg-[#eaf2e6]">
+      <div className="flex h-14 w-14 flex-shrink-0 items-center justify-center rounded-full bg-[#eaf2e6]">
         {icon}
       </div>
       <div>

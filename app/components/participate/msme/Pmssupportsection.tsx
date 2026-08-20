@@ -15,6 +15,8 @@ import {
   Phone,
   ChevronRight,
 } from "lucide-react";
+import howToApplyImg from "@/app/assets/participate/msme/how_to_apply.png";
+import everySupportImg from "@/app/assets/participate/msme/every_support.png";
 
 /**
  * Section 05 — "How To Apply & Get PMS Support"
@@ -132,12 +134,10 @@ export default function PmsSupportSection() {
           {/* Right: hero photo + expo badge */}
           <div className="relative overflow-hidden rounded-2xl sm:rounded-3xl">
             <img
-              src="/images/pms-support-hero.jpg"
+              src={howToApplyImg.src}
               alt="Bharat Organic Expo team assisting an exhibitor with the PMS application process"
               className="h-64 w-full object-cover sm:h-80 lg:h-[26rem]"
               loading="lazy"
-              width={1200}
-              height={800}
             />
 
             {/* Expo brand badge */}
@@ -199,17 +199,18 @@ export default function PmsSupportSection() {
           {/* Expert support at every step */}
           <div className="flex overflow-hidden rounded-2xl bg-emerald-950 text-white">
             <img
-              src="/images/pms-support-agent.jpg"
+              src={everySupportImg.src}
               alt="Bharat Organic Expo support specialist ready to help with PMS applications"
               className="h-full w-28 shrink-0 object-cover sm:w-36"
               loading="lazy"
-              width={200}
-              height={280}
             />
             <div className="flex flex-col justify-center gap-2 p-4 sm:p-5">
-              <span className="flex h-9 w-9 items-center justify-center rounded-full bg-white/10">
-                <Headphones className="h-5 w-5" aria-hidden="true" />
+              <div className="flex gap-2">
+              <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-white/10">
+                <Headphones className="h-6 w-6" aria-hidden="true" />
               </span>
+              <div>
+
               <h3 className="text-sm font-extrabold uppercase leading-tight sm:text-base">
                 Expert Support at Every Step
               </h3>
@@ -217,14 +218,19 @@ export default function PmsSupportSection() {
                 Our PMS experts guide you through documentation, submissions and
                 follow-ups—so you get the support you deserve.
               </p>
+              </div>
+              </div>
             </div>
           </div>
 
           {/* Have questions / contact */}
           <div className="flex flex-col gap-3 rounded-2xl bg-emerald-50 p-5 sm:p-6">
-            <span className="flex h-9 w-9 items-center justify-center rounded-full bg-emerald-100">
-              <Users className="h-5 w-5 text-emerald-800" aria-hidden="true" />
+            <div className="flex flex-row gap-2">
+            <span className="flex h-12 w-12 items-center justify-center rounded-full bg-emerald-100">
+              <Users className="h-6 w-6 text-emerald-800" aria-hidden="true" />
             </span>
+            <div>
+
             <h3 className="text-sm font-extrabold uppercase leading-tight text-emerald-950 sm:text-base">
               Have Questions?
             </h3>
@@ -232,17 +238,18 @@ export default function PmsSupportSection() {
               Our team is here to help you with eligibility, documents and the
               PMS process.
             </p>
-
+            </div>
+</div>
             <address className="mt-1 flex flex-col gap-1.5 text-xs not-italic text-emerald-950 sm:text-sm">
               <a
                 href="mailto:msme.support@bharatorganicexpo.in"
                 className="flex items-center gap-2 hover:underline"
               >
-                <Mail className="h-4 w-4 shrink-0 text-emerald-800" aria-hidden="true" />
+                <Mail className="h-5 w-5 shrink-0 text-emerald-800" aria-hidden="true" />
                 msme.support@bharatorganicexpo.in
               </a>
               <a href="tel:+911143083738" className="flex items-center gap-2 hover:underline">
-                <Phone className="h-4 w-4 shrink-0 text-emerald-800" aria-hidden="true" />
+                <Phone className="h-5 w-5 shrink-0 text-emerald-800" aria-hidden="true" />
                 +91 11 4308 3738
               </a>
             </address>
@@ -250,17 +257,19 @@ export default function PmsSupportSection() {
 
           {/* Ready to apply / CTA */}
           <div className="flex flex-col justify-between gap-4 rounded-2xl bg-emerald-950 p-5 text-white sm:p-6">
-            <div className="flex flex-col gap-2">
-              <span className="flex h-9 w-9 items-center justify-center rounded-full bg-white/10">
-                <FileText className="h-5 w-5" aria-hidden="true" />
+            <div className="flex items-start gap-4">
+              <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-white/10">
+                <FileText className="h-6 w-6" aria-hidden="true" />
               </span>
-              <h3 className="text-sm font-extrabold uppercase leading-tight sm:text-base">
-                Ready to Apply?
-              </h3>
-              <p className="text-xs leading-relaxed text-emerald-50/80 sm:text-sm">
-                Take the first step towards financial support and grow your
-                business with us.
-              </p>
+              <div className="flex flex-col gap-2">
+                <h3 className="text-sm font-extrabold uppercase leading-tight sm:text-base">
+                  Ready to Apply?
+                </h3>
+                <p className="text-xs leading-relaxed text-emerald-50/80 sm:text-sm">
+                  Take the first step towards financial support and grow your
+                  business with us.
+                </p>
+              </div>
             </div>
 
             <button

@@ -13,6 +13,8 @@ import {
   Target,
   ChevronRight,
 } from "lucide-react";
+import financialImg from "@/app/assets/participate/msme/financial_assitance.png";
+import howMuchImg from "@/app/assets/participate/msme/how_much_support.png";
 
 /**
  * PMSFinancialAssistanceBanner
@@ -89,12 +91,15 @@ const PMSFinancialAssistanceBanner: FC = () => {
       {/* ============ Hero ============ */}
       <div className="mx-auto w-full px-4 md:px-11">
       <div className="relative flex flex-col lg:flex-row">
-        {/* Left: hero photo placeholder + empowering badge */}
+        {/* Left: hero photo + empowering badge */}
         <div
-          className="bg-hero-photo relative min-h-[280px] w-full bg-[#0B5D34]/10 bg-cover bg-center sm:min-h-[360px] lg:min-h-[560px] lg:w-[36%]"
-          role="img"
-          aria-label="Two professionals reviewing the Bharat Organic Expo 2027 brochure"
+          className="relative min-h-[280px] w-full sm:min-h-[360px] lg:min-h-[560px] lg:w-[36%]"
         >
+          <img
+            src={howMuchImg.src}
+            alt="Financial assistance for MSEs"
+            className="absolute inset-0 h-full w-full object-cover"
+          />
           {/* Gradient overlay for badge legibility */}
           <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/10 via-transparent to-transparent" />
 
@@ -221,7 +226,7 @@ const PMSFinancialAssistanceBanner: FC = () => {
       {/* ============ Footer strip ============ */}
       <div className="relative px-4 pb-8 pt-2 md:px-11">
         <div className="relative overflow-hidden rounded-2xl bg-[#F1EEE3]">
-          <div className="grid grid-cols-1 items-center gap-6 px-6 py-8 sm:px-10 sm:py-9 md:grid-cols-[1fr_auto_1fr_auto] md:gap-8">
+          <div className="flex flex-col items-center justify-between gap-6 px-6 py-8 sm:px-10 sm:py-9 md:flex-row md:gap-8">
             {/* Important note */}
             <div className="flex items-start gap-4">
               <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-[#0B5D34]">
@@ -236,12 +241,6 @@ const PMSFinancialAssistanceBanner: FC = () => {
                 event/component, documentation and final sanction.
               </p>
             </div>
-
-            {/* Divider */}
-            <span
-              aria-hidden="true"
-              className="hidden h-20 w-px border-l border-dashed border-[#0B5D34]/30 md:block"
-            />
 
             {/* Government support */}
             <div className="flex items-center gap-4">
@@ -259,16 +258,18 @@ const PMSFinancialAssistanceBanner: FC = () => {
               </p>
             </div>
 
-            {/* Plant photo placeholder */}
-            <div
-              className="bg-plant-photo hidden h-24 w-full rounded-xl bg-[#0B5D34]/10 bg-cover bg-center md:block md:h-full md:w-40"
-              role="img"
-              aria-label="Young plant sprouting from soil, symbolising sustainable growth"
-            />
+            {/* Plant photo */}
+            <div className="shrink-0 overflow-hidden rounded-xl">
+              <img
+                src={financialImg.src}
+                alt="Government support for sustainable business growth"
+                className="h-28 w-36 object-cover sm:h-32 sm:w-44"
+              />
+            </div>
           </div>
 
-          {/* CTA button, overlapping top edge of the strip */}
-          <div className="absolute left-1/2 top-0 w-full max-w-xs -translate-x-1/2 -translate-y-1/2 px-4 sm:max-w-sm">
+          {/* CTA button, overlapping bottom edge of the section */}
+          <div className="absolute bottom-0 left-1/2 z-20 w-full max-w-xs -translate-x-1/2 translate-y-1/2 px-4 sm:max-w-sm">
             <a
               href="#eligibility"
               className="flex w-full items-center justify-center gap-2.5 rounded-full bg-[#0B5D34] px-6 py-4 text-sm font-bold uppercase tracking-wide text-white shadow-lg shadow-[#0B5D34]/30 transition-colors hover:bg-[#0A4E2C] sm:text-base"

@@ -87,7 +87,7 @@ export default function WhyParticipateSection() {
               className="flex flex-col items-center overflow-hidden rounded-2xl border border-emerald-900/5 bg-white text-center shadow-[0_8px_30px_-12px_rgba(15,23,42,0.15)] transition-transform duration-300 hover:-translate-y-1"
             >
               <div className="flex flex-1 flex-col items-center px-6 pb-8 pt-9">
-                <div className="mb-5 flex h-20 w-20 items-center justify-center rounded-full border border-emerald-100 bg-emerald-50">
+                <div className="mb-5 flex h-24 w-24 items-center justify-center rounded-full border border-emerald-100 bg-emerald-50">
                   {feature.icon}
                 </div>
                 <h3 className="text-lg font-bold text-slate-900 sm:text-xl">
@@ -120,7 +120,7 @@ export default function WhyParticipateSection() {
         </a>
 
         {/* Footnote */}
-        <p className="mt-6 w-full text-left text-xs italic text-slate-500 sm:text-sm">
+        <p className="mt-6 w-full text-left text-xs text-slate-500 sm:text-sm">
           *Subject to approval under PMS Scheme guidelines.
         </p>
       </div>
