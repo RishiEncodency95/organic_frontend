@@ -56,8 +56,8 @@ export const eventApi = {
 };
 
 export const settingsApi = { 
-    get: async () => apiCall('/settings?website=9th%20IHWE'),
-    getSettings: async () => apiCall('/settings?website=9th%20IHWE')
+    get: async () => apiCall(`/settings?website=Organicexpo}`),
+    getSettings: async () => apiCall(`/settings?website=Organicexpo}`)
 };
 
 export const termsApi = { 
@@ -71,11 +71,11 @@ export const publicApi = {
 };
 
 export const verifyApi = {
-    sendEmailOtp: async (email: string, profile: string = 'SPEAKER') => {
+    sendEmailOtp: async (email: string, profile: string = 'SPEAKER', name: string = '', eventName: string = process.env.NEXT_PUBLIC_EVENT_NAME || 'BOE2026') => {
         const response = await fetch(`${API_URL}/verify/send-email-otp`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ email, profile })
+            body: JSON.stringify({ email, profile, name: name || null, eventName })
         });
         return await response.json();
     },
@@ -87,11 +87,11 @@ export const verifyApi = {
         });
         return await response.json();
     },
-    sendPhoneOtp: async (phone: string, profile: string = 'CONTACT', name: string = '') => {
+    sendPhoneOtp: async (phone: string, profile: string = 'CONTACT', name: string = '', eventName: string = process.env.NEXT_PUBLIC_EVENT_NAME || 'BOE2026') => {
         const response = await fetch(`${API_URL}/verify/send-phone-otp`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ phone, profile, name: name || null })
+            body: JSON.stringify({ phone, profile, name: name || null, eventName })
         });
         return await response.json();
     },
