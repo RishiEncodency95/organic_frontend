@@ -73,7 +73,7 @@ const AwardsGrandAwards = () => {
               {GRAND_AWARDS.map((g, i) => (
                 <Reveal key={g.label} delay={i * 70}>
                   <div
-                    className={`group flex h-full flex-col items-center gap-2 border-r border-[#fed7aa] p-4 text-center font-inter transition-all duration-300 hover:-translate-y-1 hover:border-[#f97316]`}
+                    className={`group flex h-full flex-col items-center gap-2 ${i < GRAND_AWARDS.length - 1 ? "border-r border-[#fed7aa]" : ""} p-4 pr-5 text-center font-inter transition-all duration-300 hover:-translate-y-1 ${i < GRAND_AWARDS.length - 1 ? "hover:border-[#f97316]" : ""}`}
                   >
                     <Image
                       src={g.icon}

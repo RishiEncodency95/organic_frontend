@@ -5,6 +5,8 @@ import {
   ClipboardList,
   ClipboardCheck,
   Users,
+  Building2,
+  Map,
   Award,
   Medal,
   Star,
@@ -28,6 +30,7 @@ import nominationBg from "../../assets/awards/nomination.webp";
 import bharatOrganicLogo from "../../assets/awards/bharat_organic.webp";
 import beTheLeft from "../../assets/exhibitors/be_the_left.png";
 import beTheRight from "../../assets/exhibitors/be_the_right.png";
+import SectionContainer from "@/app/components/layout/SectionContainer";
 
 interface FormState {
   applicantType: string;
@@ -99,27 +102,28 @@ function Reveal({
   const [visible, setVisible] = useState(false);
 
   useEffect(() => {
-    const el = ref.current;
-    if (!el) return;
-    const io = new IntersectionObserver(
+    const element = ref.current;
+    if (!element) return;
+    const observer = new IntersectionObserver(
       ([entry]) => {
         if (entry.isIntersecting) {
           setVisible(true);
-          io.disconnect();
+          observer.disconnect();
         }
       },
       { threshold: 0.15 }
     );
-    io.observe(el);
-    return () => io.disconnect();
+    observer.observe(element);
+    return () => observer.disconnect();
   }, []);
 
   return (
     <div
       ref={ref}
       style={{ transitionDelay: visible ? `${delay}ms` : "0ms" }}
-      className={`transition-all duration-700 ease-out will-change-transform ${visible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6"
-        } ${className}`}
+      className={`transition-all duration-700 ease-out will-change-transform ${
+        visible ? "opacity-100 scale-100" : "opacity-0 scale-95"
+      } ${className}`}
     >
       {children}
     </div>
@@ -156,7 +160,7 @@ function Field({
         placeholder={placeholder}
         value={value}
         onChange={(e) => onChange(e.target.value)}
-        className="w-full rounded-md border border-emerald-900/15 bg-white px-3 py-2 text-sm text-emerald-950 placeholder:text-emerald-900/35 outline-none transition-all duration-200 focus:border-amber-500 focus:ring-2 focus:ring-amber-400/30 hover:border-emerald-900/30"
+        className="w-full rounded-md border border-emerald-900/15 bg-white px-3 py-2 text-sm text-emerald-950 placeholder:text-black outline-none transition-all duration-200 focus:border-amber-500 focus:ring-2 focus:ring-amber-400/30 hover:border-emerald-900/30"
       />
     </div>
   );
@@ -185,7 +189,7 @@ function Select({
       <select
         value={value}
         onChange={(e) => onChange(e.target.value)}
-        className="w-full rounded-md border border-emerald-900/15 bg-white px-3 py-2 text-sm text-emerald-900/40 outline-none transition-all duration-200 focus:border-amber-500 focus:ring-2 focus:ring-amber-400/30 hover:border-emerald-900/30"
+        className="w-full rounded-md border border-emerald-900/15 bg-white px-3 py-2 text-sm text-black outline-none transition-all duration-200 focus:border-amber-500 focus:ring-2 focus:ring-amber-400/30 hover:border-emerald-900/30"
       >
         <option value="">{placeholder}</option>
         {options.map((opt) => (
@@ -223,7 +227,7 @@ function TextArea({
         placeholder={placeholder}
         value={value}
         onChange={(e) => onChange(e.target.value)}
-        className="w-full resize-none rounded-md border border-emerald-900/15 bg-white px-3 py-2 text-sm text-emerald-950 placeholder:text-emerald-900/35 outline-none transition-all duration-200 focus:border-amber-500 focus:ring-2 focus:ring-amber-400/30 hover:border-emerald-900/30"
+        className="w-full resize-none rounded-md border border-emerald-900/15 bg-white px-3 py-2 text-sm text-emerald-950 placeholder:text-black outline-none transition-all duration-200 focus:border-amber-500 focus:ring-2 focus:ring-amber-400/30 hover:border-emerald-900/30"
       />
     </div>
   );
@@ -244,12 +248,12 @@ function UploadRow({
     <div>
       <div className="mb-1">
         <p className="text-[13px] font-medium text-emerald-950">{label}</p>
-        <p className="text-[11px] text-emerald-950/50">{subLabel}</p>
+        <p className="text-[11px] text-black">{subLabel}</p>
       </div>
-      <label className="flex cursor-pointer items-center gap-2 rounded-md border border-dashed border-amber-500/50 bg-amber-50 px-3 py-2 text-xs text-emerald-950/70 transition-colors duration-200 hover:bg-amber-100">
+      <label className="flex cursor-pointer items-center gap-2 rounded-md border border-dashed border-amber-500/50 bg-amber-50 px-3 py-2 text-xs text-black transition-colors duration-200 hover:bg-amber-100">
         <Upload className="h-4 w-4 shrink-0 text-amber-600" />
         Upload File
-        <span className="truncate text-emerald-950/40">
+        <span className="truncate text-black">
           {fileName || "No file chosen"}
         </span>
         <input
@@ -325,6 +329,40 @@ const processSteps = [
     Icon: Trophy,
   },
 ];
+
+const bannerStats = [
+  { value: "200+", label: "EXHIBITORS", icon: Building2 },
+  { value: "8,000+", label: "TRADE VISITORS", icon: Users },
+  { value: "5,000 Sqm", label: "EXHIBITION AREA", icon: Map },
+  { value: "10+ Years", label: "PROVEN EXPERIENCE", icon: Award },
+];
+
+function StatCounter({ value }: { value: string }) {
+  const match = value.match(/^([\d,]+)(.*)$/);
+  const target = match ? Number(match[1].replace(/,/g, "")) : 0;
+  const suffix = match?.[2] || "";
+  const [count, setCount] = useState(0);
+
+  useEffect(() => {
+    if (!match) return;
+
+    const duration = 1800;
+    const startTime = performance.now();
+    let frameId: number;
+
+    const animateCount = (time: number) => {
+      const progress = Math.min((time - startTime) / duration, 1);
+      const easedProgress = 1 - Math.pow(1 - progress, 3);
+      setCount(Math.floor(target * easedProgress));
+      if (progress < 1) frameId = requestAnimationFrame(animateCount);
+    };
+
+    frameId = requestAnimationFrame(animateCount);
+    return () => cancelAnimationFrame(frameId);
+  }, [target]);
+
+  return <>{count.toLocaleString()}{suffix}</>;
+}
 
 const APPLICANT_TYPES = ["Individual", "Organization", "Startup"];
 
@@ -430,9 +468,9 @@ export default function BharatOrganicAwards() {
   }
 
   return (
-    <div className="w-full min-h-screen overflow-x-clip bg-[#f7f5ec] font-sans">
+    <div className="w-full overflow-x-hidden bg-[#f7f5ec] font-sans">
       {/* ================= HERO ================= */}
-      <section className="relative flex w-full items-center overflow-hidden bg-[#f7f5ec]">
+      <section className="relative flex h-[68vh] min-h-[400px] w-full items-center overflow-hidden bg-[#f7f5ec] pt-3 font-inter md:h-[72vh] md:pt-5 lg:h-[78vh] border-b-4 border-[#ea580c] pb-4 md:pb-6">
         {/* full-width background image */}
         <div className="absolute inset-0 z-0">
           <img
@@ -445,37 +483,38 @@ export default function BharatOrganicAwards() {
         <Leaf className="pointer-events-none absolute -left-4 top-6 h-16 w-16 -rotate-12 text-lime-700/20 animate-[bounce_6s_ease-in-out_infinite]" />
         <Leaf className="pointer-events-none absolute right-10 bottom-4 hidden h-20 w-20 rotate-45 text-lime-300/10 sm:block" />
 
-        <div className="relative z-20 container mx-auto max-w-[1400px] px-6 py-14 sm:py-16 md:py-20">
-          <div className="max-w-xl">
-            <img
+        <div className="relative z-20 w-full px-4 py-1 md:px-11 md:py-2">
+          <div className="max-w-2xl text-left">
+            {/* <img
               src={bharatOrganicLogo.src}
               alt="Bharat Organic Logo"
-              className="mb-4 h-16 w-auto object-contain md:h-20"
-            />
+              className="mb-3 h-14 w-auto object-contain md:mb-4 md:h-16"
+            /> */}
 
-            <h1 className="text-[42px] font-black uppercase leading-[1.05] tracking-tight text-[#0b2912] sm:text-[52px] md:text-[62px] lg:text-[72px]">
-              <span className="text-[26px] sm:text-[34px] md:text-[42px] lg:text-[50px]">Bharat Organic</span>
-              <br />
-              Excellence
-              <br />
-              <span className="text-[#F2B40E]">Awards 2027</span>
+            <h1 className="mb-3 font-poppins text-4xl font-semibold uppercase leading-[1.02] tracking-tight text-[#0b3b18] sm:text-5xl md:text-[56px] lg:text-[66px]" style={{ textShadow: "1px 1px 2px rgba(0,0,0,0.2)" }}>
+              <span className="block text-[26px] font-semibold tracking-tight sm:text-[26px] md:text-[26px] lg:text-[36px]">Bharat Organic</span>
+              <span className="block font-semibold tracking-tight">Excellence</span>
+              <span className="block font-semibold tracking-tight text-[#ea580c]">Awards 2027</span>
             </h1>
 
-            <p className="mt-5 flex flex-wrap items-center gap-x-3 gap-y-1 text-[14px] font-bold uppercase tracking-wider text-[#0b2912] sm:text-[15px]">
+            <p className="mb-2.5 flex flex-wrap items-center gap-x-2.5 gap-y-1 text-xs font-bold uppercase tracking-wider text-[#0b3b18] sm:text-[13.5px]">
               <span>Celebrating Excellence</span>
-              <span className="h-2 w-2 rounded-full bg-[#F2B40E]" />
+              <span className="text-sm text-[#ea580c]">•</span>
               <span>Innovation</span>
-              <span className="h-2 w-2 rounded-full bg-[#F2B40E]" />
+              <span className="text-sm text-[#ea580c]">•</span>
               <span>Sustainability</span>
             </p>
+            <p className="text-black max-w-xl font-semibold">
+              Honouring the changemakers, organizations and innovations during india's organic, natural and sustainable future.
+            </p>
 
-            <div className="mt-8 flex flex-wrap items-center gap-4">
+            <div className="mt-5 flex flex-wrap items-center gap-3">
               <button
                 onClick={() => {
                   const formSection = document.getElementById("nomination-form");
                   if (formSection) formSection.scrollIntoView({ behavior: "smooth", block: "start" });
                 }}
-                className="group inline-flex items-center gap-2.5 rounded-lg bg-[#0b2912] px-6 py-3 text-[12px] font-bold uppercase tracking-wider text-white shadow-lg ring-1 ring-white/20 transition-all duration-300 hover:-translate-y-0.5 hover:bg-[#123d1c] hover:shadow-xl"
+                className="group inline-flex items-center gap-2 rounded-full bg-[#0b3b18] px-4 py-2.5 text-[10px] font-semibold uppercase tracking-widest text-white shadow-lg ring-1 ring-white/20 transition-all duration-300 hover:-translate-y-0.5 hover:bg-[#123d1c] hover:shadow-xl"
               >
                 <Award className="h-4 w-4 text-[#F2B40E]" />
                 Submit Nomination
@@ -483,7 +522,7 @@ export default function BharatOrganicAwards() {
               </button>
               <a
                 href="/awards"
-                className="group inline-flex items-center gap-2.5 rounded-lg border-2 border-[#0b2912] bg-white px-6 py-2.5 text-[12px] font-bold uppercase tracking-wider text-[#0b2912] shadow-lg transition-all duration-300 hover:-translate-y-0.5 hover:bg-[#f0f7f0] hover:shadow-xl"
+                className="group inline-flex items-center gap-2 rounded-full border border-[#0b3b18]/30 bg-white/90 px-4 py-2.5 text-[10px] font-semibold uppercase tracking-widest text-[#0b3b18] shadow-sm transition-all duration-300 hover:-translate-y-0.5 hover:bg-[#0b3b18] hover:text-white hover:shadow-lg"
               >
                 <Medal className="h-4 w-4 text-[#0b2912]" />
                 View Categories
@@ -491,60 +530,84 @@ export default function BharatOrganicAwards() {
               </a>
             </div>
 
-            <div className="mt-8 flex flex-wrap items-center gap-x-5 gap-y-4 text-[15px] font-medium text-[#0b2912] sm:gap-x-8">
-              <span className="flex items-center gap-3">
-                <span className="flex h-11 w-11 items-center justify-center rounded-full border-2 border-[#0b2912] bg-white">
-                  <Calendar className="h-5 w-5 text-[#F2B40E]" />
-                </span>
-                <span className="flex flex-col leading-tight">
-                  <span className="text-lg font-bold">31 December 2026</span>
-                  <span className="uppercase tracking-wider">Nominations Close</span>
-                </span>
-              </span>
-              <span className="hidden h-10 w-px bg-[#0b2912]/20 sm:block" />
-              <span className="flex items-center gap-3">
-                <span className="flex h-11 w-11 items-center justify-center rounded-full border-2 border-[#0b2912] bg-white">
-                  <MapPin className="h-5 w-5 text-[#F2B40E]" />
-                </span>
-                <span className="flex flex-col leading-tight">
-                  <span className="text-lg font-bold">19 – 21 February 2027</span>
-                  <span className="uppercase tracking-wider">Awards Ceremony</span>
-                </span>
-              </span>
+            <div className="mt-5 flex flex-col items-start gap-3 text-xs font-bold text-[#4B1426] sm:flex-row sm:items-center sm:gap-4 sm:text-sm md:text-[14px]">
+              <div className="flex items-center gap-3">
+                <Calendar className="h-[25px] w-[25px] shrink-0 text-emerald-900" />
+                <div>
+                  
+                <p>19 - 21</p>
+                <p className="uppercase">February 2027</p>
+                </div>
+              </div>
+              <span className="hidden h-4 w-px bg-[#4B1426]/30 sm:block" />
+              <div className="flex items-center gap-3">
+                <MapPin className="h-[25px] w-[25px] shrink-0 text-emerald-900" />
+                <div>
+                  
+                <p>Hall 12, Bharat Mandapam</p>
+                <p className="uppercase">PRAGATI MAIDAN, NEW DELHI, INDIA</p>
+                </div>
+              </div>
             </div>
+
           </div>
         </div>
       </section>
 
+      <div className="relative z-20 -mt-6 font-inter md:-mt-8">
+        <SectionContainer>
+          <div className="relative overflow-hidden rounded-2xl border border-white/10 bg-[#1b5e20] p-0.5 shadow-[0_8px_20px_-10px_rgba(0,0,0,0.3)] md:px-3 md:py-2">
+            <div className="grid grid-cols-2 items-center justify-center gap-x-2 gap-y-3 sm:grid-cols-4 md:flex md:flex-nowrap md:justify-between md:gap-0">
+              {bannerStats.map(({ value, label, icon: Icon }, index) => (
+                <React.Fragment key={label}>
+                  <div className="group flex flex-1 flex-col items-center py-1 text-center">
+                    <Icon className="mb-1 h-4 w-4 stroke-[1.75] text-white md:h-5 md:w-5" />
+                    <h4 className="mb-0.5 font-inter text-[11px] font-semibold leading-none text-white sm:text-[13px] md:text-sm">
+                      <StatCounter value={value} />
+                    </h4>
+                    <p className="mt-0.5 font-inter text-[8px] font-bold uppercase leading-tight tracking-widest text-[#facc15] md:text-[9px]">
+                      {label}
+                    </p>
+                  </div>
+                  {index < bannerStats.length - 1 && (
+                    <div className="hidden h-6 w-px bg-white/20 md:block" />
+                  )}
+                </React.Fragment>
+              ))}
+            </div>
+          </div>
+        </SectionContainer>
+      </div>
+
       {/* ================= PROCESS ================= */}
-      <section className="container mx-auto max-w-[1400px] px-6 py-2 md:py-4">
+      <section className="w-full px-4 py-2 md:px-11 md:py-4 my-4">
         <Reveal>
           <div className="mb-6 flex items-center justify-center gap-2 text-emerald-900">
             <Sprout className="h-4 w-4 text-lime-600" />
-            <h2 className="text-sm font-bold tracking-widest">
+            <h2 className="text-base font-bold tracking-widest sm:text-lg">
               THE AWARD PROCESS
             </h2>
             <Sprout className="h-4 w-4 -scale-x-100 text-lime-600" />
           </div>
         </Reveal>
 
-        <div className="grid grid-cols-3 gap-x-2 gap-y-6 sm:grid-cols-6 sm:gap-x-1">
+        <div className="grid grid-cols-2 sm:grid-cols-3 gap-x-2 gap-y-6 md:grid-cols-6 sm:gap-x-8">
           {processSteps.map((s, i) => (
             <Reveal key={s.n} delay={i * 100}>
-              <div className="group flex flex-col items-center text-center">
+              <div className="group relative flex flex-col items-center text-center">
                 <div className="relative flex h-14 w-14 items-center justify-center rounded-full border-2 border-lime-600/40 bg-lime-50 transition-all duration-300 group-hover:border-lime-600 group-hover:bg-lime-100 group-hover:shadow-lg group-hover:shadow-lime-600/20 group-hover:-translate-y-1">
                   <s.Icon className="h-6 w-6 text-emerald-800 transition-transform duration-300 group-hover:scale-110" />
-                  {i < processSteps.length - 1 && (
-                    <span className="absolute left-full top-1/2 hidden h-px w-full -translate-y-1/2 border-t-2 border-dashed border-lime-600/40 sm:block" />
-                  )}
                 </div>
+                {i < processSteps.length - 1 && (
+                  <ArrowRight className="absolute left-[calc(100%+1rem)] top-7 hidden h-5 w-5 -translate-y-1/2 text-emerald-800/50 sm:block" />
+                )}
                 <p className="mt-2 text-[11px] font-bold text-amber-600">
                   {s.n}
                 </p>
-                <p className="text-[11px] font-bold uppercase text-emerald-950">
+                <p className="text-xs font-bold uppercase leading-tight text-emerald-950 sm:text-sm">
                   {s.title}
                 </p>
-                <p className="mt-0.5 text-[10px] leading-snug text-emerald-950/60">
+                <p className="mt-1 text-xs font-medium leading-relaxed text-emerald-950/70 sm:text-[13px]">
                   {s.desc}
                 </p>
               </div>
@@ -554,18 +617,18 @@ export default function BharatOrganicAwards() {
       </section>
 
       {/* ================= FORM + SIDEBAR ================= */}
-      <section id="nomination-form" className="container mx-auto max-w-[1400px] px-6 py-2 md:py-4 grid grid-cols-1 gap-4 lg:gap-4 lg:grid-cols-[1fr_320px]">
+      <section id="nomination-form" className="w-full px-4 py-2 md:px-11 md:py-4 grid grid-cols-1 gap-4 lg:gap-4 lg:grid-cols-[1fr_320px]">
         {/* ---- Nomination form ---- */}
         <div className="min-w-0">
           <Reveal className="rounded-2xl border border-emerald-900/10 bg-white p-5 shadow-sm">
             <div className="mb-4 flex items-center justify-between">
               <div className="flex items-center gap-2">
-                <ClipboardList className="h-5 w-5 text-emerald-800" />
+                <ClipboardList className="h-7 w-7 text-emerald-800 sm:h-8 sm:w-8" />
                 <div>
-                  <h2 className="text-base font-bold text-emerald-950">
+                  <h2 className="text-lg font-bold text-emerald-950 sm:text-xl">
                     NOMINATION FORM
                   </h2>
-                  <p className="text-xs text-emerald-950/60">
+                  <p className="text-sm text-emerald-950/60">
                     Please fill in the details below to submit your nomination.
                   </p>
                 </div>
@@ -573,8 +636,8 @@ export default function BharatOrganicAwards() {
               <div className="hidden items-center gap-2 sm:flex">
                 <ShieldCheck className="h-6 w-6 text-amber-500" />
                 <div className="flex flex-col leading-tight">
-                  <p className="text-[11px] font-bold text-emerald-950">100%</p>
-                  <p className="text-[8px] text-emerald-950/50">SECURE</p>
+                    <p className="text-sm font-bold text-emerald-950">100%</p>
+                    <p className="text-[10px] font-semibold text-emerald-950/60">SECURE</p>
                 </div>
               </div>
             </div>
@@ -742,7 +805,7 @@ export default function BharatOrganicAwards() {
             {/* 5. Supporting documents */}
             <div className="mt-6">
               <SectionBadge n={5} title="SUPPORTING DOCUMENTS" />
-              <p className="mb-3 text-[11px] text-emerald-950/50">
+              <p className="mb-3 text-[11px] text-black">
                 Upload supporting documents (PDF, DOC, JPG, PNG – Max size 10MB each)
               </p>
               <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
@@ -766,8 +829,8 @@ export default function BharatOrganicAwards() {
                 />
                 <div>
                   <div className="mb-1">
-                    <p className="text-[13px] font-medium text-emerald-950">Social Links</p>
-                    <p className="text-[11px] text-emerald-950/50">Website / Social Links</p>
+                    <p className="text-[13px] font-medium text-black">Social Links</p>
+                    <p className="text-[11px] text-black">Website / Social Links</p>
                   </div>
                   <div className="relative">
                     <Link2 className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-amber-600" />
@@ -776,12 +839,12 @@ export default function BharatOrganicAwards() {
                       placeholder="https://www.example.com"
                       value={form.socialLink}
                       onChange={(e) => update("socialLink", e.target.value)}
-                      className="w-full rounded-md border border-emerald-900/15 bg-white py-2 pl-9 pr-3 text-sm text-emerald-950 placeholder:text-emerald-900/35 outline-none transition-all duration-200 focus:border-amber-500 focus:ring-2 focus:ring-amber-400/30 hover:border-emerald-900/30"
+                      className="w-full rounded-md border border-emerald-900/15 bg-white py-2 pl-9 pr-3 text-sm text-emerald-950 placeholder:text-black outline-none transition-all duration-200 focus:border-amber-500 focus:ring-2 focus:ring-amber-400/30 hover:border-emerald-900/30"
                     />
                   </div>
                 </div>
               </div>
-              <p className="mt-3 text-[11px] italic text-emerald-950/40">
+              <p className="mt-3 text-[11px] italic text-black">
                 You can upload multiple files after submission.
               </p>
             </div>
@@ -789,7 +852,7 @@ export default function BharatOrganicAwards() {
             {/* 6. Declaration */}
             <div className="mt-6">
               <SectionBadge n={6} title="DECLARATION" />
-              <label className="flex items-start gap-2 rounded-md bg-emerald-50/60 p-2.5 text-[11px] text-emerald-950/70 cursor-pointer">
+              <label className="flex items-start gap-2 rounded-md bg-emerald-50/60 p-2.5 text-sm text-black cursor-pointer sm:text-[15px]">
                 <input
                   type="checkbox"
                   checked={form.declaration}
@@ -816,7 +879,7 @@ export default function BharatOrganicAwards() {
                 <Send className="h-4 w-4 transition-transform duration-300 group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
                 {submitting ? "SUBMITTING..." : "SUBMIT NOMINATION"}
               </button>
-              <p className="mt-3 text-[11px] text-emerald-950/50">
+              <p className="mt-3 text-sm text-black sm:text-[15px]">
                 <ShieldCheck className="mr-1 inline h-3.5 w-3.5 text-amber-600" />
                 Your information is secure and will be kept confidential.
               </p>
@@ -939,7 +1002,7 @@ export default function BharatOrganicAwards() {
             aria-hidden="true"
             className="hidden md:block absolute right-0 top-0 h-44 lg:h-52 w-auto z-0"
           />
-          <div className="relative z-10 container mx-auto max-w-[1400px] px-6 py-2 md:py-4 flex flex-col items-center gap-2 text-center sm:flex-row sm:justify-between sm:text-left">
+          <div className="relative z-10 w-full px-4 py-2 md:px-11 md:py-4 flex flex-col items-center gap-2 text-center sm:flex-row sm:justify-between sm:text-left">
             <div>
               <p className="text-sm font-extrabold text-emerald-950">
                 CELEBRATING LEADERS.
