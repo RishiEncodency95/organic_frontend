@@ -80,7 +80,7 @@ const FEATURES: Feature[] = [
 
 export default function ReasonToVisitBanner() {
   return (
-    <section className="relative w-full overflow-hidden bg-[#F8F6F0] px-4 py-6 md:px-11">
+    <section className="relative w-full overflow-hidden bg-[#f0ede0] px-4 py-6 md:px-11">
       <div className="mx-auto w-full">
         {/* ===================== TOP: heading + photo collage ===================== */}
         <div className="grid grid-cols-1 items-center gap-10 lg:grid-cols-2 lg:gap-8">
@@ -142,7 +142,7 @@ export default function ReasonToVisitBanner() {
                 key={feature.id}
                 className="flex flex-col items-center px-2 text-center lg:px-4"
               >
-                <span className="mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-[#EDEBE1] text-[#2F5E2F] sm:h-[4.5rem] sm:w-[4.5rem]">
+                <span className="mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-[#e5e0d0] text-[#2F5E2F] sm:h-[4.5rem] sm:w-[4.5rem]">
                   {feature.icon}
                 </span>
                 <h3 className="text-xs font-semibold uppercase leading-snug text-[#14231A] sm:text-sm">

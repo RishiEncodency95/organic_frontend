@@ -19,7 +19,7 @@ export default function OfficialRecognitionBanner() {
   return (
     <section
       aria-labelledby="official-recognition-heading"
-      className="w-full bg-[#F7F6F1] px-4 py-6 md:px-11"
+      className="w-full bg-[#f0efe5] px-4 py-6 md:px-11"
     >
       <div className="mx-auto w-full">
         <div className="grid grid-cols-1 items-start gap-6 lg:grid-cols-[1.1fr_0.8fr_0.85fr] lg:gap-6">

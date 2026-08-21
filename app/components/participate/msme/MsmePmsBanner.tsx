@@ -128,7 +128,7 @@ export default function MsmePmsBanner({
 
       <section
         ref={sectionRef}
-        className="relative flex items-center pt-3 md:pt-5 pb-4 md:pb-6 overflow-hidden min-h-[380px] sm:min-h-[420px] md:min-h-[450px] lg:min-h-[470px] bg-[#fcfcf0] font-inter border-b-4 border-[#ea580c]"
+        className="relative flex items-center pt-3 md:pt-5 pb-4 md:pb-6 overflow-hidden min-h-[380px] sm:min-h-[420px] md:min-h-[450px] lg:min-h-[470px] bg-[#f5f0e0] font-inter border-b-4 border-[#ea580c]"
       >
         {/* Background Image with Ken Burns zoom */}
         <div className="absolute inset-0 z-0 overflow-hidden">
@@ -166,13 +166,13 @@ export default function MsmePmsBanner({
                 style={{ textShadow: "1px 1px 2px rgba(0,0,0,0.4)" }}
               >
                 <span className="block overflow-hidden">
-                  <span ref={line1Ref} style={{ opacity: 0, display: "block" }} className="text-[#1b5e20] text-2xl sm:text-4xl md:text-5xl lg:text-[64px] font-semibold mb-1">
-                    GOVERNMENT
+                  <span ref={line1Ref} style={{ opacity: 0, display: "block" }} className="text-[#4B1426] text-2xl sm:text-4xl md:text-5xl lg:text-[64px] font-semibold tracking-tight whitespace-nowrap">
+                    MSME PMS <span className="capitalize">Scheme</span>
                   </span>
                 </span>
                 <span className="block overflow-hidden">
-                  <span ref={line2Ref} style={{ opacity: 0, display: "block" }} className="text-[#4B1426] text-2xl sm:text-4xl md:text-5xl lg:text-[64px] font-semibold tracking-tight whitespace-nowrap">
-                    MSME SUBSIDY
+                  <span ref={line2Ref} style={{ opacity: 0, display: "block" }} className="text-[#1b5e20] text-2xl sm:text-4xl md:text-5xl lg:text-[64px] font-semibold mb-1 uppercase">
+                    Exhibition Support
                   </span>
                 </span>
               </h1>
@@ -181,9 +181,11 @@ export default function MsmePmsBanner({
               <p
                 ref={subtitleRef}
                 style={{ opacity: 0 }}
-                className="text-slate-950 text-xs sm:text-sm md:text-base max-w-lg mb-4 md:mb-5 font-bold leading-relaxed text-left"
+                className="text-black text-xs sm:text-sm md:text-base max-w-lg mb-4 md:mb-5 font-bold leading-relaxed text-left"
               >
-                Unlock Government Support for Your Growth. The Procurement & Marketing Support (PMS) Scheme empowers micro and small enterprises by subsidizing stall charges, making participation highly affordable.
+                Eligible Micro & Small Enterprises can explore financial assistance
+                for participation in <span className="text-emerald-900">Bharat Organic Expo 2027</span> under the applicable
+                Procurement & Marketing Support (PMS) Scheme.
               </p>
 
               {/* Date & Venue */}
