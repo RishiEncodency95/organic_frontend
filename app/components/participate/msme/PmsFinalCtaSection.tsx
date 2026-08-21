@@ -185,7 +185,7 @@ const PMSFinalCTASection: React.FC = () => {
               <br />Disclaimer
             </span>
           </div>
-          <p className="border-l-2 border-[#3b8c2a]/30 pl-5 text-[13px] leading-relaxed text-slate-700 sm:text-sm">
+          <p className="border-l-2 border-[#3b8c2a]/30 pl-5 text-[13px] leading-snug text-slate-700 sm:text-sm">
             Bharat Organic Expo / Organiser provides PMS facilitation, preliminary eligibility
             screening, Udyam Registration guidance, documentation and claim-process assistance.
             Event approval does not constitute automatic approval of an individual MSE

@@ -234,7 +234,7 @@ const PMSFinancialAssistanceBanner: FC = () => {
 
       {/* ============ Footer strip ============ */}
       <div className="relative px-4 pb-6 pt-2 md:px-11">
-        <div className="relative overflow-hidden rounded-2xl bg-[#EFF7EE]">
+        <div className="relative overflow-hidden rounded-2xl bg-[#EFF7EE] shadow-lg">
           <div className="flex flex-col items-center gap-4 px-3 py-4 sm:px-4 sm:py-5 md:flex-row md:items-center md:gap-6 md:px-4 md:py-4">
             {/* Important note */}
             <div className="flex w-full items-start gap-3 md:w-[38%]">
