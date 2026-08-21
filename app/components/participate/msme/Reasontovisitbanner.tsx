@@ -136,7 +136,7 @@ export default function ReasonToVisitBanner() {
         </div>
 
         {/* ===================== FEATURES STRIP ===================== */}
-        <div className="mt-12 grid grid-cols-2 gap-x-4 gap-y-10 border-t border-[#E1DDD0] pt-10 sm:grid-cols-3 sm:gap-x-6 lg:mt-16 lg:grid-cols-6 lg:divide-x lg:divide-dashed lg:divide-[#D7D2C2] lg:pt-12">
+        <div className="mt-8 grid grid-cols-2 gap-x-4 gap-y-6 border-t border-[#E1DDD0] pt-6 sm:grid-cols-3 sm:gap-x-6 lg:mt-10 lg:grid-cols-6 lg:divide-x lg:divide-dashed lg:divide-[#D7D2C2] lg:pt-8">
             {FEATURES.map((feature) => (
               <article
                 key={feature.id}
@@ -159,7 +159,7 @@ export default function ReasonToVisitBanner() {
         </div>
 
         {/* ===================== BOTTOM CTA BAR ===================== */}
-        <div className="mt-10 flex flex-col gap-4 rounded-[2rem] border border-[#E1DDD0] bg-white/60 p-4 sm:flex-row sm:items-center sm:justify-center sm:gap-6 sm:p-5 lg:mt-12 gap-4">
+        <div className="mt-6 flex flex-col gap-4 rounded-[2rem] border border-[#E1DDD0] bg-white/60 p-4 sm:flex-row sm:items-center sm:justify-center sm:gap-6 sm:p-5 gap-4">
           <div className="flex flex-col items-center gap-3 sm:flex-row sm:gap-4">
             <span className="flex items-center gap-2 text-sm font-medium text-[#2F5E2F] sm:text-base">
               <Leaf className="h-4 w-4 shrink-0" strokeWidth={2} />

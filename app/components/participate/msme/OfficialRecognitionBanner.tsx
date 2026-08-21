@@ -111,7 +111,7 @@ export default function OfficialRecognitionBanner() {
               </div>
 
               <div className="p-5 sm:p-6">
-                <div className="mb-4 flex items-center gap-3">
+                <div className="mb-4 flex flex-col items-center gap-3 text-center">
                   <Leaf className="h-9 w-9 shrink-0 text-emerald-600" aria-hidden="true" />
                   <p className="text-lg font-semibold leading-tight text-emerald-950">
                     BHARAT
