@@ -37,7 +37,7 @@ export default function OfficialMessageBanner({
   return (
     <section
       aria-labelledby="msme-director-message-heading"
-      className="w-full bg-[#faf6ee] px-4 py-6 md:px-11"
+      className="w-full bg-white px-4 py-6 md:px-11"
     >
       <div className="mx-auto w-full">
         {/* Eyebrow */}
@@ -240,7 +240,7 @@ function FeatureItem({
 }) {
   return (
     <div className={`flex items-start gap-3 ${className}`}>
-      <div className="flex h-14 w-14 flex-shrink-0 items-center justify-center rounded-full bg-[#eaf2e6]">
+      <div className="flex h-14 w-14 flex-shrink-0 items-center justify-center rounded-full bg-[#d5e8cc]">
         {icon}
       </div>
       <div>

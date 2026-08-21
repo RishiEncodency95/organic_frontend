@@ -83,9 +83,9 @@ export default function PmsSupportSection() {
   return (
     <section
       aria-labelledby="pms-support-heading"
-      className="relative w-full bg-gradient-to-br from-green-50 via-emerald-50/60 to-white px-4 py-6 md:px-11"
+      className="relative w-full bg-gradient-to-br from-green-100 via-emerald-100/70 to-white px-4 py-4 md:px-11"
     >
-      <div className="mx-auto flex w-full flex-col gap-8 sm:gap-10 lg:gap-12">
+      <div className="mx-auto flex w-full flex-col gap-6 sm:gap-8 lg:gap-10">
         {/* ---------- Top block: heading + hero image ---------- */}
         <div className="grid grid-cols-1 gap-8 lg:grid-cols-2 lg:items-center lg:gap-10">
           {/* Left: heading + intro + highlight cards */}
@@ -94,7 +94,7 @@ export default function PmsSupportSection() {
 
               <h2
                 id="pms-support-heading"
-                className="text-3xl font-semibold uppercase leading-[1.05] tracking-tight text-emerald-950 sm:text-4xl md:text-5xl"
+                className="text-[32px] font-semibold uppercase leading-[1.05] tracking-tight text-emerald-950"
               >
                 How to Apply
                 <br />
@@ -155,7 +155,7 @@ export default function PmsSupportSection() {
         </div>
 
         {/* ---------- 4-step journey ---------- */}
-        <div className="rounded-3xl bg-emerald-50/80 p-4 ring-1 ring-emerald-900/5 sm:p-5">
+        <div className="rounded-3xl bg-emerald-100/90 p-4 ring-1 ring-emerald-900/5 sm:p-5">
           <div className="mb-5 flex justify-center">
             <h3 className="inline-flex items-center gap-2 rounded-full bg-emerald-950 px-5 py-2 text-xs font-semibold uppercase tracking-widest text-white sm:px-6 sm:text-sm">
               Your 4-Step Journey
@@ -224,7 +224,7 @@ export default function PmsSupportSection() {
           </div>
 
           {/* Have questions / contact */}
-          <div className="flex flex-col gap-3 rounded-2xl bg-emerald-50 p-5 sm:p-6">
+          <div className="flex flex-col gap-3 rounded-2xl bg-emerald-100 p-5 sm:p-6">
             <div className="flex flex-row gap-2">
             <span className="flex h-12 w-12 items-center justify-center rounded-full bg-emerald-100">
               <Users className="h-6 w-6 text-emerald-800" aria-hidden="true" />

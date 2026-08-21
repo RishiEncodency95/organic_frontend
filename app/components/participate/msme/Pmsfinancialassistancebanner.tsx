@@ -56,7 +56,7 @@ const SUPPORT_CARDS: SupportCard[] = [
       "Of eligible built-up space rent assistance subject to PMS provisions.",
     footIcon: Landmark,
     footIconColor: "text-[#0B5D34]",
-    footIconBg: "bg-[#0B5D34]/10",
+    footIconBg: "bg-[#0B5D34]/30",
   },
   {
     icon: Users,
@@ -69,7 +69,7 @@ const SUPPORT_CARDS: SupportCard[] = [
     description: "As per applicable PMS scheme provisions and conditions.",
     footIcon: HandHelping,
     footIconColor: "text-[#C99A3B]",
-    footIconBg: "bg-[#C99A3B]/10",
+    footIconBg: "bg-[#C99A3B]/30",
   },
   {
     icon: ReceiptIndianRupee,
@@ -82,7 +82,7 @@ const SUPPORT_CARDS: SupportCard[] = [
     description: "Other eligible expenses as applicable under current PMS guidelines.",
     footIcon: TrendingUp,
     footIconColor: "text-[#0B5D34]",
-    footIconBg: "bg-[#0B5D34]/10",
+    footIconBg: "bg-[#0B5D34]/30",
   },
 ];
 
@@ -90,7 +90,7 @@ const PMSFinancialAssistanceBanner: FC = () => {
   return (
     <section
       aria-labelledby="pms-banner-heading"
-      className="relative w-full overflow-hidden border-y-4 border-[#0B5D34] bg-[#FAF8F2]"
+      className="relative w-full overflow-hidden border-y-4 border-[#0B5D34] bg-white"
     >
       {/* ============ Hero ============ */}
       <div className="mx-auto w-full px-4 md:px-11">
@@ -106,13 +106,11 @@ const PMSFinancialAssistanceBanner: FC = () => {
           />
           {/* Gradient overlay for badge legibility */}
           <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/10 via-transparent to-transparent" />
-          {/* Left side blur fade */}
-          <div className="pointer-events-none absolute inset-0 bg-gradient-to-r from-[#FAF8F2] via-[#FAF8F2]/60 to-transparent" />
 
           {/* Empowering MSEs badge */}
           <div className="absolute bottom-0 left-0 right-0 flex items-center gap-3 bg-[#0B5D34] px-5 py-4 sm:gap-4 sm:px-8 sm:py-5">
-            <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full border-2 border-[#C99A3B] bg-white sm:h-14 sm:w-14">
-              <Leaf className="h-5 w-5 text-[#0B5D34] sm:h-6 sm:w-6" aria-hidden="true" />
+            <span className="flex h-14 w-14 shrink-0 items-center justify-center rounded-full border-2 border-[#C99A3B] bg-white sm:h-16 sm:w-16">
+              <Leaf className="h-7 w-7 text-[#0B5D34] sm:h-8 sm:w-8" aria-hidden="true" />
             </span>
             <p className="text-sm leading-snug text-white sm:text-base md:text-lg">
               <span className="block font-semibold">Empowering MSEs</span>
@@ -124,7 +122,7 @@ const PMSFinancialAssistanceBanner: FC = () => {
         </div>
 
         {/* Right: heading content */}
-        <div className="relative flex w-full flex-col justify-center px-4 py-6 sm:px-6 sm:py-6 lg:w-[64%] lg:px-10 lg:py-6">
+        <div className="relative flex w-full flex-col justify-center px-4 py-6 sm:px-6 sm:py-6 lg:w-[64%] lg:px-6 lg:py-6">
           {/* Decorative watermark leaves, top-right */}
           <Leaf
             aria-hidden="true"
@@ -132,7 +130,7 @@ const PMSFinancialAssistanceBanner: FC = () => {
           />
 
           {/* Eyebrow */}
-          <div className="mb-4 flex items-center gap-3 sm:mb-5">
+          <div className="mb-2 flex items-center gap-3 sm:mb-3">
             <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-[#0B5D34]/10 sm:h-14 sm:w-14">
               <HandCoins className="h-6 w-6 text-[#0B5D34] sm:h-7 sm:w-7" aria-hidden="true" />
             </span>
@@ -149,7 +147,7 @@ const PMSFinancialAssistanceBanner: FC = () => {
           {/* Heading */}
           <h1
             id="pms-banner-heading"
-            className="text-3xl font-semibold leading-[1.08] tracking-tight sm:text-4xl md:text-5xl lg:text-[2.5rem] xl:text-[3rem]"
+            className="text-[32px] font-semibold leading-[1.08] tracking-tight"
           >
             <span className="block text-[#0B5D34]">How Much Support</span>
             <span className="relative inline-block text-[#152238]">
@@ -175,21 +173,21 @@ const PMSFinancialAssistanceBanner: FC = () => {
           </h1>
 
           {/* Supporting copy */}
-          <p className="mt-6 max-w-2xl text-base leading-relaxed text-[#334155] sm:text-lg">
+          <p className="mt-4 max-w-2xl text-base leading-relaxed text-black sm:text-lg">
             The <strong className="font-semibold text-[#0B5D34]">PMS Scheme</strong>{" "}
             provides financial assistance to reduce your participation cost
             and help your business grow in new markets.
           </p>
 
           {/* Support cards */}
-          <div className="mt-8 grid grid-cols-1 gap-5 sm:grid-cols-2 sm:gap-6 lg:mt-10 lg:grid-cols-3">
+          <div className="mt-2 grid grid-cols-1 gap-5 sm:grid-cols-2 sm:gap-6 lg:mt-4 lg:grid-cols-3">
             {SUPPORT_CARDS.map((card) => {
               const Icon = card.icon;
               const FootIcon = card.footIcon;
               return (
                 <article
                   key={card.title}
-                  className="relative flex flex-col items-center rounded-2xl bg-white px-5 pb-12 pt-7 text-center shadow-[0_10px_30px_-12px_rgba(15,45,30,0.18)]"
+                  className="relative flex flex-col items-center rounded-2xl bg-gray-100 px-4 pb-12 pt-5 text-center shadow-[0_10px_30px_-12px_rgba(15,45,30,0.18)] overflow-visible"
                 >
                   <span
                     className={`mb-3 flex h-14 w-14 items-center justify-center rounded-full ${card.iconBg}`}
@@ -208,20 +206,20 @@ const PMSFinancialAssistanceBanner: FC = () => {
                     {card.value}
                   </p>
 
-                  <span className="my-3 h-px w-16 bg-[#0B5D34]/20" aria-hidden="true" />
+                  <span className="my-2 h-px w-16 bg-[#0B5D34]/20" aria-hidden="true" />
 
                   <h3 className={`text-base font-semibold leading-snug ${card.titleColor}`}>
                     {card.title}
                   </h3>
-                  <p className="mt-2 text-sm leading-relaxed text-[#64748B]">
+                  <p className="mt-2 text-sm leading-relaxed text-black">
                     {card.description}
                   </p>
 
-                  {/* Bottom border area with absolute icon */}
-                  <div className="absolute bottom-0 left-0 right-0 flex h-10 items-center justify-center border-t border-[#0B5D34]/10">
-                    <span className={`absolute -top-5 flex h-10 w-10 items-center justify-center rounded-full ${card.footIconBg}`}>
+                  {/* Bottom border with icon on top */}
+                  <div className={`absolute bottom-0 left-0 right-0 h-8 rounded-b-2xl ${card.footIconBg}`}>
+                    <span className={`absolute left-1/2 -top-7 flex h-16 w-16 -translate-x-1/2 items-center justify-center rounded-full ${card.footIconBg} shadow-lg z-10`}>
                       <FootIcon
-                        className={`h-5 w-5 ${card.footIconColor}`}
+                        className={`h-7 w-7 ${card.footIconColor}`}
                         aria-hidden="true"
                       />
                     </span>
@@ -236,14 +234,14 @@ const PMSFinancialAssistanceBanner: FC = () => {
 
       {/* ============ Footer strip ============ */}
       <div className="relative px-4 pb-6 pt-2 md:px-11">
-        <div className="overflow-hidden rounded-2xl bg-[#F1EEE3]">
-          <div className="flex flex-col items-center gap-4 px-4 py-5 sm:px-6 sm:py-6 md:flex-row md:items-center md:gap-6 md:px-6 md:py-5">
+        <div className="relative overflow-hidden rounded-2xl bg-[#e8e3d5]">
+          <div className="flex flex-col items-center gap-4 px-3 py-4 sm:px-4 sm:py-5 md:flex-row md:items-center md:gap-6 md:px-4 md:py-4">
             {/* Important note */}
             <div className="flex w-full items-start gap-3 md:w-[38%]">
               <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-[#0B5D34]">
                 <ShieldCheck className="h-5 w-5 text-white" aria-hidden="true" />
               </span>
-              <p className="text-xs leading-relaxed text-[#334155] sm:text-sm">
+              <p className="text-xs leading-relaxed text-black sm:text-sm">
                 <strong className="font-semibold text-[#152238]">
                   *Important Note:
                 </strong>{" "}
@@ -282,11 +280,11 @@ const PMSFinancialAssistanceBanner: FC = () => {
             </div>
 
             {/* Plant photo */}
-            <div className="w-full shrink-0 overflow-hidden rounded-xl md:ml-auto md:w-auto md:flex-shrink-0">
+            <div className="absolute top-0 bottom-0 right-0 hidden overflow-hidden rounded-r-2xl md:block">
               <img
                 src={financialImg.src}
                 alt="Government support for sustainable business growth"
-                className="h-20 w-28 object-cover sm:h-24 sm:w-32"
+                className="h-full w-40 object-cover sm:w-52"
               />
             </div>
           </div>

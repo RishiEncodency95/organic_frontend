@@ -79,15 +79,15 @@ export default function WhatsNextBanner() {
           <div className="lg:col-span-5 flex flex-col justify-center">
             <h2
               id="whats-next-heading"
-              className="flex flex-wrap items-center gap-2 font-semibold uppercase leading-[0.95] tracking-tight text-emerald-800 text-4xl sm:text-5xl xl:text-6xl"
+              className="flex flex-wrap items-center gap-2 font-semibold uppercase leading-[0.95] tracking-tight text-emerald-800 text-[30px]"
             >
               What&apos;s Next?
               <Leaf
-                className="h-8 w-8 sm:h-10 sm:w-10 shrink-0 -rotate-12 text-emerald-600"
+                className="h-8 w-8 shrink-0 -rotate-12 text-emerald-600"
                 aria-hidden="true"
               />
             </h2>
-            <p className="mt-1 font-semibold uppercase leading-[0.95] tracking-tight text-slate-900 text-3xl sm:text-4xl xl:text-5xl">
+            <p className="mt-1 font-semibold uppercase leading-[0.95] tracking-tight text-slate-900 text-[32px]">
               Take the Next Step Today
             </p>
 
@@ -107,8 +107,8 @@ export default function WhatsNextBanner() {
           <div className="lg:col-span-7 flex flex-col gap-6">
             {/* Logo lockup */}
             <div className="flex items-center justify-start gap-3 lg:justify-end">
-              <Leaf className="h-10 w-10 shrink-0 text-emerald-600" aria-hidden="true" />
-              <p className="text-2xl sm:text-3xl font-semibold leading-tight text-emerald-800">
+              <Leaf className="h-8 w-8 shrink-0 text-emerald-600" aria-hidden="true" />
+              <p className="text-lg sm:text-xl font-semibold leading-tight text-emerald-800">
                 Bharat
                 <br />
                 Organic
@@ -118,7 +118,7 @@ export default function WhatsNextBanner() {
             </div>
 
             {/* Benefits card */}
-            <div className="rounded-2xl border border-emerald-100 bg-white/80 shadow-sm px-4 py-4 sm:px-6 sm:py-5">
+            <div className="rounded-2xl border border-emerald-100 bg-white/80 shadow-[rgba(0,0,0,0.24)_0px_3px_8px] px-4 py-4 sm:px-6 sm:py-5">
               <ul className="grid grid-cols-2 gap-x-4 gap-y-8 sm:grid-cols-4 sm:gap-x-0 sm:divide-x sm:divide-dashed sm:divide-emerald-300">
                 {benefits.map(({ icon: Icon, title, desc }) => (
                   <li

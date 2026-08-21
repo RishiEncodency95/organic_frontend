@@ -36,42 +36,42 @@ type Feature = {
 const FEATURES: Feature[] = [
   {
     id: "01",
-    icon: <PackageOpen className="h-7 w-7" strokeWidth={1.75} />,
+    icon: <PackageOpen className="h-9 w-9" strokeWidth={1.75} />,
     title: "Discover New Products",
     description:
       "Explore the latest organic, natural, AYUSH and sustainable products from leading brands and innovators.",
   },
   {
     id: "02",
-    icon: <Users className="h-7 w-7" strokeWidth={1.75} />,
+    icon: <Users className="h-9 w-9" strokeWidth={1.75} />,
     title: "Learn From Industry Experts",
     description:
       "Gain insights from 150+ speakers through seminars, panel discussions and knowledge sessions.",
   },
   {
     id: "03",
-    icon: <Globe2 className="h-7 w-7" strokeWidth={1.75} />,
+    icon: <Globe2 className="h-9 w-9" strokeWidth={1.75} />,
     title: "Expand Your Network",
     description:
       "Connect with industry leaders, decision-makers, distributors and partners from across the globe.",
   },
   {
     id: "04",
-    icon: <TrendingUp className="h-7 w-7" strokeWidth={1.75} />,
+    icon: <TrendingUp className="h-9 w-9" strokeWidth={1.75} />,
     title: "Stay Ahead of Trends",
     description:
       "Stay updated with emerging trends, innovations and technologies shaping the organic industry.",
   },
   {
     id: "05",
-    icon: <Award className="h-7 w-7" strokeWidth={1.75} />,
+    icon: <Award className="h-9 w-9" strokeWidth={1.75} />,
     title: "Recognition & Celebration",
     description:
       "Celebrate excellence at Bharat Organic Excellence Awards and honor the changemakers.",
   },
   {
     id: "06",
-    icon: <Sprout className="h-7 w-7" strokeWidth={1.75} />,
+    icon: <Sprout className="h-9 w-9" strokeWidth={1.75} />,
     title: "Be Part of a Better Tomorrow",
     description:
       "Join the movement towards a healthier, sustainable and environmentally responsible future.",
@@ -80,7 +80,7 @@ const FEATURES: Feature[] = [
 
 export default function ReasonToVisitBanner() {
   return (
-    <section className="relative w-full overflow-hidden bg-[#F8F6F0] px-4 py-6 md:px-11">
+    <section className="relative w-full overflow-hidden bg-[#f0ede0] px-4 py-6 md:px-11">
       <div className="mx-auto w-full">
         {/* ===================== TOP: heading + photo collage ===================== */}
         <div className="grid grid-cols-1 items-center gap-10 lg:grid-cols-2 lg:gap-8">
@@ -136,13 +136,13 @@ export default function ReasonToVisitBanner() {
         </div>
 
         {/* ===================== FEATURES STRIP ===================== */}
-        <div className="mt-8 grid grid-cols-2 gap-x-4 gap-y-6 border-t border-[#E1DDD0] pt-6 sm:grid-cols-3 sm:gap-x-6 lg:mt-10 lg:grid-cols-6 lg:divide-x lg:divide-dashed lg:divide-[#D7D2C2] lg:pt-8">
+        <div className="mt-4 grid grid-cols-2 gap-x-4 gap-y-6 border-t border-[#E1DDD0] pt-4 sm:grid-cols-3 sm:gap-x-6 lg:grid-cols-6 lg:divide-x lg:divide-dashed lg:divide-[#D7D2C2]">
             {FEATURES.map((feature) => (
               <article
                 key={feature.id}
                 className="flex flex-col items-center px-2 text-center lg:px-4"
               >
-                <span className="mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-[#EDEBE1] text-[#2F5E2F] sm:h-[4.5rem] sm:w-[4.5rem]">
+                <span className="mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-[#e5e0d0] text-[#2F5E2F] sm:h-20 sm:w-20">
                   {feature.icon}
                 </span>
                 <h3 className="text-xs font-semibold uppercase leading-snug text-[#14231A] sm:text-sm">
@@ -151,7 +151,7 @@ export default function ReasonToVisitBanner() {
                 <p className="mt-2 text-[11px] leading-relaxed text-[#5B6B5E] sm:text-xs">
                   {feature.description}
                 </p>
-                <span className="mt-4 rounded-md bg-[#1E331E] px-3 py-1 text-xs font-semibold text-white">
+                <span className="mt-auto rounded-md bg-[#1E331E] px-3 py-1 text-xs font-semibold text-white">
                   {feature.id}
                 </span>
               </article>
@@ -174,7 +174,7 @@ export default function ReasonToVisitBanner() {
 
           <a
             href="#plan-your-visit"
-            className="group flex items-center justify-center gap-3 rounded-full bg-[#1E331E] px-6 py-3.5 text-sm font-semibold uppercase tracking-wide text-white transition-colors hover:bg-[#2F5E2F] sm:text-base"
+            className="group flex items-center justify-center gap-3 rounded-full bg-[#1E331E] px-6 py-2.5 text-sm font-semibold uppercase tracking-wide text-white transition-colors hover:bg-[#2F5E2F] sm:text-base"
           >
             Plan Your Visit Now
             <span className="flex h-7 w-7 items-center justify-center rounded-full bg-white/15 transition-transform group-hover:translate-x-0.5">

@@ -16,6 +16,7 @@ import {
   FileEdit,
   ArrowRight,
 } from "lucide-react";
+import documentsBgImg from "@/app/assets/participate/msme/documents_ready.jpg";
 
 interface PmsDocument {
   id: number;
@@ -103,18 +104,18 @@ export default function PMSDocumentsBanner() {
   return (
     <section
       aria-labelledby="pms-documents-heading"
-      className="relative isolate overflow-hidden bg-white px-4 py-6 md:px-11"
+      className="relative isolate overflow-hidden bg-white px-4 py-4 md:px-11"
     >
+      {/* Background Image */}
+      <div className="absolute inset-0 -z-10">
+        <img
+          src={documentsBgImg.src}
+          alt=""
+          className="h-full w-full object-cover"
+        />
+      </div>
       {/* Header */}
-      <header className="relative mx-auto mb-6 max-w-3xl text-center">
-        <div className="mb-4 flex items-center justify-center gap-3">
-          <span className="h-px w-8 bg-green-700 sm:w-12" aria-hidden="true" />
-          <span className="text-xs font-semibold tracking-[0.2em] text-green-700 sm:text-sm">
-            BE PREPARED
-          </span>
-          <span className="h-px w-8 bg-green-700 sm:w-12" aria-hidden="true" />
-        </div>
-
+      <header className="relative mx-auto mb-2 max-w-3xl text-center">
         <h1
           id="pms-documents-heading"
           className="text-2xl font-semibold leading-tight tracking-tight text-slate-900 sm:text-3xl"
@@ -132,7 +133,7 @@ export default function PMSDocumentsBanner() {
           <span className="h-px w-10 bg-green-700 sm:w-16" />
         </div>
 
-        <p className="text-base leading-relaxed text-slate-600 sm:text-lg">
+        <p className="text-base leading-relaxed text-black sm:text-lg">
           Ensure these essential documents are ready for a smooth{" "}
           <span className="block font-semibold text-green-700 sm:inline">
             PMS claim process.
@@ -147,7 +148,7 @@ export default function PMSDocumentsBanner() {
           return (
             <li
               key={doc.id}
-              className="flex flex-col items-center rounded-2xl border border-green-900/10 bg-white/80 px-4 py-5 text-center shadow-sm backdrop-blur-sm transition-shadow duration-300 hover:shadow-md"
+              className="flex flex-col items-center rounded-2xl border border-green-900/10 bg-white/80 px-2 py-3 text-center shadow-sm backdrop-blur-sm transition-shadow duration-300 hover:shadow-md"
             >
               <span className="mb-3 flex h-16 w-16 items-center justify-center rounded-full bg-green-50 ring-1 ring-green-900/5">
                 <Icon
@@ -157,7 +158,7 @@ export default function PMSDocumentsBanner() {
                 />
               </span>
 
-              <h2 className="text-sm font-semibold leading-snug text-slate-900 sm:text-base">
+              <h2 className="text-xs font-semibold leading-snug text-black sm:text-sm">
                 {doc.id}. {doc.title}
               </h2>
 
@@ -166,7 +167,7 @@ export default function PMSDocumentsBanner() {
                 aria-hidden="true"
               />
 
-              <p className="text-xs leading-relaxed text-slate-500 sm:text-sm">
+              <p className="text-[11px] leading-relaxed text-black sm:text-xs">
                 {doc.description}
               </p>
             </li>
@@ -175,12 +176,12 @@ export default function PMSDocumentsBanner() {
       </ul>
 
       {/* Notice bar */}
-      <div className="relative mx-auto mt-6 max-w-7xl overflow-hidden rounded-2xl bg-green-50 px-5 py-4 sm:px-8">
+      <div className="relative mx-auto mt-4 max-w-7xl overflow-hidden rounded-2xl bg-green-50 px-5 py-3 sm:px-8">
         <div className="flex items-start gap-4 sm:items-center">
           <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-white ring-1 ring-green-900/10">
-            <Info className="h-5 w-5 text-green-800" aria-hidden="true" />
+            <FileText className="h-5 w-5 text-green-800" aria-hidden="true" />
           </span>
-          <p className="text-sm font-medium leading-relaxed text-slate-800 sm:text-base">
+          <p className="text-sm font-medium leading-relaxed text-black sm:text-base">
             Additional documents may be required depending on applicable PMS
             guidelines and the individual enterprise.
           </p>
@@ -188,10 +189,10 @@ export default function PMSDocumentsBanner() {
       </div>
 
       {/* CTA */}
-      <div className="mt-6 flex justify-center">
+      <div className="mt-4 flex justify-center">
         <a
           href="#complete-document-checklist"
-          className="inline-flex items-center gap-3 rounded-full bg-green-800 px-6 py-4 text-sm font-semibold tracking-wide text-white shadow-md transition-colors duration-200 hover:bg-green-900 focus:outline-none focus-visible:ring-2 focus-visible:ring-green-700 focus-visible:ring-offset-2 sm:px-8 sm:text-base"
+          className="inline-flex items-center gap-3 rounded-full bg-green-800 px-6 py-3 text-sm font-semibold tracking-wide text-white shadow-md transition-colors duration-200 hover:bg-green-900 focus:outline-none focus-visible:ring-2 focus-visible:ring-green-700 focus-visible:ring-offset-2 sm:px-8 sm:text-base"
         >
           <FileEdit className="h-5 w-5" aria-hidden="true" />
           VIEW COMPLETE DOCUMENT CHECKLIST
