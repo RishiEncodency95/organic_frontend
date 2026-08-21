@@ -11,6 +11,7 @@ import {
   Headphones,
   ShieldAlert,
 } from "lucide-react";
+import readyToExploreImg from "@/app/assets/participate/msme/ready_to_explore.jpeg";
 
 /**
  * Section 11 — Final CTA
@@ -27,13 +28,13 @@ interface OptionCardProps {
 }
 
 const OptionCard: React.FC<OptionCardProps> = ({ icon, title, description }) => (
-  <div className="flex flex-col items-center rounded-2xl bg-white/95 px-6 py-8 text-center shadow-sm ring-1 ring-black/5 sm:px-8">
-    <div className="mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-[#EAF3E7]">
+  <div className="flex flex-col items-center rounded-2xl bg-white/95 px-4 py-4 text-center shadow-lg ring-1 ring-black/5 sm:px-5">
+    <div className="mb-3 flex h-14 w-14 items-center justify-center rounded-full bg-[#EAF3E7]">
       {icon}
     </div>
-    <h3 className="text-lg font-semibold text-[#0F2A1D] sm:text-xl">{title}</h3>
-    <span className="my-2 h-[3px] w-8 rounded-full bg-[#1B5E20]" />
-    <p className="max-w-[22ch] text-sm leading-relaxed text-slate-600 sm:text-[15px]">
+    <h3 className="text-base font-semibold text-[#0F2A1D] sm:text-lg">{title}</h3>
+    <span className="my-1.5 h-[3px] w-8 rounded-full bg-[#1B5E20]" />
+    <p className="text-xs leading-relaxed text-slate-600 sm:text-sm">
       {description}
     </p>
   </div>
@@ -45,7 +46,7 @@ interface FeatureProps {
 }
 
 const Feature: React.FC<FeatureProps> = ({ icon, label }) => (
-  <div className="flex items-center gap-2 text-[#1B5E20]">
+  <div className="flex items-center gap-2 text-[#1B5E20]" style={{ textShadow: "0 1px 3px rgba(255,255,255,0.8)" }}>
     <span className="shrink-0">{icon}</span>
     <span className="text-xs font-semibold text-[#173B1F] sm:text-sm">{label}</span>
   </div>
@@ -55,9 +56,18 @@ const PMSFinalCTASection: React.FC = () => {
   return (
     <section
       aria-labelledby="pms-final-cta-heading"
-      className="relative w-full px-4 py-6 md:px-11"
+      className="relative w-full overflow-hidden px-4 py-4 md:px-11"
     >
-      <div className="mx-auto flex w-full flex-col items-center">
+      {/* Background image */}
+      <div className="absolute inset-0 z-0">
+        <img
+          src={readyToExploreImg.src}
+          alt=""
+          className="h-full w-full object-cover pointer-events-none"
+        />
+      </div>
+
+      <div className="relative z-10 mx-auto flex w-full max-w-2xl flex-col items-center lg:max-w-[50%]">
         {/* Heading */}
         <h2
           id="pms-final-cta-heading"
@@ -68,15 +78,15 @@ const PMSFinalCTASection: React.FC = () => {
 
         {/* Subheading with dashed dividers */}
         <div className="mt-3 flex items-center gap-3 text-[#173B1F] sm:gap-4">
-          <span className="hidden h-px w-10 border-t-2 border-dashed border-[#1B5E20]/50 sm:block" aria-hidden="true" />
+          <span className="hidden h-px w-10 border-t-2 border-[#1B5E20]/50 sm:block" aria-hidden="true" />
           <p className="text-center text-base font-medium sm:text-lg">
             Start with a Simple Eligibility Check.
           </p>
-          <span className="hidden h-px w-10 border-t-2 border-dashed border-[#1B5E20]/50 sm:block" aria-hidden="true" />
+          <span className="hidden h-px w-10 border-t-2 border-[#1B5E20]/50 sm:block" aria-hidden="true" />
         </div>
 
         {/* Option cards */}
-        <div className="relative mt-8 grid w-full grid-cols-1 gap-6 sm:grid-cols-2 sm:gap-8">
+        <div className="relative mt-4 grid w-full grid-cols-1 gap-5 sm:grid-cols-2 sm:gap-6">
           <OptionCard
             icon={<FileBadge2 className="h-7 w-7 text-[#1B5E20]" strokeWidth={1.75} />}
             title="Already Udyam registered?"
@@ -104,17 +114,17 @@ const PMSFinalCTASection: React.FC = () => {
         </div>
 
         {/* CTA buttons */}
-        <div className="mt-6 flex w-full flex-col gap-4 sm:flex-row">
+        <div className="mt-5 flex w-full flex-col gap-3 sm:flex-row">
           <button
             type="button"
-            className="flex flex-1 items-center justify-center gap-2 rounded-lg bg-[#1B5E20] px-6 py-3.5 text-sm font-semibold uppercase tracking-wide text-white shadow-sm transition hover:bg-[#164C1A] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#1B5E20] sm:text-[15px]"
+            className="flex flex-1 items-center justify-center gap-2 rounded-lg bg-[#1B5E20] px-5 py-3 text-xs font-semibold uppercase tracking-wide text-white shadow-sm transition hover:bg-[#164C1A] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#1B5E20] sm:text-sm"
           >
             <Upload className="h-4 w-4" strokeWidth={2} aria-hidden="true" />
             Check Your PMS Eligibility
           </button>
           <button
             type="button"
-            className="flex flex-1 items-center justify-center gap-2 rounded-lg border-2 border-[#1B5E20] bg-white px-6 py-3.5 text-sm font-semibold uppercase tracking-wide text-[#1B5E20] shadow-sm transition hover:bg-[#EAF3E7] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#1B5E20] sm:text-[15px]"
+            className="flex flex-1 items-center justify-center gap-2 rounded-lg border-2 border-[#1B5E20] bg-white px-5 py-3 text-xs font-semibold uppercase tracking-wide text-[#1B5E20] shadow-sm transition hover:bg-[#EAF3E7] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#1B5E20] sm:text-sm"
           >
             <CircleUserRound className="h-4 w-4" strokeWidth={2} aria-hidden="true" />
             Get Udyam Registration Guidance
@@ -124,53 +134,58 @@ const PMSFinalCTASection: React.FC = () => {
         {/* Talk to support link */}
         <a
           href="#pms-support-team"
-          className="mt-5 inline-flex items-center gap-1.5 text-sm font-semibold text-[#1B5E20] underline-offset-4 hover:underline sm:text-base"
+          className="mt-4 inline-flex items-center gap-1.5 text-sm font-semibold text-[#1B5E20] underline-offset-4 hover:underline sm:text-base"
         >
           Talk to PMS Support Team
           <ArrowRight className="h-4 w-4" strokeWidth={2.25} aria-hidden="true" />
         </a>
+      </div>
 
-        {/* Feature strip */}
-        <ul className="mt-7 flex w-full flex-wrap items-center justify-center gap-x-6 gap-y-3 sm:gap-x-8">
-          <li>
+      {/* Feature strip + Disclaimer - wider width */}
+      <div className="relative z-10 mx-auto w-full max-w-5xl">
+        <ul className="mt-5 flex w-full flex-wrap items-center justify-center gap-x-0 divide-x divide-[#1B5E20]/20">
+          <li className="px-4">
             <Feature
-              icon={<ShieldCheck className="h-4 w-4" strokeWidth={2} />}
+              icon={<ShieldCheck className="h-5 w-5" strokeWidth={2} />}
               label="Registration Guidance"
             />
           </li>
-          <li>
+          <li className="px-4">
             <Feature
-              icon={<CircleUserRound className="h-4 w-4" strokeWidth={2} />}
+              icon={<CircleUserRound className="h-5 w-5" strokeWidth={2} />}
               label="Eligibility Screening"
             />
           </li>
-          <li>
+          <li className="px-4">
             <Feature
-              icon={<FileText className="h-4 w-4" strokeWidth={2} />}
+              icon={<FileText className="h-5 w-5" strokeWidth={2} />}
               label="Application Support"
             />
           </li>
-          <li>
-            <Feature icon={<Folder className="h-4 w-4" strokeWidth={2} />} label="Documentation" />
+          <li className="px-4">
+            <Feature icon={<Folder className="h-5 w-5" strokeWidth={2} />} label="Documentation" />
           </li>
-          <li>
+          <li className="px-4">
             <Feature
-              icon={<Headphones className="h-4 w-4" strokeWidth={2} />}
+              icon={<Headphones className="h-5 w-5" strokeWidth={2} />}
               label="Claim Assistance"
             />
           </li>
         </ul>
 
-        {/* Disclaimer */}
-        <div className="mt-7 flex w-full flex-col items-start gap-3 rounded-xl bg-white/95 p-4 shadow-sm ring-1 ring-black/5 sm:flex-row sm:items-start sm:gap-4 sm:p-5">
-          <div className="flex shrink-0 flex-col items-center gap-1 sm:w-32">
-            <ShieldAlert className="h-6 w-6 text-[#1B5E20]" strokeWidth={2} aria-hidden="true" />
-            <span className="text-center text-xs font-semibold uppercase leading-tight text-[#1B5E20] sm:text-[13px]">
+      </div>
+
+      {/* Disclaimer - full section width */}
+      <div className="relative z-10 w-full px-4 md:px-11">
+        <div className="mt-5 flex w-full items-start gap-5 rounded-xl bg-white/95 p-6 shadow-sm ring-1 ring-black/5 sm:p-8">
+          <div className="flex shrink-0 items-center gap-3">
+            <ShieldAlert className="h-12 w-12 text-[#1B5E20]" strokeWidth={2} aria-hidden="true" />
+            <span className="text-sm font-semibold uppercase leading-tight text-[#1B5E20] sm:text-base">
               Important
-              <br className="hidden sm:block" /> Disclaimer
+              <br />Disclaimer
             </span>
           </div>
-          <p className="text-xs leading-relaxed text-slate-700 sm:text-[13px]">
+          <p className="border-l-2 border-[#1B5E20]/30 pl-5 text-xs leading-relaxed text-slate-700 sm:text-sm">
             Bharat Organic Expo / Organiser provides PMS facilitation, preliminary eligibility
             screening, Udyam Registration guidance, documentation and claim-process assistance.
             Event approval does not constitute automatic approval of an individual MSE

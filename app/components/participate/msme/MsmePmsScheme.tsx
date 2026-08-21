@@ -48,7 +48,7 @@ export default function MsmePmsScheme() {
   return (
     <section
       aria-labelledby="msme-pms-heading"
-      className="w-full py-8 px-4 md:px-11"
+      className="w-full py-6 px-4 md:px-11"
     >
       <div className="mx-auto w-full">
         {/* Eyebrow */}
@@ -128,7 +128,7 @@ export default function MsmePmsScheme() {
         </ul>
 
         {/* Bottom banner */}
-        <div className="mt-10 flex flex-col sm:flex-row items-center gap-4 rounded-2xl bg-emerald-50/80 px-6 py-6 sm:px-8">
+        <div className="mt-6 flex flex-col sm:flex-row items-center gap-4 rounded-2xl bg-emerald-50/80 px-6 py-6 sm:px-8">
           <div className="flex h-14 w-14 shrink-0 items-center justify-center rounded-full bg-emerald-950">
             <ShieldCheck className="h-7 w-7 text-white" aria-hidden="true" />
           </div>

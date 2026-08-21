@@ -5,6 +5,7 @@ const apiCall = async (endpoint: string, options: RequestInit = {}) => {
     try {
         const url = `${API_URL}${endpoint}`;
         const response = await fetch(url, {
+            cache: 'no-store',
             ...options,
             headers: {
                 'Content-Type': 'application/json',
@@ -56,8 +57,8 @@ export const eventApi = {
 };
 
 export const settingsApi = { 
-    get: async () => apiCall(`/settings?website=Organicexpo}`),
-    getSettings: async () => apiCall(`/settings?website=Organicexpo}`)
+    get: async () => apiCall(`/settings?website=Organicexpo`),
+    getSettings: async () => apiCall(`/settings?website=Organicexpo`)
 };
 
 export const termsApi = { 
@@ -77,6 +78,10 @@ export const verifyApi = {
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ email, profile, name: name || null, eventName })
         });
+        if (!response.ok) {
+            const text = await response.text();
+            try { return JSON.parse(text); } catch(e) { return { success: false, message: "HTTP " + response.status + ": " + text.substring(0, 50) }; }
+        }
         return await response.json();
     },
     verifyEmailOtp: async (email: string, otp: string) => {
@@ -85,6 +90,10 @@ export const verifyApi = {
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ email, otp })
         });
+        if (!response.ok) {
+            const text = await response.text();
+            try { return JSON.parse(text); } catch(e) { return { success: false, message: "HTTP " + response.status + ": " + text.substring(0, 50) }; }
+        }
         return await response.json();
     },
     sendPhoneOtp: async (phone: string, profile: string = 'CONTACT', name: string = '', eventName: string = process.env.NEXT_PUBLIC_EVENT_NAME || 'BOE2026') => {
@@ -93,6 +102,10 @@ export const verifyApi = {
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ phone, profile, name: name || null, eventName })
         });
+        if (!response.ok) {
+            const text = await response.text();
+            try { return JSON.parse(text); } catch(e) { return { success: false, message: "HTTP " + response.status + ": " + text.substring(0, 50) }; }
+        }
         return await response.json();
     },
     verifyPhoneOtp: async (phone: string, otp: string) => {
@@ -101,6 +114,10 @@ export const verifyApi = {
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ phone, otp })
         });
+        if (!response.ok) {
+            const text = await response.text();
+            try { return JSON.parse(text); } catch(e) { return { success: false, message: "HTTP " + response.status + ": " + text.substring(0, 50) }; }
+        }
         return await response.json();
     }
 };
@@ -158,6 +175,10 @@ export const buyerApi = {
             console.error("API Error Response:", text);
             return json || { success: false, message: text };
         }
+        if (!response.ok) {
+            const text = await response.text();
+            try { return JSON.parse(text); } catch(e) { return { success: false, message: "HTTP " + response.status + ": " + text.substring(0, 50) }; }
+        }
         return await response.json();
     },
     submitBuyer: async (formData: FormData) => {
@@ -175,6 +196,10 @@ export const buyerApi = {
             console.error("API Error Response:", text);
             return json || { success: false, message: text };
         }
+        if (!response.ok) {
+            const text = await response.text();
+            try { return JSON.parse(text); } catch(e) { return { success: false, message: "HTTP " + response.status + ": " + text.substring(0, 50) }; }
+        }
         return await response.json();
     }
 };
@@ -190,6 +215,10 @@ export const contactEnquiryApi = {
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(payload)
         });
+        if (!response.ok) {
+            const text = await response.text();
+            try { return JSON.parse(text); } catch(e) { return { success: false, message: "HTTP " + response.status + ": " + text.substring(0, 50) }; }
+        }
         return await response.json();
     },
     getAll: async () => {
@@ -201,6 +230,10 @@ export const contactEnquiryApi = {
         const response = await fetch(`${API_URL}/contact-enquiry/${id}`, {
             method: 'DELETE'
         });
+        if (!response.ok) {
+            const text = await response.text();
+            try { return JSON.parse(text); } catch(e) { return { success: false, message: "HTTP " + response.status + ": " + text.substring(0, 50) }; }
+        }
         return await response.json();
     }
 };
@@ -212,6 +245,10 @@ export const sponsorshipEnquiryApi = {
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(data)
         });
+        if (!response.ok) {
+            const text = await response.text();
+            try { return JSON.parse(text); } catch(e) { return { success: false, message: "HTTP " + response.status + ": " + text.substring(0, 50) }; }
+        }
         return await response.json();
     }
 };

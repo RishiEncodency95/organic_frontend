@@ -118,7 +118,7 @@ export default function WhatsNextBanner() {
             </div>
 
             {/* Benefits card */}
-            <div className="rounded-2xl border border-emerald-100 bg-white/80 shadow-sm px-4 py-6 sm:px-8 sm:py-8">
+            <div className="rounded-2xl border border-emerald-100 bg-white/80 shadow-sm px-4 py-4 sm:px-6 sm:py-5">
               <ul className="grid grid-cols-2 gap-x-4 gap-y-8 sm:grid-cols-4 sm:gap-x-0 sm:divide-x sm:divide-dashed sm:divide-emerald-300">
                 {benefits.map(({ icon: Icon, title, desc }) => (
                   <li

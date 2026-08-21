@@ -8,13 +8,13 @@ interface FeatureCard {
 
 const features: FeatureCard[] = [
   {
-    icon: <Award className="h-9 w-9 text-emerald-700" strokeWidth={1.75} />,
+    icon: <Award className="h-10 w-10 text-emerald-700" strokeWidth={1.75} />,
     title: "PMS Approved Event*",
     description:
       "Opportunity for eligible MSEs to explore applicable PMS assistance.",
   },
   {
-    icon: <Target className="h-9 w-9 text-emerald-700" strokeWidth={1.75} />,
+    icon: <Target className="h-10 w-10 text-emerald-700" strokeWidth={1.75} />,
     title: "Focused Industry Platform",
     description:
       "Organic • Food • Nutrition • AYUSH • Herbal • Wellness • Agriculture • GreenTech",
@@ -73,24 +73,24 @@ export default function WhyParticipateSection() {
         </h2>
 
         {/* Cards */}
-        <ul className="mt-14 grid w-full grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
+        <ul className="mt-10 grid w-full grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
           {features.map((feature) => (
             <li
               key={feature.title}
               className="flex flex-col items-center overflow-hidden rounded-2xl border border-emerald-900/5 bg-white text-center shadow-[0_8px_30px_-12px_rgba(15,23,42,0.15)] transition-transform duration-300 hover:-translate-y-1"
             >
-              <div className="flex flex-1 flex-col items-center px-6 pb-8 pt-9">
-                <div className="mb-5 flex h-24 w-24 items-center justify-center rounded-full border border-emerald-100 bg-emerald-50">
+              <div className="flex flex-1 flex-col items-center px-5 pb-6 pt-7">
+                <div className="mb-4 flex h-20 w-20 items-center justify-center rounded-full border border-emerald-100 bg-emerald-50">
                   {feature.icon}
                 </div>
-                <h3 className="text-lg font-semibold text-slate-900 sm:text-xl">
+                <h3 className="text-base font-semibold text-slate-900 sm:text-lg">
                   {feature.title}
                 </h3>
                 <span
-                  className="my-3 h-0.5 w-8 rounded-full bg-emerald-600"
+                  className="my-2 h-0.5 w-8 rounded-full bg-emerald-600"
                   aria-hidden="true"
                 />
-                <p className="text-sm leading-relaxed text-slate-600 sm:text-[15px]">
+                <p className="text-xs leading-relaxed text-slate-600 sm:text-sm">
                   {feature.description}
                 </p>
               </div>
