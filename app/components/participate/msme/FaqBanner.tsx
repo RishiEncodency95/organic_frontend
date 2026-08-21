@@ -7,9 +7,9 @@ import {
   FileQuestion,
   IdCard,
   Headset,
-  ChevronDown,
   Leaf,
 } from "lucide-react";
+import faqBgImg from "@/app/assets/participate/msme/faq_bg.png";
 
 interface FAQItem {
   id: string;
@@ -67,59 +67,44 @@ export default function FAQBanner() {
   return (
     <section
       aria-labelledby="faq-heading"
-      className="relative w-full overflow-hidden bg-gradient-to-b from-green-50/60 to-white px-4 py-6 md:px-11"
+      className="relative w-full overflow-hidden bg-gradient-to-b from-green-100/70 to-white px-4 py-6 md:px-11"
     >
       {/* Decorative leaf accent, top right */}
       <Leaf
-        className="pointer-events-none absolute -top-4 right-6 hidden h-24 w-24 rotate-[20deg] text-green-700/20 sm:block lg:right-10 lg:h-32 lg:w-32"
+        className="pointer-events-none absolute top-0 right-6 z-0 hidden h-24 w-24 rotate-[20deg] text-green-700/20 sm:block lg:right-10 lg:h-32 lg:w-32"
         strokeWidth={1}
         aria-hidden="true"
       />
 
-      <div className="mx-auto grid w-full grid-cols-1 items-center gap-10 lg:grid-cols-[minmax(0,420px)_minmax(0,1fr)] lg:gap-12">
-        {/* Left: image panel — bg image is supplied separately, this is just the frame */}
+      <div className="relative z-10 mx-auto grid w-full grid-cols-1 items-center gap-6 lg:grid-cols-[minmax(0,400px)_minmax(0,1fr)] lg:gap-8">
+        {/* Left: image panel */}
         <div className="relative mx-auto w-full max-w-md lg:mx-0 lg:max-w-none">
           <div
-            className="relative aspect-[4/5] w-full overflow-hidden rounded-[2.5rem] bg-green-900/10 shadow-lg lg:rounded-r-[6rem] lg:rounded-l-2xl"
+            className="relative aspect-[4/5] w-full overflow-hidden rounded-[2.5rem] shadow-lg lg:rounded-r-[6rem] lg:rounded-l-2xl"
             role="img"
             aria-label="Bharat Organic Expo visitors browsing organic produce stalls"
           >
-            {/* Intentionally left empty — background image is applied via CSS/props elsewhere */}
-          </div>
-
-          {/* Overlapping "Supporting MSMEs" badge */}
-          <div className="absolute -bottom-6 right-2 flex h-28 w-28 flex-col items-center justify-center rounded-full border-4 border-white bg-white text-center shadow-xl sm:h-32 sm:w-32 lg:-right-4 lg:bottom-4">
-            <Leaf className="mb-1 h-5 w-5 text-green-700" aria-hidden="true" />
-            <p className="text-[11px] font-semibold uppercase leading-tight text-green-900 sm:text-xs">
-              Supporting
-            </p>
-            <p className="text-sm font-semibold uppercase leading-tight text-green-800 sm:text-base">
-              MSMEs
-            </p>
-            <p className="text-[11px] font-semibold uppercase leading-tight text-green-900 sm:text-xs">
-              Growth Together
-            </p>
+            <img
+              src={faqBgImg.src}
+              alt="FAQ Background"
+              className="absolute inset-0 h-full w-full object-cover"
+            />
           </div>
         </div>
 
         {/* Right: heading + accordion */}
         <div className="w-full">
-          <div className="mb-8 text-center lg:mb-10">
+          <div className="mb-4">
             <div className="mb-2 flex items-center justify-center gap-4">
               <span className="hidden h-px w-16 bg-green-700/40 sm:block" aria-hidden="true" />
               <h2
                 id="faq-heading"
                 className="text-3xl font-semibold tracking-tight text-green-900 sm:text-4xl"
               >
-                FAQ
+                Frequently Asked Questions
               </h2>
               <span className="hidden h-px w-16 bg-green-700/40 sm:block" aria-hidden="true" />
             </div>
-            <p className="flex items-center justify-center gap-2 text-xs font-semibold uppercase tracking-widest text-green-800 sm:text-sm">
-              <span className="h-1.5 w-1.5 rounded-full bg-green-700" aria-hidden="true" />
-              Frequently Asked Questions
-              <span className="h-1.5 w-1.5 rounded-full bg-green-700" aria-hidden="true" />
-            </p>
           </div>
 
           <div className="flex flex-col gap-4">
@@ -130,7 +115,7 @@ export default function FAQBanner() {
               return (
                 <div
                   key={item.id}
-                  className="overflow-hidden rounded-2xl bg-white shadow-md ring-1 ring-black/5"
+                  className="overflow-hidden rounded-2xl bg-white shadow-sm"
                 >
                   <h3 className="m-0">
                     <button
@@ -155,7 +140,7 @@ export default function FAQBanner() {
 
                       {/* Question + answer */}
                       <span className="flex flex-1 flex-col justify-center gap-1 py-4 pr-4 sm:flex-row sm:items-center sm:gap-6 sm:py-5">
-                        <span className="flex-none text-base font-semibold text-green-950 sm:w-56 sm:text-lg lg:w-64">
+                        <span className="flex-none text-[13px] font-semibold text-green-950 sm:w-44 sm:text-[15px] lg:w-52">
                           {item.question}
                         </span>
                         <span className="hidden flex-none self-stretch border-l border-gray-200 sm:block" aria-hidden="true" />
@@ -163,7 +148,7 @@ export default function FAQBanner() {
                           id={`${item.id}-panel`}
                           role="region"
                           aria-labelledby={`${item.id}-button`}
-                          className={`text-sm leading-relaxed text-gray-600 transition-all duration-300 sm:text-base ${
+                          className={`text-xs leading-relaxed text-black transition-all duration-300 sm:text-sm ${
                             isOpen
                               ? "max-h-40 opacity-100"
                               : "max-h-0 overflow-hidden opacity-0 sm:max-h-40 sm:opacity-100"
@@ -173,15 +158,7 @@ export default function FAQBanner() {
                         </span>
                       </span>
 
-                      {/* Chevron */}
-                      <span className="flex flex-none items-center pr-4 sm:pr-6">
-                        <ChevronDown
-                          className={`h-5 w-5 text-green-700 transition-transform duration-300 ${
-                            isOpen ? "rotate-180" : ""
-                          }`}
-                          aria-hidden="true"
-                        />
-                      </span>
+
                     </button>
                   </h3>
                 </div>

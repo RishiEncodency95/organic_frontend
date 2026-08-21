@@ -83,9 +83,9 @@ export default function PmsSupportSection() {
   return (
     <section
       aria-labelledby="pms-support-heading"
-      className="relative w-full bg-gradient-to-br from-green-50 via-emerald-50/60 to-white px-4 py-6 md:px-11"
+      className="relative w-full bg-gradient-to-br from-green-100 via-emerald-100/70 to-white px-4 py-4 md:px-11"
     >
-      <div className="mx-auto flex w-full flex-col gap-8 sm:gap-10 lg:gap-12">
+      <div className="mx-auto flex w-full flex-col gap-6 sm:gap-8 lg:gap-10">
         {/* ---------- Top block: heading + hero image ---------- */}
         <div className="grid grid-cols-1 gap-8 lg:grid-cols-2 lg:items-center lg:gap-10">
           {/* Left: heading + intro + highlight cards */}
@@ -94,14 +94,14 @@ export default function PmsSupportSection() {
 
               <h2
                 id="pms-support-heading"
-                className="text-3xl font-semibold uppercase leading-[1.05] tracking-tight text-emerald-950 sm:text-4xl md:text-5xl"
+                className="text-[32px] font-semibold uppercase leading-[1.05] tracking-tight text-emerald-950"
               >
                 How to Apply
                 <br />
                 &amp; Get PMS Support
               </h2>
 
-              <p className="max-w-xl text-sm leading-relaxed text-emerald-950/70 sm:text-base">
+              <p className="max-w-xl text-sm leading-relaxed text-emerald-950 sm:text-base">
                 A simple, guided process to help eligible MSEs receive financial
                 assistance for participation.
               </p>
@@ -112,7 +112,8 @@ export default function PmsSupportSection() {
             {/* Highlight cards */}
             <ul className="grid grid-cols-2 gap-x-4 gap-y-6 sm:grid-cols-4 sm:gap-x-3 lg:grid-cols-2 lg:gap-x-4 xl:grid-cols-4">
               {highlightCards.map(({ icon: Icon, title, description }) => (
-                <li key={title} className="flex flex-row items-start gap-3 sm:gap-4">
+                <li key={title} className="flex flex-col items-start gap-3 sm:gap-4">
+                  <div className="flex flex-row gap-3 sm:gap-4">
                   <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-gray-200 sm:h-12 sm:w-12">
                     <Icon className="h-5 w-5 text-emerald-800 sm:h-6 sm:w-6" aria-hidden="true" />
                   </span>
@@ -120,10 +121,11 @@ export default function PmsSupportSection() {
                     <h3 className="text-xs font-semibold uppercase leading-tight text-emerald-950 sm:text-sm">
                       {title}
                     </h3>
-                    <p className="text-xs leading-snug text-emerald-950/60 sm:text-sm">
+                  </div>
+                  </div>
+                    <p className="text-xs leading-snug text-emerald-950 sm:text-sm">
                       {description}
                     </p>
-                  </div>
                 </li>
               ))}
             </ul>
@@ -153,14 +155,14 @@ export default function PmsSupportSection() {
         </div>
 
         {/* ---------- 4-step journey ---------- */}
-        <div className="rounded-3xl bg-emerald-50/80 p-5 ring-1 ring-emerald-900/5 sm:p-8 lg:p-10">
-          <div className="mb-8 flex justify-center sm:mb-10">
+        <div className="rounded-3xl bg-emerald-100/90 p-4 ring-1 ring-emerald-900/5 sm:p-5">
+          <div className="mb-5 flex justify-center">
             <h3 className="inline-flex items-center gap-2 rounded-full bg-emerald-950 px-5 py-2 text-xs font-semibold uppercase tracking-widest text-white sm:px-6 sm:text-sm">
               Your 4-Step Journey
             </h3>
           </div>
 
-          <ol className="grid grid-cols-1 gap-y-10 sm:grid-cols-2 sm:gap-x-6 sm:gap-y-10 lg:grid-cols-4 lg:gap-x-4">
+          <ol className="grid grid-cols-1 gap-y-6 sm:grid-cols-2 sm:gap-x-6 sm:gap-y-8 lg:grid-cols-4 lg:gap-x-4">
             {journeySteps.map(({ number, icon: Icon, title, description }, index) => (
               <li key={number} className="relative flex flex-col items-center text-center">
                 {/* connecting arrow (desktop only, between cards) */}
@@ -222,7 +224,7 @@ export default function PmsSupportSection() {
           </div>
 
           {/* Have questions / contact */}
-          <div className="flex flex-col gap-3 rounded-2xl bg-emerald-50 p-5 sm:p-6">
+          <div className="flex flex-col gap-3 rounded-2xl bg-emerald-100 p-5 sm:p-6">
             <div className="flex flex-row gap-2">
             <span className="flex h-12 w-12 items-center justify-center rounded-full bg-emerald-100">
               <Users className="h-6 w-6 text-emerald-800" aria-hidden="true" />
