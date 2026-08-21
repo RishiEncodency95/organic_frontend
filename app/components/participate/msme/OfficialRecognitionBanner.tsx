@@ -252,6 +252,14 @@ export default function OfficialRecognitionBanner() {
                 </div>
                 <SealPlaceholder />
               </div>
+
+              <button
+                type="button"
+                className="mt-4 flex w-full items-center justify-center gap-2 rounded-full bg-[#1b5e20] py-2.5 text-[13px] font-semibold text-white transition-colors hover:bg-[#2d7a2d] sm:text-[14px]"
+              >
+                <Download className="h-4 w-4" aria-hidden="true" />
+                DOWNLOAD APPROVAL LETTER (PDF)
+              </button>
             </div>
 
             <button

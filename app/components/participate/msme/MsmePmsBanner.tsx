@@ -171,7 +171,7 @@ export default function MsmePmsBanner({
                   </span>
                 </span>
                 <span className="block overflow-hidden">
-                  <span ref={line2Ref} style={{ opacity: 0, display: "block" }} className="text-[#1b5e20] text-2xl sm:text-4xl md:text-5xl lg:text-[64px] font-semibold mb-1 uppercase">
+                  <span ref={line2Ref} style={{ opacity: 0, display: "block" }} className="text-[#1b5e20] text-[20px] sm:text-[32px] md:text-[44px] lg:text-[60px] font-semibold mb-1 uppercase">
                     Exhibition Support
                   </span>
                 </span>
@@ -184,7 +184,7 @@ export default function MsmePmsBanner({
                 className="text-black text-xs sm:text-sm md:text-base max-w-lg mb-4 md:mb-5 font-bold leading-relaxed text-left"
               >
                 Eligible Micro & Small Enterprises can explore financial assistance
-                for participation in <span className="text-emerald-900">Bharat Organic Expo 2027</span> under the applicable
+                for participation in <span className="text-[#1b5e20]">Bharat Organic Expo 2027</span> under the applicable
                 Procurement & Marketing Support (PMS) Scheme.
               </p>
 

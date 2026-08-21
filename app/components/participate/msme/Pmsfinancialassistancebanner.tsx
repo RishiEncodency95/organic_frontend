@@ -46,17 +46,17 @@ interface SupportCard {
 const SUPPORT_CARDS: SupportCard[] = [
   {
     icon: Percent,
-    iconBg: "bg-[#0B5D34]",
+    iconBg: "bg-[#1b5e20]",
     eyebrow: "UP TO",
-    eyebrowColor: "text-[#0B5D34]",
+    eyebrowColor: "text-[#1b5e20]",
     value: "80%*",
     title: "General MSEs",
-    titleColor: "text-[#0B5D34]",
+    titleColor: "text-[#1b5e20]",
     description:
       "Of eligible built-up space rent assistance subject to PMS provisions.",
     footIcon: Landmark,
-    footIconColor: "text-[#0B5D34]",
-    footIconBg: "bg-[#0B5D34]/30",
+    footIconColor: "text-[#1b5e20]",
+    footIconBg: "bg-[#1b5e20]/30",
   },
   {
     icon: Users,
@@ -73,16 +73,16 @@ const SUPPORT_CARDS: SupportCard[] = [
   },
   {
     icon: ReceiptIndianRupee,
-    iconBg: "bg-[#0B5D34]",
+    iconBg: "bg-[#1b5e20]",
     eyebrow: "ADDITIONAL",
-    eyebrowColor: "text-[#0B5D34]",
+    eyebrowColor: "text-[#1b5e20]",
     value: "SUPPORT*",
     title: "Eligible Expenses",
-    titleColor: "text-[#0B5D34]",
+    titleColor: "text-[#1b5e20]",
     description: "Other eligible expenses as applicable under current PMS guidelines.",
     footIcon: TrendingUp,
-    footIconColor: "text-[#0B5D34]",
-    footIconBg: "bg-[#0B5D34]/30",
+    footIconColor: "text-[#1b5e20]",
+    footIconBg: "bg-[#1b5e20]/30",
   },
 ];
 
@@ -90,7 +90,7 @@ const PMSFinancialAssistanceBanner: FC = () => {
   return (
     <section
       aria-labelledby="pms-banner-heading"
-      className="relative w-full overflow-hidden border-y-4 border-[#0B5D34] bg-white"
+      className="relative w-full overflow-hidden border-y-4 border-[#1b5e20] bg-[#EFF7EE]"
     >
       {/* ============ Hero ============ */}
       <div className="mx-auto w-full px-4 md:px-11">
@@ -108,13 +108,13 @@ const PMSFinancialAssistanceBanner: FC = () => {
           <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/10 via-transparent to-transparent" />
 
           {/* Empowering MSEs badge */}
-          <div className="absolute bottom-0 left-0 right-0 flex items-center gap-3 bg-[#0B5D34] px-5 py-4 sm:gap-4 sm:px-8 sm:py-5">
-            <span className="flex h-14 w-14 shrink-0 items-center justify-center rounded-full border-2 border-[#C99A3B] bg-white sm:h-16 sm:w-16">
-              <Leaf className="h-7 w-7 text-[#0B5D34] sm:h-8 sm:w-8" aria-hidden="true" />
+          <div className="absolute bottom-0 left-0 right-0 flex items-center gap-3 bg-[#1b5e20] px-5 py-4 sm:gap-4 sm:px-8 sm:py-5">
+              <span className="flex h-14 w-14 shrink-0 items-center justify-center rounded-full border-2 border-[#C99A3B] bg-white sm:h-16 sm:w-16">
+              <Leaf className="h-7 w-7 text-[#1b5e20] sm:h-8 sm:w-8" aria-hidden="true" />
             </span>
             <p className="text-sm leading-snug text-white sm:text-base md:text-lg">
               <span className="block font-semibold">Empowering MSEs</span>
-              <span className="block font-semibold text-[#8FD19E]">
+              <span className="block font-semibold text-[#3b8c2a]">
                 for a stronger tomorrow
               </span>
             </p>
@@ -126,19 +126,19 @@ const PMSFinancialAssistanceBanner: FC = () => {
           {/* Decorative watermark leaves, top-right */}
           <Leaf
             aria-hidden="true"
-            className="pointer-events-none absolute -right-6 top-2 hidden h-40 w-40 rotate-[20deg] text-[#0B5D34] sm:block lg:h-56 lg:w-56"
+            className="pointer-events-none absolute -right-6 top-2 hidden h-40 w-40 rotate-[20deg] text-[#1b5e20] sm:block lg:h-56 lg:w-56"
           />
 
           {/* Eyebrow */}
           <div className="mb-2 flex items-center gap-3 sm:mb-3">
-            <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-[#0B5D34]/10 sm:h-14 sm:w-14">
-              <HandCoins className="h-6 w-6 text-[#0B5D34] sm:h-7 sm:w-7" aria-hidden="true" />
+            <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-[#1b5e20]/10 sm:h-14 sm:w-14">
+              <HandCoins className="h-6 w-6 text-[#1b5e20] sm:h-7 sm:w-7" aria-hidden="true" />
             </span>
             <div>
-              <p className="text-base font-semibold uppercase tracking-wide text-[#0B5D34] sm:text-lg">
+              <p className="text-base font-semibold uppercase tracking-wide text-[#1b5e20] sm:text-lg">
                 Financial Assistance
               </p>
-              <p className="text-sm text-[#1E293B] sm:text-base">
+              <p className="text-sm text-slate-700 sm:text-base">
                 For Eligible MSEs
               </p>
             </div>
@@ -149,17 +149,17 @@ const PMSFinancialAssistanceBanner: FC = () => {
             id="pms-banner-heading"
             className="text-[32px] font-semibold leading-[1.08] tracking-tight"
           >
-            <span className="block text-[#0B5D34]">How Much Support</span>
-            <span className="relative inline-block text-[#152238]">
+            <span className="block text-[#1b5e20]">How Much Support</span>
+            <span className="relative inline-block text-slate-900">
               May You Get?
               <Leaf
                 aria-hidden="true"
-                className="ml-2 inline-block h-8 w-8 -translate-y-2 rotate-[15deg] fill-[#8FD19E] text-[#0B5D34] sm:h-9 sm:w-9 md:h-10 md:w-10"
+                className="ml-2 inline-block h-8 w-8 -translate-y-2 rotate-[15deg] fill-[#3b8c2a] text-[#1b5e20] sm:h-9 sm:w-9 md:h-10 md:w-10"
               />
               <svg
                 aria-hidden="true"
                 viewBox="0 0 220 14"
-                className="absolute -bottom-2 left-0 h-3 w-40 text-[#0B5D34] sm:w-52 md:w-60"
+                className="absolute -bottom-2 left-0 h-3 w-40 text-[#1b5e20] sm:w-52 md:w-60"
                 fill="none"
               >
                 <path
@@ -173,8 +173,8 @@ const PMSFinancialAssistanceBanner: FC = () => {
           </h1>
 
           {/* Supporting copy */}
-          <p className="mt-4 max-w-2xl text-base leading-relaxed text-black sm:text-lg">
-            The <strong className="font-semibold text-[#0B5D34]">PMS Scheme</strong>{" "}
+          <p className="mt-4 max-w-2xl text-[14px] leading-relaxed text-slate-700 md:text-[15px]">
+            The <strong className="font-semibold text-[#1b5e20]">PMS Scheme</strong>{" "}
             provides financial assistance to reduce your participation cost
             and help your business grow in new markets.
           </p>
@@ -187,7 +187,7 @@ const PMSFinancialAssistanceBanner: FC = () => {
               return (
                 <article
                   key={card.title}
-                  className="relative flex flex-col items-center rounded-2xl bg-gray-100 px-4 pb-12 pt-5 text-center shadow-[0_10px_30px_-12px_rgba(15,45,30,0.18)] overflow-visible"
+                  className="relative flex flex-col items-center rounded-2xl bg-white px-4 pb-12 pt-5 text-center shadow-sm ring-1 ring-black/5 overflow-visible"
                 >
                   <span
                     className={`mb-3 flex h-14 w-14 items-center justify-center rounded-full ${card.iconBg}`}
@@ -206,18 +206,18 @@ const PMSFinancialAssistanceBanner: FC = () => {
                     {card.value}
                   </p>
 
-                  <span className="my-2 h-px w-16 bg-[#0B5D34]/20" aria-hidden="true" />
+                  <span className="my-2 h-px w-16 bg-[#1b5e20]/20" aria-hidden="true" />
 
                   <h3 className={`text-base font-semibold leading-snug ${card.titleColor}`}>
                     {card.title}
                   </h3>
-                  <p className="mt-2 text-sm leading-relaxed text-black">
+                  <p className="mt-2 text-sm leading-relaxed text-slate-600">
                     {card.description}
                   </p>
 
                   {/* Bottom border with icon on top */}
                   <div className={`absolute bottom-0 left-0 right-0 h-8 rounded-b-2xl ${card.footIconBg}`}>
-                    <span className={`absolute left-1/2 -top-7 flex h-16 w-16 -translate-x-1/2 items-center justify-center rounded-full ${card.footIconBg} shadow-lg z-10`}>
+                    <span className={`absolute left-1/2 -top-7 flex h-16 w-16 -translate-x-1/2 items-center justify-center rounded-full ${card.footIconBg} z-10`}>
                       <FootIcon
                         className={`h-7 w-7 ${card.footIconColor}`}
                         aria-hidden="true"
@@ -234,15 +234,15 @@ const PMSFinancialAssistanceBanner: FC = () => {
 
       {/* ============ Footer strip ============ */}
       <div className="relative px-4 pb-6 pt-2 md:px-11">
-        <div className="relative overflow-hidden rounded-2xl bg-[#e8e3d5]">
+        <div className="relative overflow-hidden rounded-2xl bg-[#EFF7EE] shadow-lg">
           <div className="flex flex-col items-center gap-4 px-3 py-4 sm:px-4 sm:py-5 md:flex-row md:items-center md:gap-6 md:px-4 md:py-4">
             {/* Important note */}
             <div className="flex w-full items-start gap-3 md:w-[38%]">
-              <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-[#0B5D34]">
+              <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-[#1b5e20]">
                 <ShieldCheck className="h-5 w-5 text-white" aria-hidden="true" />
               </span>
-              <p className="text-xs leading-relaxed text-black sm:text-sm">
-                <strong className="font-semibold text-[#152238]">
+              <p className="text-xs leading-relaxed text-slate-700 sm:text-sm">
+                <strong className="font-semibold text-slate-900">
                   *Important Note:
                 </strong>{" "}
                 Assistance is subject to applicable PMS guidelines,
@@ -253,15 +253,15 @@ const PMSFinancialAssistanceBanner: FC = () => {
 
             {/* Government support */}
             <div className="flex w-full items-center gap-3 md:w-[25%]">
-              <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-[#0B5D34]/10">
-                <Handshake className="h-5 w-5 text-[#0B5D34]" aria-hidden="true" />
+              <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-[#1b5e20]/10">
+                <Handshake className="h-5 w-5 text-[#1b5e20]" aria-hidden="true" />
               </span>
-              <p className="text-sm font-semibold leading-snug text-[#152238]">
+              <p className="text-sm font-semibold leading-snug text-slate-900">
                 Government Support.
                 <br />
                 Stronger Business.
                 <br />
-                <span className="font-semibold text-[#0B5D34]">
+                <span className="font-semibold text-[#1b5e20]">
                   Sustainable Growth.
                 </span>
               </p>
@@ -271,7 +271,7 @@ const PMSFinancialAssistanceBanner: FC = () => {
             <div className="flex w-full shrink-0 justify-center md:w-auto">
               <a
                 href="#eligibility"
-                className="inline-flex items-center gap-1.5 rounded-full bg-[#0B5D34] px-4 py-2 text-xs font-semibold uppercase tracking-wide text-white shadow-md transition-colors hover:bg-[#0A4E2C] sm:text-sm"
+                className="inline-flex items-center gap-1.5 rounded-full bg-[#1b5e20] px-4 py-2 text-[13px] font-semibold uppercase tracking-wide text-white shadow-md transition-colors hover:bg-[#2d7a2d] sm:text-[14px]"
               >
                 <Target className="h-3.5 w-3.5" aria-hidden="true" />
                 Check My Eligibility

@@ -67,20 +67,20 @@ export default function FAQBanner() {
   return (
     <section
       aria-labelledby="faq-heading"
-      className="relative w-full overflow-hidden bg-gradient-to-b from-green-100/70 to-white px-4 py-6 md:px-11"
+      className="relative w-full overflow-hidden bg-[#F9FCF9] px-4 py-2 md:px-11"
     >
       {/* Decorative leaf accent, top right */}
       <Leaf
-        className="pointer-events-none absolute top-0 right-6 z-0 hidden h-24 w-24 rotate-[20deg] text-green-700/20 sm:block lg:right-10 lg:h-32 lg:w-32"
+        className="pointer-events-none absolute top-0 right-6 z-0 hidden h-24 w-24 rotate-[20deg] text-[#3b8c2a]/20 sm:block lg:right-10 lg:h-32 lg:w-32"
         strokeWidth={1}
         aria-hidden="true"
       />
 
-      <div className="relative z-10 mx-auto grid w-full grid-cols-1 items-center gap-6 lg:grid-cols-[minmax(0,400px)_minmax(0,1fr)] lg:gap-8">
+      <div className="relative z-10 mx-auto grid w-full grid-cols-1 items-stretch gap-6 lg:grid-cols-[minmax(0,400px)_minmax(0,1fr)] lg:gap-8">
         {/* Left: image panel */}
         <div className="relative mx-auto w-full max-w-md lg:mx-0 lg:max-w-none">
           <div
-            className="relative aspect-[4/5] w-full overflow-hidden rounded-[2.5rem] shadow-lg lg:rounded-r-[6rem] lg:rounded-l-2xl"
+            className="relative h-full min-h-[300px] w-full overflow-hidden rounded-[2.5rem] lg:rounded-r-[6rem] lg:rounded-l-2xl"
             role="img"
             aria-label="Bharat Organic Expo visitors browsing organic produce stalls"
           >
@@ -96,14 +96,14 @@ export default function FAQBanner() {
         <div className="w-full">
           <div className="mb-4">
             <div className="mb-2 flex items-center justify-center gap-4">
-              <span className="hidden h-px w-16 bg-green-700/40 sm:block" aria-hidden="true" />
+              <span className="hidden h-px w-16 bg-[#3b8c2a]/40 sm:block" aria-hidden="true" />
               <h2
                 id="faq-heading"
-                className="text-3xl font-semibold tracking-tight text-green-900 sm:text-4xl"
+                className="text-[18px] font-semibold tracking-tight text-slate-900 md:text-[28px] lg:text-[32px]"
               >
                 Frequently Asked Questions
               </h2>
-              <span className="hidden h-px w-16 bg-green-700/40 sm:block" aria-hidden="true" />
+              <span className="hidden h-px w-16 bg-[#3b8c2a]/40 sm:block" aria-hidden="true" />
             </div>
           </div>
 
@@ -124,11 +124,11 @@ export default function FAQBanner() {
                       aria-expanded={isOpen}
                       aria-controls={`${item.id}-panel`}
                       id={`${item.id}-button`}
-                      className="flex w-full items-stretch gap-4 text-left focus:outline-none focus-visible:ring-2 focus-visible:ring-green-600 focus-visible:ring-offset-2"
+                      className="flex w-full items-stretch gap-4 text-left focus:outline-none focus-visible:ring-2 focus-visible:ring-[#3b8c2a] focus-visible:ring-offset-2"
                     >
                       {/* Icon badge */}
                       <span
-                        className="flex w-16 flex-none items-center justify-center bg-gradient-to-br from-green-800 to-green-600 text-white sm:w-20"
+                        className="flex w-16 flex-none items-center justify-center bg-gradient-to-br from-[#1b5e20] to-[#3b8c2a] text-white sm:w-20"
                         style={{
                           clipPath:
                             "polygon(0 0, 100% 0, 80% 100%, 0% 100%)",
@@ -140,7 +140,7 @@ export default function FAQBanner() {
 
                       {/* Question + answer */}
                       <span className="flex flex-1 flex-col justify-center gap-1 py-4 pr-4 sm:flex-row sm:items-center sm:gap-6 sm:py-5">
-                        <span className="flex-none text-[13px] font-semibold text-green-950 sm:w-44 sm:text-[15px] lg:w-52">
+                        <span className="flex-none text-[13px] font-semibold text-slate-900 sm:w-44 sm:text-[15px] lg:w-52">
                           {item.question}
                         </span>
                         <span className="hidden flex-none self-stretch border-l border-gray-200 sm:block" aria-hidden="true" />
@@ -148,7 +148,7 @@ export default function FAQBanner() {
                           id={`${item.id}-panel`}
                           role="region"
                           aria-labelledby={`${item.id}-button`}
-                          className={`text-xs leading-relaxed text-black transition-all duration-300 sm:text-sm ${
+                          className={`text-xs leading-relaxed text-slate-600 transition-all duration-300 sm:text-sm ${
                             isOpen
                               ? "max-h-40 opacity-100"
                               : "max-h-0 overflow-hidden opacity-0 sm:max-h-40 sm:opacity-100"
