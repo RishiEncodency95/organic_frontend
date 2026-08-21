@@ -9,7 +9,7 @@ import {
   ArrowRight,
   Leaf,
 } from "lucide-react";
-import reasonToVisitImg from "@/app/assets/participate/msme/reason_to_visit.png";
+import reasonToVisitImg from "@/app/assets/participate/msme/reason_to_visit.jpg";
 
 /**
  * Bharat Organic Expo — "Reason to Visit" banner
@@ -80,7 +80,7 @@ const FEATURES: Feature[] = [
 
 export default function ReasonToVisitBanner() {
   return (
-    <section className="relative w-full overflow-hidden bg-[#f0ede0] px-4 py-6 md:px-11">
+    <section className="relative w-full overflow-hidden bg-[#EFF7EE] px-4 py-6 md:px-11">
       <div className="mx-auto w-full">
         {/* ===================== TOP: heading + photo collage ===================== */}
         <div className="grid grid-cols-1 items-center gap-10 lg:grid-cols-2 lg:gap-8">
@@ -88,10 +88,10 @@ export default function ReasonToVisitBanner() {
           <div>
             <div className="mb-4 flex items-center gap-2">
               <Leaf
-                className="h-5 w-5 shrink-0 -rotate-12 text-[#2F5E2F]"
+                className="h-5 w-5 shrink-0 -rotate-12 text-[#1b5e20]"
                 strokeWidth={2}
               />
-              <p className="text-xs font-semibold uppercase tracking-wide text-[#2F5E2F] sm:text-sm">
+              <p className="text-[11px] font-semibold uppercase tracking-wide text-[#1b5e20] sm:text-[12px]">
                 Be part of India&rsquo;s leading{" "}
                 <span className="block text-[#14231A] sm:inline">
                   Organic &amp; Sustainable Future
@@ -99,22 +99,22 @@ export default function ReasonToVisitBanner() {
               </p>
             </div>
 
-            <h1 className="relative font-sans text-3xl font-semibold uppercase leading-[1.1] tracking-tight text-[#14231A] sm:text-4xl md:text-5xl">
+            <h1 className="relative font-sans text-[24px] font-semibold uppercase leading-[1.1] tracking-tight text-slate-900 md:text-[32px] lg:text-[40px]">
               Reason
               <Leaf
-                className="ml-1 inline-block h-6 w-6 -translate-y-3 rotate-45 text-[#2F5E2F] sm:h-7 sm:w-7"
+                className="ml-1 inline-block h-6 w-6 -translate-y-3 rotate-45 text-[#1b5e20] sm:h-7 sm:w-7"
                 strokeWidth={2}
               />
               <br />
               To Visit
             </h1>
 
-            <div className="mt-5 max-w-md">
-              <h2 className="text-lg font-semibold text-[#2F5E2F] sm:text-xl">
+            <div className="mt-4 max-w-md">
+              <h2 className="text-[18px] font-semibold text-[#1b5e20] md:text-[20px]">
                 More than an Expo. A Gateway to Growth.
               </h2>
-              <span className="mt-1 block h-[3px] w-14 bg-[#2F5E2F]" />
-              <p className="mt-4 text-sm leading-relaxed text-[#3F4A42] sm:text-base">
+              <span className="mt-1 block h-[3px] w-14 bg-[#3b8c2a]" />
+              <p className="mt-4 text-[14px] leading-relaxed text-slate-600 md:text-[15px]">
                 Bharat Organic Expo brings together the entire organic
                 ecosystem to create opportunities, inspire innovation and
                 build a healthier tomorrow.
@@ -136,22 +136,22 @@ export default function ReasonToVisitBanner() {
         </div>
 
         {/* ===================== FEATURES STRIP ===================== */}
-        <div className="mt-4 grid grid-cols-2 gap-x-4 gap-y-6 border-t border-[#E1DDD0] pt-4 sm:grid-cols-3 sm:gap-x-6 lg:grid-cols-6 lg:divide-x lg:divide-dashed lg:divide-[#D7D2C2]">
+        <div className="mt-4 grid grid-cols-2 gap-x-4 gap-y-6 border-t border-gray-200 pt-4 sm:grid-cols-3 sm:gap-x-6 lg:grid-cols-6 lg:divide-x lg:divide-dashed lg:divide-gray-200">
             {FEATURES.map((feature) => (
               <article
                 key={feature.id}
                 className="flex flex-col items-center px-2 text-center lg:px-4"
               >
-                <span className="mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-[#e5e0d0] text-[#2F5E2F] sm:h-20 sm:w-20">
+                <span className="mb-2 flex h-16 w-16 items-center justify-center rounded-full bg-[#EFF7EE] text-[#1b5e20] sm:h-20 sm:w-20">
                   {feature.icon}
                 </span>
-                <h3 className="text-xs font-semibold uppercase leading-snug text-[#14231A] sm:text-sm">
+                <h3 className="text-[13px] font-semibold uppercase leading-snug text-slate-900 sm:text-[14px]">
                   {feature.title}
                 </h3>
-                <p className="mt-2 text-[11px] leading-relaxed text-[#5B6B5E] sm:text-xs">
+                <p className="mt-1 text-[12px] leading-relaxed text-slate-600 sm:text-[13px]">
                   {feature.description}
                 </p>
-                <span className="mt-auto rounded-md bg-[#1E331E] px-3 py-1 text-xs font-semibold text-white">
+                <span className="mt-auto rounded-md bg-[#1b5e20] px-3 py-1 text-[12px] font-semibold text-white">
                   {feature.id}
                 </span>
               </article>
@@ -159,14 +159,14 @@ export default function ReasonToVisitBanner() {
         </div>
 
         {/* ===================== BOTTOM CTA BAR ===================== */}
-        <div className="mt-6 flex flex-col gap-4 rounded-[2rem] border border-[#E1DDD0] bg-white/60 p-4 sm:flex-row sm:items-center sm:justify-center sm:gap-6 sm:p-5 gap-4">
+        <div className="mt-6 flex flex-col gap-4 rounded-[2rem] border border-gray-200 bg-white p-4 sm:flex-row sm:items-center sm:justify-center sm:gap-6 sm:p-5 gap-4">
           <div className="flex flex-col items-center gap-3 sm:flex-row sm:gap-4">
-            <span className="flex items-center gap-2 text-sm font-medium text-[#2F5E2F] sm:text-base">
+            <span className="flex items-center gap-2 text-[14px] font-medium text-[#1b5e20] sm:text-[15px]">
               <Leaf className="h-4 w-4 shrink-0" strokeWidth={2} />
               One Platform. Unlimited Opportunities.
             </span>
-            <span className="hidden h-6 w-px bg-[#D7D2C2] sm:block" />
-            <span className="flex items-center gap-2 text-sm font-semibold uppercase tracking-wide text-[#14231A] sm:text-base">
+            <span className="hidden h-6 w-px bg-gray-200 sm:block" />
+            <span className="flex items-center gap-2 text-[14px] font-semibold uppercase tracking-wide text-slate-900 sm:text-[15px]">
               Don&rsquo;t Miss It!
               <Leaf className="h-4 w-4 shrink-0 rotate-90" strokeWidth={2} />
             </span>
@@ -174,7 +174,7 @@ export default function ReasonToVisitBanner() {
 
           <a
             href="#plan-your-visit"
-            className="group flex items-center justify-center gap-3 rounded-full bg-[#1E331E] px-6 py-2.5 text-sm font-semibold uppercase tracking-wide text-white transition-colors hover:bg-[#2F5E2F] sm:text-base"
+            className="group flex items-center justify-center gap-3 rounded-full bg-[#1b5e20] px-6 py-2.5 text-[14px] font-semibold uppercase tracking-wide text-white transition-colors hover:bg-[#2d7a2d] sm:text-[15px]"
           >
             Plan Your Visit Now
             <span className="flex h-7 w-7 items-center justify-center rounded-full bg-white/15 transition-transform group-hover:translate-x-0.5">

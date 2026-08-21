@@ -48,27 +48,20 @@ export default function MsmePmsScheme() {
   return (
     <section
       aria-labelledby="msme-pms-heading"
-      className="w-full py-6 px-4 md:px-11"
+      className="w-full bg-[#F9FCF9] py-6 px-4 md:px-11"
     >
       <div className="mx-auto w-full">
         {/* Heading */}
         <h2
           id="msme-pms-heading"
-          className="text-center text-2xl sm:text-3xl lg:text-4xl font-semibold tracking-tight text-emerald-950 text-balance"
+          className="text-center text-[18px] font-semibold tracking-tight text-slate-900 text-balance md:text-[28px] lg:text-[32px]"
         >
           What is the MSME PMS Scheme?
         </h2>
 
-        {/* Divider */}
-        <div className="mt-4 mb-2 flex items-center justify-center gap-2" aria-hidden="true">
-          <span className="h-px w-16 bg-amber-600/70" />
-          <span className="h-1.5 w-1.5 rounded-full bg-amber-600" />
-          <span className="h-px w-16 bg-amber-600/70" />
-        </div>
-
         {/* Intro paragraph */}
-        <p className="mx-auto max-w-3xl text-center text-base sm:text-lg leading-relaxed text-neutral-700 text-balance">
-          The <strong className="font-semibold text-neutral-900">Procurement &amp; Marketing Support (PMS) Scheme</strong> is
+        <p className="mx-auto max-w-3xl text-center text-[14px] sm:text-[15px] leading-relaxed text-slate-600 text-balance">
+          The <strong className="font-semibold text-slate-900">Procurement &amp; Marketing Support (PMS) Scheme</strong> is
           an initiative of the Ministry of MSME aimed at improving market access for Micro
           &amp; Small Enterprises. Eligible MSEs can explore applicable financial assistance for
           participation in approved trade fairs and exhibitions.
@@ -83,26 +76,20 @@ export default function MsmePmsScheme() {
                 key={feature.id}
                 className="relative flex flex-col items-center rounded-2xl bg-white pt-6 pb-10 px-4 text-center shadow-sm ring-1 ring-black/5 overflow-hidden"
               >
-                <div className="flex h-20 w-20 items-center justify-center rounded-full border-2 border-gray-300 bg-gray-100">
-                  <Icon className="h-10 w-10 text-emerald-800" strokeWidth={1.75} aria-hidden="true" />
+                <div className="flex h-20 w-20 items-center justify-center rounded-full border-2 border-[#3b8c2a]/20 bg-[#EFF7EE]">
+                  <Icon className="h-10 w-10 text-[#1b5e20]" strokeWidth={1.75} aria-hidden="true" />
                 </div>
 
-                <h3 className="mt-4 text-lg sm:text-xl font-semibold text-emerald-950">
+                <h3 className="mt-4 text-[18px] sm:text-xl font-semibold text-slate-900">
                   {feature.title}
                 </h3>
 
-                <div className="mt-2 mb-2 flex items-center gap-2" aria-hidden="true">
-                  <span className="h-px w-10 bg-amber-600/70" />
-                  <span className="h-1 w-1 rounded-full bg-amber-600" />
-                  <span className="h-px w-10 bg-amber-600/70" />
-                </div>
-
-                <p className="text-sm leading-relaxed text-neutral-600">
+                <p className="mt-2 text-[14px] leading-relaxed text-slate-600">
                   {feature.description}
                 </p>
 
                 <div
-                  className="absolute bottom-0 left-1/2 h-14 w-32 -translate-x-1/2 translate-y-1/2 rounded-full bg-emerald-950"
+                  className="absolute bottom-0 left-1/2 h-14 w-32 -translate-x-1/2 translate-y-1/2 rounded-full bg-[#0b2912]"
                   aria-hidden="true"
                 />
                 <span className="absolute bottom-2 left-1/2 -translate-x-1/2 text-sm font-semibold text-white">
@@ -114,14 +101,14 @@ export default function MsmePmsScheme() {
         </ul>
 
         {/* Bottom banner */}
-        <div className="mt-6 flex flex-col sm:flex-row items-center gap-4 rounded-2xl bg-emerald-100/90 px-4 py-4 sm:px-6">
-          <div className="flex h-14 w-14 shrink-0 items-center justify-center rounded-full bg-emerald-950">
+        <div className="mt-6 flex flex-col sm:flex-row items-center gap-4 rounded-2xl bg-[#EFF7EE] px-4 py-4 sm:px-6">
+          <div className="flex h-14 w-14 shrink-0 items-center justify-center rounded-full bg-[#1b5e20]">
             <ShieldCheck className="h-7 w-7 text-white" aria-hidden="true" />
           </div>
-          <p className="text-center sm:text-left text-base sm:text-lg text-neutral-800">
+          <p className="text-center sm:text-left text-[14px] sm:text-[15px] text-slate-700">
             The PMS Scheme empowers MSEs to participate, promote and prosper.{" "}
             <br />
-            <strong className="block sm:inline font-semibold text-emerald-900">
+            <strong className="block sm:inline font-semibold text-slate-900">
               More Participation. More Exposure. More Growth.
             </strong>
           </p>

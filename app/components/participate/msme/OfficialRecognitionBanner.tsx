@@ -19,7 +19,7 @@ export default function OfficialRecognitionBanner() {
   return (
     <section
       aria-labelledby="official-recognition-heading"
-      className="w-full bg-[#f0efe5] px-4 py-6 md:px-11"
+      className="w-full bg-white px-4 pt-8 pb-6 md:px-11"
     >
       <div className="mx-auto w-full">
         <div className="grid grid-cols-1 items-start gap-6 lg:grid-cols-[1.1fr_0.8fr_0.85fr] lg:gap-6">
@@ -27,29 +27,27 @@ export default function OfficialRecognitionBanner() {
           <div>
             {/* Eyebrow badge */}
             <div className="mb-3 flex items-center gap-3">
-              <span className="flex h-10 w-10 items-center justify-center rounded-full bg-amber-100">
-                <Award className="h-5 w-5 text-amber-600" strokeWidth={2} aria-hidden="true" />
+              <span className="flex h-10 w-10 items-center justify-center rounded-full bg-[#F2B40E]/20">
+                <Award className="h-5 w-5 text-[#F2B40E]" strokeWidth={2} aria-hidden="true" />
               </span>
-              <span className="border-b-2 border-amber-400 pb-1 text-xs font-semibold tracking-widest text-emerald-800 sm:text-sm">
+              <span className="border-b-2 border-[#F2B40E] pb-1 text-[11px] font-semibold tracking-widest text-[#1b5e20] sm:text-[12px]">
                 OFFICIAL RECOGNITION
               </span>
             </div>
 
             <h1
               id="official-recognition-heading"
-              className="text-3xl font-semibold leading-[1.1] tracking-tight text-emerald-950 sm:text-4xl"
+              className="text-[24px] font-semibold leading-[1.1] tracking-tight text-slate-900 md:text-[32px]"
             >
               Bharat Organic Expo
               <br />
               Approved under PMS*
             </h1>
 
-            <div className="my-4 h-1 w-16 rounded-full bg-amber-400" aria-hidden="true" />
-
-            <p className="mb-5 max-w-xl text-base leading-relaxed text-gray-600 sm:text-lg">
-              <span className="font-semibold text-gray-800">Bharat Organic Expo 2027</span> has
+            <p className="mb-5 max-w-xl text-[14px] leading-relaxed text-slate-600 md:text-[15px]">
+              <span className="font-semibold text-slate-900">Bharat Organic Expo 2027</span> has
               received approval/sanction under the applicable{" "}
-              <span className="font-semibold text-gray-800">
+              <span className="font-semibold text-slate-900">
                 Procurement &amp; Marketing Support (PMS) Scheme
               </span>{" "}
               component, enabling eligible participating MSEs to apply for applicable exhibition
@@ -57,22 +55,22 @@ export default function OfficialRecognitionBanner() {
             </p>
 
             {/* Feature strip */}
-            <ul className="mb-6 grid max-w-xl grid-cols-3 gap-3 rounded-2xl bg-emerald-50/70 p-4">
+            <ul className="mb-6 grid max-w-xl grid-cols-3 gap-3 rounded-2xl bg-white p-4">
               <li className="flex flex-col items-center gap-2 text-center">
-                <FileCheck2 className="h-7 w-7 text-emerald-700" aria-hidden="true" />
-                <span className="text-xs font-medium leading-snug text-gray-700 sm:text-sm">
+                <FileCheck2 className="h-7 w-7 text-[#1b5e20]" aria-hidden="true" />
+                <span className="text-[12px] font-medium leading-snug text-slate-700 sm:text-[13px]">
                   Government Approved Exhibition
                 </span>
               </li>
               <li className="flex flex-col items-center gap-2 text-center">
-                <Users className="h-7 w-7 text-emerald-700" aria-hidden="true" />
-                <span className="text-xs font-medium leading-snug text-gray-700 sm:text-sm">
+                <Users className="h-7 w-7 text-[#1b5e20]" aria-hidden="true" />
+                <span className="text-[12px] font-medium leading-snug text-slate-700 sm:text-[13px]">
                   Support for MSE Growth
                 </span>
               </li>
               <li className="flex flex-col items-center gap-2 text-center">
-                <BadgeCheck className="h-7 w-7 text-emerald-700" aria-hidden="true" />
-                <span className="text-xs font-medium leading-snug text-gray-700 sm:text-sm">
+                <BadgeCheck className="h-7 w-7 text-[#1b5e20]" aria-hidden="true" />
+                <span className="text-[12px] font-medium leading-snug text-slate-700 sm:text-[13px]">
                   Applicable for Eligible MSEs Only
                 </span>
               </li>
@@ -82,7 +80,7 @@ export default function OfficialRecognitionBanner() {
             <div className="flex items-center gap-6">
               <button
                 type="button"
-                className="inline-flex items-center gap-2 rounded-full bg-emerald-900 px-5 py-2.5 text-xs font-semibold text-white transition-colors hover:bg-emerald-800 sm:text-sm"
+                className="inline-flex items-center gap-2 rounded-full bg-[#1b5e20] px-5 py-2.5 text-[13px] font-semibold text-white transition-colors hover:bg-[#2d7a2d] sm:text-[14px]"
               >
                 <FileText className="h-4 w-4" aria-hidden="true" />
                 VIEW OFFICIAL APPROVAL
@@ -90,7 +88,7 @@ export default function OfficialRecognitionBanner() {
               </button>
               <a
                 href="#pms-scheme"
-                className="text-sm font-medium text-emerald-900 underline decoration-emerald-900/40 underline-offset-4 hover:decoration-emerald-900 sm:text-base"
+                className="text-[14px] font-medium text-[#1b5e20] underline decoration-[#1b5e20]/40 underline-offset-4 hover:decoration-[#1b5e20] sm:text-[15px]"
               >
                 Know more about PMS Scheme →
               </a>
@@ -98,22 +96,20 @@ export default function OfficialRecognitionBanner() {
           </div>
 
           {/* ---------------- Middle: Approval Card ---------------- */}
-          <div className="relative mt-4 lg:mt-0">
-            <div className="absolute left-1/2 top-0 z-10 flex h-14 w-14 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full bg-white shadow-md ring-4 ring-white">
-              <span className="flex h-11 w-11 items-center justify-center rounded-full bg-emerald-700">
-                <CheckCircle2 className="h-6 w-6 text-white" aria-hidden="true" />
-              </span>
+          <div className="relative mt-4 lg:mt-0 flex">
+            <div className="absolute left-1/2 top-0 z-10 flex h-14 w-14 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full bg-[#1b5e20] shadow-md ring-4 ring-white">
+              <CheckCircle2 className="h-7 w-7 text-white" aria-hidden="true" />
             </div>
 
-            <div className="overflow-hidden rounded-3xl border border-emerald-100 bg-white shadow-xl">
-              <div className="bg-emerald-800 py-4 pt-8 text-center text-xs font-semibold uppercase tracking-wide text-white sm:text-sm">
+            <div className="overflow-hidden rounded-3xl border border-gray-100 bg-white shadow-xl w-full">
+              <div className="bg-[#1b5e20] py-4 pt-8 text-center text-[13px] font-semibold uppercase tracking-wide text-white sm:text-[14px]">
                 MSME PMS Approved Event
               </div>
 
               <div className="p-5 sm:p-6">
                 <div className="mb-4 flex flex-col items-center gap-3 text-center">
-                  <Leaf className="h-9 w-9 shrink-0 text-emerald-600" aria-hidden="true" />
-                  <p className="text-lg font-semibold leading-tight text-emerald-950">
+                  <Leaf className="h-9 w-9 shrink-0 text-[#3b8c2a]" aria-hidden="true" />
+                  <p className="text-[18px] font-semibold leading-tight text-slate-900">
                     BHARAT
                     <br />
                     ORGANIC EXPO
@@ -122,12 +118,12 @@ export default function OfficialRecognitionBanner() {
                   </p>
                 </div>
 
-                <div className="mb-3 flex items-center gap-3 text-sm font-semibold text-gray-700">
-                  <Calendar className="h-4 w-4 shrink-0 text-emerald-700" aria-hidden="true" />
+                <div className="mb-3 flex items-center gap-3 text-[14px] font-semibold text-slate-700">
+                  <Calendar className="h-4 w-4 shrink-0 text-[#1b5e20]" aria-hidden="true" />
                   19–21 FEBRUARY 2027
                 </div>
-                <div className="mb-5 flex items-center gap-3 text-sm font-semibold text-gray-700">
-                  <MapPin className="h-4 w-4 shrink-0 text-emerald-700" aria-hidden="true" />
+                <div className="mb-5 flex items-center gap-3 text-[14px] font-semibold text-slate-700">
+                  <MapPin className="h-4 w-4 shrink-0 text-[#1b5e20]" aria-hidden="true" />
                   BHARAT MANDAPAM, NEW DELHI
                 </div>
 
@@ -135,71 +131,61 @@ export default function OfficialRecognitionBanner() {
 
                 <dl>
                   <div className="mb-3 flex items-start gap-3">
-                    <span className="mt-0.5 flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-emerald-50">
-                      <FileSearch className="h-4 w-4 text-emerald-700" aria-hidden="true" />
+                    <span className="mt-0.5 flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-[#EFF7EE]">
+                      <FileSearch className="h-4 w-4 text-[#1b5e20]" aria-hidden="true" />
                     </span>
                     <div>
-                      <dt className="text-xs text-gray-500">Approval / Sanction No.</dt>
-                      <dd className="text-sm font-semibold text-emerald-900">
+                      <dt className="text-[12px] text-slate-500">Approval / Sanction No.</dt>
+                      <dd className="text-[14px] font-semibold text-[#1b5e20]">
                         PMS/DFO-DELHI/2024-25/487
                       </dd>
                     </div>
                   </div>
                   <div className="mb-3 flex items-start gap-3">
-                    <span className="mt-0.5 flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-emerald-50">
-                      <BadgeCheck className="h-4 w-4 text-emerald-700" aria-hidden="true" />
+                    <span className="mt-0.5 flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-[#EFF7EE]">
+                      <BadgeCheck className="h-4 w-4 text-[#1b5e20]" aria-hidden="true" />
                     </span>
                     <div>
-                      <dt className="text-xs text-gray-500">Issued By</dt>
-                      <dd className="text-sm font-semibold text-emerald-900">MSME-DFO, DELHI</dd>
+                      <dt className="text-[12px] text-slate-500">Issued By</dt>
+                      <dd className="text-[14px] font-semibold text-[#1b5e20]">MSME-DFO, DELHI</dd>
                     </div>
                   </div>
                   <div className="flex items-start gap-3">
-                    <span className="mt-0.5 flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-emerald-50">
-                      <Calendar className="h-4 w-4 text-emerald-700" aria-hidden="true" />
+                    <span className="mt-0.5 flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-[#EFF7EE]">
+                      <Calendar className="h-4 w-4 text-[#1b5e20]" aria-hidden="true" />
                     </span>
                     <div>
-                      <dt className="text-xs text-gray-500">Approval Date</dt>
-                      <dd className="text-sm font-semibold text-emerald-900">18 APRIL 2024</dd>
+                      <dt className="text-[12px] text-slate-500">Approval Date</dt>
+                      <dd className="text-[14px] font-semibold text-[#1b5e20]">18 APRIL 2024</dd>
                     </div>
                   </div>
                 </dl>
-
-                <div className="mt-4 h-px bg-gray-200" />
-
-                <button
-                  type="button"
-                  className="mt-4 flex w-full items-center justify-center gap-2 rounded-full bg-emerald-800 py-2.5 text-xs font-semibold text-white transition-colors hover:bg-emerald-700 sm:text-sm"
-                >
-                  <Download className="h-4 w-4" aria-hidden="true" />
-                  DOWNLOAD APPROVAL LETTER (PDF)
-                </button>
               </div>
             </div>
           </div>
 
           {/* ---------------- Right: Certificate ---------------- */}
-          <div className="mt-4 lg:mt-0">
-            <div className="rounded-2xl border border-gray-100 bg-white p-5 shadow-lg sm:p-6">
+          <div className="mt-4 lg:mt-0 flex">
+            <div className="rounded-2xl border border-gray-100 bg-white p-5 shadow-lg sm:p-6 w-full">
               <div className="mb-3 flex flex-col items-center text-center">
-                <Landmark className="mb-2 h-8 w-8 text-gray-700" aria-hidden="true" />
-                <p className="text-[11px] leading-snug text-gray-700 sm:text-xs">भारत सरकार</p>
-                <p className="text-[11px] font-semibold tracking-wide text-gray-800 sm:text-xs">
+                <Landmark className="mb-2 h-8 w-8 text-slate-700" aria-hidden="true" />
+                <p className="text-[11px] leading-snug text-slate-600 sm:text-[12px]">भारत सरकार</p>
+                <p className="text-[11px] font-semibold tracking-wide text-slate-900 sm:text-[12px]">
                   GOVERNMENT OF INDIA
                 </p>
-                <p className="mt-1 text-[11px] leading-snug text-gray-700 sm:text-xs">
+                <p className="mt-1 text-[11px] leading-snug text-slate-600 sm:text-[12px]">
                   सूक्ष्म, लघु और मध्यम उद्यम मंत्रालय
                 </p>
-                <p className="text-[11px] font-semibold text-gray-800 sm:text-xs">MINISTRY OF</p>
-                <p className="text-[11px] font-semibold text-gray-800 sm:text-xs">
+                <p className="text-[11px] font-semibold text-slate-900 sm:text-[12px]">MINISTRY OF</p>
+                <p className="text-[11px] font-semibold text-slate-900 sm:text-[12px]">
                   MICRO, SMALL &amp; MEDIUM ENTERPRISES
                 </p>
-                <p className="mt-1 text-[11px] font-semibold text-gray-600 sm:text-xs">
+                <p className="mt-1 text-[11px] font-semibold text-slate-600 sm:text-[12px]">
                   MSME-DFO, DELHI
                 </p>
               </div>
 
-              <div className="mb-3 flex items-start justify-between text-[10px] text-gray-500 sm:text-[11px]">
+              <div className="mb-3 flex items-start justify-between text-[10px] text-slate-500 sm:text-[11px]">
                 <span>
                   क्रमांक / Ref. No.:
                   <br />
@@ -208,47 +194,55 @@ export default function OfficialRecognitionBanner() {
                 <span className="text-right">दिनांक / Date: 18.04.2024</span>
               </div>
 
-              <p className="mb-2 text-center text-xs font-semibold text-gray-800 underline underline-offset-4 sm:text-sm">
+              <p className="mb-2 text-center text-[13px] font-semibold text-slate-900 underline underline-offset-4 sm:text-[14px]">
                 To Whomsoever It May Concern
               </p>
 
-              <p className="mb-2 text-justify text-[11px] leading-relaxed text-gray-600 sm:text-xs">
+              <p className="mb-2 text-justify text-[11px] leading-relaxed text-slate-600 sm:text-[12px]">
                 This is to certify that{" "}
-                <span className="font-semibold text-gray-800">Bharat Organic Expo 2027</span>{" "}
+                <span className="font-semibold text-slate-900">Bharat Organic Expo 2027</span>{" "}
                 (19–21 February 2027) to be held at Bharat Mandapam,{" "}
-                <span className="font-semibold text-gray-800">New Delhi</span> has been approved
+                <span className="font-semibold text-slate-900">New Delhi</span> has been approved
                 under the Procurement &amp; Marketing Support (PMS) Scheme component for the
                 financial year 2024-25.
               </p>
-              <p className="mb-4 text-justify text-[11px] leading-relaxed text-gray-600 sm:text-xs">
+              <p className="mb-4 text-justify text-[11px] leading-relaxed text-slate-600 sm:text-[12px]">
                 This approval is subject to the terms &amp; conditions of the PMS Scheme
                 guidelines issued by the Ministry of MSME from time to time.
               </p>
 
               <div className="flex items-end justify-between gap-3">
-                <div className="text-[11px] leading-snug text-gray-600 sm:text-xs">
-                  <p className="mb-0.5 font-semibold text-gray-700">(Authorised Signatory)</p>
+                <div className="text-[11px] leading-snug text-slate-600 sm:text-[12px]">
+                  <p className="mb-0.5 font-semibold text-slate-700">(Authorised Signatory)</p>
                   <p>MSME-DFO, Delhi</p>
                   <p>Ministry of MSME</p>
                   <p>Government of India</p>
                 </div>
                 <div
-                  className="flex h-14 w-14 shrink-0 items-center justify-center rounded-full border-2 border-indigo-300 text-center text-[6px] leading-tight text-indigo-400"
+                  className="flex h-14 w-14 shrink-0 items-center justify-center rounded-full border-2 border-[#1b5e20]/30 text-center text-[6px] leading-tight text-[#1b5e20]/60"
                   aria-hidden="true"
                 >
                   OFFICIAL SEAL
                 </div>
               </div>
+
+              <button
+                type="button"
+                className="mt-4 flex w-full items-center justify-center gap-2 rounded-full bg-[#1b5e20] py-2.5 text-[13px] font-semibold text-white transition-colors hover:bg-[#2d7a2d] sm:text-[14px]"
+              >
+                <Download className="h-4 w-4" aria-hidden="true" />
+                DOWNLOAD APPROVAL LETTER (PDF)
+              </button>
             </div>
           </div>
         </div>
 
         {/* ---------------- Disclaimer ---------------- */}
-        <div className="mt-6 flex items-start gap-3 rounded-2xl border border-emerald-100 bg-emerald-50/70 p-4 sm:p-5">
-          <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-emerald-700">
+        <div className="mt-4 flex items-start gap-3 rounded-2xl border border-gray-100 bg-white p-3 shadow-lg sm:p-4">
+          <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-[#1b5e20]">
             <ShieldCheck className="h-4 w-4 text-white" aria-hidden="true" />
           </span>
-          <p className="text-xs leading-relaxed text-gray-600 sm:text-sm">
+          <p className="text-[13px] leading-relaxed text-slate-600 sm:text-[14px]">
             Event approval does not guarantee reimbursement. Individual eligibility,
             documentation and final <br/>sanction are subject to applicable PMS Scheme guidelines and
             decision of the competent authority.

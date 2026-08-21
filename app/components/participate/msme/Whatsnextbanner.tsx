@@ -16,12 +16,6 @@ import {
   ChevronRight,
 } from "lucide-react";
 
-/**
- * WhatsNextBanner — "What's Next? Take the Next Step Today"
- * Promotional section for Bharat Organic Expo 2027.
- * Pure Tailwind, no background image (parent provides the bg).
- */
-
 const benefits = [
   {
     icon: Globe2,
@@ -70,68 +64,65 @@ export default function WhatsNextBanner() {
   return (
     <section
       aria-labelledby="whats-next-heading"
-      className="w-full px-4 py-6 md:px-11"
+      className="w-full bg-[#F9FCF9] px-4 py-4 md:px-11"
     >
       <div className="mx-auto w-full">
         {/* ============ TOP: Heading+Intro  |  Logo+Benefits ============ */}
-        <div className="grid grid-cols-1 gap-8 lg:grid-cols-12 lg:gap-10">
+        <div className="grid grid-cols-1 gap-4 lg:grid-cols-12 lg:gap-6">
           {/* Left: heading + intro copy */}
           <div className="lg:col-span-5 flex flex-col justify-center">
             <h2
               id="whats-next-heading"
-              className="flex flex-wrap items-center gap-2 font-semibold uppercase leading-[0.95] tracking-tight text-emerald-800 text-[30px]"
+              className="flex flex-wrap items-center gap-2 font-semibold uppercase leading-[0.95] tracking-tight text-[#1b5e20] text-[18px] md:text-[28px] lg:text-[32px]"
             >
               What&apos;s Next?
               <Leaf
-                className="h-8 w-8 shrink-0 -rotate-12 text-emerald-600"
+                className="h-8 w-8 shrink-0 -rotate-12 text-[#3b8c2a]"
                 aria-hidden="true"
               />
             </h2>
-            <p className="mt-1 font-semibold uppercase leading-[0.95] tracking-tight text-slate-900 text-[32px]">
+            <p className="mt-1 font-semibold uppercase leading-[0.95] tracking-tight text-slate-900 text-[20px] md:text-[26px] lg:text-[30px]">
               Take the Next Step Today
             </p>
 
-            <div className="my-5 flex items-center gap-3" aria-hidden="true">
-              <span className="h-[3px] w-16 bg-emerald-700" />
-              <Leaf className="h-4 w-4 text-emerald-600" />
-              <span className="h-px flex-1 bg-emerald-700/40" />
+            <div className="my-3 flex items-center gap-3" aria-hidden="true">
+              <span className="h-[3px] w-16 bg-[#3b8c2a]" />
+              <Leaf className="h-4 w-4 text-[#3b8c2a]" />
+              <span className="h-px flex-1 bg-[#3b8c2a]/40" />
             </div>
 
-            <p className="max-w-md text-base sm:text-lg leading-relaxed text-slate-700">
+            <p className="max-w-md text-[14px] sm:text-[15px] leading-relaxed text-slate-600">
               Join <span className="font-semibold text-slate-900">Bharat Organic Expo 2027</span> and
               be part of India&apos;s fastest growing Organic &amp; Natural marketplace.
             </p>
           </div>
 
           {/* Right: logo lockup + benefits card */}
-          <div className="lg:col-span-7 flex flex-col gap-6">
+          <div className="lg:col-span-7 flex flex-col gap-4">
             {/* Logo lockup */}
             <div className="flex items-center justify-start gap-3 lg:justify-end">
-              <Leaf className="h-8 w-8 shrink-0 text-emerald-600" aria-hidden="true" />
-              <p className="text-lg sm:text-xl font-semibold leading-tight text-emerald-800">
-                Bharat
-                <br />
-                Organic
-                <br />
-                Expo <span className="text-amber-700">2027</span>
+              <Leaf className="h-8 w-8 shrink-0 text-[#3b8c2a]" aria-hidden="true" />
+              <p className="text-[16px] sm:text-[18px] font-semibold leading-tight text-[#1b5e20]">
+                Bharat Organic Expo<br />
+                <span className="text-[#F2B40E]">2027</span>
               </p>
             </div>
 
             {/* Benefits card */}
-            <div className="rounded-2xl border border-emerald-100 bg-white/80 shadow-[rgba(0,0,0,0.24)_0px_3px_8px] px-4 py-4 sm:px-6 sm:py-5">
-              <ul className="grid grid-cols-2 gap-x-4 gap-y-8 sm:grid-cols-4 sm:gap-x-0 sm:divide-x sm:divide-dashed sm:divide-emerald-300">
+            <div className="rounded-2xl border border-gray-100 bg-white shadow-sm px-4 py-3 sm:px-6 sm:py-4">
+              <ul className="grid grid-cols-2 gap-x-4 gap-y-4 sm:grid-cols-4 sm:gap-x-0 sm:divide-x sm:divide-dashed sm:divide-gray-200">
                 {benefits.map(({ icon: Icon, title, desc }) => (
                   <li
                     key={title}
-                    className="flex flex-col items-center px-2 text-center sm:px-4"
+                    className="flex flex-col items-center px-2 text-center sm:px-3"
                   >
-                    <span className="mb-3 flex h-16 w-16 items-center justify-center rounded-full bg-gray-100">
-                      <Icon className="h-8 w-8 text-emerald-900" aria-hidden="true" />
+                    <span className="mb-2 flex h-14 w-14 items-center justify-center rounded-full bg-[#EFF7EE]">
+                      <Icon className="h-7 w-7 text-[#1b5e20]" aria-hidden="true" />
                     </span>
-                    <h3 className="text-sm sm:text-base font-semibold uppercase leading-tight text-emerald-800">
+                    <h3 className="text-[13px] sm:text-[14px] font-semibold uppercase leading-tight text-slate-900">
                       {title}
                     </h3>
-                    <p className="mt-2 text-xs sm:text-sm leading-snug text-slate-600">
+                    <p className="mt-1 text-[13px] sm:text-sm leading-snug text-slate-600">
                       {desc}
                     </p>
                   </li>
@@ -142,44 +133,44 @@ export default function WhatsNextBanner() {
         </div>
 
         {/* ============ BOTTOM: 3 Steps | Help card ============ */}
-        <div className="mt-10 grid grid-cols-1 gap-6 lg:mt-12 lg:grid-cols-12 lg:gap-8 lg:items-stretch">
+        <div className="mt-6 grid grid-cols-1 gap-4 lg:mt-8 lg:grid-cols-12 lg:gap-6 lg:items-stretch">
           {/* 3 Easy Steps */}
-          <div className="lg:col-span-7 rounded-2xl border border-emerald-100 bg-white/80 p-5 sm:p-8 shadow-sm">
+          <div className="lg:col-span-7 rounded-2xl border border-gray-100 bg-white p-4 sm:p-5 shadow-sm">
             {/* Ribbon */}
-            <div className="mb-8 flex items-center justify-center gap-3">
-              <Leaf className="hidden h-6 w-6 -rotate-45 text-emerald-500 sm:block" aria-hidden="true" />
-              <div className="rounded-md bg-emerald-800 px-6 py-2.5 text-center text-sm sm:text-base font-semibold uppercase tracking-wide text-white shadow">
+            <div className="mb-5 flex items-center justify-center gap-3">
+              <Leaf className="hidden h-6 w-6 -rotate-45 text-[#3b8c2a] sm:block" aria-hidden="true" />
+              <div className="rounded-md bg-[#1b5e20] px-5 py-2 text-center text-[14px] sm:text-[15px] font-semibold uppercase tracking-wide text-white shadow">
                 Get Started in 3 Easy Steps
               </div>
-              <Leaf className="hidden h-6 w-6 rotate-45 scale-x-[-1] text-emerald-500 sm:block" aria-hidden="true" />
+              <Leaf className="hidden h-6 w-6 rotate-45 scale-x-[-1] text-[#3b8c2a] sm:block" aria-hidden="true" />
             </div>
 
             {/* Steps */}
-            <ol className="grid grid-cols-1 gap-8 sm:grid-cols-3 sm:gap-4">
+            <ol className="grid grid-cols-1 gap-4 sm:grid-cols-3 sm:gap-3">
               {steps.map(({ number, icon: Icon, title, desc }, i) => (
                 <li key={number} className="relative flex flex-col items-center text-center">
                   {/* connector arrow (desktop only, between items) */}
                   {i < steps.length - 1 && (
                     <span
-                      className="absolute right-[-1.1rem] top-10 hidden text-emerald-700 sm:block"
+                      className="absolute right-[-1.1rem] top-10 hidden text-[#1b5e20] sm:block"
                       aria-hidden="true"
                     >
                       <ChevronRight className="h-5 w-5" strokeWidth={3} />
                     </span>
                   )}
 
-                  <span className="relative mb-4 flex h-20 w-20 items-center justify-center rounded-full bg-gray-100">
-                    <Icon className="h-9 w-9 text-emerald-900" aria-hidden="true" />
-                    <span className="absolute -top-2 -left-1 flex h-7 w-7 items-center justify-center rounded-full bg-emerald-900 text-xs font-semibold text-white ring-4 ring-white">
+                  <span className="relative mb-2 flex h-16 w-16 items-center justify-center rounded-full bg-[#EFF7EE]">
+                    <Icon className="h-8 w-8 text-[#1b5e20]" aria-hidden="true" />
+                    <span className="absolute -top-1 -left-1 flex h-6 w-6 items-center justify-center rounded-full bg-[#1b5e20] text-[11px] font-semibold text-white ring-3 ring-white">
                       {number}
                     </span>
                   </span>
 
-                  <h3 className="text-sm sm:text-base font-semibold uppercase leading-snug text-emerald-800">
+                  <h3 className="text-[13px] sm:text-[14px] font-semibold uppercase leading-snug text-slate-900">
                     {title}
                   </h3>
-                  <span className="mt-1 mb-2 h-0.5 w-8 bg-emerald-700" aria-hidden="true" />
-                  <p className="max-w-[16rem] text-xs sm:text-sm leading-relaxed text-slate-600">
+                  <span className="mt-1 mb-1 h-0.5 w-6 bg-[#3b8c2a]" aria-hidden="true" />
+                  <p className="max-w-[16rem] text-[13px] sm:text-sm leading-relaxed text-slate-600">
                     {desc}
                   </p>
                 </li>
@@ -188,40 +179,40 @@ export default function WhatsNextBanner() {
           </div>
 
           {/* We're here to help */}
-          <div className="lg:col-span-5 relative overflow-hidden rounded-2xl bg-emerald-950 p-6 sm:p-8 text-white shadow-sm">
+          <div className="lg:col-span-5 relative overflow-hidden rounded-2xl bg-[#0b2912] p-5 sm:p-6 text-white shadow-sm">
             <Leaf
-              className="pointer-events-none absolute -right-6 -bottom-6 h-40 w-40 text-emerald-800/60"
+              className="pointer-events-none absolute -right-6 -bottom-6 h-40 w-40 text-[#1b5e20]/40"
               aria-hidden="true"
             />
-            <div className="relative flex items-start gap-4">
-              <span className="flex h-14 w-14 shrink-0 items-center justify-center rounded-full bg-emerald-700/70">
-                <Headset className="h-7 w-7 text-white" aria-hidden="true" />
+            <div className="relative flex items-start gap-3">
+              <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-white/10">
+                <Headset className="h-6 w-6 text-white" aria-hidden="true" />
               </span>
-              <h3 className="pt-1 text-2xl sm:text-3xl font-semibold leading-tight">
+              <h3 className="pt-1 text-[20px] sm:text-[24px] font-semibold leading-tight">
                 We&apos;re Here to Help!
               </h3>
             </div>
 
-            <p className="relative mt-5 max-w-sm text-sm sm:text-base leading-relaxed text-emerald-50/90">
+            <p className="relative mt-3 max-w-sm text-[14px] sm:text-[15px] leading-relaxed text-white/80">
               Our team is ready to assist you at every step of the PMS
               application process.
             </p>
 
-            <span className="relative mt-5 block h-px w-full bg-emerald-400/30" aria-hidden="true" />
+            <span className="relative mt-4 block h-px w-full bg-white/20" aria-hidden="true" />
 
-            <div className="relative mt-5 flex flex-col gap-3 text-sm sm:text-base">
+            <div className="relative mt-3 flex flex-col gap-2 text-[14px] sm:text-[15px]">
               <a
                 href="mailto:msme.support@bharatorganicexpo.in"
-                className="flex items-center gap-3 text-emerald-50 hover:text-white"
+                className="flex items-center gap-3 text-white/90 hover:text-white"
               >
-                <Mail className="h-5 w-5 shrink-0 text-emerald-300" aria-hidden="true" />
+                <Mail className="h-5 w-5 shrink-0 text-[#F2B40E]" aria-hidden="true" />
                 <span className="break-all">msme.support@bharatorganicexpo.in</span>
               </a>
               <a
                 href="tel:+911143083738"
-                className="flex items-center gap-3 text-emerald-50 hover:text-white"
+                className="flex items-center gap-3 text-white/90 hover:text-white"
               >
-                <Phone className="h-5 w-5 shrink-0 text-emerald-300" aria-hidden="true" />
+                <Phone className="h-5 w-5 shrink-0 text-[#F2B40E]" aria-hidden="true" />
                 <span>+91 11 4308 3738</span>
               </a>
             </div>
@@ -229,22 +220,22 @@ export default function WhatsNextBanner() {
         </div>
 
         {/* ============ FOOTER STRIP ============ */}
-        <div className="mt-6 lg:mt-8 flex flex-col overflow-hidden rounded-2xl bg-emerald-50 sm:flex-row sm:items-center">
+        <div className="mt-3 lg:mt-4 flex flex-col overflow-hidden rounded-2xl bg-[#EFF7EE] sm:flex-row sm:items-center">
           {/* Let's grow together */}
-          <div className="relative flex items-center gap-4 overflow-hidden px-5 py-6 sm:w-1/2 sm:px-8">
+          <div className="relative flex items-center gap-3 overflow-hidden px-4 py-3 sm:w-1/2 sm:px-5">
             <Leaf
-              className="pointer-events-none absolute -left-4 -bottom-4 h-20 w-20 text-emerald-200"
+              className="pointer-events-none absolute -left-4 -bottom-4 h-20 w-20 text-[#3b8c2a]/20"
               aria-hidden="true"
             />
-            <span className="relative hidden h-14 w-14 shrink-0 items-center justify-center rounded-full bg-emerald-900 sm:flex">
-              <Leaf className="h-7 w-7 text-white" aria-hidden="true" />
+            <span className="relative hidden h-10 w-10 shrink-0 items-center justify-center rounded-full bg-[#1b5e20] sm:flex">
+              <Leaf className="h-5 w-5 text-white" aria-hidden="true" />
             </span>
-            <span className="relative hidden h-10 w-px self-stretch bg-emerald-800/20 sm:block" aria-hidden="true" />
+            <span className="relative hidden h-8 w-px self-stretch bg-[#1b5e20]/20 sm:block" aria-hidden="true" />
             <div className="relative">
-              <p className="font-serif text-xl sm:text-2xl font-semibold text-emerald-900">
+              <p className="text-[18px] sm:text-[20px] font-semibold text-slate-900">
                 Let&apos;s Grow Together
               </p>
-              <p className="mt-1 max-w-xs text-sm text-slate-600">
+              <p className="mt-1 max-w-xs text-[13px] text-slate-600">
                 Your participation makes a healthier planet and a stronger
                 future.
               </p>
@@ -252,14 +243,14 @@ export default function WhatsNextBanner() {
           </div>
 
           {/* Ready to take the next step / Apply now */}
-          <div className="flex flex-1 flex-col gap-4 border-t border-emerald-200 bg-white px-5 py-6 sm:flex-row sm:items-center sm:justify-between sm:gap-6 sm:border-l sm:border-t-0 sm:px-8">
+          <div className="flex flex-1 flex-col gap-3 border-t border-gray-200 bg-white px-4 py-3 sm:flex-row sm:items-center sm:justify-between sm:gap-6 sm:border-l sm:border-t-0 sm:px-5">
             <div className="flex items-center gap-3">
-              <FileEdit className="h-8 w-8 shrink-0 text-emerald-800" aria-hidden="true" />
+              <FileEdit className="h-8 w-8 shrink-0 text-[#1b5e20]" aria-hidden="true" />
               <div>
-                <p className="text-sm sm:text-base font-semibold uppercase leading-tight text-slate-900">
+                <p className="text-[14px] sm:text-[15px] font-semibold uppercase leading-tight text-slate-900">
                   Ready to Take the Next Step?
                 </p>
-                <p className="mt-0.5 text-sm text-slate-600">
+                <p className="mt-0.5 text-[14px] text-slate-600">
                   Apply now and grow your business with government support.
                 </p>
               </div>
@@ -267,7 +258,7 @@ export default function WhatsNextBanner() {
 
             <a
               href="#apply"
-              className="inline-flex shrink-0 items-center justify-center gap-1 rounded-lg bg-emerald-900 px-6 py-3 text-sm sm:text-base font-semibold uppercase tracking-wide text-white transition-colors hover:bg-emerald-800 focus:outline-none focus-visible:ring-2 focus-visible:ring-emerald-700 focus-visible:ring-offset-2"
+              className="inline-flex shrink-0 items-center justify-center gap-1 rounded-lg bg-[#1b5e20] px-6 py-3 text-[14px] sm:text-[15px] font-semibold uppercase tracking-wide text-white transition-colors hover:bg-[#2d7a2d] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#3b8c2a] focus-visible:ring-offset-2"
             >
               Apply Now
               <ChevronRight className="h-5 w-5" aria-hidden="true" />
