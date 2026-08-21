@@ -55,8 +55,8 @@ const SUPPORT_CARDS: SupportCard[] = [
     description:
       "Of eligible built-up space rent assistance subject to PMS provisions.",
     footIcon: Landmark,
-    footIconColor: "text-[#1b5e20]",
-    footIconBg: "bg-[#1b5e20]/30",
+    footIconColor: "text-white",
+    footIconBg: "bg-[#1b5e20]",
   },
   {
     icon: Users,
@@ -68,8 +68,8 @@ const SUPPORT_CARDS: SupportCard[] = [
     titleColor: "text-[#C99A3B]",
     description: "As per applicable PMS scheme provisions and conditions.",
     footIcon: HandHelping,
-    footIconColor: "text-[#C99A3B]",
-    footIconBg: "bg-[#C99A3B]/30",
+    footIconColor: "text-white",
+    footIconBg: "bg-[#C99A3B]",
   },
   {
     icon: ReceiptIndianRupee,
@@ -81,8 +81,8 @@ const SUPPORT_CARDS: SupportCard[] = [
     titleColor: "text-[#1b5e20]",
     description: "Other eligible expenses as applicable under current PMS guidelines.",
     footIcon: TrendingUp,
-    footIconColor: "text-[#1b5e20]",
-    footIconBg: "bg-[#1b5e20]/30",
+    footIconColor: "text-white",
+    footIconBg: "bg-[#1b5e20]",
   },
 ];
 
@@ -97,7 +97,7 @@ const PMSFinancialAssistanceBanner: FC = () => {
       <div className="relative flex flex-col lg:flex-row">
         {/* Left: hero photo + empowering badge */}
         <div
-          className="relative min-h-[280px] w-full sm:min-h-[360px] lg:min-h-[560px] lg:w-[36%]"
+          className="relative min-h-[280px] w-full sm:min-h-[360px] lg:min-h-0 lg:w-[36%]"
         >
           <img
             src={howMuchImg.src}
@@ -109,9 +109,6 @@ const PMSFinancialAssistanceBanner: FC = () => {
 
           {/* Empowering MSEs badge */}
           <div className="absolute bottom-0 left-0 right-0 flex items-center gap-3 bg-[#1b5e20] px-5 py-4 sm:gap-4 sm:px-8 sm:py-5">
-              <span className="flex h-14 w-14 shrink-0 items-center justify-center rounded-full border-2 border-[#C99A3B] bg-white sm:h-16 sm:w-16">
-              <Leaf className="h-7 w-7 text-[#1b5e20] sm:h-8 sm:w-8" aria-hidden="true" />
-            </span>
             <p className="text-sm leading-snug text-white sm:text-base md:text-lg">
               <span className="block font-semibold">Empowering MSEs</span>
               <span className="block font-semibold text-[#3b8c2a]">
@@ -123,12 +120,6 @@ const PMSFinancialAssistanceBanner: FC = () => {
 
         {/* Right: heading content */}
         <div className="relative flex w-full flex-col justify-center px-4 py-6 sm:px-6 sm:py-6 lg:w-[64%] lg:px-6 lg:py-6">
-          {/* Decorative watermark leaves, top-right */}
-          <Leaf
-            aria-hidden="true"
-            className="pointer-events-none absolute -right-6 top-2 hidden h-40 w-40 rotate-[20deg] text-[#1b5e20] sm:block lg:h-56 lg:w-56"
-          />
-
           {/* Eyebrow */}
           <div className="mb-2 flex items-center gap-3 sm:mb-3">
             <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-[#1b5e20]/10 sm:h-14 sm:w-14">
@@ -152,23 +143,6 @@ const PMSFinancialAssistanceBanner: FC = () => {
             <span className="block text-[#1b5e20]">How Much Support</span>
             <span className="relative inline-block text-slate-900">
               May You Get?
-              <Leaf
-                aria-hidden="true"
-                className="ml-2 inline-block h-8 w-8 -translate-y-2 rotate-[15deg] fill-[#3b8c2a] text-[#1b5e20] sm:h-9 sm:w-9 md:h-10 md:w-10"
-              />
-              <svg
-                aria-hidden="true"
-                viewBox="0 0 220 14"
-                className="absolute -bottom-2 left-0 h-3 w-40 text-[#1b5e20] sm:w-52 md:w-60"
-                fill="none"
-              >
-                <path
-                  d="M2 10.5C40 2 90 2 110 7.5C130 13 180 4 218 6"
-                  stroke="currentColor"
-                  strokeWidth="3.5"
-                  strokeLinecap="round"
-                />
-              </svg>
             </span>
           </h1>
 
@@ -211,15 +185,15 @@ const PMSFinancialAssistanceBanner: FC = () => {
                   <h3 className={`text-base font-semibold leading-snug ${card.titleColor}`}>
                     {card.title}
                   </h3>
-                  <p className="mt-2 text-sm leading-relaxed text-slate-600">
+                  <p className="mt-2 mb-6 text-sm leading-relaxed text-slate-600">
                     {card.description}
                   </p>
 
                   {/* Bottom border with icon on top */}
                   <div className={`absolute bottom-0 left-0 right-0 h-8 rounded-b-2xl ${card.footIconBg}`}>
-                    <span className={`absolute left-1/2 -top-7 flex h-16 w-16 -translate-x-1/2 items-center justify-center rounded-full ${card.footIconBg} z-10`}>
+                    <span className={`absolute left-1/2 -top-10 flex h-16 w-16 -translate-x-1/2 items-center justify-center rounded-full ${card.footIconBg} z-0`}>
                       <FootIcon
-                        className={`h-7 w-7 ${card.footIconColor}`}
+                        className="h-7 w-7 text-white"
                         aria-hidden="true"
                       />
                     </span>

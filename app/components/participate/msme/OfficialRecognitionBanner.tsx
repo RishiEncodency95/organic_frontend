@@ -261,14 +261,6 @@ export default function OfficialRecognitionBanner() {
                 DOWNLOAD APPROVAL LETTER (PDF)
               </button>
             </div>
-
-            <button
-              type="button"
-              className="mt-2 flex w-full items-center justify-center gap-1.5 rounded-[8px] bg-[#f0ede4] border border-[#e3dac4] py-2 text-[9.5px] font-bold text-[#6b5835] transition-colors hover:bg-[#e6dfcc] font-poppins shadow-sm tracking-wide"
-            >
-              <Download className="h-3 w-3" strokeWidth={2.5} />
-              DOWNLOAD APPROVAL LETTER (PDF)
-            </button>
           </div>
         </div>
 

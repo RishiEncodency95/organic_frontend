@@ -10,6 +10,7 @@ import {
   Leaf,
 } from "lucide-react";
 import reasonToVisitImg from "@/app/assets/participate/msme/reason_to_visit.jpg";
+import leafsImg from "@/app/assets/icons/leafs.png";
 
 /**
  * Bharat Organic Expo — "Reason to Visit" banner
@@ -81,6 +82,12 @@ const FEATURES: Feature[] = [
 export default function ReasonToVisitBanner() {
   return (
     <section className="relative w-full overflow-hidden bg-[#EFF7EE] px-4 py-6 md:px-11">
+      <img
+        src={leafsImg.src}
+        alt=""
+        className="pointer-events-none absolute -left-8 top-0 h-36 w-36 rotate-[-20deg] object-contain opacity-10 sm:h-48 sm:w-48"
+        aria-hidden="true"
+      />
       <div className="mx-auto w-full">
         {/* ===================== TOP: heading + photo collage ===================== */}
         <div className="grid grid-cols-1 items-center gap-10 lg:grid-cols-2 lg:gap-8">
@@ -142,7 +149,7 @@ export default function ReasonToVisitBanner() {
                 key={feature.id}
                 className="flex flex-col items-center px-2 text-center lg:px-4"
               >
-                <span className="mb-2 flex h-16 w-16 items-center justify-center rounded-full bg-[#EFF7EE] text-[#1b5e20] sm:h-20 sm:w-20">
+                <span className="mb-2 flex items-center justify-center rounded-full bg-[#EFF7EE] text-[#1b5e20]">
                   {feature.icon}
                 </span>
                 <h3 className="text-[13px] font-semibold uppercase leading-snug text-slate-900 sm:text-[14px]">
@@ -159,7 +166,7 @@ export default function ReasonToVisitBanner() {
         </div>
 
         {/* ===================== BOTTOM CTA BAR ===================== */}
-        <div className="mt-6 flex flex-col gap-4 rounded-[2rem] border border-gray-200 bg-white p-4 sm:flex-row sm:items-center sm:justify-center sm:gap-6 sm:p-5 gap-4">
+        <div className="mt-6 flex flex-col gap-4 rounded-[2rem] border border-gray-200 bg-white p-4 sm:flex-row sm:items-center sm:justify-between sm:gap-6 sm:p-5">
           <div className="flex flex-col items-center gap-3 sm:flex-row sm:gap-4">
             <span className="flex items-center gap-2 text-[14px] font-medium text-[#1b5e20] sm:text-[15px]">
               <Leaf className="h-4 w-4 shrink-0" strokeWidth={2} />
