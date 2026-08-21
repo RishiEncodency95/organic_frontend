@@ -158,7 +158,7 @@ export default function MsmePmsBanner({
 
         <SectionContainer className="relative z-20 py-1 md:py-2 [perspective:800px]">
           <div className="flex flex-col lg:flex-row items-center justify-start">
-            <div className="w-full lg:w-[60%] xl:w-[50%] text-left shrink-0 ml-0 lg:ml-8 xl:ml-12">
+            <div className="w-full lg:w-[60%] xl:w-[50%] text-left shrink-0 ">
 
               {/* Heading */}
               <h1
