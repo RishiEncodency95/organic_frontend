@@ -15,6 +15,8 @@ import {
   FileEdit,
   ChevronRight,
 } from "lucide-react";
+import footerrightImg from "@/app/assets/icons/footerright.png";
+import leafsImg from "@/app/assets/icons/leafs.png";
 
 const benefits = [
   {
@@ -64,8 +66,14 @@ export default function WhatsNextBanner() {
   return (
     <section
       aria-labelledby="whats-next-heading"
-      className="w-full bg-[#F9FCF9] px-4 py-4 md:px-11"
+      className="relative w-full overflow-hidden bg-[#F9FCF9] px-4 py-4 md:px-11"
     >
+      <img
+        src={footerrightImg.src}
+        alt=""
+        className="pointer-events-none absolute -left-8 bottom-0 h-36 w-36 rotate-[-20deg] object-contain opacity-10 sm:h-48 sm:w-48"
+        aria-hidden="true"
+      />
       <div className="mx-auto w-full">
         {/* ============ TOP: Heading+Intro  |  Logo+Benefits ============ */}
         <div className="grid grid-cols-1 gap-4 lg:grid-cols-12 lg:gap-6">
@@ -135,18 +143,22 @@ export default function WhatsNextBanner() {
         {/* ============ BOTTOM: 3 Steps | Help card ============ */}
         <div className="mt-6 grid grid-cols-1 gap-4 lg:mt-8 lg:grid-cols-12 lg:gap-6 lg:items-stretch">
           {/* 3 Easy Steps */}
-          <div className="lg:col-span-7 rounded-2xl border border-gray-100 bg-white p-4 sm:p-5 shadow-sm">
+          <div className="relative overflow-hidden lg:col-span-7 rounded-2xl border border-gray-100 bg-white p-4 sm:p-5 shadow-sm">
+            <img
+              src={leafsImg.src}
+              alt=""
+              className="pointer-events-none absolute -right-10 -top-8 h-36 w-36 rotate-[18deg] object-contain opacity-20 sm:h-44 sm:w-44"
+              aria-hidden="true"
+            />
             {/* Ribbon */}
-            <div className="mb-5 flex items-center justify-center gap-3">
-              <Leaf className="hidden h-6 w-6 -rotate-45 text-[#3b8c2a] sm:block" aria-hidden="true" />
-              <div className="rounded-md bg-[#1b5e20] px-5 py-2 text-center text-[14px] sm:text-[15px] font-semibold uppercase tracking-wide text-white shadow">
+            <div className="relative z-10 mb-5">
+              <h3 className="text-center text-[16px] font-semibold tracking-tight text-slate-900 md:text-[20px] lg:text-[22px]">
                 Get Started in 3 Easy Steps
-              </div>
-              <Leaf className="hidden h-6 w-6 rotate-45 scale-x-[-1] text-[#3b8c2a] sm:block" aria-hidden="true" />
+              </h3>
             </div>
 
             {/* Steps */}
-            <ol className="grid grid-cols-1 gap-4 sm:grid-cols-3 sm:gap-3">
+            <ol className="relative z-10 grid grid-cols-1 gap-4 sm:grid-cols-3 sm:gap-3">
               {steps.map(({ number, icon: Icon, title, desc }, i) => (
                 <li key={number} className="relative flex flex-col items-center text-center">
                   {/* connector arrow (desktop only, between items) */}
@@ -179,12 +191,18 @@ export default function WhatsNextBanner() {
           </div>
 
           {/* We're here to help */}
-          <div className="lg:col-span-5 relative overflow-hidden rounded-2xl bg-[#0b2912] p-5 sm:p-6 text-white shadow-sm">
+          <div className="lg:col-span-5 relative overflow-hidden rounded-2xl bg-[#1b5e20] p-5 sm:p-6 text-white shadow-sm">
+            <img
+              src={leafsImg.src}
+              alt=""
+              className="pointer-events-none absolute right-0 top-0 h-full w-32 object-contain object-right opacity-20 sm:w-40"
+              aria-hidden="true"
+            />
             <Leaf
               className="pointer-events-none absolute -right-6 -bottom-6 h-40 w-40 text-[#1b5e20]/40"
               aria-hidden="true"
             />
-            <div className="relative flex items-start gap-3">
+            <div className="relative z-10 flex items-start gap-3">
               <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-white/10">
                 <Headset className="h-6 w-6 text-white" aria-hidden="true" />
               </span>
@@ -193,14 +211,14 @@ export default function WhatsNextBanner() {
               </h3>
             </div>
 
-            <p className="relative mt-3 max-w-sm text-[14px] sm:text-[15px] leading-relaxed text-white/80">
+            <p className="relative z-10 mt-3 max-w-sm text-[14px] sm:text-[15px] leading-relaxed text-white/80">
               Our team is ready to assist you at every step of the PMS
               application process.
             </p>
 
-            <span className="relative mt-4 block h-px w-full bg-white/20" aria-hidden="true" />
+            <span className="relative z-10 mt-4 block h-px w-full bg-white/20" aria-hidden="true" />
 
-            <div className="relative mt-3 flex flex-col gap-2 text-[14px] sm:text-[15px]">
+            <div className="relative z-10 mt-3 flex flex-col gap-2 text-[14px] sm:text-[15px]">
               <a
                 href="mailto:msme.support@bharatorganicexpo.in"
                 className="flex items-center gap-3 text-white/90 hover:text-white"

@@ -13,6 +13,7 @@ import {
   Users,
   Award,
 } from "lucide-react";
+import vleafImg from "@/app/assets/icons/vleaf.png";
 import officialMessageImg from "@/app/assets/participate/msme/official_message.png";
 
 /**
@@ -37,8 +38,14 @@ export default function OfficialMessageBanner({
   return (
     <section
       aria-labelledby="msme-director-message-heading"
-      className="w-full bg-[#F7F8F0] px-4 py-6 md:px-11"
+      className="relative w-full overflow-hidden bg-[#F7F8F0] px-4 py-6 md:px-11"
     >
+      <img
+        src={vleafImg.src}
+        alt=""
+        className="pointer-events-none absolute -right-8 top-0 h-36 w-36 rotate-[20deg] object-contain opacity-10 sm:h-48 sm:w-48"
+        aria-hidden="true"
+      />
       <div className="mx-auto w-full">
         {/* Eyebrow */}
         <div className="mb-3 flex items-center justify-center gap-3">
@@ -195,20 +202,20 @@ export default function OfficialMessageBanner({
         </div>
 
         {/* Feature strip */}
-        <div className="mt-8 grid grid-cols-1 gap-4 rounded-2xl border border-gray-100 bg-white p-5 sm:grid-cols-3 sm:gap-6 sm:p-6">
+        <div className="mt-8 grid grid-cols-1 gap-4 rounded-2xl bg-[#1b5e20] p-5 sm:grid-cols-3 sm:gap-6 sm:p-6">
           <FeatureItem
-            icon={<ShieldCheck className="h-7 w-7 text-[#1b5e20]" aria-hidden="true" />}
+            icon={<ShieldCheck className="h-7 w-7 text-white" aria-hidden="true" />}
             title="Official Message"
             description="Direct message from MSME Leadership"
           />
           <FeatureItem
-            icon={<Users className="h-7 w-7 text-[#1b5e20]" aria-hidden="true" />}
+            icon={<Users className="h-7 w-7 text-white" aria-hidden="true" />}
             title="For All MSMEs"
             description="Encouragement for every entrepreneur across India"
-            className="sm:border-x sm:border-gray-100 sm:px-6"
+            className="sm:border-x sm:border-white/20 sm:px-6"
           />
           <FeatureItem
-            icon={<Award className="h-7 w-7 text-[#1b5e20]" aria-hidden="true" />}
+            icon={<Award className="h-7 w-7 text-white" aria-hidden="true" />}
             title="Government Support"
             description="Strong support for growth, competitiveness & global reach"
           />
@@ -231,12 +238,12 @@ function FeatureItem({
 }) {
   return (
     <div className={`flex items-start gap-3 ${className}`}>
-      <div className="flex h-14 w-14 flex-shrink-0 items-center justify-center rounded-full bg-[#EFF7EE]">
+      <div className="flex h-14 w-14 flex-shrink-0 items-center justify-center rounded-full bg-white/20">
         {icon}
       </div>
       <div>
-        <p className="text-[14px] font-semibold text-slate-900 sm:text-[15px]">{title}</p>
-        <p className="mt-0.5 text-[13px] leading-snug text-slate-600 sm:text-[14px]">
+        <p className="text-[14px] font-semibold text-white sm:text-[15px]">{title}</p>
+        <p className="mt-0.5 text-[13px] leading-snug text-white/80 sm:text-[14px]">
           {description}
         </p>
       </div>

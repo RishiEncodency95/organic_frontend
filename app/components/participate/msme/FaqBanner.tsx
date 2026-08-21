@@ -69,12 +69,6 @@ export default function FAQBanner() {
       aria-labelledby="faq-heading"
       className="relative w-full overflow-hidden bg-[#F9FCF9] px-4 py-2 md:px-11"
     >
-      {/* Decorative leaf accent, top right */}
-      <Leaf
-        className="pointer-events-none absolute top-0 right-6 z-0 hidden h-24 w-24 rotate-[20deg] text-[#3b8c2a]/20 sm:block lg:right-10 lg:h-32 lg:w-32"
-        strokeWidth={1}
-        aria-hidden="true"
-      />
 
       <div className="relative z-10 mx-auto grid w-full grid-cols-1 items-stretch gap-6 lg:grid-cols-[minmax(0,400px)_minmax(0,1fr)] lg:gap-8">
         {/* Left: image panel */}
@@ -139,7 +133,7 @@ export default function FAQBanner() {
                       </span>
 
                       {/* Question + answer */}
-                      <span className="flex flex-1 flex-col justify-center gap-1 py-4 pr-4 sm:flex-row sm:items-center sm:gap-6 sm:py-5">
+                      <span className="flex flex-1 flex-col justify-center gap-1 py-2 pr-4 sm:flex-row sm:items-center sm:gap-6 sm:py-2">
                         <span className="flex-none text-[13px] font-semibold text-slate-900 sm:w-44 sm:text-[15px] lg:w-52">
                           {item.question}
                         </span>

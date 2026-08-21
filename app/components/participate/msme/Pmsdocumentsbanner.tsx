@@ -123,16 +123,6 @@ export default function PMSDocumentsBanner() {
           Keep Your <span className="text-[#1b5e20]">PMS</span> Documents Ready
         </h1>
 
-        <div className="mx-auto my-3 flex items-center justify-center gap-2" aria-hidden="true">
-          <span className="h-px w-10 bg-[#3b8c2a] sm:w-16" />
-          <span className="flex gap-1.5">
-            <span className="h-1.5 w-1.5 rounded-full bg-[#3b8c2a]" />
-            <span className="h-1.5 w-1.5 rounded-full bg-[#3b8c2a]" />
-            <span className="h-1.5 w-1.5 rounded-full bg-[#3b8c2a]" />
-          </span>
-          <span className="h-px w-10 bg-[#3b8c2a] sm:w-16" />
-        </div>
-
         <p className="text-base leading-relaxed text-black sm:text-lg">
           Ensure these essential documents are ready for a smooth{" "}
           <span className="block font-semibold text-[#1b5e20] sm:inline">

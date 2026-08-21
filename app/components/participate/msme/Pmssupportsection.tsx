@@ -15,6 +15,7 @@ import {
   Phone,
   ChevronRight,
 } from "lucide-react";
+import leafsImg from "@/app/assets/icons/leafs.png";
 import howToApplyImg from "@/app/assets/participate/msme/how_to_apply.png";
 import everySupportImg from "@/app/assets/participate/msme/every_support.png";
 
@@ -72,8 +73,14 @@ export default function PmsSupportSection() {
   return (
     <section
       aria-labelledby="pms-support-heading"
-      className="relative w-full bg-[#F7F8F0] px-4 py-4 md:px-11"
+      className="relative w-full overflow-hidden bg-[#F7F8F0] px-4 py-4 md:px-11"
     >
+      <img
+        src={leafsImg.src}
+        alt=""
+        className="pointer-events-none absolute -right-10 top-0 h-40 w-40 rotate-[20deg] object-contain opacity-10 sm:h-56 sm:w-56 lg:right-4"
+        aria-hidden="true"
+      />
       <div className="mx-auto flex w-full flex-col gap-6 sm:gap-8 lg:gap-10">
         {/* ---------- Top block: heading + hero image ---------- */}
         <div className="grid grid-cols-1 gap-8 lg:grid-cols-2 lg:items-center lg:gap-10">
@@ -125,12 +132,12 @@ export default function PmsSupportSection() {
             <img
               src={howToApplyImg.src}
               alt="Bharat Organic Expo team assisting an exhibitor with the PMS application process"
-              className="h-64 w-full object-cover sm:h-80 lg:h-[26rem]"
+              className="h-64 w-full object-cover object-top sm:h-80 lg:h-[26rem]"
               loading="lazy"
             />
 
             {/* Expo brand badge */}
-            <div className="absolute right-3 top-3 flex items-center gap-2 rounded-lg bg-white/90 px-3 py-2 backdrop-blur-sm sm:right-4 sm:top-4">
+            {/* <div className="absolute right-3 top-3 flex items-center gap-2 rounded-lg bg-white/90 px-3 py-2 backdrop-blur-sm sm:right-4 sm:top-4">
               <Leaf className="h-6 w-6 shrink-0 text-[#1b5e20]" aria-hidden="true" />
               <span className="text-[11px] font-semibold uppercase leading-tight text-slate-900 sm:text-[12px]">
                 Bharat
@@ -139,14 +146,14 @@ export default function PmsSupportSection() {
                 <br />
                 <span className="text-[#F2B40E]">Expo 2027</span>
               </span>
-            </div>
+            </div> */}
           </div>
         </div>
 
         {/* ---------- 4-step journey ---------- */}
         <div className="rounded-3xl bg-[#EFF7EE] p-4 ring-1 ring-black/5 sm:p-5">
-          <div className="mb-5 flex justify-center">
-            <h3 className="inline-flex items-center gap-2 rounded-full bg-[#1b5e20] px-5 py-2 text-[11px] font-semibold uppercase tracking-widest text-white sm:px-6 sm:text-[13px]">
+          <div className="mb-5">
+            <h3 className="text-center text-[16px] font-semibold tracking-tight text-slate-900 md:text-[20px] lg:text-[22px]">
               Your 4-Step Journey
             </h3>
           </div>
@@ -164,11 +171,10 @@ export default function PmsSupportSection() {
                   </span>
                 )}
 
-                <span className="mb-3 inline-flex h-8 w-8 items-center justify-center rounded-full bg-[#1b5e20] text-[11px] font-semibold text-white">
-                  {number}
-                </span>
-
-                <span className="mb-4 flex h-14 w-14 items-center justify-center rounded-full bg-white shadow-sm sm:h-16 sm:w-16">
+                <span className="relative mb-4 flex h-14 w-14 items-center justify-center rounded-full bg-white shadow-sm sm:h-16 sm:w-16">
+                  <span className="absolute -top-4 left-1/2 flex h-8 w-8 -translate-x-1/2 items-center justify-center rounded-full bg-[#1b5e20] text-[11px] font-semibold text-white ring-2 ring-[#EFF7EE]">
+                    {number}
+                  </span>
                   <Icon className="h-6 w-6 text-[#1b5e20] sm:h-7 sm:w-7" aria-hidden="true" />
                 </span>
 
@@ -215,7 +221,7 @@ export default function PmsSupportSection() {
           {/* Have questions / contact */}
           <div className="flex flex-col gap-3 rounded-2xl bg-[#EFF7EE] p-5 sm:p-6">
             <div className="flex flex-row gap-2">
-            <span className="flex h-12 w-12 items-center justify-center rounded-full bg-white">
+            <span className="flex h-12 w-12 min-h-12 min-w-12 items-center justify-center rounded-full bg-white">
               <Users className="h-6 w-6 text-[#1b5e20]" aria-hidden="true" />
             </span>
             <div>
@@ -245,7 +251,7 @@ export default function PmsSupportSection() {
           </div>
 
           {/* Ready to apply / CTA */}
-          <div className="flex flex-col justify-between gap-4 rounded-2xl bg-[#0b2912] p-5 text-white sm:p-6">
+          <div className="flex flex-col justify-between gap-4 rounded-2xl bg-[#1b5e20] p-5 text-white sm:p-6">
             <div className="flex items-start gap-4">
               <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-white/10">
                 <FileText className="h-6 w-6" aria-hidden="true" />
