@@ -132,7 +132,7 @@ export default function PmsSupportSection() {
             <img
               src={howToApplyImg.src}
               alt="Bharat Organic Expo team assisting an exhibitor with the PMS application process"
-              className="h-64 w-full object-cover object-top sm:h-80 lg:h-[26rem]"
+              className="h-52 w-full object-cover object-top sm:h-64 lg:h-[22rem]"
               loading="lazy"
             />
 

@@ -9,8 +9,9 @@ import {
   ArrowRight,
   Leaf,
 } from "lucide-react";
-import reasonToVisitImg from "@/app/assets/participate/msme/reason_to_visit.jpg";
+
 import leafsImg from "@/app/assets/icons/leafs.png";
+import reasonToVisitImg from "@/app/assets/participate/msme/reason_to_visit.jpg";
 
 /**
  * Bharat Organic Expo — "Reason to Visit" banner
@@ -82,12 +83,6 @@ const FEATURES: Feature[] = [
 export default function ReasonToVisitBanner() {
   return (
     <section className="relative w-full overflow-hidden bg-[#EFF7EE] px-4 py-6 md:px-11">
-      <img
-        src={leafsImg.src}
-        alt=""
-        className="pointer-events-none absolute -left-8 top-0 h-36 w-36 rotate-[-20deg] object-contain opacity-10 sm:h-48 sm:w-48"
-        aria-hidden="true"
-      />
       <div className="mx-auto w-full">
         {/* ===================== TOP: heading + photo collage ===================== */}
         <div className="grid grid-cols-1 items-center gap-10 lg:grid-cols-2 lg:gap-8">
@@ -107,31 +102,30 @@ export default function ReasonToVisitBanner() {
             </div>
 
             <h1 className="relative font-sans text-[24px] font-semibold uppercase leading-[1.1] tracking-tight text-slate-900 md:text-[32px] lg:text-[40px]">
-              Reason
-              <Leaf
-                className="ml-1 inline-block h-6 w-6 -translate-y-3 rotate-45 text-[#1b5e20] sm:h-7 sm:w-7"
-                strokeWidth={2}
-              />
-              <br />
-              To Visit
+              Reason To Visit
             </h1>
 
-            <div className="mt-4 max-w-md">
+            <div className="mt-4">
               <h2 className="text-[18px] font-semibold text-[#1b5e20] md:text-[20px]">
                 More than an Expo. A Gateway to Growth.
               </h2>
               <span className="mt-1 block h-[3px] w-14 bg-[#3b8c2a]" />
               <p className="mt-4 text-[14px] leading-relaxed text-slate-600 md:text-[15px]">
                 Bharat Organic Expo brings together the entire organic
-                ecosystem to create opportunities, inspire innovation and
-                build a healthier tomorrow.
+                ecosystem — from farmers and producers to retailers, distributors
+                and global buyers — under one roof. Discover cutting-edge
+                products, attend power-packed sessions with 150+ industry experts,
+                explore business partnerships and witness the latest innovations
+                in organic, natural, AYUSH and sustainable living. Whether you're
+                a curious consumer or a seasoned entrepreneur, this is your
+                gateway to meaningful connections, fresh ideas and a healthier
+                tomorrow.
               </p>
             </div>
           </div>
 
           {/* ---------- Right: photo ---------- */}
           <div className="relative">
-            {/* Photo */}
             <div className="aspect-[16/9] overflow-hidden rounded-[2.5rem]">
               <img
                 src={reasonToVisitImg.src}
@@ -166,7 +160,7 @@ export default function ReasonToVisitBanner() {
         </div>
 
         {/* ===================== BOTTOM CTA BAR ===================== */}
-        <div className="mt-6 flex flex-col gap-4 rounded-[2rem] border border-gray-200 bg-white p-4 sm:flex-row sm:items-center sm:justify-between sm:gap-6 sm:p-5">
+        <div className="mt-6 flex flex-col gap-3 rounded-[2rem] border border-gray-200 bg-white px-4 py-3 sm:flex-row sm:items-center sm:justify-between sm:gap-6 sm:px-5 sm:py-3">
           <div className="flex flex-col items-center gap-3 sm:flex-row sm:gap-4">
             <span className="flex items-center gap-2 text-[14px] font-medium text-[#1b5e20] sm:text-[15px]">
               <Leaf className="h-4 w-4 shrink-0" strokeWidth={2} />

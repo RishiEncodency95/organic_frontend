@@ -17,6 +17,7 @@ import {
   ArrowRight,
 } from "lucide-react";
 import documentsBgImg from "@/app/assets/participate/msme/documents_ready.jpg";
+import cleafImg from "@/app/assets/icons/cleaf.png";
 
 interface PmsDocument {
   id: number;
@@ -138,9 +139,16 @@ export default function PMSDocumentsBanner() {
           return (
             <li
               key={doc.id}
-              className="flex flex-col items-center rounded-2xl border border-gray-100 bg-white px-2 py-3 text-center shadow-sm transition-shadow duration-300 hover:shadow-md"
+              className="relative flex flex-col items-center overflow-hidden rounded-2xl bg-gradient-to-br from-[#f0f7ee] to-[#fef9f0] px-2 py-3 text-center shadow-sm transition-shadow duration-300 hover:shadow-md"
             >
-              <span className="mb-3 flex h-16 w-16 items-center justify-center rounded-full bg-[#EFF7EE] ring-1 ring-black/5">
+              <img
+                src={cleafImg.src}
+                alt=""
+                className="pointer-events-none absolute bottom-0 right-0 h-1/2 w-auto object-contain opacity-10"
+                aria-hidden="true"
+              />
+
+              <span className="mb-3 flex h-16 w-16 items-center justify-center rounded-full bg-white/80 ring-1 ring-black/5">
                 <Icon
                   className="h-7 w-7 text-[#1b5e20]"
                   strokeWidth={1.75}
@@ -148,7 +156,7 @@ export default function PMSDocumentsBanner() {
                 />
               </span>
 
-              <h2 className="text-[11px] font-semibold leading-snug text-slate-900 sm:text-[13px]">
+              <h2 className="relative text-[11px] font-semibold leading-snug text-slate-900 sm:text-[13px]">
                 {doc.id}. {doc.title}
               </h2>
 
@@ -157,7 +165,7 @@ export default function PMSDocumentsBanner() {
                 aria-hidden="true"
               />
 
-              <p className="text-[11px] leading-relaxed text-slate-600 sm:text-[12px]">
+              <p className="relative text-[11px] leading-relaxed text-slate-600 sm:text-[12px]">
                 {doc.description}
               </p>
             </li>

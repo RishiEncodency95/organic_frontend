@@ -72,6 +72,18 @@ export default function FeatureStrip() {
           style={{ opacity: 0, backgroundColor: "#1b5e20", boxShadow: "0 8px 20px -10px rgba(0,0,0,0.3)" }}
           className="rounded-2xl border border-white/10 p-0.5 md:py-2 md:px-3 relative overflow-hidden [perspective:1000px]"
         >
+          {/* Background pattern */}
+          <div className="pointer-events-none absolute inset-0 opacity-[0.04]" aria-hidden="true">
+            <svg width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
+              <defs>
+                <pattern id="leaf-pattern" x="0" y="0" width="40" height="40" patternUnits="userSpaceOnUse">
+                  <circle cx="20" cy="20" r="1.5" fill="white" />
+                </pattern>
+              </defs>
+              <rect width="100%" height="100%" fill="url(#leaf-pattern)" />
+            </svg>
+          </div>
+
           {/* Shimmer overlay */}
           <div
             ref={shimmerRef}

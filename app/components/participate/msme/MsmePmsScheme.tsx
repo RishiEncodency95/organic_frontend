@@ -51,6 +51,10 @@ export default function MsmePmsScheme() {
       aria-labelledby="msme-pms-heading"
       className="relative w-full overflow-hidden bg-[#F9FCF9] py-6 px-4 md:px-11"
     >
+      <div
+        className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_80%_50%_at_50%_-20%,rgba(27,94,32,0.06),transparent)]"
+        aria-hidden="true"
+      />
       <img
         src={leafsImg.src}
         alt=""
@@ -81,14 +85,8 @@ export default function MsmePmsScheme() {
             return (
               <li
                 key={feature.id}
-                className="relative flex flex-col items-center rounded-2xl bg-white pt-6 pb-10 px-4 text-center shadow-sm ring-1 ring-black/5 overflow-hidden"
+                className="relative flex flex-col items-center rounded-2xl bg-gradient-to-b from-[#f4f9f3] to-white pt-6 pb-10 px-4 text-center shadow-sm ring-1 ring-black/5 overflow-hidden"
               >
-                <img
-                  src={leafsImg.src}
-                  alt=""
-                  className="pointer-events-none absolute -right-4 -bottom-4 h-20 w-20 rotate-[20deg] object-contain opacity-[0.06]"
-                  aria-hidden="true"
-                />
                 <div className="flex h-20 w-20 items-center justify-center rounded-full border-2 border-[#3b8c2a]/20 bg-[#EFF7EE]">
                   <Icon className="h-10 w-10 text-[#1b5e20]" strokeWidth={1.75} aria-hidden="true" />
                 </div>

@@ -74,6 +74,12 @@ export default function WhatsNextBanner() {
         className="pointer-events-none absolute -left-8 bottom-0 h-36 w-36 rotate-[-20deg] object-contain opacity-10 sm:h-48 sm:w-48"
         aria-hidden="true"
       />
+      <img
+        src={leafsImg.src}
+        alt=""
+        className="pointer-events-none absolute left-0 top-1/2 h-64 w-40 -translate-y-1/2 object-contain object-left opacity-[0.07] sm:h-80 sm:w-52"
+        aria-hidden="true"
+      />
       <div className="mx-auto w-full">
         {/* ============ TOP: Heading+Intro  |  Logo+Benefits ============ */}
         <div className="grid grid-cols-1 gap-4 lg:grid-cols-12 lg:gap-6">
@@ -105,17 +111,8 @@ export default function WhatsNextBanner() {
             </p>
           </div>
 
-          {/* Right: logo lockup + benefits card */}
+          {/* Right: benefits card */}
           <div className="lg:col-span-7 flex flex-col gap-4">
-            {/* Logo lockup */}
-            <div className="flex items-center justify-start gap-3 lg:justify-end">
-              <Leaf className="h-8 w-8 shrink-0 text-[#3b8c2a]" aria-hidden="true" />
-              <p className="text-[16px] sm:text-[18px] font-semibold leading-tight text-[#1b5e20]">
-                Bharat Organic Expo<br />
-                <span className="text-[#F2B40E]">2027</span>
-              </p>
-            </div>
-
             {/* Benefits card */}
             <div className="rounded-2xl border border-gray-100 bg-white shadow-sm px-4 py-3 sm:px-6 sm:py-4">
               <ul className="grid grid-cols-2 gap-x-4 gap-y-4 sm:grid-cols-4 sm:gap-x-0 sm:divide-x sm:divide-dashed sm:divide-gray-200">
@@ -192,12 +189,6 @@ export default function WhatsNextBanner() {
 
           {/* We're here to help */}
           <div className="lg:col-span-5 relative overflow-hidden rounded-2xl bg-[#1b5e20] p-5 sm:p-6 text-white shadow-sm">
-            <img
-              src={leafsImg.src}
-              alt=""
-              className="pointer-events-none absolute right-0 top-0 h-full w-32 object-contain object-right opacity-20 sm:w-40"
-              aria-hidden="true"
-            />
             <Leaf
               className="pointer-events-none absolute -right-6 -bottom-6 h-40 w-40 text-[#1b5e20]/40"
               aria-hidden="true"

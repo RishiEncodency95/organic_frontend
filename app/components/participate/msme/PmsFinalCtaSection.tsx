@@ -134,7 +134,7 @@ const PMSFinalCTASection: React.FC = () => {
         {/* Talk to support link */}
         <a
           href="#pms-support-team"
-          className="mt-4 inline-flex items-center gap-1.5 text-[13px] font-semibold text-[#1b5e20] underline-offset-4 hover:underline sm:text-sm"
+          className="mt-4 inline-flex items-center gap-1.5 text-[13px] font-semibold text-[#1b5e20] underline-offset-4 hover:text-[#ea580c] hover:underline sm:text-sm"
         >
           Talk to PMS Support Team
           <ArrowRight className="h-4 w-4" strokeWidth={2.25} aria-hidden="true" />

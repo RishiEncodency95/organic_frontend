@@ -46,13 +46,13 @@ export default function OfficialRecognitionBanner() {
   return (
     <section
       aria-labelledby="official-recognition-heading"
-      className="w-full bg-[#f9f8f4] px-3 py-6 md:px-8 font-inter relative overflow-hidden"
+      className="w-full bg-[#f9f8f4] px-4 pb-6 pt-0 md:px-11 font-inter relative overflow-hidden"
     >
       <div className="absolute bottom-0 right-0 pointer-events-none opacity-[0.03] scale-150 translate-x-1/4 translate-y-1/4">
         <LeafIcon />
       </div>
 
-      <div className="mx-auto w-full max-w-[1280px] relative z-10">
+      <div className="mx-auto w-full relative z-10">
         <div className="grid grid-cols-1 items-stretch gap-4 lg:grid-cols-[1.2fr_0.9fr_1fr] lg:gap-5">
           
           {/* ---------------- Left: Content ---------------- */}
@@ -88,7 +88,7 @@ export default function OfficialRecognitionBanner() {
             </p>
 
             <div className="mb-4 grid grid-cols-3 gap-2 w-full max-w-[400px]">
-              <div className="flex flex-col items-center justify-center gap-1.5 text-center bg-[#f0f5ec] rounded-[10px] p-2.5 shadow-[0_2px_10px_rgba(0,0,0,0.02)]">
+              <div className="flex flex-col items-center justify-center gap-1.5 text-center bg-gradient-to-b from-[#f0f5ec] to-[#e8f0e4] rounded-[10px] p-2.5 shadow-[0_2px_10px_rgba(0,0,0,0.04)] ring-1 ring-[#d4e8d0]">
                 <div className="h-7 w-7 rounded-full bg-white flex items-center justify-center shadow-sm">
                   <Award className="h-3.5 w-3.5 text-[#266e3b]" strokeWidth={2.5} />
                 </div>
@@ -96,15 +96,15 @@ export default function OfficialRecognitionBanner() {
                   Government Approved<br />Exhibition
                 </span>
               </div>
-              <div className="flex flex-col items-center justify-center gap-1.5 text-center bg-[#f0f5ec] rounded-[10px] p-2.5 shadow-[0_2px_10px_rgba(0,0,0,0.02)]">
+              <div className="flex flex-col items-center justify-center gap-1.5 text-center bg-gradient-to-b from-[#fef9f0] to-[#fdf3e0] rounded-[10px] p-2.5 shadow-[0_2px_10px_rgba(0,0,0,0.04)] ring-1 ring-[#f0e0c0]">
                 <div className="h-7 w-7 rounded-full bg-white flex items-center justify-center shadow-sm">
-                  <Users className="h-3.5 w-3.5 text-[#266e3b]" strokeWidth={2.5} />
+                  <Users className="h-3.5 w-3.5 text-[#b07d10]" strokeWidth={2.5} />
                 </div>
                 <span className="text-[9.5px] font-bold leading-tight text-[#0c3b1d]">
                   Support for<br />MSE Growth
                 </span>
               </div>
-              <div className="flex flex-col items-center justify-center gap-1.5 text-center bg-[#f0f5ec] rounded-[10px] p-2.5 shadow-[0_2px_10px_rgba(0,0,0,0.02)]">
+              <div className="flex flex-col items-center justify-center gap-1.5 text-center bg-gradient-to-b from-[#f0f5ec] to-[#e8f0e4] rounded-[10px] p-2.5 shadow-[0_2px_10px_rgba(0,0,0,0.04)] ring-1 ring-[#d4e8d0]">
                 <div className="h-7 w-7 rounded-full bg-white flex items-center justify-center shadow-sm">
                   <FileCheck2 className="h-3.5 w-3.5 text-[#266e3b]" strokeWidth={2.5} />
                 </div>

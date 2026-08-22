@@ -1,9 +1,9 @@
 import { Calendar, Leaf, ArrowRight } from "lucide-react";
 import whyParticipateBg from "@/app/assets/participate/msme/why_participate_bg.jpeg";
-import pmsApprovedIcon from "@/app/assets/participate/msme/pms_approved.jpg";
-import focusedIndustryIcon from "@/app/assets/participate/msme/focused_industry.jpg";
-import b2bOpportunitiesIcon from "@/app/assets/participate/msme/b2b_opporttunities.jpg";
-import dedicatedSupportIcon from "@/app/assets/participate/msme/dedicated.jpg";
+import pmsApprovedIcon from "@/app/assets/participate/msme/pms_approved.png";
+import focusedIndustryIcon from "@/app/assets/participate/msme/focused_industry.png";
+import b2bOpportunitiesIcon from "@/app/assets/participate/msme/b2b_opporttunities.png";
+import dedicatedSupportIcon from "@/app/assets/participate/msme/dedicated.png";
 
 interface FeatureCard {
   icon: string;
@@ -91,7 +91,7 @@ export default function WhyParticipateSection() {
           {features.map((feature) => (
             <li
               key={feature.title}
-          className="relative flex flex-col items-center overflow-visible rounded-2xl border border-gray-100 bg-white pt-10 pb-8 text-center shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-md"
+          className="relative flex flex-col items-center overflow-visible rounded-2xl border border-[#d4e8d0] bg-gradient-to-b from-[#f4f9f3] to-white pt-10 pb-8 text-center shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-md"
             >
               {/* Icon container - half outside, half inside */}
               <div className="absolute -top-10 left-1/2 z-10 flex h-20 w-20 -translate-x-1/2 items-center justify-center overflow-hidden">
