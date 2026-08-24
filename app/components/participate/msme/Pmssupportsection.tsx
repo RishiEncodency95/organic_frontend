@@ -17,8 +17,8 @@ import {
   ArrowRight,
 } from "lucide-react";
 import leafsImg from "@/app/assets/icons/leafs.png";
-import howToApplyImg from "@/app/assets/participate/msme/how_to_apply.png";
-import everySupportImg from "@/app/assets/participate/msme/every_support.png";
+import howToApplyImg from "@/app/assets/participate/msme/how_to_apply.webp";
+import everySupportImg from "@/app/assets/participate/msme/every_support.webp";
 
 const highlightCards = [
   {

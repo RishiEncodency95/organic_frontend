@@ -16,7 +16,7 @@ import {
   FileEdit,
   ArrowRight,
 } from "lucide-react";
-import documentsBgImg from "@/app/assets/participate/msme/documents_ready.jpg";
+import documentsBgImg from "@/app/assets/participate/msme/documents_ready.webp";
 import cleafImg from "@/app/assets/icons/cleaf.png";
 
 interface PmsDocument {

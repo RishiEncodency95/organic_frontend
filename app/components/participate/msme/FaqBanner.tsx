@@ -9,7 +9,7 @@ import {
   Headset,
   Leaf,
 } from "lucide-react";
-import faqBgImg from "@/app/assets/participate/msme/faq_bg.png";
+import faqBgImg from "@/app/assets/participate/msme/faq_bg.webp";
 
 interface FAQItem {
   id: string;

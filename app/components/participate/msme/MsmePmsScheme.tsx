@@ -1,7 +1,7 @@
 import { BookOpenCheck, Globe, Store, Handshake, TrendingUp, ShieldCheck } from "lucide-react";
 import type { LucideIcon } from "lucide-react";
 import leafsImg from "@/app/assets/icons/leafs.png";
-import ctaBannerImg from "@/app/assets/participate/msme/ctabanner.png";
+import ctaBannerImg from "@/app/assets/participate/msme/ctabanner.webp";
 
 interface SchemeFeature {
   id: string;

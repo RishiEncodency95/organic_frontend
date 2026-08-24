@@ -14,7 +14,9 @@ import {
   Award,
 } from "lucide-react";
 import vleafImg from "@/app/assets/icons/vleaf.png";
-import officialMessageImg from "@/app/assets/participate/msme/official_message.png";
+import officialMessageImg from "@/app/assets/participate/msme/official_message.webp";
+import officialMessageBgImg from "@/app/assets/participate/msme/official_message_bg.webp";
+import ministryImg from "@/app/assets/participate/msme/ministry.webp";
 
 /**
  * OfficialMessageBanner
@@ -41,12 +43,18 @@ export default function OfficialMessageBanner({
       className="relative w-full overflow-hidden bg-[#F7F8F0] px-4 py-4 md:px-11"
     >
       <img
+        src={officialMessageBgImg.src}
+        alt=""
+        className="pointer-events-none absolute inset-0 h-full w-full object-cover opacity-15"
+        aria-hidden="true"
+      />
+      <img
         src={vleafImg.src}
         alt=""
         className="pointer-events-none absolute -right-8 top-0 h-36 w-36 rotate-[20deg] object-contain opacity-10 sm:h-48 sm:w-48"
         aria-hidden="true"
       />
-      <div className="mx-auto w-full">
+      <div className="relative z-10 mx-auto w-full">
         {/* Eyebrow */}
         <div className="mb-3 flex items-center justify-center gap-3">
           <span className="h-px w-8 bg-[#3b8c2a]/40 sm:w-14" aria-hidden="true" />
@@ -79,11 +87,11 @@ export default function OfficialMessageBanner({
         {/* Main content: video + quote card */}
         <div className="mt-4 grid grid-cols-1 gap-4 items-stretch lg:grid-cols-2 lg:gap-6">
           {/* Video card */}
-          <div className="overflow-hidden rounded-2xl shadow-xl ring-1 ring-black/5">
+          <div className="overflow-hidden rounded-2xl shadow-xl ring-1 ring-black/5 h-full">
             <iframe
               src="https://www.youtube.com/embed/dQw4w9WgXcQ?rel=0"
               title="MSME Director Official Message"
-              className="aspect-video w-full border-0"
+              className="h-full w-full border-0"
               allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
               allowFullScreen
               loading="lazy"
@@ -146,10 +154,11 @@ export default function OfficialMessageBanner({
               </div>
             </div>
 
-            <Landmark
-              className="pointer-events-none absolute -bottom-3 -right-3 h-24 w-24 text-[#1b5e20]/10 sm:h-28 sm:w-28"
+            <img
+              src={ministryImg.src}
+              alt=""
+              className="pointer-events-none absolute bottom-0 -right-3 h-40 w-40 object-contain sm:h-48 sm:w-48"
               aria-hidden="true"
-              strokeWidth={1}
             />
           </div>
         </div>

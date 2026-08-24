@@ -17,7 +17,7 @@ import {
 } from "lucide-react";
 import footerrightImg from "@/app/assets/icons/footerright.png";
 import leafsImg from "@/app/assets/icons/leafs.png";
-import ctaBannerImg from "@/app/assets/participate/msme/ctabanner.png";
+import ctaBannerImg from "@/app/assets/participate/msme/ctabanner.webp";
 
 const benefits = [
   {

@@ -2,7 +2,7 @@
 import React, { useRef, useEffect } from "react";
 import Link from "next/link";
 import { CalendarDays, MapPin, ArrowRight } from "lucide-react";
-import bannerImg from "@/app/assets/participate/msme/home-banner.jpeg";
+import bannerImg from "@/app/assets/participate/msme/home-banner.webp";
 import leafImg from "@/app/assets/icons/leafs.png";
 import gsap from "gsap";
 import SectionContainer from "@/app/components/layout/SectionContainer";

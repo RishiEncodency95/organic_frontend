@@ -1,9 +1,9 @@
 import { Calendar, Leaf, ArrowRight } from "lucide-react";
-import whyParticipateBg from "@/app/assets/participate/msme/why_participate_bg.jpeg";
-import pmsApprovedIcon from "@/app/assets/participate/msme/pms_approved.png";
-import focusedIndustryIcon from "@/app/assets/participate/msme/focused_industry.png";
-import b2bOpportunitiesIcon from "@/app/assets/participate/msme/b2b_opporttunities.png";
-import dedicatedSupportIcon from "@/app/assets/participate/msme/dedicated.png";
+import whyParticipateBg from "@/app/assets/participate/msme/why_participate_bg.webp";
+import pmsApprovedIcon from "@/app/assets/participate/msme/pms_approved.webp";
+import focusedIndustryIcon from "@/app/assets/participate/msme/focused_industry.webp";
+import b2bOpportunitiesIcon from "@/app/assets/participate/msme/b2b_opporttunities.webp";
+import dedicatedSupportIcon from "@/app/assets/participate/msme/dedicated.webp";
 
 interface FeatureCard {
   icon: string;

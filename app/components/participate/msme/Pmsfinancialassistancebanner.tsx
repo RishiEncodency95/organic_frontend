@@ -13,8 +13,8 @@ import {
   Target,
   ChevronRight,
 } from "lucide-react";
-import financialImg from "@/app/assets/participate/msme/financial_assitance.png";
-import howMuchImg from "@/app/assets/participate/msme/how_much_support.png";
+import financialImg from "@/app/assets/participate/msme/financial_assitance.webp";
+import howMuchImg from "@/app/assets/participate/msme/how_much_support.webp";
 
 /**
  * PMSFinancialAssistanceBanner

@@ -11,7 +11,7 @@ import {
 } from "lucide-react";
 
 import leafsImg from "@/app/assets/icons/leafs.png";
-import reasonToVisitImg from "@/app/assets/participate/msme/reason_to_visit.jpg";
+import reasonToVisitImg from "@/app/assets/participate/msme/reason_to_visit.webp";
 import beTheLeftImg from "@/app/assets/exhibitors/be_the_left.png";
 import beTheRightImg from "@/app/assets/exhibitors/be_the_right.png";
 
@@ -94,7 +94,7 @@ export default function ReasonToVisitBanner() {
       <img
         src={beTheRightImg.src}
         alt=""
-        className="pointer-events-none absolute right-0 top-1/2 h-auto w-20 -translate-y-1/2 object-contain opacity-30 sm:w-28 lg:w-36"
+        className="pointer-events-none absolute right-0 bottom-0 h-auto w-20 object-contain opacity-30 sm:w-28 lg:w-36"
         aria-hidden="true"
       />
       <div className="mx-auto w-full">

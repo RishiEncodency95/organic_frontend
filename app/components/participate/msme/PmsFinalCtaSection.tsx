@@ -11,7 +11,7 @@ import {
   Headphones,
   ShieldAlert,
 } from "lucide-react";
-import readyToExploreImg from "@/app/assets/participate/msme/ready_to_explore.jpeg";
+import readyToExploreImg from "@/app/assets/participate/msme/ready_to_explore.webp";
 
 /**
  * Section 11 — Final CTA
