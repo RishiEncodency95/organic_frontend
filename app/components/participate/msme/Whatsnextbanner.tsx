@@ -17,6 +17,7 @@ import {
 } from "lucide-react";
 import footerrightImg from "@/app/assets/icons/footerright.png";
 import leafsImg from "@/app/assets/icons/leafs.png";
+import ctaBannerImg from "@/app/assets/participate/msme/ctabanner.png";
 
 const benefits = [
   {
@@ -84,7 +85,7 @@ export default function WhatsNextBanner() {
         {/* ============ TOP: Heading+Intro  |  Logo+Benefits ============ */}
         <div className="grid grid-cols-1 gap-4 lg:grid-cols-12 lg:gap-6">
           {/* Left: heading + intro copy */}
-          <div className="lg:col-span-5 flex flex-col justify-center">
+          <div className="lg:col-span-4 flex flex-col justify-center">
             <h2
               id="whats-next-heading"
               className="flex flex-wrap items-center gap-2 font-semibold uppercase leading-[0.95] tracking-tight text-[#1b5e20] text-[18px] md:text-[28px] lg:text-[32px]"
@@ -112,9 +113,9 @@ export default function WhatsNextBanner() {
           </div>
 
           {/* Right: benefits card */}
-          <div className="lg:col-span-7 flex flex-col gap-4">
+          <div className="lg:col-span-8 flex flex-col gap-4">
             {/* Benefits card */}
-            <div className="rounded-2xl border border-gray-100 bg-white shadow-sm px-4 py-3 sm:px-6 sm:py-4">
+            <div className="rounded-2xl border border-gray-100 bg-white shadow-sm px-4 py-4">
               <ul className="grid grid-cols-2 gap-x-4 gap-y-4 sm:grid-cols-4 sm:gap-x-0 sm:divide-x sm:divide-dashed sm:divide-gray-200">
                 {benefits.map(({ icon: Icon, title, desc }) => (
                   <li
@@ -141,12 +142,6 @@ export default function WhatsNextBanner() {
         <div className="mt-6 grid grid-cols-1 gap-4 lg:mt-8 lg:grid-cols-12 lg:gap-6 lg:items-stretch">
           {/* 3 Easy Steps */}
           <div className="relative overflow-hidden lg:col-span-7 rounded-2xl border border-gray-100 bg-white p-4 sm:p-5 shadow-sm">
-            <img
-              src={leafsImg.src}
-              alt=""
-              className="pointer-events-none absolute -right-10 -top-8 h-36 w-36 rotate-[18deg] object-contain opacity-20 sm:h-44 sm:w-44"
-              aria-hidden="true"
-            />
             {/* Ribbon */}
             <div className="relative z-10 mb-5">
               <h3 className="text-center text-[16px] font-semibold tracking-tight text-slate-900 md:text-[20px] lg:text-[22px]">
@@ -231,9 +226,11 @@ export default function WhatsNextBanner() {
         {/* ============ FOOTER STRIP ============ */}
         <div className="mt-3 lg:mt-4 flex flex-col overflow-hidden rounded-2xl bg-[#EFF7EE] sm:flex-row sm:items-center">
           {/* Let's grow together */}
-          <div className="relative flex items-center gap-3 overflow-hidden px-4 py-3 sm:w-1/2 sm:px-5">
-            <Leaf
-              className="pointer-events-none absolute -left-4 -bottom-4 h-20 w-20 text-[#3b8c2a]/20"
+          <div className="relative flex items-center gap-3 overflow-hidden pl-28 pr-4 py-3 sm:w-1/2 sm:pl-28 sm:pr-5 sm:py-3">
+            <img
+              src={ctaBannerImg.src}
+              alt=""
+              className="absolute left-0 bottom-0 h-[120%] w-24 object-contain opacity-20"
               aria-hidden="true"
             />
             <span className="relative hidden h-10 w-10 shrink-0 items-center justify-center rounded-full bg-[#1b5e20] sm:flex">
@@ -252,7 +249,7 @@ export default function WhatsNextBanner() {
           </div>
 
           {/* Ready to take the next step / Apply now */}
-          <div className="flex flex-1 flex-col gap-3 border-t border-gray-200 bg-white px-4 py-3 sm:flex-row sm:items-center sm:justify-between sm:gap-6 sm:border-l sm:border-t-0 sm:px-5">
+          <div className="flex flex-1 flex-col gap-3 rounded-2xl border-t border-gray-200 bg-white px-4 py-3 sm:flex-row sm:items-center sm:justify-between sm:gap-6 sm:border-l sm:border-t-0 sm:px-5">
             <div className="flex items-center gap-3">
               <FileEdit className="h-8 w-8 shrink-0 text-[#1b5e20]" aria-hidden="true" />
               <div>

@@ -14,6 +14,7 @@ import {
   Mail,
   Phone,
   ChevronRight,
+  ArrowRight,
 } from "lucide-react";
 import leafsImg from "@/app/assets/icons/leafs.png";
 import howToApplyImg from "@/app/assets/participate/msme/how_to_apply.png";
@@ -97,7 +98,7 @@ export default function PmsSupportSection() {
                 &amp; Get PMS Support
               </h2>
 
-              <p className="max-w-xl text-[14px] leading-relaxed text-slate-600 sm:text-[15px]">
+              <p className="max-w-sm text-[14px] leading-relaxed text-slate-600 sm:text-[15px]">
                 A simple, guided process to help eligible MSEs receive financial
                 assistance for participation.
               </p>
@@ -158,21 +159,21 @@ export default function PmsSupportSection() {
             </h3>
           </div>
 
-          <ol className="grid grid-cols-1 gap-y-6 sm:grid-cols-2 sm:gap-x-6 sm:gap-y-8 lg:grid-cols-4 lg:gap-x-4">
+          <ol className="grid grid-cols-1 gap-y-6 sm:grid-cols-2 sm:gap-x-6 sm:gap-y-8 lg:grid-cols-4 lg:gap-x-12">
             {journeySteps.map(({ number, icon: Icon, title, description }, index) => (
-              <li key={number} className="relative flex flex-col items-center text-center">
+              <li key={number} className="relative flex flex-col items-center text-center rounded-2xl bg-white px-4 py-6 shadow-sm ring-1 ring-black/5">
                 {/* connecting arrow (desktop only, between cards) */}
                 {index < journeySteps.length - 1 && (
                   <span
-                    className="pointer-events-none absolute -right-3 top-9 hidden text-[#1b5e20]/60 lg:block"
+                    className="pointer-events-none absolute -right-6 top-9 hidden text-[#1b5e20]/60 lg:block z-10"
                     aria-hidden="true"
                   >
-                    <ChevronRight className="h-6 w-6" strokeWidth={2.5} />
+                    <ArrowRight className="h-5 w-5" strokeWidth={2.5} />
                   </span>
                 )}
 
-                <span className="relative mb-4 flex h-14 w-14 items-center justify-center rounded-full bg-white shadow-sm sm:h-16 sm:w-16">
-                  <span className="absolute -top-4 left-1/2 flex h-8 w-8 -translate-x-1/2 items-center justify-center rounded-full bg-[#1b5e20] text-[11px] font-semibold text-white ring-2 ring-[#EFF7EE]">
+                <span className="relative mb-4 flex h-14 w-14 items-center justify-center rounded-full bg-[#EFF7EE] sm:h-16 sm:w-16">
+                  <span className="absolute -top-4 left-1/2 flex h-8 w-8 -translate-x-1/2 items-center justify-center rounded-full bg-[#1b5e20] text-[11px] font-semibold text-white ring-2 ring-white">
                     {number}
                   </span>
                   <Icon className="h-6 w-6 text-[#1b5e20] sm:h-7 sm:w-7" aria-hidden="true" />
@@ -181,6 +182,7 @@ export default function PmsSupportSection() {
                 <h4 className="mb-2 text-[13px] font-semibold uppercase tracking-wide text-slate-900 sm:text-[14px]">
                   {title}
                 </h4>
+                <span className="mb-2 h-[2px] w-8 rounded-full bg-[#1b5e20]" aria-hidden="true" />
                 <p className="max-w-[16rem] text-[13px] leading-relaxed text-slate-600 sm:text-sm">
                   {description}
                 </p>

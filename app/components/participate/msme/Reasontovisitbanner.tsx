@@ -12,6 +12,8 @@ import {
 
 import leafsImg from "@/app/assets/icons/leafs.png";
 import reasonToVisitImg from "@/app/assets/participate/msme/reason_to_visit.jpg";
+import beTheLeftImg from "@/app/assets/exhibitors/be_the_left.png";
+import beTheRightImg from "@/app/assets/exhibitors/be_the_right.png";
 
 /**
  * Bharat Organic Expo — "Reason to Visit" banner
@@ -83,6 +85,18 @@ const FEATURES: Feature[] = [
 export default function ReasonToVisitBanner() {
   return (
     <section className="relative w-full overflow-hidden bg-[#EFF7EE] px-4 py-6 md:px-11">
+      <img
+        src={beTheLeftImg.src}
+        alt=""
+        className="pointer-events-none absolute left-0 top-1/2 h-auto w-20 -translate-y-1/2 object-contain opacity-30 sm:w-28 lg:w-36"
+        aria-hidden="true"
+      />
+      <img
+        src={beTheRightImg.src}
+        alt=""
+        className="pointer-events-none absolute right-0 top-1/2 h-auto w-20 -translate-y-1/2 object-contain opacity-30 sm:w-28 lg:w-36"
+        aria-hidden="true"
+      />
       <div className="mx-auto w-full">
         {/* ===================== TOP: heading + photo collage ===================== */}
         <div className="grid grid-cols-1 items-center gap-10 lg:grid-cols-2 lg:gap-8">

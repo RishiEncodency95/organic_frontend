@@ -41,6 +41,7 @@ interface SupportCard {
   footIcon: FC<{ className?: string }>;
   footIconColor: string;
   footIconBg: string;
+  borderColor: string;
 }
 
 const SUPPORT_CARDS: SupportCard[] = [
@@ -57,6 +58,7 @@ const SUPPORT_CARDS: SupportCard[] = [
     footIcon: Landmark,
     footIconColor: "text-white",
     footIconBg: "bg-[#1b5e20]",
+    borderColor: "#1b5e20",
   },
   {
     icon: Users,
@@ -70,6 +72,7 @@ const SUPPORT_CARDS: SupportCard[] = [
     footIcon: HandHelping,
     footIconColor: "text-white",
     footIconBg: "bg-[#C99A3B]",
+    borderColor: "#C99A3B",
   },
   {
     icon: ReceiptIndianRupee,
@@ -83,6 +86,7 @@ const SUPPORT_CARDS: SupportCard[] = [
     footIcon: TrendingUp,
     footIconColor: "text-white",
     footIconBg: "bg-[#1b5e20]",
+    borderColor: "#1b5e20",
   },
 ];
 
@@ -154,7 +158,7 @@ const PMSFinancialAssistanceBanner: FC = () => {
           </p>
 
           {/* Support cards */}
-          <div className="mt-2 grid grid-cols-1 gap-5 sm:grid-cols-2 sm:gap-6 lg:mt-4 lg:grid-cols-3">
+          <div className="mt-2 grid grid-cols-1 gap-5 sm:grid-cols-2 sm:gap-5 lg:mt-4 lg:grid-cols-3">
             {SUPPORT_CARDS.map((card) => {
               const Icon = card.icon;
               const FootIcon = card.footIcon;
@@ -180,7 +184,13 @@ const PMSFinancialAssistanceBanner: FC = () => {
                     {card.value}
                   </p>
 
-                  <span className="my-2 h-px w-16 bg-[#1b5e20]/20" aria-hidden="true" />
+                  <div className="my-2 flex w-full items-start justify-start" aria-hidden="true">
+                    <span className={`h-[2px] flex-1 ${card.iconBg}`} />
+                    <svg width="14" height="10" viewBox="0 0 14 10" fill="none" className="shrink-0">
+                      <path d="M1 1L7 7L13 1" stroke={card.borderColor} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+                    </svg>
+                    <span className={`h-[2px] flex-1 ${card.iconBg}`} />
+                  </div>
 
                   <h3 className={`text-base font-semibold leading-snug ${card.titleColor}`}>
                     {card.title}
@@ -208,7 +218,7 @@ const PMSFinancialAssistanceBanner: FC = () => {
 
       {/* ============ Footer strip ============ */}
       <div className="relative px-4 pb-6 pt-2 md:px-11">
-        <div className="relative overflow-hidden rounded-2xl bg-[#EFF7EE] shadow-lg">
+        <div className="relative overflow-hidden rounded-2xl border border-[#a8cfa0] bg-[#EFF7EE] shadow-lg">
           <div className="flex flex-col items-center gap-4 px-3 py-4 sm:px-4 sm:py-5 md:flex-row md:items-center md:gap-6 md:px-4 md:py-4">
             {/* Important note */}
             <div className="flex w-full items-start gap-3 md:w-[38%]">

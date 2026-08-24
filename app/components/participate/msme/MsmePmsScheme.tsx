@@ -1,6 +1,7 @@
 import { BookOpenCheck, Globe, Store, Handshake, TrendingUp, ShieldCheck } from "lucide-react";
 import type { LucideIcon } from "lucide-react";
 import leafsImg from "@/app/assets/icons/leafs.png";
+import ctaBannerImg from "@/app/assets/participate/msme/ctabanner.png";
 
 interface SchemeFeature {
   id: string;
@@ -58,7 +59,7 @@ export default function MsmePmsScheme() {
       <img
         src={leafsImg.src}
         alt=""
-        className="pointer-events-none absolute -right-10 top-0 h-40 w-40 rotate-[20deg] object-contain opacity-10 sm:h-56 sm:w-56 lg:right-4"
+        className="pointer-events-none absolute left-0 top-0 h-full w-[10%] object-contain opacity-10"
         aria-hidden="true"
       />
       <div className="mx-auto w-full">
@@ -72,7 +73,7 @@ export default function MsmePmsScheme() {
 
         {/* Intro paragraph */}
         <p className="mx-auto max-w-3xl text-center text-[14px] sm:text-[15px] leading-relaxed text-slate-600 text-balance">
-          The <strong className="font-semibold text-slate-900">Procurement &amp; Marketing Support (PMS) Scheme</strong> is
+          The <strong className="font-semibold text-slate-900">Procurement &amp; Marketing Support (PMS) Scheme </strong> {" "}is
           an initiative of the Ministry of MSME aimed at improving market access for Micro
           &amp; Small Enterprises. Eligible MSEs can explore applicable financial assistance for
           participation in approved trade fairs and exhibitions.
@@ -91,11 +92,12 @@ export default function MsmePmsScheme() {
                   <Icon className="h-10 w-10 text-[#1b5e20]" strokeWidth={1.75} aria-hidden="true" />
                 </div>
 
-                <h3 className="mt-4 text-[18px] sm:text-xl font-semibold text-slate-900">
+                <h3 className="mt-4 text-[18px] sm:text-xl font-semibold text-[#1b5e20]">
                   {feature.title}
                 </h3>
+                <span className="mt-2 h-[2px] w-10 rounded-full bg-[#1b5e20]" aria-hidden="true" />
 
-                <p className="mt-2 text-[14px] leading-relaxed text-slate-600">
+                <p className="mt-2 max-w-[200px] text-[14px] leading-relaxed text-[#1b5e20]">
                   {feature.description}
                 </p>
 
@@ -112,17 +114,25 @@ export default function MsmePmsScheme() {
         </ul>
 
         {/* Bottom banner */}
-        <div className="mt-6 flex flex-col sm:flex-row items-center gap-4 rounded-2xl bg-[#EFF7EE] px-4 py-4 sm:px-6">
-          <div className="flex h-14 w-14 shrink-0 items-center justify-center rounded-full bg-[#1b5e20]">
-            <ShieldCheck className="h-7 w-7 text-white" aria-hidden="true" />
+        <div className="relative mt-6 overflow-hidden rounded-2xl bg-[#EFF7EE] px-4 py-4 sm:px-6">
+          <div className="flex flex-col sm:flex-row items-center gap-4 relative z-10">
+            <div className="flex h-14 w-14 shrink-0 items-center justify-center rounded-full bg-[#1b5e20]">
+              <ShieldCheck className="h-7 w-7 text-white" aria-hidden="true" />
+            </div>
+            <p className="text-center sm:text-left text-[14px] sm:text-[15px] text-slate-700">
+              The PMS Scheme empowers MSEs to participate, promote and prosper.{" "}
+              <br />
+              <strong className="block sm:inline font-semibold text-slate-900">
+                More Participation. More Exposure. More Growth.
+              </strong>
+            </p>
           </div>
-          <p className="text-center sm:text-left text-[14px] sm:text-[15px] text-slate-700">
-            The PMS Scheme empowers MSEs to participate, promote and prosper.{" "}
-            <br />
-            <strong className="block sm:inline font-semibold text-slate-900">
-              More Participation. More Exposure. More Growth.
-            </strong>
-          </p>
+          <img
+            src={ctaBannerImg.src}
+            alt=""
+            className="pointer-events-none absolute right-0 bottom-0 h-full w-auto object-contain opacity-20 sm:opacity-30"
+            aria-hidden="true"
+          />
         </div>
       </div>
     </section>
