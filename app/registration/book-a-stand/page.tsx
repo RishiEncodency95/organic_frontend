@@ -280,7 +280,7 @@ const BookAStand = () => {
                     if (employeesRes) setMarketingStaff(Array.isArray(employeesRes) ? employeesRes : ((employeesRes as any).data || []));
                     if (staffRes) setStaff(Array.isArray(staffRes) ? staffRes : ((staffRes as any).data || []));
                     if (termsRes) setTermsContent(termsRes);
-                    if (countryRes) setCountries(countryRes);
+                    if (countryRes) setCountries(Array.isArray(countryRes) ? countryRes : ((countryRes as any).data || []));
                     if (highlightRes) setEventHighlights(highlightRes);
                     if (settingsRes) setSettings(settingsRes);
                     if (counterRes) setCounters(counterRes);
@@ -296,7 +296,7 @@ const BookAStand = () => {
             const selectedCountry = countries.find(c => c.name === formData.country);
             if (selectedCountry && selectedCountry.countryCode) {
                 crmApi.getStates(selectedCountry.countryCode).then(stateRes => {
-                    setStates(stateRes);
+                    setStates(Array.isArray(stateRes) ? stateRes : ((stateRes as any).data || []));
                 }).catch(err => console.error("Error fetching states:", err));
             }
         } else {
@@ -309,7 +309,7 @@ const BookAStand = () => {
             const selectedState = states.find(s => s.name === formData.state);
             if (selectedState && selectedState.stateCode) {
                 crmApi.getCities(selectedState.stateCode).then(cityRes => {
-                    setCities(cityRes);
+                    setCities(Array.isArray(cityRes) ? cityRes : ((cityRes as any).data || []));
                 }).catch(err => console.error("Error fetching cities:", err));
             }
         } else {
@@ -794,12 +794,12 @@ const BookAStand = () => {
                     balanceAmount: formData.financeBreakdown?.netPayable || 0,
                 };
                 const regRes = await exhibitorRegistrationApi.submit(pendingData);
-                if (!regRes.success || !regRes.data?._id) {
-                    Swal.fire('Error', regRes.message || 'Failed to initiate registration. Please try again.', 'error');
+                if (!regRes || !regRes._id) {
+                    Swal.fire('Error', regRes?.message || 'Failed to initiate registration. Please try again.', 'error');
                     setIsLoading(false);
                     return;
                 }
-                const registrationDbId = regRes.data._id;
+                const registrationDbId = regRes._id;
 
                 // Step 2: Create Razorpay order on backend (gets a proper order_id)
                 const orderRes = await fetch(`${API_URL}/payment/create-order/${registrationDbId}`, {
