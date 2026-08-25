@@ -64,9 +64,32 @@ const IntroductionSection = () => {
   const staticData = {
     bgColor: '#ffffff',
     subtitle: 'INTRODUCTION',
-    title: 'A Global Platform for <span class="text-[#246b38] relative inline-block">Organic & <svg class="absolute w-full h-3 -bottom-1 left-0 text-[#3b8c2a]/20" viewBox="0 0 100 10" preserveAspectRatio="none"><path d="M0 5 Q 50 10 100 5" stroke="currentColor" stroke-width="4" fill="transparent"/></svg></span> Sustainable Living',
-    description: "Bharat Organic Expo 2027 stands as India's most influential international platform dedicated to organic excellence, wellness innovation, and sustainable living. Entering its prestigious edition, the Expo represents a strategic evolution—from a conventional trade exhibition into a powerful global ecosystem for business growth, policy exchange, knowledge sharing, and international collaboration.<br/><br/>With a strong legacy of 10+ years and 8 successfully executed editions, the Expo has established itself as a trusted meeting ground for organic leaders, wellness brands, sustainable technology providers, investors, policymakers, researchers, startups, and global delegations from across the world.",
-    image: introImg
+    title: {
+      prefix: "WELCOME TO",
+      highlightMain: "BHARAT ORGANIC EXPO",
+      highlightYear: "2027",
+      suffix: "India's Premier Platform for Organic Products, Sustainable Agriculture & Natural Living"
+    },
+    paragraphs: [
+      {
+        id: 1,
+        highlightStart: "Bharat Organic Expo 2027",
+        text: " is India's leading international exhibition dedicated to organic products, sustainable agriculture, natural wellness, eco-friendly innovations, and green business opportunities. The Expo brings together manufacturers, exhibitors, buyers, importers, exporters, investors, government organizations, industry experts, startups, researchers, and global delegates under one dynamic platform.",
+        hasBorder: true
+      },
+      {
+        id: 2,
+        highlightStart: "",
+        text: "Designed to foster business growth, knowledge sharing, innovation, and international collaboration, Bharat Organic Expo serves as the perfect destination for discovering new products, building strategic partnerships, expanding global markets, and promoting a sustainable future.",
+        hasBorder: false
+      }
+    ],
+    button: {
+      text: "Explore Exhibition",
+      link: "/about"
+    },
+    image: introImg,
+    imageAlt: "Bharat Organic Expo 2027 Introduction"
   };
 
   const sortedFeatures = [
@@ -105,41 +128,45 @@ const IntroductionSection = () => {
             <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-gradient-to-r from-[#3b8c2a]/10 to-[#F2B40E]/10 border border-[#3b8c2a]/20 shadow-[0_4px_15px_rgba(59,140,42,0.06)] mb-2 transform hover:scale-105 transition-transform duration-300">
               <span className="w-2 h-2 rounded-full bg-[#F2B40E] animate-pulse"></span>
               <span className="text-[11px] md:text-[14px] font-semibold uppercase tracking-[0.2em] md:tracking-[0.25em] text-[#1a6b3a]">
-                INTRODUCTION
+                {staticData.subtitle}
               </span>
             </div>
 
             {/* Title */}
             <h2 className="text-[24px] sm:text-[28px] md:text-[32px] lg:text-[36px] font-semibold font-poppins text-slate-900 leading-[1.3] md:leading-[1.4] mb-4 tracking-tight">
-              WELCOME TO{" "}
+              {staticData.title.prefix}{" "}
               <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#3b8c2a] to-[#1a6b3a] relative inline-block">
-                BHARAT ORGANIC EXPO{" "}
-                <span className="text-[#F2B40E] inline-block">2027</span>
+                {staticData.title.highlightMain}{" "}
+                <span className="text-[#F2B40E] inline-block">{staticData.title.highlightYear}</span>
                 <svg className="absolute w-full h-3 -bottom-1 left-0 text-[#F2B40E]/40" viewBox="0 0 100 10" preserveAspectRatio="none"><path d="M0 5 Q 50 10 100 5" stroke="currentColor" strokeWidth="4" fill="transparent" /></svg>
               </span>
               {" "}
               <span className="text-[14px] sm:text-[15px] md:text-[18px] font-medium text-black mt-2 sm:mt-4 block tracking-normal">
-                India's Premier Platform for Organic Products, Sustainable Agriculture & Natural Living
+                {staticData.title.suffix}
               </span>
             </h2>
 
             <div className="mb-4 space-y-3 sm:space-y-4">
-              <p className="text-[14px] sm:text-[15px] md:text-[16px] leading-[1.7] text-slate-700 font-medium border-l-4 border-[#F2B40E] pl-3.5 sm:pl-5 bg-gradient-to-r from-[#F2B40E]/5 to-transparent py-3 sm:py-4 rounded-r-xl shadow-sm">
-                <strong className="text-[#1a6b3a] font-bold">Bharat Organic Expo 2027</strong>{" "}
-                is India's leading international exhibition dedicated to organic products, sustainable agriculture, natural wellness, eco-friendly innovations, and green business opportunities. The Expo brings together manufacturers, exhibitors, buyers, importers, exporters, investors, government organizations, industry experts, startups, researchers, and global delegates under one dynamic platform.
-              </p>
-              <p className="text-[13.5px] sm:text-[14px] md:text-[16px] leading-[1.7] text-slate-600">
-                Designed to foster business growth, knowledge sharing, innovation, and international collaboration, Bharat Organic Expo serves as the perfect destination for discovering new products, building strategic partnerships, expanding global markets, and promoting a sustainable future.
-              </p>
+              {staticData.paragraphs.map((p) => (
+                <p 
+                  key={p.id} 
+                  className={p.hasBorder 
+                    ? "text-[14px] sm:text-[15px] md:text-[16px] leading-[1.7] text-slate-700 font-medium border-l-4 border-[#F2B40E] pl-3.5 sm:pl-5 bg-gradient-to-r from-[#F2B40E]/5 to-transparent py-3 sm:py-4 rounded-r-xl shadow-sm"
+                    : "text-[13.5px] sm:text-[14px] md:text-[16px] leading-[1.7] text-slate-600"}
+                >
+                  {p.highlightStart && <strong className="text-[#1a6b3a] font-bold">{p.highlightStart}</strong>}
+                  {p.text}
+                </p>
+              ))}
             </div>
 
             {/* Action Buttons */}
             <div className="flex items-center gap-4 pt-1">
               <a
-                href="/about"
+                href={staticData.button.link}
                 className="w-full sm:w-auto text-center px-6 py-2.5 bg-[#3b8c2a] border-2 border-[#F2B40E] hover:bg-[#F2B40E] hover:text-[#0b2912] text-white text-[12px] font-bold uppercase tracking-wider rounded-full shadow-[0_10px_20px_rgba(59,140,42,0.2)] hover:shadow-[0_15px_30px_rgba(59,140,42,0.3)] transition-all duration-300"
               >
-                Explore Exhibition
+                {staticData.button.text}
               </a>
             </div>
           </motion.div>
@@ -186,7 +213,7 @@ const IntroductionSection = () => {
               {staticData.image ? (
                 <Image
                   src={staticData.image}
-                  alt="ORGANIC EXPO Introduction"
+                  alt={staticData.imageAlt}
                   width={640}
                   height={480}
                   sizes="(max-width: 768px) 100vw, 40vw"

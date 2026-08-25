@@ -1,6 +1,7 @@
 "use client";
 import React, { useState, useEffect, useRef, useCallback } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { CalendarDays, MapPin, ChevronLeft, ChevronRight, ArrowRight } from "lucide-react";
 import gsap from "gsap";
 import SectionContainer from "@/app/components/layout/SectionContainer";
@@ -43,6 +44,7 @@ const SLIDES = [
   {
     id: 0,
     img: home1,
+    alt: "Organic Food & Beverages",
     tagline: "ORGANIC FOOD & BEVERAGES",
     titlePrimary: "PURE & CERTIFIED",
     titleSecondary: "ORGANIC STAPLES",
@@ -55,6 +57,7 @@ const SLIDES = [
   {
     id: 1,
     img: home2,
+    alt: "Superfoods",
     tagline: "SUPERFOODS",
     titlePrimary: "BOOST YOUR",
     titleSecondary: "IMMUNITY",
@@ -67,6 +70,7 @@ const SLIDES = [
   {
     id: 2,
     img: home5,
+    alt: "Natural Beauty",
     tagline: "NATURAL BEAUTY",
     titlePrimary: "CLEAN & CRUELTY",
     titleSecondary: "FREE COSMETICS",
@@ -79,6 +83,7 @@ const SLIDES = [
   {
     id: 3,
     img: home3,
+    alt: "Smart & Sustainable Farming",
     tagline: "SMART & SUSTAINABLE FARMING",
     titlePrimary: "INNOVATING",
     titleSecondary: "AGRICULTURE",
@@ -91,6 +96,7 @@ const SLIDES = [
   {
     id: 4,
     img: home4,
+    alt: "Herbal Wellness & Ayurveda",
     tagline: "HERBAL WELLNESS & AYURVEDA",
     titlePrimary: "ANCIENT WISDOM",
     titleSecondary: "MODERN HEALING",
@@ -103,6 +109,7 @@ const SLIDES = [
   {
     id: 5,
     img: home6,
+    alt: "Live Expo & Networking",
     tagline: "LIVE EXPO & NETWORKING",
     titlePrimary: "EXPERIENCE THE",
     titleSecondary: "MEGA EVENT",
@@ -432,17 +439,15 @@ const HeroSection = () => {
             className="absolute inset-0 w-full h-full pointer-events-none"
             style={{ zIndex: id === 0 ? 2 : 1, willChange: "clip-path, opacity, transform" }}
           >
-            <img
+            <Image
               ref={(el) => {
                 imgEls.current[id] = el;
               }}
-              src={img.src}
+              src={img}
               alt={`Bharat Organic Expo slide ${id + 1}`}
               className="w-full h-full object-cover select-none"
               style={{ willChange: "transform, filter" }}
-              fetchPriority={id === 0 ? "high" : "low"}
-              loading={id === 0 ? "eager" : "lazy"}
-              decoding={id === 0 ? "sync" : "async"}
+              priority={id === 0}
             />
           </div>
         ))}
