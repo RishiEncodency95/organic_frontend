@@ -28,17 +28,31 @@ const Sparkle = ({ style, color = '#fff176' }: { style?: React.CSSProperties; co
   </span>
 );
 
-const points = [
-  "Meet genuine buyers, distributors, retailers, and healthcare professionals",
-  "Generate high-quality B2B & B2C leads with faster business conversions",
-  "Launch new products with maximum visibility and market impact",
-  "Expand your dealer, distributor, franchise, and export network",
-  "Strengthen brand presence through live demos and media exposure",
-  "Connect with investors, CEOs, doctors, and key decision-makers",
-  "Achieve higher ROI with direct customer engagement and trust building"
-];
-
-const mainPoints = ["Exhibit", "Connect", "Grow"];
+// ── Dynamic Data Configuration ──
+const sectionData = {
+  sectionTag: "WHY PARTICIPATE",
+  titleMain: "Your Gateway to",
+  titleHighlight: "Global Opportunities",
+  description: "Bharat Organic Expo 2027 is a leading platform for organic products, natural health, fitness, Ayurveda, and sustainable innovation—bringing together top brands, buyers, investors, and industry leaders from India and worldwide.",
+  points: [
+    "Meet genuine buyers, distributors, retailers, and healthcare professionals",
+    "Generate high-quality B2B & B2C leads with faster business conversions",
+    "Launch new products with maximum visibility and market impact",
+    "Expand your dealer, distributor, franchise, and export network",
+    "Strengthen brand presence through live demos and media exposure",
+    "Connect with investors, CEOs, doctors, and key decision-makers",
+    "Achieve higher ROI with direct customer engagement and trust building"
+  ],
+  image: meetingImg,
+  imageAlt: "Business Meeting at Expo",
+  imageBadgeText: "Build Relationships.\nGenerate Leads.\nGrow Your Business.",
+  mainPoints: ["Exhibit", "Connect", "Grow"],
+  buttons: {
+    stall: { text: "BOOK A STALL", link: "/registration/book-a-stand" },
+    brochure: { text: "Download Brochure", link: "/download/invited card.pdf" },
+    moreInfo: { text: "Why Exhibit?", link: "/why-exhibit" }
+  }
+};
 
 const WhyParticipate = () => {
   return (
@@ -111,21 +125,21 @@ const WhyParticipate = () => {
           <div className="flex items-center gap-2 mb-2.5">
             <Leaf className="w-5 h-5 text-[#1b5e20] shrink-0" fill="#1b5e20" />
             <span className="font-poppins font-semibold text-sm sm:text-base text-[#1b5e20] tracking-widest uppercase">
-              WHY PARTICIPATE
+              {sectionData.sectionTag}
             </span>
           </div>
 
           <h2 className="font-poppins font-semibold text-2xl sm:text-3xl md:text-[34px] lg:text-[38px] text-[#001810] leading-[1.1] mb-2.5 uppercase tracking-tight">
-            Your Gateway to <br className="hidden sm:block" />
-            <span className="text-[#f58220]">Global Opportunities</span>
+            {sectionData.titleMain} <br className="hidden sm:block" />
+            <span className="text-[#f58220]">{sectionData.titleHighlight}</span>
           </h2>
 
           <p className="font-inter text-sm sm:text-base font-bold text-[#131730] leading-relaxed mb-4 max-w-xl">
-            Bharat Organic Expo 2027 is a leading platform for organic products, natural health, fitness, Ayurveda, and sustainable innovation—bringing together top brands, buyers, investors, and industry leaders from India and worldwide.
+            {sectionData.description}
           </p>
 
           <div className="space-y-3 mb-8 font-inter">
-            {points.map((point: string, index: number) => (
+            {sectionData.points.map((point: string, index: number) => (
               <div key={index} className="flex items-center gap-3">
                 <CheckCircle2 className="w-5 h-5 text-[#1b5e20] shrink-0" fill="#1b5e20" color="#fff" />
                 <span className="text-[13.5px] sm:text-[14px] font-bold text-[#131730]">{point}</span>
@@ -146,13 +160,13 @@ const WhyParticipate = () => {
               <Sparkle style={{ bottom: '-12px', right: '30%', animationDelay: '0.6s' }} />
 
               <Link
-                href="/registration/book-a-stand"
+                href={sectionData.buttons.stall.link}
                 target="_blank"
                 className="golden-btn-wp flex items-center gap-1.5 px-4 h-8 rounded-lg relative z-10 hover:scale-[1.02] transition-transform"
               >
                 <Store className="w-[14px] h-[14px] text-[#050A1A] shrink-0" />
                 <span className="font-bold text-[10px] tracking-widest text-[#050A1A] font-poppins uppercase">
-                  BOOK A STALL
+                  {sectionData.buttons.stall.text}
                 </span>
                 <ArrowRight className="w-3 h-3 text-[#050A1A] group-hover/btn:translate-x-1 transition-transform" />
               </Link>
@@ -168,14 +182,14 @@ const WhyParticipate = () => {
               <Sparkle color="#28396C" style={{ bottom: '-12px', right: '30%', animationDelay: '0.7s' }} />
 
               <a
-                href="/download/invited card.pdf"
+                href={sectionData.buttons.brochure.link}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="blue-btn-wp flex items-center gap-1.5 px-4 h-8 rounded-lg relative z-10 hover:scale-[1.02] transition-transform"
               >
                 <FileDown className="w-[14px] h-[14px] text-white shrink-0" />
                 <span className="font-bold text-[10px] tracking-widest text-white uppercase font-poppins">
-                  Download Brochure
+                  {sectionData.buttons.brochure.text}
                 </span>
                 <ArrowRight className="w-3 h-3 text-white group-hover/btn:translate-x-1 transition-transform" />
               </a>
@@ -183,14 +197,14 @@ const WhyParticipate = () => {
 
             {/* ── More Info Button ── */}
             <Link
-              href="/why-exhibit"
+              href={sectionData.buttons.moreInfo.link}
               target="_blank"
               rel="noopener noreferrer"
               className="flex items-center gap-1.5 px-3 h-8 rounded-lg border border-[#2f8f3a] bg-[#F9FCF9] text-[#2f8f3a] hover:bg-[#2f8f3a]/5 transition-all hover:scale-[1.02] shadow-sm relative z-10 font-poppins"
             >
               <Info className="w-[14px] h-[14px] shrink-0" />
               <span className="font-bold text-[10px] tracking-widest uppercase">
-                Why Exhibit?
+                {sectionData.buttons.moreInfo.text}
               </span>
             </Link>
           </div>
@@ -209,8 +223,8 @@ const WhyParticipate = () => {
 
           <div className="relative rounded-[2rem] overflow-hidden shadow-2xl border-[7px] border-white/70 z-10">
             <Image
-              src={meetingImg}
-              alt="Business Meeting at Expo"
+              src={sectionData.image}
+              alt={sectionData.imageAlt}
               sizes="(max-width: 1024px) 100vw, 50vw"
               className="w-full h-[280px] md:h-[330px] object-cover"
             />
@@ -220,7 +234,7 @@ const WhyParticipate = () => {
               <div className="flex items-start gap-2 md:gap-3">
                 <Leaf className="w-3.5 h-3.5 md:w-4 md:h-4 text-[#2f8f3a] shrink-0 mt-[2px]" fill="#2f8f3a" />
                 <p className="text-[10px] md:text-[12px] font-bold text-[#071c3d] leading-tight whitespace-pre-line font-inter">
-                  {"Build Relationships.\nGenerate Leads.\nGrow Your Business."}
+                  {sectionData.imageBadgeText}
                 </p>
               </div>
             </div>
@@ -228,7 +242,7 @@ const WhyParticipate = () => {
 
           {/* 3-point bullets below image */}
           <div className="flex flex-wrap justify-center md:justify-start items-center gap-4 md:gap-8 mt-6 md:mt-8 md:ml-6 font-poppins">
-            {mainPoints.map((point: string, index: number) => (
+            {sectionData.mainPoints.map((point: string, index: number) => (
               <div key={index} className="flex items-center gap-2">
                 <CheckCircle2 className="w-5 h-5 text-[#2f8f3a] shrink-0" fill="#2f8f3a" color="#fff" />
                 <span className="text-[13px] md:text-[14px] font-bold text-[#071c3d] tracking-tight uppercase">{point}</span>

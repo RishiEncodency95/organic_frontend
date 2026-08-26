@@ -13,44 +13,6 @@ import SectionContainer from '../layout/SectionContainer';
 import testImg from "../../assets/banner/testbg.webp";
 import leafPng from "../../assets/home/leaf.webp";
 
-// ─── Sparkle component for golden button ───
-const Sparkle = ({ style }: { style?: React.CSSProperties }) => (
-  <span
-    style={{
-      position: 'absolute',
-      pointerEvents: 'none',
-      fontSize: '12px',
-      color: '#fff176',
-      textShadow: '0 0 6px gold, 0 0 12px gold',
-      animation: 'sparkleAnim 1.6s ease-in-out infinite',
-      opacity: 0,
-      zIndex: 20,
-      ...style,
-    }}
-  >
-    ✦
-  </span>
-);
-
-// ─── Sparkle component for teal button ───
-const TealSparkle = ({ style }: { style?: React.CSSProperties }) => (
-  <span
-    style={{
-      position: 'absolute',
-      pointerEvents: 'none',
-      fontSize: '12px',
-      color: '#5ef5e0',
-      textShadow: '0 0 6px #0A7C6E, 0 0 12px #0fe8d0',
-      animation: 'sparkleAnim 1.6s ease-in-out infinite',
-      opacity: 0,
-      zIndex: 20,
-      ...style,
-    }}
-  >
-    ✦
-  </span>
-);
-
 // ─── Initials Generator ───
 const getInitials = (name: string) => {
   if (!name) return "";
@@ -78,78 +40,98 @@ const InitialsCircle = ({ name, color }: { name: string; color: string }) => (
   </div>
 );
 
-
-const TESTIMONIALS_DATA = [
-  {
-    _id: "1",
-    company1: "Achaspati Kulwant",
-    company2: "Chancellor, University of Patanjali",
-    location: "Haridwar",
-    quote: "The change is organizing activities with a vision. I wish the project a great success. It's a wonderful initiative for sustainable future. We must all come together to ensure that our environment is protected and cherished by the coming generations, creating a harmonious balance.",
-    color: "#1b5e20",
-    logoText: "PATANJALI"
+// ─── Dynamic Data Configuration ───
+const sectionData = {
+  heroBanner: {
+    badge: "Industry Testimonials",
+    titlePrefix: "WHAT GLOBAL EXPERTS SAY",
+    titleHighlight: "ABOUT BHARAT ORGANIC EXPO",
+    subtitle: (
+      <>
+        Bridging the gap between <span className="text-[#1b5e20]">Organic Buyers</span> and <span className="text-[#1b5e20]">Sustainable Brands</span>
+      </>
+    ),
+    description: (
+      <>
+        Trusted by leaders across natural & organic sectors. Bharat Organic Expo serves <br className="hidden sm:block" />
+        as the premier platform bridging the gap between sustainable brands, farmers, <br className="hidden sm:block" />
+        and global buyers. We are committed to fostering B2B connections and <br className="hidden sm:block" />
+        transforming the <span className="font-bold text-[#1b5e20]">organic business landscape</span> globally.
+      </>
+    )
   },
-  {
-    _id: "2",
-    company1: "Khyati Nayak",
-    company2: "PRO – Gujarat Tourism",
-    location: "Gujarat",
-    quote: "This platform will open eyes of our new generations towards organic living. It provides a unique opportunity to learn from global experts. By adopting these sustainable methodologies, we can actively contribute to a greener ecosystem and promote healthier lifestyle choices.",
-    color: "#d26019",
-    logoText: "GUJARAT\nTOURISM"
-  },
-  {
-    _id: "3",
-    company1: "Mukesh Kumar",
-    company2: "The Yogshala Head",
-    location: "New Delhi",
-    quote: "It made me realize the impact of holistic wellness in our daily decisions. Every small step taken today safeguards our natural resources. Whether it is choosing chemical-free products or supporting local farmers, these choices collectively lead to a monumental positive shift in society.",
-    color: "#00643b",
-    logoText: "YOGSHALA"
-  },
-  {
-    _id: "4",
-    company1: "Dr. Subramanian Swamy",
-    company2: "Bharatiya Janata Party (BJP)",
-    location: "New Delhi",
-    quote: "The Yogshala Expo is a great step towards a healthier and self-reliant India. It beautifully bridges traditional wisdom with modern practices. The integration of Ayurveda into everyday life ensures that our citizens maintain not just physical strength but also mental and spiritual well-being.",
-    color: "#23471d",
-    logoText: "BJP\nINDIA"
-  },
-  {
-    _id: "5",
-    company1: "Qazhf Khan",
-    company2: "Father of Kairana Model",
-    location: "Kairana",
-    quote: "The Yogshala Expo ensures honest and responsible contributions. The collective commitment shown here will build a robust organic market. We are witnessing an incredible movement where ethical farming and conscientious consumption are becoming the new standard for a thriving nation.",
-    color: "#164429",
-    logoText: "KAIRANA"
-  }
-];
-
-const VIDEOS_DATA = [
-  {
-    _id: "v1",
-    title: "Bharat Organic Expo 2027: A New Era for Sustainable Farming",
-    location: "Bharat Mandapam, New Delhi",
-    videoUrl: "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
-    thumbnail: "https://images.unsplash.com/photo-1540575467063-178a50c2df87?q=80&w=800&auto=format&fit=crop"
-  },
-  {
-    _id: "v2",
-    title: "Exhibitors Speak: B2B Growth & Global Buyer Connections",
-    location: "New Delhi, India",
-    videoUrl: "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
-    thumbnail: "https://images.unsplash.com/photo-1511578314322-379afb476865?q=80&w=800&auto=format&fit=crop"
-  },
-  {
-    _id: "v3",
-    title: "Industry Leaders Panel: Insights into Organic & Eco Markets",
-    location: "Hall 12, New Delhi",
-    videoUrl: "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
-    thumbnail: "https://images.unsplash.com/photo-1551836022-d5d88e9218df?q=80&w=800&auto=format&fit=crop"
-  }
-];
+  sectionDividerText: "MORE INSPIRING STORIES",
+  testimonials: [
+    {
+      _id: "1",
+      company1: "Achaspati Kulwant",
+      company2: "Chancellor, University of Patanjali",
+      location: "Haridwar",
+      quote: "The change is organizing activities with a vision. I wish the project a great success. It's a wonderful initiative for sustainable future. We must all come together to ensure that our environment is protected and cherished by the coming generations, creating a harmonious balance.",
+      color: "#1b5e20",
+      logoText: "PATANJALI"
+    },
+    {
+      _id: "2",
+      company1: "Khyati Nayak",
+      company2: "PRO – Gujarat Tourism",
+      location: "Gujarat",
+      quote: "This platform will open eyes of our new generations towards organic living. It provides a unique opportunity to learn from global experts. By adopting these sustainable methodologies, we can actively contribute to a greener ecosystem and promote healthier lifestyle choices.",
+      color: "#d26019",
+      logoText: "GUJARAT\nTOURISM"
+    },
+    {
+      _id: "3",
+      company1: "Mukesh Kumar",
+      company2: "The Yogshala Head",
+      location: "New Delhi",
+      quote: "It made me realize the impact of holistic wellness in our daily decisions. Every small step taken today safeguards our natural resources. Whether it is choosing chemical-free products or supporting local farmers, these choices collectively lead to a monumental positive shift in society.",
+      color: "#00643b",
+      logoText: "YOGSHALA"
+    },
+    {
+      _id: "4",
+      company1: "Dr. Subramanian Swamy",
+      company2: "Bharatiya Janata Party (BJP)",
+      location: "New Delhi",
+      quote: "The Yogshala Expo is a great step towards a healthier and self-reliant India. It beautifully bridges traditional wisdom with modern practices. The integration of Ayurveda into everyday life ensures that our citizens maintain not just physical strength but also mental and spiritual well-being.",
+      color: "#23471d",
+      logoText: "BJP\nINDIA"
+    },
+    {
+      _id: "5",
+      company1: "Qazhf Khan",
+      company2: "Father of Kairana Model",
+      location: "Kairana",
+      quote: "The Yogshala Expo ensures honest and responsible contributions. The collective commitment shown here will build a robust organic market. We are witnessing an incredible movement where ethical farming and conscientious consumption are becoming the new standard for a thriving nation.",
+      color: "#164429",
+      logoText: "KAIRANA"
+    }
+  ],
+  videos: [
+    {
+      _id: "v1",
+      title: "Bharat Organic Expo 2027: A New Era for Sustainable Farming",
+      location: "Bharat Mandapam, New Delhi",
+      videoUrl: "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
+      thumbnail: "https://images.unsplash.com/photo-1540575467063-178a50c2df87?q=80&w=800&auto=format&fit=crop"
+    },
+    {
+      _id: "v2",
+      title: "Exhibitors Speak: B2B Growth & Global Buyer Connections",
+      location: "New Delhi, India",
+      videoUrl: "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
+      thumbnail: "https://images.unsplash.com/photo-1511578314322-379afb476865?q=80&w=800&auto=format&fit=crop"
+    },
+    {
+      _id: "v3",
+      title: "Industry Leaders Panel: Insights into Organic & Eco Markets",
+      location: "Hall 12, New Delhi",
+      videoUrl: "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
+      thumbnail: "https://images.unsplash.com/photo-1551836022-d5d88e9218df?q=80&w=800&auto=format&fit=crop"
+    }
+  ]
+};
 
 
 // ─── Testimonial Card Component ───
@@ -415,8 +397,8 @@ const SectionDivider = ({ text }: { text: string }) => (
 const TestimonialsCarousel = () => {
   const [expandedCardId, setExpandedCardId] = useState<string | null>(null);
 
-  const total = TESTIMONIALS_DATA.length;
-  const totalVideos = VIDEOS_DATA.length;
+  const total = sectionData.testimonials.length;
+  const totalVideos = sectionData.videos.length;
 
   return (
     <section className="relative bg-white overflow-hidden py-4">
@@ -527,7 +509,7 @@ const TestimonialsCarousel = () => {
                 <Quote className="w-3.5 h-3.5 text-white" />
               </div>
               <span className="text-[#1b5e20] font-bold text-[13px] md:text-[14px] tracking-wide uppercase font-poppins">
-                Industry Testimonials
+                {sectionData.heroBanner.badge}
               </span>
             </div>
 
@@ -537,10 +519,10 @@ const TestimonialsCarousel = () => {
               style={{ textShadow: "1px 1px 2px rgba(0,0,0,0.4)" }}
             >
               <span className="block text-[#1b5e20] font-semibold mb-0.5">
-                WHAT GLOBAL EXPERTS SAY
+                {sectionData.heroBanner.titlePrefix}
               </span>
               <span className="block text-[#4B1426] font-semibold tracking-tight md:whitespace-nowrap">
-                ABOUT BHARAT ORGANIC EXPO
+                {sectionData.heroBanner.titleHighlight}
               </span>
             </h1>
 
@@ -548,22 +530,19 @@ const TestimonialsCarousel = () => {
 
             {/* Subtitle */}
             <p className="text-[#131730] text-sm md:text-base max-w-3xl mb-3 font-bold leading-relaxed text-left">
-              Bridging the gap between <span className="text-[#1b5e20]">Organic Buyers</span> and <span className="text-[#1b5e20]">Sustainable Brands</span>
+              {sectionData.heroBanner.subtitle}
             </p>
 
             {/* Description */}
             <p className="text-[#131730] text-sm md:text-[15px] max-w-2xl mb-4 font-semibold leading-relaxed text-justify">
-              Trusted by leaders across natural & organic sectors. Bharat Organic Expo serves <br className="hidden sm:block" />
-              as the premier platform bridging the gap between sustainable brands, farmers, <br className="hidden sm:block" />
-              and global buyers. We are committed to fostering B2B connections and <br className="hidden sm:block" />
-              transforming the <span className="font-bold text-[#1b5e20]">organic business landscape</span> globally.
+              {sectionData.heroBanner.description}
             </p>
           </div>
         </SectionContainer>
       </div>
 
       {/* ─── SECTION HEADER ─── */}
-      <SectionDivider text="MORE INSPIRING STORIES" />
+      <SectionDivider text={sectionData.sectionDividerText} />
 
       {/* ─── TESTIMONIAL CARDS MARQUEE (Right Scrolling) ─── */}
       <div className="relative pt-8 pb-6">
@@ -575,7 +554,7 @@ const TestimonialsCarousel = () => {
             >
               {[1, 2, 3, 4].map((set) => (
                 <div key={set} className="flex gap-6">
-                  {TESTIMONIALS_DATA.map((item: any, i: number) => (
+                  {sectionData.testimonials.map((item: any, i: number) => (
                     <div key={`${set}-${i}`} className="flex-shrink-0">
                       <TestimonialCard
                         item={item}
@@ -606,7 +585,7 @@ const TestimonialsCarousel = () => {
               >
                 {[1, 2, 3, 4].map((set) => (
                   <div key={set} className="flex gap-4">
-                    {VIDEOS_DATA.map((v: any, i: number) => (
+                    {sectionData.videos.map((v: any, i: number) => (
                       <div key={`${set}-${i}`} className="w-[280px] md:w-[320px] flex-shrink-0">
                         <VideoCard item={v} />
                       </div>

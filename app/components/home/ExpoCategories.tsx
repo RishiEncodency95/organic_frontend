@@ -15,33 +15,29 @@ import sectors8 from "../../assets/home/sectors8.png";
 import sectors9 from "../../assets/home/sectors9.png";
 import sectors10 from "../../assets/home/sectors10.png";
 
-const categories = [
-  { icon: Apple, title: "Organic Food & Beverages", desc: "Wide range of certified organic foods, beverages, healthy snacks, grains, pulses, and ingredients.", color: "#4ade80", image: sectors1 },
-  { icon: Leaf, title: "AYUSH, Ayurveda & Herba", desc: "Ayurvedic medicines, herbal supplements, essential oils, teas, wellness products and holistic solutions.", color: "#14b8a6", image: sectors2 },
-  { icon: Sprout, title: "Organic Natural Farming", desc: "Natural farming practices, organic cultivation methods, innovations and farm-to-market solutions.", color: "#22c55e", image: sectors3 },
-  { icon: Package, title: "Organic Inputs, Seeds & Bio- Inputs", desc: "Bio-fertilisers, organic manures, soil enhancers, pesticides and high-quality seeds.", color: "#fb923c", image: sectors4 },
-  { icon: Milk, title: "Dairy, Livestock & Allied", desc: "Organic dairy products, livestock nutrition, animal health solutions and sustainable practices.", color: "#f472b6", image: sectors5 },
-  { icon: Droplet, title: "Natural Beauty & Personal Care", desc: "Herbal skincare, haircare, personal care and eco-friendly beauty products.", color: "#60a5fa", image: sectors6 },
-  { icon: Pill, title: "Nutraceuticals & Functional Nutrition", desc: "Dietary supplements, functional foods, immunity boosters and wellness nutrition products.", color: "#34d399", image: sectors7 },
-  { icon: Box, title: "Sustainable Packaging & Processing", desc: "Eco-friendly, biodegradable, recyclable and sustainable packaging solutions.", color: "#3b82f6", image: sectors8 },
-  { icon: Tractor, title: "AgriTech, GreenTech & Innovation", desc: "Innovative agri technologies, smart farming, irrigation, farm mechanization and digital solutions.", color: "#10b981", image: sectors9 },
-  { icon: Globe, title: "Certification, Export, Trade & Services", desc: "Exporters, importers, trade associations and global business opportunities for organic products.", color: "#f59e0b", image: sectors10 },
-];
+// ── Dynamic Data Configuration ──
+const sectionData = {
+  sectionTag: "Expo Categories",
+  titleMain: "Explore Diverse",
+  titleHighlight: "Exhibition Sectors",
+  descriptionPrefix: "One Platform. Every Opportunity.",
+  description: " Bharat Organic Expo brings together the entire organic ecosystem under one roof. Explore a wide range of sectors driving sustainable living, natural wellness, ethical production and global trade.",
+  exploreText: "Explore",
+  buttonText: "VIEW ALL CATEGORIES",
+  categories: [
+    { icon: Apple, title: "Organic Food & Beverages", desc: "Wide range of certified organic foods, beverages, healthy snacks, grains, pulses, and ingredients.", color: "#4ade80", image: sectors1, imageAlt: "Organic Food & Beverages Sector" },
+    { icon: Leaf, title: "AYUSH, Ayurveda & Herba", desc: "Ayurvedic medicines, herbal supplements, essential oils, teas, wellness products and holistic solutions.", color: "#14b8a6", image: sectors2, imageAlt: "AYUSH, Ayurveda & Herbs Sector" },
+    { icon: Sprout, title: "Organic Natural Farming", desc: "Natural farming practices, organic cultivation methods, innovations and farm-to-market solutions.", color: "#22c55e", image: sectors3, imageAlt: "Organic Natural Farming Sector" },
+    { icon: Package, title: "Organic Inputs, Seeds & Bio- Inputs", desc: "Bio-fertilisers, organic manures, soil enhancers, pesticides and high-quality seeds.", color: "#fb923c", image: sectors4, imageAlt: "Organic Inputs, Seeds & Bio-Inputs Sector" },
+    { icon: Milk, title: "Dairy, Livestock & Allied", desc: "Organic dairy products, livestock nutrition, animal health solutions and sustainable practices.", color: "#f472b6", image: sectors5, imageAlt: "Dairy, Livestock & Allied Sector" },
+    { icon: Droplet, title: "Natural Beauty & Personal Care", desc: "Herbal skincare, haircare, personal care and eco-friendly beauty products.", color: "#60a5fa", image: sectors6, imageAlt: "Natural Beauty & Personal Care Sector" },
+    { icon: Pill, title: "Nutraceuticals & Functional Nutrition", desc: "Dietary supplements, functional foods, immunity boosters and wellness nutrition products.", color: "#34d399", image: sectors7, imageAlt: "Nutraceuticals & Functional Nutrition Sector" },
+    { icon: Box, title: "Sustainable Packaging & Processing", desc: "Eco-friendly, biodegradable, recyclable and sustainable packaging solutions.", color: "#3b82f6", image: sectors8, imageAlt: "Sustainable Packaging & Processing Sector" },
+    { icon: Tractor, title: "AgriTech, GreenTech & Innovation", desc: "Innovative agri technologies, smart farming, irrigation, farm mechanization and digital solutions.", color: "#10b981", image: sectors9, imageAlt: "AgriTech, GreenTech & Innovation Sector" },
+    { icon: Globe, title: "Certification, Export, Trade & Services", desc: "Exporters, importers, trade associations and global business opportunities for organic products.", color: "#f59e0b", image: sectors10, imageAlt: "Certification, Export, Trade & Services Sector" },
+  ]
+};
 
-const FlowerDecoration = ({ className, style }: { className?: string; style?: React.CSSProperties }) => (
-  <svg viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg" className={className} style={style}>
-    {/* Center Petal */}
-    <path d="M60 10 C70 30 75 60 60 90 C45 60 50 30 60 10 Z" fill="#ffffff" />
-    {/* Inner Left Petal */}
-    <path d="M60 90 C30 75 20 40 30 25 C45 35 55 60 60 90 Z" fill="#ffffff" />
-    {/* Inner Right Petal */}
-    <path d="M60 90 C90 75 100 40 90 25 C75 35 65 60 60 90 Z" fill="#ffffff" />
-    {/* Outer Left Petal */}
-    <path d="M55 90 C20 85 5 60 10 45 C30 55 45 75 55 90 Z" fill="#ffffff" />
-    {/* Outer Right Petal */}
-    <path d="M65 90 C100 85 115 60 110 45 C90 55 75 75 65 90 Z" fill="#ffffff" />
-  </svg>
-);
 
 const ExpoCategories = () => {
   return (
@@ -66,25 +62,25 @@ const ExpoCategories = () => {
           <div className="inline-flex items-center justify-center gap-2 px-4 py-1.5 mb-2 rounded-full bg-white border border-[#3b8c2a]/20 shadow-[0_2px_10px_rgba(59,140,42,0.05)]">
             <span className="w-1.5 h-1.5 rounded-full bg-[#f58634] animate-pulse"></span>
             <span className="text-[#3b8c2a] text-[11px] md:text-[12px] font-bold tracking-[0.2em] uppercase">
-              Expo Categories
+              {sectionData.sectionTag}
             </span>
           </div>
 
           {/* Title */}
           <h2 className="text-[#1a3821] text-[18px] md:text-[30px] lg:text-[32px] font-medium leading-[1.2] mb-4 font-poppins tracking-tight">
-            Explore Diverse <br className="sm:hidden" />
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#3b8c2a] to-[#F2B40E]">Exhibition Sectors</span>
+            {sectionData.titleMain} <br className="sm:hidden" />
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#3b8c2a] to-[#F2B40E]">{sectionData.titleHighlight}</span>
           </h2>
 
           {/* Description */}
           <p className="text-slate-600 text-[15px] md:text-[17px]  font-medium leading-[1.7]">
-            <span className="font-bold text-[#1a3821]">One Platform. Every Opportunity.</span> Bharat Organic Expo brings together the entire organic ecosystem under one roof. Explore a wide range of sectors driving sustainable living, natural wellness, ethical production and global trade.
+            <span className="font-bold text-[#1a3821]">{sectionData.descriptionPrefix}</span>{sectionData.description}
           </p>
         </div>
 
         {/* Static Grid Layout (No Slider) */}
         <div className="w-full mb-6 py-2 px-2 md:px-11 grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-x-2 lg:gap-x-2 gap-y-4 lg:gap-y-4 justify-center">
-          {categories.map((item, index) => {
+          {sectionData.categories.map((item, index) => {
             const Icon = item.icon;
             const displayIndex = index + 1; // Numbering 1 to 10
 
@@ -101,7 +97,7 @@ const ExpoCategories = () => {
 
                 {/* Top Half: Image */}
                 <div className="relative w-full h-[140px] lg:h-[180px] shrink-0 overflow-hidden rounded-t-[15px] bg-gray-200">
-                  <Image src={item.image} alt={item.title} fill sizes="(max-width: 640px) 50vw, (max-width: 1024px) 25vw, 20vw" className="object-cover group-hover:scale-110 transition-transform duration-700" />
+                  <Image src={item.image} alt={item.imageAlt} fill sizes="(max-width: 640px) 50vw, (max-width: 1024px) 25vw, 20vw" className="object-cover group-hover:scale-110 transition-transform duration-700" />
                 </div>
 
                 {/* Bottom Half: Content */}
@@ -119,7 +115,7 @@ const ExpoCategories = () => {
                   {/* View More Link */}
                   <div className="mt-auto w-full flex justify-between items-center pt-2.5 border-t border-slate-100">
                     <span className="text-[#f58220] group-hover:text-[#d35400] text-[10.5px] md:text-[11px] font-bold uppercase tracking-widest transition-colors duration-300">
-                      Explore
+                      {sectionData.exploreText}
                     </span>
                     <ArrowRight size={14} strokeWidth={2.5} className="text-[#f58220] group-hover:text-[#d35400] group-hover:translate-x-1 transition-all duration-300" />
                   </div>
@@ -133,7 +129,7 @@ const ExpoCategories = () => {
         {/* Button */}
         <div className="flex justify-center px-4 mb-2 ">
           <button className="group flex items-center justify-center gap-3 px-6 py-2 rounded-full border-2 border-[#F2B40E] bg-[#3b8c2a] text-white text-[12px] md:text-[14px] font-bold uppercase tracking-wider hover:bg-[#F2B40E] hover:text-[#0b2912] hover:shadow-lg transition-all duration-300 min-h-[44px]">
-            VIEW ALL CATEGORIES
+            {sectionData.buttonText}
             <ArrowRight size={16} strokeWidth={2.5} className="group-hover:translate-x-1 transition-transform" />
           </button>
         </div>
