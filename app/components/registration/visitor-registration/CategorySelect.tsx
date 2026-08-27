@@ -40,7 +40,7 @@ interface CategorySelectProps {
 
 export default function CategorySelect({ visitorType, onChange }: CategorySelectProps) {
   return (
-    <section id="select-category" className="w-full pt-8 pb-4 px-4 md:px-8 bg-[#f9f9f9] font-inter scroll-mt-20">
+    <section id="select-category" className="w-full pt-8 pb-4 px-4 md:px-14 bg-[#f9f9f9] font-inter scroll-mt-20">
       <div className="flex items-center justify-center gap-4 mb-6">
         <span className="block flex-1 max-w-[80px] h-px bg-gradient-to-r from-transparent to-gray-300" />
         <h2 className="text-xl md:text-2xl font-semibold tracking-wide text-[#1b5e20] uppercase text-center font-poppins">

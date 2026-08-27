@@ -8,7 +8,7 @@ import industryImg from "../../assets/home/industry.png";
 
 const IndustryLeaders = () => {
   return (
-    <section className="relative w-full bg-white py-2 md:py-4 lg:py-4 px-4 md:px-11 overflow-hidden">
+    <section className="relative w-full bg-white py-2 md:py-4 lg:py-4 px-4 md:px-14 overflow-hidden">
 
       {/* Decorative Elements */}
       <div className="absolute top-10 left-10 opacity-10 pointer-events-none">

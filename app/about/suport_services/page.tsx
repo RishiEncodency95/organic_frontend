@@ -15,7 +15,7 @@ const SupportServicesPage = () => {
   return (
     <>
       <div className="bg-[#ffffff] min-h-screen pt-24 md:pt-32 pb-16 md:pb-20">
-        <div className="w-full px-4 md:px-11">
+        <div className="w-full px-4 md:px-14">
 
           <div className="flex flex-col items-center text-center mb-12">
             <div className="flex items-center gap-3 mb-2">

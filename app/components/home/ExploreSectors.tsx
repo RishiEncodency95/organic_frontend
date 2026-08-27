@@ -86,7 +86,7 @@ const ExploreSectors = () => {
       {/* Background Dots Pattern */}
       <div className="absolute inset-0 opacity-10 pointer-events-none" style={{ backgroundImage: 'radial-gradient(#3b8c2a 1px, transparent 1px)', backgroundSize: '24px 24px' }}></div>
 
-      <div className="w-full px-4 md:px-11 relative z-10 ">
+      <div className="w-full px-4 md:px-14 relative z-10 ">
 
         {/* Header Title */}
         <div className="text-center mb-8">
