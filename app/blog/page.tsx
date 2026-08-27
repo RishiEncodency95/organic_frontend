@@ -24,7 +24,7 @@ const BlogPage = () => {
             <BlogHero />
             <AboutStrip />
 
-            <main className="w-full px-6 lg:px-11 py-2 md:py-4 grid lg:grid-cols-[1fr_320px] gap-10 lg:gap-12">
+            <main className="w-full px-6 lg:px-11 py-2 md:py-4 grid lg:grid-cols-[1fr_320px] gap-2 lg:gap-4">
                 <div className="min-w-0">
                     <BlogFeatured />
                     <BlogExperts />

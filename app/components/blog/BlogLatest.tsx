@@ -1,6 +1,7 @@
 "use client";
 
 import React from "react";
+import Link from "next/link";
 import { Calendar, Clock } from "lucide-react";
 import SectionHeading from "./BlogSectionHeading";
 import { Reveal } from "./BlogReveal";
@@ -33,8 +34,10 @@ const BlogLatest = () => {
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
         {latestUpdates.map((u, i) => (
           <Reveal key={u.title} delay={i * 100} direction={i % 2 === 0 ? "left" : "right"}>
-            <a
-              href="#"
+            <Link
+              href="/blog/indias-organic-market"
+              target="_blank"
+              rel="noopener noreferrer"
               className="group block rounded-xl overflow-hidden bg-white transition-all duration-300 hover:-translate-y-1 font-inter"
               style={{ boxShadow: "rgba(0, 0, 0, 0.02) 0px 1px 3px 0px, rgba(27, 31, 35, 0.15) 0px 0px 0px 1px" }}
             >
@@ -58,7 +61,7 @@ const BlogLatest = () => {
                   </span>
                 </div>
               </div>
-            </a>
+            </Link>
           </Reveal>
         ))}
       </div>
