@@ -95,10 +95,10 @@ const AboutHero = () => {
         className="object-cover z-0"
         sizes="100vw"
       />
-      {/* Lightened dark gradient overlay removed as per user request */}
 
-      {/* Content Overlay */}
-      <div className="relative z-20 w-full px-3 md:px-11 h-full flex flex-col justify-center py-12 md:py-6">
+
+      {/* Content wrapper */}
+      <div className="relative z-20 w-full px-4 md:px-14 h-full flex flex-col justify-center py-12 md:py-6">
         <div className="max-w-xl text-left mt-6 md:mt-0 space-y-3.5 md:space-y-4 w-full bg-white/75 md:bg-transparent backdrop-blur-md md:backdrop-blur-none p-4 sm:p-6 md:p-0 rounded-2xl border border-white/60 md:border-none shadow-lg md:shadow-none">
 
           {/* Tagline */}

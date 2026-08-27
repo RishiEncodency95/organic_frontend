@@ -24,7 +24,7 @@ const LinkedinIcon = () => (
 export default function BlogDetail() {
     return (
         <div className="min-h-screen bg-white font-sans text-neutral-800">
-            <div className="w-full px-4 md:px-8 lg:px-11 py-6">
+            <div className="w-full px-4 md:px-8 lg:px-14 py-6">
                 {/* Breadcrumbs */}
                 <nav className="flex items-center text-[13px] text-neutral-500 mt-7 mb-2 whitespace-nowrap overflow-x-auto">
                     <Link href="/" className="hover:text-green-700 transition-colors">Home</Link>

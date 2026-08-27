@@ -8,20 +8,22 @@ import SectionContainer from '@/app/components/layout/SectionContainer';
 const AboutOrganizer = () => {
   return (
     <div style={{ fontFamily: "'Inter', sans-serif" }}>
-      
+
       {/* ABOUT THE ORGANIZER SECTION */}
-      <section className="pt-10 pb-6 bg-[#FFFDF1] border-t border-gray-100">
+      <section className="pt-6 pb-6 bg-[#FFFDF1] border-t border-gray-100">
         <SectionContainer>
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 divide-y lg:divide-y-0 lg:divide-x divide-gray-200 items-center">
-            
+
             {/* LEFT - About the Organizer */}
             <div className="pt-4 lg:pt-0 lg:pr-6">
-              <p className="flex items-center gap-2 text-[#d26019] font-semibold text-[11px] uppercase tracking-[0.22em] mb-2">
+              <p className="flex items-center gap-2 text-[#d26019] font-semibold text-[14px] uppercase tracking-[0.22em] mb-2">
                 <span className="inline-block w-6 h-[1.5px] bg-[#d26019]" />
-                ABOUT THE ORGANIZER
+                ABOUT THE
+                <span className="inline-block w-6 h-[1.5px] bg-[#d26019]" />
+
               </p>
-              
-              <h2 
+
+              <h2
                 className="text-[#23471d] font-semibold text-2xl md:text-[28px] leading-[1.3] mb-3 font-poppins"
                 style={{ textShadow: "1px 1px 2px rgba(0,0,0,0.4)" }}
               >
@@ -31,7 +33,7 @@ const AboutOrganizer = () => {
               <p className="text-gray-800 text-[13px] leading-[1.7] mb-3 text-justify font-semibold">
                 A professionally managed exhibition and conference organizer in India, specializing in creating large-scale B2B trade shows, healthcare exhibitions, and global business platforms.
               </p>
-              
+
               <p className="text-gray-800 text-[13px] leading-[1.7] mb-5 text-justify font-semibold">
                 Established in 2016, the company has built a strong reputation for delivering high-impact, result-driven platforms that combine exhibitions, conferences, buyer–seller meets, and Indian participation into one ecosystem.
               </p>
@@ -40,7 +42,7 @@ const AboutOrganizer = () => {
               <p className="text-[#23471d] font-bold text-[10px] uppercase tracking-[0.2em] mb-2">
                 CORE CAPABILITIES
               </p>
-              
+
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-3 mb-1">
                 {[
                   "Indian exhibitions & trade shows",
@@ -67,22 +69,22 @@ const AboutOrganizer = () => {
               <div className="relative w-full max-w-xl h-[360px] md:h-[400px] lg:h-[420px]">
 
                 {/* Dot pattern top-right */}
-                <div 
+                <div
                   className="absolute -top-4 -right-4 w-28 h-28 z-0 pointer-events-none"
-                  style={{ backgroundImage: 'radial-gradient(circle, #d26019 1.2px, transparent 1.2px)', backgroundSize: '9px 9px', opacity: 0.25 }} 
+                  style={{ backgroundImage: 'radial-gradient(circle, #d26019 1.2px, transparent 1.2px)', backgroundSize: '9px 9px', opacity: 0.25 }}
                 />
                 {/* Dot pattern bottom-left */}
-                <div 
+                <div
                   className="absolute -bottom-4 -left-4 w-28 h-28 z-0 pointer-events-none"
-                  style={{ backgroundImage: 'radial-gradient(circle, #23471d 1.2px, transparent 1.2px)', backgroundSize: '9px 9px', opacity: 0.2 }} 
+                  style={{ backgroundImage: 'radial-gradient(circle, #23471d 1.2px, transparent 1.2px)', backgroundSize: '9px 9px', opacity: 0.2 }}
                 />
 
                 {/* Image Frame */}
-                <div 
+                <div
                   className="relative z-10 w-full h-full overflow-hidden group rounded-xl shadow-md"
                   style={{ outline: '2px solid #d26019', outlineOffset: '-2px' }}
                 >
-                  <Image 
+                  <Image
                     src={organImg}
                     alt="Namo Gange Wellness Pvt. Ltd."
                     fill
@@ -94,7 +96,7 @@ const AboutOrganizer = () => {
                 </div>
 
                 {/* Badge */}
-                <div 
+                <div
                   className="absolute z-20 flex flex-col items-center justify-center text-center p-2"
                   style={{ bottom: '0px', right: '0px', minWidth: '85px', minHeight: '85px', background: '#d26019', border: '3px solid #fff', boxShadow: '0 6px 24px rgba(210,96,25,0.4)' }}
                 >
@@ -117,10 +119,10 @@ const AboutOrganizer = () => {
       <section className="pt-4 pb-8 bg-[#FFFDF1] border-t border-gray-100 relative overflow-hidden">
         {/* Right Decorative Image */}
         <div className="absolute right-0 bottom-0 pointer-events-none opacity-30 md:opacity-40 w-48 md:w-64 lg:w-80 z-0">
-          <Image 
-            src={footerRightImg} 
-            alt="Decoration" 
-            className="w-full h-auto object-contain translate-x-6 translate-y-6" 
+          <Image
+            src={footerRightImg}
+            alt="Decoration"
+            className="w-full h-auto object-contain translate-x-6 translate-y-6"
           />
         </div>
 
@@ -128,18 +130,19 @@ const AboutOrganizer = () => {
 
           {/* Header */}
           <div className="mb-5">
-            <p className="flex items-center gap-2 text-[#d26019] font-semibold text-[11px] uppercase tracking-[0.22em] mb-2">
+            <p className="flex items-center gap-2 text-[#d26019] font-semibold text-[14px] uppercase tracking-[0.22em] mb-2">
               <span className="inline-block w-6 h-[1.5px] bg-[#d26019]" />
               OUR JOURNEY & FLAGSHIP EVENTS
+              <span className="inline-block w-6 h-[1.5px] bg-[#d26019]" />
             </p>
-            
-            <h2 
+
+            <h2
               className="text-[#23471d] font-semibold text-2xl md:text-[28px] leading-[1.3] mb-1 font-poppins"
               style={{ textShadow: "1px 1px 2px rgba(0,0,0,0.4)" }}
             >
               A LEGACY OF GROWTH & INNOVATION
             </h2>
-            
+
             <p className="text-gray-900 text-[13px] leading-[1.7] mt-1 font-medium">
               With a proven legacy of delivering result-oriented exhibitions, we forge lasting business relationships and accelerate industry growth.
             </p>
@@ -158,7 +161,7 @@ const AboutOrganizer = () => {
                   OUR JOURNEY: A LEGACY OF GROWTH
                 </p>
               </div>
-              
+
               <div className="flex flex-col gap-4 pl-3 border-l-2 border-[#d26019]/25">
                 {[
                   { year: "2016", text: "Company Founded — commitment to exceptional exhibition management." },
@@ -183,7 +186,7 @@ const AboutOrganizer = () => {
                   DRIVING INNOVATION ACROSS CORE SECTORS
                 </p>
               </div>
-              
+
               <div className="flex flex-col gap-3">
                 {[
                   { label: "Health & Wellness", text: "Shaping the future of integrated personal & public healthcare through innovation, prevention, and global collaboration." },
@@ -211,11 +214,11 @@ const AboutOrganizer = () => {
                   FLAGSHIP EVENTS: A PROVEN TRACK RECORD
                 </p>
               </div>
-              
+
               <p className="text-gray-600 text-[13px] leading-[1.6] mb-3">
                 NGWPL's flagship events consistently deliver exceptional value and foster vibrant communities, creating significant market opportunities.
               </p>
-              
+
               <div className="flex flex-col gap-2">
                 {[
                   "Punjab Health & Wellness Expo",
