@@ -67,7 +67,7 @@ export default function FAQBanner() {
   return (
     <section
       aria-labelledby="faq-heading"
-      className="relative w-full overflow-hidden bg-[#F9FCF9] px-4 py-2 md:px-11"
+      className="relative w-full overflow-hidden bg-[#F9FCF9] px-4 py-2 md:px-14"
     >
 
       <div className="relative z-10 mx-auto grid w-full grid-cols-1 items-stretch gap-6 lg:grid-cols-[minmax(0,400px)_minmax(0,1fr)] lg:gap-8">

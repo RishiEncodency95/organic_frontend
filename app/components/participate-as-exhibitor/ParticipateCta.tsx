@@ -6,7 +6,7 @@ import { Users2, ArrowRight } from "lucide-react";
 
 const ParticipateCta = () => {
   return (
-    <section className="w-full px-4 md:px-11 py-2 md:py-3 font-inter">
+    <section className="w-full px-4 md:px-14 py-2 md:py-3 font-inter">
       <div className="rounded-2xl bg-gradient-to-r from-[#031d0d] via-[#062914] to-[#041a0d] px-5 py-4 md:px-8 md:py-4 flex flex-col md:flex-row items-center justify-between gap-4 md:gap-6 shadow-[0_10px_35px_rgba(0,0,0,0.18)] border border-[#1b5e20]/40 relative overflow-hidden">
         {/* Subtle decorative glow */}
         <div className="absolute -right-16 -top-16 w-48 h-48 rounded-full bg-[#1b5e20]/20 blur-2xl pointer-events-none" />

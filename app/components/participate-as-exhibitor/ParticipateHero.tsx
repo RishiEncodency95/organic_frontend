@@ -76,7 +76,7 @@ const ParticipateHero = () => {
       </div>
 
       {/* Content Container aligned with Navbar */}
-      <div className="relative z-10 w-full px-4 sm:px-6 md:px-11 lg:px-11 py-4 md:py-6 lg:py-8">
+      <div className="relative z-10 w-full px-4 sm:px-6 md:px-14 lg:px-14 py-4 md:py-6 lg:py-8">
         <div className="max-w-xl lg:max-w-2xl text-left">
 
           {/* Orange Line & Tagline */}

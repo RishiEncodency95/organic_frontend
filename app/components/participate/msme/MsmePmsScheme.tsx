@@ -49,7 +49,7 @@ export default function MsmePmsScheme() {
   return (
     <section
       aria-labelledby="msme-pms-heading"
-      className="relative w-full overflow-hidden bg-[#F9FCF9] py-6 px-4 md:px-11"
+      className="relative w-full overflow-hidden bg-[#F9FCF9] py-6 px-4 md:px-14"
     >
       <img
         src={leafsImg.src}

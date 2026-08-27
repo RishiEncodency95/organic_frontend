@@ -81,7 +81,7 @@ const FEATURES: Feature[] = [
 
 export default function ReasonToVisitBanner() {
   return (
-    <section className="relative w-full overflow-hidden bg-[#EFF7EE] px-4 py-6 md:px-11">
+    <section className="relative w-full overflow-hidden bg-[#EFF7EE] px-4 py-6 md:px-14">
       <img
         src={leafsImg.src}
         alt=""

@@ -104,7 +104,7 @@ export default function PMSDocumentsBanner() {
   return (
     <section
       aria-labelledby="pms-documents-heading"
-      className="relative isolate overflow-hidden bg-white px-4 py-4 md:px-11"
+      className="relative isolate overflow-hidden bg-white px-4 py-4 md:px-14"
     >
       {/* Background Image */}
       <div className="absolute inset-0 -z-10">

@@ -38,7 +38,7 @@ export default function OfficialMessageBanner({
   return (
     <section
       aria-labelledby="msme-director-message-heading"
-      className="relative w-full overflow-hidden bg-[#F7F8F0] px-4 py-6 md:px-11"
+      className="relative w-full overflow-hidden bg-[#F7F8F0] px-4 py-6 md:px-14"
     >
       <img
         src={vleafImg.src}

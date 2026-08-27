@@ -140,7 +140,7 @@ export default function IndustrySegments() {
           </p>
 
           {/* Main Title */}
-          <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-[40px] font-semibold text-[#001810] uppercase leading-[1.1] font-poppins relative inline-block mb-1.5">
+          <h2 className="text-xl sm:text-xl md:text-2xl lg:text-[28px] font-semibold text-[#001810] uppercase leading-[1.1] font-poppins relative inline-block mb-1.5">
             Explore <span className="text-[#1b5e20]">6</span> Major Industry Segments
           </h2>
         </div>
