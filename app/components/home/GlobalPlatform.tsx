@@ -72,7 +72,7 @@ const staticData = {
 
 const GlobalPlatform = () => {
   return (
-    <section className="relative w-full flex items-center bg-white py-2 md:py-6 lg:py-6 px-2 md:px-11 overflow-hidden font-inter border-y border-green-100">
+    <section className="relative w-full flex items-center bg-white py-2 md:py-6 lg:py-6 px-2 md:px-14 overflow-hidden font-inter border-y border-green-100">
       {/* Background Image Map/Design */}
       <div className="absolute inset-0 z-0">
         <Image

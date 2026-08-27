@@ -500,7 +500,7 @@ const TestimonialsCarousel = () => {
           <div className="absolute inset-0 bg-white/40 md:hidden" />
         </div>
 
-        <SectionContainer className="relative z-10 flex flex-col md:flex-row items-center gap-10 md:gap-12 w-full">
+        <div className="w-full px-4 lg:px-14 relative z-10 flex flex-col md:flex-row items-center gap-10 md:gap-12 w-full">
           <div className="flex flex-col justify-center w-full max-w-3xl text-left font-inter">
 
             {/* Badge */}
@@ -538,7 +538,7 @@ const TestimonialsCarousel = () => {
               {sectionData.heroBanner.description}
             </p>
           </div>
-        </SectionContainer>
+        </div>
       </div>
 
       {/* ─── SECTION HEADER ─── */}
@@ -546,7 +546,7 @@ const TestimonialsCarousel = () => {
 
       {/* ─── TESTIMONIAL CARDS MARQUEE (Right Scrolling) ─── */}
       <div className="relative pt-8 pb-6">
-        <SectionContainer className="relative z-10">
+        <div className="w-full px-4 lg:px-14 relative z-10">
           <div className="w-full overflow-hidden">
             <div
               className="marquee-wrapper-cards gap-6"
@@ -567,16 +567,16 @@ const TestimonialsCarousel = () => {
               ))}
             </div>
           </div>
-        </SectionContainer>
+        </div>
       </div>
 
       {/* ─── VIDEO SECTION ─── */}
-      <div className="relative pt-4 pb-2">
+      <div className="relative pt-2 pb-2">
         <div className="absolute -left-10 bottom-0 w-44 h-44 opacity-20 pointer-events-none rotate-45 select-none z-0">
           <img src={leafPng.src} alt="" className="w-full h-full object-contain" />
         </div>
 
-        <SectionContainer className="relative z-10">
+        <div className="px-4 lg:px-14 relative z-10">
           <div className="flex flex-col md:flex-row items-stretch">
             <div className="w-full overflow-hidden">
               <div
@@ -595,7 +595,7 @@ const TestimonialsCarousel = () => {
               </div>
             </div>
           </div>
-        </SectionContainer>
+        </div>
 
         <div className="absolute -right-12 bottom-4 w-48 h-48 opacity-20 pointer-events-none -rotate-12 select-none z-0">
           <img src={leafPng.src} alt="" className="w-full h-full object-contain" />

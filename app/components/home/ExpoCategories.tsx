@@ -57,7 +57,7 @@ const ExpoCategories = () => {
       <div className="w-full px-0 relative z-10">
 
         {/* Section Header */}
-        <div className="px-4 md:px-11 w-full flex flex-col items-center text-center mb-6 relative z-10">
+        <div className="px-4 md:px-14 w-full flex flex-col items-center text-center mb-6 relative z-10">
           {/* Elegant Badge */}
           <div className="inline-flex items-center justify-center gap-2 px-4 py-1.5 mb-2 rounded-full bg-white border border-[#3b8c2a]/20 shadow-[0_2px_10px_rgba(59,140,42,0.05)]">
             <span className="w-1.5 h-1.5 rounded-full bg-[#f58634] animate-pulse"></span>
@@ -79,7 +79,7 @@ const ExpoCategories = () => {
         </div>
 
         {/* Static Grid Layout (No Slider) */}
-        <div className="w-full mb-6 py-2 px-2 md:px-11 grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-x-2 lg:gap-x-2 gap-y-4 lg:gap-y-4 justify-center">
+        <div className="w-full mb-6 py-2 px-2 md:px-14 grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-x-2 lg:gap-x-2 gap-y-4 lg:gap-y-4 justify-center">
           {sectionData.categories.map((item, index) => {
             const Icon = item.icon;
             const displayIndex = index + 1; // Numbering 1 to 10

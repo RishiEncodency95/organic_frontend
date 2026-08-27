@@ -56,7 +56,7 @@ const OrangeSparkle = ({ style }: { style?: React.CSSProperties }) => (
 
 const ConferenceSeminars = () => {
   return (
-    <section className="bg-white py-2 md:py-4 lg:py-6 px-4 md:px-11 overflow-hidden relative shadow-[0_0_60px_rgba(245,130,32,0.1)] border-y border-[#f58220]/20 z-20">
+    <section className="bg-white py-2 md:py-4 lg:py-6 px-4 md:px-14 overflow-hidden relative shadow-[0_0_60px_rgba(245,130,32,0.1)] border-y border-[#f58220]/20 z-20">
       {/* Subtle Glowing Highlights */}
       <div className="absolute top-0 right-0 w-[600px] h-[600px] bg-[#f58220]/[0.04] rounded-full blur-[80px] -z-10 translate-x-1/3 -translate-y-1/4 pointer-events-none"></div>
       <div className="absolute bottom-0 left-0 w-[500px] h-[500px] bg-[#3b8c2a]/[0.04] rounded-full blur-[80px] -z-10 -translate-x-1/4 translate-y-1/4 pointer-events-none"></div>

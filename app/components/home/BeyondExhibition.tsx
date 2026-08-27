@@ -83,7 +83,7 @@ const sectionData = {
 const BeyondExhibition = () => {
   return (
     <section className="bg-white py-2 lg:py-6 overflow-hidden border-y border-[#3b8c2a]/10 font-inter">
-      <div className=" w-full px-4 sm:px-6 lg:px-11">
+      <div className=" w-full px-4 sm:px-6 lg:px-14">
 
         {/* Main Container */}
         <div className="flex flex-col lg:flex-row bg-white rounded-3xl overflow-hidden shadow-2xl border border-slate-100">

@@ -172,7 +172,7 @@ const SponsorshipCategories = () => {
   };
 
   return (
-    <section className="w-full bg-[#EFF7EE] font-inter relative px-2 lg:px-11 py-4 lg:py-6 overflow-hidden border-b border-gray-100">
+    <section className="w-full bg-[#EFF7EE] font-inter relative px-2 lg:px-14 py-4 lg:py-6 overflow-hidden border-b border-gray-100">
       <style>{`
         @keyframes sparkleAnim {
           0%, 100% { opacity: 0; transform: scale(0.4) rotate(0deg); }

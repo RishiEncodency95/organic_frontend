@@ -55,7 +55,7 @@ const LatestInsights = () => {
   return (
     <section className="relative w-full py-3 md:py-5 overflow-hidden border-t border-gray-100 font-inter" style={{ backgroundColor: "#F7F8F0" }}>
 
-      <div className="w-full px-4 md:px-11 relative z-10">
+      <div className="w-full px-4 md:px-14 relative z-10">
 
         {/* BRANDED HEADING (Matching WhoCanParticipate font-poppins & font-semibold) */}
         <div className="flex flex-col md:flex-row md:items-end justify-between mb-4 md:mb-5 gap-3 md:gap-4">

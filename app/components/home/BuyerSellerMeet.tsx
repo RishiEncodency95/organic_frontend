@@ -112,7 +112,7 @@ const sectionData = {
 const BuyerSellerMeet = () => {
   return (
     <>
-      <section className="relative w-full bg-[#EFF7EE] py-2 md:py-4 lg:py-4 px-4 md:px-11 border-t border-gray-100 overflow-hidden font-inter">
+      <section className="relative w-full bg-[#EFF7EE] py-2 md:py-4 lg:py-4 px-4 md:px-14 border-t border-gray-100 overflow-hidden font-inter">
 
         {/* Background Dotted Pattern */}
         <div className="absolute top-[30%] left-[45%] w-64 h-64 opacity-20 pointer-events-none" style={{ backgroundImage: 'radial-gradient(#3b8c2a 2px, transparent 2px)', backgroundSize: '20px 20px' }}></div>
@@ -250,7 +250,7 @@ const BuyerSellerMeet = () => {
         <div className="absolute top-1/2 left-1/4 w-96 h-96 bg-[#1b5e20]/20 rounded-full blur-[100px] -translate-y-1/2 pointer-events-none"></div>
         <div className="absolute top-1/2 right-1/4 w-96 h-96 bg-[#facc15]/10 rounded-full blur-[100px] -translate-y-1/2 pointer-events-none"></div>
 
-        <div className="px-4 md:px-11 flex flex-col xl:flex-row items-center justify-between gap-6 xl:gap-4 relative z-10">
+        <div className="px-4 md:px-14 flex flex-col xl:flex-row items-center justify-between gap-6 xl:gap-4 relative z-10">
 
           {/* Mapped Premium Band Items */}
           {sectionData.premiumBand.items.map((item, idx, arr) => (

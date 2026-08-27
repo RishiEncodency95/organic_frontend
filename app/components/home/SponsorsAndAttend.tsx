@@ -72,7 +72,7 @@ const SponsorsAndAttend = () => {
   return (
     <>
       <section className="w-full relative z-10 py-2 md:py-6 lg:py-6 overflow-hidden bg-[#EFF7EE]">
-        <div className="w-full px-4 md:px-11 grid grid-cols-1 xl:grid-cols-12 gap-2 xl:gap-4 items-start">
+        <div className="w-full px-4 md:px-14 grid grid-cols-1 xl:grid-cols-12 gap-2 xl:gap-4 items-start">
 
           {/* LEFT: WHY ATTEND */}
           <motion.div
@@ -306,7 +306,7 @@ const SponsorsAndAttend = () => {
         <div className="absolute top-1/2 left-1/4 w-96 h-96 bg-[#1b5e20]/20 rounded-full blur-[100px] -translate-y-1/2 pointer-events-none"></div>
         <div className="absolute top-1/2 right-1/4 w-96 h-96 bg-[#facc15]/10 rounded-full blur-[100px] -translate-y-1/2 pointer-events-none"></div>
 
-        <div className="px-4 md:px-11 grid grid-cols-1 sm:grid-cols-2 xl:flex xl:items-center xl:justify-between gap-4 relative z-10">
+        <div className="px-4 md:px-14 grid grid-cols-1 sm:grid-cols-2 xl:flex xl:items-center xl:justify-between gap-4 relative z-10">
 
           {/* Item 1: Date */}
           <div className="flex items-center gap-3 group">

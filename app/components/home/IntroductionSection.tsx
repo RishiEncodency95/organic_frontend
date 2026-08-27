@@ -113,7 +113,7 @@ const IntroductionSection = () => {
       <div className="absolute top-0 right-0 w-[600px] h-[600px] bg-[#3b8c2a]/5 rounded-full blur-[100px] -z-10 translate-x-1/3 -translate-y-1/4"></div>
       <div className="absolute bottom-0 left-0 w-[400px] h-[400px] bg-[#3b6fd4]/5 rounded-full blur-[80px] -z-10 -translate-x-1/4 translate-y-1/4"></div>
 
-      <div className="w-full px-4 sm:px-6 lg:px-11 relative z-10">
+      <div className="w-full px-4 sm:px-6 lg:px-14 relative z-10">
         <div className="flex flex-col lg:flex-row gap-6 items-center mb-2">
 
           {/* LEFT: Content */}
