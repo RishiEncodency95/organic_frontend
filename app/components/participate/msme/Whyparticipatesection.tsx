@@ -41,7 +41,7 @@ export default function WhyParticipateSection() {
   return (
     <section
       aria-labelledby="why-participate-heading"
-      className="relative w-full overflow-hidden bg-[#EFF7EE] px-4 py-6 md:px-11"
+      className="relative w-full overflow-hidden bg-[#EFF7EE] px-4 py-6 md:px-14"
     >
       {/* Background image */}
       <div className="absolute inset-0 z-0">

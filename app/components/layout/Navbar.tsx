@@ -135,7 +135,7 @@ const Navbar = () => {
                     : "relative z-[100] bg-white border-b border-slate-200 py-1 shadow-sm"
                     } transition-all duration-500`}
             >
-                <SectionContainer>
+                <div className="w-full px-4 md:px-11">
 
                     {/* ─── DESKTOP NAV (unchanged) ─── */}
                     <div className="hidden xl:flex items-center justify-between py-0 relative h-14">
@@ -279,7 +279,7 @@ const Navbar = () => {
                             </button>
                         </div>
                     </div>
-                </SectionContainer>
+                </div>
             </motion.nav>
 
             {/* ─── MOBILE BOTTOM TAB BAR ─── */}

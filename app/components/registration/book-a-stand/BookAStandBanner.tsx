@@ -3,7 +3,7 @@ import { Globe, ShieldCheck, Target, TrendingUp } from "lucide-react";
 
 const BookAStandBanner = () => {
     return (
-        <div className="w-full px-4 lg:px-11">
+        <div className="w-full px-4 lg:px-14">
             <section className="grid grid-cols-1 md:flex md:items-center md:justify-between my-3 p-4 md:py-3 md:px-2 gap-4 md:gap-0 bg-white border border-gray-100 rounded-xl shadow-sm">
                 {[
                     {

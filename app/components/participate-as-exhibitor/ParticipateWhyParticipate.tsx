@@ -16,9 +16,9 @@ const whyBuyers = [
 
 const ParticipateWhyParticipate = () => {
   return (
-    <section className="w-full py-2 font-inter">
-      <div className="rounded-2xl border border-gray-200/80 bg-[#f5f7f4] px-2 lg:px-11 shadow-[0_2px_12px_rgba(0,0,0,0.03)]">
-        <div className="grid grid-cols-1 items-center gap-8 lg:grid-cols-12">
+    <section className="w-full bg-white pb-6 font-inter">
+      <div className="rounded-2xl border border-gray-200/80 bg-[#f5f7f4] px-2 lg:px-14 shadow-[0_2px_12px_rgba(0,0,0,0.03)]">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 lg:divide-x divide-gray-200/80 items-stretch">
           {/* Left: Why Buyers */}
           <div className="lg:col-span-4">
             <h3 className="text-base sm:text-lg md:text-[19px] font-extrabold text-gray-900 font-poppins uppercase tracking-tight mb-4">

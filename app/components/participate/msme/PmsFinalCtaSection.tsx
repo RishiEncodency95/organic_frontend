@@ -56,7 +56,7 @@ const PMSFinalCTASection: React.FC = () => {
   return (
     <section
       aria-labelledby="pms-final-cta-heading"
-      className="relative w-full overflow-hidden px-4 py-4 md:px-11"
+      className="relative w-full overflow-hidden px-4 py-4 md:px-14"
     >
       {/* Background image */}
       <div className="absolute inset-0 z-0">

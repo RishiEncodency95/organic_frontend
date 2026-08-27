@@ -1,6 +1,7 @@
 "use client";
 
 import React from "react";
+import Link from "next/link";
 import { Calendar, Clock } from "lucide-react";
 import { Reveal, RevealDirection } from "./BlogReveal";
 
@@ -16,8 +17,10 @@ export type BlogArticle = {
 export default function ArticleCard({ a, delay = 0, direction = "up" }: { a: BlogArticle; delay?: number; direction?: RevealDirection }) {
   return (
     <Reveal delay={delay} direction={direction}>
-      <a
-        href="#"
+      <Link
+        href={`/blog/indias-organic-market`}
+        target="_blank"
+        rel="noopener noreferrer"
         className="group block bg-white rounded-xl overflow-hidden border border-gray-100 transition-all duration-300 hover:-translate-y-1 font-inter"
         style={{ boxShadow: "rgba(0, 0, 0, 0.02) 0px 1px 3px 0px, rgba(27, 31, 35, 0.15) 0px 0px 0px 1px" }}
       >
@@ -47,7 +50,7 @@ export default function ArticleCard({ a, delay = 0, direction = "up" }: { a: Blo
             </span>
           </div>
         </div>
-      </a>
+      </Link>
     </Reveal>
   );
 }

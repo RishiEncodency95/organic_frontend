@@ -320,7 +320,7 @@ const PrivacyPolicy: React.FC = () => {
           </div>
 
           {/* Overlay Text */}
-          <div className="relative z-20 w-full px-6 md:px-11 h-full flex flex-col justify-center pb-12">
+          <div className="relative z-20 w-full px-6 md:px-14 h-full flex flex-col justify-center pb-12">
             <div className="max-w-xl text-left mt-8 md:mt-0 space-y-4 w-full max-w-2xl">
 
               {/* Tagline Badge */}
@@ -371,7 +371,7 @@ const PrivacyPolicy: React.FC = () => {
       </section>
 
       {/* Info Strip (Like StatsBand) */}
-      <div className="relative z-20 -mt-6 md:-mt-8 w-full max-w-[1440px] mx-auto px-6 md:px-11">
+      <div className="relative z-20 -mt-6 md:-mt-8 w-full max-w-[1440px] mx-auto px-6 md:px-14">
         <div
           className="rounded-2xl border border-white/10 p-2 md:py-3 md:px-4"
           style={{
@@ -433,7 +433,7 @@ const PrivacyPolicy: React.FC = () => {
 
       {/* Main Content */}
       <section className="py-3 w-full">
-        <div className="w-full px-6 md:px-11">
+        <div className="w-full px-6 md:px-14">
             <>
               <div className="bg-white rounded-3xl shadow-[0_2px_20px_rgb(0,0,0,0.03)] border border-gray-200 overflow-hidden">
                 <div className="grid grid-cols-1 lg:grid-cols-2">

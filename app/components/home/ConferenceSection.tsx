@@ -9,6 +9,32 @@ import global1 from '../../assets/home/global1.png';
 
 
 
+// ── Dynamic Data Configuration ──
+const conferenceData = {
+  sectionTag: "GLOBAL CONFERENCE & SEMINARS",
+  titleMain: "Where Knowledge Meets",
+  titleHighlight: "the Future of Organic",
+  description: "Join expert-led sessions, panel discussions & thought leadership talks on the latest trends shaping the future of organic, natural and sustainable living.",
+  checklist: [
+    "Expert-led panel discussions & keynotes",
+    "Emerging trends in organic farming & retail",
+    "Sustainable business & growth strategies"
+  ],
+  button: {
+    text: "View Conference Schedule",
+    link: "https://arogya.namogange.org/"
+  },
+  eventInfo: [
+    { icon: Calendar, title: '19 – 21', sub: 'FEBRUARY 2027' },
+    { icon: MapPin, title: 'PRAGATI MAIDAN', sub: 'NEW DELHI' },
+    { icon: Users, title: 'INSIGHTS. IDEAS.', sub: 'IMPACT.' },
+    { icon: Mic, title: '50+ GLOBAL', sub: 'SPEAKERS' },
+    { icon: BookOpen, title: '20+ KEY', sub: 'SESSIONS' },
+  ],
+  image: global1,
+  imageAlt: "Conference and Seminars"
+};
+
 // Orange Sparkle component
 const OrangeSparkle = ({ style }: { style?: React.CSSProperties }) => (
   <span
@@ -30,7 +56,7 @@ const OrangeSparkle = ({ style }: { style?: React.CSSProperties }) => (
 
 const ConferenceSeminars = () => {
   return (
-    <section className="bg-white py-2 md:py-4 lg:py-6 px-4 md:px-11 overflow-hidden relative shadow-[0_0_60px_rgba(245,130,32,0.1)] border-y border-[#f58220]/20 z-20">
+    <section className="bg-white py-2 md:py-4 lg:py-6 px-4 md:px-14 overflow-hidden relative shadow-[0_0_60px_rgba(245,130,32,0.1)] border-y border-[#f58220]/20 z-20">
       {/* Subtle Glowing Highlights */}
       <div className="absolute top-0 right-0 w-[600px] h-[600px] bg-[#f58220]/[0.04] rounded-full blur-[80px] -z-10 translate-x-1/3 -translate-y-1/4 pointer-events-none"></div>
       <div className="absolute bottom-0 left-0 w-[500px] h-[500px] bg-[#3b8c2a]/[0.04] rounded-full blur-[80px] -z-10 -translate-x-1/4 translate-y-1/4 pointer-events-none"></div>
@@ -136,26 +162,22 @@ const ConferenceSeminars = () => {
           >
             <div className="flex items-center gap-2 mb-4">
               <span className="text-[12px] md:text-[13px] lg:text-[14px] font-bold uppercase tracking-widest text-[#f58220] bg-[#f58220]/10 px-4 py-1.5 rounded-full border border-[#f58220]/20">
-                GLOBAL CONFERENCE & SEMINARS
+                {conferenceData.sectionTag}
               </span>
             </div>
 
             <h3 className="text-[18px] md:text-[24px] lg:text-[28px] font-medium text-[#1a1a1a] leading-[1.2] mb-4">
-              Where Knowledge Meets <br className="hidden md:block" />
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#00643b] to-[#3b8c2a]">the Future of Organic</span>
+              {conferenceData.titleMain} <br className="hidden md:block" />
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#00643b] to-[#3b8c2a]">{conferenceData.titleHighlight}</span>
             </h3>
 
             <p className="text-[16px] md:text-[18px] text-gray-600 leading-[1.6] mb-6 font-normal border-l-4 border-[#f58220] pl-4">
-              Join expert-led sessions, panel discussions &amp; thought leadership talks on the latest trends shaping the future of organic, natural and sustainable living.
+              {conferenceData.description}
             </p>
 
             {/* Elegant Checklist */}
             <div className="flex flex-col gap-2 mb-5 w-full">
-              {[
-                "Expert-led panel discussions & keynotes",
-                "Emerging trends in organic farming & retail",
-                "Sustainable business & growth strategies"
-              ].map((text, idx) => (
+              {conferenceData.checklist.map((text, idx) => (
                 <div key={idx} className="flex items-start gap-3">
                   <div className="mt-0.5 bg-[#f58220]/10 p-0.5 rounded-full">
                     <CheckCircle className="w-4 h-4 text-[#f58220] shrink-0" />
@@ -176,9 +198,9 @@ const ConferenceSeminars = () => {
                 <OrangeSparkle style={{ bottom: '-11px', right: '28%', animationDelay: '0.55s' }} />
               </div>
 
-              <Link href="https://arogya.namogange.org/" target="_blank" rel="noopener noreferrer" className="relative z-10">
+              <Link href={conferenceData.button.link} target="_blank" rel="noopener noreferrer" className="relative z-10">
                 <button className="flex items-center justify-center gap-2 px-8 py-2 rounded-xl bg-gradient-to-r from-[#f58634] to-[#ff9b4f] hover:from-[#e67929] hover:to-[#f58634] text-white font-semibold uppercase tracking-wider shadow-[0_5px_15px_rgba(245,134,52,0.3)] hover:shadow-[0_8px_25px_rgba(245,134,52,0.4)] transition-all duration-300 hover:-translate-y-1 min-h-[44px] group">
-                  <span className="text-[12px] md:text-[14px]">View Conference Schedule</span>
+                  <span className="text-[12px] md:text-[14px]">{conferenceData.button.text}</span>
                   <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
                 </button>
               </Link>
@@ -190,13 +212,7 @@ const ConferenceSeminars = () => {
 
           {/* Event Info Stack */}
           <div className="hidden md:flex flex-col gap-5 pl-2 shrink-0">
-            {[
-              { icon: Calendar, title: '19 – 21', sub: 'FEBRUARY 2027' },
-              { icon: MapPin, title: 'PRAGATI MAIDAN', sub: 'NEW DELHI' },
-              { icon: Users, title: 'INSIGHTS. IDEAS.', sub: 'IMPACT.' },
-              { icon: Mic, title: '50+ GLOBAL', sub: 'SPEAKERS' },
-              { icon: BookOpen, title: '20+ KEY', sub: 'SESSIONS' },
-            ].map((item, i) => (
+            {conferenceData.eventInfo.map((item, i) => (
               <div key={i} className="flex items-center gap-4 group">
                 <div className="w-12 h-12 rounded-full bg-[#fdf5ed] group-hover:bg-[#f58220] transition-colors duration-300 flex items-center justify-center border border-[#f58220]/30 shadow-sm shrink-0">
                   <item.icon className="w-5 h-5 text-[#f58220] group-hover:text-white transition-colors duration-300" />
@@ -224,8 +240,8 @@ const ConferenceSeminars = () => {
         >
           <div className="relative rounded-[24px] overflow-hidden border-[8px] border-white shadow-[0_20px_50px_rgba(0,0,0,0.15)] group h-[300px] md:h-[390px]">
             <Image
-              src={global1}
-              alt="Conference and Seminars"
+              src={conferenceData.image}
+              alt={conferenceData.imageAlt}
               width={600}
               height={400}
               sizes="(max-width: 1280px) 100vw, 45vw"

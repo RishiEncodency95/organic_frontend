@@ -238,6 +238,8 @@ export default function HeroSection() {
               <p className="text-[#c2410c] text-xs sm:text-sm md:text-[15px] font-bold uppercase tracking-[0.18em] text-left font-poppins">
                 WHY VISIT BHARAT ORGANIC EXPO 2027
               </p>
+              <span className="w-8 h-[2.5px] bg-[#c2410c] shrink-0" />
+
             </div>
 
             {/* Heading - 3 separate stacked lines */}

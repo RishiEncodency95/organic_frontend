@@ -483,7 +483,7 @@ export default function BharatOrganicAwards() {
         <Leaf className="pointer-events-none absolute -left-4 top-6 h-16 w-16 -rotate-12 text-lime-700/20 animate-[bounce_6s_ease-in-out_infinite]" />
         <Leaf className="pointer-events-none absolute right-10 bottom-4 hidden h-20 w-20 rotate-45 text-lime-300/10 sm:block" />
 
-        <div className="relative z-20 w-full px-4 py-1 md:px-11 md:py-2">
+        <div className="relative z-20 w-full px-4 py-1 md:px-14 md:py-2">
           <div className="max-w-2xl text-left">
             {/* <img
               src={bharatOrganicLogo.src}
@@ -580,7 +580,7 @@ export default function BharatOrganicAwards() {
       </div>
 
       {/* ================= PROCESS ================= */}
-      <section className="w-full px-4 py-2 md:px-11 md:py-4 my-4">
+      <section className="w-full px-4 py-2 md:px-14 md:py-4 my-4">
         <Reveal>
           <div className="mb-6 flex items-center justify-center gap-2 text-emerald-900">
             <Sprout className="h-4 w-4 text-lime-600" />
@@ -617,7 +617,7 @@ export default function BharatOrganicAwards() {
       </section>
 
       {/* ================= FORM + SIDEBAR ================= */}
-      <section id="nomination-form" className="w-full px-4 py-2 md:px-11 md:py-4 grid grid-cols-1 gap-4 lg:gap-4 lg:grid-cols-[1fr_320px]">
+      <section id="nomination-form" className="w-full px-4 py-2 md:px-14 md:py-4 grid grid-cols-1 gap-4 lg:gap-4 lg:grid-cols-[1fr_320px]">
         {/* ---- Nomination form ---- */}
         <div className="min-w-0">
           <Reveal className="rounded-2xl border border-emerald-900/10 bg-white p-5 shadow-sm">
@@ -1002,7 +1002,7 @@ export default function BharatOrganicAwards() {
             aria-hidden="true"
             className="hidden md:block absolute right-0 top-0 h-44 lg:h-52 w-auto z-0"
           />
-          <div className="relative z-10 w-full px-4 py-2 md:px-11 md:py-4 flex flex-col items-center gap-2 text-center sm:flex-row sm:justify-between sm:text-left">
+          <div className="relative z-10 w-full px-4 py-2 md:px-14 md:py-4 flex flex-col items-center gap-2 text-center sm:flex-row sm:justify-between sm:text-left">
             <div>
               <p className="text-sm font-extrabold text-emerald-950">
                 CELEBRATING LEADERS.

@@ -99,7 +99,7 @@ const PartnersAndBrands = () => {
         }
       `}</style>
 
-      <div className="w-full px-4 sm:px-6 lg:px-11">
+      <div className="w-full px-4 sm:px-6 lg:px-14">
 
         {/* ══════════════════════════════════════════
             SECTION 1: TRUSTED BY INDUSTRY LEADERS

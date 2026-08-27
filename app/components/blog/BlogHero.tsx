@@ -23,7 +23,7 @@ const BlogHero = () => {
         sizes="100vw"
       />
 
-      <div className="relative z-20 w-full px-6 lg:px-11 h-full flex flex-col justify-center">
+      <div className="relative z-20 w-full px-6 lg:px-14 h-full flex flex-col justify-center">
         <div className="text-left">
           {/* Tagline Badge */}
           <div className={`flex items-center justify-start gap-2.5 mb-2 transition-all duration-700 ease-out ${mounted ? "translate-y-0 opacity-100" : "translate-y-4 opacity-0"

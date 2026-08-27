@@ -66,7 +66,7 @@ export default function WhatsNextBanner() {
   return (
     <section
       aria-labelledby="whats-next-heading"
-      className="relative w-full overflow-hidden bg-[#F9FCF9] px-4 py-4 md:px-11"
+      className="relative w-full overflow-hidden bg-[#F9FCF9] px-4 py-4 md:px-14"
     >
       <img
         src={footerrightImg.src}

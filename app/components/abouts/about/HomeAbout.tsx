@@ -54,8 +54,10 @@ const HomeAbout = () => {
 
           {/* Right Column: Text content */}
           <div className="w-full flex flex-col justify-center">
-            <p className="text-[#d26019] font-bold text-[13px] uppercase tracking-[0.22em] mb-2">
+            <p className="flex items-center gap-2 text-[#d26019] font-semibold text-[14px] uppercase tracking-[0.22em] mb-2">
+              <span className="inline-block w-6 h-[1.5px] bg-[#d26019]" />
               ABOUT ORGANIC EXPO
+              <span className="inline-block w-6 h-[1.5px] bg-[#d26019]" />
             </p>
 
             <h2 

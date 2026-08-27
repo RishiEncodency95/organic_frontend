@@ -46,13 +46,13 @@ export default function OfficialRecognitionBanner() {
   return (
     <section
       aria-labelledby="official-recognition-heading"
-      className="w-full bg-[#f9f8f4] px-3 py-6 md:px-8 font-inter relative overflow-hidden"
+      className="w-full bg-[#f9f8f4] px-3 py-6 lg:px-14 font-inter relative overflow-hidden"
     >
       <div className="absolute bottom-0 right-0 pointer-events-none opacity-[0.03] scale-150 translate-x-1/4 translate-y-1/4">
         <LeafIcon />
       </div>
 
-      <div className="mx-auto w-full max-w-[1280px] relative z-10">
+      <div className="w-full relative z-10">
         <div className="grid grid-cols-1 items-stretch gap-4 lg:grid-cols-[1.2fr_0.9fr_1fr] lg:gap-5">
           
           {/* ---------------- Left: Content ---------------- */}

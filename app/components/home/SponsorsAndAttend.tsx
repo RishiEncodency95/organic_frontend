@@ -28,60 +28,51 @@ const Sparkle = ({ style, color = "#facc15", shadow = "#4B1426" }: { style?: Rea
   </span>
 );
 
-const WhyAttendItemsLeft = [
-  {
-    title: "DISCOVER",
-    desc: "Explore the latest organic products and eco-friendly services driving a sustainable future.",
-    icon: <Lightbulb className="w-5 h-5 text-[#f58220]" />
+// ── Dynamic Data Configuration ──
+const sectionData = {
+  leftSection: {
+    titlePrefix: "WHY",
+    titleHighlight: "ATTEND?",
+    description: "Explore innovations, build connections and gain insights that drive better health and stronger businesses.",
+    itemsLeft: [
+      { title: "DISCOVER", desc: "Explore the latest organic products and eco-friendly services driving a sustainable future.", icon: <Lightbulb className="w-5 h-5 text-[#f58220]" /> },
+      { title: "CONNECT", desc: "Meet leading organic brands, manufacturers and sustainable suppliers under one roof.", icon: <Handshake className="w-5 h-5 text-[#f58220]" /> },
+      { title: "GROW", desc: "Unlock new green business opportunities, partnerships and eco-investment possibilities.", icon: <TrendingUp className="w-5 h-5 text-[#f58220]" /> }
+    ],
+    itemsRight: [
+      { title: "LEARN", desc: "Attend seminars, workshops and live demos by organic agriculture and sustainability experts.", icon: <BookOpen className="w-5 h-5 text-[#f58220]" /> },
+      { title: "SOURCE", desc: "Find trusted organic suppliers, distributors and eco-franchise opportunities.", icon: <PackageSearch className="w-5 h-5 text-[#f58220]" /> },
+      { title: "STAY AHEAD", desc: "Stay updated with market trends, conscious consumer insights and future organic industry developments.", icon: <Zap className="w-5 h-5 text-[#f58220]" /> }
+    ]
   },
-  {
-    title: "CONNECT",
-    desc: "Meet leading organic brands, manufacturers and sustainable suppliers under one roof.",
-    icon: <Handshake className="w-5 h-5 text-[#f58220]" />
+  centerSection: {
+    text1: "ONE PLATFORM.",
+    text2: "ORGANIC",
+    text3: "OPPORTUNITIES."
   },
-  {
-    title: "GROW",
-    desc: "Unlock new green business opportunities, partnerships and eco-investment possibilities.",
-    icon: <TrendingUp className="w-5 h-5 text-[#f58220]" />
+  rightSection: {
+    title: "WHO SHOULD ATTEND?",
+    bottomText: "Whether you're sourcing, learning or networking — this is the place to be!",
+    items: [
+      { label: "Organic Distributors, Wholesalers & Retailers", icon: <ShoppingCart className="w-4 h-4" /> },
+      { label: "Eco-Importers & Exporters", icon: <Globe className="w-4 h-4" /> },
+      { label: "Ayurvedic Institutions & Wellness Centers", icon: <Hospital className="w-4 h-4" /> },
+      { label: "Nutritionists, Farmers & Wellness Experts", icon: <Stethoscope className="w-4 h-4" /> },
+      { label: "Gym Owners, Spa & Eco-Fitness Professionals", icon: <Dumbbell className="w-4 h-4" /> },
+      { label: "Organic Farming & Natural Product Buyers", icon: <Sprout className="w-4 h-4" /> },
+      { label: "Sustainable Packaging & Eco-friendly Brands", icon: <Flower2 className="w-4 h-4" /> },
+      { label: "Investors, Franchise Seekers & Green Business", icon: <Handshake className="w-4 h-4" /> },
+      { label: "Supermarkets & Organic Grocery Chains", icon: <Users className="w-4 h-4" /> },
+      { label: "Health-Conscious Consumers & Eco-Enthusiasts", icon: <Heart className="w-4 h-4" /> },
+    ]
   }
-];
-
-const WhyAttendItemsRight = [
-  {
-    title: "LEARN",
-    desc: "Attend seminars, workshops and live demos by organic agriculture and sustainability experts.",
-    icon: <BookOpen className="w-5 h-5 text-[#f58220]" />
-  },
-  {
-    title: "SOURCE",
-    desc: "Find trusted organic suppliers, distributors and eco-franchise opportunities.",
-    icon: <PackageSearch className="w-5 h-5 text-[#f58220]" />
-  },
-  {
-    title: "STAY AHEAD",
-    desc: "Stay updated with market trends, conscious consumer insights and future organic industry developments.",
-    icon: <Zap className="w-5 h-5 text-[#f58220]" />
-  }
-];
-
-const WhoShouldAttendItems = [
-  { label: "Organic Distributors, Wholesalers & Retailers", icon: <ShoppingCart className="w-4 h-4" /> },
-  { label: "Eco-Importers & Exporters", icon: <Globe className="w-4 h-4" /> },
-  { label: "Ayurvedic Institutions & Wellness Centers", icon: <Hospital className="w-4 h-4" /> },
-  { label: "Nutritionists, Farmers & Wellness Experts", icon: <Stethoscope className="w-4 h-4" /> },
-  { label: "Gym Owners, Spa & Eco-Fitness Professionals", icon: <Dumbbell className="w-4 h-4" /> },
-  { label: "Organic Farming & Natural Product Buyers", icon: <Sprout className="w-4 h-4" /> },
-  { label: "Sustainable Packaging & Eco-friendly Brands", icon: <Flower2 className="w-4 h-4" /> },
-  { label: "Investors, Franchise Seekers & Green Business", icon: <Handshake className="w-4 h-4" /> },
-  { label: "Supermarkets & Organic Grocery Chains", icon: <Users className="w-4 h-4" /> },
-  { label: "Health-Conscious Consumers & Eco-Enthusiasts", icon: <Heart className="w-4 h-4" /> },
-];
+};
 
 const SponsorsAndAttend = () => {
   return (
     <>
       <section className="w-full relative z-10 py-2 md:py-6 lg:py-6 overflow-hidden bg-[#EFF7EE]">
-        <div className="w-full px-4 md:px-11 grid grid-cols-1 xl:grid-cols-12 gap-2 xl:gap-4 items-start">
+        <div className="w-full px-4 md:px-14 grid grid-cols-1 xl:grid-cols-12 gap-2 xl:gap-4 items-start">
 
           {/* LEFT: WHY ATTEND */}
           <motion.div
@@ -94,13 +85,13 @@ const SponsorsAndAttend = () => {
             <div className="flex flex-col md:flex-row items-start gap-1 mb-2 text-left">
               <div className="flex items-center gap-1.5">
                 <h2 className="text-[18px] md:text-[24px] lg:text-[30px] font-semibold text-[#1a1a1a] tracking-tight leading-[1.2]">
-                  WHY <span className="bg-gradient-to-r from-[#00643b] to-[#f58220] bg-clip-text text-transparent">ATTEND?</span>
+                  {sectionData.leftSection.titlePrefix} <span className="bg-gradient-to-r from-[#00643b] to-[#f58220] bg-clip-text text-transparent">{sectionData.leftSection.titleHighlight}</span>
                 </h2>
                 <Leaf className="w-6 h-6 md:w-8 md:h-8 text-[#f58220] fill-[#f58220]" />
               </div>
             </div>
             <p className="text-[16px] md:text-[18px] text-gray-700 font-normal mb-4 leading-[1.6] max-w-[500px] text-left">
-              Explore innovations, build connections and gain insights that drive better health and stronger businesses.
+              {sectionData.leftSection.description}
             </p>
 
             {/* Divider with Leaf */}
@@ -116,7 +107,7 @@ const SponsorsAndAttend = () => {
 
               {/* Row 1 */}
               <div className="py-1 px-0 md:px-3 border-b-0 md:border-b border-dashed border-gray-300 relative">
-                {WhyAttendItemsLeft.slice(0, 1).map((item, index) => (
+                {sectionData.leftSection.itemsLeft.slice(0, 1).map((item, index) => (
                   <div key={index} className="flex gap-4 group">
                     <div className="w-10 h-10 rounded-full flex items-center justify-center bg-[#fff8f2] shrink-0 mt-0.5 border border-[#feeddf]">
                       {React.cloneElement(item.icon as React.ReactElement<{ className?: string }>, { className: 'w-5 h-5 text-[#f58220]' })}
@@ -129,7 +120,7 @@ const SponsorsAndAttend = () => {
                 ))}
               </div>
               <div className="py-2 px-0 md:px-2 border-b-0 md:border-b border-dashed border-gray-300 relative">
-                {WhyAttendItemsRight.slice(0, 1).map((item, index) => (
+                {sectionData.leftSection.itemsRight.slice(0, 1).map((item, index) => (
                   <div key={index} className="flex gap-4 group">
                     <div className="w-10 h-10 rounded-full flex items-center justify-center bg-[#fff8f2] shrink-0 mt-0.5 border border-[#feeddf]">
                       {React.cloneElement(item.icon as React.ReactElement<{ className?: string }>, { className: 'w-5 h-5 text-[#f58220]' })}
@@ -144,7 +135,7 @@ const SponsorsAndAttend = () => {
 
               {/* Row 2 */}
               <div className="py-2 px-0 md:px-3 border-b-0 md:border-b border-dashed border-gray-300 relative">
-                {WhyAttendItemsLeft.slice(1, 2).map((item, index) => (
+                {sectionData.leftSection.itemsLeft.slice(1, 2).map((item, index) => (
                   <div key={index} className="flex gap-4 group">
                     <div className="w-10 h-10 rounded-full flex items-center justify-center bg-[#fff8f2] shrink-0 mt-0.5 border border-[#feeddf]">
                       {React.cloneElement(item.icon as React.ReactElement<{ className?: string }>, { className: 'w-5 h-5 text-[#f58220]' })}
@@ -157,7 +148,7 @@ const SponsorsAndAttend = () => {
                 ))}
               </div>
               <div className="py-2 px-0 md:px-3 border-b-0 md:border-b border-dashed border-gray-300 relative">
-                {WhyAttendItemsRight.slice(1, 2).map((item, index) => (
+                {sectionData.leftSection.itemsRight.slice(1, 2).map((item, index) => (
                   <div key={index} className="flex gap-4 group">
                     <div className="w-10 h-10 rounded-full flex items-center justify-center bg-[#fff8f2] shrink-0 mt-0.5 border border-[#feeddf]">
                       {React.cloneElement(item.icon as React.ReactElement<{ className?: string }>, { className: 'w-5 h-5 text-[#f58220]' })}
@@ -172,7 +163,7 @@ const SponsorsAndAttend = () => {
 
               {/* Row 3 */}
               <div className="py-2 px-0 md:px-3 relative">
-                {WhyAttendItemsLeft.slice(2, 3).map((item, index) => (
+                {sectionData.leftSection.itemsLeft.slice(2, 3).map((item, index) => (
                   <div key={index} className="flex gap-4 group">
                     <div className="w-10 h-10 rounded-full flex items-center justify-center bg-[#fff8f2] shrink-0 mt-0.5 border border-[#feeddf]">
                       {React.cloneElement(item.icon as React.ReactElement<{ className?: string }>, { className: 'w-5 h-5 text-[#f58220]' })}
@@ -185,7 +176,7 @@ const SponsorsAndAttend = () => {
                 ))}
               </div>
               <div className="py-2 px-0 md:px-3 relative">
-                {WhyAttendItemsRight.slice(2, 3).map((item, index) => (
+                {sectionData.leftSection.itemsRight.slice(2, 3).map((item, index) => (
                   <div key={index} className="flex gap-4 group">
                     <div className="w-10 h-10 rounded-full flex items-center justify-center bg-[#fff8f2] shrink-0 mt-0.5 border border-[#feeddf]">
                       {React.cloneElement(item.icon as React.ReactElement<{ className?: string }>, { className: 'w-5 h-5 text-[#f58220]' })}
@@ -234,9 +225,9 @@ const SponsorsAndAttend = () => {
               {/* Center Overlay Circle */}
               <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-20 w-[110px] h-[110px] md:w-[130px] md:h-[130px] bg-white rounded-full flex flex-col items-center justify-center text-center shadow-lg p-3 border-[4px] border-white">
                 <Leaf className="w-5 h-5 md:w-6 md:h-6 text-[#00643b] mb-1" />
-                <p className="text-[10px] md:text-[11.5px] font-black text-[#00643b] leading-tight uppercase">ONE PLATFORM.</p>
-                <p className="text-[10px] md:text-[11.5px] font-black text-[#f58220] leading-tight uppercase tracking-tight">ORGANIC</p>
-                <p className="text-[10px] md:text-[11.5px] font-black text-[#00643b] leading-tight uppercase tracking-tight">OPPORTUNITIES.</p>
+                <p className="text-[10px] md:text-[11.5px] font-black text-[#00643b] leading-tight uppercase">{sectionData.centerSection.text1}</p>
+                <p className="text-[10px] md:text-[11.5px] font-black text-[#f58220] leading-tight uppercase tracking-tight">{sectionData.centerSection.text2}</p>
+                <p className="text-[10px] md:text-[11.5px] font-black text-[#00643b] leading-tight uppercase tracking-tight">{sectionData.centerSection.text3}</p>
               </div>
 
               {/* Rotating Ring & Dots Container */}
@@ -273,12 +264,12 @@ const SponsorsAndAttend = () => {
               <div className="bg-[#3b8c2a] text-white p-2 flex items-center justify-center relative">
                 <div className="flex items-center gap-2">
                   <Users className="w-4 h-4 text-[#f58220]" />
-                  <span className="text-[16px] md:text-[18px] font-semibold uppercase tracking-wider">WHO SHOULD ATTEND?</span>
+                  <span className="text-[16px] md:text-[18px] font-semibold uppercase tracking-wider">{sectionData.rightSection.title}</span>
                 </div>
               </div>
 
               <div className="px-3 py-0 md:py-0">
-                {WhoShouldAttendItems.map((item, index) => (
+                {sectionData.rightSection.items.map((item, index) => (
                   <div key={index} className="flex items-center gap-3 py-1 border-b border-gray-100 last:border-0 group cursor-default">
                     <div className="w-6 h-6 rounded bg-[#fff8f2] flex items-center justify-center text-[#f58220] group-hover:bg-[#f58220] group-hover:text-white transition-all duration-300 border border-[#feeddf] shrink-0">
                       {React.cloneElement(item.icon as React.ReactElement<{ className?: string }>, { className: 'w-3.5 h-3.5' })}
@@ -294,7 +285,7 @@ const SponsorsAndAttend = () => {
                   <Star className="w-3.5 h-3.5 text-white" />
                 </div>
                 <p className="text-[14px] text-[#00643b] font-semibold leading-[1.4]">
-                  Whether you're sourcing, learning or networking — this is the place to be!
+                  {sectionData.rightSection.bottomText}
                 </p>
               </div>
             </div>
@@ -315,7 +306,7 @@ const SponsorsAndAttend = () => {
         <div className="absolute top-1/2 left-1/4 w-96 h-96 bg-[#1b5e20]/20 rounded-full blur-[100px] -translate-y-1/2 pointer-events-none"></div>
         <div className="absolute top-1/2 right-1/4 w-96 h-96 bg-[#facc15]/10 rounded-full blur-[100px] -translate-y-1/2 pointer-events-none"></div>
 
-        <div className="px-4 md:px-11 grid grid-cols-1 sm:grid-cols-2 xl:flex xl:items-center xl:justify-between gap-4 relative z-10">
+        <div className="px-4 md:px-14 grid grid-cols-1 sm:grid-cols-2 xl:flex xl:items-center xl:justify-between gap-4 relative z-10">
 
           {/* Item 1: Date */}
           <div className="flex items-center gap-3 group">

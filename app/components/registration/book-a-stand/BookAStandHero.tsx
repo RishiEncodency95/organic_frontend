@@ -13,7 +13,7 @@ const BookAStandHero = () => {
                 fontFamily: "'Barlow', sans-serif",
             }}
         >
-            <div className="w-full px-4 lg:px-11">
+            <div className="w-full px-4 lg:px-14">
                 <div className="w-full">
                     <div className="relative z-10 py-6 md:py-12 flex flex-col gap-2 w-full md:w-[60%] lg:w-[55%] bg-black/40 md:bg-transparent p-4 md:p-0 rounded-2xl md:rounded-none backdrop-blur-sm md:backdrop-blur-none">
 

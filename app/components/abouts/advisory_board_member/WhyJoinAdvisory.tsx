@@ -53,7 +53,7 @@ const WhyJoinAdvisory = () => {
 
     return (
         <section className="w-full py-2 lg:py-6 bg-[#EFF7EE] relative">
-            <div className="w-full px-4 md:px-11">
+            <div className="w-full px-4 md:px-14">
 
                 {/* Top Section: Why Join & Cards */}
                 <div className="flex flex-col lg:flex-row gap-8 xl:gap-12 mb-4 items-start">
@@ -115,7 +115,7 @@ const WhyJoinAdvisory = () => {
                     </div>
 
                     {/* Banner Content Container */}
-                    <div className="relative z-10 flex flex-col md:flex-row items-center justify-between px-6 py-4 md:px-10 lg:px-11 gap-6">
+                    <div className="relative z-10 flex flex-col md:flex-row items-center justify-between px-6 py-4 md:px-10 lg:px-14 gap-6">
 
                         {/* Left Side: Banner Text */}
                         <div className="w-full md:w-2/3 flex flex-col items-start md:pr-10">

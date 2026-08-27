@@ -53,7 +53,7 @@ const WhoShouldVisit = () => {
       style={{
         backgroundImage: `url(${visitBg.src})`,
         backgroundPosition: "center top",
-        backgroundSize: "95% 42%",
+        backgroundSize: "100% 42%",
       }}
     >
       <SectionContainer>
