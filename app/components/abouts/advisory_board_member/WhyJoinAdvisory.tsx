@@ -177,7 +177,9 @@ const WhyJoinAdvisory = () => {
 
 
                             <Link
-                                href="/nominate"
+                                href="/about/nominate_advisory_board"
+                                target="_blank"
+                                rel="noopener noreferrer"
                                 className="group inline-flex items-center gap-3 bg-[#f5c742] text-[#1f471b] px-6 py-3 rounded-full font-bold text-[12px] md:text-[13px] tracking-widest uppercase transition-all shadow-lg hover:shadow-xl hover:bg-[#e0b536] hover:-translate-y-0.5 z-20 shrink-0"
                             >
                                 Nominate Now

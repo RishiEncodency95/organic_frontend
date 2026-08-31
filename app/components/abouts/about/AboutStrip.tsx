@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useRef, useEffect, useState } from 'react';
-import { Users, Building2, Map, Award } from 'lucide-react';
+import { Users, Target, Globe, TrendingUp } from 'lucide-react';
 import { SITE_CONFIG } from '@/app/constants/siteConfig';
 import { useInView, animate } from "framer-motion";
 import gsap from "gsap";
@@ -42,28 +42,24 @@ const AboutStrip = () => {
 
   const items = [
     {
-      title: SITE_CONFIG.stats.exhibitors,
-      subtitle: "EXHIBITORS",
-      icon: Building2,
-      color: "text-orange-500"
+      title: "EXPERIENCE THAT MATTERS",
+      subtitle: "Decades of collective leadership across sectors",
+      icon: Users
     },
     {
-      title: SITE_CONFIG.stats.visitors,
-      subtitle: "TRADE VISITORS",
-      icon: Users,
-      color: "text-[#3b8c2a]"
+      title: "INSIGHTS THAT SHAPE",
+      subtitle: "Actionable perspectives for industry advancement",
+      icon: Target
     },
     {
-      title: "5,000 Sqm",
-      subtitle: "EXHIBITION AREA",
-      icon: Map,
-      color: "text-blue-500"
+      title: "NETWORKS THAT CONNECT",
+      subtitle: "Strong national & global partnerships",
+      icon: Globe
     },
     {
-      title: "10+ Years",
-      subtitle: "PROVEN EXPERIENCE",
-      icon: Award,
-      color: "text-green-600"
+      title: "MENTORSHIP THAT EMPOWERS",
+      subtitle: "Guiding the next generation of changemakers",
+      icon: TrendingUp
     }
   ];
 
@@ -138,14 +134,14 @@ const AboutStrip = () => {
                     style={{ opacity: 0 }}
                     className="flex flex-row items-center justify-center gap-2 sm:gap-2.5 group flex-1 py-1 px-1.5 bg-white/5 md:bg-transparent rounded-xl border border-white/10 md:border-none"
                   >
-                    <div className="w-8 h-8 md:w-9 md:h-9 rounded-full bg-white/10 flex items-center justify-center shrink-0 border border-white/15">
-                      <IconComponent className="w-4 h-4 md:w-5 md:h-5 text-[#facc15] stroke-[2]" />
+                    <div className="w-10 h-10 md:w-11 md:h-11 rounded-full bg-transparent flex items-center justify-center shrink-0 border border-[#4caf50]">
+                      <IconComponent className="w-5 h-5 md:w-6 md:h-6 text-white stroke-[2]" />
                     </div>
-                    <div className="flex flex-col text-left justify-center">
-                      <h4 className="text-[15px] sm:text-[16px] md:text-[17px] font-semibold text-white leading-none font-inter mb-0.5">
-                        <StatCounter value={item.title} />
+                    <div className="flex flex-col text-left justify-center pt-0.5">
+                      <h4 className="text-[11px] sm:text-[12px] md:text-[13px] font-bold text-white leading-tight font-inter mb-0.5">
+                        {item.title}
                       </h4>
-                      <p className="text-[9.5px] sm:text-[10px] md:text-[10.5px] font-semibold text-[#facc15] uppercase tracking-wider leading-none font-inter">
+                      <p className="text-[10px] sm:text-[11px] md:text-[11.5px] font-medium text-[#a5d6a7] leading-[1.2] font-inter">
                         {item.subtitle}
                       </p>
                     </div>
