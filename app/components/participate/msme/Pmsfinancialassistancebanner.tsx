@@ -15,6 +15,7 @@ import {
 } from "lucide-react";
 import financialImg from "@/app/assets/participate/msme/financial_assitance.png";
 import howMuchImg from "@/app/assets/participate/msme/how_much_support.png";
+import Link from "next/link";
 
 /**
  * PMSFinancialAssistanceBanner
@@ -209,7 +210,7 @@ const PMSFinancialAssistanceBanner: FC = () => {
       {/* ============ Footer strip ============ */}
       <div className="relative px-4 pb-6 pt-2 md:px-14">
         <div className="relative overflow-hidden rounded-2xl bg-[#EFF7EE] shadow-lg">
-          <div className="flex flex-col items-center gap-4 px-3 py-4 sm:px-4 sm:py-5 md:flex-row md:items-center md:gap-6 md:px-4 md:py-4">
+          <div className="flex flex-col items-center gap-4 px-3 py-4 sm:px-4 sm:py-5 md:flex-row md:items-center md:gap-6 md:pl-4 md:py-4 md:pr-[220px]">
             {/* Important note */}
             <div className="flex w-full items-start gap-3 md:w-[38%]">
               <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-[#1b5e20]">
@@ -242,15 +243,16 @@ const PMSFinancialAssistanceBanner: FC = () => {
             </div>
 
             {/* CTA button */}
-            <div className="flex w-full shrink-0 justify-center md:w-auto">
-              <a
-                href="#eligibility"
+            <div className="relative z-10 flex w-full shrink-0 justify-start md:w-auto">
+                      <Link
+            href="/participate/msme/eligibility-check"
+            target="_blank"
                 className="inline-flex items-center gap-1.5 rounded-full bg-[#1b5e20] px-4 py-2 text-[13px] font-semibold uppercase tracking-wide text-white shadow-md transition-colors hover:bg-[#2d7a2d] sm:text-[14px]"
               >
                 <Target className="h-3.5 w-3.5" aria-hidden="true" />
                 Check My Eligibility
                 <ChevronRight className="h-3.5 w-3.5" aria-hidden="true" />
-              </a>
+              </Link>
             </div>
 
             {/* Plant photo */}
