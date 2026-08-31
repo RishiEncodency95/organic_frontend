@@ -11,6 +11,7 @@ import {
   Headphones,
   ShieldAlert,
 } from "lucide-react";
+import Link from "next/link";
 import readyToExploreImg from "@/app/assets/participate/msme/ready_to_explore.jpeg";
 
 /**
@@ -115,13 +116,14 @@ const PMSFinalCTASection: React.FC = () => {
 
         {/* CTA buttons */}
         <div className="mt-5 flex w-full flex-col gap-3 sm:flex-row">
-          <button
-            type="button"
+          <Link
+            href="/participate/msme/eligibility-check"
+            target="_blank"
             className="flex flex-1 items-center justify-center gap-2 rounded-lg bg-[#1b5e20] px-5 py-3 text-[11px] font-semibold uppercase tracking-wide text-white shadow-sm transition hover:bg-[#2d7a2d] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#1b5e20] sm:text-[12px]"
           >
             <Upload className="h-4 w-4" strokeWidth={2} aria-hidden="true" />
             Check Your PMS Eligibility
-          </button>
+          </Link>
           <button
             type="button"
             className="flex flex-1 items-center justify-center gap-2 rounded-lg border-2 border-[#1b5e20] bg-white px-5 py-3 text-[11px] font-semibold uppercase tracking-wide text-[#1b5e20] shadow-sm transition hover:bg-[#EFF7EE] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#1b5e20] sm:text-[12px]"
