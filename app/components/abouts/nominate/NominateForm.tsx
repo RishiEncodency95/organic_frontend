@@ -47,7 +47,7 @@ const NominateForm = () => {
 
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                         <div className="flex flex-col gap-1.5">
-                            <label className="text-[12px] md:text-[13px] font-bold text-[#1a1a1a]">Full Name of Nominee <span className="text-red-500">*</span></label>
+                            <label className="text-[12px] md:text-[13px] font-semibold text-[#1a1a1a]">Full Name of Nominee <span className="text-red-500">*</span></label>
                             <div className="relative">
                                 <span className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400">
                                     <User size={16} />
@@ -56,11 +56,11 @@ const NominateForm = () => {
                             </div>
                         </div>
                         <div className="flex flex-col gap-1.5">
-                            <label className="text-[12px] md:text-[13px] font-bold text-[#1a1a1a]">Designation <span className="text-red-500">*</span></label>
+                            <label className="text-[12px] md:text-[13px] font-semibold text-[#1a1a1a]">Designation <span className="text-red-500">*</span></label>
                             <input type="text" placeholder="e.g., CEO, Founder, Director" className="w-full px-3 py-2.5 rounded-lg border border-[#e2e8f0] text-[13px] focus:outline-none focus:border-[#0a4d22] focus:ring-1 focus:ring-[#0a4d22] transition-colors placeholder:text-gray-400" />
                         </div>
                         <div className="flex flex-col gap-1.5">
-                            <label className="text-[12px] md:text-[13px] font-bold text-[#1a1a1a]">Organisation / Institution <span className="text-red-500">*</span></label>
+                            <label className="text-[12px] md:text-[13px] font-semibold text-[#1a1a1a]">Organisation / Institution <span className="text-red-500">*</span></label>
                             <div className="relative">
                                 <span className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400">
                                     <Building2 size={16} />
@@ -69,7 +69,7 @@ const NominateForm = () => {
                             </div>
                         </div>
                         <div className="flex flex-col gap-1.5">
-                            <label className="text-[12px] md:text-[13px] font-bold text-[#1a1a1a]">Industry / Sector <span className="text-red-500">*</span></label>
+                            <label className="text-[12px] md:text-[13px] font-semibold text-[#1a1a1a]">Industry / Sector <span className="text-red-500">*</span></label>
                             <div className="relative">
                                 <select className="w-full px-3 py-2.5 pr-8 rounded-lg border border-[#e2e8f0] text-[13px] text-gray-500 focus:outline-none focus:border-[#0a4d22] focus:ring-1 focus:ring-[#0a4d22] transition-colors bg-white appearance-none cursor-pointer">
                                     <option value="" disabled selected>Select industry / sector</option>
@@ -81,7 +81,7 @@ const NominateForm = () => {
                             </div>
                         </div>
                         <div className="flex flex-col gap-1.5">
-                            <label className="text-[12px] md:text-[13px] font-bold text-[#1a1a1a]">Email Address <span className="text-red-500">*</span></label>
+                            <label className="text-[12px] md:text-[13px] font-semibold text-[#1a1a1a]">Email Address <span className="text-red-500">*</span></label>
                             <div className="relative">
                                 <span className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400">
                                     <Mail size={16} />
@@ -90,7 +90,7 @@ const NominateForm = () => {
                             </div>
                         </div>
                         <div className="flex flex-col gap-1.5">
-                            <label className="text-[12px] md:text-[13px] font-bold text-[#1a1a1a]">Phone / Mobile Number <span className="text-red-500">*</span></label>
+                            <label className="text-[12px] md:text-[13px] font-semibold text-[#1a1a1a]">Phone / Mobile Number <span className="text-red-500">*</span></label>
                             <div className="relative">
                                 <span className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400">
                                     <Phone size={16} />
@@ -99,7 +99,7 @@ const NominateForm = () => {
                             </div>
                         </div>
                         <div className="flex flex-col gap-1.5 md:col-span-2">
-                            <label className="text-[12px] md:text-[13px] font-bold text-[#1a1a1a]">Professional Profile / LinkedIn <span className="font-normal text-gray-500">(if available)</span></label>
+                            <label className="text-[12px] md:text-[13px] font-semibold text-[#1a1a1a]">Professional Profile / LinkedIn <span className="font-normal text-gray-500">(if available)</span></label>
                             <div className="relative">
                                 <input type="url" placeholder="https://linkedin.com/in/yourprofile" className="w-full px-3 py-2.5 pr-10 rounded-lg border border-[#e2e8f0] text-[13px] focus:outline-none focus:border-[#0a4d22] focus:ring-1 focus:ring-[#0a4d22] transition-colors placeholder:text-gray-400" />
                                 <span className="absolute right-3 top-1/2 -translate-y-1/2 bg-[#0077b5] text-white font-bold text-[11px] px-1.5 py-0.5 rounded-[3px]">
@@ -120,7 +120,7 @@ const NominateForm = () => {
                     <div className="flex flex-col gap-5 md:gap-6">
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-5 md:gap-6">
                             <div className="flex flex-col gap-1.5">
-                                <label className="text-[12px] md:text-[13px] font-bold text-[#1a1a1a]">Areas of Expertise <span className="text-red-500">*</span></label>
+                                <label className="text-[12px] md:text-[13px] font-semibold text-[#1a1a1a]">Areas of Expertise <span className="text-red-500">*</span></label>
                                 <div className="relative">
                                     <select className="w-full px-3 py-2.5 pr-8 rounded-lg border border-[#e2e8f0] text-[13px] text-gray-500 focus:outline-none focus:border-[#0a4d22] focus:ring-1 focus:ring-[#0a4d22] transition-colors bg-white appearance-none cursor-pointer">
                                         <option value="" disabled selected>Select areas of expertise</option>
@@ -132,7 +132,7 @@ const NominateForm = () => {
                                 </div>
                             </div>
                             <div className="flex flex-col gap-1.5">
-                                <label className="text-[12px] md:text-[13px] font-bold text-[#1a1a1a]">Key Achievements / Contributions <span className="text-red-500">*</span></label>
+                                <label className="text-[12px] md:text-[13px] font-semibold text-[#1a1a1a]">Key Achievements / Contributions <span className="text-red-500">*</span></label>
                                 <div className="relative">
                                     <textarea
                                         rows={1}

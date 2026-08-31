@@ -8,7 +8,7 @@ import Link from "next/link";
 
 const AdvisoryHero = () => {
     return (
-        <section className="relative w-full min-h-[500px] md:min-h-[550px] lg:min-h-[550px] flex items-center overflow-hidden bg-[#f9fafb]">
+        <section className="relative w-full min-h-[350px] md:min-h-[410px] lg:min-h-[415px] flex items-center overflow-hidden bg-[#f9fafb]">
             {/* Background Image (Globe and Green scenery on the right) */}
             <Image
                 src={heroBanner}
@@ -20,15 +20,15 @@ const AdvisoryHero = () => {
             />
 
             {/* Content Overlay */}
-            <div className="relative z-20 w-full px-4 md:px-14 h-full flex flex-col justify-center py-12 md:py-16">
-                <div className="max-w-3xl text-left mt-6 md:mt-0 space-y-4 md:space-y-6 w-full relative z-10">
+            <div className="relative z-20 w-full px-4 md:px-14 flex flex-col justify-center py-8 md:py-10">
+                <div className="max-w-3xl text-left mt-4 md:mt-0 space-y-4 md:space-y-6 w-full relative z-10">
 
                     {/* Title */}
-                    <h1 className="font-black leading-[1.05] mb-2 font-poppins">
-                        <div className="text-[#1b5e20] text-[36px] sm:text-[42px] md:text-[54px] lg:text-[68px] tracking-tight block font-bold">
+                    <h1 className="font-semibold mt-2 leading-[1.05] mb-2 font-poppins">
+                        <div className="text-[#1b5e20] text-[16px] sm:text-[14px] md:text-[28px] lg:text-[46px] tracking-tight block font-semibold">
                             ADVISORY
                         </div>
-                        <div className="text-[#ea580c] text-[32px] sm:text-[42px] md:text-[54px] lg:text-[68px] tracking-tight block font-bold">
+                        <div className="text-[#ea580c] text-[16px] sm:text-[14px] md:text-[28px] lg:text-[46px] tracking-tight block font-bold">
                             BOARD MEMBERS
                         </div>
                     </h1>
@@ -52,7 +52,7 @@ const AdvisoryHero = () => {
                     </p>
 
                     {/* Features Banner Row */}
-                    <div className="flex flex-col sm:flex-row flex-wrap sm:flex-nowrap justify-between gap-4 sm:gap-2 mt-6 p-4 sm:p-5 rounded-2xl bg-[#f4f7f2]/90 backdrop-blur-sm border border-[#e5ece3] shadow-sm max-w-[700px]">
+                    <div className="flex flex-col sm:flex-row flex-wrap sm:flex-nowrap justify-between gap-4 sm:gap-2 mt-6 px-4 py-2 sm:px-5 rounded-2xl bg-[#f4f7f2]/90 backdrop-blur-sm border border-[#e5ece3] shadow-sm max-w-[700px]">
 
                         {/* Feature 1 */}
                         <div className="flex items-start gap-3 w-full sm:w-[24%] border-b sm:border-b-0 sm:border-r border-[#d1dcd0] pb-3 sm:pb-0 sm:pr-2 last:border-0">
