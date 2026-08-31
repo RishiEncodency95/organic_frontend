@@ -4,13 +4,13 @@ import { Award, Leaf, Beaker } from 'lucide-react';
 const IndustryMatch = () => {
   return (
     <div className="w-full h-full flex flex-col justify-between">
-      
-      <div className="w-full bg-white rounded-2xl shadow-sm border border-gray-200 p-6 md:p-8 flex-1">
-        
-        <div className="flex items-start gap-3 mb-6">
+
+      <div className="w-full bg-white rounded-2xl shadow-sm border border-gray-200 p-4 md:px-5 md:py-2  flex-1">
+
+        <div className="flex items-start gap-3 mb-3">
           <Award size={20} className="text-[#1b5e20] mt-0.5" />
           <div>
-            <h3 className="text-[13px] font-bold text-gray-500 uppercase tracking-widest mb-1">
+            <h3 className="text-[16px] font-semibold text-[#1b5e20] uppercase tracking-widest mb-1">
               Industry Match Found
             </h3>
             <p className="text-[12px] font-medium text-gray-500">
@@ -20,7 +20,7 @@ const IndustryMatch = () => {
         </div>
 
         <div className="flex flex-col gap-4">
-          
+
           {/* NIC Card 1 */}
           <div className="border border-gray-200 rounded-xl p-5 relative overflow-hidden flex items-center justify-between">
             <div className="flex flex-col z-10 w-[80%]">
@@ -29,7 +29,7 @@ const IndustryMatch = () => {
               <p className="text-[11px] font-medium text-gray-500 mb-4">
                 Food Products → Spices → Manufacturing
               </p>
-              
+
               <span className="text-[10px] font-bold text-gray-500 uppercase tracking-widest mb-2">Matched Expo Segments</span>
               <div className="flex flex-wrap gap-2">
                 <span className="bg-[#f0f9f0] border border-gray-200 text-[#1b5e20] px-2.5 py-1 rounded-md text-[10px] font-bold">Food & Beverages</span>
@@ -37,7 +37,7 @@ const IndustryMatch = () => {
                 <span className="bg-[#f0f9f0] border border-gray-200 text-[#1b5e20] px-2.5 py-1 rounded-md text-[10px] font-bold">Nutrition / Food Products</span>
               </div>
             </div>
-            
+
             <div className="w-12 h-12 rounded-full border border-gray-200 flex items-center justify-center shrink-0">
               <Leaf size={20} className="text-[#1b5e20]" />
             </div>
@@ -51,7 +51,7 @@ const IndustryMatch = () => {
               <p className="text-[11px] font-medium text-gray-500 mb-4">
                 Pharmaceuticals → Medicinal → Botanical Products → Manufacturing
               </p>
-              
+
               <span className="text-[10px] font-bold text-gray-500 uppercase tracking-widest mb-2">Matched Expo Segments</span>
               <div className="flex flex-wrap gap-2">
                 <span className="bg-[#f0f9f0] border border-gray-200 text-[#1b5e20] px-2.5 py-1 rounded-md text-[10px] font-bold">Pharma</span>
@@ -61,7 +61,7 @@ const IndustryMatch = () => {
                 <span className="bg-[#f0f9f0] border border-gray-200 text-[#1b5e20] px-2.5 py-1 rounded-md text-[10px] font-bold">Organic & Natural Products</span>
               </div>
             </div>
-            
+
             <div className="w-12 h-12 rounded-full border border-gray-200 flex items-center justify-center shrink-0">
               <Beaker size={20} className="text-[#1b5e20]" />
             </div>

@@ -18,14 +18,14 @@ const EligibilityHero = () => {
         {/* <div className="absolute inset-0 bg-gradient-to-r from-green-950/90 to-transparent"></div> */}
       </div>
 
-      <div className="relative z-10 max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between">
+      <div className="relative z-10 w-full flex flex-col md:flex-row items-center justify-between">
 
         {/* Left Content */}
-        <div className="flex flex-col text-white max-w-xl z-20">
-          <span className="text-[14px] md:text-[15px] font-semibold tracking-widest text-white/90 uppercase mb-2">
+        <div className="flex flex-col text-white">
+          <span className="text-[14px] md:text-[16px] font-semibold tracking-widest text-white/90 uppercase mb-2">
             PMS Eligibility Check
           </span>
-          <h1 className="text-xl md:text-3xl lg:text-4xl font-semibold leading-tight mb-4">
+          <h1 className="text-xl md:text-3xl lg:text-5xl font-semibold leading-tight mb-4">
             Your Gateway to<br />PMS Support
           </h1>
           <h2 className="text-xl md:text-2xl font-bold text-[#facc15]">
