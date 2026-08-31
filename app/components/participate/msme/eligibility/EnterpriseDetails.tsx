@@ -8,93 +8,93 @@ const EnterpriseDetails = () => {
         Your Enterprise Details
       </h3>
 
-      <div className="flex flex-col text-[11.5px] md:text-[12.5px] font-medium text-gray-600 mb-4 flex-1">
+      <div className="flex flex-col text-xs md:text-sm font-medium text-gray-600 mb-4 flex-1">
 
         <div className="grid grid-cols-12 gap-2 border-b border-gray-100 pb-2.5 mb-2.5 items-center">
           <div className="col-span-5 flex items-center gap-2 text-gray-500">
-            <Building2 size={14} className="text-[#1b5e20]/70" /> Enterprise Name
+            <Building2 size={16} className="text-[#1b5e20]/70" /> Enterprise Name
           </div>
-          <div className="col-span-7 font-bold text-gray-900 leading-tight">RAMMANI TRADELINK PRIVATE LIMITED</div>
+          <div className="col-span-7 font-semibold text-gray-900 leading-tight">RAMMANI TRADELINK PRIVATE LIMITED</div>
         </div>
 
         <div className="grid grid-cols-12 gap-2 border-b border-gray-100 pb-2.5 mb-2.5 items-center">
           <div className="col-span-5 flex items-center gap-2 text-gray-500">
-            <Settings2 size={14} className="text-[#1b5e20]/70" /> Enterprise Type
+            <Settings2 size={16} className="text-[#1b5e20]/70" /> Enterprise Type
           </div>
-          <div className="col-span-7 font-bold text-gray-900 flex items-center gap-1.5">
-            <CheckCircle2 size={14} className="text-[#1b5e20]" /> Micro
-          </div>
-        </div>
-
-        <div className="grid grid-cols-12 gap-2 border-b border-gray-100 pb-2.5 mb-2.5 items-center">
-          <div className="col-span-5 flex items-center gap-2 text-gray-500">
-            <Factory size={14} className="text-[#1b5e20]/70" /> Major Activity
-          </div>
-          <div className="col-span-7 font-bold text-gray-900 flex items-center gap-1.5">
-            <CheckCircle2 size={14} className="text-[#1b5e20]" /> Manufacturing
+          <div className="col-span-7 font-semibold text-gray-900 flex items-center gap-1.5">
+            <CheckCircle2 size={16} className="text-[#1b5e20]" /> Micro
           </div>
         </div>
 
         <div className="grid grid-cols-12 gap-2 border-b border-gray-100 pb-2.5 mb-2.5 items-center">
           <div className="col-span-5 flex items-center gap-2 text-gray-500">
-            <Layout size={14} className="text-[#1b5e20]/70" /> Organisation
+            <Factory size={16} className="text-[#1b5e20]/70" /> Major Activity
           </div>
-          <div className="col-span-7 font-bold text-gray-900">Private Limited Company</div>
-        </div>
-
-        <div className="grid grid-cols-12 gap-2 border-b border-gray-100 pb-2.5 mb-2.5 items-center">
-          <div className="col-span-5 flex items-center gap-2 text-gray-500">
-            <UserCircle2 size={14} className="text-[#1b5e20]/70" /> Entrepreneur Category
-          </div>
-          <div className="col-span-7 font-bold text-gray-900">General</div>
-        </div>
-
-        <div className="grid grid-cols-12 gap-2 border-b border-gray-100 pb-2.5 mb-2.5 items-center">
-          <div className="col-span-5 flex items-center gap-2 text-gray-500">
-            <Venus size={14} className="text-[#1b5e20]/70" /> Gender
-          </div>
-          <div className="col-span-7 font-bold text-gray-900 flex items-center gap-1.5">
-            <Venus size={14} className="text-[#ec4899]" /> Female
+          <div className="col-span-7 font-semibold text-gray-900 flex items-center gap-1.5">
+            <CheckCircle2 size={16} className="text-[#1b5e20]" /> Manufacturing
           </div>
         </div>
 
         <div className="grid grid-cols-12 gap-2 border-b border-gray-100 pb-2.5 mb-2.5 items-center">
           <div className="col-span-5 flex items-center gap-2 text-gray-500">
-            <Calendar size={14} className="text-[#1b5e20]/70" /> Udyam Registration Date
+            <Layout size={16} className="text-[#1b5e20]/70" /> Organisation
           </div>
-          <div className="col-span-7 font-bold text-gray-900">25 May 2026</div>
+          <div className="col-span-7 font-semibold text-gray-900">Private Limited Company</div>
         </div>
 
         <div className="grid grid-cols-12 gap-2 border-b border-gray-100 pb-2.5 mb-2.5 items-center">
           <div className="col-span-5 flex items-center gap-2 text-gray-500">
-            <MapPin size={14} className="text-[#1b5e20]/70" /> Location
+            <UserCircle2 size={16} className="text-[#1b5e20]/70" /> Entrepreneur Category
           </div>
-          <div className="col-span-7 font-bold text-gray-900">East Delhi, Delhi</div>
+          <div className="col-span-7 font-semibold text-gray-900">General</div>
+        </div>
+
+        <div className="grid grid-cols-12 gap-2 border-b border-gray-100 pb-2.5 mb-2.5 items-center">
+          <div className="col-span-5 flex items-center gap-2 text-gray-500">
+            <Venus size={16} className="text-[#1b5e20]/70" /> Gender
+          </div>
+          <div className="col-span-7 font-semibold text-gray-900 flex items-center gap-1.5">
+            <Venus size={16} className="text-[#ec4899]" /> Female
+          </div>
+        </div>
+
+        <div className="grid grid-cols-12 gap-2 border-b border-gray-100 pb-2.5 mb-2.5 items-center">
+          <div className="col-span-5 flex items-center gap-2 text-gray-500">
+            <Calendar size={16} className="text-[#1b5e20]/70" /> Udyam Registration Date
+          </div>
+          <div className="col-span-7 font-semibold text-gray-900">25 May 2026</div>
+        </div>
+
+        <div className="grid grid-cols-12 gap-2 border-b border-gray-100 pb-2.5 mb-2.5 items-center">
+          <div className="col-span-5 flex items-center gap-2 text-gray-500">
+            <MapPin size={16} className="text-[#1b5e20]/70" /> Location
+          </div>
+          <div className="col-span-7 font-semibold text-gray-900">East Delhi, Delhi</div>
         </div>
 
         <div className="grid grid-cols-12 gap-2 items-center">
           <div className="col-span-5 flex items-center gap-2 text-gray-500">
-            <ShieldCheck size={14} className="text-[#1b5e20]/70" /> GSTIN Available
+            <ShieldCheck size={16} className="text-[#1b5e20]/70" /> GSTIN Available
           </div>
-          <div className="col-span-7 font-bold text-gray-900 flex items-center gap-1.5">
-            <CheckCircle2 size={14} className="text-[#1b5e20]" /> Yes
+          <div className="col-span-7 font-semibold text-gray-900 flex items-center gap-1.5">
+            <CheckCircle2 size={16} className="text-[#1b5e20]" /> Yes
           </div>
         </div>
 
       </div>
 
-      <div className="bg-[#f4fbf4] p-3 rounded-lg mb-4 text-[11px] md:text-[12px] leading-relaxed font-medium text-[#1b5e20]/80">
+      <div className="bg-[#f4fbf4] p-3 rounded-lg mb-4 text-[11px] md:text-[14px] leading-relaxed font-medium text-[#1b5e20]/80">
         The Udyam certificate confirms Micro classification and Manufacturing as the major activity. The detailed record identifies the entrepreneur as female.
       </div>
 
       <div className="flex items-center gap-3 border-t border-gray-100 pt-3">
-        <span className="text-[11px] md:text-[12px] font-bold text-[#1b5e20] uppercase tracking-wider">Match Quality</span>
+        <span className="text-[12px] md:text-[14px] font-semibold text-[#1b5e20] uppercase tracking-wider">Match Quality</span>
         <div className="flex gap-0.5">
           {[1, 2, 3, 4, 5].map((star) => (
             <Star key={star} size={14} className="text-[#1b5e20] fill-[#1b5e20]" />
           ))}
         </div>
-        <span className="text-[11px] md:text-[12px] font-bold text-gray-900 ml-auto md:ml-2">Strong Match</span>
+        <span className="text-[11px] md:text-[14px] font-semibold text-gray-900 ml-auto md:ml-2">Strong Match</span>
       </div>
 
     </div>
