@@ -578,10 +578,10 @@ export default function ParticipationForm() {
 
       {/* Form Bottom Actions */}
       <div className="flex flex-col sm:flex-row items-center justify-between gap-4 mt-2">
-        <button type="button" className="h-[40px] px-5 rounded-md border border-gray-300 text-gray-700 font-bold text-[12px] uppercase tracking-wide hover:bg-gray-50 transition-colors flex items-center justify-center gap-2">
+        <button type="button" className="h-[36px] px-5 rounded-md border border-gray-300 text-gray-700 font-bold text-[12px] uppercase tracking-wide hover:bg-gray-50 transition-colors flex items-center justify-center gap-2">
           <ArrowLeft size={16} strokeWidth={2.5} /> Back
         </button>
-        <button type="button" className="w-full sm:w-auto h-[40px] px-8 rounded-md bg-[#176b27] text-white font-bold text-[12px] uppercase tracking-wide hover:bg-[#115d20] transition-colors flex items-center justify-center gap-2 shadow-md">
+        <button type="button" className="w-full sm:w-auto h-[36px] px-8 rounded-md bg-[#176b27] text-white font-bold text-[12px] uppercase tracking-wide hover:bg-[#115d20] transition-colors flex items-center justify-center gap-2 shadow-md">
           Save & Continue to Documents <ArrowRight size={16} strokeWidth={2.5} />
         </button>
       </div>
