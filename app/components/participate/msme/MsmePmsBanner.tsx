@@ -31,7 +31,7 @@ const Sparkle = ({ style, color = "#F2B40E", shadow }: { style?: React.CSSProper
 );
 
 export default function MsmePmsBanner({
-  eligibilityHref = "#check-eligibility",
+  eligibilityHref = "/participate/msme/eligibility-check",
   supportHref = "#get-support",
 }: MsmePmsBannerProps) {
   const sectionRef = useRef<HTMLElement>(null);
