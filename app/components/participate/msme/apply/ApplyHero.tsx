@@ -1,5 +1,6 @@
 import { Users, Percent, ShieldCheck, Store, FileText } from "lucide-react";
 import Image from "next/image";
+import Link from "next/link";
 import bgImage from "@/app/assets/msme/apply.png";
 
 export default function ApplyHero() {
@@ -22,8 +23,18 @@ export default function ApplyHero() {
 
 
         {/* Content Overlay */}
-        <div className="relative z-10 w-full px-4 md:pl-28 h-full flex flex-col justify-center py-14">
-          <div className="max-w-2xl">
+        <div className="relative z-10 w-full px-4 md:pl-28 h-full flex flex-col justify-center py-12">
+          <div className="max-w-2xl mt-4">
+            
+            {/* Breadcrumb */}
+            <div className="flex flex-wrap items-center gap-2 text-[12px] font-bold text-gray-600 mb-6 bg-white w-max px-4 py-2 rounded-xl shadow-sm border border-gray-100">
+              <Link href="#" className="hover:text-[#176b27] transition-colors">Home</Link>
+              <span className="text-gray-400">&gt;</span>
+              <Link href="#" className="hover:text-[#176b27] transition-colors">PMS Scheme</Link>
+              <span className="text-gray-400">&gt;</span>
+              <span className="text-[#176b27]">Apply for PMS Support</span>
+            </div>
+
             <span className="text-[#176b27] font-bold text-[16px] tracking-wider uppercase mb-3 block">
               PMS Scheme
             </span>

@@ -136,7 +136,7 @@ export default function EnterpriseForm() {
           </label>
           <input
             type="text"
-            defaultValue="East Delhi"
+            placeholder="e.g. East Delhi"
             className="w-full h-[32px] px-3 bg-[#fafbfa] border border-[#e5e7eb] rounded-md text-[12px] font-semibold text-gray-800 focus:outline-none"
           />
         </div>
@@ -147,7 +147,8 @@ export default function EnterpriseForm() {
               State <span className="text-red-500">*</span>
             </label>
             <select className="w-full h-[32px] px-3 bg-[#fafbfa] border border-[#e5e7eb] rounded-md text-[12px] font-semibold text-gray-800 appearance-none focus:outline-none">
-              <option>Delhi</option>
+              <option value="">Select State</option>
+              <option value="Delhi">Delhi</option>
             </select>
             <ChevronDown size={16} className="absolute right-3 top-[23px] text-gray-400 pointer-events-none" />
           </div>
@@ -156,7 +157,8 @@ export default function EnterpriseForm() {
               District <span className="text-red-500">*</span>
             </label>
             <select className="w-full h-[32px] px-3 bg-[#fafbfa] border border-[#e5e7eb] rounded-md text-[12px] font-semibold text-gray-800 appearance-none focus:outline-none">
-              <option>East Delhi</option>
+              <option value="">Select District</option>
+              <option value="East Delhi">East Delhi</option>
             </select>
             <ChevronDown size={16} className="absolute right-3 top-[23px] text-gray-400 pointer-events-none" />
           </div>
@@ -166,7 +168,7 @@ export default function EnterpriseForm() {
             </label>
             <input
               type="text"
-              defaultValue="110092"
+              placeholder="e.g. 110092"
               className="w-full h-[32px] px-3 bg-[#fafbfa] border border-[#e5e7eb] rounded-md text-[12px] font-semibold text-gray-800 focus:outline-none"
             />
           </div>
@@ -179,7 +181,7 @@ export default function EnterpriseForm() {
             </label>
             <input
               type="text"
-              defaultValue="+91 98765 43210"
+              placeholder="10-digit mobile number"
               className="w-full h-[32px] px-3 bg-[#fafbfa] border border-[#e5e7eb] rounded-md text-[12px] font-semibold text-gray-800 focus:outline-none"
             />
           </div>
@@ -189,7 +191,7 @@ export default function EnterpriseForm() {
             </label>
             <input
               type="email"
-              defaultValue="info@rammanitradelink.com"
+              placeholder="e.g. info@rammanitradelink.com"
               className="w-full h-[32px] px-3 bg-[#fafbfa] border border-[#e5e7eb] rounded-md text-[12px] font-semibold text-gray-800 focus:outline-none"
             />
           </div>
@@ -202,7 +204,7 @@ export default function EnterpriseForm() {
             </label>
             <input
               type="text"
-              defaultValue="07AAXCR1234R1Z5"
+              placeholder="e.g. 07AAXCR1234R1Z5"
               className="w-full h-[32px] px-3 bg-[#fafbfa] border border-[#e5e7eb] rounded-md text-[12px] font-semibold text-gray-800 focus:outline-none"
             />
           </div>
@@ -212,7 +214,7 @@ export default function EnterpriseForm() {
             </label>
             <input
               type="text"
-              defaultValue="AAXCR1234R"
+              placeholder="e.g. AAXCR1234R"
               className="w-full h-[32px] px-3 bg-[#fafbfa] border border-[#e5e7eb] rounded-md text-[12px] font-semibold text-gray-800 focus:outline-none"
             />
           </div>
@@ -235,7 +237,7 @@ export default function EnterpriseForm() {
             </label>
             <input
               type="text"
-              defaultValue="RAMMANI TRADELINK PRIVATE LIMITED"
+              placeholder="Company or Individual Name"
               className="w-full h-[32px] px-3 bg-[#fafbfa] border border-[#e5e7eb] rounded-md text-[12px] font-semibold text-gray-800 focus:outline-none"
             />
           </div>
@@ -245,7 +247,7 @@ export default function EnterpriseForm() {
             </label>
             <input
               type="text"
-              defaultValue="HDFC BANK LTD."
+              placeholder="e.g. HDFC BANK LTD."
               className="w-full h-[32px] px-3 bg-[#fafbfa] border border-[#e5e7eb] rounded-md text-[12px] font-semibold text-gray-800 focus:outline-none"
             />
           </div>
@@ -258,8 +260,7 @@ export default function EnterpriseForm() {
             </label>
             <input
               type="text"
-              defaultValue="1234567894321"
-              placeholder="1234567894321"
+              placeholder="e.g. 1234567894321"
               className="w-full h-[32px] px-3 bg-[#fafbfa] border border-[#e5e7eb] rounded-md text-[12px] font-semibold text-gray-800 focus:outline-none"
             />
           </div>
@@ -269,7 +270,7 @@ export default function EnterpriseForm() {
             </label>
             <input
               type="text"
-              defaultValue="HDFC0001234"
+              placeholder="e.g. HDFC0001234"
               className="w-full h-[32px] px-3 bg-[#fafbfa] border border-[#e5e7eb] rounded-md text-[12px] font-semibold text-gray-800 focus:outline-none"
             />
           </div>
@@ -279,7 +280,7 @@ export default function EnterpriseForm() {
             </label>
             <input
               type="text"
-              defaultValue="LAXMI NAGAR, DELHI"
+              placeholder="e.g. LAXMI NAGAR, DELHI"
               className="w-full h-[32px] px-3 bg-[#fafbfa] border border-[#e5e7eb] rounded-md text-[12px] font-semibold text-gray-800 focus:outline-none"
             />
           </div>
