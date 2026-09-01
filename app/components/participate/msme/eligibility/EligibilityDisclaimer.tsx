@@ -3,7 +3,7 @@ import { ShieldAlert } from 'lucide-react';
 
 const EligibilityDisclaimer = () => {
   return (
-    <div className="w-full bg-[#ffedd5]/50 rounded-2xl shadow-sm border border-[#fdba74]/50 p-6 flex flex-col sm:flex-row items-start gap-4 mt-6">
+    <div className="w-full bg-[#ffedd5]/50 rounded-2xl shadow-sm border border-[#fdba74]/50 p-4 lg:px-6 lg:py-2 flex flex-col sm:flex-row items-start gap-4 mt-4">
       <div className="bg-[#fff8f1] rounded-full p-2.5 shrink-0 border border-[#fdba74]/30 text-[#ea580c]">
         <ShieldAlert size={24} strokeWidth={2} />
       </div>

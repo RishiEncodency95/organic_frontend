@@ -21,7 +21,7 @@ export const metadata: Metadata = {
 
 export default function PMSEligibilityCheckPage() {
   return (
-    <div className="min-h-screen bg-[#f8f9fa] font-sans text-neutral-800 pb-16">
+    <div className="min-h-screen bg-[#f8f9fa] font-sans text-neutral-800 pb-4">
       {/* Hero Section */}
       <EligibilityHero />
 

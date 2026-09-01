@@ -1,108 +1,193 @@
 import React from 'react';
-import { AlertTriangle, FileText, CheckCircle2, Receipt, CreditCard, Banknote, ShieldAlert, Stamp } from 'lucide-react';
+import {
+  AlertTriangle,
+  FileText,
+  CheckCircle2,
+  Receipt,
+  Stamp,
+} from 'lucide-react';
 
 const VerificationAlerts = () => {
   return (
-    <div className="w-full mt-6 grid grid-cols-1 lg:grid-cols-2 gap-6">
-      
-      {/* Left Column: Additional Verification Required */}
-      <div className="bg-[#fff8f1] rounded-2xl shadow-sm border border-[#fdba74] p-6 md:p-8 flex flex-col h-full">
-        
-        <div className="flex items-center gap-2 mb-4">
-          <AlertTriangle size={20} className="text-[#ea580c]" />
-          <h3 className="text-[14px] font-bold text-[#ea580c] uppercase tracking-wide">
+    <div className="w-full mt-4 grid grid-cols-1 lg:grid-cols-2 gap-4">
+
+      {/* LEFT — Additional Verification Required */}
+      <div className="bg-white rounded-xl border border-gray-100 shadow-[0_1px_8px_rgba(0,0,0,0.03)] p-4 md:px-5 md:py-4">
+
+        {/* Heading */}
+        <div className="flex items-center gap-3 mb-5">
+          <AlertTriangle
+            size={24}
+            strokeWidth={2}
+            className="text-[#c95d32]"
+          />
+
+          <h3 className="text-[12px] lg:text-[14px] font-bold text-[#c95d32] uppercase tracking-wide">
             Additional Verification Required
           </h3>
         </div>
-        
-        <p className="text-[12px] md:text-[13px] font-medium text-gray-700 mb-5 leading-relaxed">
-          Your preliminary eligibility is positive, but we found a few details that may require supporting documents during application/claim processing:
+
+        {/* Description */}
+        <p className="text-[15px] leading-[1.55] font-medium text-gray-700 mb-3 max-w-[700px]">
+          Your preliminary eligibility is positive, but we found a few details
+          that may require supporting documents during application/claim
+          processing:
         </p>
 
-        <div className="border border-[#fdba74]/50 rounded-xl overflow-hidden mb-6 bg-white">
-          <table className="w-full text-left text-[12px] md:text-[13px]">
-            <tbody className="divide-y divide-[#fdba74]/30 font-medium text-gray-700">
+        {/* Verification Table */}
+        <div className="border border-gray-100 rounded-lg overflow-hidden bg-white mb-3">
+          <table className="w-full text-left">
+            <tbody className="divide-y divide-gray-100">
+
+              {/* Turnover */}
               <tr>
-                <td className="px-4 py-3 flex items-center gap-3">
-                  <Receipt size={16} className="text-gray-400" /> FY 2024-25 Turnover
+                <td className="px-5 py-2">
+                  <div className="flex items-center gap-3 text-[15px] font-medium text-gray-700">
+                    <Receipt
+                      size={19}
+                      strokeWidth={1.8}
+                      className="text-gray-500 shrink-0"
+                    />
+                    <span>FY 2024-25 Turnover</span>
+                  </div>
                 </td>
-                <td className="px-4 py-3 font-bold text-gray-900 w-[120px]">₹0</td>
+
+                <td className="px-5 py-2 w-[190px] text-[15px] font-bold text-gray-900">
+                  ₹0
+                </td>
               </tr>
+
+              {/* ITR */}
               <tr>
-                <td className="px-4 py-3 flex items-center gap-3">
-                  <FileText size={16} className="text-gray-400" /> ITR Filed
+                <td className="px-5 py-2">
+                  <div className="flex items-center gap-3 text-[15px] font-medium text-gray-700">
+                    <FileText
+                      size={19}
+                      strokeWidth={1.8}
+                      className="text-gray-500 shrink-0"
+                    />
+                    <span>ITR Filed</span>
+                  </div>
                 </td>
-                <td className="px-4 py-3 font-bold text-gray-900">No</td>
+
+                <td className="px-5 py-2 text-[15px] font-bold text-gray-900">
+                  No
+                </td>
               </tr>
+
+              {/* IEC */}
               <tr>
-                <td className="px-4 py-3 flex items-center gap-3">
-                  <Stamp size={16} className="text-gray-400" /> IEC Status
+                <td className="px-5 py-2">
+                  <div className="flex items-center gap-3 text-[15px] font-medium text-gray-700">
+                    <Stamp
+                      size={19}
+                      strokeWidth={1.8}
+                      className="text-gray-500 shrink-0"
+                    />
+                    <span>IEC Status</span>
+                  </div>
                 </td>
-                <td className="px-4 py-3 font-bold text-gray-900">Inactive</td>
+
+                <td className="px-5 py-2 text-[15px] font-bold text-gray-900">
+                  Inactive
+                </td>
               </tr>
+
             </tbody>
           </table>
         </div>
 
-        <div className="bg-[#ffedd5] p-4 rounded-xl text-[12px] font-medium text-[#c2410c] leading-relaxed border border-[#fdba74]/50 mt-auto">
-          This does <strong className="font-bold">NOT</strong> currently change your result to &quot;Not Eligible.&quot;<br className="hidden sm:block" />
-          It means supporting business/financial documents may be required during final verification.
+        {/* Bottom Warning */}
+        <div className="bg-[#fff7e9] border border-[#f4dfbd] rounded-lg px-3 py-3">
+          <p className="text-[14px] leading-[1.7] font-medium">
+            <span className="text-[#91451f]">
+              This does <strong className="font-bold text-[#000]">NOT</strong>{' '}
+              currently change <span className="text-[#000]">your result to</span> &quot;Not Eligible.&quot;
+            </span>
+            <br />
+            <span className="text-gray-700">
+              It means supporting business/financial documents may be required during
+              final verification.
+            </span>
+          </p>
         </div>
       </div>
 
-      {/* Right Column: Documents to Keep Ready */}
-      <div className="bg-[#f2f7f2] rounded-2xl shadow-sm border border-[#e2ede2] p-6 md:p-8 flex flex-col h-full">
-        
-        <div className="flex items-center gap-2 mb-6">
-          <FileText size={20} className="text-[#1b5e20]" />
-          <h3 className="text-[14px] font-bold text-[#1b5e20] uppercase tracking-wide">
+
+      {/* RIGHT — Documents to Keep Ready */}
+      <div className="bg-white rounded-xl border border-gray-100 shadow-[0_1px_8px_rgba(0,0,0,0.03)] p-4 md:px-5 md:py-4">
+
+        {/* Heading */}
+        <div className="flex items-center gap-3 mb-6">
+          <FileText
+            size={24}
+            strokeWidth={2}
+            className="text-[#1f6426]"
+          />
+
+          <h3 className="text-[12px] lg:text-[14px] font-bold text-[#1f6426] uppercase tracking-wide">
             Documents to Keep Ready
           </h3>
         </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-4 gap-y-4 text-[12px] md:text-[13px] font-medium text-gray-700">
-          <div className="flex items-start gap-2.5">
-            <CheckCircle2 size={16} className="text-[#1b5e20] shrink-0 mt-0.5" />
-            <span className="leading-snug">Udyam Registration Certificate</span>
-          </div>
-          <div className="flex items-start gap-2.5">
-            <CheckCircle2 size={16} className="text-[#1b5e20] shrink-0 mt-0.5" />
-            <span className="leading-snug">Stall Invoice</span>
-          </div>
-          <div className="flex items-start gap-2.5">
-            <CheckCircle2 size={16} className="text-[#1b5e20] shrink-0 mt-0.5" />
-            <span className="leading-snug">PAN</span>
-          </div>
-          <div className="flex items-start gap-2.5">
-            <CheckCircle2 size={16} className="text-[#1b5e20] shrink-0 mt-0.5" />
-            <span className="leading-snug">Payment Proof</span>
-          </div>
-          <div className="flex items-start gap-2.5">
-            <CheckCircle2 size={16} className="text-[#1b5e20] shrink-0 mt-0.5" />
-            <span className="leading-snug">GST Registration Certificate</span>
-          </div>
-          <div className="flex items-start gap-2.5">
-            <CheckCircle2 size={16} className="text-[#1b5e20] shrink-0 mt-0.5" />
-            <span className="leading-snug">Product / Business Activity Proof</span>
-          </div>
-          <div className="flex items-start gap-2.5">
-            <CheckCircle2 size={16} className="text-[#1b5e20] shrink-0 mt-0.5" />
-            <span className="leading-snug">Cancelled Cheque / Bank Details</span>
-          </div>
-          <div className="flex items-start gap-2.5">
-            <CheckCircle2 size={16} className="text-[#1b5e20] shrink-0 mt-0.5" />
-            <span className="leading-snug">Women ownership/promoter proof, if requested</span>
-          </div>
-          <div className="flex items-start gap-2.5 sm:col-span-1">
-            <CheckCircle2 size={16} className="text-[#1b5e20] shrink-0 mt-0.5" />
-            <span className="leading-snug">Bharat Organic Expo Booking Confirmation</span>
-          </div>
-          <div className="flex items-start gap-2.5 sm:col-span-1">
-            <CheckCircle2 size={16} className="text-[#1b5e20] shrink-0 mt-0.5" />
-            <span className="leading-snug">Additional documents required under PMS guidelines</span>
-          </div>
-        </div>
+        {/* Documents */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-10 gap-y-5">
 
+          {/* Left Vertical List */}
+          <div className="flex flex-col gap-5">
+            <div className="flex items-start gap-3">
+              <CheckCircle2 size={20} strokeWidth={2} className="text-[#4b9652] shrink-0 mt-[1px]" />
+              <span className="text-[15px] leading-[1.45] font-medium text-gray-700">Udyam Registration Certificate</span>
+            </div>
+            <div className="flex items-start gap-3">
+              <CheckCircle2 size={20} strokeWidth={2} className="text-[#4b9652] shrink-0 mt-[1px]" />
+              <span className="text-[15px] leading-[1.45] font-medium text-gray-700">PAN</span>
+            </div>
+            <div className="flex items-start gap-3">
+              <CheckCircle2 size={20} strokeWidth={2} className="text-[#4b9652] shrink-0 mt-[1px]" />
+              <span className="text-[15px] leading-[1.45] font-medium text-gray-700">GST Registration Certificate</span>
+            </div>
+            <div className="flex items-start gap-3">
+              <CheckCircle2 size={20} strokeWidth={2} className="text-[#4b9652] shrink-0 mt-[1px]" />
+              <span className="text-[15px] leading-[1.45] font-medium text-gray-700">Cancelled Cheque / Bank Details</span>
+            </div>
+            <div className="flex items-start gap-3">
+              <CheckCircle2 size={20} strokeWidth={2} className="text-[#4b9652] shrink-0 mt-[1px]" />
+              <span className="text-[15px] leading-[1.45] font-medium text-gray-700">
+                Bharat Organic Expo Booking Confirmation
+              </span>
+            </div>
+          </div>
+
+          {/* Right Vertical List */}
+          <div className="flex flex-col gap-5 mt-5 sm:mt-0">
+            <div className="flex items-start gap-3">
+              <CheckCircle2 size={20} strokeWidth={2} className="text-[#4b9652] shrink-0 mt-[1px]" />
+              <span className="text-[15px] leading-[1.45] font-medium text-gray-700">Stall Invoice</span>
+            </div>
+            <div className="flex items-start gap-3">
+              <CheckCircle2 size={20} strokeWidth={2} className="text-[#4b9652] shrink-0 mt-[1px]" />
+              <span className="text-[15px] leading-[1.45] font-medium text-gray-700">Payment Proof</span>
+            </div>
+            <div className="flex items-start gap-3">
+              <CheckCircle2 size={20} strokeWidth={2} className="text-[#4b9652] shrink-0 mt-[1px]" />
+              <span className="text-[15px] leading-[1.45] font-medium text-gray-700">Product / Business Activity Proof</span>
+            </div>
+            <div className="flex items-start gap-3">
+              <CheckCircle2 size={20} strokeWidth={2} className="text-[#4b9652] shrink-0 mt-[1px]" />
+              <span className="text-[15px] leading-[1.45] font-medium text-gray-700">
+                Women ownership/promoter proof, if requested
+              </span>
+            </div>
+            <div className="flex items-start gap-3">
+              <CheckCircle2 size={20} strokeWidth={2} className="text-[#4b9652] shrink-0 mt-[1px]" />
+              <span className="text-[15px] leading-[1.45] font-medium text-gray-700">
+                Additional documents required under PMS guidelines
+              </span>
+            </div>
+          </div>
+
+        </div>
       </div>
 
     </div>
