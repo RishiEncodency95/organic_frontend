@@ -257,9 +257,9 @@ export default function EnterpriseForm() {
               Account Number <span className="text-red-500">*</span>
             </label>
             <input
-              type="password"
+              type="text"
               defaultValue="1234567894321"
-              placeholder="*********4321"
+              placeholder="1234567894321"
               className="w-full h-[32px] px-3 bg-[#fafbfa] border border-[#e5e7eb] rounded-md text-[12px] font-semibold text-gray-800 focus:outline-none"
             />
           </div>

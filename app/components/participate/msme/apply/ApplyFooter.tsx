@@ -1,4 +1,4 @@
-import { AlertTriangle, CheckSquare, ArrowRight, Headphones, Phone } from "lucide-react";
+import { AlertTriangle, CheckSquare, Check, ArrowRight, Headphones, Phone } from "lucide-react";
 
 export default function ApplyFooter() {
   return (
@@ -13,26 +13,26 @@ export default function ApplyFooter() {
           </h2>
         </div>
 
-        <div className="flex items-start gap-3 mt-4">
+        <label htmlFor="declaration-check" className="flex items-start gap-3 mt-4 cursor-pointer group">
           <div className="mt-0.5 relative shrink-0">
             {/* Custom Checkbox */}
             <input type="checkbox" defaultChecked className="peer sr-only" id="declaration-check" />
-            <div className="w-5 h-5 rounded-[4px] border-2 border-[#176b27] bg-[#176b27] flex items-center justify-center transition-colors">
-              <CheckSquare size={14} className="text-white fill-current" strokeWidth={3} />
+            <div className="w-5 h-5 rounded-[4px] border-2 border-gray-300 peer-checked:border-[#176b27] peer-checked:bg-[#176b27] bg-white flex items-center justify-center transition-colors group-hover:border-[#176b27] text-transparent peer-checked:text-white">
+              <Check size={14} strokeWidth={3.5} />
             </div>
           </div>
-          <label htmlFor="declaration-check" className="text-[14px] font-medium text-gray-700 leading-[1.6] cursor-pointer">
+          <div className="text-[14px] font-medium text-gray-700 leading-[1.6]">
             I hereby declare that the information provided above is true and correct to the best of my knowledge and belief. I understand that any misrepresentation of facts may lead to rejection of my PMS claim and action as per applicable government guidelines.
-          </label>
-        </div>
+          </div>
+        </label>
       </div>
 
       {/* Actions */}
       <div className="flex flex-col sm:flex-row items-center justify-between gap-4 mt-4 bg-white px-4 md:mx-14 py-4 rounded-xl shadow-[0_4px_20px_rgb(0,0,0,0.03)]">
-        <button type="button" className="w-full sm:w-auto h-[48px] px-6 rounded-md border-2 border-[#176b27] text-[#176b27] font-bold text-[13px] uppercase tracking-wide hover:bg-[#f1f6f1] transition-colors">
+        <button type="button" className="w-full sm:w-auto h-[38px] px-6 rounded-md border-2 border-[#176b27] text-[#176b27] font-bold text-[13px] uppercase tracking-wide hover:bg-[#f1f6f1] transition-colors">
           Save & Continue Later
         </button>
-        <button type="button" className="w-full sm:w-auto h-[48px] px-8 rounded-md bg-[#176b27] text-white font-bold text-[13px] uppercase tracking-wide hover:bg-[#115d20] transition-colors flex items-center justify-center gap-2 shadow-md">
+        <button type="button" className="w-full sm:w-auto h-[38px] px-8 rounded-md bg-[#176b27] text-white font-bold text-[13px] uppercase tracking-wide hover:bg-[#115d20] transition-colors flex items-center justify-center gap-2 shadow-md">
           Save & Proceed to Next <ArrowRight size={18} strokeWidth={2.5} />
         </button>
       </div>
