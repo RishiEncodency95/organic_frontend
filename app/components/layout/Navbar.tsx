@@ -78,7 +78,7 @@ const registrationOptions = [
 ];
 
 const quickPills = [
-    { label: "Advisory Board", path: "/advisory-board" },
+    { label: "Advisory Board", path: "/about/advisory_board_member" },
     { label: "Media / Gallery", path: "/gallery" },
     { label: "Blogs", path: "/blog" },
     { label: "Exhibitor List", path: "/exhibitors" },
