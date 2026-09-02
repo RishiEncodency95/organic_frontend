@@ -1,8 +1,10 @@
 'use client';
-import React from 'react';
-import { Lock, Check } from 'lucide-react';
+import React, { useState } from 'react';
+import { Lock, Check, Upload } from 'lucide-react';
 
 const EligibilityInputBar = () => {
+  const [fileName, setFileName] = useState("");
+
   return (
     <form 
       onSubmit={(e) => e.preventDefault()}
@@ -11,24 +13,33 @@ const EligibilityInputBar = () => {
       
       {/* Left side: Input Area */}
       <div className="flex flex-col gap-1.5 flex-1">
-        <label htmlFor="udyam-number" className="text-[12px] font-bold text-gray-800">
-          Enter Udyam Registration Number
+        <label className="text-[12px] font-bold text-gray-800">
+          Upload Udyam Registration Certificate
         </label>
-        <div className="flex flex-col sm:flex-row gap-2 items-start sm:items-center">
+        <div className="flex flex-col sm:flex-row gap-3 items-start sm:items-center">
+          <label 
+            htmlFor="udyam-file" 
+            className="cursor-pointer border border-dashed border-gray-400 rounded-lg bg-gray-50 flex items-center px-4 py-2 hover:bg-gray-100 transition-colors w-full sm:w-[320px] h-[40px]"
+          >
+            <Upload size={16} className="text-gray-500 mr-2 shrink-0" />
+            <span className={`text-sm truncate w-full ${fileName ? 'text-gray-900 font-medium' : 'text-gray-500'}`}>
+              {fileName || "Choose PDF or JPEG file..."}
+            </span>
+          </label>
           <input 
-            id="udyam-number"
-            type="text" 
-            defaultValue="UDYAM-DL-02-0118490" 
-            className="w-full sm:w-[300px] px-3 py-2 border border-gray-300 rounded-lg text-sm text-gray-700 bg-white focus:outline-none focus:border-[#1b5e20] focus:ring-1 focus:ring-[#1b5e20]"
-            placeholder="e.g. UDYAM-XX-00-0000000"
+            id="udyam-file"
+            type="file" 
+            accept=".pdf,.jpeg,.jpg"
+            className="hidden"
+            onChange={(e) => setFileName(e.target.files?.[0]?.name || "")}
           />
-          <button type="submit" className="bg-[#1b5e20] hover:bg-[#154a19] text-white px-5 py-2 rounded-lg text-sm font-bold tracking-wide transition-colors whitespace-nowrap">
-            CHECK ELIGIBILITY
+          <button type="submit" className="bg-[#1b5e20] hover:bg-[#154a19] text-white px-5 rounded-lg text-sm font-bold tracking-wide transition-colors whitespace-nowrap shadow-sm h-[40px] flex items-center justify-center">
+            UPLOAD & VERIFY
           </button>
         </div>
-        <div className="flex items-center gap-1.5 mt-0.5 text-gray-500">
+        <div className="flex items-center gap-1.5 mt-1 text-gray-500">
           <Lock size={12} />
-          <span className="text-[11px] font-medium">We fetch data securely from the official Udyam database.</span>
+          <span className="text-[11px] font-medium">Upload your official Udyam certificate (PDF/JPEG) for verification.</span>
         </div>
       </div>
 
