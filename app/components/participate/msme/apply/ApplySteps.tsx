@@ -11,13 +11,9 @@ export default function ApplySteps({ currentStep = 1 }: { currentStep?: number }
       id: 2,
       title: "Participation Details",
     },
-    // {
-    //   id: 3,
-    //   title: "Documents",
-    // },
     {
       id: 3,
-      title: "Declaration",
+      title: "Payment",
     },
   ];
 

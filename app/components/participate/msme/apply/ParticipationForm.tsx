@@ -581,9 +581,9 @@ export default function ParticipationForm() {
         <button type="button" className="h-[36px] px-5 rounded-md border border-gray-300 text-gray-700 font-bold text-[12px] uppercase tracking-wide hover:bg-gray-50 transition-colors flex items-center justify-center gap-2">
           <ArrowLeft size={16} strokeWidth={2.5} /> Back
         </button>
-        <button type="button" className="w-full sm:w-auto h-[36px] px-8 rounded-md bg-[#176b27] text-white font-bold text-[12px] uppercase tracking-wide hover:bg-[#115d20] transition-colors flex items-center justify-center gap-2 shadow-md">
-          Save & Continue to Documents <ArrowRight size={16} strokeWidth={2.5} />
-        </button>
+        <Link href="/participate/msme/apply/payment" className="w-full sm:w-auto h-[36px] px-8 rounded-md bg-[#176b27] text-white font-bold text-[12px] uppercase tracking-wide hover:bg-[#115d20] transition-colors flex items-center justify-center gap-2 shadow-md">
+          Save & Continue to Payment <ArrowRight size={16} strokeWidth={2.5} />
+        </Link>
       </div>
 
     </div>
