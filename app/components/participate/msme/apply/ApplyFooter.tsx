@@ -1,5 +1,6 @@
-import { AlertTriangle, CheckSquare, Check, ArrowRight, Headphones, Phone } from "lucide-react";
+import { AlertTriangle, Check, ArrowRight, Headphones, Phone } from "lucide-react";
 import Link from "next/link";
+import { SITE_CONFIG } from "@/app/constants/siteConfig";
 
 export default function ApplyFooter({ 
   nextLink = "/participate/msme/apply/participation-details",
@@ -68,9 +69,9 @@ export default function ApplyFooter({
         </div>
 
         <div className="flex flex-col sm:flex-row items-center gap-6 shrink-0">
-          <button type="button" className="h-[40px] px-5 rounded-md border border-[#176b27] text-[#176b27] font-semibold text-[14px] uppercase tracking-wide flex items-center gap-2 hover:bg-[#f1f6f1] transition-colors">
+          <a href={`tel:${SITE_CONFIG.rawPhone}`} className="h-[40px] px-5 rounded-md border border-[#176b27] text-[#176b27] font-semibold text-[14px] uppercase tracking-wide flex items-center gap-2 hover:bg-[#f1f6f1] transition-colors">
             Talk to PMS Support Team <Headphones size={16} strokeWidth={2.5} />
-          </button>
+          </a>
 
           <div className="h-10 w-[1px] bg-gray-200 hidden sm:block"></div>
 

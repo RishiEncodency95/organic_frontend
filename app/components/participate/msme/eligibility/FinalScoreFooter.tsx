@@ -12,6 +12,7 @@ import {
   Users,
 } from "lucide-react";
 import Link from "next/link";
+import { SITE_CONFIG } from "@/app/constants/siteConfig";
 
 /* =========================================================
    SCORE
@@ -348,6 +349,7 @@ const FinalScoreFooter = () => {
 
           {/* Book */}
           <ActionButton
+            href="/registration/book-a-stand"
             icon={
               <ArrowRight
                 size={28}
@@ -374,6 +376,7 @@ const FinalScoreFooter = () => {
 
           {/* Support */}
           <ActionButton
+            href={`tel:${SITE_CONFIG.rawPhone}`}
             icon={
               <Headphones
                 size={27}
@@ -496,6 +499,7 @@ const FinalScoreFooter = () => {
           </ActionButton>
 
           <ActionButton
+            href="/registration/book-a-stand"
             icon={<ArrowRight size={20} />}
           >
             Book Your Stall
@@ -508,6 +512,7 @@ const FinalScoreFooter = () => {
           </ActionButton>
 
           <ActionButton
+            href={`tel:${SITE_CONFIG.rawPhone}`}
             icon={<Headphones size={20} />}
           >
             Talk to PMS Support Team

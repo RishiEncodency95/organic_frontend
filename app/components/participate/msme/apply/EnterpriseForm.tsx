@@ -44,8 +44,7 @@ export default function EnterpriseForm() {
           </label>
           <input
             type="text"
-            defaultValue="RAMMANI TRADELINK PRIVATE LIMITED"
-            readOnly
+            placeholder="e.g. RAMMANI TRADELINK PRIVATE LIMITED"
             className="w-full h-[32px] px-3 bg-[#fafbfa] border border-[#e5e7eb] rounded-md text-[12px] font-semibold text-gray-800 focus:outline-none"
           />
         </div>
@@ -57,7 +56,10 @@ export default function EnterpriseForm() {
               Enterprise Type <span className="text-red-500">*</span>
             </label>
             <select className="w-full h-[32px] px-3 bg-[#fafbfa] border border-[#e5e7eb] rounded-md text-[12px] font-semibold text-gray-800 appearance-none focus:outline-none">
-              <option>Micro</option>
+              <option value="">Select Enterprise Type</option>
+              <option value="Micro">Micro</option>
+              <option value="Small">Small</option>
+              <option value="Medium">Medium</option>
             </select>
             <ChevronDown size={16} className="absolute right-3 top-[23px] text-gray-400 pointer-events-none" />
           </div>
@@ -66,7 +68,10 @@ export default function EnterpriseForm() {
               Major Activity <span className="text-red-500">*</span>
             </label>
             <select className="w-full h-[32px] px-3 bg-[#fafbfa] border border-[#e5e7eb] rounded-md text-[12px] font-semibold text-gray-800 appearance-none focus:outline-none">
-              <option>Manufacturing</option>
+              <option value="">Select Major Activity</option>
+              <option value="Manufacturing">Manufacturing</option>
+              <option value="Services">Services</option>
+              <option value="Trading">Trading</option>
             </select>
             <ChevronDown size={16} className="absolute right-3 top-[23px] text-gray-400 pointer-events-none" />
           </div>
@@ -79,7 +84,12 @@ export default function EnterpriseForm() {
               Constitution / Organisation <span className="text-red-500">*</span>
             </label>
             <select className="w-full h-[32px] px-3 bg-[#fafbfa] border border-[#e5e7eb] rounded-md text-[12px] font-semibold text-gray-800 appearance-none focus:outline-none">
-              <option>Private Limited Company</option>
+              <option value="">Select Constitution</option>
+              <option value="Private Limited Company">Private Limited Company</option>
+              <option value="Proprietorship">Proprietorship</option>
+              <option value="Partnership">Partnership</option>
+              <option value="LLP">LLP</option>
+              <option value="Public Limited Company">Public Limited Company</option>
             </select>
             <ChevronDown size={16} className="absolute right-3 top-[23px] text-gray-400 pointer-events-none" />
           </div>
@@ -88,7 +98,11 @@ export default function EnterpriseForm() {
               Entrepreneur Category <span className="text-red-500">*</span>
             </label>
             <select className="w-full h-[32px] px-3 bg-[#fafbfa] border border-[#e5e7eb] rounded-md text-[12px] font-semibold text-gray-800 appearance-none focus:outline-none">
-              <option>General</option>
+              <option value="">Select Category</option>
+              <option value="General">General</option>
+              <option value="OBC">OBC</option>
+              <option value="SC/ST">SC/ST</option>
+              <option value="Women">Women</option>
             </select>
             <ChevronDown size={16} className="absolute right-3 top-[23px] text-gray-400 pointer-events-none" />
           </div>
@@ -101,7 +115,10 @@ export default function EnterpriseForm() {
               Gender of Entrepreneur <span className="text-red-500">*</span>
             </label>
             <select className="w-full h-[32px] px-3 bg-[#fafbfa] border border-[#e5e7eb] rounded-md text-[12px] font-semibold text-gray-800 appearance-none focus:outline-none">
-              <option>Female</option>
+              <option value="">Select Gender</option>
+              <option value="Male">Male</option>
+              <option value="Female">Female</option>
+              <option value="Other">Other</option>
             </select>
             <ChevronDown size={16} className="absolute right-3 top-[23px] text-gray-400 pointer-events-none" />
           </div>
@@ -110,12 +127,9 @@ export default function EnterpriseForm() {
               Date of Incorporation <span className="text-red-500">*</span>
             </label>
             <input
-              type="text"
-              defaultValue="25/05/2026"
-              readOnly
+              type="date"
               className="w-full h-[32px] px-3 bg-[#fafbfa] border border-[#e5e7eb] rounded-md text-[12px] font-semibold text-gray-800 focus:outline-none"
             />
-            <Calendar size={16} className="absolute right-3 top-[23px] text-gray-400 pointer-events-none" />
           </div>
         </div>
       </div>

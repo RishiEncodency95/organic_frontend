@@ -13,6 +13,7 @@ import {
 } from "lucide-react";
 import Link from "next/link";
 import readyToExploreImg from "@/app/assets/participate/msme/ready_to_explore.jpeg";
+import { SITE_CONFIG } from "@/app/constants/siteConfig";
 
 /**
  * Section 11 — Final CTA
@@ -135,7 +136,7 @@ const PMSFinalCTASection: React.FC = () => {
 
         {/* Talk to support link */}
         <a
-          href="#pms-support-team"
+          href={`tel:${SITE_CONFIG.rawPhone}`}
           className="mt-4 inline-flex items-center gap-1.5 text-[13px] font-semibold text-[#1b5e20] underline-offset-4 hover:underline sm:text-sm"
         >
           Talk to PMS Support Team
