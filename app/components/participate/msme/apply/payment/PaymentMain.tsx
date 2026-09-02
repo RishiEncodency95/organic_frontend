@@ -2,9 +2,93 @@
 import React, { useState } from "react";
 import { CheckCircle2, CreditCard, Landmark, Receipt, ShieldCheck, ArrowLeft, ArrowRight, Shield } from "lucide-react";
 import Link from "next/link";
+import Swal from "sweetalert2";
+
+const loadScript = (src: string) => {
+  return new Promise((resolve) => {
+    const script = document.createElement("script");
+    script.src = src;
+    script.onload = () => resolve(true);
+    script.onerror = () => resolve(false);
+    document.body.appendChild(script);
+  });
+};
 
 export default function PaymentMain() {
   const [selectedMethod, setSelectedMethod] = useState("online");
+  const [isLoading, setIsLoading] = useState(false);
+
+  const handlePayment = async () => {
+    setIsLoading(true);
+
+    try {
+      // 1. Create order via Next.js API
+      const res = await fetch("/api/razorpay/create-order", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          amount: 116820,
+        }),
+      });
+      const orderData = await res.json();
+
+      if (!orderData.success) {
+        Swal.fire("Error", orderData.message || "Failed to create order", "error");
+        setIsLoading(false);
+        return;
+      }
+
+      // 2. Load Razorpay script
+      const isLoaded = await loadScript("https://checkout.razorpay.com/v1/checkout.js");
+      if (!isLoaded) {
+        Swal.fire("Error", "Razorpay SDK failed to load. Are you online?", "error");
+        setIsLoading(false);
+        return;
+      }
+
+      // 3. Initialize Razorpay options
+      const options = {
+        key: orderData.key,
+        amount: orderData.order.amount,
+        currency: orderData.order.currency,
+        name: "Organic Expo",
+        description: "PMS Support Application - Stall Booking",
+        order_id: orderData.order.id,
+        handler: function (response: any) {
+          Swal.fire({
+            title: "Payment Successful!",
+            text: "Your application will be submitted for verification.",
+            icon: "success",
+            confirmButtonColor: "#176b27",
+          }).then(() => {
+            // Optional: redirect to a success page or handle post-payment logic
+          });
+        },
+        modal: {
+          ondismiss: function () {
+            setIsLoading(false);
+          },
+        },
+        theme: {
+          color: "#176b27",
+        },
+      };
+
+      const rzp = new (window as any).Razorpay(options);
+      rzp.on("payment.failed", function (response: any) {
+        Swal.fire("Payment Failed", response.error.description || "Something went wrong.", "error");
+        setIsLoading(false);
+      });
+
+      rzp.open();
+    } catch (error) {
+      console.error(error);
+      Swal.fire("Error", "Something went wrong during payment initialization.", "error");
+      setIsLoading(false);
+    }
+  };
 
   return (
     <div className="w-full flex flex-col gap-3">
@@ -137,8 +221,17 @@ export default function PaymentMain() {
         <Link href="/participate/msme/apply/participation-details" className="h-[36px] px-5 rounded-md border border-gray-300 text-gray-700 font-bold text-[12px] uppercase tracking-wide hover:bg-gray-50 transition-colors flex items-center justify-center gap-2">
           <ArrowLeft size={16} strokeWidth={2.5} /> Back
         </Link>
-        <button type="button" className="w-full sm:w-auto h-[36px] px-8 rounded-md bg-[#176b27] text-white font-bold text-[12px] uppercase tracking-wide hover:bg-[#115d20] transition-colors flex items-center justify-center gap-2 shadow-md">
-          Proceed to Payment <ArrowRight size={16} strokeWidth={2.5} />
+        <button 
+          type="button" 
+          onClick={handlePayment}
+          disabled={isLoading}
+          className="w-full sm:w-auto h-[36px] px-8 rounded-md bg-[#176b27] text-white font-bold text-[12px] uppercase tracking-wide hover:bg-[#115d20] transition-colors flex items-center justify-center gap-2 shadow-md disabled:opacity-70 disabled:cursor-not-allowed"
+        >
+          {isLoading ? "Processing..." : (
+            <>
+              Proceed to Payment <ArrowRight size={16} strokeWidth={2.5} />
+            </>
+          )}
         </button>
       </div>
     </div>
