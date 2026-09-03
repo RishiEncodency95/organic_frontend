@@ -9,10 +9,7 @@ import {
   ArrowRight,
   Download,
   Headphones,
-  Users,
 } from "lucide-react";
-import Link from "next/link";
-import { SITE_CONFIG } from "@/app/constants/siteConfig";
 
 /* =========================================================
    SCORE
@@ -88,18 +85,16 @@ interface StatusItemProps {
   icon: React.ReactNode;
   title: React.ReactNode;
   warning?: boolean;
-  className?: string;
 }
 
 const StatusItem = ({
   icon,
   title,
   warning = false,
-  className = "",
 }: StatusItemProps) => {
   return (
     <div
-      className={`flex flex-col items-center text-center min-w-0 ${className}`}
+      className="flex flex-col items-center text-center min-w-0"
     >
       {/* Icon */}
       <div
@@ -161,30 +156,17 @@ interface ActionButtonProps {
   children: React.ReactNode;
   primary?: boolean;
   icon: React.ReactNode;
-  href?: string;
 }
 
 const ActionButton = ({
   children,
   primary = false,
   icon,
-  href,
 }: ActionButtonProps) => {
-  const className = `h-[44px] w-full rounded-[6px] px-4 flex items-center justify-center gap-2 text-[12px] font-bold uppercase transition-all ${primary ? ` bg-[#176b27] text-white hover:bg-[#115d20] ` : ` bg-white border border-[#91a592] text-[#28552f] hover:bg-[#f7faf7] `}`;
-  
-  if (href) {
-    return (
-      <Link href={href} target="_blank" className={className}>
-        <span>{children}</span>
-        {icon}
-      </Link>
-    );
-  }
-
   return (
     <button
       type="button"
-      className={className}
+      className={`h-[44px] w-full rounded-[6px] px-4 flex items-center justify-center gap-2 text-[12px] font-bold uppercase transition-all ${primary ? ` bg-[#176b27] text-white hover:bg-[#115d20] ` : ` bg-white border border-[#91a592] text-[#28552f] hover:bg-[#f7faf7] `}`}
     >
       <span>{children}</span>
       {icon}
@@ -222,11 +204,10 @@ const FinalScoreFooter = () => {
         {/* ===================================================
             STATUS SECTION
         ==================================================== */}
-        <div className="flex-1 grid grid-cols-2 md:grid-cols-3 xl:grid-cols-6 items-center py-1 lg:py-2 w-full gap-y-6 lg:gap-y-0">
+        <div className="flex-1 grid grid-cols-2 md:grid-cols-3 xl:grid-cols-6 items-center py-1 lg:py-2 w-full">
 
           {/* 1 */}
           <StatusItem
-            className="border-r border-[#e6ebe6]"
             title="Micro Enterprise"
             icon={
               <Building2
@@ -239,7 +220,6 @@ const FinalScoreFooter = () => {
 
           {/* 2 */}
           <StatusItem
-            className="border-r-0 md:border-r border-[#e6ebe6]"
             title="Manufacturing"
             icon={
               <Factory
@@ -252,10 +232,10 @@ const FinalScoreFooter = () => {
 
           {/* 3 */}
           <StatusItem
-            className="border-r border-[#e6ebe6] md:border-r-0 xl:border-r"
             title={
               <>
-                Approved <br />
+                Approved
+                <br />
                 Industry Match
               </>
             }
@@ -270,10 +250,9 @@ const FinalScoreFooter = () => {
 
           {/* 4 */}
           <StatusItem
-            className="border-r-0 md:border-r border-[#e6ebe6]"
             title="Valid Udyam"
             icon={
-              <Sprout
+              <FileCheck2
                 size={36}
                 strokeWidth={1.6}
                 className="text-[#58745c]"
@@ -283,13 +262,31 @@ const FinalScoreFooter = () => {
 
           {/* 5 */}
           <StatusItem
-            className="border-r border-[#e6ebe6]"
             title="Women Category"
             icon={
-              <Users
+              <Sprout
                 size={36}
                 strokeWidth={1.6}
                 className="text-[#58745c]"
+              />
+            }
+          />
+
+          {/* 6 */}
+          <StatusItem
+            warning
+            title={
+              <>
+                Additional Financial
+                <br />
+                Verification
+              </>
+            }
+            icon={
+              <AlertCircle
+                size={36}
+                strokeWidth={1.8}
+                className="text-[#e17f19]"
               />
             }
           />
@@ -341,7 +338,6 @@ const FinalScoreFooter = () => {
           <ActionButton
             primary
             icon={<ArrowRight size={18} strokeWidth={2.3} />}
-            href="/participate/msme/apply"
           >
             Apply for PMS Support
           </ActionButton>
@@ -349,7 +345,6 @@ const FinalScoreFooter = () => {
 
           {/* Book */}
           <ActionButton
-            href="/registration/book-a-stand"
             icon={
               <ArrowRight
                 size={28}
@@ -376,7 +371,6 @@ const FinalScoreFooter = () => {
 
           {/* Support */}
           <ActionButton
-            href={`tel:${SITE_CONFIG.rawPhone}`}
             icon={
               <Headphones
                 size={27}
@@ -493,13 +487,11 @@ const FinalScoreFooter = () => {
           <ActionButton
             primary
             icon={<ArrowRight size={20} />}
-            href="/participate/msme/apply"
           >
             Apply for PMS Support
           </ActionButton>
 
           <ActionButton
-            href="/registration/book-a-stand"
             icon={<ArrowRight size={20} />}
           >
             Book Your Stall
@@ -512,7 +504,6 @@ const FinalScoreFooter = () => {
           </ActionButton>
 
           <ActionButton
-            href={`tel:${SITE_CONFIG.rawPhone}`}
             icon={<Headphones size={20} />}
           >
             Talk to PMS Support Team
