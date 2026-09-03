@@ -76,11 +76,9 @@ export default function OfficialMessageBanner({
           under the PMS Scheme.
         </p>
 
-        {/* Main content: video + quote card */}
+        {/* Main content: video + quote card 
         <div className="mt-4 grid grid-cols-1 gap-4 lg:grid-cols-2 lg:gap-6">
-          {/* Video card */}
           <div className="relative overflow-hidden rounded-2xl bg-[#0e1a2b] shadow-xl ring-1 ring-black/5">
-            {/* Thumbnail */}
             <div className="relative aspect-[3/1] w-full sm:aspect-[5/2]">
               <img
                 src={officialMessageImg.src}
@@ -88,13 +86,11 @@ export default function OfficialMessageBanner({
                 className="h-full w-full object-cover"
               />
 
-              {/* Duration badge */}
               <div className="absolute left-3 top-3 flex items-center gap-1.5 rounded-full bg-[#1b5e20]/90 px-3 py-1.5 text-[11px] font-semibold text-white shadow-sm backdrop-blur-sm sm:left-4 sm:top-4 sm:text-[12px]">
                 <Clock className="h-3.5 w-3.5" aria-hidden="true" />
                 45–90 Sec Message
               </div>
 
-              {/* Play button */}
               <button
                 type="button"
                 aria-label="Play official message video"
@@ -104,7 +100,6 @@ export default function OfficialMessageBanner({
               </button>
             </div>
 
-            {/* Control bar */}
             <div className="flex items-center gap-2 bg-[#0b2912] px-3 py-2">
               <button
                 type="button"
@@ -142,25 +137,23 @@ export default function OfficialMessageBanner({
             </div>
           </div>
 
-          {/* Quote card */}
           <div className="relative flex flex-col overflow-hidden rounded-2xl border border-gray-100 bg-white p-5 shadow-sm">
-            {/* Quote icon */}
             <div className="flex flex-1 gap-4">
-            <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-[#1b5e20]">
-              <Quote className="h-4 w-4 fill-white text-white" aria-hidden="true" />
-            </div>
-<div>
+              <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-[#1b5e20]">
+                <Quote className="h-4 w-4 fill-white text-white" aria-hidden="true" />
+              </div>
+              <div>
 
-            <h2 className="text-[18px] font-semibold tracking-wide text-slate-900 md:text-[20px]">
-              MESSAGE FROM MSME LEADERSHIP
-            </h2>
-            <div className="mt-1 flex items-center gap-2 sm:justify-start" aria-hidden="true">
-              <span className="h-px w-10 bg-[#3b8c2a]/40" />
-              <Leaf className="h-3.5 w-3.5 -rotate-45 text-[#1b5e20]" />
-              <span className="h-px w-10 bg-[#3b8c2a]/40" />
-</div>
-</div>
-</div>
+                <h2 className="text-[18px] font-semibold tracking-wide text-slate-900 md:text-[20px]">
+                  MESSAGE FROM MSME LEADERSHIP
+                </h2>
+                <div className="mt-1 flex items-center gap-2 sm:justify-start" aria-hidden="true">
+                  <span className="h-px w-10 bg-[#3b8c2a]/40" />
+                  <Leaf className="h-3.5 w-3.5 -rotate-45 text-[#1b5e20]" />
+                  <span className="h-px w-10 bg-[#3b8c2a]/40" />
+                </div>
+              </div>
+            </div>
 
             <blockquote className="mt-3 flex-1 text-[14px] leading-relaxed text-slate-600 md:text-[15px]">
               "Government of India is committed to empowering MSMEs and
@@ -200,7 +193,7 @@ export default function OfficialMessageBanner({
             />
           </div>
         </div>
-
+        */}
         {/* Feature strip */}
         <div className="mt-8 grid grid-cols-1 gap-4 rounded-2xl bg-[#1b5e20] p-5 sm:grid-cols-3 sm:gap-6 sm:p-6">
           <FeatureItem
