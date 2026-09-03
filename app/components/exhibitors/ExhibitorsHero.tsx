@@ -126,9 +126,9 @@ const ExhibitorsHero = () => {
                   href="/registration/buyer-registration"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="blue-btn-hero-exh text-white px-4 py-2 rounded-lg font-semibold text-[10px] uppercase tracking-widest flex items-center justify-start gap-2 transition-all active:scale-95 shadow-lg relative z-10 w-full sm:w-auto"
+                  className="blue-btn-hero-exh text-white px-5 py-2.5 rounded-lg font-semibold text-[11px] sm:text-[12px] uppercase tracking-widest flex items-center justify-start gap-2 transition-all active:scale-95 shadow-lg relative z-10 w-full sm:w-auto"
                 >
-                  REGISTER AS A BUYER <ArrowRight size={14} />
+                  REGISTER AS A BUYER <ArrowRight size={15} />
                 </Link>
               </div>
               <div className="relative w-full sm:w-auto">
@@ -139,14 +139,14 @@ const ExhibitorsHero = () => {
                   href="/registration/book-a-stand"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="group relative inline-flex items-center justify-start gap-2 px-4 py-2 rounded-lg font-semibold text-[10px] uppercase tracking-widest text-white transition-all active:scale-95 shadow-2xl z-10 w-full sm:w-auto overflow-hidden"
+                  className="group relative inline-flex items-center justify-start gap-2 px-5 py-2.5 rounded-lg font-semibold text-[11px] sm:text-[12px] uppercase tracking-widest text-white transition-all active:scale-95 shadow-2xl z-10 w-full sm:w-auto overflow-hidden"
                   style={{
                     background: "linear-gradient(135deg, #ea580c, #c2410c)",
                     boxShadow: "0 4px 20px rgba(194,65,12,0.5), 0 0 12px rgba(249,115,22,0.3)",
                   }}
                 >
                   <span className="absolute inset-0 bg-white/10 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-500 skew-x-12" />
-                  PARTICIPATE AS AN EXHIBITOR <ArrowRight size={14} className="group-hover:translate-x-1 transition-transform" />
+                  PARTICIPATE AS AN EXHIBITOR <ArrowRight size={15} className="group-hover:translate-x-1 transition-transform" />
                 </Link>
               </div>
             </div>

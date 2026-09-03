@@ -39,7 +39,6 @@ const navLinks = [
             { label: "Exhibitor List", path: "/exhibitors", icon: FileCheck, description: "View the list of confirmed participating brands" },
             { label: "Why Visit ORGANIC EXPO", path: "/why-visit", icon: Layout, description: "Secure your premium space at ORGANIC EXPO 2026" },
             // { label: "Buyer-Seller Meet", path: "/buyer-seller-meet", icon: Users, description: "Connect with buyers and sellers at ORGANIC EXPO" },
-            // { label: "MSME PMS Scheme", path: "/msme-pms-scheme", icon: ShieldCheck, description: "Government subsidy for MSME exhibitors" },
             { label: "MSME PMS Scheme", path: "/participate/msme", icon: ShieldCheck, description: "Government subsidy for MSME exhibitors" },
         ],
     },
@@ -78,7 +77,7 @@ const registrationOptions = [
 ];
 
 const quickPills = [
-    { label: "Advisory Board", path: "/advisory-board" },
+    { label: "Advisory Board", path: "/about/advisory_board_member" },
     { label: "Media / Gallery", path: "/gallery" },
     { label: "Blogs", path: "/blog" },
     { label: "Exhibitor List", path: "/exhibitors" },
