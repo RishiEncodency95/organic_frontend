@@ -70,22 +70,25 @@ export default function FAQBanner() {
       aria-labelledby="faq-heading"
       className="relative w-full overflow-hidden bg-[#F9FCF9] py-2"
     >
-      <SectionContainer>
-      <div className="relative z-10 mx-auto grid w-full grid-cols-1 items-stretch gap-6 lg:grid-cols-[minmax(0,400px)_minmax(0,1fr)] lg:gap-8">
-        {/* Left: image panel */}
-        <div className="relative mx-auto w-full max-w-md lg:mx-0 lg:max-w-none">
-          <div
-            className="relative h-full min-h-[300px] w-full overflow-hidden rounded-[2.5rem] lg:rounded-r-[6rem] lg:rounded-l-2xl"
-            role="img"
-            aria-label="Bharat Organic Expo visitors browsing organic produce stalls"
-          >
-            <img
-              src={faqBgImg.src}
-              alt="FAQ Background"
-              className="absolute inset-0 h-full w-full object-cover"
-            />
-          </div>
+      {/* Image - absolute left */}
+      <div className="absolute left-0 top-0 h-full w-[350px] z-0 hidden lg:block">
+        <div
+          className="relative h-full w-full overflow-hidden rounded-r-[6rem]"
+          role="img"
+          aria-label="Bharat Organic Expo visitors browsing organic produce stalls"
+        >
+          <img
+            src={faqBgImg.src}
+            alt="FAQ Background"
+            className="absolute inset-0 h-full w-full object-cover"
+          />
         </div>
+      </div>
+
+      <SectionContainer>
+      <div className="relative z-10 mx-auto grid w-full grid-cols-1 items-stretch gap-6 lg:grid-cols-[350px_1fr] lg:gap-8">
+        {/* Left: empty spacer for image */}
+        <div className="hidden lg:block"></div>
 
         {/* Right: heading + accordion */}
         <div className="w-full">

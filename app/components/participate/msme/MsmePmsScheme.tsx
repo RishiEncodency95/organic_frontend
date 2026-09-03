@@ -54,7 +54,7 @@ export default function MsmePmsScheme() {
   return (
     <section
       aria-labelledby="msme-pms-heading"
-      className="relative w-full overflow-hidden bg-[#F9FCF9] py-6"
+      className="relative w-full overflow-hidden bg-[#F9FCF9] py-4"
     >
       {/* <img
         src={leafsImg.src}
@@ -94,14 +94,14 @@ export default function MsmePmsScheme() {
             return (
               <li
                 key={feature.id}
-                className="relative flex flex-col items-center rounded-2xl bg-white pt-8 pb-6 px-4 text-center shadow-sm ring-1 ring-black/5 overflow-hidden"
+                className="relative flex flex-col items-center rounded-2xl bg-white pt-2 pb-12 px-4 text-center shadow-sm ring-1 ring-black/5 overflow-hidden"
                 style={{ backgroundImage: `url(${cardBg.src})`, backgroundSize: "cover", backgroundPosition: "center bottom" }}
               >
-                <div className="flex h-24 w-24 items-center justify-center rounded-full border-2 border-gray-200 bg-gray-100">
-                  <Icon className="h-12 w-12 text-[#1b5e20]" strokeWidth={1.75} aria-hidden="true" />
+                <div className="flex h-16 w-16 items-center justify-center rounded-full border-2 border-gray-200 bg-gray-100">
+                  <Icon className="h-8 w-8 text-[#1b5e20]" strokeWidth={1.75} aria-hidden="true" />
                 </div>
 
-                <h3 className="mt-4 text-[20px] sm:text-[22px] font-semibold text-[#1b5e20]">
+                <h3 className="mt-2 text-[18px] sm:text-[20px] font-semibold text-[#1b5e20]">
                   {feature.title}
                 </h3>
 
@@ -111,11 +111,11 @@ export default function MsmePmsScheme() {
                   <span className="h-px w-12 bg-[#d4a017]" />
                 </div>
 
-                <p className="mt-2 mb-10 max-w-[180px] text-[15px] leading-relaxed text-black">
+                <p className="mt-2 mb-6 max-w-[180px] text-[15px] leading-relaxed text-black">
                   {feature.description}
                 </p>
 
-                <span className="absolute bottom-1 left-1/2 -translate-x-1/2 text-[24px] font-bold text-white/80">
+                <span className="absolute bottom-2 left-1/2 -translate-x-1/2 text-[14px] font-bold text-white/80">
                   {feature.number}
                 </span>
               </li>
@@ -124,9 +124,9 @@ export default function MsmePmsScheme() {
         </ul>
 
         {/* Bottom banner */}
-        <div className="relative mt-6 flex flex-col sm:flex-row items-center gap-4 rounded-2xl bg-gray-200 px-4 py-4 sm:px-6 overflow-hidden">
-          <div className="w-14 h-14 shrink-0 rounded-full bg-gray-300 flex items-center justify-center">
-            <Image src={secureImg} alt="Secure" className="w-8 h-8 object-contain" />
+        <div className="relative mt-4 flex flex-col sm:flex-row items-center gap-3 rounded-2xl bg-gray-200 px-4 py-3 sm:px-6 overflow-hidden">
+          <div className="w-10 h-10 shrink-0 rounded-full bg-gray-300 flex items-center justify-center">
+            <Image src={secureImg} alt="Secure" className="w-6 h-6 object-contain" />
           </div>
           <p className="text-center sm:text-left text-[14px] sm:text-[15px] text-slate-700">
             The PMS Scheme empowers MSEs to participate, promote and prosper.{" "}

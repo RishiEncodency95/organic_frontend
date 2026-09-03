@@ -148,6 +148,7 @@ const PMSFinalCTASection: React.FC = () => {
       </SectionContainer>
 
       {/* Feature strip + Disclaimer - full width */}
+      <SectionContainer>
       <div className="relative z-10 w-full">
         <ul className="mt-5 flex w-full flex-wrap items-center justify-between gap-x-0 divide-x divide-white/30 rounded-lg bg-[#ea580c] px-2 py-2">
           <li className="px-3">
@@ -201,6 +202,7 @@ const PMSFinalCTASection: React.FC = () => {
           </p>
         </div>
       </div>
+      </SectionContainer>
     </section>
   );
 };
