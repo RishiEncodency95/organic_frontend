@@ -291,6 +291,23 @@ const FinalScoreFooter = () => {
             }
           />
 
+          {/* 6 */}
+          <StatusItem
+            title={
+              <>
+                Additional Financial <br />
+                Verification
+              </>
+            }
+            warning={true}
+            icon={
+              <AlertCircle
+                size={36}
+                strokeWidth={1.6}
+                className="text-[#e98218]"
+              />
+            }
+          />
         </div>
 
       </div>

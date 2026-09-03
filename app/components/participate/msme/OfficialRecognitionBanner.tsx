@@ -1,3 +1,4 @@
+"use client";
 import {
   Award,
   CheckCircle2,
@@ -12,8 +13,10 @@ import {
   Building2,
   Users,
   FileCheck2,
+  X,
 } from "lucide-react";
 import Image from "next/image";
+import { useState } from "react";
 
 const LeafIcon = () => (
   <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -43,10 +46,12 @@ const SealPlaceholder = () => (
 );
 
 export default function OfficialRecognitionBanner() {
+  const [showCertificate, setShowCertificate] = useState(false);
+
   return (
     <section
       aria-labelledby="official-recognition-heading"
-      className="w-full bg-[#f9f8f4] px-3 py-6 lg:px-14 font-inter relative overflow-hidden"
+      className="w-full bg-[#f9f8f4] px-3 py-6 lg:px-14 font-inter relative overflow-hidden transition-all duration-500"
     >
       <div className="absolute bottom-0 right-0 pointer-events-none opacity-[0.03] scale-150 translate-x-1/4 translate-y-1/4">
         <LeafIcon />
@@ -117,11 +122,12 @@ export default function OfficialRecognitionBanner() {
             <div className="flex items-center gap-3">
               <button
                 type="button"
-                className="inline-flex items-center justify-center gap-1 rounded-full bg-[#0c3b1d] px-4 py-2 text-[10px] font-bold text-white transition-all hover:bg-[#072411] tracking-wider uppercase font-poppins whitespace-nowrap"
+                onClick={() => setShowCertificate(!showCertificate)}
+                className="inline-flex items-center justify-center gap-1 rounded-full bg-[#0c3b1d] px-4 py-2 text-[10px] font-bold text-white transition-all hover:bg-[#072411] tracking-wider uppercase font-poppins whitespace-nowrap shadow-md"
               >
                 <FileText className="h-3 w-3" aria-hidden="true" />
-                VIEW OFFICIAL APPROVAL
-                <ChevronRight className="h-3 w-3" aria-hidden="true" />
+                {showCertificate ? "HIDE OFFICIAL APPROVAL" : "VIEW OFFICIAL APPROVAL"}
+                <ChevronRight className={`h-3 w-3 transition-transform ${showCertificate ? "rotate-180" : ""}`} aria-hidden="true" />
               </button>
               <a
                 href="#pms-scheme"
@@ -206,62 +212,66 @@ export default function OfficialRecognitionBanner() {
           </div>
 
           {/* ---------------- Right: Certificate ---------------- */}
-          <div className="flex flex-col pt-5 w-full h-full">
-            <div className="rounded-[16px] border border-[#e5e7eb] bg-white p-3 shadow-[0_10px_30px_rgba(0,0,0,0.04)] flex-1 flex flex-col relative z-10">
-              <div className="mb-2 flex flex-col items-center text-center">
-                <EmblemPlaceholder />
-                <p className="text-[7px] font-semibold leading-[1.1] text-gray-800">भारत सरकार</p>
-                <p className="text-[8px] font-bold tracking-wide text-gray-900 mb-0.5">GOVERNMENT OF INDIA</p>
-                <p className="text-[7px] font-semibold leading-[1.1] text-gray-800">सूक्ष्म, लघु और मध्यम उद्यम मंत्रालय</p>
-                <p className="text-[8px] font-bold text-gray-900">MINISTRY OF</p>
-                <p className="text-[8px] font-bold text-gray-900 mb-0.5">MICRO, SMALL &amp; MEDIUM ENTERPRISES</p>
-                <p className="text-[7.5px] font-bold text-gray-700">MSME-DFO, DELHI</p>
-              </div>
-
-              <div className="mb-2 flex items-start justify-between text-[7.5px] font-medium text-gray-600 border-t border-b border-gray-100 py-1">
-                <span className="leading-[1.2]">
-                  <span className="font-semibold text-gray-800">क्रमांक / Ref. No.:</span><br />
-                  PMS/DFO-DELHI/2024-25/487
-                </span>
-                <span className="text-right leading-[1.2]">
-                  <span className="font-semibold text-gray-800">दिनांक / Date:</span><br />
-                  18.04.2024
-                </span>
-              </div>
-
-              <p className="mb-2 text-center text-[9.5px] font-bold text-gray-900 underline underline-offset-2">
-                To Whomsoever It May Concern
-              </p>
-
-              <div className="flex-1">
-                <p className="mb-1.5 text-justify text-[9px] leading-snug text-gray-700 font-medium tracking-tight">
-                  This is to certify that <strong className="font-bold text-gray-900">Bharat Organic Expo 2027</strong> (19–21 February 2027) to be held at Bharat Mandapam, <strong className="font-bold text-gray-900">New Delhi</strong> has been approved under the Procurement &amp; Marketing Support (PMS) Scheme component for the financial year 2024-25.
-                </p>
-                <p className="text-justify text-[9px] leading-snug text-gray-700 font-medium tracking-tight">
-                  This approval is subject to the terms &amp; conditions of the PMS Scheme guidelines issued by the Ministry of MSME from time to time.
-                </p>
-              </div>
-
-              <div className="flex items-end justify-between mt-2 pt-1 border-t border-gray-50">
-                <div className="text-[8px] leading-tight text-gray-600 flex flex-col items-center text-center">
-                  <SignaturePlaceholder />
-                  <p className="font-bold text-gray-800 mt-0.5">(Authorised Signatory)</p>
-                  <p>MSME-DFO, Delhi</p>
-                  <p>Ministry of MSME</p>
-                  <p>Government of India</p>
+          {showCertificate && (
+            <div className="flex flex-col pt-5 w-full h-full animate-in fade-in slide-in-from-right-8 duration-500">
+              <div className="rounded-[16px] border border-[#e5e7eb] bg-white p-3 shadow-[0_10px_30px_rgba(0,0,0,0.04)] flex-1 flex flex-col relative z-10">
+                <div className="mb-2 flex flex-col items-center text-center">
+                  <EmblemPlaceholder />
+                  <p className="text-[7px] font-semibold leading-[1.1] text-gray-800">भारत सरकार</p>
+                  <p className="text-[8px] font-bold tracking-wide text-gray-900 mb-0.5">GOVERNMENT OF INDIA</p>
+                  <p className="text-[7px] font-semibold leading-[1.1] text-gray-800">सूक्ष्म, लघु और मध्यम उद्यम मंत्रालय</p>
+                  <p className="text-[8px] font-bold text-gray-900">MINISTRY OF</p>
+                  <p className="text-[8px] font-bold text-gray-900 mb-0.5">MICRO, SMALL &amp; MEDIUM ENTERPRISES</p>
+                  <p className="text-[7.5px] font-bold text-gray-700">MSME-DFO, DELHI</p>
                 </div>
-                <SealPlaceholder />
-              </div>
 
-              <button
-                type="button"
-                className="mt-4 flex w-full items-center justify-center gap-2 rounded-full bg-[#1b5e20] py-2.5 text-[13px] font-semibold text-white transition-colors hover:bg-[#2d7a2d] sm:text-[14px]"
-              >
-                <Download className="h-4 w-4" aria-hidden="true" />
-                DOWNLOAD APPROVAL LETTER (PDF)
-              </button>
+                <div className="mb-2 flex items-start justify-between text-[7.5px] font-medium text-gray-600 border-t border-b border-gray-100 py-1">
+                  <span className="leading-[1.2]">
+                    <span className="font-semibold text-gray-800">क्रमांक / Ref. No.:</span><br />
+                    PMS/DFO-DELHI/2024-25/487
+                  </span>
+                  <span className="text-right leading-[1.2]">
+                    <span className="font-semibold text-gray-800">दिनांक / Date:</span><br />
+                    18.04.2024
+                  </span>
+                </div>
+
+                <p className="mb-2 text-center text-[9.5px] font-bold text-gray-900 underline underline-offset-2">
+                  To Whomsoever It May Concern
+                </p>
+
+                <div className="flex-1">
+                  <p className="mb-1.5 text-justify text-[9px] leading-snug text-gray-700 font-medium tracking-tight">
+                    This is to certify that <strong className="font-bold text-gray-900">Bharat Organic Expo 2027</strong> (19–21 February 2027) to be held at Bharat Mandapam, <strong className="font-bold text-gray-900">New Delhi</strong> has been approved under the Procurement &amp; Marketing Support (PMS) Scheme component for the financial year 2024-25.
+                  </p>
+                  <p className="text-justify text-[9px] leading-snug text-gray-700 font-medium tracking-tight">
+                    This approval is subject to the terms &amp; conditions of the PMS Scheme guidelines issued by the Ministry of MSME from time to time.
+                  </p>
+                </div>
+
+                <div className="flex items-end justify-between mt-2 pt-1 border-t border-gray-50">
+                  <div className="text-[8px] leading-tight text-gray-600 flex flex-col items-center text-center">
+                    <SignaturePlaceholder />
+                    <p className="font-bold text-gray-800 mt-0.5">(Authorised Signatory)</p>
+                    <p>MSME-DFO, Delhi</p>
+                    <p>Ministry of MSME</p>
+                    <p>Government of India</p>
+                  </div>
+                  <SealPlaceholder />
+                </div>
+
+                <a
+                  href="/download/MSME_Approval_Letter.pdf"
+                  download="MSME_Approval_Letter.pdf"
+                  target="_blank"
+                  className="mt-4 flex w-full items-center justify-center gap-2 rounded-full bg-[#1b5e20] py-2.5 text-[13px] font-semibold text-white transition-colors hover:bg-[#2d7a2d] sm:text-[14px]"
+                >
+                  <Download className="h-4 w-4" aria-hidden="true" />
+                  DOWNLOAD APPROVAL LETTER (PDF)
+                </a>
+              </div>
             </div>
-          </div>
+          )}
         </div>
 
         {/* ---------------- Disclaimer ---------------- */}
