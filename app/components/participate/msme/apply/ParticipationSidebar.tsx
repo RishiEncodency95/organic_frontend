@@ -13,13 +13,13 @@ export default function ParticipationSidebar() {
         <div className="relative z-10">
           <div className="flex items-center gap-2 mb-6 justify-center">
             <ShieldCheck size={20} className="text-[#a3d9a5]" strokeWidth={2.5} />
-            <h3 className="text-[12px] font-bold uppercase text-white tracking-widest text-center">
+            <h3 className="text-[12px] font-semibold uppercase text-white tracking-widest text-center">
               Your PMS Eligibility Summary
             </h3>
           </div>
 
           <div className="border-t border-b border-[#2e7d38] py-4 mb-4 flex flex-col items-center">
-            <span className="text-[#a3d9a5] text-[10px] font-bold uppercase tracking-wider mb-1">
+            <span className="text-[#a3d9a5] text-[10px] font-semibold uppercase tracking-wider mb-1">
               Preliminary Status
             </span>
             <div className="flex items-center gap-2">
@@ -42,7 +42,7 @@ export default function ParticipationSidebar() {
 
           <div className="bg-white rounded-full py-1.5 px-3 flex items-center justify-center gap-1.5 w-max mx-auto shadow-sm">
             <Tag size={12} className="text-[#176b27]" strokeWidth={2.5} />
-            <span className="text-[11px] font-bold text-[#176b27]">
+            <span className="text-[11px] font-semibold text-[#176b27]">
               Women MSE Category
             </span>
           </div>
@@ -51,37 +51,37 @@ export default function ParticipationSidebar() {
 
       {/* Application Summary */}
       <div className="bg-white rounded-xl shadow-[0_4px_20px_rgb(0,0,0,0.03)] border border-[#edf0ed] p-5">
-        <h3 className="text-[12px] font-bold uppercase text-[#176b27] tracking-wider mb-4 border-b border-[#edf0ed] pb-2">
+        <h3 className="text-[12px] font-semibold uppercase text-[#176b27] tracking-wider mb-4 border-b border-[#edf0ed] pb-2">
           Application Summary
         </h3>
         
         <div className="flex flex-col gap-3">
           <div className="flex justify-between items-start gap-4">
             <span className="text-[11px] font-medium text-gray-500 w-[40%]">Udyam Reg. Number</span>
-            <span className="text-[11px] font-bold text-gray-900 w-[60%] text-right">UDYAM-DL-02-0118490</span>
+            <span className="text-[11px] font-semibold text-gray-900 w-[60%] text-right">UDYAM-DL-02-0118490</span>
           </div>
           <div className="flex justify-between items-start gap-4">
             <span className="text-[11px] font-medium text-gray-500 w-[40%]">Enterprise Name</span>
-            <span className="text-[11px] font-bold text-gray-900 w-[60%] text-right leading-tight">RAMMANI TRADELINK PRIVATE LIMITED</span>
+            <span className="text-[11px] font-semibold text-gray-900 w-[60%] text-right leading-tight">RAMMANI TRADELINK PRIVATE LIMITED</span>
           </div>
           <div className="flex justify-between items-start gap-4">
             <span className="text-[11px] font-medium text-gray-500 w-[40%]">Enterprise Type</span>
-            <span className="text-[11px] font-bold text-gray-900 w-[60%] text-right">Micro</span>
+            <span className="text-[11px] font-semibold text-gray-900 w-[60%] text-right">Micro</span>
           </div>
           <div className="flex justify-between items-start gap-4">
             <span className="text-[11px] font-medium text-gray-500 w-[40%]">Major Activity</span>
-            <span className="text-[11px] font-bold text-gray-900 w-[60%] text-right">Manufacturing</span>
+            <span className="text-[11px] font-semibold text-gray-900 w-[60%] text-right">Manufacturing</span>
           </div>
           <div className="flex justify-between items-start gap-4">
             <span className="text-[11px] font-medium text-gray-500 w-[40%]">Stall Type</span>
-            <span className="text-[11px] font-bold text-gray-900 w-[60%] text-right">Shell Scheme</span>
+            <span className="text-[11px] font-semibold text-gray-900 w-[60%] text-right">Shell Scheme</span>
           </div>
           <div className="flex justify-between items-start gap-4">
             <span className="text-[11px] font-medium text-gray-500 w-[40%]">Stall Size</span>
-            <span className="text-[11px] font-bold text-gray-900 w-[60%] text-right">9 sqm</span>
+            <span className="text-[11px] font-semibold text-gray-900 w-[60%] text-right">9 sqm</span>
           </div>
           <div className="flex justify-between items-start gap-4 pt-2 border-t border-[#edf0ed]">
-            <span className="text-[11px] font-bold text-gray-700 w-[40%]">Total Amount <br/><span className="text-[9px] font-medium text-gray-500">(Inclusive of GST)</span></span>
+            <span className="text-[11px] font-semibold text-gray-700 w-[40%]">Total Amount <br/><span className="text-[9px] font-medium text-gray-500">(Inclusive of GST)</span></span>
             <span className="text-[13px] font-extrabold text-[#176b27] w-[60%] text-right">₹1,16,820</span>
           </div>
         </div>
@@ -89,7 +89,7 @@ export default function ParticipationSidebar() {
 
       {/* Next Steps */}
       <div className="bg-white rounded-xl shadow-[0_4px_20px_rgb(0,0,0,0.03)] border border-[#edf0ed] p-5">
-        <h3 className="text-[12px] font-bold uppercase text-[#176b27] tracking-wider mb-5">
+        <h3 className="text-[12px] font-semibold uppercase text-[#176b27] tracking-wider mb-5">
           Next Steps
         </h3>
         
@@ -104,11 +104,11 @@ export default function ParticipationSidebar() {
             { id: 4, title: "PMS Assistance", desc: "We will guide you through the claim process after the event" },
           ].map((step, i) => (
             <div key={i} className="flex gap-4 relative z-10 mb-4 last:mb-0">
-              <div className="w-6 h-6 rounded-full bg-[#176b27] text-white flex items-center justify-center text-[10px] font-bold shrink-0 shadow-sm border-2 border-white">
+              <div className="w-6 h-6 rounded-full bg-[#176b27] text-white flex items-center justify-center text-[10px] font-semibold shrink-0 shadow-sm border-2 border-white">
                 {step.id}
               </div>
               <div className="flex flex-col pt-0.5">
-                <span className="text-[12px] font-bold text-gray-900 leading-none mb-1">{step.title}</span>
+                <span className="text-[12px] font-semibold text-gray-900 leading-none mb-1">{step.title}</span>
                 <span className="text-[11px] font-medium text-gray-500 leading-snug pr-2">{step.desc}</span>
               </div>
             </div>

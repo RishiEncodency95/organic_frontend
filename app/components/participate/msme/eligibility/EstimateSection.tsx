@@ -19,7 +19,7 @@ const EstimateSection = () => {
 
       {/* Left Column: Your Estimated PMS Benefit */}
       <div className="bg-white rounded-xl lg:rounded-2xl border border-gray-100 p-4 md:px-5 md:py-4 flex flex-col justify-between shadow-[0_2px_10px_rgba(0,0,0,0.03)]">
-        <h3 className="text-[13px] lg:text-[14px] font-bold text-[#1b5e20] uppercase tracking-wide mb-6">
+        <h3 className="text-[13px] lg:text-[14px] font-semibold text-[#1b5e20] uppercase tracking-wide mb-6">
           YOUR ESTIMATED PMS BENEFIT
         </h3>
 
@@ -61,7 +61,7 @@ const EstimateSection = () => {
               </div>
             )}
 
-            <span className={`text-[11px] lg:text-[15px] font-bold mb-3 uppercase tracking-wide ${selectedCategory === 'applicable' ? 'text-[#d97706]' : 'text-gray-700'}`}>YOUR APPLICABLE CATEGORY</span>
+            <span className={`text-[11px] lg:text-[15px] font-semibold mb-3 uppercase tracking-wide ${selectedCategory === 'applicable' ? 'text-[#d97706]' : 'text-gray-700'}`}>YOUR APPLICABLE CATEGORY</span>
             <h4 className="text-xl lg:text-4xl font-semibold text-[#1b5e20] mb-2">Up to 100%</h4>
             <span className="text-[11px] lg:text-lg font-semibold text-gray-800">Women MSE Category</span>
           </div>
@@ -75,13 +75,13 @@ const EstimateSection = () => {
 
       {/* Right Column: Estimate Your Potential Assistance */}
       <div className="bg-white rounded-xl lg:rounded-2xl border border-gray-100 p-4 md:px-5 md:py-4 shadow-[0_2px_10px_rgba(0,0,0,0.03)]">
-        <h3 className="text-[13px] lg:text-[14px] font-bold text-[#1b5e20] uppercase tracking-wide mb-5">
+        <h3 className="text-[13px] lg:text-[14px] font-semibold text-[#1b5e20] uppercase tracking-wide mb-5">
           ESTIMATE YOUR POTENTIAL ASSISTANCE
         </h3>
 
         <div className="flex flex-col sm:flex-row items-start sm:items-center gap-6 mb-5">
           <div className="flex items-center gap-3 w-full sm:w-auto">
-            <label className="text-xs font-bold text-gray-800 whitespace-nowrap">Select Stall Size</label>
+            <label className="text-xs font-semibold text-gray-800 whitespace-nowrap">Select Stall Size</label>
             <div className="relative w-full sm:w-[100px]">
               <select
                 value={stallSize}
@@ -98,23 +98,23 @@ const EstimateSection = () => {
           </div>
 
           <div className="flex items-center gap-3 w-full sm:w-auto">
-            <span className="text-xs font-bold text-gray-800">Space Rate</span>
+            <span className="text-xs font-semibold text-gray-800">Space Rate</span>
             <div className="flex items-center gap-1 text-xs font-semibold text-gray-600">
               <span className="text-[10.5px]">₹</span>
-              <span className="border-b border-gray-300 px-1 text-gray-800 font-bold min-w-[3rem] text-center">11,500</span>
+              <span className="border-b border-gray-300 px-1 text-gray-800 font-semibold min-w-[3rem] text-center">11,500</span>
               <span className="text-[10.5px]">/ sqm</span>
             </div>
           </div>
         </div>
 
-        <h4 className="text-xs font-bold text-gray-800 mb-3">Example Calculation</h4>
+        <h4 className="text-xs font-semibold text-gray-800 mb-3">Example Calculation</h4>
 
         <div className="border border-gray-100 rounded-lg overflow-hidden mb-5">
           <table className="w-full text-left text-[11px] lg:text-xs">
             <thead className="bg-[#f9fafb] border-b border-gray-100">
               <tr>
-                <th className="px-4 py-2.5 font-bold text-gray-800 w-[60%]">Particulars</th>
-                <th className="px-4 py-2.5 font-bold text-gray-800">Amount</th>
+                <th className="px-4 py-2.5 font-semibold text-gray-800 w-[60%]">Particulars</th>
+                <th className="px-4 py-2.5 font-semibold text-gray-800">Amount</th>
               </tr>
             </thead>
             <tbody className="divide-y divide-gray-100 font-medium text-gray-600">
@@ -135,8 +135,8 @@ const EstimateSection = () => {
                 <td className="px-4 py-2.5 text-gray-800">Up to {assistanceRate}%</td>
               </tr>
               <tr className="bg-[#f4fbf4]">
-                <td className="px-4 py-3 font-bold text-gray-800">Estimated Eligible Assistance</td>
-                <td className="px-4 py-3 font-bold text-[#1b5e20]">Up to 99,000*</td>
+                <td className="px-4 py-3 font-semibold text-gray-800">Estimated Eligible Assistance</td>
+                <td className="px-4 py-3 font-semibold text-[#1b5e20]">Up to 99,000*</td>
               </tr>
             </tbody>
           </table>
@@ -150,7 +150,7 @@ const EstimateSection = () => {
             </svg>
           </div>
           <div className="flex flex-col gap-1">
-            <span className="text-[15px] font-bold text-[#1b5e20]">You may be eligible for assistance of up to 99,000*</span>
+            <span className="text-[15px] font-semibold text-[#1b5e20]">You may be eligible for assistance of up to 99,000*</span>
             <span className="text-[10px] lg:text-[14px] font-medium text-gray-600 leading-[1.4]">
               This is an indicative calculation. Final eligible amount may be restricted by the approved stall area, scheme ceiling and other PMS conditions.
             </span>

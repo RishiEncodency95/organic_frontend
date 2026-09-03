@@ -17,6 +17,7 @@ import {
   ArrowRight,
 } from "lucide-react";
 import documentsBgImg from "@/app/assets/participate/msme/documents_ready.jpg";
+import SectionContainer from "@/app/components/layout/SectionContainer";
 
 interface PmsDocument {
   id: number;
@@ -104,7 +105,7 @@ export default function PMSDocumentsBanner() {
   return (
     <section
       aria-labelledby="pms-documents-heading"
-      className="relative isolate overflow-hidden bg-white px-4 py-4 md:px-14"
+      className="relative isolate overflow-hidden bg-white py-4"
     >
       {/* Background Image */}
       <div className="absolute inset-0 -z-10">
@@ -114,6 +115,7 @@ export default function PMSDocumentsBanner() {
           className="h-full w-full object-cover"
         />
       </div>
+      <SectionContainer>
       {/* Header */}
       <header className="relative mx-auto mb-2 max-w-3xl text-center">
         <h1
@@ -189,6 +191,7 @@ export default function PMSDocumentsBanner() {
           <ArrowRight className="h-5 w-5" aria-hidden="true" />
         </a>
       </div>
+      </SectionContainer>
     </section>
   );
 }

@@ -2,7 +2,7 @@
 import React, { useRef, useEffect } from "react";
 import Link from "next/link";
 import { CalendarDays, MapPin, ArrowRight } from "lucide-react";
-import bannerImg from "@/app/assets/participate/msme/home-banner.jpeg";
+import bannerImg from "@/app/assets/participate/msme/home-banner.png";
 import leafImg from "@/app/assets/icons/leafs.png";
 import gsap from "gsap";
 import SectionContainer from "@/app/components/layout/SectionContainer";
@@ -128,7 +128,7 @@ export default function MsmePmsBanner({
 
       <section
         ref={sectionRef}
-        className="relative flex items-center pt-3 md:pt-5 pb-4 md:pb-6 overflow-hidden min-h-[380px] sm:min-h-[420px] md:min-h-[450px] lg:min-h-[470px] bg-[#f5f0e0] font-inter border-b-4 border-[#ea580c]"
+        className="relative w-full min-h-[380px] sm:min-h-[420px] md:min-h-[450px] lg:min-h-[470px] flex items-center overflow-hidden bg-white border-b-4 border-[#ea580c]"
       >
         {/* Background Image with Ken Burns zoom */}
         <div className="absolute inset-0 z-0 overflow-hidden">
@@ -143,7 +143,7 @@ export default function MsmePmsBanner({
         <div className="absolute inset-0 z-[1] bg-gradient-to-r from-white/95 via-white/85 to-transparent/30 md:hidden pointer-events-none" />
 
         {/* Leaf */}
-        <div
+        {/* <div
           ref={leafRef}
           className="absolute -left-5 lg:left-0 top-[5%] lg:top-[10%] z-10 hidden sm:block w-32 md:w-40 lg:w-[200px] pointer-events-none"
           style={{ opacity: 1 }}
@@ -154,34 +154,53 @@ export default function MsmePmsBanner({
             className="w-full h-auto object-contain"
             style={{ filter: "drop-shadow(4px 10px 15px rgba(0,0,0,0.15))" }}
           />
-        </div>
+        </div> */}
 
-        <SectionContainer className="relative z-20 py-1 md:py-2 [perspective:800px]">
-          <div className="flex flex-col lg:flex-row items-center justify-start">
-            <div className="w-full lg:w-[60%] xl:w-[50%] text-left shrink-0 ">
+        <div className="relative z-20 w-full h-full flex flex-col justify-center py-12 md:py-6 [perspective:800px]">
+          <SectionContainer>
+          <div className="max-w-2xl text-left mt-6 md:mt-0 space-y-3.5 md:space-y-4 w-full bg-white/75 md:bg-transparent backdrop-blur-md md:backdrop-blur-none p-4 sm:p-6 md:p-0 rounded-2xl border border-white/60 md:border-none shadow-lg md:shadow-none">
+            <div className="flex flex-col items-start justify-start">
+              <div className="w-full text-left">
+
+              {/* Tagline */}
+              <div className="flex items-center justify-start gap-2.5 mb-1">
+                <span className="w-8 h-[2.5px] bg-[#c2410c] shrink-0" />
+                <p className="text-[#c2410c] text-[12px] md:text-[15px] lg:text-[16px] font-semibold uppercase tracking-[0.18em] text-left">
+                  MSME PMS SCHEME
+                </p>
+              </div>
 
               {/* Heading */}
               <h1
-                className="text-2xl sm:text-4xl md:text-5xl lg:text-[68px] font-semibold leading-[1.05] mb-3 md:mb-4 text-left font-poppins"
+                className="text-2xl sm:text-4xl md:text-5xl lg:text-[58px] font-semibold leading-[1.05] mb-3 md:mb-4 text-left font-poppins"
                 style={{ textShadow: "1px 1px 2px rgba(0,0,0,0.4)" }}
               >
                 <span className="block overflow-hidden">
-                  <span ref={line1Ref} style={{ opacity: 0, display: "block" }} className="text-[#4B1426] text-2xl sm:text-4xl md:text-5xl lg:text-[64px] font-semibold tracking-tight whitespace-nowrap">
+                  <span ref={line1Ref} style={{ opacity: 0, display: "block" }} className="text-[#4B1426] text-2xl sm:text-4xl md:text-5xl lg:text-[58px] font-semibold tracking-tight">
                     MSME PMS <span className="capitalize">Scheme</span>
                   </span>
                 </span>
                 <span className="block overflow-hidden">
-                  <span ref={line2Ref} style={{ opacity: 0, display: "block" }} className="text-[#1b5e20] text-[20px] sm:text-[32px] md:text-[44px] lg:text-[60px] font-semibold mb-1 uppercase">
+                  <span ref={line2Ref} style={{ opacity: 0, display: "block" }} className="text-[#1b5e20] text-[20px] sm:text-[32px] md:text-[44px] lg:text-[52px] font-semibold mb-1 uppercase">
                     Exhibition Support
                   </span>
                 </span>
               </h1>
 
               {/* Subtitle */}
+              <div className="flex items-center gap-2.5">
+                <div className="w-8 md:w-12 h-1 bg-[#ea580c] rounded-full shrink-0"></div>
+                <span className="text-[#1b5e20] font-semibold text-[12px] sm:text-[14px] md:text-[16px] tracking-widest uppercase">
+                  Our Mission & Vision
+                </span>
+                <div className="w-8 md:w-12 h-1 bg-[#ea580c] rounded-full shrink-0"></div>
+              </div>
+
+              {/* Description */}
               <p
                 ref={subtitleRef}
                 style={{ opacity: 0 }}
-                className="text-black text-xs sm:text-sm md:text-base max-w-lg mb-4 md:mb-5 font-bold leading-relaxed text-left"
+                className="text-[#131730] font-semibold text-[12.5px] sm:text-[13.5px] md:text-[15px] leading-relaxed max-w-lg mt-2 font-inter"
               >
                 Eligible Micro & Small Enterprises can explore financial assistance
                 for participation in <span className="text-[#1b5e20]">Bharat Organic Expo 2027</span> under the applicable
@@ -192,7 +211,7 @@ export default function MsmePmsBanner({
               <div
                 ref={metaRef}
                 style={{ opacity: 0 }}
-                className="flex flex-col sm:flex-row items-start sm:items-center gap-2.5 sm:gap-4 mb-5 md:mb-6 text-[#4B1426] text-xs sm:text-sm md:text-[15px] font-extrabold"
+                className="flex flex-col sm:flex-row items-start sm:items-center gap-2.5 sm:gap-4 mt-4 md:mt-5 mb-5 md:mb-6 text-[#4B1426] text-xs sm:text-sm md:text-[15px] font-extrabold"
               >
                 <div className="flex items-center gap-2">
                   <CalendarDays size={17} className="shrink-0 text-[#ea580c]" />
@@ -215,7 +234,7 @@ export default function MsmePmsBanner({
                     href={eligibilityHref}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="blue-btn-hero text-white px-4 py-2 rounded-lg font-semibold text-[10px] uppercase tracking-widest flex items-center justify-center gap-2 transition-all active:scale-95 shadow-lg relative z-10 w-fit sm:w-auto"
+                    className="blue-btn-hero text-white px-5 py-2.5 rounded-full font-semibold text-[11px] md:text-[12px] uppercase tracking-wider flex items-center justify-center gap-2 transition-all active:scale-95 shadow-md relative z-10 w-full sm:w-auto"
                   >
                     CHECK PMS ELIGIBILITY <ArrowRight size={14} />
                   </Link>
@@ -228,7 +247,7 @@ export default function MsmePmsBanner({
                     href={supportHref}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="group relative inline-flex items-center justify-center gap-2 px-4 py-2 rounded-lg font-semibold text-[10px] uppercase tracking-widest text-white transition-all active:scale-95 shadow-2xl z-10 w-fit sm:w-auto overflow-hidden"
+                    className="group relative inline-flex items-center justify-center gap-2 px-5 py-2.5 rounded-full font-semibold text-[11px] md:text-[12px] uppercase tracking-wider text-white transition-all active:scale-95 shadow-xl z-10 w-full sm:w-auto overflow-hidden"
                     style={{
                       background: "linear-gradient(135deg, #ea580c, #c2410c)",
                       boxShadow: "0 4px 20px rgba(194,65,12,0.5), 0 0 12px rgba(249,115,22,0.3)",
@@ -241,7 +260,9 @@ export default function MsmePmsBanner({
               </div>
             </div>
           </div>
-        </SectionContainer>
+          </div>
+          </SectionContainer>
+        </div>
       </section>
     </>
   );

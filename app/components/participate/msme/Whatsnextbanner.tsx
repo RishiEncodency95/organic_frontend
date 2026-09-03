@@ -17,6 +17,7 @@ import {
 } from "lucide-react";
 import footerrightImg from "@/app/assets/icons/footerright.png";
 import leafsImg from "@/app/assets/icons/leafs.png";
+import SectionContainer from "@/app/components/layout/SectionContainer";
 
 const benefits = [
   {
@@ -66,7 +67,7 @@ export default function WhatsNextBanner() {
   return (
     <section
       aria-labelledby="whats-next-heading"
-      className="relative w-full overflow-hidden bg-[#F9FCF9] px-4 py-4 md:px-14"
+      className="relative w-full overflow-hidden bg-[#F9FCF9] py-4"
     >
       <img
         src={footerrightImg.src}
@@ -74,6 +75,7 @@ export default function WhatsNextBanner() {
         className="pointer-events-none absolute -left-8 bottom-0 h-36 w-36 rotate-[-20deg] object-contain opacity-10 sm:h-48 sm:w-48"
         aria-hidden="true"
       />
+      <SectionContainer>
       <div className="mx-auto w-full">
         {/* ============ TOP: Heading+Intro  |  Logo+Benefits ============ */}
         <div className="grid grid-cols-1 gap-4 lg:grid-cols-12 lg:gap-6">
@@ -144,12 +146,12 @@ export default function WhatsNextBanner() {
         <div className="mt-6 grid grid-cols-1 gap-4 lg:mt-8 lg:grid-cols-12 lg:gap-6 lg:items-stretch">
           {/* 3 Easy Steps */}
           <div className="relative overflow-hidden lg:col-span-7 rounded-2xl border border-gray-100 bg-white p-4 sm:p-5 shadow-sm">
-            <img
+            {/* <img
               src={leafsImg.src}
               alt=""
               className="pointer-events-none absolute -right-10 -top-8 h-36 w-36 rotate-[18deg] object-contain opacity-20 sm:h-44 sm:w-44"
               aria-hidden="true"
-            />
+            /> */}
             {/* Ribbon */}
             <div className="relative z-10 mb-5">
               <h3 className="text-center text-[16px] font-semibold tracking-tight text-slate-900 md:text-[20px] lg:text-[22px]">
@@ -192,12 +194,12 @@ export default function WhatsNextBanner() {
 
           {/* We're here to help */}
           <div className="lg:col-span-5 relative overflow-hidden rounded-2xl bg-[#1b5e20] p-5 sm:p-6 text-white shadow-sm">
-            <img
+            {/* <img
               src={leafsImg.src}
               alt=""
               className="pointer-events-none absolute right-0 top-0 h-full w-32 object-contain object-right opacity-20 sm:w-40"
               aria-hidden="true"
-            />
+            /> */}
             <Leaf
               className="pointer-events-none absolute -right-6 -bottom-6 h-40 w-40 text-[#1b5e20]/40"
               aria-hidden="true"
@@ -284,6 +286,7 @@ export default function WhatsNextBanner() {
           </div>
         </div>
       </div>
+      </SectionContainer>
     </section>
   );
 }

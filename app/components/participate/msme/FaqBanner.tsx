@@ -10,6 +10,7 @@ import {
   Leaf,
 } from "lucide-react";
 import faqBgImg from "@/app/assets/participate/msme/faq_bg.png";
+import SectionContainer from "@/app/components/layout/SectionContainer";
 
 interface FAQItem {
   id: string;
@@ -67,9 +68,9 @@ export default function FAQBanner() {
   return (
     <section
       aria-labelledby="faq-heading"
-      className="relative w-full overflow-hidden bg-[#F9FCF9] px-4 py-2 md:px-14"
+      className="relative w-full overflow-hidden bg-[#F9FCF9] py-2"
     >
-
+      <SectionContainer>
       <div className="relative z-10 mx-auto grid w-full grid-cols-1 items-stretch gap-6 lg:grid-cols-[minmax(0,400px)_minmax(0,1fr)] lg:gap-8">
         {/* Left: image panel */}
         <div className="relative mx-auto w-full max-w-md lg:mx-0 lg:max-w-none">
@@ -161,6 +162,7 @@ export default function FAQBanner() {
           </div>
         </div>
       </div>
+      </SectionContainer>
     </section>
   );
 }

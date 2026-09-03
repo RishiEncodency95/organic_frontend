@@ -22,7 +22,7 @@ export default function ApplicationHero() {
           <div className="max-w-2xl mt-4">
 
             {/* Breadcrumb */}
-            <div className="flex flex-wrap items-center gap-2 text-[12px] font-bold text-gray-600 mb-6 bg-white w-max px-4 py-2 rounded-xl shadow-sm border border-gray-100">
+            <div className="flex flex-wrap items-center gap-2 text-[12px] font-semibold text-gray-600 mb-6 bg-white w-max px-4 py-2 rounded-xl shadow-sm border border-gray-100">
               <Link href="#" className="hover:text-[#176b27] transition-colors">Home</Link>
               <span className="text-gray-400">&gt;</span>
               <Link href="#" className="hover:text-[#176b27] transition-colors">PMS Scheme</Link>
@@ -32,7 +32,7 @@ export default function ApplicationHero() {
               <span className="text-[#176b27]">Application Details</span>
             </div>
 
-            <span className="text-[#176b27] font-bold text-[14px] tracking-wider uppercase mb-3 block">
+            <span className="text-[#176b27] font-semibold text-[14px] tracking-wider uppercase mb-3 block">
               PMS SCHEME
             </span>
             <h1 className="text-4xl md:text-[52px] font-semibold text-[#111827] leading-[1.3] mb-2 tracking-tight">

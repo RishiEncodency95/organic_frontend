@@ -15,6 +15,7 @@ import {
 } from "lucide-react";
 import vleafImg from "@/app/assets/icons/vleaf.png";
 import officialMessageImg from "@/app/assets/participate/msme/official_message.png";
+import SectionContainer from "@/app/components/layout/SectionContainer";
 
 /**
  * OfficialMessageBanner
@@ -38,7 +39,7 @@ export default function OfficialMessageBanner({
   return (
     <section
       aria-labelledby="msme-director-message-heading"
-      className="relative w-full overflow-hidden bg-[#F7F8F0] px-4 py-6 md:px-14"
+      className="relative w-full overflow-hidden bg-[#F7F8F0] py-6"
     >
       <img
         src={vleafImg.src}
@@ -46,6 +47,7 @@ export default function OfficialMessageBanner({
         className="pointer-events-none absolute -right-8 top-0 h-36 w-36 rotate-[20deg] object-contain opacity-10 sm:h-48 sm:w-48"
         aria-hidden="true"
       />
+      <SectionContainer>
       <div className="mx-auto w-full">
         {/* Eyebrow */}
         <div className="mb-3 flex items-center justify-center gap-3">
@@ -214,6 +216,7 @@ export default function OfficialMessageBanner({
           />
         </div>
       </div>
+      </SectionContainer>
     </section>
   );
 }

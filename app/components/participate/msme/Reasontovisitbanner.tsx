@@ -11,6 +11,7 @@ import {
 } from "lucide-react";
 import reasonToVisitImg from "@/app/assets/participate/msme/reason_to_visit.jpg";
 import leafsImg from "@/app/assets/icons/leafs.png";
+import SectionContainer from "@/app/components/layout/SectionContainer";
 
 /**
  * Bharat Organic Expo — "Reason to Visit" banner
@@ -81,13 +82,14 @@ const FEATURES: Feature[] = [
 
 export default function ReasonToVisitBanner() {
   return (
-    <section className="relative w-full overflow-hidden bg-[#EFF7EE] px-4 py-6 md:px-14">
+    <section className="relative w-full overflow-hidden bg-[#EFF7EE] py-6">
       <img
         src={leafsImg.src}
         alt=""
         className="pointer-events-none absolute -left-8 top-0 h-36 w-36 rotate-[-20deg] object-contain opacity-10 sm:h-48 sm:w-48"
         aria-hidden="true"
       />
+      <SectionContainer>
       <div className="mx-auto w-full">
         {/* ===================== TOP: heading + photo collage ===================== */}
         <div className="grid grid-cols-1 items-center gap-10 lg:grid-cols-2 lg:gap-8">
@@ -190,6 +192,7 @@ export default function ReasonToVisitBanner() {
           </a>
         </div>
       </div>
+      </SectionContainer>
     </section>
   );
 }

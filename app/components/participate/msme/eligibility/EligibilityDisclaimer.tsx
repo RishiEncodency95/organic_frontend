@@ -8,7 +8,7 @@ const EligibilityDisclaimer = () => {
         <ShieldAlert size={24} strokeWidth={2} />
       </div>
       <div>
-        <h4 className="text-[12px] font-bold text-[#ea580c] uppercase tracking-wide mb-1.5">
+        <h4 className="text-[12px] font-semibold text-[#ea580c] uppercase tracking-wide mb-1.5">
           Important Disclaimer
         </h4>
         <p className="text-[11px] md:text-[12px] font-medium text-gray-700 leading-relaxed">

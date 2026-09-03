@@ -14,6 +14,7 @@ import {
 import Link from "next/link";
 import readyToExploreImg from "@/app/assets/participate/msme/ready_to_explore.jpeg";
 import { SITE_CONFIG } from "@/app/constants/siteConfig";
+import SectionContainer from "@/app/components/layout/SectionContainer";
 
 /**
  * Section 11 — Final CTA
@@ -58,7 +59,7 @@ const PMSFinalCTASection: React.FC = () => {
   return (
     <section
       aria-labelledby="pms-final-cta-heading"
-      className="relative w-full overflow-hidden px-4 py-4 md:px-14"
+      className="relative w-full overflow-hidden py-4"
     >
       {/* Background image */}
       <div className="absolute inset-0 z-0">
@@ -69,6 +70,7 @@ const PMSFinalCTASection: React.FC = () => {
         />
       </div>
 
+      <SectionContainer>
       <div className="relative z-10 mx-auto flex w-full max-w-2xl flex-col items-center px-2 lg:max-w-[50%]">
         {/* Heading */}
         <h2
@@ -143,6 +145,7 @@ const PMSFinalCTASection: React.FC = () => {
           <ArrowRight className="h-4 w-4" strokeWidth={2.25} aria-hidden="true" />
         </a>
       </div>
+      </SectionContainer>
 
       {/* Feature strip + Disclaimer - full width */}
       <div className="relative z-10 w-full">

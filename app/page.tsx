@@ -3,6 +3,7 @@ import HeroSection from "./components/home/HeroSection";
 // import BrochureDownloadPopup from "./components/home/BrochureDownloadPopup";
 
 import AudienceStrip from "./components/home/AudienceStrip";
+import FeatureStrap from "./components/home/FeatureStrap";
 // Lazy load below-the-fold components
 const IntroductionSection = lazy(() => import("./components/home/IntroductionSection"));
 const WhyParticipate = lazy(() => import("./components/home/WhyParticipate"));
@@ -26,6 +27,7 @@ const Index = () => {
     <>
       <HeroSection />
       <AudienceStrip />
+      <FeatureStrap />
       <Suspense fallback={<div className="min-h-[200px] flex items-center justify-center"><div className="w-8 h-8 border-4 border-[#3b8c2a] border-t-transparent rounded-full animate-spin"></div></div>}>
         <IntroductionSection />
         <GlobalPlatform />

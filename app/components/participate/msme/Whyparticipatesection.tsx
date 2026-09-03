@@ -1,9 +1,10 @@
 import { Calendar, Leaf, ArrowRight } from "lucide-react";
 import whyParticipateBg from "@/app/assets/participate/msme/why_participate_bg.jpeg";
-import pmsApprovedIcon from "@/app/assets/participate/msme/pms_approved.jpg";
-import focusedIndustryIcon from "@/app/assets/participate/msme/focused_industry.jpg";
-import b2bOpportunitiesIcon from "@/app/assets/participate/msme/b2b_opporttunities.jpg";
-import dedicatedSupportIcon from "@/app/assets/participate/msme/dedicated.jpg";
+import pmsApprovedIcon from "@/app/assets/participate/msme/pms_approved.png";
+import focusedIndustryIcon from "@/app/assets/participate/msme/focused_industry.png";
+import b2bOpportunitiesIcon from "@/app/assets/participate/msme/b2b_opporttunities.png";
+import dedicatedSupportIcon from "@/app/assets/participate/msme/dedicated.png";
+import SectionContainer from "@/app/components/layout/SectionContainer";
 
 interface FeatureCard {
   icon: string;
@@ -41,7 +42,7 @@ export default function WhyParticipateSection() {
   return (
     <section
       aria-labelledby="why-participate-heading"
-      className="relative w-full overflow-hidden bg-[#EFF7EE] px-4 py-6 md:px-14"
+      className="relative w-full overflow-hidden bg-[#EFF7EE] py-6"
     >
       {/* Background image */}
       <div className="absolute inset-0 z-0">
@@ -52,6 +53,7 @@ export default function WhyParticipateSection() {
         />
       </div>
 
+      <SectionContainer>
       <div className="relative z-10 mx-auto flex w-full flex-col items-center">
         {/* Sub-eyebrow */}
         <div className="mt-2 flex items-center gap-3 text-[11px] font-semibold tracking-[0.2em] text-[#1b5e20] sm:text-[12px]">
@@ -127,6 +129,7 @@ export default function WhyParticipateSection() {
           <ArrowRight className="h-5 w-5" strokeWidth={2.5} aria-hidden="true" />
         </a>
       </div>
+      </SectionContainer>
     </section>
   );
 }
