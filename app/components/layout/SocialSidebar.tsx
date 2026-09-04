@@ -49,11 +49,11 @@ const SocialSidebar = () => {
 
   const config = SITE_CONFIG as any;
   const socialLinks = {
-    facebook: config.socialLinks?.facebook || "https://www.facebook.com/namogangewellness.event",
-    instagram: config.socialLinks?.instagram || "https://www.instagram.com/namogangewellness/",
-    twitter: "https://twitter.com",
-    youtube: config.socialLinks?.youtube || "https://www.youtube.com/@NamoGangeTrust",
-    linkedin: config.socialLinks?.linkedin || "https://in.linkedin.com/company/namogange",
+    facebook: config.socialLinks?.facebook || "https://www.facebook.com/bharatorganicexpo",
+    instagram: config.socialLinks?.instagram || "https://www.instagram.com/bharatorganicexpo",
+    twitter: config.socialLinks?.twitter || "https://x.com/organicexpoin",
+    youtube: config.socialLinks?.youtube || "https://www.youtube.com/@bharatorganicexpo",
+    linkedin: config.socialLinks?.linkedin || "https://www.linkedin.com/company/bharatorganicexpo/",
   };
 
   // Static social media icons with dynamic links

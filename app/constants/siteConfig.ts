@@ -22,10 +22,10 @@ export const SITE_CONFIG = {
         sessionsCount: 100
     },
     socialLinks: {
-        facebook: "https://www.facebook.com/namogangewellness.event",
-        instagram: "https://www.instagram.com/namogangewellness/",
-        twitter: "https://twitter.com",
-        youtube: "https://www.youtube.com/@NamoGangeTrust",
-        linkedin: "https://in.linkedin.com/company/namogange",
+        facebook: "https://www.facebook.com/bharatorganicexpo",
+        instagram: "https://www.instagram.com/bharatorganicexpo",
+        twitter: "https://x.com/organicexpoin",
+        youtube: "https://www.youtube.com/@bharatorganicexpo",
+        linkedin: "https://www.linkedin.com/company/bharatorganicexpo/",
     }
 };
