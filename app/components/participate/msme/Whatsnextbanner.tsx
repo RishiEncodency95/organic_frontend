@@ -216,18 +216,18 @@ export default function WhatsNextBanner() {
 
               <div className="mt-3 flex flex-col gap-2 text-[14px] sm:text-[15px]">
                 <a
-                  href="mailto:msme.support@bharatorganicexpo.in"
+                  href="mailto:info@namogangewellness.com"
                   className="flex items-center gap-3 text-white/90 hover:text-white"
                 >
                   <Mail className="h-5 w-5 shrink-0 text-[#F2B40E]" aria-hidden="true" />
-                  <span className="break-all">msme.support@bharatorganicexpo.in</span>
+                  <span className="break-all">info@namogangewellness.com</span>
                 </a>
                 <a
-                  href="tel:+911143083738"
+                  href="tel:+919654900525"
                   className="flex items-center gap-3 text-white/90 hover:text-white"
                 >
                   <Phone className="h-5 w-5 shrink-0 text-[#F2B40E]" aria-hidden="true" />
-                  <span>+91 11 4308 3738</span>
+                  <span>+91 96549 00525</span>
                 </a>
               </div>
             </div>

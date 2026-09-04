@@ -239,24 +239,24 @@ export default function PmsSupportSection() {
             </div>
             <address className="mt-1 flex flex-col gap-1.5 text-[13px] not-italic text-slate-700 sm:text-sm">
               <a
-                href="mailto:msme.support@bharatorganicexpo.in"
+                href="mailto:info@namogangewellness.com"
                 className="flex items-center gap-2 hover:underline"
               >
                 <Mail
                   className="h-5 w-5 shrink-0 text-[#1b5e20]"
                   aria-hidden="true"
                 />
-                msme.support@bharatorganicexpo.in
+                info@namogangewellness.com
               </a>
               <a
-                href="tel:+911143083738"
+                href="tel:+919654900525"
                 className="flex items-center gap-2 hover:underline"
               >
                 <Phone
                   className="h-5 w-5 shrink-0 text-[#1b5e20]"
                   aria-hidden="true"
                 />
-                +91 11 4308 3738
+                +91 96549 00525
               </a>
             </address>
           </div>
