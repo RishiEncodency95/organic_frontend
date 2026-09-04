@@ -4,6 +4,7 @@ import {
   MessageCircle,
   Globe,
   Headset,
+  FileText,
   CheckCircle,
   Users,
   ShieldCheck,
@@ -63,13 +64,13 @@ export default function NeedHelpSection() {
     <section className="bg-gray-100 pt-6 pb-0">
       <SectionContainer>
         {/* Top row */}
-        <div className="grid grid-cols-1 gap-5 lg:grid-cols-2">
+        <div className="grid grid-cols-1 gap-5 lg:grid-cols-[1fr_1.4fr]">
           {/* Left: Heading + commitment */}
           <div>
-            <h2 className="text-[28px] font-extrabold uppercase leading-tight text-[#0d4a1a] sm:text-[36px]">
+            <h2 className="text-[28px] font-semibold uppercase leading-tight text-[#0d4a1a] sm:text-[36px]">
               Need Help?
             </h2>
-            <h3 className="text-[22px] font-extrabold uppercase leading-tight text-slate-900 sm:text-[28px]">
+            <h3 className="text-[22px] font-semibold uppercase leading-tight text-slate-900 sm:text-[28px]">
               We&apos;re Here to Support You
             </h3>
             <span className="mt-1 block h-[3px] w-16 rounded-full bg-[#1b5e20]" />
@@ -116,13 +117,13 @@ export default function NeedHelpSection() {
                     <span className="mb-2 flex h-12 w-12 items-center justify-center rounded-full bg-[#EFF7EE]">
                       <m.icon className="h-6 w-6 text-[#1b5e20]" aria-hidden="true" />
                     </span>
-                    <p className="text-[12px] font-semibold uppercase text-slate-900">
+                    <p className="text-[12px] font-semibold uppercase text-[#1b5e20]">
                       {m.title}
                     </p>
-                    <p className="mt-0.5 text-[12px] font-semibold text-[#1b5e20] break-all">
+                    <p className="mt-0.5 text-[12px] font-semibold text-slate-900 break-all">
                       {m.detail}
                     </p>
-                    <span className="my-2 h-px w-6 bg-gray-200" />
+                    <span className="my-2 h-[2px] w-12 bg-gray-300" />
                     <p className="text-[11px] leading-snug text-slate-500 whitespace-pre-line">
                       {m.sub}
                     </p>
@@ -137,7 +138,7 @@ export default function NeedHelpSection() {
         <div className="mt-5 grid grid-cols-1 gap-5 lg:grid-cols-2">
           {/* Why reach out */}
           <div className="flex items-center gap-4 rounded-2xl border border-gray-200 bg-white p-5 shadow-sm">
-            <div className="flex-1">
+            <div className="flex-1 border-r border-gray-200 pr-4">
               <div className="flex items-center gap-2">
                 <h4 className="text-[16px] font-semibold text-[#1b5e20]">
                   WHY REACH OUT TO US?
@@ -171,7 +172,7 @@ export default function NeedHelpSection() {
                 <Users className="h-6 w-6 text-white" aria-hidden="true" />
               </span>
               <div>
-                <p className="text-[15px] font-semibold text-slate-900">
+                <p className="text-[15px] font-semibold text-[#1b5e20]">
                   DEDICATED RELATIONSHIP MANAGERS
                 </p>
                 <p className="mt-0.5 text-[13px] leading-snug text-slate-600">
@@ -182,13 +183,13 @@ export default function NeedHelpSection() {
               </div>
             </div>
 
-            <div className="mt-4 grid grid-cols-4 gap-3">
-              {features.map((f) => (
-                <div key={f.label} className="flex flex-col items-center text-center">
-                  <span className="mb-2 flex h-11 w-11 items-center justify-center rounded-full bg-[#EFF7EE]">
-                    <f.icon className="h-5 w-5 text-[#1b5e20]" aria-hidden="true" />
+            <div className="mt-4 grid grid-cols-4 gap-3 border-t border-gray-200 pt-4">
+              {features.map((f, i) => (
+                <div key={f.label} className={`flex flex-col items-center text-center ${i < features.length - 1 ? "border-r border-gray-200" : ""}`}>
+                  <span className="mb-2 flex h-11 w-11 items-center justify-center">
+                    <f.icon className="h-7 w-7 text-[#1b5e20]" aria-hidden="true" />
                   </span>
-                  <p className="text-[10px] font-semibold uppercase leading-tight text-slate-700 whitespace-pre-line">
+                  <p className="text-[12px] font-semibold uppercase leading-tight text-slate-700 whitespace-pre-line">
                     {f.label}
                   </p>
                 </div>
@@ -213,7 +214,7 @@ export default function NeedHelpSection() {
               />
             </span>
             <div>
-              <p className="text-[14px] font-semibold uppercase leading-tight text-white sm:text-[15px]">
+              <p className="text-[14px] font-semibold uppercase leading-tight text-white sm:text-[15px] border-b-2 border-white pb-1">
                 Together, Let&apos;s Grow
                 <br />A Sustainable India
               </p>
@@ -230,7 +231,7 @@ export default function NeedHelpSection() {
           <div className="flex flex-1 items-center justify-between gap-3 rounded-2xl bg-white px-5 py-2 sm:py-2">
             <div className="flex items-center gap-3">
               <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-[#EFF7EE]">
-                <Headset className="h-8 w-8 text-[#1b5e20]" aria-hidden="true" />
+                <FileText className="h-8 w-8 text-[#1b5e20]" aria-hidden="true" />
               </span>
               <div>
                 <p className="text-[13px] font-semibold uppercase text-slate-900">

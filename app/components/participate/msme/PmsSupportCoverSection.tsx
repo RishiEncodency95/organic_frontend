@@ -130,8 +130,8 @@ const PmsSupportCoverSection: FC = () => {
             </div>
 
             {/* Right side - Maximum assistance box */}
-            <div className="flex items-center justify-start pl-4">
-              <div className="relative w-full max-w-sm rounded-2xl border-2 border-[#1b5e20] bg-[#f5faf5] px-6 pb-6 pt-10 text-center shadow-md">
+            <div className="flex items-center justify-start pl-0">
+              <div className="relative w-full max-w-xs rounded-2xl border-2 border-[#1b5e20] bg-[#f5faf5] px-6 pb-6 pt-10 text-center shadow-md">
                 {/* UP TO badge - half outside */}
                 <div className="absolute left-1/2 top-0 z-10 -translate-x-1/2 -translate-y-1/2">
                   <span className="rounded-full bg-[#1b5e20] px-5 py-1.5 text-[13px] font-bold uppercase tracking-wide text-white shadow-md">

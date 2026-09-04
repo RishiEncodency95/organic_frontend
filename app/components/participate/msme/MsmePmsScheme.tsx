@@ -1,4 +1,4 @@
-import { Globe, Store, Handshake, TrendingUp } from "lucide-react";
+import { Globe, Store, Handshake, TrendingUp, BookSearch, BookOpenCheck } from "lucide-react";
 import type { LucideIcon } from "lucide-react";
 import Image from "next/image";
 import leafsImg from "@/app/assets/icons/leafs.png";
@@ -71,10 +71,16 @@ export default function MsmePmsScheme() {
       /> */}
       <SectionContainer>
       <div className="mx-auto w-full">
+        <div className="flex items-center justify-center gap-4">
+          <div className="w-[100px] h-px bg-[#d4a017]"></div>
+        <h2 className="uppercase text-center text-[18px] font-semibold tracking-tight text-[#1b5e20] text-balance flex gap-2"><BookOpenCheck className="h-6 w-6" /> Know The Scheme</h2>
+          <div className="w-[100px] h-px bg-[#d4a017]"></div>
+
+        </div>
         {/* Heading */}
         <h2
           id="msme-pms-heading"
-          className="text-center text-[18px] font-semibold tracking-tight text-[#1b5e20] text-balance md:text-[28px] lg:text-[32px]"
+          className="text-center text-[18px] font-semibold tracking-tight text-[#1b5e20] text-balance md:text-[28px] lg:text-[40px] mt-4"
         >
           What is the MSME PMS Scheme?
         </h2>
@@ -87,11 +93,11 @@ export default function MsmePmsScheme() {
         </div>
 
         {/* Intro paragraph */}
-        <p className="mx-auto max-w-3xl text-center text-[14px] sm:text-[15px] leading-relaxed text-slate-600 text-balance">
+        <p className="mx-auto max-w-3xl text-center text-[16px] leading-relaxed text-balance">
           The <strong className="font-semibold text-[#1b5e20]">Procurement &amp; Marketing Support (PMS) Scheme</strong> {' '}is
           an initiative of the Ministry of MSME aimed at improving market access for Micro
-          &amp; Small Enterprises. Eligible MSEs can explore applicable financial assistance for
-          participation in approved trade fairs and exhibitions.
+          &amp; Small Enterprises. <br/>Eligible MSEs can explore applicable financial assistance for
+          participation<br/> in approved trade fairs and exhibitions.
         </p>
 
         {/* Feature cards */}
