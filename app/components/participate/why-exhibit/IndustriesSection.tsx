@@ -29,7 +29,7 @@ const sectionData = {
   buttonText: "VIEW ALL CATEGORIES",
   categories: [
     { id: "organic-food-beverages", icon: Apple, title: "Organic Food & Beverages", desc: "Wide range of certified organic foods, beverages, healthy snacks, grains, pulses, and ingredients.", color: "#4ade80", image: sectors1, imageAlt: "Organic Food & Beverages Sector" },
-    { icon: Leaf, title: "AYUSH, Ayurveda & Herba", desc: "Ayurvedic medicines, herbal supplements, essential oils, teas, wellness products and holistic solutions.", color: "#14b8a6", image: sectors2, imageAlt: "AYUSH, Ayurveda & Herbs Sector" },
+    { id: "ayush-ayurveda-herbal", icon: Leaf, title: "AYUSH, Ayurveda & Herba", desc: "Ayurvedic medicines, herbal supplements, essential oils, teas, wellness products and holistic solutions.", color: "#14b8a6", image: sectors2, imageAlt: "AYUSH, Ayurveda & Herbs Sector" },
     { icon: Sprout, title: "Organic Natural Farming", desc: "Natural farming practices, organic cultivation methods, innovations and farm-to-market solutions.", color: "#22c55e", image: sectors3, imageAlt: "Organic Natural Farming Sector" },
     { icon: Package, title: "Organic Inputs, Seeds & Bio- Inputs", desc: "Bio-fertilisers, organic manures, soil enhancers, pesticides and high-quality seeds.", color: "#fb923c", image: sectors4, imageAlt: "Organic Inputs, Seeds & Bio-Inputs Sector" },
     { icon: Milk, title: "Dairy, Livestock & Allied", desc: "Organic dairy products, livestock nutrition, animal health solutions and sustainable practices.", color: "#f472b6", image: sectors5, imageAlt: "Dairy, Livestock & Allied Sector" },
