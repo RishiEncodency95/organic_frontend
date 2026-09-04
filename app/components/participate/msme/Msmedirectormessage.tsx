@@ -74,9 +74,9 @@ export default function OfficialMessageBanner({
         </p>
 
         {/* Main content: video + quote card */}
-        <div className="mt-3 grid grid-cols-1 gap-4 lg:grid-cols-2 lg:gap-6">
-          <div className="relative overflow-hidden rounded-2xl bg-[#0e1a2b] shadow-xl ring-1 ring-black/5">
-            <div className="relative aspect-[2/1] w-full">
+        <div className="mt-3 grid grid-cols-1 gap-4 lg:grid-cols-5 lg:gap-6">
+          <div className="relative overflow-hidden rounded-2xl bg-[#0e1a2b] shadow-xl ring-1 ring-black/5 lg:col-span-3">
+            <div className="relative h-[280px] w-full">
               <iframe
                 src="https://www.youtube.com/embed/r5Ak4KY8-cs"
                 title="MSME Director Official Message"
@@ -87,25 +87,25 @@ export default function OfficialMessageBanner({
             </div>
           </div>
 
-          <div className="relative flex flex-col overflow-hidden rounded-2xl border border-gray-100 bg-white p-4 shadow-sm">
+          <div className="relative flex flex-col overflow-hidden rounded-2xl border border-gray-100 bg-white p-4 shadow-sm lg:col-span-2">
             <div className="flex flex-1 gap-4">
-              <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-[#1b5e20]">
-                <Quote className="h-4 w-4 fill-white text-white" aria-hidden="true" />
+              <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-[#1b5e20]">
+                <Quote className="h-5 w-5 fill-white text-white" aria-hidden="true" />
               </div>
               <div>
 
-                <h2 className="text-[18px] font-semibold tracking-wide text-slate-900 md:text-[20px]">
+                <h2 className="text-[18px] font-semibold tracking-wide text-[#1b5e20] md:text-[20px]">
                   MESSAGE FROM MSME LEADERSHIP
                 </h2>
-                <div className="mt-1 flex items-center gap-2 sm:justify-start" aria-hidden="true">
-                  <span className="h-px w-10 bg-[#3b8c2a]/40" />
+                <div className="mt-1 flex w-full items-center gap-2 sm:justify-start" aria-hidden="true">
+                  <span className="h-px flex-1 bg-[#3b8c2a]/40" />
                   <Leaf className="h-3.5 w-3.5 -rotate-45 text-[#1b5e20]" />
-                  <span className="h-px w-10 bg-[#3b8c2a]/40" />
+                  <span className="h-px flex-1 bg-[#3b8c2a]/40" />
                 </div>
               </div>
             </div>
 
-            <blockquote className="mt-2 flex-1 text-[14px] leading-relaxed text-slate-600 md:text-[15px]">
+            <blockquote className="mt-2 flex-1 text-[15px] leading-loose text-slate-600 md:text-[16px]">
               "Government of India is committed to empowering MSMEs and
               creating more opportunities for their growth. We appreciate
               initiatives like{" "}
@@ -118,8 +118,8 @@ export default function OfficialMessageBanner({
 
             <div className="mt-4 border-t border-dashed border-gray-200 pt-4">
               <div className="flex items-center gap-3">
-                <div className="flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-full bg-[#1b5e20]">
-                  <User className="h-6 w-6 text-white" aria-hidden="true" />
+                <div className="flex h-14 w-14 flex-shrink-0 items-center justify-center rounded-full bg-[#1b5e20]">
+                  <User className="h-7 w-7 text-white" aria-hidden="true" />
                 </div>
                 <div>
                   <p className="text-[14px] font-semibold text-slate-900 sm:text-[15px]">
@@ -145,20 +145,20 @@ export default function OfficialMessageBanner({
           </div>
         </div>
         {/* Feature strip */}
-        <div className="mt-6 grid grid-cols-1 gap-4 rounded-2xl bg-[#1b5e20] p-4 sm:grid-cols-3 sm:gap-6 sm:p-5">
+        <div className="mt-6 grid grid-cols-1 gap-4 rounded-2xl border border-gray-100 bg-white p-4 shadow-sm sm:grid-cols-3 sm:gap-6 sm:p-5">
           <FeatureItem
-            icon={<ShieldCheck className="h-7 w-7 text-white" aria-hidden="true" />}
+            icon={<ShieldCheck className="h-7 w-7 text-[#1b5e20]" aria-hidden="true" />}
             title="Official Message"
             description="Direct message from MSME Leadership"
           />
           <FeatureItem
-            icon={<Users className="h-7 w-7 text-white" aria-hidden="true" />}
+            icon={<Users className="h-7 w-7 text-[#1b5e20]" aria-hidden="true" />}
             title="For All MSMEs"
             description="Encouragement for every entrepreneur across India"
-            className="sm:border-x sm:border-white/20 sm:px-6"
+            className="sm:border-x sm:border-gray-200 sm:px-6"
           />
           <FeatureItem
-            icon={<Award className="h-7 w-7 text-white" aria-hidden="true" />}
+            icon={<Award className="h-7 w-7 text-[#1b5e20]" aria-hidden="true" />}
             title="Government Support"
             description="Strong support for growth, competitiveness & global reach"
           />
@@ -182,12 +182,12 @@ function FeatureItem({
 }) {
   return (
     <div className={`flex items-start gap-3 ${className}`}>
-      <div className="flex h-14 w-14 flex-shrink-0 items-center justify-center rounded-full bg-white/20">
+      <div className="flex h-14 w-14 flex-shrink-0 items-center justify-center rounded-full bg-gray-100">
         {icon}
       </div>
       <div>
-        <p className="text-[14px] font-semibold text-white sm:text-[15px]">{title}</p>
-        <p className="mt-0.5 text-[13px] leading-snug text-white/80 sm:text-[14px]">
+        <p className="text-[14px] font-semibold text-[#1b5e20] sm:text-[15px]">{title}</p>
+        <p className="mt-0.5 text-[13px] leading-snug text-slate-600 sm:text-[14px]">
           {description}
         </p>
       </div>

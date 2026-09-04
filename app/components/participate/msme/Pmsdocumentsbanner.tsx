@@ -125,8 +125,17 @@ export default function PMSDocumentsBanner() {
           Keep Your <span className="text-[#1b5e20]">PMS</span> Documents Ready
         </h1>
 
+        {/* Decoration */}
+        <div className="mx-auto mt-3 flex w-full max-w-xs items-center gap-2">
+          <span className="h-px flex-1 bg-[#1b5e20]/40" />
+          <span className="h-2 w-2 rounded-full bg-[#1b5e20]" />
+          <span className="h-2.5 w-2.5 rounded-full bg-[#1b5e20]" />
+          <span className="h-2 w-2 rounded-full bg-[#1b5e20]" />
+          <span className="h-px flex-1 bg-[#1b5e20]/40" />
+        </div>
+
         <p className="text-base leading-relaxed text-black sm:text-lg">
-          Ensure these essential documents are ready for a smooth{" "}
+          Ensure these essential documents are ready for a smooth{" "}<br/>
           <span className="block font-semibold text-[#1b5e20] sm:inline">
             PMS claim process.
           </span>
