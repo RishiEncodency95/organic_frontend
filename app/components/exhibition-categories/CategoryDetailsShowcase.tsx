@@ -5,6 +5,15 @@ import Image from "next/image";
 import { Check, Phone, ArrowRight, ShieldCheck, Users, Globe, Handshake, Target, MapPin, Calendar, Heart, Leaf, Sprout, Store, Star, Factory, Tag, Package, Coffee, Carrot, CheckCircle2, Navigation, Headphones, TrendingUp, Megaphone, Apple, CupSoda, Utensils, Wheat, BadgeCheck, Truck, ShoppingBag } from "lucide-react";
 import heroBg from "@/app/assets/exhibition-categories/food.png";
 import cardImg1 from "@/app/assets/exhibition-categories/organic-food/organic_grains_millets_cereals.png";
+import cardImg2 from "@/app/assets/exhibition-categories/organic-food/pulses_legumes_beans_186x140.png";
+import cardImg3 from "@/app/assets/exhibition-categories/organic-food/organic_beverages.png";
+import cardImg4 from "@/app/assets/exhibition-categories/organic-food/fruits_vegetables.png";
+import cardImg5 from "@/app/assets/exhibition-categories/organic-food/nuts_seeds_superfoods.png";
+import cardImg6 from "@/app/assets/exhibition-categories/organic-food/oils_fats_sweeteners.png";
+import cardImg7 from "@/app/assets/exhibition-categories/organic-food/organic_processed_convenience_foods_186x140.png";
+import cardImg8 from "@/app/assets/exhibition-categories/organic-food/functional_plant_based_foods_186x140.png";
+import cardImg9 from "@/app/assets/exhibition-categories/organic-food/organic_baby_kids_food_186x140.png";
+import cardImg10 from "@/app/assets/exhibition-categories/organic-food/health_foods_snacks_186x140.png";
 
 const productSegments = [
   {
@@ -14,39 +23,48 @@ const productSegments = [
   },
   {
     title: "Pulses, Legumes\n& Beans",
-    items: ["Dals & lentils", "Beans, peas & chickpeas", "Sprouts & microgreens", "High-protein plant foods"]
+    items: ["Dals & lentils", "Beans, peas & chickpeas", "Sprouts & microgreens", "High-protein plant foods"],
+    image: cardImg2
   },
   {
     title: "Organic Beverages",
-    items: ["Juices, smoothies & nectars", "Herbal & functional beverages", "Plant-based milk & drinks", "Tea, coffee & cocoa"]
+    items: ["Juices, smoothies & nectars", "Herbal & functional beverages", "Plant-based milk & drinks", "Tea, coffee & cocoa"],
+    image: cardImg3
   },
   {
     title: "Fruits & Vegetables",
-    items: ["Fresh organic fruits", "Fresh organic vegetables", "Dried fruits & vegetables", "Fruit & vegetable powders"]
+    items: ["Fresh organic fruits", "Fresh organic vegetables", "Dried fruits & vegetables", "Fruit & vegetable powders"],
+    image: cardImg4
   },
   {
     title: "Nuts, Seeds &\nSuperfoods",
-    items: ["Nuts, dry fruits & seeds", "Chia, flax, pumpkin, sesame", "Superfoods (quinoa,\namaranth, etc.)", "Trail mixes & nutrition bites"]
+    items: ["Nuts, dry fruits & seeds", "Chia, flax, pumpkin, sesame", "Superfoods (quinoa,\namaranth, etc.)", "Trail mixes & nutrition bites"],
+    image: cardImg5
   },
   {
     title: "Oils, Fats &\nSweeteners",
-    items: ["Cold-pressed organic oils", "Ghee & plant-based fats", "Natural sweeteners (honey,\njaggery, maple syrup)", "Coconut & nut oils"]
+    items: ["Cold-pressed organic oils", "Ghee & plant-based fats", "Natural sweeteners (honey,\njaggery, maple syrup)", "Coconut & nut oils"],
+    image: cardImg6
   },
   {
     title: "Organic Processed &\nConvenience Foods",
-    items: ["Pickles, chutneys & condiments", "Ready-to-eat meals", "Soups, sauces & spreads", "Instant mixes & meal kits", "Snacks, crackers & chips"]
+    items: ["Pickles, chutneys & condiments", "Ready-to-eat meals", "Soups, sauces & spreads", "Instant mixes & meal kits", "Snacks, crackers & chips"],
+    image: cardImg7
   },
   {
     title: "Functional Foods &\nPlant-based Foods",
-    items: ["Protein powders & plant proteins", "Fiber, omega & vitamin blends", "Prebiotics, probiotics & enzymes", "Baking & cooking ingredients", "Meat & dairy alternatives"]
+    items: ["Protein powders & plant proteins", "Fiber, omega & vitamin blends", "Prebiotics, probiotics & enzymes", "Baking & cooking ingredients", "Meat & dairy alternatives"],
+    image: cardImg8
   },
   {
     title: "Organic Baby &\nKids Food",
-    items: ["Organic infant nutrition", "Baby cereals & snacks", "Toddler meals & drinks", "Kids' healthy snacks"]
+    items: ["Organic infant nutrition", "Baby cereals & snacks", "Toddler meals & drinks", "Kids' healthy snacks"],
+    image: cardImg9
   },
   {
     title: "Health Foods & Snacks",
-    items: ["Granola, muesli & energy bars", "Healthy chips & crackers", "Natural & organic sweet treats", "On-the-go healthy snacks"]
+    items: ["Granola, muesli & energy bars", "Healthy chips & crackers", "Natural & organic sweet treats", "On-the-go healthy snacks"],
+    image: cardImg10
   }
 ];
 
@@ -313,30 +331,30 @@ export default function CategoryDetailsShowcase() {
             {/* Box 2: Middle Banner */}
             <div className="rounded-[12px] bg-[#0c2f17] px-4 py-2 flex-[1.1] relative overflow-hidden flex flex-col justify-center shadow-md min-h-[140px]">
               {/* Background Image on Right */}
-              <div 
-                className="absolute right-0 top-0 h-full w-[50%] bg-cover bg-center" 
-                style={{ 
-                  backgroundImage: `url(${heroBg.src})`, 
-                  maskImage: "linear-gradient(to right, transparent, black 85%)", 
-                  WebkitMaskImage: "linear-gradient(to right, transparent, black 80%)" 
+              <div
+                className="absolute right-0 top-0 h-full w-[50%] bg-cover bg-center"
+                style={{
+                  backgroundImage: `url(${heroBg.src})`,
+                  maskImage: "linear-gradient(to right, transparent, black 85%)",
+                  WebkitMaskImage: "linear-gradient(to right, transparent, black 80%)"
                 }}
               ></div>
-              
+
               <div className="relative z-10 w-[80%]">
                 <h3 className="text-white text-[13px] font-semibold mb-3 leading-[1.4] uppercase">
                   BE PART OF INDIA'S PREMIER PLATFORM FOR ORGANIC, NATURAL & WELLNESS
                 </h3>
-                
+
                 <div className="flex items-center gap-4">
                   <div className="flex flex-col gap-2">
                     <span className="text-white text-[11px]">Showcase. Connect. Grow.</span>
-                    <button className="bg-[#ff4500] hover:bg-[#e63e00] text-white text-[12px] font-bold px-4 py-1.5 rounded flex items-center justify-center gap-2 uppercase w-max transition-colors">
+                    <a href="/registration/book-a-stand" target="_blank" rel="noopener noreferrer" className="bg-[#ff4500] hover:bg-[#e63e00] text-white text-[12px] font-bold px-4 py-1.5 rounded flex items-center justify-center gap-2 uppercase w-max transition-colors">
                       BOOK A STALL NOW <ArrowRight className="w-4 h-4" />
-                    </button>
+                    </a>
                   </div>
-                  
+
                   <div className="w-[1px] h-14 bg-white/20 mx-2"></div>
-                  
+
                   <div className="flex flex-col gap-2 justify-center">
                     <span className="text-white text-[11px] mb-0.5">Or Contact Us</span>
                     <div className="flex items-center gap-1.5 text-white/90 text-[10.5px]">
@@ -361,7 +379,7 @@ export default function CategoryDetailsShowcase() {
                   Our team is here to help you find the right category for your business.
                 </div>
               </div>
-              <a href="#" className="text-[#ff4500] text-[12px] font-bold uppercase tracking-wide flex items-center gap-1 mt-4 hover:underline">
+              <a href="/contact" target="_blank" rel="noopener noreferrer" className="text-[#ff4500] text-[12px] font-bold uppercase tracking-wide flex items-center gap-1 mt-4 hover:underline">
                 CONTACT US <ArrowRight className="w-3.5 h-3.5" strokeWidth={2.5} />
               </a>
             </div>
