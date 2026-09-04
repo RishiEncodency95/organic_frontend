@@ -5,6 +5,7 @@ import ExhibitionSectors from "@/app/components/exhibition-categories/Exhibition
 import CategoryDetailsShowcase from "@/app/components/exhibition-categories/CategoryDetailsShowcase";
 import AyushDetailsShowcase from "@/app/components/exhibition-categories/AyushDetailsShowcase";
 import OrganicFarmingShowcase from "@/app/components/exhibition-categories/OrganicFarmingShowcase";
+import OrganicInputsShowcase from "@/app/components/exhibition-categories/OrganicInputsShowcase";
 
 export default function ExhibitionCategoriesPage() {
   const [activeCategory, setActiveCategory] = useState("organic-food-beverages");
@@ -32,8 +33,9 @@ export default function ExhibitionCategoriesPage() {
       {activeCategory === "organic-food-beverages" && <CategoryDetailsShowcase />}
       {activeCategory === "ayush-ayurveda-herbal" && <AyushDetailsShowcase />}
       {activeCategory === "organic-natural-farming" && <OrganicFarmingShowcase />}
+      {activeCategory === "organic-inputs" && <OrganicInputsShowcase />}
       
-      {!["organic-food-beverages", "ayush-ayurveda-herbal", "organic-natural-farming"].includes(activeCategory) && (
+      {!["organic-food-beverages", "ayush-ayurveda-herbal", "organic-natural-farming", "organic-inputs"].includes(activeCategory) && (
         <div className="w-full py-20 text-center text-gray-500 font-medium">
           Detailed showcase for this category is coming soon.
         </div>

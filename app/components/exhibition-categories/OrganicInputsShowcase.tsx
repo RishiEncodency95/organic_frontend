@@ -1,124 +1,121 @@
-"use client";
-
 import React from "react";
 import Image from "next/image";
-import { Check, Phone, ArrowRight, ShieldCheck, Users, Globe, Handshake, Target, MapPin, Calendar, Heart, Leaf, Sprout, Store, Star, Factory, Tag, Package, Coffee, Carrot, CheckCircle2, Navigation, Headphones, TrendingUp, Megaphone, Apple, CupSoda, Utensils, Wheat, BadgeCheck, Truck, ShoppingBag, GraduationCap, Droplet, FlaskConical, Stethoscope, Building2, Beaker, FileText, Briefcase, Sun, Tractor, Trees } from "lucide-react";
-import heroBg from "@/app/assets/exhibition-categories/organic-natural-farming/organic-natural-bg.png";
-import organicSeedsImg from "@/app/assets/exhibition-categories/organic-natural-farming/organic-seeds.png";
-import organicInputImg from "@/app/assets/exhibition-categories/organic-natural-farming/organic-input.png";
-import soilHealthImg from "@/app/assets/exhibition-categories/organic-natural-farming/soli-health.png";
-import sustainableImg from "@/app/assets/exhibition-categories/organic-natural-farming/sustainable.png";
-import farmMachineryImg from "@/app/assets/exhibition-categories/organic-natural-farming/farm-machinery.png";
-import protectedImg from "@/app/assets/exhibition-categories/organic-natural-farming/protected.png";
-import irrigationImg from "@/app/assets/exhibition-categories/organic-natural-farming/irrgation.png";
-import cropImg from "@/app/assets/exhibition-categories/organic-natural-farming/crop.png";
-import integratedImg from "@/app/assets/exhibition-categories/organic-natural-farming/intergrated.png";
-import postHarvestImg from "@/app/assets/exhibition-categories/organic-natural-farming/post-harvest.png";
+import { Check, Phone, ArrowRight, ShieldCheck, Users, Globe, Handshake, Target, MapPin, Calendar, Heart, Leaf, Sprout, Store, Star, Factory, Tag, Package, Coffee, Carrot, CheckCircle2, Navigation, Headphones, TrendingUp, Megaphone, Apple, CupSoda, Utensils, Wheat, BadgeCheck, Truck, ShoppingBag, GraduationCap, Droplet, FlaskConical, Stethoscope, Building2, Beaker, FileText, Briefcase, Sun, Tractor, Trees, TestTube, Microscope, Search, Sprout as Plant } from "lucide-react";
+import heroBg from "@/app/assets/exhibition-categories/organic-inputs-seeds/organic-inputs-bg.png";
+import organicManuresImg from "@/app/assets/exhibition-categories/organic-inputs-seeds/organic-manures.png";
+import bioFertilizersImg from "@/app/assets/exhibition-categories/organic-inputs-seeds/bio-fertilizers.png";
+import organicSeedsImg from "@/app/assets/exhibition-categories/organic-inputs-seeds/organic-seeds.png";
+import bioPesticidesImg from "@/app/assets/exhibition-categories/organic-inputs-seeds/bio-pesticides.png";
+import plantGrowthImg from "@/app/assets/exhibition-categories/organic-inputs-seeds/plant-growth.png";
+import soilCropImg from "@/app/assets/exhibition-categories/organic-inputs-seeds/soil-crop.png";
+import seedTreatmentImg from "@/app/assets/exhibition-categories/organic-inputs-seeds/seed-treatment.png";
+import organicNutrientImg from "@/app/assets/exhibition-categories/organic-inputs-seeds/organic-nnutrient.png";
+import bioInputImg from "@/app/assets/exhibition-categories/organic-inputs-seeds/bio-input.png";
+import nurseryImg from "@/app/assets/exhibition-categories/organic-inputs-seeds/nursery.png";
 
 const productSegments = [
   {
-    title: "Organic Seeds &\nPlanting Materials",
-    items: ["Organic seeds & seedlings", "Bio-fertilized seeds", "Planting materials & saplings", "Tissue culture plants"],
+    title: "Organic Manures &\nSoil Amendments",
+    items: ["Farmyard manure & compost", "Vermicompost & vermiwash", "Green manure & cover crops", "Soil conditioners & enhancers"],
+    image: organicManuresImg
+  },
+  {
+    title: "Bio-Fertilizers &\nMicrobial Inoculants",
+    items: ["Nitrogen fixing bio-fertilizers", "Phosphate solubilizers", "Potash mobilizers", "Multi-strain microbial consortia"],
+    image: bioFertilizersImg
+  },
+  {
+    title: "Organic Seeds &\nSeed Varieties",
+    items: ["Certified organic seeds", "Open pollinated varieties", "Hybrid & indigenous seeds", "Vegetable, field & oilseeds"],
     image: organicSeedsImg
   },
   {
-    title: "Organic Inputs &\nBio-Products",
-    items: ["Organic manures & compost", "Bio-fertilizers & inoculants", "Bio-pesticides & bio-control", "Plant growth promoters"],
-    image: organicInputImg
+    title: "Bio-Pesticides &\nBio-Control Solutions",
+    items: ["Botanical pesticides & extracts", "Bio-insecticides & fungicides", "Bio-nematicides & miticides", "Beneficial insects & predators"],
+    image: bioPesticidesImg
   },
   {
-    title: "Soil Health & Nutrient\nManagement",
-    items: ["Soil conditioners & amendments", "Microbial inoculants", "Vermicompost & vermiwash", "Soil testing & analysis"],
-    image: soilHealthImg
+    title: "Plant Growth Promoters &\nBiostimulants",
+    items: ["Amino acids & protein extracts", "Humic & fulvic acid", "Seaweed extracts", "Natural growth enhancers"],
+    image: plantGrowthImg
   },
   {
-    title: "Sustainable Farming\nSolutions",
-    items: ["Natural farming solutions", "Crop protection solutions", "Water conservation systems", "Integrated farming systems"],
-    image: sustainableImg
+    title: "Soil & Crop Health\nManagement Solutions",
+    items: ["Soil testing kits & equipment", "pH regulators & buffers", "Mycorrhiza & root enhancers", "Soil health monitoring tools"],
+    image: soilCropImg
   },
   {
-    title: "Farm Machinery &\nEquipment",
-    items: ["Organic farming equipment", "Small farm machinery", "Tools & implements", "Post-harvest equipment"],
-    image: farmMachineryImg
+    title: "Seed Treatment &\nCoating Solutions",
+    items: ["Bio-priming solutions", "Seed coatings & protectants", "Bio-film & polymer coatings", "Seed germination enhancers"],
+    image: seedTreatmentImg
   },
   {
-    title: "Protected Cultivation &\nGreenhouses",
-    items: ["Polyhouse & greenhouse systems", "Shade nets & net houses", "Hydroponics & aeroponics", "Vertical farming solutions"],
-    image: protectedImg
+    title: "Organic Nutrient Supplements\n& Trace Elements",
+    items: ["Organic trace minerals", "Micronutrient formulations", "Chelated micronutrients", "Natural nutrient supplements"],
+    image: organicNutrientImg
   },
   {
-    title: "Irrigation & Water\nManagement",
-    items: ["Drip & sprinkler systems", "Rainwater harvesting systems", "Water filtration & treatment", "Smart irrigation solutions"],
-    image: irrigationImg
+    title: "Bio-Input Cultures &\nFormulations",
+    items: ["Trichoderma & Pseudomonas", "Azospirillum & Azotobacter", "PSB, KMB & other cultures", "Custom bio-formulations"],
+    image: bioInputImg
   },
   {
-    title: "Crop Production &\nManagement",
-    items: ["Organic crop cultivation", "Intercropping solutions", "Natural pest management", "Crop monitoring solutions"],
-    image: cropImg
-  },
-  {
-    title: "Integrated Farming &\nAllied Activities",
-    items: ["Crop-livestock integration", "Poultry & dairy solutions", "Beekeeping & aquaculture", "Farm diversification"],
-    image: integratedImg
-  },
-  {
-    title: "Post-Harvest Handling &\nValue Addition",
-    items: ["Grading, sorting & cleaning", "Storage & preservation solutions", "Processing & farm produce units", "Value addition equipment"],
-    image: postHarvestImg
+    title: "Nursery &\nPropagation Inputs",
+    items: ["Cocopeat & growing media", "Seedling trays & pots", "Rooting hormones (natural)", "Organic potting mixes"],
+    image: nurseryImg
   }
 ];
 
 const exhibitors = [
-  { label: "Organic Farmers & FPOs", icon: Users },
-  { label: "Agri Input Manufacturers", icon: Factory },
-  { label: "Bioproduct Companies", icon: FlaskConical },
-  { label: "Seed & Plant Producers", icon: Sprout },
-  { label: "Agri Machinery Makers", icon: Tractor },
-  { label: "Research & Development Institutes", icon: Beaker },
+  { label: "Bio-Input Manufacturers", icon: Factory },
+  { label: "Organic Input Suppliers", icon: Store },
+  { label: "Seed Companies & Breeders", icon: Sprout },
+  { label: "Bio-Fertilizer Producers", icon: FlaskConical },
+  { label: "Agri-Input Exporters", icon: Truck },
+  { label: "Research & Development Institutes", icon: TestTube },
+  { label: "Quality Testing Laboratories", icon: Microscope },
   { label: "Consultants & Service Providers", icon: Briefcase },
   { label: "Distributors & Importers", icon: Globe },
-  { label: "Agri Tech Startups", icon: Sun },
-  { label: "NGOs & Farmer Associations", icon: Handshake }
+  { label: "Agri Tech Startups", icon: Building2 }
+];
+
+const whyExhibit = [
+  "Tap into the fast-growing organic farming market",
+  "Showcase innovative & eco-friendly input solutions",
+  "Connect with farmers, FPOs & agri communities",
+  "Build trust & long-term partnerships",
+  "Expand distribution & reach new geographies",
+  "Support sustainable agriculture & food security"
 ];
 
 const targetVisitors = [
   { label: "Farmers & FPOs", icon: Users },
-  { label: "Agronomists & Scientists", icon: GraduationCap },
+  { label: "Agri Entrepreneurs", icon: Briefcase },
   { label: "Agri Input Dealers", icon: Store },
-  { label: "Agri Entrepreneurs", icon: TrendingUp },
-  { label: "Cooperatives & Societies", icon: Handshake },
+  { label: "Organic Growers", icon: Plant },
+  { label: "Nursery Operators", icon: Trees },
   { label: "Government Officials", icon: Building2 },
-  { label: "Researchers & Academicians", icon: Beaker },
-  { label: "Agri Investors", icon: Target },
+  { label: "Agronomists & Scientists", icon: TestTube },
+  { label: "Agri Consultants", icon: FileText },
   { label: "Exporters & Importers", icon: Globe },
-  { label: "Agri Tech Companies", icon: Sun }
-];
-
-const whyExhibit = [
-  "Meet a fast-growing market of organic farmers & agri businesses",
-  "Showcase innovative & sustainable agri solutions",
-  "Build strong partnerships with FPOs & agri communities",
-  "Expand reach to new geographies & markets",
-  "Promote soil health, productivity & sustainability",
-  "Be part of a greener, healthier & sustainable future"
+  { label: "Agri Tech Companies", icon: Factory }
 ];
 
 const exhibitorExamples = [
-  { label: "Organic Farming Companies", icon: Leaf },
-  { label: "Bio-Input Manufacturers", icon: Factory },
-  { label: "Seed & Plant Producers", icon: Sprout },
-  { label: "Agri Machinery Manufacturers", icon: Tractor },
-  { label: "Irrigation Solution Providers", icon: Droplet },
-  { label: "Research & Institutions", icon: Beaker },
-  { label: "Distributors & Importers", icon: Globe },
-  { label: "Government & Support Bodies", icon: Building2 },
-  { label: "Agri Tech Startups", icon: Sun },
-  { label: "NGOs & Farmer Associations", icon: Handshake }
+  { label: "Organic Input\nManufacturers", icon: Factory },
+  { label: "Bio-Fertilizer\nCompanies", icon: FlaskConical },
+  { label: "Seed Companies\n& Breeders", icon: Sprout },
+  { label: "Bio-Pesticide\nProducers", icon: TestTube },
+  { label: "Soil Health\nSolution Providers", icon: Heart },
+  { label: "Research &\nInstitutes", icon: Microscope },
+  { label: "Agri Tech\nStartups", icon: Building2 },
+  { label: "Distributors\n& Importers", icon: Globe },
+  { label: "Exporters\n& Traders", icon: Truck }
 ];
 
-export default function OrganicFarmingShowcase() {
+export default function OrganicInputsShowcase() {
   return (
-    <div id="organic-natural-farming" className="w-full bg-white font-inter text-gray-900 border-t border-gray-300 scroll-mt-[100px]">
+    <div id="organic-inputs" className="w-full bg-white font-inter text-gray-900 border-t border-gray-300 scroll-mt-[100px]">
 
       {/* ---------------- 1. HEADER SECTION ---------------- */}
       <section className="relative w-full bg-white overflow-hidden flex items-center shadow-inner">
@@ -137,27 +134,27 @@ export default function OrganicFarmingShowcase() {
           {/* Left Text Block */}
           <div className="lg:w-[60%] flex flex-col relative z-20">
             <h1 className="text-[18px] lg:text-[56px] font-semibold uppercase leading-[0.9] tracking-[-0.02em] font-poppins mb-3">
-              <span className="text-[#113d20]">ORGANIC</span><br />
-              <span className="text-[#e44c20]">NATURAL FARMING</span>
+              <span className="text-[#113d20]">ORGANIC INPUTS,</span><br />
+              <span className="text-[#e44c20]">SEEDS & BIO-INPUTS</span>
             </h1>
 
             {/* Subtitle with diamond lines */}
             <div className="flex items-center gap-4 my-2">
               <h3 className="text-[#3b8c2a] font-semibold text-[18px] lg:text-[21px] tracking-wide ">
-                Healthy Soil. Healthy Food. Healthy Future.
+                Right Input. Strong Roots. Better Harvest. Sustainable Future.
               </h3>
             </div>
 
             <p className="text-[14px] lg:text-[15.5px] font-medium text-gray-800 max-w-[600px] leading-relaxed mt-2 pb-10">
-              Explore innovative solutions for organic and natural farming that improve soil health, conserve resources, and build a resilient, productive future for generations to come.
+              Discover a complete range of certified organic inputs, quality seeds and innovative bio-input solutions that enrich soil, protect crops and increase productivity - naturally and sustainably.
             </p>
           </div>
 
           {/* Circular Badge - Positioned perfectly over the blend line */}
-          <div className="hidden lg:flex absolute left-[46%] top-2/3 -translate-y-1/2 w-[160px] h-[160px] rounded-full border-[3px] border-[#113d20] bg-white items-center justify-center shadow-2xl z-30">
+          <div className="hidden lg:flex absolute left-[52%] top-2/3 -translate-y-1/2 w-[160px] h-[160px] rounded-full border-[3px] border-[#113d20] bg-white items-center justify-center shadow-2xl z-30">
             <div className="w-[146px] h-[146px] rounded-full border-[1.5px] border-dashed border-[#113d20] flex flex-col items-center justify-center p-2 text-center relative">
-              <span className="text-[#113d20] font-bold text-[14px] leading-[1.3]">
-                GOOD SOIL<br />BETTER HARVEST<br />BETTER PLANET
+              <span className="text-[#113d20] font-bold text-[13px] leading-[1.3]">
+                NOURISH<br />THE SOIL,<br />NURTURE LIFE,<br />GROW<br />SUSTAINABLY
               </span>
               <div className="flex items-center gap-0.5 mt-1.5 justify-center">
                 <Leaf className="text-[#113d20] w-5 h-5 -rotate-12" strokeWidth={2} />
@@ -175,7 +172,7 @@ export default function OrganicFarmingShowcase() {
         <div className=" w-full  p-2 lg:px-14 lg:py-6 lg:pb-0 flex flex-col lg:flex-row gap-2">
 
           {/* LEFT: PRODUCTS & SEGMENTS (70%) */}
-          <div className="lg:w-[73%] flex flex-col">
+          <div className="lg:w-[75%] flex flex-col">
 
             {/* Products Title */}
             <div className="flex items-center justify-center gap-4 mb-4">
@@ -230,7 +227,7 @@ export default function OrganicFarmingShowcase() {
 
 
           {/* RIGHT: SIDEBAR (30%) */}
-          <div className="lg:w-[27%] flex flex-col gap-2">
+          <div className="lg:w-[25%] flex flex-col gap-2">
 
             {/* Box 1: WHO CAN EXHIBIT? */}
             <div className="border border-gray-200 rounded-[16px] bg-white p-2 shadow-sm">
@@ -355,7 +352,7 @@ export default function OrganicFarmingShowcase() {
                     </a>
                   </div>
 
-                  <div className="w-[1px] h-14  mx-3"></div>
+                  <div className="w-[1px] h-14 bg-white/40 mx-3"></div>
 
                   <div className="flex flex-col gap-1.5 justify-center">
                     <span className="text-white text-[11px]">Or Contact Us</span>

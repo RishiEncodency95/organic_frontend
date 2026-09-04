@@ -161,14 +161,14 @@ export default function AyushDetailsShowcase() {
           </div>
 
           {/* Circular Badge - Positioned perfectly over the blend line */}
-          <div className="hidden lg:flex absolute left-[52%] top-2/3 -translate-y-1/2 w-[150px] h-[150px] rounded-full border-[3px] border-[#113d20] bg-white items-center justify-center shadow-2xl z-30">
-            <div className="w-[136px] h-[136px] rounded-full border border-[#113d20] flex flex-col items-center justify-center p-2 text-center relative">
-              <span className="text-[#3b8c2a] font-bold text-[14px] leading-[1.4] mb-1">
+          <div className="hidden lg:flex absolute left-[52%] top-2/3 -translate-y-1/2 w-[160px] h-[160px] rounded-full border-[3px] border-[#113d20] bg-white items-center justify-center shadow-2xl z-30">
+            <div className="w-[146px] h-[146px] rounded-full border-[1.5px] border-dashed border-[#113d20] flex flex-col items-center justify-center p-2 text-center relative">
+              <span className="text-[#113d20] font-bold text-[14px] leading-[1.3]">
                 HEAL<br />NATURALLY<br />LIVE<br />HOLISTICALLY
               </span>
-              <div className="flex items-center gap-1 mt-1 border-t border-[#3b8c2a] pt-1 w-12 justify-center">
-                <Leaf className="text-[#3b8c2a] w-4 h-4" />
-                <Leaf className="text-[#3b8c2a] w-4 h-4 -scale-x-100" />
+              <div className="flex items-center gap-0.5 mt-1.5 justify-center">
+                <Leaf className="text-[#113d20] w-5 h-5 -rotate-12" strokeWidth={2} />
+                <Leaf className="text-[#113d20] w-5 h-5 -scale-x-100 rotate-12" strokeWidth={2} />
               </div>
             </div>
           </div>
