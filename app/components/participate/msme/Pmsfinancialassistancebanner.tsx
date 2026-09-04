@@ -52,7 +52,7 @@ interface SupportCard {
 const SUPPORT_CARDS: SupportCard[] = [
   {
     icon: Percent,
-    iconBg: "bg-[#1b5e20]/10",
+    iconBg: "bg-[#1b5e20]",
     iconColor: "text-[#1b5e20]",
     cardBg: "bg-[#1b5e20]/5",
     eyebrow: "UP TO",
@@ -64,12 +64,12 @@ const SUPPORT_CARDS: SupportCard[] = [
       "Of eligible built-up space rent assistance subject to PMS provisions.",
     footIcon: Landmark,
     footIconColor: "text-white",
-    footIconBg: "bg-[#1b5e20]",
+    footIconBg: "bg-[#1b5e20]/10",
     borderColor: "#1b5e20",
   },
   {
     icon: Users,
-    iconBg: "bg-[#C99A3B]/10",
+    iconBg: "bg-[#C99A3B]",
     iconColor: "text-[#C99A3B]",
     cardBg: "bg-[#C99A3B]/5",
     eyebrow: "UP TO",
@@ -80,12 +80,12 @@ const SUPPORT_CARDS: SupportCard[] = [
     description: "As per applicable PMS scheme provisions and conditions.",
     footIcon: HandHelping,
     footIconColor: "text-white",
-    footIconBg: "bg-[#C99A3B]",
+    footIconBg: "bg-[#C99A3B]/10",
     borderColor: "#C99A3B",
   },
   {
     icon: ReceiptIndianRupee,
-    iconBg: "bg-[#1b5e20]/10",
+    iconBg: "bg-[#1b5e20]",
     iconColor: "text-[#1b5e20]",
     cardBg: "bg-[#1b5e20]/5",
     eyebrow: "ADDITIONAL",
@@ -96,7 +96,7 @@ const SUPPORT_CARDS: SupportCard[] = [
     description: "Other eligible expenses as applicable under current PMS guidelines.",
     footIcon: TrendingUp,
     footIconColor: "text-white",
-    footIconBg: "bg-[#1b5e20]",
+    footIconBg: "bg-[#1b5e20]/10",
     borderColor: "#1b5e20",
   },
 ];
@@ -123,7 +123,7 @@ const PMSFinancialAssistanceBanner: FC = () => {
           className="absolute inset-0 h-full w-full object-cover"
         />
         {/* Right-side gradient */}
-        <div className="absolute right-0 top-0 h-full w-[10%] bg-gradient-to-r from-transparent to-white" />
+        <div className="absolute -right-1 top-0 h-full w-[10%] bg-gradient-to-r from-transparent to-white" />
       </div>
 
       {/* ============ Hero ============ */}
@@ -136,7 +136,7 @@ const PMSFinancialAssistanceBanner: FC = () => {
           </div>
 
           {/* Right: heading content */}
-          <div className="relative flex w-full flex-col justify-center px-4 py-4 sm:px-6 sm:py-5 lg:w-[72%] lg:px-8 lg:py-5">
+          <div className="relative flex w-full flex-col justify-center px-4 py-4 sm:px-4 sm:py-5 lg:w-[72%] lg:py-5">
             {/* Eyebrow */}
             <div className="mb-2 flex items-center gap-3 sm:mb-3">
               <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-[#1b5e20]/10 sm:h-12 sm:w-12">
@@ -169,7 +169,7 @@ const PMSFinancialAssistanceBanner: FC = () => {
             </h1>
 
             {/* Supporting copy */}
-            <p className="mt-3 max-w-lg text-[13px] leading-relaxed text-slate-700 md:text-[14px] text-center">
+            <p className="mt-3 max-w-xl text-[13px] leading-relaxed text-slate-700 md:text-[14px] text-center">
               The <strong className="font-semibold text-[#1b5e20]">PMS Scheme</strong>{" "}
               provides financial assistance<br/> to reduce your participation cost
               and help your business grow in new markets.
@@ -183,12 +183,12 @@ const PMSFinancialAssistanceBanner: FC = () => {
                 return (
                   <article
                     key={card.title}
-                    className={`relative flex flex-col items-center rounded-2xl ${card.cardBg} px-4 pb-10 pt-4 text-center shadow-sm ring-1 ring-black/5 overflow-visible`}
+                    className={`relative flex flex-col items-center rounded-2xl bg-white px-4 pb-10 pt-4 text-center shadow-sm ring-1 ring-black/5 overflow-visible`}
                   >
                     <span
                       className={`mb-2 flex h-12 w-12 items-center justify-center rounded-full ${card.iconBg}`}
                     >
-                      <Icon className={`h-6 w-6 ${card.iconColor}`} aria-hidden="true" />
+                      <Icon className={`h-6 w-6 text-white`} aria-hidden="true" />
                     </span>
 
                     <p
@@ -221,7 +221,7 @@ const PMSFinancialAssistanceBanner: FC = () => {
                     <div className={`absolute bottom-0 left-0 right-0 h-7 rounded-b-2xl ${card.footIconBg}`}>
                       <span className={`absolute left-1/2 -top-9 flex h-14 w-14 -translate-x-1/2 items-center justify-center rounded-full ${card.footIconBg} z-0`}>
                         <FootIcon
-                          className="h-6 w-6 text-white"
+                          className={`h-6 w-6 ${card.iconColor}`}
                           aria-hidden="true"
                         />
                       </span>

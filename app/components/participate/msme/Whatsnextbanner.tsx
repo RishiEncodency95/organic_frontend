@@ -17,6 +17,9 @@ import {
 } from "lucide-react";
 import footerrightImg from "@/app/assets/icons/footerright.png";
 import leafsImg from "@/app/assets/icons/leafs.png";
+import hereToHelpImg from "@/app/assets/participate/msme/here_to_help.png";
+import leftImg from "@/app/assets/participate/msme/left.png";
+import supportRightImg from "@/app/assets/participate/msme/support_right.png";
 import SectionContainer from "@/app/components/layout/SectionContainer";
 
 const benefits = [
@@ -145,7 +148,7 @@ export default function WhatsNextBanner() {
         {/* ============ BOTTOM: 3 Steps | Help card ============ */}
         <div className="relative mt-6 grid grid-cols-1 gap-4 lg:mt-8 lg:grid-cols-12 lg:gap-6 lg:items-stretch">
           {/* 3 Easy Steps */}
-          <div className="relative overflow-visible lg:col-span-7 rounded-2xl border border-gray-100 bg-white p-4 pt-10 sm:p-5 sm:pt-12 shadow-sm">
+          <div className="relative overflow-visible lg:col-span-7 rounded-2xl border border-gray-100 bg-white p-4 pt-10 sm:p-5 sm:pt-10 shadow-sm">
             {/* Title - absolute half outside, half inside */}
             <div className="absolute left-1/2 top-0 z-20 -translate-x-1/2 -translate-y-1/2">
               <h3 className="whitespace-nowrap rounded-lg bg-[#1b5e20] px-4 py-1 text-center text-[16px] font-semibold tracking-tight text-white shadow-lg md:text-[18px] lg:text-[20px]">
@@ -193,66 +196,68 @@ export default function WhatsNextBanner() {
           </div>
 
           {/* We're here to help */}
-          <div className="lg:col-span-5 relative overflow-hidden rounded-2xl bg-[#1b5e20] p-5 sm:p-6 text-white shadow-sm">
-            {/* <img
-              src={leafsImg.src}
-              alt=""
-              className="pointer-events-none absolute right-0 top-0 h-full w-32 object-contain object-right opacity-20 sm:w-40"
-              aria-hidden="true"
-            /> */}
-            <Leaf
-              className="pointer-events-none absolute -right-6 -bottom-6 h-40 w-40 text-[#1b5e20]/40"
-              aria-hidden="true"
+          <div className="lg:col-span-5 relative overflow-hidden rounded-2xl bg-[#1b5e20] text-white shadow-sm flex">
+            <div className="flex flex-1 flex-col p-4 sm:p-4">
+              <div className="flex items-start gap-3">
+                <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-white/10">
+                  <Headset className="h-6 w-6 text-white" aria-hidden="true" />
+                </span>
+                <h3 className="pt-1 text-[20px] sm:text-[24px] font-semibold leading-tight">
+                  We&apos;re Here to Help!
+                </h3>
+              </div>
+
+              <p className="mt-3 max-w-sm text-[14px] sm:text-[15px] leading-relaxed text-white/80">
+                Our team is ready to assist you at every step of the PMS
+                application process.
+              </p>
+
+              <span className="mt-4 block h-px w-full bg-white/20" aria-hidden="true" />
+
+              <div className="mt-3 flex flex-col gap-2 text-[14px] sm:text-[15px]">
+                <a
+                  href="mailto:msme.support@bharatorganicexpo.in"
+                  className="flex items-center gap-3 text-white/90 hover:text-white"
+                >
+                  <Mail className="h-5 w-5 shrink-0 text-[#F2B40E]" aria-hidden="true" />
+                  <span className="break-all">msme.support@bharatorganicexpo.in</span>
+                </a>
+                <a
+                  href="tel:+911143083738"
+                  className="flex items-center gap-3 text-white/90 hover:text-white"
+                >
+                  <Phone className="h-5 w-5 shrink-0 text-[#F2B40E]" aria-hidden="true" />
+                  <span>+91 11 4308 3738</span>
+                </a>
+              </div>
+            </div>
+            <img
+              src={hereToHelpImg.src}
+              alt="We're here to help"
+              className="h-full w-[30%] shrink-0 object-cover"
+              loading="lazy"
             />
-            <div className="relative z-10 flex items-start gap-3">
-              <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-white/10">
-                <Headset className="h-6 w-6 text-white" aria-hidden="true" />
-              </span>
-              <h3 className="pt-1 text-[20px] sm:text-[24px] font-semibold leading-tight">
-                We&apos;re Here to Help!
-              </h3>
-            </div>
-
-            <p className="relative z-10 mt-3 max-w-sm text-[14px] sm:text-[15px] leading-relaxed text-white/80">
-              Our team is ready to assist you at every step of the PMS
-              application process.
-            </p>
-
-            <span className="relative z-10 mt-4 block h-px w-full bg-white/20" aria-hidden="true" />
-
-            <div className="relative z-10 mt-3 flex flex-col gap-2 text-[14px] sm:text-[15px]">
-              <a
-                href="mailto:msme.support@bharatorganicexpo.in"
-                className="flex items-center gap-3 text-white/90 hover:text-white"
-              >
-                <Mail className="h-5 w-5 shrink-0 text-[#F2B40E]" aria-hidden="true" />
-                <span className="break-all">msme.support@bharatorganicexpo.in</span>
-              </a>
-              <a
-                href="tel:+911143083738"
-                className="flex items-center gap-3 text-white/90 hover:text-white"
-              >
-                <Phone className="h-5 w-5 shrink-0 text-[#F2B40E]" aria-hidden="true" />
-                <span>+91 11 4308 3738</span>
-              </a>
-            </div>
           </div>
         </div>
 
         {/* ============ FOOTER STRIP ============ */}
-        <div className="mt-3 lg:mt-4 overflow-hidden rounded-2xl border border-gray-200 bg-[#EFF7EE]">
+      </div>
+      </SectionContainer>
+        <div className="relative mt-3 lg:mt-4 overflow-hidden rounded-2xl border border-gray-200 bg-[#EFF7EE]">
+          <img
+            src={leftImg.src}
+            alt=""
+            className="absolute left-0 top-1/2 -translate-y-1/2 h-[120px] w-auto object-contain z-10"
+            loading="lazy"
+          />
+          <SectionContainer>
           <div className="flex flex-col sm:flex-row sm:items-center">
             {/* Let's grow together */}
             <div className="relative flex items-center gap-3 overflow-hidden px-4 py-3 sm:w-1/2 sm:px-5">
-              <Leaf
-                className="pointer-events-none absolute -left-4 -bottom-4 h-20 w-20 text-[#3b8c2a]/20"
-                aria-hidden="true"
-              />
               <span className="relative hidden h-10 w-10 shrink-0 items-center justify-center rounded-full bg-[#1b5e20] sm:flex">
-                <Leaf className="h-5 w-5 text-white" aria-hidden="true" />
+                <img src={supportRightImg.src} alt="" className="h-6 w-6 object-contain brightness-0 invert" aria-hidden="true" />
               </span>
-              <span className="relative hidden h-8 w-px self-stretch bg-[#1b5e20]/20 sm:block" aria-hidden="true" />
-              <div className="relative">
+              <div className="relative border-l-[3px] border-l-[#1b5e20] pl-4">
                 <p className="text-[18px] sm:text-[20px] font-semibold text-slate-900">
                   Let&apos;s Grow Together
                 </p>
@@ -264,7 +269,7 @@ export default function WhatsNextBanner() {
             </div>
 
             {/* Ready to take the next step / Apply now */}
-            <div className="flex flex-1 flex-col gap-3 px-4 py-3 sm:flex-row sm:items-center sm:justify-between sm:gap-6 sm:border-l sm:border-gray-200 sm:px-5">
+            <div className="flex flex-1 flex-col gap-3 px-4 py-3 sm:flex-row sm:items-center sm:justify-between sm:gap-6 sm:border-l sm:border-gray-200 sm:px-5 bg-white rounded-lg">
               <div className="flex items-center gap-3">
                 <FileEdit className="h-8 w-8 shrink-0 text-[#1b5e20]" aria-hidden="true" />
                 <div>
@@ -286,9 +291,8 @@ export default function WhatsNextBanner() {
               </a>
             </div>
           </div>
+          </SectionContainer>
         </div>
-      </div>
-      </SectionContainer>
     </section>
   );
 }

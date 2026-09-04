@@ -175,7 +175,7 @@ export default function PmsSupportSection() {
                     {number}
                   </span>
 
-                  <div className="flex h-full flex-col rounded-2xl bg-white p-5 shadow-sm ring-1 ring-black/5 sm:p-6">
+                  <div className="flex h-full flex-col rounded-2xl bg-white px-5 py-4 shadow-sm ring-1 ring-black/5 sm:px-6 sm:py-4">
                     <span className="mx-auto mb-4 flex h-14 w-14 items-center justify-center rounded-full bg-[#EFF7EE] sm:h-16 sm:w-16">
                       <Icon
                         className="h-6 w-6 text-[#1b5e20] sm:h-7 sm:w-7"
@@ -222,7 +222,7 @@ export default function PmsSupportSection() {
           </div>
 
           {/* Have questions / contact */}
-          <div className="flex flex-col gap-3 rounded-2xl border border-gray-200 bg-[#f3f4f6] p-5 shadow-sm sm:p-6 lg:col-span-3">
+          <div className="flex flex-col gap-3 rounded-2xl border border-gray-200 bg-[#f3f4f6] p-5 shadow-sm sm:p-6">
             <div className="flex flex-row gap-2">
               <span className="flex h-16 w-16 min-h-16 min-w-16 items-center justify-center rounded-full bg-white">
                 <Users className="h-6 w-6 text-[#1b5e20]" aria-hidden="true" />

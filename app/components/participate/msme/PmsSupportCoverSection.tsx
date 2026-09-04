@@ -356,7 +356,7 @@ const PmsSupportCoverSection: FC = () => {
           {/* Footer row: Terms left + Badges right */}
           <div className="mt-2 flex flex-col items-center justify-between gap-4 rounded-lg border border-[#1b5e20]/10 p-2 sm:flex-row">
             {/* Terms note - left */}
-            <p className="text-[14px] text-slate-500">
+            <p className="border-r border-[#1b5e20]/20 pr-4 text-[14px] text-slate-500">
               * Terms, limits and eligibility are subject to the applicable
               Procurement &amp; Marketing Support (PMS) Scheme guidelines and
               competent authority approval.
