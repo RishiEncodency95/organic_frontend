@@ -102,7 +102,7 @@ export default function PmsSupportSection() {
               &amp; Get PMS Support
             </h2>
 
-            <p className="max-w-xl text-[14px] text-slate-600 sm:text-[15px]">
+            <p className="max-w-lg text-[14px] text-slate-600 sm:text-[15px]">
               A simple, guided process to help eligible MSEs receive financial
               assistance for participation.
             </p>
@@ -196,11 +196,11 @@ export default function PmsSupportSection() {
           </ol>
         <div className="grid grid-cols-1 gap-4 sm:gap-5 lg:grid-cols-3 mt-2">
           {/* Expert support at every step */}
-          <div className="relative overflow-hidden rounded-2xl bg-[#0b2912] text-white">
+          <div className="relative rounded-2xl bg-[#0b2912] text-white">
             <img
               src={everySupportImg.src}
               alt="Bharat Organic Expo support specialist ready to help with PMS applications"
-              className="absolute -top-4 left-0 h-[calc(100%+2rem)] w-[40%] object-cover object-top"
+              className="absolute -top-4 left-0 h-[calc(100%+1rem)] w-[55%] object-cover object-top"
               loading="lazy"
             />
             <div className="relative ml-[42%] flex flex-col justify-center gap-2 p-4 sm:p-5">

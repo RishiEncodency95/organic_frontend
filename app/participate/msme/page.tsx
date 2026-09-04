@@ -7,6 +7,7 @@ import Pmsfinancialassistancebanner from "@/app/components/participate/msme/Pmsf
 import PmsSupportCoverSection from "@/app/components/participate/msme/PmsSupportCoverSection";
 import Pmssupportsection from "@/app/components/participate/msme/Pmssupportsection";
 import Whatsnextbanner from "@/app/components/participate/msme/Whatsnextbanner";
+import NeedHelpSection from "@/app/components/participate/msme/NeedHelpSection";
 import Reasontovisitbanner from "@/app/components/participate/msme/Reasontovisitbanner";
 import OfficialMessageBanner from "@/app/components/participate/msme/Msmedirectormessage";
 import Pmsdocumentsbanner from "@/app/components/participate/msme/Pmsdocumentsbanner";
@@ -34,6 +35,7 @@ const MsmePage = () => {
       <PmsSupportCoverSection />
       <Pmssupportsection />
       <Whatsnextbanner />
+      <NeedHelpSection />
       <Reasontovisitbanner />
       <OfficialMessageBanner />
       <Pmsdocumentsbanner />

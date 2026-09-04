@@ -9,7 +9,7 @@ import {
   ArrowRight,
   Leaf,
 } from "lucide-react";
-import reasonToVisitImg from "@/app/assets/participate/msme/reason_to_visit.jpg";
+import reasonToVisitImg from "@/app/assets/participate/msme/reason_to_visit.png";
 import leafsImg from "@/app/assets/icons/leafs.png";
 import SectionContainer from "@/app/components/layout/SectionContainer";
 
@@ -134,7 +134,7 @@ export default function ReasonToVisitBanner() {
           {/* ---------- Right: photo ---------- */}
           <div className="relative">
             {/* Photo */}
-            <div className="aspect-[16/9] overflow-hidden rounded-[2.5rem]">
+            <div className="overflow-visible rounded-[2.5rem]">
               <img
                 src={reasonToVisitImg.src}
                 alt="Bharat Organic Expo exhibition hall with visitors"
