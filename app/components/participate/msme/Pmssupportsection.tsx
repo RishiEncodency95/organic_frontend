@@ -222,7 +222,7 @@ export default function PmsSupportSection() {
           </div>
 
           {/* Have questions / contact */}
-          <div className="flex flex-col gap-3 rounded-2xl bg-[#EFF7EE] p-5 sm:p-6">
+          <div className="flex flex-col gap-3 rounded-2xl border border-gray-200 bg-[#f3f4f6] p-5 shadow-sm sm:p-6 lg:col-span-3">
             <div className="flex flex-row gap-2">
               <span className="flex h-16 w-16 min-h-16 min-w-16 items-center justify-center rounded-full bg-white">
                 <Users className="h-6 w-6 text-[#1b5e20]" aria-hidden="true" />
@@ -262,7 +262,7 @@ export default function PmsSupportSection() {
           </div>
 
           {/* Ready to apply / CTA */}
-          <div className="relative flex overflow-visible rounded-2xl bg-[#0b2912] text-white">
+          <div className="relative flex max-w-sm overflow-visible rounded-2xl bg-[#0b2912] text-white">
             <div className="flex flex-1 flex-col justify-between gap-4 p-5 sm:p-6">
               <div className="flex items-start gap-4">
                 <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-white/10">
@@ -290,7 +290,7 @@ export default function PmsSupportSection() {
             <img
               src={leftImage.src}
               alt="Ready to apply for PMS"
-              className="absolute -right-16 top-1/2 -translate-y-1/2 h-[180px] w-auto object-contain z-10"
+              className="absolute -right-28 top-1/2 -translate-y-1/2 h-[160px] w-auto object-contain z-10"
               loading="lazy"
             />
           </div>

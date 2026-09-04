@@ -175,7 +175,7 @@ export default function WhatsNextBanner() {
 
                   <span className="relative mb-2 flex h-16 w-16 items-center justify-center rounded-full bg-[#EFF7EE]">
                     <Icon className="h-8 w-8 text-[#1b5e20]" aria-hidden="true" />
-                    <span className="absolute -top-1 left-1/2 -translate-x-1/2 flex h-6 w-6 items-center justify-center rounded-full bg-[#1b5e20] text-[11px] font-semibold text-white ring-3 ring-white">
+                    <span className="absolute -top-3 left-1/2 -translate-x-1/2 flex h-6 w-6 items-center justify-center rounded-full bg-[#1b5e20] text-[11px] font-semibold text-white">
                       {number}
                     </span>
                   </span>
@@ -240,49 +240,51 @@ export default function WhatsNextBanner() {
         </div>
 
         {/* ============ FOOTER STRIP ============ */}
-        <div className="mt-3 lg:mt-4 flex flex-col overflow-hidden rounded-2xl bg-[#EFF7EE] sm:flex-row sm:items-center">
-          {/* Let's grow together */}
-          <div className="relative flex items-center gap-3 overflow-hidden px-4 py-3 sm:w-1/2 sm:px-5">
-            <Leaf
-              className="pointer-events-none absolute -left-4 -bottom-4 h-20 w-20 text-[#3b8c2a]/20"
-              aria-hidden="true"
-            />
-            <span className="relative hidden h-10 w-10 shrink-0 items-center justify-center rounded-full bg-[#1b5e20] sm:flex">
-              <Leaf className="h-5 w-5 text-white" aria-hidden="true" />
-            </span>
-            <span className="relative hidden h-8 w-px self-stretch bg-[#1b5e20]/20 sm:block" aria-hidden="true" />
-            <div className="relative">
-              <p className="text-[18px] sm:text-[20px] font-semibold text-slate-900">
-                Let&apos;s Grow Together
-              </p>
-              <p className="mt-1 max-w-xs text-[13px] text-slate-600">
-                Your participation makes a healthier planet and a stronger
-                future.
-              </p>
-            </div>
-          </div>
-
-          {/* Ready to take the next step / Apply now */}
-          <div className="flex flex-1 flex-col gap-3 border-t border-gray-200 bg-white px-4 py-3 sm:flex-row sm:items-center sm:justify-between sm:gap-6 sm:border-l sm:border-t-0 sm:px-5">
-            <div className="flex items-center gap-3">
-              <FileEdit className="h-8 w-8 shrink-0 text-[#1b5e20]" aria-hidden="true" />
-              <div>
-                <p className="text-[14px] sm:text-[15px] font-semibold uppercase leading-tight text-slate-900">
-                  Ready to Take the Next Step?
+        <div className="mt-3 lg:mt-4 overflow-hidden rounded-2xl border border-gray-200 bg-[#EFF7EE]">
+          <div className="flex flex-col sm:flex-row sm:items-center">
+            {/* Let's grow together */}
+            <div className="relative flex items-center gap-3 overflow-hidden px-4 py-3 sm:w-1/2 sm:px-5">
+              <Leaf
+                className="pointer-events-none absolute -left-4 -bottom-4 h-20 w-20 text-[#3b8c2a]/20"
+                aria-hidden="true"
+              />
+              <span className="relative hidden h-10 w-10 shrink-0 items-center justify-center rounded-full bg-[#1b5e20] sm:flex">
+                <Leaf className="h-5 w-5 text-white" aria-hidden="true" />
+              </span>
+              <span className="relative hidden h-8 w-px self-stretch bg-[#1b5e20]/20 sm:block" aria-hidden="true" />
+              <div className="relative">
+                <p className="text-[18px] sm:text-[20px] font-semibold text-slate-900">
+                  Let&apos;s Grow Together
                 </p>
-                <p className="mt-0.5 text-[14px] text-slate-600">
-                  Apply now and grow your business with government support.
+                <p className="mt-1 max-w-xs text-[13px] text-slate-600">
+                  Your participation makes a healthier planet and a stronger
+                  future.
                 </p>
               </div>
             </div>
 
-            <a
-              href="#apply"
-              className="inline-flex shrink-0 items-center justify-center gap-1 rounded-lg bg-[#1b5e20] px-6 py-3 text-[14px] sm:text-[15px] font-semibold uppercase tracking-wide text-white transition-colors hover:bg-[#2d7a2d] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#3b8c2a] focus-visible:ring-offset-2"
-            >
-              Apply Now
-              <ChevronRight className="h-5 w-5" aria-hidden="true" />
-            </a>
+            {/* Ready to take the next step / Apply now */}
+            <div className="flex flex-1 flex-col gap-3 px-4 py-3 sm:flex-row sm:items-center sm:justify-between sm:gap-6 sm:border-l sm:border-gray-200 sm:px-5">
+              <div className="flex items-center gap-3">
+                <FileEdit className="h-8 w-8 shrink-0 text-[#1b5e20]" aria-hidden="true" />
+                <div>
+                  <p className="text-[14px] sm:text-[15px] font-semibold uppercase leading-tight text-slate-900">
+                    Ready to Take the Next Step?
+                  </p>
+                  <p className="mt-0.5 text-[14px] text-slate-600">
+                    Apply now and grow your business with government support.
+                  </p>
+                </div>
+              </div>
+
+              <a
+                href="#apply"
+                className="inline-flex shrink-0 items-center justify-center gap-1 rounded-lg bg-[#1b5e20] px-6 py-3 text-[14px] sm:text-[15px] font-semibold uppercase tracking-wide text-white transition-colors hover:bg-[#2d7a2d] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#3b8c2a] focus-visible:ring-offset-2"
+              >
+                Apply Now
+                <ChevronRight className="h-5 w-5" aria-hidden="true" />
+              </a>
+            </div>
           </div>
         </div>
       </div>
