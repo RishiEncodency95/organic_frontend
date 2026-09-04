@@ -83,12 +83,12 @@ const FEATURES: Feature[] = [
 export default function ReasonToVisitBanner() {
   return (
     <section className="relative w-full overflow-hidden bg-[#EFF7EE] py-6">
-      <img
+      {/* <img
         src={leafsImg.src}
         alt=""
         className="pointer-events-none absolute -left-8 top-0 h-36 w-36 rotate-[-20deg] object-contain opacity-10 sm:h-48 sm:w-48"
         aria-hidden="true"
-      />
+      /> */}
       <SectionContainer>
       <div className="mx-auto w-full">
         {/* ===================== TOP: heading + photo collage ===================== */}

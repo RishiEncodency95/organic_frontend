@@ -3,12 +3,13 @@ import {
   Leaf,
   Quote,
   User,
-  Landmark,
   ShieldCheck,
   Users,
   Award,
 } from "lucide-react";
+import Image from "next/image";
 import vleafImg from "@/app/assets/icons/vleaf.png";
+import ministryImg from "@/app/assets/participate/msme/ministry.webp";
 import SectionContainer from "@/app/components/layout/SectionContainer";
 
 /**
@@ -33,7 +34,7 @@ export default function OfficialMessageBanner({
   return (
     <section
       aria-labelledby="msme-director-message-heading"
-      className="relative w-full overflow-hidden bg-[#F7F8F0] py-6"
+      className="relative w-full overflow-hidden bg-[#F7F8F0] py-4"
     >
       <img
         src={vleafImg.src}
@@ -44,7 +45,7 @@ export default function OfficialMessageBanner({
       <SectionContainer>
       <div className="mx-auto w-full">
         {/* Eyebrow */}
-        <div className="mb-3 flex items-center justify-center gap-3">
+        <div className="mb-2 flex items-center justify-center gap-3">
           <span className="h-px w-8 bg-[#3b8c2a]/40 sm:w-14" aria-hidden="true" />
           <Leaf className="h-4 w-4 -rotate-45 text-[#1b5e20]" aria-hidden="true" />
           <span className="text-[11px] font-semibold tracking-[0.2em] text-[#1b5e20] sm:text-[12px]">
@@ -73,7 +74,7 @@ export default function OfficialMessageBanner({
         </p>
 
         {/* Main content: video + quote card */}
-        <div className="mt-4 grid grid-cols-1 gap-4 lg:grid-cols-2 lg:gap-6">
+        <div className="mt-3 grid grid-cols-1 gap-4 lg:grid-cols-2 lg:gap-6">
           <div className="relative overflow-hidden rounded-2xl bg-[#0e1a2b] shadow-xl ring-1 ring-black/5">
             <div className="relative aspect-[2/1] w-full">
               <iframe
@@ -86,7 +87,7 @@ export default function OfficialMessageBanner({
             </div>
           </div>
 
-          <div className="relative flex flex-col overflow-hidden rounded-2xl border border-gray-100 bg-white p-5 shadow-sm">
+          <div className="relative flex flex-col overflow-hidden rounded-2xl border border-gray-100 bg-white p-4 shadow-sm">
             <div className="flex flex-1 gap-4">
               <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-[#1b5e20]">
                 <Quote className="h-4 w-4 fill-white text-white" aria-hidden="true" />
@@ -104,7 +105,7 @@ export default function OfficialMessageBanner({
               </div>
             </div>
 
-            <blockquote className="mt-3 flex-1 text-[14px] leading-relaxed text-slate-600 md:text-[15px]">
+            <blockquote className="mt-2 flex-1 text-[14px] leading-relaxed text-slate-600 md:text-[15px]">
               "Government of India is committed to empowering MSMEs and
               creating more opportunities for their growth. We appreciate
               initiatives like{" "}
@@ -115,7 +116,7 @@ export default function OfficialMessageBanner({
               products, build business, and expand globally."
             </blockquote>
 
-            <div className="mt-6 border-t border-dashed border-gray-200 pt-5">
+            <div className="mt-4 border-t border-dashed border-gray-200 pt-4">
               <div className="flex items-center gap-3">
                 <div className="flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-full bg-[#1b5e20]">
                   <User className="h-6 w-6 text-white" aria-hidden="true" />
@@ -135,15 +136,16 @@ export default function OfficialMessageBanner({
               </div>
             </div>
 
-            <Landmark
-              className="pointer-events-none absolute -bottom-3 -right-3 h-24 w-24 text-[#1b5e20]/10 sm:h-28 sm:w-28"
+            <Image
+              src={ministryImg}
+              alt="Ministry of MSME"
+              className="pointer-events-none absolute -bottom-2 -right-2 h-32 w-32 object-contain opacity-20 sm:h-36 sm:w-36"
               aria-hidden="true"
-              strokeWidth={1}
             />
           </div>
         </div>
         {/* Feature strip */}
-        <div className="mt-8 grid grid-cols-1 gap-4 rounded-2xl bg-[#1b5e20] p-5 sm:grid-cols-3 sm:gap-6 sm:p-6">
+        <div className="mt-6 grid grid-cols-1 gap-4 rounded-2xl bg-[#1b5e20] p-4 sm:grid-cols-3 sm:gap-6 sm:p-5">
           <FeatureItem
             icon={<ShieldCheck className="h-7 w-7 text-white" aria-hidden="true" />}
             title="Official Message"
