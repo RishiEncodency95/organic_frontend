@@ -63,14 +63,14 @@ const EligibilityScore = ({ score = 95 }: { score?: number }) => {
       <div className="absolute inset-0 flex flex-col mb-2 items-center justify-center">
         <div className="flex items-baseline">
           <span className="text-[30px] font-black text-[#1b6e27] leading-none tracking-tight">{score}</span>
-          <span className="ml-1 text-[24px] font-bold text-[#626a64]">/ 100</span>
+          <span className="ml-1 text-[24px] font-semibold text-[#626a64]">/ 100</span>
         </div>
       </div>
 
       {/* High eligibility badge */}
       <div className="absolute bottom-14 left-0 right-0 flex justify-center items-center gap-1.5 mx-auto w-fit px-2">
         <ShieldCheck size={18} strokeWidth={2.5} className="text-white fill-[#1b6e27]" />
-        <span className="text-[10px] font-bold uppercase text-[#1b6e27]">High Eligibility</span>
+        <span className="text-[10px] font-semibold uppercase text-[#1b6e27]">High Eligibility</span>
       </div>
     </div>
   );
@@ -120,7 +120,7 @@ const StatusItem = ({
           <div
             className="w-[28px] h-[28px] rounded-full bg-[#e98218] flex items-center justify-center"
           >
-            <span className="text-white text-[18px] font-bold">
+            <span className="text-white text-[18px] font-semibold">
               !
             </span>
           </div>
@@ -163,6 +163,17 @@ const ActionButton = ({
   primary = false,
   icon,
 }: ActionButtonProps) => {
+  const className = `h-[44px] w-full rounded-[6px] px-4 flex items-center justify-center gap-2 text-[12px] font-semibold uppercase transition-all ${primary ? ` bg-[#176b27] text-white hover:bg-[#115d20] ` : ` bg-white border border-[#91a592] text-[#28552f] hover:bg-[#f7faf7] `}`;
+  
+  if (href) {
+    return (
+      <Link href={href} target="_blank" className={className}>
+        <span>{children}</span>
+        {icon}
+      </Link>
+    );
+  }
+
   return (
     <button
       type="button"
@@ -192,7 +203,7 @@ const FinalScoreFooter = () => {
             SCORE SECTION (Left Column)
         ==================================================== */}
         <div className="w-full lg:w-[290px] xl:w-[320px] shrink-0 flex flex-col items-center lg:items-start border-b lg:border-b-0 lg:border-r border-[#e6ebe6] px-5 lg:px-7 pt-4">
-          <h2 className="text-[12px] lg:text-[13px] font-bold uppercase text-[#265a29] tracking-wide mb-3 text-center lg:text-left w-full whitespace-nowrap">
+          <h2 className="text-[12px] lg:text-[13px] font-semibold uppercase text-[#265a29] tracking-wide mb-3 text-center lg:text-left w-full whitespace-nowrap">
             Your Preliminary Eligibility Score
           </h2>
           <div className="w-full flex justify-center">
@@ -321,7 +332,7 @@ const FinalScoreFooter = () => {
             RECOMMENDED NEXT STEP
         ==================================================== */}
         <div className="bg-[#f5f8f5] rounded-[8px] px-4 py-2 flex flex-col justify-center w-full xl:w-[420px] shrink-0 border border-[#e6ebe6]/50">
-          <h3 className="text-[14px] font-bold uppercase text-[#265a29] mb-1 tracking-wide">
+          <h3 className="text-[14px] font-semibold uppercase text-[#265a29] mb-1 tracking-wide">
             Recommended Next Step
           </h3>
           <p className="text-[14px] leading-[1.3] font-semibold text-[#374151]">
@@ -395,7 +406,7 @@ const FinalScoreFooter = () => {
         {/* Score */}
         <div className="flex flex-col items-center">
 
-          <h2 className="text-[15px] font-bold uppercase text-[#35653c] mb-4 text-center">
+          <h2 className="text-[15px] font-semibold uppercase text-[#35653c] mb-4 text-center">
             Your Preliminary Eligibility Score
           </h2>
 
@@ -408,7 +419,7 @@ const FinalScoreFooter = () => {
               className="text-white fill-[#176b27]"
             />
 
-            <span className="text-[12px] font-bold uppercase text-[#35653c]">
+            <span className="text-[12px] font-semibold uppercase text-[#35653c]">
               High Eligibility
             </span>
 
@@ -469,7 +480,7 @@ const FinalScoreFooter = () => {
         {/* Recommended */}
         <div className="bg-[#f5f8f5] rounded-[10px] p-5 mb-4">
 
-          <h3 className="text-[13px] font-bold uppercase text-[#35653c] mb-2">
+          <h3 className="text-[13px] font-semibold uppercase text-[#35653c] mb-2">
             Recommended Next Step
           </h3>
 

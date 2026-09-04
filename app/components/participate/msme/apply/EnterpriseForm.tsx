@@ -352,12 +352,12 @@ export default function EnterpriseForm() {
                 className={`w-full h-[32px] px-3 bg-[#fafbfa] border ${mobile.length === 10 && !phoneVerified ? "border-[#176b27]" : "border-[#e5e7eb]"} rounded-md text-[12px] font-semibold text-gray-800 focus:outline-none`}
               />
               {mobile.length === 10 && !phoneVerified && (
-                <button type="button" onClick={handleSendPhoneOtp} disabled={isPhoneLoading || phoneTimer > 0} className="absolute right-1 top-[2px] h-[28px] px-3 bg-[#25D366] text-white text-[10px] font-bold uppercase rounded hover:bg-[#20b858] transition-colors disabled:opacity-50">
+                <button type="button" onClick={handleSendPhoneOtp} disabled={isPhoneLoading || phoneTimer > 0} className="absolute right-1 top-[2px] h-[28px] px-3 bg-[#25D366] text-white text-[10px] font-semibold uppercase rounded hover:bg-[#20b858] transition-colors disabled:opacity-50">
                   {phoneTimer > 0 ? `Resend in ${phoneTimer}s` : isPhoneLoading ? "Sending..." : "Verify"}
                 </button>
               )}
               {phoneVerified && (
-                <div className="absolute right-2 top-1.5 flex items-center gap-1 text-[#176b27] bg-[#f1f6f1] px-2 py-0.5 rounded text-[10px] font-bold">
+                <div className="absolute right-2 top-1.5 flex items-center gap-1 text-[#176b27] bg-[#f1f6f1] px-2 py-0.5 rounded text-[10px] font-semibold">
                   <CheckCircle size={12} /> Verified
                 </div>
               )}
@@ -377,7 +377,7 @@ export default function EnterpriseForm() {
                   type="button"
                   onClick={handleVerifyPhoneOtp}
                   disabled={phoneOtp.length !== 6 || isPhoneLoading}
-                  className="h-[32px] px-4 bg-[#176b27] text-white text-[11px] font-bold uppercase rounded-md hover:bg-[#115d20] transition-colors disabled:opacity-50 whitespace-nowrap"
+                  className="h-[32px] px-4 bg-[#176b27] text-white text-[11px] font-semibold uppercase rounded-md hover:bg-[#115d20] transition-colors disabled:opacity-50 whitespace-nowrap"
                 >
                   Confirm
                 </button>
@@ -397,12 +397,12 @@ export default function EnterpriseForm() {
                 className={`w-full h-[32px] px-3 bg-[#fafbfa] border ${email && !emailVerified ? "border-[#176b27]" : "border-[#e5e7eb]"} rounded-md text-[12px] font-semibold text-gray-800 focus:outline-none`}
               />
               {email && !emailVerified && /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email) && (
-                <button type="button" onClick={handleSendEmailOtp} disabled={isEmailLoading || emailTimer > 0} className="absolute right-1 top-[2px] h-[28px] px-3 bg-[#176b27] text-white text-[10px] font-bold uppercase rounded hover:bg-[#115d20] transition-colors disabled:opacity-50">
+                <button type="button" onClick={handleSendEmailOtp} disabled={isEmailLoading || emailTimer > 0} className="absolute right-1 top-[2px] h-[28px] px-3 bg-[#176b27] text-white text-[10px] font-semibold uppercase rounded hover:bg-[#115d20] transition-colors disabled:opacity-50">
                   {emailTimer > 0 ? `Resend in ${emailTimer}s` : isEmailLoading ? "Sending..." : "Verify"}
                 </button>
               )}
               {emailVerified && (
-                <div className="absolute right-2 top-1.5 flex items-center gap-1 text-[#176b27] bg-[#f1f6f1] px-2 py-0.5 rounded text-[10px] font-bold">
+                <div className="absolute right-2 top-1.5 flex items-center gap-1 text-[#176b27] bg-[#f1f6f1] px-2 py-0.5 rounded text-[10px] font-semibold">
                   <CheckCircle size={12} /> Verified
                 </div>
               )}
@@ -422,7 +422,7 @@ export default function EnterpriseForm() {
                   type="button"
                   onClick={handleVerifyEmailOtp}
                   disabled={emailOtp.length !== 6 || isEmailLoading}
-                  className="h-[32px] px-4 bg-[#176b27] text-white text-[11px] font-bold uppercase rounded-md hover:bg-[#115d20] transition-colors disabled:opacity-50 whitespace-nowrap"
+                  className="h-[32px] px-4 bg-[#176b27] text-white text-[11px] font-semibold uppercase rounded-md hover:bg-[#115d20] transition-colors disabled:opacity-50 whitespace-nowrap"
                 >
                   Confirm
                 </button>

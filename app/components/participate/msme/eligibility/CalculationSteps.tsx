@@ -16,7 +16,7 @@ const StepCard = ({
     <div className="flex flex-col items-center justify-start flex-1 min-w-0 bg-white border border-gray-100 rounded-lg p-2 md:p-3 text-center">
       <div className="flex items-center gap-1.5 mb-2.5">
         <CheckCircle2 size={16} className="text-white fill-[#1b5e20]" />
-        <span className="text-sm font-bold text-[#1b5e20] tracking-wide">STEP {step}</span>
+        <span className="text-sm font-semibold text-[#1b5e20] tracking-wide">STEP {step}</span>
       </div>
       <h4 className="text-xs lg:text-sm font-semibold text-gray-900 mb-2 leading-tight min-h-[30px] flex items-center justify-center text-center">
         {title}

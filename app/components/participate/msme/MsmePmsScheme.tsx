@@ -1,6 +1,12 @@
-import { BookOpenCheck, Globe, Store, Handshake, TrendingUp, ShieldCheck } from "lucide-react";
+import { Globe, Store, Handshake, TrendingUp } from "lucide-react";
 import type { LucideIcon } from "lucide-react";
+import Image from "next/image";
 import leafsImg from "@/app/assets/icons/leafs.png";
+import cardBg from "@/app/assets/participate/msme/card_image.png";
+import secureImg from "@/app/assets/participate/msme/secure.png";
+import rightLeaf from "@/app/assets/participate/msme/right_image.png";
+import leftImage from "@/app/assets/participate/msme/left_image.png";
+import SectionContainer from "@/app/components/layout/SectionContainer";
 
 interface SchemeFeature {
   id: string;
@@ -49,26 +55,40 @@ export default function MsmePmsScheme() {
   return (
     <section
       aria-labelledby="msme-pms-heading"
-      className="relative w-full overflow-hidden bg-[#F9FCF9] py-6 px-4 md:px-14"
+      className="relative w-full overflow-hidden bg-[#F9FCF9] py-4"
     >
+      {/* Left absolute image */}
       <img
+        src={leftImage.src}
+        alt=""
+        className="absolute left-0 top-0 hidden h-[180px] w-auto object-contain lg:block opacity-40"
+      />
+      {/* <img
         src={leafsImg.src}
         alt=""
         className="pointer-events-none absolute -right-10 top-0 h-40 w-40 rotate-[20deg] object-contain opacity-10 sm:h-56 sm:w-56 lg:right-4"
         aria-hidden="true"
-      />
+      /> */}
+      <SectionContainer>
       <div className="mx-auto w-full">
         {/* Heading */}
         <h2
           id="msme-pms-heading"
-          className="text-center text-[18px] font-semibold tracking-tight text-slate-900 text-balance md:text-[28px] lg:text-[32px]"
+          className="text-center text-[18px] font-semibold tracking-tight text-[#1b5e20] text-balance md:text-[28px] lg:text-[32px]"
         >
           What is the MSME PMS Scheme?
         </h2>
 
+        {/* Golden decoration */}
+        <div className="mb-4 flex items-center justify-center gap-2">
+          <span className="h-px w-12 bg-[#d4a017]" />
+          <span className="h-1.5 w-1.5 rounded-full bg-[#d4a017]" />
+          <span className="h-px w-12 bg-[#d4a017]" />
+        </div>
+
         {/* Intro paragraph */}
         <p className="mx-auto max-w-3xl text-center text-[14px] sm:text-[15px] leading-relaxed text-slate-600 text-balance">
-          The <strong className="font-semibold text-slate-900">Procurement &amp; Marketing Support (PMS) Scheme</strong> is
+          The <strong className="font-semibold text-[#1b5e20]">Procurement &amp; Marketing Support (PMS) Scheme</strong> {' '}is
           an initiative of the Ministry of MSME aimed at improving market access for Micro
           &amp; Small Enterprises. Eligible MSEs can explore applicable financial assistance for
           participation in approved trade fairs and exhibitions.
@@ -81,31 +101,28 @@ export default function MsmePmsScheme() {
             return (
               <li
                 key={feature.id}
-                className="relative flex flex-col items-center rounded-2xl bg-white pt-6 pb-10 px-4 text-center shadow-sm ring-1 ring-black/5 overflow-hidden"
+                className="relative flex flex-col items-center rounded-2xl bg-white pt-2 pb-12 px-4 text-center shadow-sm ring-1 ring-black/5 overflow-hidden"
+                style={{ backgroundImage: `url(${cardBg.src})`, backgroundSize: "cover", backgroundPosition: "center bottom" }}
               >
-                <img
-                  src={leafsImg.src}
-                  alt=""
-                  className="pointer-events-none absolute -right-4 -bottom-4 h-20 w-20 rotate-[20deg] object-contain opacity-[0.06]"
-                  aria-hidden="true"
-                />
-                <div className="flex h-20 w-20 items-center justify-center rounded-full border-2 border-[#3b8c2a]/20 bg-[#EFF7EE]">
-                  <Icon className="h-10 w-10 text-[#1b5e20]" strokeWidth={1.75} aria-hidden="true" />
+                <div className="flex h-16 w-16 items-center justify-center rounded-full border-2 border-gray-200 bg-gray-100">
+                  <Icon className="h-8 w-8 text-[#1b5e20]" strokeWidth={1.75} aria-hidden="true" />
                 </div>
 
-                <h3 className="mt-4 text-[18px] sm:text-xl font-semibold text-slate-900">
+                <h3 className="mt-2 text-[18px] sm:text-[20px] font-semibold text-[#1b5e20]">
                   {feature.title}
                 </h3>
 
-                <p className="mt-2 text-[14px] leading-relaxed text-slate-600">
+                <div className="mt-2 flex items-center justify-center gap-2">
+                  <span className="h-px w-12 bg-[#d4a017]" />
+                  <span className="h-1.5 w-1.5 rounded-full bg-[#d4a017]" />
+                  <span className="h-px w-12 bg-[#d4a017]" />
+                </div>
+
+                <p className="mt-2 mb-6 max-w-[180px] text-[15px] leading-relaxed text-black">
                   {feature.description}
                 </p>
 
-                <div
-                  className="absolute bottom-0 left-1/2 h-14 w-32 -translate-x-1/2 translate-y-1/2 rounded-full bg-[#0b2912]"
-                  aria-hidden="true"
-                />
-                <span className="absolute bottom-2 left-1/2 -translate-x-1/2 text-sm font-semibold text-white">
+                <span className="absolute bottom-2 left-1/2 -translate-x-1/2 text-[14px] font-bold text-white/80">
                   {feature.number}
                 </span>
               </li>
@@ -114,9 +131,9 @@ export default function MsmePmsScheme() {
         </ul>
 
         {/* Bottom banner */}
-        <div className="mt-6 flex flex-col sm:flex-row items-center gap-4 rounded-2xl bg-[#EFF7EE] px-4 py-4 sm:px-6">
-          <div className="flex h-14 w-14 shrink-0 items-center justify-center rounded-full bg-[#1b5e20]">
-            <ShieldCheck className="h-7 w-7 text-white" aria-hidden="true" />
+        <div className="relative mt-4 flex flex-col sm:flex-row items-center gap-3 rounded-2xl bg-gray-200 px-4 py-3 sm:px-6 overflow-hidden">
+          <div className="w-10 h-10 shrink-0 rounded-full bg-gray-300 flex items-center justify-center">
+            <Image src={secureImg} alt="Secure" className="w-6 h-6 object-contain" />
           </div>
           <p className="text-center sm:text-left text-[14px] sm:text-[15px] text-slate-700">
             The PMS Scheme empowers MSEs to participate, promote and prosper.{" "}
@@ -125,8 +142,10 @@ export default function MsmePmsScheme() {
               More Participation. More Exposure. More Growth.
             </strong>
           </p>
+          <Image src={rightLeaf} alt="Leaf" className="absolute right-0 bottom-0 h-28 w-auto object-contain opacity-30" />
         </div>
       </div>
+      </SectionContainer>
     </section>
   );
 }

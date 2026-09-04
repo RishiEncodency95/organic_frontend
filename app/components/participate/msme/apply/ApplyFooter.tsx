@@ -42,10 +42,10 @@ export default function ApplyFooter({
       {/* Actions */}
       {showActions && (
         <div className="flex flex-col sm:flex-row items-center justify-between gap-4 mt-4 bg-white px-4 md:mx-14 py-4 rounded-xl shadow-[0_4px_20px_rgb(0,0,0,0.03)]">
-          <button type="button" className="w-full sm:w-auto h-[38px] px-6 rounded-md border-2 border-[#176b27] text-[#176b27] font-bold text-[13px] uppercase tracking-wide hover:bg-[#f1f6f1] transition-colors">
+          <button type="button" className="w-full sm:w-auto h-[38px] px-6 rounded-md border-2 border-[#176b27] text-[#176b27] font-semibold text-[13px] uppercase tracking-wide hover:bg-[#f1f6f1] transition-colors">
             Save & Continue Later
           </button>
-          <Link href={nextLink} target="_blank" className="w-full sm:w-auto h-[38px] px-8 rounded-md bg-[#176b27] text-white font-bold text-[13px] uppercase tracking-wide hover:bg-[#115d20] transition-colors flex items-center justify-center gap-2 shadow-md">
+          <Link href={nextLink} target="_blank" className="w-full sm:w-auto h-[38px] px-8 rounded-md bg-[#176b27] text-white font-semibold text-[13px] uppercase tracking-wide hover:bg-[#115d20] transition-colors flex items-center justify-center gap-2 shadow-md">
             Save & Proceed to Next <ArrowRight size={18} strokeWidth={2.5} />
           </Link>
         </div>
@@ -59,7 +59,7 @@ export default function ApplyFooter({
             <Headphones size={28} strokeWidth={2} />
           </div>
           <div>
-            <h4 className="text-[15px] font-bold text-[#176b27] mb-1">
+            <h4 className="text-[15px] font-semibold text-[#176b27] mb-1">
               Need Help with PMS Application?
             </h4>
             <p className="text-[14px] font-medium text-gray-600 leading-snug">
@@ -80,10 +80,10 @@ export default function ApplyFooter({
               <Phone size={18} strokeWidth={2} />
             </div>
             <div>
-              <div className="text-[14px] font-bold text-[#176b27] uppercase tracking-wider mb-0.5">
+              <div className="text-[14px] font-semibold text-[#176b27] uppercase tracking-wider mb-0.5">
                 PMS Helpline
               </div>
-              <div className="text-[16px] font-bold text-[#176b27] leading-none mb-1">
+              <div className="text-[16px] font-semibold text-[#176b27] leading-none mb-1">
                 +91 11 4075 4187
               </div>
               <div className="text-[12px] font-medium text-gray-500">

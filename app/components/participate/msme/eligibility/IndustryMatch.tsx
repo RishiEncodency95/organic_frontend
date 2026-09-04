@@ -10,7 +10,7 @@ const IndustryMatch = () => {
         <div className="flex items-start gap-3 mb-4">
           <Award size={24} className="text-[#1b5e20] mt-0.5" />
           <div>
-            <h2 className="text-sm md:text-base font-bold text-[#1b5e20] uppercase tracking-wider mb-0.5">
+            <h2 className="text-sm md:text-base font-semibold text-[#1b5e20] uppercase tracking-wider mb-0.5">
               Industry Match Found
             </h2>
             <p className="text-xs md:text-sm font-medium text-gray-600 leading-snug">
@@ -24,17 +24,17 @@ const IndustryMatch = () => {
           {/* NIC Card 1 */}
           <div className="border border-gray-100 rounded-xl p-3 md:p-4 relative overflow-hidden flex items-center justify-between shadow-sm">
             <div className="flex flex-col z-10 w-[80%]">
-              <span className="text-[11px] md:text-xs font-bold text-[#1b5e20] mb-0.5">NIC 10795</span>
-              <h3 className="text-sm md:text-[15px] font-bold text-gray-900 mb-1 leading-snug">Grinding & Processing of Spices</h3>
+              <span className="text-[11px] md:text-xs font-semibold text-[#1b5e20] mb-0.5">NIC 10795</span>
+              <h3 className="text-sm md:text-[15px] font-semibold text-gray-900 mb-1 leading-snug">Grinding & Processing of Spices</h3>
               <p className="text-[11.5px] md:text-[13px] font-medium text-gray-600 mb-2 md:mb-3">
                 Food Products → Spices → Manufacturing
               </p>
 
-              <span className="text-[10px] md:text-[11px] font-bold text-gray-500 uppercase tracking-widest mb-1.5">Matched Expo Segments</span>
+              <span className="text-[10px] md:text-[11px] font-semibold text-gray-500 uppercase tracking-widest mb-1.5">Matched Expo Segments</span>
               <div className="flex flex-wrap gap-1.5">
-                <span className="bg-[#f0f9f0] border border-gray-200 text-[#1b5e20] px-2.5 py-1 rounded-md text-[11px] md:text-xs font-bold shadow-sm">Food & Beverages</span>
-                <span className="bg-[#f0f9f0] border border-gray-200 text-[#1b5e20] px-2.5 py-1 rounded-md text-[11px] md:text-xs font-bold shadow-sm">Organic & Natural Products</span>
-                <span className="bg-[#f0f9f0] border border-gray-200 text-[#1b5e20] px-2.5 py-1 rounded-md text-[11px] md:text-xs font-bold shadow-sm">Nutrition / Food Products</span>
+                <span className="bg-[#f0f9f0] border border-gray-200 text-[#1b5e20] px-2.5 py-1 rounded-md text-[11px] md:text-xs font-semibold shadow-sm">Food & Beverages</span>
+                <span className="bg-[#f0f9f0] border border-gray-200 text-[#1b5e20] px-2.5 py-1 rounded-md text-[11px] md:text-xs font-semibold shadow-sm">Organic & Natural Products</span>
+                <span className="bg-[#f0f9f0] border border-gray-200 text-[#1b5e20] px-2.5 py-1 rounded-md text-[11px] md:text-xs font-semibold shadow-sm">Nutrition / Food Products</span>
               </div>
             </div>
 
@@ -46,19 +46,19 @@ const IndustryMatch = () => {
           {/* NIC Card 2 */}
           <div className="border border-gray-100 rounded-xl p-3 md:p-4 relative overflow-hidden flex items-center justify-between shadow-sm">
             <div className="flex flex-col z-10 w-[80%]">
-              <span className="text-[11px] md:text-xs font-bold text-[#1b5e20] mb-0.5">NIC 21009</span>
-              <h3 className="text-sm md:text-[15px] font-bold text-gray-900 mb-1 leading-snug">Pharmaceutical & Botanical Products</h3>
+              <span className="text-[11px] md:text-xs font-semibold text-[#1b5e20] mb-0.5">NIC 21009</span>
+              <h3 className="text-sm md:text-[15px] font-semibold text-gray-900 mb-1 leading-snug">Pharmaceutical & Botanical Products</h3>
               <p className="text-[11.5px] md:text-[13px] font-medium text-gray-600 mb-2 md:mb-3">
                 Pharmaceuticals → Medicinal → Botanical Products → Manufacturing
               </p>
 
-              <span className="text-[10px] md:text-[11px] font-bold text-gray-500 uppercase tracking-widest mb-1.5">Matched Expo Segments</span>
+              <span className="text-[10px] md:text-[11px] font-semibold text-gray-500 uppercase tracking-widest mb-1.5">Matched Expo Segments</span>
               <div className="flex flex-wrap gap-1.5">
-                <span className="bg-[#f0f9f0] border border-gray-200 text-[#1b5e20] px-2.5 py-1 rounded-md text-[11px] md:text-xs font-bold shadow-sm">Pharma</span>
-                <span className="bg-[#f0f9f0] border border-gray-200 text-[#1b5e20] px-2.5 py-1 rounded-md text-[11px] md:text-xs font-bold shadow-sm">AYUSH & Wellness</span>
-                <span className="bg-[#f0f9f0] border border-gray-200 text-[#1b5e20] px-2.5 py-1 rounded-md text-[11px] md:text-xs font-bold shadow-sm">Medicinal Products</span>
-                <span className="bg-[#f0f9f0] border border-gray-200 text-[#1b5e20] px-2.5 py-1 rounded-md text-[11px] md:text-xs font-bold shadow-sm">Herbal & Botanical</span>
-                <span className="bg-[#f0f9f0] border border-gray-200 text-[#1b5e20] px-2.5 py-1 rounded-md text-[11px] md:text-xs font-bold shadow-sm">Organic & Natural Products</span>
+                <span className="bg-[#f0f9f0] border border-gray-200 text-[#1b5e20] px-2.5 py-1 rounded-md text-[11px] md:text-xs font-semibold shadow-sm">Pharma</span>
+                <span className="bg-[#f0f9f0] border border-gray-200 text-[#1b5e20] px-2.5 py-1 rounded-md text-[11px] md:text-xs font-semibold shadow-sm">AYUSH & Wellness</span>
+                <span className="bg-[#f0f9f0] border border-gray-200 text-[#1b5e20] px-2.5 py-1 rounded-md text-[11px] md:text-xs font-semibold shadow-sm">Medicinal Products</span>
+                <span className="bg-[#f0f9f0] border border-gray-200 text-[#1b5e20] px-2.5 py-1 rounded-md text-[11px] md:text-xs font-semibold shadow-sm">Herbal & Botanical</span>
+                <span className="bg-[#f0f9f0] border border-gray-200 text-[#1b5e20] px-2.5 py-1 rounded-md text-[11px] md:text-xs font-semibold shadow-sm">Organic & Natural Products</span>
               </div>
             </div>
 

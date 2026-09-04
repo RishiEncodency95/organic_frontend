@@ -13,7 +13,7 @@ const EligibilityInputBar = () => {
       
       {/* Left side: Input Area */}
       <div className="flex flex-col gap-1.5 flex-1">
-        <label className="text-[12px] font-bold text-gray-800">
+        <label className="text-[12px] font-semibold text-gray-800">
           Upload Udyam Registration Certificate
         </label>
         <div className="flex flex-col sm:flex-row gap-3 items-start sm:items-center">
@@ -33,7 +33,7 @@ const EligibilityInputBar = () => {
             className="hidden"
             onChange={(e) => setFileName(e.target.files?.[0]?.name || "")}
           />
-          <button type="submit" className="bg-[#1b5e20] hover:bg-[#154a19] text-white px-5 rounded-lg text-sm font-bold tracking-wide transition-colors whitespace-nowrap shadow-sm h-[40px] flex items-center justify-center">
+          <button type="submit" className="bg-[#1b5e20] hover:bg-[#154a19] text-white px-5 rounded-lg text-sm font-semibold tracking-wide transition-colors whitespace-nowrap shadow-sm h-[40px] flex items-center justify-center">
             UPLOAD & VERIFY
           </button>
         </div>
@@ -48,7 +48,7 @@ const EligibilityInputBar = () => {
         <span className="text-[12px] font-medium text-gray-500">
           Checked on: 25 May 2025, 11:30 AM
         </span>
-        <div className="flex items-center gap-1.5 bg-[#f0f9f0] border border-[#1b5e20] text-[#1b5e20] px-3 py-1 rounded-md font-bold text-[12px]">
+        <div className="flex items-center gap-1.5 bg-[#f0f9f0] border border-[#1b5e20] text-[#1b5e20] px-3 py-1 rounded-md font-semibold text-[12px]">
           <Check size={14} strokeWidth={3} />
           Verified
         </div>

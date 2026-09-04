@@ -32,7 +32,7 @@ export default function ApplySteps({ currentStep = 1 }: { currentStep?: number }
             <div className="flex items-center gap-3 shrink-0">
               {/* Circle */}
               <div
-                className={`w-10 h-10 rounded-full flex items-center justify-center font-bold text-[15px] ${isCompleted
+                className={`w-10 h-10 rounded-full flex items-center justify-center font-semibold text-[15px] ${isCompleted
                     ? "bg-[#176b27] text-white"
                     : isActive
                       ? "bg-[#176b27] text-white"
@@ -45,7 +45,7 @@ export default function ApplySteps({ currentStep = 1 }: { currentStep?: number }
               {/* Text */}
               <div className="flex flex-col">
                 <span
-                  className={`text-[14px] font-bold ${isCompleted || isActive ? "text-[#111827]" : "text-gray-500"
+                  className={`text-[14px] font-semibold ${isCompleted || isActive ? "text-[#111827]" : "text-gray-500"
                     }`}
                 >
                   {step.title}

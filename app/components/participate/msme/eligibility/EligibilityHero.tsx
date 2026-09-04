@@ -28,7 +28,7 @@ const EligibilityHero = () => {
           <h1 className="text-xl md:text-3xl lg:text-5xl font-semibold leading-tight mb-4">
             Your Gateway to<br />PMS Support
           </h1>
-          <h2 className="text-xl md:text-2xl font-bold text-[#facc15]">
+          <h2 className="text-xl md:text-2xl font-semibold text-[#facc15]">
             Bharat Organic Expo 2027
           </h2>
         </div>

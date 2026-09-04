@@ -55,7 +55,7 @@ export default function ApplySidebar() {
       <div className="bg-white rounded-2xl shadow-[0_4px_20px_rgb(0,0,0,0.03)] p-6 border border-[#edf0ed]">
         <div className="flex items-center gap-2 mb-4">
           <Info size={20} className="text-[#176b27]" strokeWidth={2.5} />
-          <h3 className="text-[14px] font-bold uppercase text-[#176b27] tracking-wide">
+          <h3 className="text-[14px] font-semibold uppercase text-[#176b27] tracking-wide">
             About PMS Scheme
           </h3>
         </div>
@@ -70,7 +70,7 @@ export default function ApplySidebar() {
       {/* Assistance Structure */}
       <div className="bg-white rounded-2xl shadow-[0_4px_20px_rgb(0,0,0,0.03)] p-6 border border-[#edf0ed]">
         <div className="flex items-center gap-2 mb-6">
-          <h3 className="text-[14px] font-bold uppercase text-[#176b27] tracking-wide">
+          <h3 className="text-[14px] font-semibold uppercase text-[#176b27] tracking-wide">
             Assistance Structure
           </h3>
         </div>
@@ -120,7 +120,7 @@ export default function ApplySidebar() {
             <line x1="16" y1="17" x2="8" y2="17" />
             <polyline points="10 9 9 9 8 9" />
           </svg>
-          <h3 className="text-[14px] font-bold uppercase text-[#176b27] tracking-wide">
+          <h3 className="text-[14px] font-semibold uppercase text-[#176b27] tracking-wide">
             Documents Required
           </h3>
         </div>

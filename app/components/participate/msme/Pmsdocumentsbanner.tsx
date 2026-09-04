@@ -17,6 +17,8 @@ import {
   ArrowRight,
 } from "lucide-react";
 import documentsBgImg from "@/app/assets/participate/msme/documents_ready.jpg";
+import docsImg from "@/app/assets/participate/msme/docs.png";
+import SectionContainer from "@/app/components/layout/SectionContainer";
 
 interface PmsDocument {
   id: number;
@@ -104,7 +106,7 @@ export default function PMSDocumentsBanner() {
   return (
     <section
       aria-labelledby="pms-documents-heading"
-      className="relative isolate overflow-hidden bg-white px-4 py-4 md:px-14"
+      className="relative isolate overflow-visible bg-gray-100 py-4"
     >
       {/* Background Image */}
       <div className="absolute inset-0 -z-10">
@@ -114,6 +116,7 @@ export default function PMSDocumentsBanner() {
           className="h-full w-full object-cover"
         />
       </div>
+      <SectionContainer>
       {/* Header */}
       <header className="relative mx-auto mb-2 max-w-3xl text-center">
         <h1
@@ -123,8 +126,17 @@ export default function PMSDocumentsBanner() {
           Keep Your <span className="text-[#1b5e20]">PMS</span> Documents Ready
         </h1>
 
+        {/* Decoration */}
+        <div className="mx-auto mt-3 flex w-full max-w-xs items-center gap-2">
+          <span className="h-px flex-1 bg-[#1b5e20]/40" />
+          <span className="h-2 w-2 rounded-full bg-[#1b5e20]" />
+          <span className="h-2.5 w-2.5 rounded-full bg-[#1b5e20]" />
+          <span className="h-2 w-2 rounded-full bg-[#1b5e20]" />
+          <span className="h-px flex-1 bg-[#1b5e20]/40" />
+        </div>
+
         <p className="text-base leading-relaxed text-black sm:text-lg">
-          Ensure these essential documents are ready for a smooth{" "}
+          Ensure these essential documents are ready for a smooth{" "}<br/>
           <span className="block font-semibold text-[#1b5e20] sm:inline">
             PMS claim process.
           </span>
@@ -132,7 +144,7 @@ export default function PMSDocumentsBanner() {
       </header>
 
       {/* Document grid */}
-      <ul className="mx-auto grid max-w-7xl grid-cols-1 gap-3 sm:grid-cols-2 sm:gap-4 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6">
+      <ul className="grid grid-cols-1 gap-3 sm:grid-cols-2 sm:gap-4 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6">
         {pmsDocuments.map((doc) => {
           const Icon = doc.icon;
           return (
@@ -166,15 +178,23 @@ export default function PMSDocumentsBanner() {
       </ul>
 
       {/* Notice bar */}
-      <div className="relative mx-auto mt-4 max-w-7xl overflow-hidden rounded-2xl bg-white px-5 py-3 sm:px-8">
-        <div className="flex items-start gap-4 sm:items-center">
-          <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-[#EFF7EE] ring-1 ring-black/5">
-            <FileText className="h-5 w-5 text-[#1b5e20]" aria-hidden="true" />
-          </span>
-          <p className="text-[14px] font-medium leading-relaxed text-slate-700 sm:text-[15px]">
-            Additional documents may be required depending on applicable PMS
-            guidelines and the individual enterprise.
-          </p>
+      <div className="relative mt-4 overflow-visible rounded-2xl bg-gray-100 px-5 py-3 sm:px-8">
+        <div className="relative flex items-center justify-between gap-4 overflow-visible">
+          <div className="flex items-start gap-4 sm:items-center">
+            <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-white ring-1 ring-black/5">
+              <FileText className="h-5 w-5 text-[#1b5e20]" aria-hidden="true" />
+            </span>
+            <p className="text-[14px] font-medium leading-relaxed text-slate-700 sm:text-[15px]">
+              Additional documents may be required depending on applicable PMS
+              guidelines and the individual enterprise.
+            </p>
+          </div>
+          <img
+            src={docsImg.src}
+            alt="PMS Documents"
+            className="absolute -right-4 -top-8 hidden h-[100px] w-auto object-contain sm:block"
+            loading="lazy"
+          />
         </div>
       </div>
 
@@ -189,6 +209,7 @@ export default function PMSDocumentsBanner() {
           <ArrowRight className="h-5 w-5" aria-hidden="true" />
         </a>
       </div>
+      </SectionContainer>
     </section>
   );
 }

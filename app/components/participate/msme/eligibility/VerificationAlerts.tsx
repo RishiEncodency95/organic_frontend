@@ -22,7 +22,7 @@ const VerificationAlerts = () => {
             className="text-[#c95d32]"
           />
 
-          <h3 className="text-[12px] lg:text-[14px] font-bold text-[#c95d32] uppercase tracking-wide">
+          <h3 className="text-[12px] lg:text-[14px] font-semibold text-[#c95d32] uppercase tracking-wide">
             Additional Verification Required
           </h3>
         </div>
@@ -52,7 +52,7 @@ const VerificationAlerts = () => {
                   </div>
                 </td>
 
-                <td className="px-5 py-2 w-[190px] text-[15px] font-bold text-gray-900">
+                <td className="px-5 py-2 w-[190px] text-[15px] font-semibold text-gray-900">
                   ₹0
                 </td>
               </tr>
@@ -70,7 +70,7 @@ const VerificationAlerts = () => {
                   </div>
                 </td>
 
-                <td className="px-5 py-2 text-[15px] font-bold text-gray-900">
+                <td className="px-5 py-2 text-[15px] font-semibold text-gray-900">
                   No
                 </td>
               </tr>
@@ -88,7 +88,7 @@ const VerificationAlerts = () => {
                   </div>
                 </td>
 
-                <td className="px-5 py-2 text-[15px] font-bold text-gray-900">
+                <td className="px-5 py-2 text-[15px] font-semibold text-gray-900">
                   Inactive
                 </td>
               </tr>
@@ -101,7 +101,7 @@ const VerificationAlerts = () => {
         <div className="bg-[#fff7e9] border border-[#f4dfbd] rounded-lg px-3 py-3">
           <p className="text-[14px] leading-[1.7] font-medium">
             <span className="text-[#91451f]">
-              This does <strong className="font-bold text-[#000]">NOT</strong>{' '}
+              This does <strong className="font-semibold text-[#000]">NOT</strong>{' '}
               currently change <span className="text-[#000]">your result to</span> &quot;Not Eligible.&quot;
             </span>
             <br />
@@ -125,7 +125,7 @@ const VerificationAlerts = () => {
             className="text-[#1f6426]"
           />
 
-          <h3 className="text-[12px] lg:text-[14px] font-bold text-[#1f6426] uppercase tracking-wide">
+          <h3 className="text-[12px] lg:text-[14px] font-semibold text-[#1f6426] uppercase tracking-wide">
             Documents to Keep Ready
           </h3>
         </div>

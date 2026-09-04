@@ -12,8 +12,9 @@ import {
   ShieldAlert,
 } from "lucide-react";
 import Link from "next/link";
-import readyToExploreImg from "@/app/assets/participate/msme/ready_to_explore.jpeg";
+import readyToExploreImg from "@/app/assets/participate/msme/ready_to_explore.png";
 import { SITE_CONFIG } from "@/app/constants/siteConfig";
+import SectionContainer from "@/app/components/layout/SectionContainer";
 
 /**
  * Section 11 — Final CTA
@@ -36,7 +37,7 @@ const OptionCard: React.FC<OptionCardProps> = ({ icon, title, description }) => 
     </div>
     <h3 className="text-[14px] font-semibold text-slate-900 sm:text-[15px]">{title}</h3>
     <span className="my-1.5 h-[3px] w-8 rounded-full bg-[#3b8c2a]" />
-    <p className="text-[11px] leading-relaxed text-slate-600 sm:text-[12px]">
+    <p className="text-[14px] leading-relaxed text-slate-600">
       {description}
     </p>
   </div>
@@ -58,17 +59,19 @@ const PMSFinalCTASection: React.FC = () => {
   return (
     <section
       aria-labelledby="pms-final-cta-heading"
-      className="relative w-full overflow-hidden px-4 py-4 md:px-14"
+      className="relative w-full overflow-hidden py-4 min-h-[400px] lg:min-h-[500px]"
     >
       {/* Background image */}
       <div className="absolute inset-0 z-0">
         <img
           src={readyToExploreImg.src}
           alt=""
-          className="h-full w-full object-cover pointer-events-none"
+          className="h-full w-full object-cover pointer-events-none hidden lg:block"
         />
+        <div className="h-full w-full bg-gradient-to-br from-[#EFF7EE] to-white lg:hidden" />
       </div>
 
+      <SectionContainer>
       <div className="relative z-10 mx-auto flex w-full max-w-2xl flex-col items-center px-2 lg:max-w-[50%]">
         {/* Heading */}
         <h2
@@ -143,9 +146,11 @@ const PMSFinalCTASection: React.FC = () => {
           <ArrowRight className="h-4 w-4" strokeWidth={2.25} aria-hidden="true" />
         </a>
       </div>
+      </SectionContainer>
 
       {/* Feature strip + Disclaimer - full width */}
-      <div className="relative z-10 w-full">
+      <SectionContainer>
+      <div className="relative z-10 mx-auto w-full max-w-5xl">
         <ul className="mt-5 flex w-full flex-wrap items-center justify-between gap-x-0 divide-x divide-white/30 rounded-lg bg-[#ea580c] px-2 py-2">
           <li className="px-3">
             <Feature
@@ -179,8 +184,8 @@ const PMSFinalCTASection: React.FC = () => {
       </div>
 
       {/* Disclaimer - full section width */}
-      <div className="relative z-10 w-full">
-        <div className="mt-5 flex w-full items-start gap-5 rounded-xl bg-white/95 p-6 shadow-lg ring-1 ring-black/5 sm:p-4">
+      <div className="relative z-10 mx-auto w-full max-w-5xl">
+        <div className="mt-5 flex w-full items-center gap-5 rounded-xl bg-white/95 p-6 shadow-lg ring-1 ring-black/5 sm:p-4">
           <div className="flex shrink-0 items-center gap-3">
             <ShieldAlert className="h-12 w-12 text-[#1b5e20]" strokeWidth={2} aria-hidden="true" />
             <span className="text-[14px] font-semibold uppercase leading-tight text-[#1b5e20] sm:text-[15px]">
@@ -198,6 +203,7 @@ const PMSFinalCTASection: React.FC = () => {
           </p>
         </div>
       </div>
+      </SectionContainer>
     </section>
   );
 };

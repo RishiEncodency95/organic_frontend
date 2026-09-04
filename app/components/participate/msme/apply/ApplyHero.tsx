@@ -27,7 +27,7 @@ export default function ApplyHero() {
           <div className="max-w-2xl mt-4">
             
             {/* Breadcrumb */}
-            <div className="flex flex-wrap items-center gap-2 text-[12px] font-bold text-gray-600 mb-6 bg-white w-max px-4 py-2 rounded-xl shadow-sm border border-gray-100">
+            <div className="flex flex-wrap items-center gap-2 text-[12px] font-semibold text-gray-600 mb-6 bg-white w-max px-4 py-2 rounded-xl shadow-sm border border-gray-100">
               <Link href="#" className="hover:text-[#176b27] transition-colors">Home</Link>
               <span className="text-gray-400">&gt;</span>
               <Link href="#" className="hover:text-[#176b27] transition-colors">PMS Scheme</Link>
@@ -35,7 +35,7 @@ export default function ApplyHero() {
               <span className="text-[#176b27]">Apply for PMS Support</span>
             </div>
 
-            <span className="text-[#176b27] font-bold text-[16px] tracking-wider uppercase mb-3 block">
+            <span className="text-[#176b27] font-semibold text-[16px] tracking-wider uppercase mb-3 block">
               PMS Scheme
             </span>
             <h1 className="text-xl md:text-[56px] font-semibold text-[#1f2937] leading-[1.3] mb-2 ">
@@ -50,7 +50,7 @@ export default function ApplyHero() {
             </div>
 
             <p className="text-[#374151] text-[16px] leading-[1.7] max-w-[460px] font-medium">
-              Take the next step towards getting <span className="font-bold text-[#176b27]">up to ₹1.5 Lakh</span> assistance under the <span className="font-bold text-[#176b27]">MSME</span> Promotion & Marketing Assistance (<span className="font-bold text-[#176b27]">PMS</span>) Scheme.
+              Take the next step towards getting <span className="font-semibold text-[#176b27]">up to ₹1.5 Lakh</span> assistance under the <span className="font-semibold text-[#176b27]">MSME</span> Promotion & Marketing Assistance (<span className="font-semibold text-[#176b27]">PMS</span>) Scheme.
             </p>
 
             {/* Bottom decorative line */}
@@ -73,7 +73,7 @@ export default function ApplyHero() {
               <div className="w-10 h-10 rounded-full bg-[#f1f6f1] text-[#176b27] flex items-center justify-center shrink-0">
                 <Users size={18} strokeWidth={2.5} />
               </div>
-              <span className="text-xs md:text-[14px] font-bold text-[#374151] leading-[1.3]">
+              <span className="text-xs md:text-[14px] font-semibold text-[#374151] leading-[1.3]">
                 For Eligible <br /> MSEs Only
               </span>
             </div>
@@ -83,7 +83,7 @@ export default function ApplyHero() {
               <div className="w-10 h-10 rounded-full bg-[#f1f6f1] text-[#176b27] flex items-center justify-center shrink-0">
                 <Percent size={18} strokeWidth={2.5} />
               </div>
-              <span className="text-xs md:text-[14px] font-bold text-[#374151] leading-[1.3]">
+              <span className="text-xs md:text-[14px] font-semibold text-[#374151] leading-[1.3]">
                 Up to ₹1.5 Lakh <br /> Assistance
               </span>
             </div>
@@ -93,7 +93,7 @@ export default function ApplyHero() {
               <div className="w-10 h-10 rounded-full bg-[#f1f6f1] text-[#176b27] flex items-center justify-center shrink-0">
                 <ShieldCheck size={18} strokeWidth={2.5} />
               </div>
-              <span className="text-xs md:text-[14px] font-bold text-[#374151] leading-[1.3]">
+              <span className="text-xs md:text-[14px] font-semibold text-[#374151] leading-[1.3]">
                 80% or 100% <br /> Reimbursement
               </span>
             </div>
@@ -103,7 +103,7 @@ export default function ApplyHero() {
               <div className="w-10 h-10 rounded-full bg-[#f1f6f1] text-[#176b27] flex items-center justify-center shrink-0">
                 <Store size={18} strokeWidth={2.5} />
               </div>
-              <span className="text-xs md:text-[14px] font-bold text-[#374151] leading-[1.3]">
+              <span className="text-xs md:text-[14px] font-semibold text-[#374151] leading-[1.3]">
                 Min. 9 sqm <br /> Stall Required
               </span>
             </div>
@@ -113,7 +113,7 @@ export default function ApplyHero() {
               <div className="w-10 h-10 rounded-full bg-[#f1f6f1] text-[#176b27] flex items-center justify-center shrink-0">
                 <FileText size={18} strokeWidth={2.5} />
               </div>
-              <span className="text-xs md:text-[13px] font-bold text-[#374151] leading-[1.3]">
+              <span className="text-xs md:text-[13px] font-semibold text-[#374151] leading-[1.3]">
                 Subject to <br /> Govt. Guidelines
               </span>
             </div>

@@ -4,8 +4,10 @@ import FeatureStrip from "@/app/components/participate/msme/FeatureStrip";
 import OfficialRecognitionBanner from "@/app/components/participate/msme/OfficialRecognitionBanner";
 import MsmePmsScheme from "@/app/components/participate/msme/MsmePmsScheme";
 import Pmsfinancialassistancebanner from "@/app/components/participate/msme/Pmsfinancialassistancebanner";
+import PmsSupportCoverSection from "@/app/components/participate/msme/PmsSupportCoverSection";
 import Pmssupportsection from "@/app/components/participate/msme/Pmssupportsection";
 import Whatsnextbanner from "@/app/components/participate/msme/Whatsnextbanner";
+import NeedHelpSection from "@/app/components/participate/msme/NeedHelpSection";
 import Reasontovisitbanner from "@/app/components/participate/msme/Reasontovisitbanner";
 import OfficialMessageBanner from "@/app/components/participate/msme/Msmedirectormessage";
 import Pmsdocumentsbanner from "@/app/components/participate/msme/Pmsdocumentsbanner";
@@ -30,9 +32,11 @@ const MsmePage = () => {
       <OfficialRecognitionBanner />
       <MsmePmsScheme />
       <Pmsfinancialassistancebanner />
+      <PmsSupportCoverSection />
       <Pmssupportsection />
       <Whatsnextbanner />
-      <Reasontovisitbanner />
+      <NeedHelpSection />
+      {/* <Reasontovisitbanner /> */}
       <OfficialMessageBanner />
       <Pmsdocumentsbanner />
       <Whyparticipatesection />

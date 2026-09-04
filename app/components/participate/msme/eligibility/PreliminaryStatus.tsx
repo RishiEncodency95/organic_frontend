@@ -37,7 +37,7 @@ const PreliminaryStatus = () => {
             <RibbonStarIcon size={46} />
           </div>
           <div className="flex flex-col">
-            <span className="text-[10.5px] md:text-[11.5px] font-bold tracking-widest text-white/90 uppercase mb-0.5">
+            <span className="text-[10.5px] md:text-[11.5px] font-semibold tracking-widest text-white/90 uppercase mb-0.5">
               Preliminary Status
             </span>
             <h3 className="text-3xl md:text-4xl font-semibold tracking-wide mb-1 leading-none text-white">
@@ -63,13 +63,13 @@ const PreliminaryStatus = () => {
         </p>
         <div className="inline-flex items-center gap-1.5 border border-[#1b5e20]/30 text-[#1b5e20] bg-[#f0f9f0] px-2.5 py-1 rounded-md w-fit">
           <span className="text-[14px] leading-none mb-0.5">♀</span>
-          <span className="text-[12px] font-bold">Women MSE Category</span>
+          <span className="text-[12px] font-semibold">Women MSE Category</span>
         </div>
       </div>
 
       {/* Right Block */}
       <div className="px-4 md:px-5 md:py-2 flex-[1.2] flex flex-col justify-center">
-        <span className="text-[10px] md:text-[14px] font-bold text-[#1b5e20] uppercase tracking-wider mb-2">
+        <span className="text-[10px] md:text-[14px] font-semibold text-[#1b5e20] uppercase tracking-wider mb-2">
           Why 100%?
         </span>
         <p className="text-[12px] md:text-[14px] text-gray-800 leading-relaxed font-medium">

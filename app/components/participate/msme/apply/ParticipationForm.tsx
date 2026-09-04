@@ -188,7 +188,7 @@ export default function ParticipationForm() {
         <div className="flex flex-col gap-4 mb-4">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div className="w-full relative">
-              <label className="block text-[11px] font-bold text-gray-700 mb-1">
+              <label className="block text-[11px] font-semibold text-gray-700 mb-1">
                 Expo Edition <span className="text-red-500">*</span>
               </label>
               <select disabled className="w-full h-[36px] px-3 bg-[#fafbfa] border border-[#e5e7eb] rounded-md text-[13px] font-semibold text-gray-800 appearance-none focus:outline-none">
@@ -197,7 +197,7 @@ export default function ParticipationForm() {
               <ChevronDown size={16} className="absolute right-3 top-[25px] text-gray-400 pointer-events-none" />
             </div>
             <div className="w-full">
-              <label className="block text-[11px] font-bold text-gray-700 mb-1">
+              <label className="block text-[11px] font-semibold text-gray-700 mb-1">
                 Event Dates
               </label>
               <input
@@ -209,7 +209,7 @@ export default function ParticipationForm() {
             </div>
           </div>
           <div className="w-full">
-            <label className="block text-[11px] font-bold text-gray-700 mb-1">
+            <label className="block text-[11px] font-semibold text-gray-700 mb-1">
               Venue <span className="text-red-500">*</span>
             </label>
             <input
@@ -223,7 +223,7 @@ export default function ParticipationForm() {
 
         {/* Section 2: Stall Type */}
         <div className="mb-4">
-          <label className="block text-[12px] font-bold text-gray-800 mb-3">
+          <label className="block text-[12px] font-semibold text-gray-800 mb-3">
             Stall Type <span className="text-red-500">*</span>
           </label>
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-3">
@@ -238,7 +238,7 @@ export default function ParticipationForm() {
                   <div className="text-gray-400 peer-checked:text-[#176b27] transition-colors shrink-0">
                     <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M3 3h18v18H3z" /><path d="M3 9h18" /><path d="M9 21V9" /></svg>
                   </div>
-                  <span className="text-[13px] font-bold text-gray-700 peer-checked:text-[#176b27] leading-none transition-colors">Shell Scheme</span>
+                  <span className="text-[13px] font-semibold text-gray-700 peer-checked:text-[#176b27] leading-none transition-colors">Shell Scheme</span>
                 </div>
                 <span className="text-[10px] font-medium text-gray-500 peer-checked:text-gray-600 leading-relaxed transition-colors">Pre-fabricated stall<br />with basic fittings</span>
               </div>
@@ -255,7 +255,7 @@ export default function ParticipationForm() {
                   <div className="text-gray-400 peer-checked:text-[#176b27] transition-colors shrink-0">
                     <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M3 3h18v18H3z" /></svg>
                   </div>
-                  <span className="text-[13px] font-bold text-gray-700 peer-checked:text-[#176b27] leading-none transition-colors">Bare Space</span>
+                  <span className="text-[13px] font-semibold text-gray-700 peer-checked:text-[#176b27] leading-none transition-colors">Bare Space</span>
                 </div>
                 <span className="text-[10px] font-medium text-gray-500 peer-checked:text-gray-600 leading-relaxed transition-colors">Open space for custom<br />stall construction</span>
               </div>
@@ -272,7 +272,7 @@ export default function ParticipationForm() {
                   <div className="text-gray-400 peer-checked:text-[#176b27] transition-colors shrink-0">
                     <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10" /><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z" /><path d="M2 12h20" /></svg>
                   </div>
-                  <span className="text-[13px] font-bold text-gray-700 peer-checked:text-[#176b27] leading-none transition-colors">Country Pavilion</span>
+                  <span className="text-[13px] font-semibold text-gray-700 peer-checked:text-[#176b27] leading-none transition-colors">Country Pavilion</span>
                 </div>
                 <span className="text-[10px] font-medium text-gray-500 peer-checked:text-gray-600 leading-relaxed transition-colors">Group participation<br />under country pavilion</span>
               </div>
@@ -289,7 +289,7 @@ export default function ParticipationForm() {
                   <div className="text-gray-400 peer-checked:text-[#176b27] transition-colors shrink-0">
                     <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="1" /><circle cx="19" cy="12" r="1" /><circle cx="5" cy="12" r="1" /></svg>
                   </div>
-                  <span className="text-[13px] font-bold text-gray-700 peer-checked:text-[#176b27] leading-none transition-colors">Other</span>
+                  <span className="text-[13px] font-semibold text-gray-700 peer-checked:text-[#176b27] leading-none transition-colors">Other</span>
                 </div>
                 <span className="text-[10px] font-medium text-gray-500 peer-checked:text-gray-600 leading-relaxed transition-colors">Please specify</span>
               </div>
@@ -301,7 +301,7 @@ export default function ParticipationForm() {
         <div className="flex flex-col gap-4 mb-4">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div className="w-full relative">
-              <label className="block text-[11px] font-bold text-gray-700 mb-1">
+              <label className="block text-[11px] font-semibold text-gray-700 mb-1">
                 Preferred Stall Size <span className="text-red-500">*</span>
               </label>
               <select
@@ -317,7 +317,7 @@ export default function ParticipationForm() {
               <ChevronDown size={16} className="absolute right-3 top-[25px] text-gray-400 pointer-events-none" />
             </div>
             <div className="w-full">
-              <label className="block text-[11px] font-bold text-gray-700 mb-1">
+              <label className="block text-[11px] font-semibold text-gray-700 mb-1">
                 Preferred Location (Hall / Zone / Area)
               </label>
               <input
@@ -330,7 +330,7 @@ export default function ParticipationForm() {
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div className="w-full">
-              <label className="block text-[11px] font-bold text-gray-700 mb-1">
+              <label className="block text-[11px] font-semibold text-gray-700 mb-1">
                 Stall Rate (₹ / sqm)
               </label>
               <input
@@ -341,7 +341,7 @@ export default function ParticipationForm() {
               />
             </div>
             <div className="w-full">
-              <label className="block text-[11px] font-bold text-gray-700 mb-1">
+              <label className="block text-[11px] font-semibold text-gray-700 mb-1">
                 Total Area
               </label>
               <input
@@ -355,7 +355,7 @@ export default function ParticipationForm() {
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div className="w-full">
-              <label className="block text-[11px] font-bold text-gray-700 mb-1">
+              <label className="block text-[11px] font-semibold text-gray-700 mb-1">
                 Total Stall Amount (Before GST)
               </label>
               <input
@@ -366,7 +366,7 @@ export default function ParticipationForm() {
               />
             </div>
             <div className="w-full">
-              <label className="block text-[11px] font-bold text-gray-700 mb-1">
+              <label className="block text-[11px] font-semibold text-gray-700 mb-1">
                 GST (18%)
               </label>
               <input
@@ -382,10 +382,10 @@ export default function ParticipationForm() {
         {/* Total Amount Green Box */}
         <div className="bg-[#f1f6f1] border border-[#e1eee2] rounded-lg px-5 py-3 flex flex-col md:flex-row md:items-center justify-between gap-4 mb-4">
           <div>
-            <div className="text-[12px] font-bold text-[#176b27] mb-1 uppercase tracking-wider">
+            <div className="text-[12px] font-semibold text-[#176b27] mb-1 uppercase tracking-wider">
               Total Amount (Inclusive of GST)
             </div>
-            <div className="text-2xl font-bold text-[#176b27]">
+            <div className="text-2xl font-semibold text-[#176b27]">
               {formatCurrency(totalAmount)}
             </div>
           </div>
@@ -399,7 +399,7 @@ export default function ParticipationForm() {
         <div className="mb-0">
           <div className="flex items-center gap-2 mb-4">
             <User size={18} className="text-[#176b27]" strokeWidth={2.5} />
-            <h3 className="text-[13px] font-bold uppercase text-[#176b27] tracking-wide">
+            <h3 className="text-[13px] font-semibold uppercase text-[#176b27] tracking-wide">
               Contact Person for PMS Communication
             </h3>
           </div>
@@ -407,7 +407,7 @@ export default function ParticipationForm() {
           <div className="flex flex-col gap-4">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div className="w-full">
-                <label className="block text-[11px] font-bold text-gray-700 mb-1">
+                <label className="block text-[11px] font-semibold text-gray-700 mb-1">
                   Contact Person Name <span className="text-red-500">*</span>
                 </label>
                 <div className="relative">
@@ -423,7 +423,7 @@ export default function ParticipationForm() {
                 </div>
               </div>
               <div className="w-full">
-                <label className="block text-[11px] font-bold text-gray-700 mb-1">
+                <label className="block text-[11px] font-semibold text-gray-700 mb-1">
                   Designation <span className="text-red-500">*</span>
                 </label>
                 <input
@@ -440,7 +440,7 @@ export default function ParticipationForm() {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div className="w-full">
                 <div className="flex justify-between items-center mb-1">
-                  <label className="text-[11px] font-bold text-gray-700">
+                  <label className="text-[11px] font-semibold text-gray-700">
                     Mobile Number <span className="text-red-500">*</span>
                   </label>
                   {!phoneVerified ? (
@@ -448,12 +448,12 @@ export default function ParticipationForm() {
                       type="button"
                       onClick={handleSendPhoneOtp}
                       disabled={isPhoneLoading || phoneTimer > 0}
-                      className="inline-flex items-center justify-center h-[18px] bg-[#176b27] text-white text-[9px] font-bold uppercase rounded-[2px] px-2 transition-colors disabled:opacity-50 hover:bg-[#11501d]"
+                      className="inline-flex items-center justify-center h-[18px] bg-[#176b27] text-white text-[9px] font-semibold uppercase rounded-[2px] px-2 transition-colors disabled:opacity-50 hover:bg-[#11501d]"
                     >
                       {phoneTimer > 0 ? `Resend ${phoneTimer}s` : "Get OTP"}
                     </button>
                   ) : (
-                    <span className="text-[10px] font-bold text-green-600 flex items-center gap-1">
+                    <span className="text-[10px] font-semibold text-green-600 flex items-center gap-1">
                       <CheckCircle size={12} /> VERIFIED
                     </span>
                   )}
@@ -476,13 +476,13 @@ export default function ParticipationForm() {
                       onChange={(e) => setPhoneOtp(e.target.value)}
                       placeholder="6-Digit OTP"
                       maxLength={6}
-                      className="h-[32px] border border-[#176b27] bg-white text-gray-900 text-[12px] font-bold text-center tracking-[0.3em] outline-none rounded-md w-full"
+                      className="h-[32px] border border-[#176b27] bg-white text-gray-900 text-[12px] font-semibold text-center tracking-[0.3em] outline-none rounded-md w-full"
                     />
                     <button
                       type="button"
                       onClick={handleVerifyPhoneOtp}
                       disabled={isPhoneLoading}
-                      className="inline-flex items-center justify-center h-[32px] bg-[#176b27] text-white text-[11px] font-bold uppercase rounded-md px-4 hover:bg-[#11501d] transition-colors disabled:opacity-50"
+                      className="inline-flex items-center justify-center h-[32px] bg-[#176b27] text-white text-[11px] font-semibold uppercase rounded-md px-4 hover:bg-[#11501d] transition-colors disabled:opacity-50"
                     >
                       Verify
                     </button>
@@ -492,7 +492,7 @@ export default function ParticipationForm() {
 
               <div className="w-full">
                 <div className="flex justify-between items-center mb-1">
-                  <label className="text-[11px] font-bold text-gray-700">
+                  <label className="text-[11px] font-semibold text-gray-700">
                     Email ID <span className="text-red-500">*</span>
                   </label>
                   {!emailVerified ? (
@@ -500,12 +500,12 @@ export default function ParticipationForm() {
                       type="button"
                       onClick={handleSendEmailOtp}
                       disabled={isEmailLoading || emailTimer > 0}
-                      className="inline-flex items-center justify-center h-[18px] bg-[#176b27] text-white text-[9px] font-bold uppercase rounded-[2px] px-2 transition-colors disabled:opacity-50 hover:bg-[#11501d]"
+                      className="inline-flex items-center justify-center h-[18px] bg-[#176b27] text-white text-[9px] font-semibold uppercase rounded-[2px] px-2 transition-colors disabled:opacity-50 hover:bg-[#11501d]"
                     >
                       {emailTimer > 0 ? `Resend ${emailTimer}s` : "Get OTP"}
                     </button>
                   ) : (
-                    <span className="text-[10px] font-bold text-green-600 flex items-center gap-1">
+                    <span className="text-[10px] font-semibold text-green-600 flex items-center gap-1">
                       <CheckCircle size={12} /> VERIFIED
                     </span>
                   )}
@@ -528,13 +528,13 @@ export default function ParticipationForm() {
                       onChange={(e) => setEmailOtp(e.target.value)}
                       placeholder="6-Digit OTP"
                       maxLength={6}
-                      className="h-[32px] border border-[#176b27] bg-white text-gray-900 text-[12px] font-bold text-center tracking-[0.3em] outline-none rounded-md w-full"
+                      className="h-[32px] border border-[#176b27] bg-white text-gray-900 text-[12px] font-semibold text-center tracking-[0.3em] outline-none rounded-md w-full"
                     />
                     <button
                       type="button"
                       onClick={handleVerifyEmailOtp}
                       disabled={isEmailLoading}
-                      className="inline-flex items-center justify-center h-[32px] bg-[#176b27] text-white text-[11px] font-bold uppercase rounded-md px-4 hover:bg-[#11501d] transition-colors disabled:opacity-50"
+                      className="inline-flex items-center justify-center h-[32px] bg-[#176b27] text-white text-[11px] font-semibold uppercase rounded-md px-4 hover:bg-[#11501d] transition-colors disabled:opacity-50"
                     >
                       Verify
                     </button>
@@ -545,7 +545,7 @@ export default function ParticipationForm() {
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div className="w-full">
-                <label className="block text-[11px] font-bold text-gray-700 mb-1">
+                <label className="block text-[11px] font-semibold text-gray-700 mb-1">
                   Alternate Mobile Number
                 </label>
                 <input
@@ -558,7 +558,7 @@ export default function ParticipationForm() {
                 />
               </div>
               <div className="w-full">
-                <label className="block text-[11px] font-bold text-gray-700 mb-1">
+                <label className="block text-[11px] font-semibold text-gray-700 mb-1">
                   Landline Number (with STD Code)
                 </label>
                 <input
@@ -578,10 +578,10 @@ export default function ParticipationForm() {
 
       {/* Form Bottom Actions */}
       <div className="flex flex-col sm:flex-row items-center justify-between gap-4 mt-2">
-        <button type="button" className="h-[36px] px-5 rounded-md border border-gray-300 text-gray-700 font-bold text-[12px] uppercase tracking-wide hover:bg-gray-50 transition-colors flex items-center justify-center gap-2">
+        <button type="button" className="h-[36px] px-5 rounded-md border border-gray-300 text-gray-700 font-semibold text-[12px] uppercase tracking-wide hover:bg-gray-50 transition-colors flex items-center justify-center gap-2">
           <ArrowLeft size={16} strokeWidth={2.5} /> Back
         </button>
-        <Link href="/participate/msme/apply/payment" className="w-full sm:w-auto h-[36px] px-8 rounded-md bg-[#176b27] text-white font-bold text-[12px] uppercase tracking-wide hover:bg-[#115d20] transition-colors flex items-center justify-center gap-2 shadow-md">
+        <Link href="/participate/msme/apply/payment" className="w-full sm:w-auto h-[36px] px-8 rounded-md bg-[#176b27] text-white font-semibold text-[12px] uppercase tracking-wide hover:bg-[#115d20] transition-colors flex items-center justify-center gap-2 shadow-md">
           Save & Continue to Payment <ArrowRight size={16} strokeWidth={2.5} />
         </Link>
       </div>
