@@ -36,7 +36,7 @@ const MsmePage = () => {
       <Pmssupportsection />
       <Whatsnextbanner />
       <NeedHelpSection />
-      <Reasontovisitbanner />
+      {/* <Reasontovisitbanner /> */}
       <OfficialMessageBanner />
       <Pmsdocumentsbanner />
       <Whyparticipatesection />

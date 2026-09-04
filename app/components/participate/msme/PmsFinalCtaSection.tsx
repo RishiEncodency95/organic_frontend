@@ -37,7 +37,7 @@ const OptionCard: React.FC<OptionCardProps> = ({ icon, title, description }) => 
     </div>
     <h3 className="text-[14px] font-semibold text-slate-900 sm:text-[15px]">{title}</h3>
     <span className="my-1.5 h-[3px] w-8 rounded-full bg-[#3b8c2a]" />
-    <p className="text-[11px] leading-relaxed text-slate-600 sm:text-[12px]">
+    <p className="text-[14px] leading-relaxed text-slate-600">
       {description}
     </p>
   </div>
@@ -150,7 +150,7 @@ const PMSFinalCTASection: React.FC = () => {
 
       {/* Feature strip + Disclaimer - full width */}
       <SectionContainer>
-      <div className="relative z-10 w-full">
+      <div className="relative z-10 mx-auto w-full max-w-5xl">
         <ul className="mt-5 flex w-full flex-wrap items-center justify-between gap-x-0 divide-x divide-white/30 rounded-lg bg-[#ea580c] px-2 py-2">
           <li className="px-3">
             <Feature
@@ -184,8 +184,8 @@ const PMSFinalCTASection: React.FC = () => {
       </div>
 
       {/* Disclaimer - full section width */}
-      <div className="relative z-10 w-full">
-        <div className="mt-5 flex w-full items-start gap-5 rounded-xl bg-white/95 p-6 shadow-lg ring-1 ring-black/5 sm:p-4">
+      <div className="relative z-10 mx-auto w-full max-w-5xl">
+        <div className="mt-5 flex w-full items-center gap-5 rounded-xl bg-white/95 p-6 shadow-lg ring-1 ring-black/5 sm:p-4">
           <div className="flex shrink-0 items-center gap-3">
             <ShieldAlert className="h-12 w-12 text-[#1b5e20]" strokeWidth={2} aria-hidden="true" />
             <span className="text-[14px] font-semibold uppercase leading-tight text-[#1b5e20] sm:text-[15px]">

@@ -84,13 +84,13 @@ const FEATURES: Feature[] = [
 export default function ReasonToVisitBanner() {
   return (
     <section className="relative w-full overflow-hidden pb-4" style={{ backgroundImage: `url(${reasonToVisitBg.src})`, backgroundSize: 'cover', backgroundPosition: 'center', backgroundRepeat: 'no-repeat' }}>
-      <div className="absolute inset-0 bg-[#EFF7EE]/90" />
+      <div className="absolute inset-0 bg-[#EFF7EE]/60 lg:bg-[#EFF7EE]/40" />
       <div className="relative overflow-hidden">
 
         <img
             src={reasonToVisitImg.src}
             alt="Bharat Organic Expo exhibition hall with visitors"
-            className="absolute right-0 top-0 h-full w-auto object-contain hidden lg:block"
+            className="absolute right-0 top-0 h-full w-auto object-cover md:object-fill hidden lg:block"
           />
           {/* ===================== TOP: heading + photo collage ===================== */}
           <SectionContainer>
