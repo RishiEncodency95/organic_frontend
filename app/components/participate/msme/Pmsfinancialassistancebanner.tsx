@@ -35,6 +35,8 @@ import secureImg from "@/app/assets/participate/msme/secure.png";
 interface SupportCard {
   icon: FC<{ className?: string }>;
   iconBg: string;
+  iconColor: string;
+  cardBg: string;
   eyebrow: string;
   eyebrowColor: string;
   value: string;
@@ -50,7 +52,9 @@ interface SupportCard {
 const SUPPORT_CARDS: SupportCard[] = [
   {
     icon: Percent,
-    iconBg: "bg-[#1b5e20]",
+    iconBg: "bg-[#1b5e20]/10",
+    iconColor: "text-[#1b5e20]",
+    cardBg: "bg-[#1b5e20]/5",
     eyebrow: "UP TO",
     eyebrowColor: "text-[#1b5e20]",
     value: "80%*",
@@ -65,7 +69,9 @@ const SUPPORT_CARDS: SupportCard[] = [
   },
   {
     icon: Users,
-    iconBg: "bg-[#C99A3B]",
+    iconBg: "bg-[#C99A3B]/10",
+    iconColor: "text-[#C99A3B]",
+    cardBg: "bg-[#C99A3B]/5",
     eyebrow: "UP TO",
     eyebrowColor: "text-[#C99A3B]",
     value: "100%*",
@@ -79,7 +85,9 @@ const SUPPORT_CARDS: SupportCard[] = [
   },
   {
     icon: ReceiptIndianRupee,
-    iconBg: "bg-[#1b5e20]",
+    iconBg: "bg-[#1b5e20]/10",
+    iconColor: "text-[#1b5e20]",
+    cardBg: "bg-[#1b5e20]/5",
     eyebrow: "ADDITIONAL",
     eyebrowColor: "text-[#1b5e20]",
     value: "SUPPORT*",
@@ -95,31 +103,36 @@ const SUPPORT_CARDS: SupportCard[] = [
 
 const PMSFinancialAssistanceBanner: FC = () => {
   return (
+    <>
     <section
       aria-labelledby="pms-banner-heading"
-      className="relative w-full overflow-hidden border-y-4 border-[#1b5e20] bg-[#EFF7EE]"
+      className="relative w-full overflow-hidden bg-white pb-4"
     >
+      {/* Top-right absolute image */}
+      <img
+        src={supportRightTop.src}
+        alt=""
+        className="absolute right-0 top-0 hidden h-32 w-auto object-contain opacity-20 md:block"
+      />
+
+      {/* Left absolute image at section left-0 */}
+      <div className="pointer-events-none absolute left-0 top-0 z-0 h-full w-[28%] overflow-hidden lg:block">
+        <img
+          src={howMuchImg.src}
+          alt=""
+          className="absolute inset-0 h-full w-full object-cover"
+        />
+        {/* Right-side gradient */}
+        <div className="absolute right-0 top-0 h-full w-[10%] bg-gradient-to-r from-transparent to-white" />
+      </div>
+
       {/* ============ Hero ============ */}
       <div className="relative mx-auto w-full px-4 md:px-11">
-        {/* Top-right absolute image */}
-        <img
-          src={supportRightTop.src}
-          alt=""
-          className="absolute right-4 top-0 hidden h-32 w-auto object-contain opacity-20 md:right-11 md:block"
-        />
 
         <div className="relative flex flex-col lg:flex-row">
-          {/* Left: hero photo */}
+          {/* Left: spacer for absolute image */}
           <div className="relative w-full lg:w-[28%]">
-            <div className="relative h-[220px] w-full overflow-hidden rounded-2xl sm:h-[260px] lg:h-full lg:rounded-none">
-              <img
-                src={howMuchImg.src}
-                alt="Financial assistance for MSEs"
-                className="absolute inset-0 h-full w-full object-cover"
-              />
-              {/* Right-side white gradient */}
-              <div className="pointer-events-none absolute inset-0 bg-gradient-to-r from-transparent via-transparent to-white/10" />
-            </div>
+            <div className="relative h-[220px] w-full sm:h-[260px] lg:h-full" />
           </div>
 
           {/* Right: heading content */}
@@ -142,7 +155,7 @@ const PMSFinancialAssistanceBanner: FC = () => {
             {/* Heading with image next to "May You Get?" */}
             <h1
               id="pms-banner-heading"
-              className="text-center text-[28px] font-semibold leading-[1.08] tracking-tight sm:text-[32px]"
+              className="max-w-lg text-center text-[28px] font-semibold leading-[1.08] tracking-tight sm:text-[32px]"
             >
               <span className="block text-[#1b5e20]">How Much Support</span>
               <span className="relative inline-flex items-center gap-3 text-slate-900">
@@ -150,15 +163,15 @@ const PMSFinancialAssistanceBanner: FC = () => {
                 <img
                   src={supportRight.src}
                   alt=""
-                  className="hidden h-10 w-auto object-contain opacity-40 sm:h-12 md:h-14 md:inline"
+                  className="hidden h-8 w-auto object-contain opacity-40 sm:h-10 md:h-10 md:inline"
                 />
               </span>
             </h1>
 
             {/* Supporting copy */}
-            <p className="mt-3 max-w-2xl text-[13px] leading-relaxed text-slate-700 md:text-[14px]">
+            <p className="mt-3 max-w-lg text-[13px] leading-relaxed text-slate-700 md:text-[14px] text-center">
               The <strong className="font-semibold text-[#1b5e20]">PMS Scheme</strong>{" "}
-              provides financial assistance to reduce your participation cost
+              provides financial assistance<br/> to reduce your participation cost
               and help your business grow in new markets.
             </p>
 
@@ -170,12 +183,12 @@ const PMSFinancialAssistanceBanner: FC = () => {
                 return (
                   <article
                     key={card.title}
-                    className="relative flex flex-col items-center rounded-2xl bg-white px-4 pb-10 pt-4 text-center shadow-sm ring-1 ring-black/5 overflow-visible"
+                    className={`relative flex flex-col items-center rounded-2xl ${card.cardBg} px-4 pb-10 pt-4 text-center shadow-sm ring-1 ring-black/5 overflow-visible`}
                   >
                     <span
                       className={`mb-2 flex h-12 w-12 items-center justify-center rounded-full ${card.iconBg}`}
                     >
-                      <Icon className="h-6 w-6 text-white" aria-hidden="true" />
+                      <Icon className={`h-6 w-6 ${card.iconColor}`} aria-hidden="true" />
                     </span>
 
                     <p
@@ -220,22 +233,24 @@ const PMSFinancialAssistanceBanner: FC = () => {
           </div>
         </div>
       </div>
+    </section>
 
-      {/* ============ Footer strip ============ */}
-      <div className="relative px-4 pb-4 pt-2 md:px-11">
-        <div className="relative overflow-hidden rounded-2xl border border-[#a8cfa0] bg-[#EFF7EE] shadow-lg">
-          {/* Background image - full width */}
-          <div className="pointer-events-none absolute inset-0">
-            <img
-              src={financialImg.src}
-              alt=""
-              className="absolute inset-0 h-full w-full object-contain object-bottom"
-            />
-          </div>
+    {/* ============ Footer strip (outside section so left image doesn't overlap) ============ */}
+    <div className="relative px-4 pb-8 pt-2 md:px-11">
+      <div className="relative overflow-visible rounded-2xl bg-white shadow-lg">
+        {/* Background image - full width */}
+        <div className="pointer-events-none absolute inset-0">
+          <img
+            src={financialImg.src}
+            alt=""
+            className="absolute inset-0 h-full w-full object-cover object-top rounded-2xl"
+          />
+        </div>
 
-          <div className="relative flex flex-col items-center gap-4 px-3 py-4 sm:px-4 sm:py-5 md:flex-row md:items-center md:gap-6 md:px-5 md:py-4">
+        <div className="relative flex flex-col gap-4 px-3 py-4 sm:px-4 sm:py-5 md:gap-6 md:px-5 md:py-6">
+          <div className="flex flex-col gap-4 md:flex-row md:items-center md:gap-6 ">
             {/* Important note */}
-            <div className="flex w-full items-start gap-3 md:w-[38%]">
+            <div className="flex w-full items-start gap-3 md:w-[38%] border-r pr-3 md:pr-4">
               <img
                 src={secureImg.src}
                 alt=""
@@ -243,7 +258,7 @@ const PMSFinancialAssistanceBanner: FC = () => {
               />
               <p className="text-xs leading-relaxed text-slate-700 sm:text-sm">
                 <strong className="font-semibold text-slate-900">
-                  *Important Note:
+                  *Important Note:<br/>
                 </strong>{" "}
                 Assistance is subject to applicable PMS guidelines,
                 prescribed financial limits, enterprise category, approved
@@ -266,22 +281,23 @@ const PMSFinancialAssistanceBanner: FC = () => {
                 </span>
               </p>
             </div>
+          </div>
 
-            {/* CTA button */}
-            <div className="flex w-full shrink-0 justify-center md:w-auto">
-              <a
-                href="#eligibility"
-                className="inline-flex items-center gap-1.5 rounded-full bg-[#1b5e20] px-4 py-2 text-[13px] font-semibold uppercase tracking-wide text-white shadow-md transition-colors hover:bg-[#2d7a2d] sm:text-[14px]"
-              >
-                <Target className="h-3.5 w-3.5" aria-hidden="true" />
-                Check My Eligibility
-                <ChevronRight className="h-3.5 w-3.5" aria-hidden="true" />
-              </a>
-            </div>
+          {/* CTA button - half inside half outside */}
+          <div className="absolute left-1/2 bottom-0 z-10 -translate-x-1/2 translate-y-1/2">
+            <a
+              href="#eligibility"
+              className="inline-flex items-center gap-1.5 rounded-full bg-[#1b5e20] px-4 py-2 text-[14px] font-semibold uppercase tracking-wide text-white shadow-md transition-colors hover:bg-[#2d7a2d]"
+            >
+              <Target className="h-4 w-4" aria-hidden="true" />
+              Check My Eligibility
+              <ChevronRight className="h-4 w-4" aria-hidden="true" />
+            </a>
           </div>
         </div>
       </div>
-    </section>
+    </div>
+    </>
   );
 };
 

@@ -143,21 +143,21 @@ export default function WhatsNextBanner() {
         </div>
 
         {/* ============ BOTTOM: 3 Steps | Help card ============ */}
-        <div className="mt-6 grid grid-cols-1 gap-4 lg:mt-8 lg:grid-cols-12 lg:gap-6 lg:items-stretch">
+        <div className="relative mt-6 grid grid-cols-1 gap-4 lg:mt-8 lg:grid-cols-12 lg:gap-6 lg:items-stretch">
           {/* 3 Easy Steps */}
-          <div className="relative overflow-hidden lg:col-span-7 rounded-2xl border border-gray-100 bg-white p-4 sm:p-5 shadow-sm">
+          <div className="relative overflow-visible lg:col-span-7 rounded-2xl border border-gray-100 bg-white p-4 pt-10 sm:p-5 sm:pt-12 shadow-sm">
+            {/* Title - absolute half outside, half inside */}
+            <div className="absolute left-1/2 top-0 z-20 -translate-x-1/2 -translate-y-1/2">
+              <h3 className="whitespace-nowrap rounded-lg bg-[#1b5e20] px-4 py-1 text-center text-[16px] font-semibold tracking-tight text-white shadow-lg md:text-[18px] lg:text-[20px]">
+                Get Started in 3 Easy Steps
+              </h3>
+            </div>
             {/* <img
               src={leafsImg.src}
               alt=""
               className="pointer-events-none absolute -right-10 -top-8 h-36 w-36 rotate-[18deg] object-contain opacity-20 sm:h-44 sm:w-44"
               aria-hidden="true"
             /> */}
-            {/* Ribbon */}
-            <div className="relative z-10 mb-5">
-              <h3 className="text-center text-[16px] font-semibold tracking-tight text-slate-900 md:text-[20px] lg:text-[22px]">
-                Get Started in 3 Easy Steps
-              </h3>
-            </div>
 
             {/* Steps */}
             <ol className="relative z-10 grid grid-cols-1 gap-4 sm:grid-cols-3 sm:gap-3">
@@ -175,7 +175,7 @@ export default function WhatsNextBanner() {
 
                   <span className="relative mb-2 flex h-16 w-16 items-center justify-center rounded-full bg-[#EFF7EE]">
                     <Icon className="h-8 w-8 text-[#1b5e20]" aria-hidden="true" />
-                    <span className="absolute -top-1 -left-1 flex h-6 w-6 items-center justify-center rounded-full bg-[#1b5e20] text-[11px] font-semibold text-white ring-3 ring-white">
+                    <span className="absolute -top-1 left-1/2 -translate-x-1/2 flex h-6 w-6 items-center justify-center rounded-full bg-[#1b5e20] text-[11px] font-semibold text-white ring-3 ring-white">
                       {number}
                     </span>
                   </span>

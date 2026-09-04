@@ -5,6 +5,7 @@ import leafsImg from "@/app/assets/icons/leafs.png";
 import cardBg from "@/app/assets/participate/msme/card_image.png";
 import secureImg from "@/app/assets/participate/msme/secure.png";
 import rightLeaf from "@/app/assets/participate/msme/right_image.png";
+import leftImage from "@/app/assets/participate/msme/left_image.png";
 import SectionContainer from "@/app/components/layout/SectionContainer";
 
 interface SchemeFeature {
@@ -56,6 +57,12 @@ export default function MsmePmsScheme() {
       aria-labelledby="msme-pms-heading"
       className="relative w-full overflow-hidden bg-[#F9FCF9] py-4"
     >
+      {/* Left absolute image */}
+      <img
+        src={leftImage.src}
+        alt=""
+        className="absolute left-0 top-0 hidden h-[180px] w-auto object-contain lg:block opacity-40"
+      />
       {/* <img
         src={leafsImg.src}
         alt=""
@@ -81,7 +88,7 @@ export default function MsmePmsScheme() {
 
         {/* Intro paragraph */}
         <p className="mx-auto max-w-3xl text-center text-[14px] sm:text-[15px] leading-relaxed text-slate-600 text-balance">
-          The <strong className="font-semibold text-[#1b5e20]">Procurement &amp; Marketing Support (PMS) Scheme</strong> is
+          The <strong className="font-semibold text-[#1b5e20]">Procurement &amp; Marketing Support (PMS) Scheme</strong> {' '}is
           an initiative of the Ministry of MSME aimed at improving market access for Micro
           &amp; Small Enterprises. Eligible MSEs can explore applicable financial assistance for
           participation in approved trade fairs and exhibitions.

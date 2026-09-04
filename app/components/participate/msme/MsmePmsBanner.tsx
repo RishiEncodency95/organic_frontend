@@ -166,7 +166,7 @@ export default function MsmePmsBanner({
               <div className="flex items-center justify-start gap-2.5 mb-1">
                 <span className="w-8 h-[2.5px] bg-[#c2410c] shrink-0" />
                 <p className="text-[#c2410c] text-[12px] md:text-[15px] lg:text-[16px] font-semibold uppercase tracking-[0.18em] text-left">
-                  MSME PMS SCHEME
+                  MSME procurement & marketing support
                 </p>
               </div>
 
@@ -191,7 +191,7 @@ export default function MsmePmsBanner({
               <div className="flex items-center gap-2.5">
                 <div className="w-8 md:w-12 h-1 bg-[#ea580c] rounded-full shrink-0"></div>
                 <span className="text-[#1b5e20] font-semibold text-[12px] sm:text-[14px] md:text-[16px] tracking-widest uppercase">
-                  Our Mission & Vision
+                  Exhibit. Connect. Grow with  Government Support
                 </span>
                 <div className="w-8 md:w-12 h-1 bg-[#ea580c] rounded-full shrink-0"></div>
               </div>

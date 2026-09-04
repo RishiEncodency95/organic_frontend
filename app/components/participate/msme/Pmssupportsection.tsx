@@ -17,6 +17,7 @@ import {
 import howToApplyImg from "@/app/assets/participate/msme/how_to_apply.png";
 import everySupportImg from "@/app/assets/participate/msme/every_support.png";
 import readyToApplyImg from "@/app/assets/participate/msme/ready_to_apply_right.png";
+import leftImage from "@/app/assets/participate/msme/left_image.png";
 import SectionContainer from "@/app/components/layout/SectionContainer";
 
 const highlightCards = [
@@ -86,26 +87,28 @@ export default function PmsSupportSection() {
       />
 
       <SectionContainer>
-      <div className="relative z-10 mx-auto flex w-full flex-col gap-6 sm:gap-8 lg:gap-10">
+      <div className="relative z-10 mx-auto flex w-full flex-col gap-4">
         {/* ---------- Top block: heading + highlight cards ---------- */}
-        <div className="flex flex-col gap-6 sm:gap-8">
-          <div className="flex flex-col gap-3 sm:gap-4">
+        <div className="flex flex-col gap-2">
+          <div className="flex flex-col">
             <h2
               id="pms-support-heading"
               className="text-[18px] font-semibold uppercase leading-[1.05] tracking-tight text-slate-900 md:text-[28px] lg:text-[32px]"
             >
-              How to Apply
+              <span className="text-[#1b5e20]">
+                How to Apply
+                </span>
               <br />
               &amp; Get PMS Support
             </h2>
 
-            <p className="max-w-xl text-[14px] leading-relaxed text-slate-600 sm:text-[15px]">
+            <p className="max-w-xl text-[14px] text-slate-600 sm:text-[15px]">
               A simple, guided process to help eligible MSEs receive financial
               assistance for participation.
             </p>
 
             <span
-              className="h-1 w-16 rounded-full bg-[#3b8c2a]"
+              className="h-1 w-16 mt-2 rounded-full bg-[#3b8c2a]"
               aria-hidden="true"
             />
           </div>
@@ -143,31 +146,32 @@ export default function PmsSupportSection() {
         </div>
 
         {/* ---------- 4-step journey ---------- */}
-        <div className="rounded-3xl bg-gray-100 p-4 ring-1 ring-black/5 sm:p-5">
-          <div className="mb-5">
-            <h3 className="text-center text-[16px] font-semibold tracking-tight text-slate-900 md:text-[20px] lg:text-[22px]">
+        <div className="relative rounded-3xl bg-gray-100 p-4 pt-4 ring-1 ring-black/5 sm:p-5 sm:pt-4">
+          <div className="absolute left-1/2 top-0 z-20 -translate-x-1/2 -translate-y-1/2">
+            <h3 className="whitespace-nowrap rounded-lg bg-[#1b5e20] px-4 py-1 text-[16px] font-semibold tracking-tight text-white shadow-lg md:text-[18px] lg:text-[20px]">
               Your 4-Step Journey
             </h3>
           </div>
 
-          <ol className="grid grid-cols-1 gap-y-8 sm:grid-cols-2 sm:gap-x-6 sm:gap-y-10 lg:grid-cols-4 lg:gap-x-4">
+          <ol className="grid grid-cols-1 gap-y-8 pt-4 sm:grid-cols-2 sm:gap-x-6 sm:gap-y-10 lg:grid-cols-4 lg:gap-x-4">
             {journeySteps.map(
               ({ number, icon: Icon, title, description }, index) => (
                 <li
                   key={number}
-                  className="relative flex flex-col items-center text-center pt-6"
+                  className="relative flex flex-col items-center text-center pt-8"
                 >
                   {index < journeySteps.length - 1 && (
                     <span
-                      className="pointer-events-none absolute -right-3 top-14 hidden lg:block"
-                      style={{ color: "rgba(27,94,32,0.6)" }}
+                      className="pointer-events-none absolute -right-6 top-1/2 -translate-y-1/2 hidden lg:block z-20"
                       aria-hidden="true"
                     >
-                      <ChevronRight className="h-6 w-6" strokeWidth={2.5} />
+                      <svg width="44" height="14" viewBox="0 0 44 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M0 7H38M38 7L30 1M38 7L30 13" stroke="#0d4a1a" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" />
+                      </svg>
                     </span>
                   )}
 
-                  <span className="absolute -top-[18px] left-1/2 z-10 flex h-9 w-9 -translate-x-1/2 items-center justify-center rounded-full bg-[#1b5e20] text-[12px] font-bold text-white shadow-md ring-2 ring-gray-100">
+                  <span className="absolute top-[8px] left-1/2 z-10 flex h-10 w-10 -translate-x-1/2 items-center justify-center rounded-full bg-[#1b5e20] text-[13px] font-bold text-white shadow-lg ring-4 ring-gray-100">
                     {number}
                   </span>
 
@@ -190,10 +194,7 @@ export default function PmsSupportSection() {
               )
             )}
           </ol>
-        </div>
-
-        {/* ---------- Bottom row: support / contact / CTA ---------- */}
-        <div className="grid grid-cols-1 gap-4 sm:gap-5 lg:grid-cols-3">
+        <div className="grid grid-cols-1 gap-4 sm:gap-5 lg:grid-cols-3 mt-2">
           {/* Expert support at every step */}
           <div className="relative overflow-hidden rounded-2xl bg-[#0b2912] text-white">
             <img
@@ -261,7 +262,7 @@ export default function PmsSupportSection() {
           </div>
 
           {/* Ready to apply / CTA */}
-          <div className="flex overflow-hidden rounded-2xl bg-[#0b2912] text-white">
+          <div className="relative flex overflow-visible rounded-2xl bg-[#0b2912] text-white">
             <div className="flex flex-1 flex-col justify-between gap-4 p-5 sm:p-6">
               <div className="flex items-start gap-4">
                 <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-white/10">
@@ -286,14 +287,17 @@ export default function PmsSupportSection() {
                 <ChevronRight className="h-4 w-4" aria-hidden="true" />
               </button>
             </div>
-            {/* <img
-              src={readyToApplyImg.src}
+            <img
+              src={leftImage.src}
               alt="Ready to apply for PMS"
-              className="h-[120px] w-[45%] shrink-0 object-cover"
+              className="absolute -right-16 top-1/2 -translate-y-1/2 h-[180px] w-auto object-contain z-10"
               loading="lazy"
-            /> */}
+            />
           </div>
         </div>
+        </div>
+
+        {/* ---------- Bottom row: support / contact / CTA ---------- */}
       </div>
       </SectionContainer>
     </section>
