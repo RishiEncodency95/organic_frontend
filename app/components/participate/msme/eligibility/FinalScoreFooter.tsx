@@ -1,4 +1,5 @@
 import React from "react";
+import Link from "next/link";
 import {
   Building2,
   Factory,
@@ -156,14 +157,16 @@ interface ActionButtonProps {
   children: React.ReactNode;
   primary?: boolean;
   icon: React.ReactNode;
+  href?: string;
 }
 
 const ActionButton = ({
   children,
   primary = false,
   icon,
+  href,
 }: ActionButtonProps) => {
-  const className = `h-[44px] w-full rounded-[6px] px-4 flex items-center justify-center gap-2 text-[12px] font-semibold uppercase transition-all ${primary ? ` bg-[#176b27] text-white hover:bg-[#115d20] ` : ` bg-white border border-[#91a592] text-[#28552f] hover:bg-[#f7faf7] `}`;
+  const className = `h-[44px] w-full rounded-[6px] px-4 flex items-center justify-center gap-2 text-[12px] font-semibold uppercase transition-all ${primary ? `bg-[#176b27] text-white hover:bg-[#115d20]` : `bg-white border border-[#91a592] text-[#28552f] hover:bg-[#f7faf7]`}`;
   
   if (href) {
     return (
@@ -177,7 +180,7 @@ const ActionButton = ({
   return (
     <button
       type="button"
-      className={`h-[44px] w-full rounded-[6px] px-4 flex items-center justify-center gap-2 text-[12px] font-bold uppercase transition-all ${primary ? ` bg-[#176b27] text-white hover:bg-[#115d20] ` : ` bg-white border border-[#91a592] text-[#28552f] hover:bg-[#f7faf7] `}`}
+      className={className}
     >
       <span>{children}</span>
       {icon}
@@ -298,24 +301,6 @@ const FinalScoreFooter = () => {
                 size={36}
                 strokeWidth={1.8}
                 className="text-[#e17f19]"
-              />
-            }
-          />
-
-          {/* 6 */}
-          <StatusItem
-            title={
-              <>
-                Additional Financial <br />
-                Verification
-              </>
-            }
-            warning={true}
-            icon={
-              <AlertCircle
-                size={36}
-                strokeWidth={1.6}
-                className="text-[#e98218]"
               />
             }
           />
