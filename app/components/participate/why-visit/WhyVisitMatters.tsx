@@ -129,12 +129,14 @@ export default function WhyVisitMatters() {
                   {card.num}
                 </span>
 
-                {/* Direct Image - v1og to v6og (Increased size) */}
-                <img
-                  src={card.img.src}
-                  alt={card.title}
-                  className="w-20 h-20 sm:w-24 sm:h-24 object-contain mb-2 mt-0.5"
-                />
+                {/* Icon in Gray Circle */}
+                <span className="flex h-20 w-20 sm:h-24 sm:w-24 items-center justify-center rounded-full bg-gray-200 mb-2 mt-0.5">
+                  <img
+                    src={card.img.src}
+                    alt={card.title}
+                    className="w-14 h-14 sm:w-18 sm:h-18 object-contain"
+                  />
+                </span>
 
                 {/* Card Title */}
                 <h3 className="text-sm sm:text-base font-semibold text-[#1b5e20] mb-1.5 leading-tight font-poppins">

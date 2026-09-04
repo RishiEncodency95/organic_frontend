@@ -10,6 +10,7 @@ import {
   Leaf,
 } from "lucide-react";
 import reasonToVisitImg from "@/app/assets/participate/msme/reason_to_visit.png";
+import reasonToVisitBg from "@/app/assets/participate/msme/reason_to_visit_bg.png";
 import leafsImg from "@/app/assets/icons/leafs.png";
 import SectionContainer from "@/app/components/layout/SectionContainer";
 
@@ -82,76 +83,73 @@ const FEATURES: Feature[] = [
 
 export default function ReasonToVisitBanner() {
   return (
-    <section className="relative w-full overflow-hidden bg-[#EFF7EE] py-6">
-      {/* <img
-        src={leafsImg.src}
-        alt=""
-        className="pointer-events-none absolute -left-8 top-0 h-36 w-36 rotate-[-20deg] object-contain opacity-10 sm:h-48 sm:w-48"
-        aria-hidden="true"
-      /> */}
+    <section className="relative w-full overflow-hidden pb-4" style={{ backgroundImage: `url(${reasonToVisitBg.src})`, backgroundSize: 'cover', backgroundPosition: 'center', backgroundRepeat: 'no-repeat' }}>
+      <div className="absolute inset-0 bg-[#EFF7EE]/90" />
+      <div className="relative overflow-hidden">
+
+        <img
+            src={reasonToVisitImg.src}
+            alt="Bharat Organic Expo exhibition hall with visitors"
+            className="absolute right-0 top-0 h-full w-auto object-contain hidden lg:block"
+          />
+          {/* ===================== TOP: heading + photo collage ===================== */}
+          <SectionContainer>
+          <div className="grid grid-cols-1 items-center gap-10 lg:grid-cols-2 lg:gap-8">
+            {/* ---------- Left: copy ---------- */}
+            <div className="py-5">
+              <div className="mb-4 flex items-center gap-2">
+                <Leaf
+                  className="h-5 w-5 shrink-0 -rotate-12 text-[#1b5e20]"
+                  strokeWidth={2}
+                />
+                <p className="text-[11px] font-semibold uppercase tracking-wide text-[#1b5e20] sm:text-[12px]">
+                  Be part of India&rsquo;s leading{" "}<br/>
+                  <span className="block text-[#14231A] sm:inline">
+                    Organic &amp; Sustainable Future
+                  </span>
+                </p>
+              </div>
+
+              <h1 className="relative font-sans text-[24px] font-semibold uppercase leading-[1.1] tracking-tight text-slate-900 md:text-[32px] lg:text-[40px]">
+                Reason
+                <Leaf
+                  className="ml-1 inline-block h-6 w-6 -translate-y-3 rotate-45 text-[#1b5e20] sm:h-7 sm:w-7"
+                  strokeWidth={2}
+                />
+                <br />
+                To Visit
+              </h1>
+
+              <div className="mt-4 max-w-md">
+                <h2 className="text-[18px] font-semibold text-[#1b5e20] md:text-[20px]">
+                  More than an Expo. A Gateway to Growth.
+                </h2>
+                <span className="mt-1 block h-[3px] w-14 bg-[#3b8c2a]" />
+                <p className="mt-4 text-[14px] leading-relaxed text-slate-600 md:text-[15px]">
+                  Bharat Organic Expo brings together the entire organic
+                  ecosystem to create opportunities, inspire innovation and
+                  build a healthier tomorrow.
+                </p>
+              </div>
+            </div>
+
+          </div>
+          </SectionContainer>
+      </div>
+
       <SectionContainer>
-      <div className="mx-auto w-full">
-        {/* ===================== TOP: heading + photo collage ===================== */}
-        <div className="grid grid-cols-1 items-center gap-10 lg:grid-cols-2 lg:gap-8">
-          {/* ---------- Left: copy ---------- */}
-          <div>
-            <div className="mb-4 flex items-center gap-2">
-              <Leaf
-                className="h-5 w-5 shrink-0 -rotate-12 text-[#1b5e20]"
-                strokeWidth={2}
-              />
-              <p className="text-[11px] font-semibold uppercase tracking-wide text-[#1b5e20] sm:text-[12px]">
-                Be part of India&rsquo;s leading{" "}
-                <span className="block text-[#14231A] sm:inline">
-                  Organic &amp; Sustainable Future
-                </span>
-              </p>
-            </div>
-
-            <h1 className="relative font-sans text-[24px] font-semibold uppercase leading-[1.1] tracking-tight text-slate-900 md:text-[32px] lg:text-[40px]">
-              Reason
-              <Leaf
-                className="ml-1 inline-block h-6 w-6 -translate-y-3 rotate-45 text-[#1b5e20] sm:h-7 sm:w-7"
-                strokeWidth={2}
-              />
-              <br />
-              To Visit
-            </h1>
-
-            <div className="mt-4 max-w-md">
-              <h2 className="text-[18px] font-semibold text-[#1b5e20] md:text-[20px]">
-                More than an Expo. A Gateway to Growth.
-              </h2>
-              <span className="mt-1 block h-[3px] w-14 bg-[#3b8c2a]" />
-              <p className="mt-4 text-[14px] leading-relaxed text-slate-600 md:text-[15px]">
-                Bharat Organic Expo brings together the entire organic
-                ecosystem to create opportunities, inspire innovation and
-                build a healthier tomorrow.
-              </p>
-            </div>
-          </div>
-
+        <div className="relative mx-auto w-full">
           {/* ---------- Right: photo ---------- */}
-          <div className="relative">
-            {/* Photo */}
-            <div className="overflow-visible rounded-[2.5rem]">
-              <img
-                src={reasonToVisitImg.src}
-                alt="Bharat Organic Expo exhibition hall with visitors"
-                className="h-full w-full object-cover"
-              />
-            </div>
-          </div>
-        </div>
+        
 
-        {/* ===================== FEATURES STRIP ===================== */}
-        <div className="mt-4 grid grid-cols-2 gap-x-4 gap-y-6 border-t border-gray-300 pt-4 sm:grid-cols-3 sm:gap-x-6 lg:grid-cols-6 lg:divide-x lg:divide-gray-300">
+          {/* ===================== FEATURES STRIP ===================== */}
+          <div className="mt-4 grid grid-cols-2 gap-x-4 gap-y-6 border-t border-gray-300 pt-4 sm:grid-cols-3 sm:gap-x-6 lg:grid-cols-6 lg:divide-x lg:divide-gray-300">
             {FEATURES.map((feature) => (
               <article
                 key={feature.id}
                 className="flex flex-col items-center px-2 text-center lg:px-4"
               >
-                <span className="mb-2 flex items-center justify-center rounded-full bg-[#EFF7EE] text-[#1b5e20]">
+                <span className="mb-2 flex h-16 w-16 items-center justify-center rounded-full bg-gray-200 text-[#1b5e20]">
                   {feature.icon}
                 </span>
                 <h3 className="text-[13px] font-semibold uppercase leading-snug text-slate-900 sm:text-[14px]">
@@ -165,33 +163,32 @@ export default function ReasonToVisitBanner() {
                 </span>
               </article>
             ))}
-        </div>
-
-        {/* ===================== BOTTOM CTA BAR ===================== */}
-        <div className="mt-6 flex flex-col gap-4 rounded-[2rem] border border-gray-200 bg-white p-4 sm:flex-row sm:items-center sm:justify-between sm:gap-6 sm:p-5">
-          <div className="flex flex-col items-center gap-3 sm:flex-row sm:gap-4">
-            <span className="flex items-center gap-2 text-[14px] font-medium text-[#1b5e20] sm:text-[15px]">
-              <Leaf className="h-4 w-4 shrink-0" strokeWidth={2} />
-              One Platform. Unlimited Opportunities.
-            </span>
-            <span className="hidden h-6 w-px bg-gray-200 sm:block" />
-            <span className="flex items-center gap-2 text-[14px] font-semibold uppercase tracking-wide text-slate-900 sm:text-[15px]">
-              Don&rsquo;t Miss It!
-              <Leaf className="h-4 w-4 shrink-0 rotate-90" strokeWidth={2} />
-            </span>
           </div>
 
-          <a
-            href="#plan-your-visit"
-            className="group flex items-center justify-center gap-3 rounded-full bg-[#1b5e20] px-6 py-2.5 text-[14px] font-semibold uppercase tracking-wide text-white transition-colors hover:bg-[#2d7a2d] sm:text-[15px]"
-          >
-            Plan Your Visit Now
-            <span className="flex h-7 w-7 items-center justify-center rounded-full bg-white/15 transition-transform group-hover:translate-x-0.5">
-              <ArrowRight className="h-4 w-4" strokeWidth={2.5} />
-            </span>
-          </a>
+          {/* ===================== BOTTOM CTA BAR ===================== */}
+          <div className="mt-6 flex flex-col items-center gap-4 sm:flex-row sm:justify-center sm:gap-6">
+            <div className="flex items-center gap-4 rounded-lg border border-gray-200 bg-gray-100 px-6 py-2 sm:w-auto">
+              <span className="text-[14px] font-medium italic text-[#1b5e20] sm:text-[15px]">
+                One Platform. Unlimited Opportunities.
+              </span>
+              <span className="hidden h-6 w-px bg-gray-300 sm:block" />
+              <span className="flex items-center gap-2 text-[14px] font-semibold uppercase tracking-wide text-slate-900 sm:text-[15px]">
+                Don&rsquo;t Miss It!
+                <Leaf className="h-4 w-4 shrink-0 rotate-90" strokeWidth={2} />
+              </span>
+            </div>
+
+            <a
+              href="#plan-your-visit"
+              className="group flex items-center justify-center gap-3 rounded-lg bg-[#1b5e20] px-6 py-2 text-[14px] font-semibold uppercase tracking-wide text-white transition-colors hover:bg-[#2d7a2d] sm:text-[15px]"
+            >
+              Plan Your Visit Now
+              <span className="flex h-7 w-7 items-center justify-center rounded-full border-2 border-white transition-transform group-hover:translate-x-0.5">
+                <ArrowRight className="h-4 w-4" strokeWidth={2.5} />
+              </span>
+            </a>
+          </div>
         </div>
-      </div>
       </SectionContainer>
     </section>
   );

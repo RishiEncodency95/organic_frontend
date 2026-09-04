@@ -48,7 +48,7 @@ export default function OfficialMessageBanner({
         <div className="mb-2 flex items-center justify-center gap-3">
           <span className="h-px w-8 bg-[#3b8c2a]/40 sm:w-14" aria-hidden="true" />
           <Leaf className="h-4 w-4 -rotate-45 text-[#1b5e20]" aria-hidden="true" />
-          <span className="text-[11px] font-semibold tracking-[0.2em] text-[#1b5e20] sm:text-[12px]">
+          <span className="text-[13px] font-semibold tracking-[0.2em] text-[#1b5e20] sm:text-[14px]">
             HEAR FROM MSME LEADERSHIP
           </span>
           <Leaf className="h-4 w-4 rotate-[135deg] text-[#1b5e20]" aria-hidden="true" />
@@ -64,8 +64,17 @@ export default function OfficialMessageBanner({
           <span className="text-[#1b5e20]">FROM MSME DIRECTOR</span>
         </h1>
 
+        {/* Decoration */}
+        <div className="mx-auto mt-3 flex w-full max-w-xs items-center gap-2">
+          <span className="h-px flex-1 bg-[#1b5e20]/40" />
+          <span className="h-2 w-2 rounded-full bg-[#1b5e20]" />
+          <span className="h-2.5 w-2.5 rounded-full bg-[#1b5e20]" />
+          <span className="h-2 w-2 rounded-full bg-[#1b5e20]" />
+          <span className="h-px flex-1 bg-[#1b5e20]/40" />
+        </div>
+
         {/* Subheading */}
-        <p className="mx-auto max-w-2xl text-balance text-center text-[13px] leading-relaxed text-slate-600 sm:text-[14px]">
+        <p className="mx-auto mt-4 max-w-2xl text-balance text-center text-[13px] leading-relaxed text-slate-600 sm:text-[14px]">
           A message of support and encouragement for all MSMEs participating in{" "}
           <strong className="font-semibold text-[#1b5e20]">
             Bharat Organic Expo 2027
@@ -76,7 +85,7 @@ export default function OfficialMessageBanner({
         {/* Main content: video + quote card */}
         <div className="mt-3 grid grid-cols-1 gap-4 lg:grid-cols-5 lg:gap-6">
           <div className="relative overflow-hidden rounded-2xl bg-[#0e1a2b] shadow-xl ring-1 ring-black/5 lg:col-span-3">
-            <div className="relative h-[280px] w-full">
+            <div className="relative h-full w-full min-h-[280px]">
               <iframe
                 src="https://www.youtube.com/embed/r5Ak4KY8-cs"
                 title="MSME Director Official Message"
@@ -139,7 +148,7 @@ export default function OfficialMessageBanner({
             <Image
               src={ministryImg}
               alt="Ministry of MSME"
-              className="pointer-events-none absolute -bottom-2 -right-2 h-32 w-32 object-contain opacity-20 sm:h-36 sm:w-36"
+              className="pointer-events-none absolute -bottom-2 -right-2 h-40 w-40 object-contain opacity-40 sm:h-48 sm:w-48"
               aria-hidden="true"
             />
           </div>

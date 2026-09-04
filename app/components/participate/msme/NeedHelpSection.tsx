@@ -60,7 +60,7 @@ const features = [
 
 export default function NeedHelpSection() {
   return (
-    <section className="bg-gray-100 py-6">
+    <section className="bg-gray-100 pt-6 pb-0">
       <SectionContainer>
         {/* Top row */}
         <div className="grid grid-cols-1 gap-5 lg:grid-cols-2">
@@ -200,16 +200,16 @@ export default function NeedHelpSection() {
       </SectionContainer>
 
       {/* Footer strip - full width */}
-      <div className="mt-5 overflow-hidden bg-[#0d4a1a]">
+      <div className="mt-5 overflow-hidden bg-[#0d4a1a] py-2">
         <SectionContainer>
-        <div className="flex flex-col sm:flex-row sm:items-center">
+        <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:gap-6">
           {/* Left */}
-          <div className="flex items-center gap-3 border-b border-white/10 py-4 sm:w-1/2 sm:border-b-0 sm:border-r sm:border-white/10 sm:py-5">
-            <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-white">
+          <div className="flex items-center gap-3 border-b-2 border-white pb-4 sm:w-1/2 sm:border-b-0 sm:border-r-2 sm:border-white sm:pr-6 sm:pb-0">
+            <span className="flex h-16 w-16 shrink-0 items-center justify-center rounded-full bg-white">
               <img
                 src={supportRightImg.src}
                 alt=""
-                className="h-8 w-8 object-contain"
+                className="h-12 w-12 object-contain"
               />
             </span>
             <div>
@@ -218,7 +218,7 @@ export default function NeedHelpSection() {
                 <br />A Sustainable India
               </p>
               <p className="mt-0.5 text-[12px] text-white/70">
-                We look forward to supporting your journey at{" "}
+                We look forward to supporting your <br/>journey at{" "}
                 <span className="font-semibold text-[#F2B40E]">
                   Bharat Organic Expo 2027.
                 </span>
@@ -227,10 +227,10 @@ export default function NeedHelpSection() {
           </div>
 
           {/* Right */}
-          <div className="flex flex-1 items-center justify-between gap-3 rounded-2xl bg-white px-5 py-4 sm:py-5">
+          <div className="flex flex-1 items-center justify-between gap-3 rounded-2xl bg-white px-5 py-2 sm:py-2">
             <div className="flex items-center gap-3">
-              <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-[#EFF7EE]">
-                <Headset className="h-5 w-5 text-[#1b5e20]" aria-hidden="true" />
+              <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-[#EFF7EE]">
+                <Headset className="h-8 w-8 text-[#1b5e20]" aria-hidden="true" />
               </span>
               <div>
                 <p className="text-[13px] font-semibold uppercase text-slate-900">
@@ -249,7 +249,10 @@ export default function NeedHelpSection() {
               className="inline-flex shrink-0 items-center gap-1.5 rounded-lg bg-[#1b5e20] px-4 py-2.5 text-[13px] font-semibold uppercase tracking-wide text-white transition-colors hover:bg-[#2d7a2d]"
             >
               Start Your Application
-              <ChevronRight className="h-4 w-4" aria-hidden="true" />
+              <div className="bg-white w-6 h-6 flex items-center justify-center rounded-full">
+
+              <ChevronRight className="h-4 w-4 text-[#1b5e20]" aria-hidden="true" />
+              </div>
             </a>
           </div>
         </div>

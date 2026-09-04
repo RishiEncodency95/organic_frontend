@@ -12,7 +12,7 @@ import {
   ShieldAlert,
 } from "lucide-react";
 import Link from "next/link";
-import readyToExploreImg from "@/app/assets/participate/msme/ready_to_explore.jpeg";
+import readyToExploreImg from "@/app/assets/participate/msme/ready_to_explore.png";
 import { SITE_CONFIG } from "@/app/constants/siteConfig";
 import SectionContainer from "@/app/components/layout/SectionContainer";
 
@@ -59,15 +59,16 @@ const PMSFinalCTASection: React.FC = () => {
   return (
     <section
       aria-labelledby="pms-final-cta-heading"
-      className="relative w-full overflow-hidden py-4"
+      className="relative w-full overflow-hidden py-4 min-h-[400px] lg:min-h-[500px]"
     >
       {/* Background image */}
       <div className="absolute inset-0 z-0">
         <img
           src={readyToExploreImg.src}
           alt=""
-          className="h-full w-full object-cover pointer-events-none"
+          className="h-full w-full object-cover pointer-events-none hidden lg:block"
         />
+        <div className="h-full w-full bg-gradient-to-br from-[#EFF7EE] to-white lg:hidden" />
       </div>
 
       <SectionContainer>
