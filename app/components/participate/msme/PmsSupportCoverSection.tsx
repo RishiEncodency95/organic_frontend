@@ -17,9 +17,12 @@ import {
 } from "lucide-react";
 import Link from "next/link";
 import SectionContainer from "@/app/components/layout/SectionContainer";
+import whatYourPmsImg from "@/app/assets/participate/msme/what_your_pms.png";
+import calcImg from "@/app/assets/participate/msme/calc.png";
 
 interface EligibleExpense {
   icon: FC<{ className?: string }>;
+  descIcon: FC<{ className?: string }>;
   number: number;
   title: string;
   subtitle: string;
@@ -29,6 +32,7 @@ interface EligibleExpense {
 const ELIGIBLE_EXPENSES: EligibleExpense[] = [
   {
     icon: Store,
+    descIcon: CheckCircle,
     number: 1,
     title: "SPACE RENT",
     subtitle: "Stall / Built-up Space",
@@ -36,6 +40,7 @@ const ELIGIBLE_EXPENSES: EligibleExpense[] = [
   },
   {
     icon: Plane,
+    descIcon: CheckCircle,
     number: 2,
     title: "TRAVEL",
     subtitle: "One Representative*",
@@ -43,6 +48,7 @@ const ELIGIBLE_EXPENSES: EligibleExpense[] = [
   },
   {
     icon: Truck,
+    descIcon: CheckCircle,
     number: 3,
     title: "FREIGHT",
     subtitle: "Exhibition Material",
@@ -50,6 +56,7 @@ const ELIGIBLE_EXPENSES: EligibleExpense[] = [
   },
   {
     icon: Megaphone,
+    descIcon: CheckCircle,
     number: 4,
     title: "PUBLICITY",
     subtitle: "Eligible Promotion",
@@ -69,25 +76,30 @@ const PmsSupportCoverSection: FC = () => {
   return (
     <section
       aria-labelledby="pms-support-cover-heading"
-      className="relative w-full overflow-hidden bg-[#f8faf5] py-10 md:py-14"
+      className="relative w-full overflow-hidden bg-[#f8faf5]"
     >
       {/* Top green banner */}
-      <div className="bg-[#1b5e20] py-3">
-        <SectionContainer>
-          <div className="flex items-center justify-center gap-2">
-            <Users className="h-5 w-5 text-white" aria-hidden="true" />
-            <h2
-              id="pms-support-cover-heading"
-              className="text-sm font-semibold uppercase tracking-wide text-white sm:text-base"
-            >
-              What Can Your PMS Support Cover?
-            </h2>
-          </div>
-        </SectionContainer>
+      <div className="flex justify-center bg-[#1b5e20] py-2">
+        <div className="flex w-auto items-center gap-2 px-6 py-0.5">
+          <Users className="h-5 w-5 text-white" aria-hidden="true" />
+          <h2
+            id="pms-support-cover-heading"
+            className="text-sm font-semibold uppercase tracking-wide text-white sm:text-base"
+          >
+            What Can Your PMS Support Cover?
+          </h2>
+        </div>
       </div>
 
       <SectionContainer>
-        <div className="mx-auto w-full py-8 md:py-10">
+        <div className="relative mx-auto w-full py-8 md:py-10">
+          {/* Top-right absolute image */}
+          <img
+            src={whatYourPmsImg.src}
+            alt="What your PMS covers"
+            className="absolute right-0 top-0 hidden h-48 w-auto object-contain lg:block"
+          />
+
           {/* Main content grid */}
           <div className="grid grid-cols-1 gap-6 lg:grid-cols-2 lg:gap-8">
             {/* Left side - Title and description */}
@@ -127,67 +139,86 @@ const PmsSupportCoverSection: FC = () => {
                 <p className="mt-1 text-xs text-slate-500">
                   (All taxes included and subject to actual eligible expenditure)
                 </p>
-
-                {/* PMS Approved badge */}
-                <div className="absolute -right-4 -top-4 rounded-full border border-[#1b5e20]/20 bg-white px-4 py-2 shadow-sm sm:right-4 sm:top-4">
-                  <div className="flex items-center gap-2">
-                    <CheckCircle className="h-5 w-5 text-[#1b5e20]" />
-                    <div className="text-left">
-                      <p className="text-[10px] font-bold uppercase text-[#1b5e20]">
-                        PMS
-                      </p>
-                      <p className="text-[9px] font-semibold text-[#1b5e20]">
-                        Approved Scheme
-                      </p>
-                      <p className="text-[8px] text-slate-600">
-                        Ministry of MSME
-                      </p>
-                    </div>
-                  </div>
-                </div>
               </div>
             </div>
           </div>
 
           {/* Eligible Expenses Section */}
-          <div className="mt-10 rounded-2xl bg-white p-4 shadow-sm ring-1 ring-black/5 sm:p-6">
-            <h4 className="mb-6 text-center text-[14px] font-bold uppercase tracking-wide text-[#1b5e20] sm:text-[16px]">
-              Eligible Expenses Covered Under PMS for Exhibition Participation
-            </h4>
+          <div className="relative mt-10 overflow-visible rounded-2xl bg-white pt-8 shadow-sm ring-1 ring-black/5">
+            {/* Green banner header - absolute, half outside */}
+            <div className="absolute left-1/2 top-0 z-10 -translate-x-1/2 -translate-y-1/2">
+              <div className="w-auto rounded-full bg-[#1b5e20] px-6 py-2 shadow-lg">
+                <h4 className="whitespace-nowrap text-center text-[13px] font-bold uppercase tracking-wide text-white sm:text-[15px]">
+                  Eligible Expenses Covered Under PMS for Exhibition Participation
+                </h4>
+              </div>
+            </div>
+
+            <div className="p-4 sm:p-6">
 
             <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
-              {ELIGIBLE_EXPENSES.map((expense) => {
+              {ELIGIBLE_EXPENSES.map((expense, index) => {
                 const Icon = expense.icon;
+                const DescIcon = expense.descIcon;
                 return (
                   <div
                     key={expense.title}
-                    className="flex flex-col items-center rounded-xl border border-[#1b5e20]/10 bg-[#f8faf5] p-4 text-center"
+                    className="relative flex flex-col gap-3 pl-6"
                   >
-                    <div className="mb-3 flex h-12 w-12 items-center justify-center rounded-full bg-[#1b5e20]">
-                      <Icon className="h-6 w-6 text-white" aria-hidden="true" />
+                    {/* Left divider with plus icon */}
+                 {index!==0 && (
+                    <div className="absolute left-0 top-0 bottom-0 flex flex-col items-center">
+                      <div className="h-1/2 w-px bg-[#1b5e20]/20" />
+                      <div className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-[#1b5e20]">
+                        <span className="text-[14px] font-bold leading-none text-white">+</span>
+                      </div>
+                      <div className="h-1/2 w-px bg-[#1b5e20]/20" />
+                    </div>)}
+
+                    {/* Top card: Icon + Number + Title + Subtitle */}
+                    <div className="rounded-xl border border-[#1b5e20]/10 bg-[#f8faf5] p-4">
+                      <div className="flex items-center gap-3">
+                        <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-gray-200">
+                          <Icon className="h-6 w-6 text-[#1b5e20]" aria-hidden="true" />
+                        </div>
+                        <div className="flex items-center gap-2">
+                          <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-[#1b5e20] text-[11px] font-bold text-white">
+                            {expense.number}
+                          </span>
+                          <div>
+                            <p className="text-[13px] font-bold uppercase text-slate-900">
+                              {expense.title}
+                            </p>
+                            <p className="text-[11px] text-slate-500">
+                              {expense.subtitle}
+                            </p>
+                          </div>
+                        </div>
+                      </div>
+                      {/* Bottom divider */}
                     </div>
-                    <div className="mb-1 flex items-center gap-1.5">
-                      <span className="flex h-6 w-6 items-center justify-center rounded-full bg-[#1b5e20] text-[11px] font-bold text-white">
-                        {expense.number}
-                      </span>
-                      <p className="text-[13px] font-bold uppercase text-slate-900">
-                        {expense.title}
-                      </p>
+                      <div className="h-px bg-[#1b5e20]/20" />
+
+                    {/* Bottom card: Description */}
+                    <div className="rounded-xl border border-[#1b5e20]/10 bg-white p-3 shadow-sm">
+                      <div className="flex items-center gap-3">
+                        <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-gray-100">
+                          <DescIcon className="h-4 w-4 text-[#1b5e20]" aria-hidden="true" />
+                        </div>
+                        <p className="text-[12px] leading-snug text-slate-600">
+                          {expense.description}
+                        </p>
+                      </div>
                     </div>
-                    <p className="mb-2 text-[11px] text-slate-500">
-                      {expense.subtitle}
-                    </p>
-                    <p className="text-[12px] leading-snug text-slate-600">
-                      {expense.description}
-                    </p>
                   </div>
                 );
               })}
             </div>
+            </div>
           </div>
 
           {/* Additional Contingency Support */}
-          <div className="mt-6 grid grid-cols-1 gap-4 lg:grid-cols-2">
+          <div className="mt-6 grid grid-cols-1 gap-4 lg:grid-cols-3">
             {/* Left - Contingency box */}
             <div className="rounded-2xl border border-[#1b5e20]/20 bg-white p-5">
               <h4 className="text-[14px] font-bold uppercase text-slate-900 sm:text-[16px]">
@@ -211,7 +242,7 @@ const PmsSupportCoverSection: FC = () => {
               </div>
             </div>
 
-            {/* Right - Notes */}
+            {/* Middle - Notes */}
             <div className="flex flex-col gap-3">
               <div className="flex items-start gap-3 rounded-xl bg-white p-4 shadow-sm ring-1 ring-black/5">
                 <CheckCircle className="mt-0.5 h-5 w-5 shrink-0 text-[#1b5e20]" />
@@ -231,64 +262,77 @@ const PmsSupportCoverSection: FC = () => {
                 </p>
               </div>
             </div>
+
+            {/* Right - Image */}
+            <div className="flex items-center justify-center">
+              <img
+                src={calcImg.src}
+                alt="PMS Calculation"
+                className="h-48 w-auto object-contain lg:h-56"
+              />
+            </div>
           </div>
 
-          {/* Know Before You Apply */}
-          <div className="mt-6 rounded-2xl bg-[#f0f7f0] p-5">
-            <h4 className="text-[14px] font-bold uppercase text-slate-900 sm:text-[16px]">
-              Know Before You Apply
-            </h4>
-            <p className="mt-2 text-[13px] leading-relaxed text-slate-600">
-              Actual assistance depends on the enterprise category, eligible
-              expenditure, approved participation, applicable limits, supporting
-              documents and final sanction by the competent authority.
+          {/* Know Before You Apply + CTA Buttons */}
+          <div className="mt-6 flex flex-col gap-4 rounded-2xl bg-[#f0f7f0] p-5 sm:flex-row sm:items-center sm:justify-between">
+            <div className="flex-1">
+              <h4 className="text-[14px] font-bold uppercase text-slate-900 sm:text-[16px]">
+                Know Before You Apply
+              </h4>
+              <p className="mt-2 text-[13px] leading-relaxed text-slate-600">
+                Actual assistance depends on the enterprise category, eligible
+                expenditure, approved participation, applicable limits, supporting
+                documents and final sanction by the competent authority.
+              </p>
+            </div>
+
+            <div className="flex shrink-0 flex-col gap-3 sm:flex-row">
+              <Link
+                href="/participate/msme/eligibility-check"
+                target="_blank"
+                className="inline-flex items-center justify-center gap-2 rounded-md bg-[#1b5e20] px-5 py-2.5 text-[12px] font-semibold uppercase tracking-wide text-white shadow-lg transition-colors hover:bg-[#2d7a2d]"
+              >
+                <FileText className="h-4 w-4" aria-hidden="true" />
+                Check Your PMS Eligibility
+                <ArrowRight className="h-4 w-4" aria-hidden="true" />
+              </Link>
+              <Link
+                href="/participate/msme/eligibility-check"
+                target="_blank"
+                className="inline-flex items-center justify-center gap-2 rounded-md border-2 border-[#1b5e20] bg-white px-5 py-2.5 text-[12px] font-semibold uppercase tracking-wide text-[#1b5e20] transition-colors hover:bg-[#f0f7f0]"
+              >
+                <Calculator className="h-4 w-4" aria-hidden="true" />
+                Understand Your Estimated Support
+                <ArrowRight className="h-4 w-4" aria-hidden="true" />
+              </Link>
+            </div>
+          </div>
+
+          {/* Footer row: Terms left + Badges right */}
+          <div className="mt-8 flex flex-col items-center justify-between gap-4 border-t border-[#1b5e20]/10 pt-6 sm:flex-row">
+            {/* Terms note - left */}
+            <p className="text-[10px] text-slate-500 sm:text-[11px]">
+              * Terms, limits and eligibility are subject to the applicable
+              Procurement &amp; Marketing Support (PMS) Scheme guidelines and
+              competent authority approval.
             </p>
-          </div>
 
-          {/* CTA Buttons */}
-          <div className="mt-6 flex flex-col items-center justify-center gap-4 sm:flex-row">
-            <Link
-              href="/participate/msme/eligibility-check"
-              target="_blank"
-              className="inline-flex items-center gap-2 rounded-full bg-[#1b5e20] px-6 py-3 text-[13px] font-semibold uppercase tracking-wide text-white shadow-lg transition-colors hover:bg-[#2d7a2d]"
-            >
-              <FileText className="h-4 w-4" aria-hidden="true" />
-              Check Your PMS Eligibility
-              <ArrowRight className="h-4 w-4" aria-hidden="true" />
-            </Link>
-            <Link
-              href="/participate/msme/eligibility-check"
-              target="_blank"
-              className="inline-flex items-center gap-2 rounded-full border-2 border-[#1b5e20] bg-white px-6 py-3 text-[13px] font-semibold uppercase tracking-wide text-[#1b5e20] transition-colors hover:bg-[#f0f7f0]"
-            >
-              <Calculator className="h-4 w-4" aria-hidden="true" />
-              Understand Your Estimated Support
-              <ArrowRight className="h-4 w-4" aria-hidden="true" />
-            </Link>
+            {/* Badges - right, single row */}
+            <div className="flex shrink-0 flex-nowrap items-center gap-3">
+              {FOOTER_BADGES.map((badge) => {
+                const Icon = badge.icon;
+                return (
+                  <div
+                    key={badge.label}
+                    className="flex items-center gap-1.5 text-[12px] text-slate-600 sm:text-[13px]"
+                  >
+                    <Icon className="h-3.5 w-3.5 shrink-0 text-[#1b5e20]" aria-hidden="true" />
+                    <span className="whitespace-nowrap">{badge.label}</span>
+                  </div>
+                );
+              })}
+            </div>
           </div>
-
-          {/* Footer badges */}
-          <div className="mt-8 flex flex-wrap items-center justify-center gap-4 border-t border-[#1b5e20]/10 pt-6">
-            {FOOTER_BADGES.map((badge) => {
-              const Icon = badge.icon;
-              return (
-                <div
-                  key={badge.label}
-                  className="flex items-center gap-2 text-[11px] text-slate-600 sm:text-[12px]"
-                >
-                  <Icon className="h-4 w-4 text-[#1b5e20]" aria-hidden="true" />
-                  <span>{badge.label}</span>
-                </div>
-              );
-            })}
-          </div>
-
-          {/* Terms note */}
-          <p className="mt-4 text-center text-[10px] text-slate-500 sm:text-[11px]">
-            * Terms, limits and eligibility are subject to the applicable
-            Procurement &amp; Marketing Support (PMS) Scheme guidelines and
-            competent authority approval.
-          </p>
         </div>
       </SectionContainer>
     </section>
