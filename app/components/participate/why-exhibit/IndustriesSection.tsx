@@ -1,19 +1,7 @@
 "use client";
 import React from "react";
 import Image from "next/image";
-import {
-  Leaf,
-  Sprout,
-  Flower2,
-  Pill,
-  Sparkles,
-  PackageCheck,
-  Recycle,
-  Store,
-  ShieldCheck,
-  Plane,
-  ArrowRight
-} from "lucide-react";
+import { ArrowRight, Apple, Leaf, Sprout, Sparkles, Recycle, ShieldCheck, Flower2, Pill, PackageCheck, Store, Plane, Package, Milk, Droplet, Box, Tractor, Globe } from "lucide-react";
 import SectionContainer from "@/app/components/layout/SectionContainer";
 
 import leafog from "@/app/assets/icons/leafog.png";
@@ -28,70 +16,30 @@ import sectors8 from "@/app/assets/home/sectors8.png";
 import sectors9 from "@/app/assets/home/sectors9.png";
 import sectors10 from "@/app/assets/home/sectors10.png";
 
+// ── Dynamic Data Configuration ──
 const getImgSrc = (src: any): string => (typeof src === "string" ? src : src?.src || src);
 
-const industries = [
-  { 
-    icon: Leaf,         
-    title: "Organic Food & Grains",
-    desc: "Discover certified organic foods, whole grains, pulses, and healthy staples.",
-    image: sectors1
-  },
-  { 
-    icon: Sprout,       
-    title: "Agriculture & Agri-inputs",
-    desc: "Bio-fertilizers, organic seeds, soil enhancers, and innovative farming tools.",
-    image: sectors3
-  },
-  { 
-    icon: Flower2,      
-    title: "Ayush & Herbal",
-    desc: "Ayurvedic medicines, herbal extracts, essential oils, and holistic wellness products.",
-    image: sectors2
-  },
-  { 
-    icon: Pill,         
-    title: "Nutraceuticals & Supplements",
-    desc: "Dietary supplements, functional foods, and immunity-boosting nutrition.",
-    image: sectors7
-  },
-  { 
-    icon: Sparkles,     
-    title: "Natural & Organic Cosmetics",
-    desc: "Eco-friendly skincare, haircare, and personal care beauty solutions.",
-    image: sectors6
-  },
-  { 
-    icon: PackageCheck, 
-    title: "Sustainable Packaging",
-    desc: "Biodegradable, recyclable, and eco-friendly packaging materials.",
-    image: sectors8
-  },
-  { 
-    icon: Recycle,      
-    title: "Green Technology",
-    desc: "Smart farming, irrigation tech, and environmentally sustainable innovations.",
-    image: sectors9
-  },
-  { 
-    icon: Store,        
-    title: "Retail & E-commerce",
-    desc: "Organic product marketplaces, specialized retail chains, and digital trade.",
-    image: sectors10
-  },
-  { 
-    icon: ShieldCheck,  
-    title: "Certifications & Compliances",
-    desc: "Quality assurance, organic certification bodies, and compliance services.",
-    image: sectors4
-  },
-  { 
-    icon: Plane,        
-    title: "Export & Global Trade",
-    desc: "Global business opportunities, exporters, importers, and trade networks.",
-    image: sectors5
-  },
-];
+const sectionData = {
+  sectionTag: "Expo Categories",
+  titleMain: "Explore Diverse",
+  titleHighlight: "Exhibition Sectors",
+  descriptionPrefix: "One Platform. Every Opportunity.",
+  description: " Bharat Organic Expo brings together the entire organic ecosystem under one roof. Explore a wide range of sectors driving sustainable living, natural wellness, ethical production and global trade.",
+  exploreText: "Explore",
+  buttonText: "VIEW ALL CATEGORIES",
+  categories: [
+    { id: "organic-food-beverages", icon: Apple, title: "Organic Food & Beverages", desc: "Wide range of certified organic foods, beverages, healthy snacks, grains, pulses, and ingredients.", color: "#4ade80", image: sectors1, imageAlt: "Organic Food & Beverages Sector" },
+    { icon: Leaf, title: "AYUSH, Ayurveda & Herba", desc: "Ayurvedic medicines, herbal supplements, essential oils, teas, wellness products and holistic solutions.", color: "#14b8a6", image: sectors2, imageAlt: "AYUSH, Ayurveda & Herbs Sector" },
+    { icon: Sprout, title: "Organic Natural Farming", desc: "Natural farming practices, organic cultivation methods, innovations and farm-to-market solutions.", color: "#22c55e", image: sectors3, imageAlt: "Organic Natural Farming Sector" },
+    { icon: Package, title: "Organic Inputs, Seeds & Bio- Inputs", desc: "Bio-fertilisers, organic manures, soil enhancers, pesticides and high-quality seeds.", color: "#fb923c", image: sectors4, imageAlt: "Organic Inputs, Seeds & Bio-Inputs Sector" },
+    { icon: Milk, title: "Dairy, Livestock & Allied", desc: "Organic dairy products, livestock nutrition, animal health solutions and sustainable practices.", color: "#f472b6", image: sectors5, imageAlt: "Dairy, Livestock & Allied Sector" },
+    { icon: Droplet, title: "Natural Beauty & Personal Care", desc: "Herbal skincare, haircare, personal care and eco-friendly beauty products.", color: "#60a5fa", image: sectors7, imageAlt: "Natural Beauty & Personal Care Sector" },
+    { icon: Pill, title: "Nutraceuticals & Functional Nutrition", desc: "Dietary supplements, functional foods, immunity boosters and wellness nutrition products.", color: "#34d399", image: sectors6, imageAlt: "Nutraceuticals & Functional Nutrition Sector" },
+    { icon: Box, title: "Sustainable Packaging & Processing", desc: "Eco-friendly, biodegradable, recyclable and sustainable packaging solutions.", color: "#3b82f6", image: sectors9, imageAlt: "Sustainable Packaging & Processing Sector" },
+    { icon: Tractor, title: "AgriTech, GreenTech & Innovation", desc: "Innovative agri technologies, smart farming, irrigation, farm mechanization and digital solutions.", color: "#10b981", image: sectors10, imageAlt: "AgriTech, GreenTech & Innovation Sector" },
+    { icon: Globe, title: "Certification, Export, Trade & Services", desc: "Exporters, importers, trade associations and global business opportunities for organic products.", color: "#f59e0b", image: sectors8, imageAlt: "Certification, Export, Trade & Services Sector" },
+  ]
+};
 
 const IndustriesSection = () => (
   <section className="pt-4 pb-8 bg-white relative overflow-hidden font-inter">
@@ -117,13 +65,14 @@ const IndustriesSection = () => (
 
       {/* Static Grid Layout (No Slider) */}
       <div className="w-full py-2 grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-x-2 lg:gap-x-2 gap-y-4 lg:gap-y-4 justify-center">
-        {industries.map((item, index) => {
+        {sectionData.categories.map((item, index) => {
           const Icon = item.icon;
 
           return (
-            <div
+            <a
+              href={item.id ? `/exhibition-categories#${item.id}` : "/exhibition-categories"}
               key={index}
-              className="group flex flex-col w-full h-auto bg-[#f6f4f0] rounded-2xl cursor-pointer border-[1px] border-[#c0b7af] shadow-sm hover:shadow-2xl hover:-translate-y-2 hover:border-[#3b8c2a]/50 transition-all duration-500 relative mt-4"
+              className="group flex flex-col w-full h-auto bg-[#f6f4f0] rounded-2xl cursor-pointer border-[1px] border-[#c0b7af] shadow-sm hover:shadow-2xl hover:-translate-y-2 hover:border-[#3b8c2a]/50 transition-all duration-500 relative mt-4 block"
             >
               {/* Top-Center Badge */}
               <div className="absolute top-[-20px] left-1/2 -translate-x-1/2 w-14 h-14 rounded-full border-2 border-[#e8c051] shadow-md z-20 overflow-hidden flex items-center justify-center bg-gradient-to-b from-[#1c3f25] to-[#0a170d]">
@@ -133,12 +82,12 @@ const IndustriesSection = () => (
 
               {/* Top Half: Image */}
               <div className="relative w-full h-[140px] lg:h-[180px] shrink-0 overflow-hidden rounded-t-[15px] bg-gray-200">
-                <Image 
-                  src={item.image} 
-                  alt={item.title} 
-                  fill 
-                  sizes="(max-width: 640px) 50vw, (max-width: 1024px) 25vw, 20vw" 
-                  className="object-cover group-hover:scale-110 transition-transform duration-700" 
+                <Image
+                  src={item.image}
+                  alt={item.title}
+                  fill
+                  sizes="(max-width: 640px) 50vw, (max-width: 1024px) 25vw, 20vw"
+                  className="object-cover group-hover:scale-110 transition-transform duration-700"
                 />
               </div>
 
@@ -162,8 +111,7 @@ const IndustriesSection = () => (
                   <ArrowRight size={14} strokeWidth={2.5} className="text-[#f58220] group-hover:text-[#d35400] group-hover:translate-x-1 transition-all duration-300" />
                 </div>
               </div>
-
-            </div>
+            </a>
           );
         })}
       </div>
