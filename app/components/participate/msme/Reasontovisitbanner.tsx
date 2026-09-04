@@ -145,7 +145,7 @@ export default function ReasonToVisitBanner() {
         </div>
 
         {/* ===================== FEATURES STRIP ===================== */}
-        <div className="mt-4 grid grid-cols-2 gap-x-4 gap-y-6 border-t border-gray-200 pt-4 sm:grid-cols-3 sm:gap-x-6 lg:grid-cols-6 lg:divide-x lg:divide-dashed lg:divide-gray-200">
+        <div className="mt-4 grid grid-cols-2 gap-x-4 gap-y-6 border-t border-gray-300 pt-4 sm:grid-cols-3 sm:gap-x-6 lg:grid-cols-6 lg:divide-x lg:divide-gray-300">
             {FEATURES.map((feature) => (
               <article
                 key={feature.id}
