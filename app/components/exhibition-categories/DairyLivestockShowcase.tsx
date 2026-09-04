@@ -2,57 +2,67 @@ import React from "react";
 import Image from "next/image";
 import { Check, Phone, ArrowRight, ShieldCheck, Users, Globe, Handshake, Target, MapPin, Calendar, Heart, Leaf, Sprout, Store, Star, Factory, Tag, Package, Coffee, Carrot, CheckCircle2, Navigation, Headphones, TrendingUp, Megaphone, Apple, CupSoda, Utensils, Wheat, BadgeCheck, Truck, ShoppingBag, GraduationCap, Droplet, FlaskConical, Stethoscope, Building2, Beaker, FileText, Briefcase, Sun, Tractor, Trees, TestTube, Microscope, Search, Sprout as Plant, Milk, Cross, Syringe, Home, Recycle, Box, Dna, Settings } from "lucide-react";
 import heroBg from "@/app/assets/exhibition-categories/dairy-livestock-allied/dairy-ayurveda-bg.png";
+import dairyProductsImg from "@/app/assets/exhibition-categories/dairy-livestock-allied/dairy-products.png";
+import cattleImg from "@/app/assets/exhibition-categories/dairy-livestock-allied/cattle.png";
+import animalFeedImg from "@/app/assets/exhibition-categories/dairy-livestock-allied/animal-feed.png";
+import veterinaryImg from "@/app/assets/exhibition-categories/dairy-livestock-allied/veterinary.png";
+import dairyProcessingImg from "@/app/assets/exhibition-categories/dairy-livestock-allied/dairy--processing.png";
+import dairyFarmImg from "@/app/assets/exhibition-categories/dairy-livestock-allied/dairy-form.png";
+import livestockImg from "@/app/assets/exhibition-categories/dairy-livestock-allied/livestock.png";
+import milkingImg from "@/app/assets/exhibition-categories/dairy-livestock-allied/milking.png";
+import wasteManagementImg from "@/app/assets/exhibition-categories/dairy-livestock-allied/waste-management.png";
+import dairyPackagingImg from "@/app/assets/exhibition-categories/dairy-livestock-allied/dairy-packageing.png";
 
 const productSegments = [
   {
     title: "Dairy Products & Ingredients",
     items: ["Milk, curd, butter, ghee & cheese", "Milk powders & dairy ingredients", "Value-added dairy products", "Probiotic & fermented dairy"],
-    image: null
+    image: dairyProductsImg
   },
   {
     title: "Cattle Breeds & Genetics",
     items: ["High-yielding dairy breeds", "Sex-sorted semen & embryos", "Genetics & breeding programs", "Embryo transfer solutions"],
-    image: null
+    image: cattleImg
   },
   {
     title: "Animal Feed & Nutrition",
     items: ["Balanced cattle feeds", "Mineral & vitamin supplements", "Feed additives & probiotics", "Fodder, silage & hay solutions"],
-    image: null
+    image: animalFeedImg
   },
   {
     title: "Veterinary Medicines & Vaccines",
     items: ["Vaccines & immunologicals", "Antibiotics & therapeutics", "Parasiticides & dewormers", "Animal health care solutions"],
-    image: null
+    image: veterinaryImg
   },
   {
     title: "Dairy Processing Equipment",
     items: ["Milk chilling & cooling tanks", "Pasteurizers & homogenizers", "Milk processing & packaging lines", "Dairy automation systems"],
-    image: null
+    image: dairyProcessingImg
   },
   {
     title: "Dairy Farm Infrastructure",
     items: ["Dairy sheds & housing systems", "Ventilation & cooling solutions", "Milking parlours & equipment", "Manure management systems"],
-    image: null
+    image: dairyFarmImg
   },
   {
     title: "Livestock & Poultry",
     items: ["Buffalo, goat, sheep & pig", "Poultry breeds & day-old chicks", "Broilers, layers & breeders", "Backyard & commercial poultry"],
-    image: null
+    image: livestockImg
   },
   {
     title: "Milking & Cooling Solutions",
     items: ["Milking machines & accessories", "Bulk milk coolers & storage tanks", "Milk testing & quality control", "Cleaning & sanitation systems"],
-    image: null
+    image: milkingImg
   },
   {
     title: "Waste Management & Biogas",
     items: ["Biogas plants & components", "Slurry management systems", "Composting & organic manure", "Renewable energy solutions"],
-    image: null
+    image: wasteManagementImg
   },
   {
     title: "Dairy Packaging & Allied Services",
     items: ["Packaging materials & containers", "Labels & printing solutions", "Cold chain & transportation", "Consultancy & farm management"],
-    image: null
+    image: dairyPackagingImg
   }
 ];
 
