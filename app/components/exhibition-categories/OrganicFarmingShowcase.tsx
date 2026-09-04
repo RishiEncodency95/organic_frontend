@@ -2,122 +2,123 @@
 
 import React from "react";
 import Image from "next/image";
-import { Check, Phone, ArrowRight, ShieldCheck, Users, Globe, Handshake, Target, MapPin, Calendar, Heart, Leaf, Sprout, Store, Star, Factory, Tag, Package, Coffee, Carrot, CheckCircle2, Navigation, Headphones, TrendingUp, Megaphone, Apple, CupSoda, Utensils, Wheat, BadgeCheck, Truck, ShoppingBag, GraduationCap, Droplet, FlaskConical, Stethoscope, Building2, Beaker, FileText, Briefcase } from "lucide-react";
-import heroBg from "@/app/assets/exhibition-categories/ayush-ayurveda-herba/ayush-bg.png";
-import ayurvedaImg from "@/app/assets/exhibition-categories/ayush-ayurveda-herba/ayurveda.png";
-import herbalImg from "@/app/assets/exhibition-categories/ayush-ayurveda-herba/herbal.png";
-import wellnessImg from "@/app/assets/exhibition-categories/ayush-ayurveda-herba/wellnness.png";
-import essentialImg from "@/app/assets/exhibition-categories/ayush-ayurveda-herba/essential.png";
-import naturalImg from "@/app/assets/exhibition-categories/ayush-ayurveda-herba/natural.png";
-import spaImg from "@/app/assets/exhibition-categories/ayush-ayurveda-herba/spa.png";
-import naturalPersonalImg from "@/app/assets/exhibition-categories/ayush-ayurveda-herba/natural-personal.png";
-import herbalTeasImg from "@/app/assets/exhibition-categories/ayush-ayurveda-herba/herbal-teas.png";
-import researchImg from "@/app/assets/exhibition-categories/ayush-ayurveda-herba/research.png";
-import certificationImg from "@/app/assets/exhibition-categories/ayush-ayurveda-herba/certification.png";
+import { Check, Phone, ArrowRight, ShieldCheck, Users, Globe, Handshake, Target, MapPin, Calendar, Heart, Leaf, Sprout, Store, Star, Factory, Tag, Package, Coffee, Carrot, CheckCircle2, Navigation, Headphones, TrendingUp, Megaphone, Apple, CupSoda, Utensils, Wheat, BadgeCheck, Truck, ShoppingBag, GraduationCap, Droplet, FlaskConical, Stethoscope, Building2, Beaker, FileText, Briefcase, Sun, Tractor, Trees } from "lucide-react";
+import heroBg from "@/app/assets/exhibition-categories/organic-natural-farming/organic-natural-bg.png";
+import organicSeedsImg from "@/app/assets/exhibition-categories/organic-natural-farming/organic-seeds.png";
+import organicInputImg from "@/app/assets/exhibition-categories/organic-natural-farming/organic-input.png";
+import soilHealthImg from "@/app/assets/exhibition-categories/organic-natural-farming/soli-health.png";
+import sustainableImg from "@/app/assets/exhibition-categories/organic-natural-farming/sustainable.png";
+import farmMachineryImg from "@/app/assets/exhibition-categories/organic-natural-farming/farm-machinery.png";
+import protectedImg from "@/app/assets/exhibition-categories/organic-natural-farming/protected.png";
+import irrigationImg from "@/app/assets/exhibition-categories/organic-natural-farming/irrgation.png";
+import cropImg from "@/app/assets/exhibition-categories/organic-natural-farming/crop.png";
+import integratedImg from "@/app/assets/exhibition-categories/organic-natural-farming/intergrated.png";
+import postHarvestImg from "@/app/assets/exhibition-categories/organic-natural-farming/post-harvest.png";
 
 const productSegments = [
   {
-    title: "Ayurveda & Classical\nMedicines",
-    items: ["Ayurvedic formulations", "Rasashastra products", "Herbal healthcare solutions", "Bhasmas & classical remedies"],
-    image: ayurvedaImg
+    title: "Organic Seeds &\nPlanting Materials",
+    items: ["Organic seeds & seedlings", "Bio-fertilized seeds", "Planting materials & saplings", "Tissue culture plants"],
+    image: organicSeedsImg
   },
   {
-    title: "Herbal Extracts &\nIngredients",
-    items: ["Standardized extracts", "Phytochemicals & actives", "Herbal powders & granules", "Bulk herbs & raw materials"],
-    image: herbalImg
+    title: "Organic Inputs &\nBio-Products",
+    items: ["Organic manures & compost", "Bio-fertilizers & inoculants", "Bio-pesticides & bio-control", "Plant growth promoters"],
+    image: organicInputImg
   },
   {
-    title: "Wellness &\nHolistic Solutions",
-    items: ["Yoga & meditation aids", "Immunity & detox solutions", "Stress relief & sleep support", "Holistic lifestyle products"],
-    image: wellnessImg
+    title: "Soil Health & Nutrient\nManagement",
+    items: ["Soil conditioners & amendments", "Microbial inoculants", "Vermicompost & vermiwash", "Soil testing & analysis"],
+    image: soilHealthImg
   },
   {
-    title: "Essential Oils &\nAromatherapy",
-    items: ["Pure essential oils", "Carrier oils & blends", "Aromatherapy products", "Diffusers & accessories"],
-    image: essentialImg
+    title: "Sustainable Farming\nSolutions",
+    items: ["Natural farming solutions", "Crop protection solutions", "Water conservation systems", "Integrated farming systems"],
+    image: sustainableImg
   },
   {
-    title: "Natural & Organic\nHealth Products",
-    items: ["Natural supplements", "Organic superfoods", "Functional nutrition", "Plant-based wellness"],
-    image: naturalImg
+    title: "Farm Machinery &\nEquipment",
+    items: ["Organic farming equipment", "Small farm machinery", "Tools & implements", "Post-harvest equipment"],
+    image: farmMachineryImg
   },
   {
-    title: "Spa, Panchkarma &\nTherapeutic Solutions",
-    items: ["Panchkarma equipment", "Spa & wellness essentials", "Massage oils & balms", "Therapeutic care products"],
-    image: spaImg
+    title: "Protected Cultivation &\nGreenhouses",
+    items: ["Polyhouse & greenhouse systems", "Shade nets & net houses", "Hydroponics & aeroponics", "Vertical farming solutions"],
+    image: protectedImg
   },
   {
-    title: "Natural Personal Care\n& Cosmetics",
-    items: ["Herbal skincare", "Natural haircare", "Organic cosmetics", "Clean beauty solutions"],
-    image: naturalPersonalImg
+    title: "Irrigation & Water\nManagement",
+    items: ["Drip & sprinkler systems", "Rainwater harvesting systems", "Water filtration & treatment", "Smart irrigation solutions"],
+    image: irrigationImg
   },
   {
-    title: "Herbal Teas &\nFunctional Beverages",
-    items: ["Herbal teas & infusions", "Functional beverages", "Health tonics & syrups", "Ayurvedic drink mixes"],
-    image: herbalTeasImg
+    title: "Crop Production &\nManagement",
+    items: ["Organic crop cultivation", "Intercropping solutions", "Natural pest management", "Crop monitoring solutions"],
+    image: cropImg
   },
   {
-    title: "Research, Education\n& Innovation",
-    items: ["AYUSH research institutes", "Herbal innovation labs", "Educational resources", "Publications & studies"],
-    image: researchImg
+    title: "Integrated Farming &\nAllied Activities",
+    items: ["Crop-livestock integration", "Poultry & dairy solutions", "Beekeeping & aquaculture", "Farm diversification"],
+    image: integratedImg
   },
   {
-    title: "Certification, Testing\n& Quality Assurance",
-    items: ["Certification bodies", "Testing laboratories", "Quality assurance services", "Compliance solutions"],
-    image: certificationImg
+    title: "Post-Harvest Handling &\nValue Addition",
+    items: ["Grading, sorting & cleaning", "Storage & preservation solutions", "Processing & farm produce units", "Value addition equipment"],
+    image: postHarvestImg
   }
 ];
 
 const exhibitors = [
-  { label: "AYUSH Manufacturers", icon: Factory },
-  { label: "Herbal & Wellness Brands", icon: Leaf },
-  { label: "Wellness Centers & Spas", icon: Heart },
-  { label: "Organic Product Companies", icon: Sprout },
-  { label: "Research & Academic Institutes", icon: GraduationCap },
-  { label: "Exporters & Importers", icon: Globe },
-  { label: "Essential Oil & Aroma Companies", icon: Droplet },
-  { label: "Distributors & Wholesalers", icon: Package },
-  { label: "Consultants & Therapists", icon: Users },
-  { label: "NGOs & Wellness Associations", icon: Handshake }
+  { label: "Organic Farmers & FPOs", icon: Users },
+  { label: "Agri Input Manufacturers", icon: Factory },
+  { label: "Bioproduct Companies", icon: FlaskConical },
+  { label: "Seed & Plant Producers", icon: Sprout },
+  { label: "Agri Machinery Makers", icon: Tractor },
+  { label: "Research & Development Institutes", icon: Beaker },
+  { label: "Consultants & Service Providers", icon: Briefcase },
+  { label: "Distributors & Importers", icon: Globe },
+  { label: "Agri Tech Startups", icon: Sun },
+  { label: "NGOs & Farmer Associations", icon: Handshake }
 ];
 
 const targetVisitors = [
-  { label: "Distributors & Retailers", icon: Store },
-  { label: "Health & Wellness Centers", icon: Heart },
-  { label: "Doctors & Practitioners", icon: Stethoscope },
-  { label: "Pharmacies & Drug Stores", icon: ShieldCheck },
-  { label: "Ayurveda & Yoga Institutes", icon: GraduationCap },
-  { label: "Nutritionists & Therapists", icon: Target },
-  { label: "Sourcing Agents & Importers", icon: Handshake },
-  { label: "Hospitals & Clinics", icon: Building2 },
-  { label: "Wellness Influencers", icon: Users },
-  { label: "Health Conscious Consumers", icon: Leaf }
+  { label: "Farmers & FPOs", icon: Users },
+  { label: "Agronomists & Scientists", icon: GraduationCap },
+  { label: "Agri Input Dealers", icon: Store },
+  { label: "Agri Entrepreneurs", icon: TrendingUp },
+  { label: "Cooperatives & Societies", icon: Handshake },
+  { label: "Government Officials", icon: Building2 },
+  { label: "Researchers & Academicians", icon: Beaker },
+  { label: "Agri Investors", icon: Target },
+  { label: "Exporters & Importers", icon: Globe },
+  { label: "Agri Tech Companies", icon: Sun }
 ];
 
 const whyExhibit = [
-  "Tap into the rapidly growing global AYUSH & wellness market",
-  "Showcase authentic & innovative natural health solutions",
-  "Connect with global buyers, retailers & wellness professionals",
-  "Build trust through quality, certification & research",
-  "Expand distribution networks & business collaborations",
-  "Promote holistic health, sustainability & conscious living"
+  "Meet a fast-growing market of organic farmers & agri businesses",
+  "Showcase innovative & sustainable agri solutions",
+  "Build strong partnerships with FPOs & agri communities",
+  "Expand reach to new geographies & markets",
+  "Promote soil health, productivity & sustainability",
+  "Be part of a greener, healthier & sustainable future"
 ];
 
 const exhibitorExamples = [
-  { label: "AYUSH Manufacturers", icon: Factory },
-  { label: "Herbal Brands", icon: Leaf },
-  { label: "Wellness Companies", icon: Heart },
-  { label: "Essential Oil Producers", icon: Droplet },
-  { label: "Organic Companies", icon: Sprout },
-  { label: "Spa & Therapy Providers", icon: Users },
-  { label: "Research Institutes", icon: Beaker },
-  { label: "Consultants & Advisors", icon: Briefcase },
-  { label: "Certification & Testing Labs", icon: BadgeCheck }
+  { label: "Organic Farming Companies", icon: Leaf },
+  { label: "Bio-Input Manufacturers", icon: Factory },
+  { label: "Seed & Plant Producers", icon: Sprout },
+  { label: "Agri Machinery Manufacturers", icon: Tractor },
+  { label: "Irrigation Solution Providers", icon: Droplet },
+  { label: "Research & Institutions", icon: Beaker },
+  { label: "Distributors & Importers", icon: Globe },
+  { label: "Government & Support Bodies", icon: Building2 },
+  { label: "Agri Tech Startups", icon: Sun },
+  { label: "NGOs & Farmer Associations", icon: Handshake }
 ];
 
-export default function AyushDetailsShowcase() {
+export default function OrganicFarmingShowcase() {
   return (
-    <div id="ayush-ayurveda-herbal" className="w-full bg-white font-inter text-gray-900 border-t border-gray-300 scroll-mt-[100px]">
+    <div id="organic-natural-farming" className="w-full bg-white font-inter text-gray-900 border-t border-gray-300 scroll-mt-[100px]">
 
       {/* ---------------- 1. HEADER SECTION ---------------- */}
       <section className="relative w-full bg-white overflow-hidden flex items-center shadow-inner">
@@ -136,35 +137,27 @@ export default function AyushDetailsShowcase() {
           {/* Left Text Block */}
           <div className="lg:w-[60%] flex flex-col relative z-20">
             <h1 className="text-[18px] lg:text-[56px] font-semibold uppercase leading-[0.9] tracking-[-0.02em] font-poppins mb-3">
-              <span className="text-[#113d20]">AYUSH, AYURVEDA </span><br />
-              <span className="text-[#e44c20]">& HERBAL</span>
+              <span className="text-[#113d20]">ORGANIC</span><br />
+              <span className="text-[#e44c20]">NATURAL FARMING</span>
             </h1>
 
             {/* Subtitle with diamond lines */}
             <div className="flex items-center gap-4 my-2">
-              {/* <div className="flex items-center">
-                <div className="w-2 h-2 rotate-45 bg-[#3b8c2a]"></div>
-                <div className="w-16 h-[2px] bg-[#3b8c2a]"></div>
-              </div> */}
               <h3 className="text-[#3b8c2a] font-semibold text-[18px] lg:text-[21px] tracking-wide ">
-                Ancient Wisdom. Modern Science. Holistic Wellness for All.
+                Healthy Soil. Healthy Food. Healthy Future.
               </h3>
-              {/* <div className="flex items-center">
-                <div className="w-16 h-[2px] bg-[#3b8c2a]"></div>
-                <div className="w-2 h-2 rotate-45 bg-[#3b8c2a]"></div>
-              </div> */}
             </div>
 
             <p className="text-[14px] lg:text-[15.5px] font-medium text-gray-800 max-w-[600px] leading-relaxed mt-2 pb-10">
-              Discover authentic AYUSH, Ayurvedic & herbal solutions that blend ancient wisdom with modern science for holistic wellness — trusted, certified, and beneficial for all.
+              Explore innovative solutions for organic and natural farming that improve soil health, conserve resources, and build a resilient, productive future for generations to come.
             </p>
           </div>
 
           {/* Circular Badge - Positioned perfectly over the blend line */}
-          <div className="hidden lg:flex absolute left-[52%] top-2/3 -translate-y-1/2 w-[150px] h-[150px] rounded-full border-[3px] border-[#113d20] bg-white items-center justify-center shadow-2xl z-30">
+          <div className="hidden lg:flex absolute left-[46%] top-2/3 -translate-y-1/2 w-[150px] h-[150px] rounded-full border-[3px] border-[#113d20] bg-white items-center justify-center shadow-2xl z-30">
             <div className="w-[136px] h-[136px] rounded-full border border-[#113d20] flex flex-col items-center justify-center p-2 text-center relative">
               <span className="text-[#3b8c2a] font-bold text-[14px] leading-[1.4] mb-1">
-                HEAL<br />NATURALLY<br />LIVE<br />HOLISTICALLY
+                GOOD SOIL<br />BETTER HARVEST<br />BETTER PLANET
               </span>
               <div className="flex items-center gap-1 mt-1 border-t border-[#3b8c2a] pt-1 w-12 justify-center">
                 <Leaf className="text-[#3b8c2a] w-4 h-4" />
@@ -191,7 +184,7 @@ export default function AyushDetailsShowcase() {
                 <div className="w-24 h-[1px] bg-[#3b8c2a]"></div>
               </div>
               <h2 className="text-[17px] font-semibold text-[#3b8c2a] uppercase tracking-[0.08em]">
-                PRODUCTS & SEGMENTS ON DISPLAY
+                PRODUCTS & SOLUTIONS ON DISPLAY
               </h2>
               <div className="flex items-center">
                 <div className="w-24 h-[1px] bg-[#3b8c2a]"></div>
@@ -243,7 +236,7 @@ export default function AyushDetailsShowcase() {
             <div className="border border-gray-200 rounded-[16px] bg-white p-2 shadow-sm">
               <div className="flex items-center gap-3 mb-1 pb-2 border-b border-gray-100">
                 <Users className="w-5 h-5 text-[#3b8c2a]" strokeWidth={2.5} />
-                <h3 className="text-[14px] font-semibold text-[#3b8c2a] uppercase tracking-wide">
+                <h3 className="text-[16px] font-semibold text-[#3b8c2a] uppercase tracking-wide">
                   WHO CAN EXHIBIT?
                 </h3>
               </div>
@@ -253,7 +246,7 @@ export default function AyushDetailsShowcase() {
                     <div className="w-6 h-6 rounded-full bg-[#f0f8ec] flex items-center justify-center shrink-0 group-hover:bg-[#3b8c2a] transition-colors shadow-sm">
                       <exh.icon className="w-3.5 h-3.5 text-[#3b8c2a] group-hover:text-white transition-colors" strokeWidth={2.5} />
                     </div>
-                    <span className="text-[12px] font-semibold text-gray-800 leading-tight group-hover:text-[#113d20] transition-colors">{exh.label}</span>
+                    <span className="text-[13px] font-semibold text-gray-800 leading-tight group-hover:text-[#113d20] transition-colors">{exh.label}</span>
                   </li>
                 ))}
               </ul>
@@ -263,7 +256,7 @@ export default function AyushDetailsShowcase() {
             <div className="border border-gray-200 rounded-[16px] bg-white p-2 shadow-sm">
               <div className="flex items-center gap-3 mb-1 pb-2 border-b border-gray-100">
                 <Target className="w-5 h-5 text-[#3b8c2a]" strokeWidth={2.5} />
-                <h3 className="text-[14px] font-semibold text-[#3b8c2a] uppercase tracking-wide">
+                <h3 className="text-[16px] font-semibold text-[#3b8c2a] uppercase tracking-wide">
                   WHY EXHIBIT IN THIS CATEGORY?
                 </h3>
               </div>
@@ -283,7 +276,7 @@ export default function AyushDetailsShowcase() {
             <div className="border border-gray-200 rounded-[16px] bg-white p-2 shadow-sm">
               <div className="flex items-center gap-3 mb-1 pb-2 border-b border-gray-100">
                 <Users className="w-5 h-5 text-[#3b8c2a]" strokeWidth={2.5} />
-                <h3 className="text-[14px] font-semibold text-[#3b8c2a] uppercase tracking-wide">
+                <h3 className="text-[16px] font-semibold text-[#3b8c2a] uppercase tracking-wide">
                   TARGET VISITORS
                 </h3>
               </div>
@@ -293,7 +286,7 @@ export default function AyushDetailsShowcase() {
                     <div className="w-6 h-6 rounded-full bg-[#f0f8ec] flex items-center justify-center shrink-0 group-hover:bg-[#3b8c2a] transition-colors shadow-sm">
                       <vis.icon className="w-3.5 h-3.5 text-[#3b8c2a] group-hover:text-white transition-colors" strokeWidth={2.5} />
                     </div>
-                    <span className="text-[12px] font-semibold text-gray-800 leading-tight group-hover:text-[#113d20] transition-colors">{vis.label}</span>
+                    <span className="text-[13px] font-semibold text-gray-800 leading-tight group-hover:text-[#113d20] transition-colors">{vis.label}</span>
                   </li>
                 ))}
               </ul>
@@ -344,17 +337,17 @@ export default function AyushDetailsShowcase() {
                 className="absolute right-0 top-0 h-full w-[50%] bg-cover bg-center"
                 style={{
                   backgroundImage: `url(${heroBg.src})`,
-                  maskImage: "linear-gradient(to right, transparent, black 85%)",
-                  WebkitMaskImage: "linear-gradient(to right, transparent, black 80%)"
+                  maskImage: "linear-gradient(to right, transparent, black 95%)",
+                  WebkitMaskImage: "linear-gradient(to right, transparent, black 95%)"
                 }}
               ></div>
 
               <div className="relative z-10 w-[80%]">
                 <h3 className="text-white text-[13px] font-semibold mb-3 leading-[1.4] uppercase">
-                  BE PART OF INDIA'S PREMIER PLATFORM FOR ORGANIC, NATURAL & WELLNESS
+                  BE PART OF INDIA'S PREMIER PLATFORM FOR ORGANIC AGRICULTURE
                 </h3>
 
-                <div className="flex items-center gap-4">
+                <div className="flex items-center gap-2">
                   <div className="flex flex-col gap-2">
                     <span className="text-white text-[11px]">Showcase. Connect. Grow.</span>
                     <a href="/registration/book-a-stand" target="_blank" rel="noopener noreferrer" className="bg-[#ff4500] hover:bg-[#e63e00] text-white text-[12px] font-bold px-4 py-1.5 rounded flex items-center justify-center gap-2 uppercase w-max transition-colors">
@@ -362,10 +355,10 @@ export default function AyushDetailsShowcase() {
                     </a>
                   </div>
 
-                  <div className="w-[1px] h-14 bg-white/20 mx-2"></div>
+                  <div className="w-[1px] h-14  mx-3"></div>
 
-                  <div className="flex flex-col gap-2 justify-center">
-                    <span className="text-white text-[11px] mb-0.5">Or Contact Us</span>
+                  <div className="flex flex-col gap-1.5 justify-center">
+                    <span className="text-white text-[11px]">Or Contact Us</span>
                     <div className="flex items-center gap-1.5 text-white/90 text-[10.5px]">
                       <Phone className="w-3.5 h-3.5" /> 9354811889, 9205645544
                     </div>
@@ -398,11 +391,12 @@ export default function AyushDetailsShowcase() {
           {/* Bottom Trust Bar */}
           <div className="pt-2 border-t border-gray-200 flex flex-col md:flex-row items-start md:items-center justify-between gap-4 overflow-hidden">
             {[
-              { icon: Globe, title: "Global Exposure", desc: "Connect with international\nbuyers and partners." },
-              { icon: Users, title: "Right Audience", desc: "Meet verified buyers,\ndistributors & retailers." },
-              { icon: TrendingUp, title: "Business Growth", desc: "Generate leads and\nexpand your market." },
-              { icon: Megaphone, title: "Brand Visibility", desc: "Increase visibility and\nstrengthen your brand." },
-              { icon: Leaf, title: "Sustainable Future", desc: "Be a part of the movement\nfor a better tomorrow." },
+              { icon: ShieldCheck, title: "Certified & Trusted Platform", desc: "India's largest organic hub." },
+              { icon: Users, title: "High Quality Buyers", desc: "Meet verified buyers & retailers." },
+              { icon: Globe, title: "Global Market Access", desc: "Connect with international partners." },
+              { icon: Handshake, title: "Strong Business Network", desc: "Generate leads and expand market." },
+              { icon: Target, title: "Growth & Collaboration", desc: "Increase visibility & brand reach." },
+              { icon: Leaf, title: "Sustainable Future", desc: "Be part of a greener tomorrow." },
             ].map((trust, i) => (
               <React.Fragment key={i}>
                 <div className="flex items-center gap-3 w-full md:w-auto">
@@ -414,7 +408,7 @@ export default function AyushDetailsShowcase() {
                     <span className="text-[12px] font-medium text-gray-600 leading-[1.3] whitespace-pre-line">{trust.desc}</span>
                   </div>
                 </div>
-                {i < 4 && (
+                {i < 5 && (
                   <div className="hidden xl:block w-[1px] h-10 bg-gray-200 shrink-0 mx-1"></div>
                 )}
               </React.Fragment>
