@@ -97,12 +97,12 @@ export default function ExhibitionSectors() {
                   </p> */}
 
                   {/* View More Link */}
-                  {/* <div className="mt-auto w-full flex justify-between items-center pt-2.5 border-t border-slate-100">
-                    <span className="text-[#f58220] group-hover:text-[#d35400] text-[10.5px] md:text-[11px] font-bold uppercase tracking-widest transition-colors duration-300">
-                      Explore
-                    </span>
-                    <ArrowRight size={14} strokeWidth={2.5} className="text-[#f58220] group-hover:text-[#d35400] group-hover:translate-x-1 transition-all duration-300" />
-                  </div> */}
+                    <div className="mt-auto w-full flex justify-between items-center pt-2.5 border-t border-slate-100">
+                      <span className="text-[#f58220] group-hover:text-[#d35400] text-[10.5px] md:text-[11px] font-bold uppercase tracking-widest transition-colors duration-300">
+                        Explore
+                      </span>
+                      <ArrowRight size={14} strokeWidth={2.5} className="text-[#f58220] group-hover:text-[#d35400] group-hover:translate-x-1 transition-all duration-300" />
+                    </div>
                 </div>
               </a>
             );
