@@ -10,6 +10,7 @@ import DairyLivestockShowcase from "@/app/components/exhibition-categories/Dairy
 import NaturalBeautyShowcase from "@/app/components/exhibition-categories/NaturalBeautyShowcase";
 import NutraceuticalsShowcase from "@/app/components/exhibition-categories/NutraceuticalsShowcase";
 import SustainablePackagingShowcase from "@/app/components/exhibition-categories/SustainablePackagingShowcase";
+import AgriTechShowcase from "@/app/components/exhibition-categories/AgriTechShowcase";
 
 export default function ExhibitionCategoriesPage() {
   const [activeCategory, setActiveCategory] = useState("organic-food-beverages");
@@ -42,8 +43,9 @@ export default function ExhibitionCategoriesPage() {
       {activeCategory === "natural-beauty-personal-care" && <NaturalBeautyShowcase />}
       {activeCategory === "nutraceuticals-functional-nutrition" && <NutraceuticalsShowcase />}
       {activeCategory === "sustainable-packaging-processing" && <SustainablePackagingShowcase />}
+      {activeCategory === "agritech-greentech-innovation" && <AgriTechShowcase />}
       
-      {!["organic-food-beverages", "ayush-ayurveda-herbal", "organic-natural-farming", "organic-inputs", "dairy-livestock", "natural-beauty-personal-care", "nutraceuticals-functional-nutrition", "sustainable-packaging-processing"].includes(activeCategory) && (
+      {!["organic-food-beverages", "ayush-ayurveda-herbal", "organic-natural-farming", "organic-inputs", "dairy-livestock", "natural-beauty-personal-care", "nutraceuticals-functional-nutrition", "sustainable-packaging-processing", "agritech-greentech-innovation"].includes(activeCategory) && (
         <div className="w-full py-20 text-center text-gray-500 font-medium">
           Detailed showcase for this category is coming soon.
         </div>
