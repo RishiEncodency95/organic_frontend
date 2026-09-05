@@ -213,7 +213,7 @@ export default function Footer() {
 
             <h5 className="font-poppins font-semibold text-gray-400 uppercase mb-1 text-[11px] tracking-widest">ADDRESS:</h5>
             <p className="text-[12px] text-gray-200 font-medium mb-3 leading-relaxed">
-              Hall 5, Pragati Maidan,<br/>New Delhi, India 110001
+              Hall 12, Pragati Maidan,<br/>New Delhi, India 110001
             </p>
             <button className="border border-white/40 text-gray-200 text-[10px] font-semibold px-3 py-1 rounded-md mb-4 uppercase tracking-wider hover:bg-white hover:text-[#001810] transition-colors font-poppins bg-white/5">
               VIEW ON GOOGLE MAPS
