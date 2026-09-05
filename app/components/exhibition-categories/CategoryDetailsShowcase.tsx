@@ -335,8 +335,8 @@ export default function CategoryDetailsShowcase() {
                 className="absolute right-0 top-0 h-full w-[50%] bg-cover bg-center"
                 style={{
                   backgroundImage: `url(${heroBg.src})`,
-                  maskImage: "linear-gradient(to right, transparent, black 85%)",
-                  WebkitMaskImage: "linear-gradient(to right, transparent, black 80%)"
+                  maskImage: "linear-gradient(to right, transparent, black 65%)",
+                  WebkitMaskImage: "linear-gradient(to right, transparent, black 65%)"
                 }}
               ></div>
 
@@ -353,7 +353,7 @@ export default function CategoryDetailsShowcase() {
                     </a>
                   </div>
 
-                  <div className="w-[1px] h-14 bg-white/20 mx-2"></div>
+                  {/* <div className="w-[1px] h-14 bg-white/20 mx-2"></div>
 
                   <div className="flex flex-col gap-2 justify-center">
                     <span className="text-white text-[11px] mb-0.5">Or Contact Us</span>
@@ -363,7 +363,7 @@ export default function CategoryDetailsShowcase() {
                     <div className="flex items-center gap-1.5 text-white/90 text-[10.5px]">
                       <Globe className="w-3.5 h-3.5" /> www.bharatorganicexpo.com
                     </div>
-                  </div>
+                  </div> */}
                 </div>
               </div>
             </div>

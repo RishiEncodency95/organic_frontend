@@ -1,121 +1,121 @@
 import React from "react";
 import Image from "next/image";
-import { Check, Phone, ArrowRight, ShieldCheck, Users, Globe, Handshake, Target, MapPin, Calendar, Heart, Leaf, Sprout, Store, Star, Factory, Tag, Package, Coffee, Carrot, CheckCircle2, Navigation, Headphones, TrendingUp, Megaphone, Apple, CupSoda, Utensils, Wheat, BadgeCheck, Truck, ShoppingBag, GraduationCap, Droplet, FlaskConical, Stethoscope, Building2, Beaker, FileText, Briefcase, Sun, Tractor, Trees, TestTube, Microscope, Search, Sprout as Plant } from "lucide-react";
-import heroBg from "@/app/assets/exhibition-categories/organic-inputs-seeds/organic-inputs-bg.png";
-import organicManuresImg from "@/app/assets/exhibition-categories/organic-inputs-seeds/organic-manures.png";
-import bioFertilizersImg from "@/app/assets/exhibition-categories/organic-inputs-seeds/bio-fertilizers.png";
-import organicSeedsImg from "@/app/assets/exhibition-categories/organic-inputs-seeds/organic-seeds.png";
-import bioPesticidesImg from "@/app/assets/exhibition-categories/organic-inputs-seeds/bio-pesticides.png";
-import plantGrowthImg from "@/app/assets/exhibition-categories/organic-inputs-seeds/plant-growth.png";
-import soilCropImg from "@/app/assets/exhibition-categories/organic-inputs-seeds/soil-crop.png";
-import seedTreatmentImg from "@/app/assets/exhibition-categories/organic-inputs-seeds/seed-treatment.png";
-import organicNutrientImg from "@/app/assets/exhibition-categories/organic-inputs-seeds/organic-nnutrient.png";
-import bioInputImg from "@/app/assets/exhibition-categories/organic-inputs-seeds/bio-input.png";
-import nurseryImg from "@/app/assets/exhibition-categories/organic-inputs-seeds/nursery.png";
+import { Check, ArrowRight, ShieldCheck, Users, Globe, Handshake, Target, Heart, Leaf, Sprout, Store, Factory, Package, Headphones, Truck, Briefcase, TestTube, Microscope, Droplet, Sparkles, Scissors, Bath, Smile } from "lucide-react";
+import heroBg from "@/app/assets/exhibition-categories/natural-beauty/natural-beauty-bg.png";
+import naturalOrganicSkinCare from "@/app/assets/exhibition-categories/natural-beauty/natural-organic.png";
+import naturalHaircareImg from "@/app/assets/exhibition-categories/natural-beauty/natural-haircare.png";
+import naturalSoapsImg from "@/app/assets/exhibition-categories/natural-beauty/natural-soaps.png";
+import essentialOilsImg from "@/app/assets/exhibition-categories/natural-beauty/essential-oils.png";
+import naturalMakeupImg from "@/app/assets/exhibition-categories/natural-beauty/natural-organic-makeup.png";
+import oralCareImg from "@/app/assets/exhibition-categories/natural-beauty/oralcare.png";
+import naturalPerfumesImg from "@/app/assets/exhibition-categories/natural-beauty/natural-perfumes.png";
+import wellnessLifestyleImg from "@/app/assets/exhibition-categories/natural-beauty/wellness-lifestyle.png";
+import ecoFriendlyImg from "@/app/assets/exhibition-categories/natural-beauty/eco-friendly.png";
+import spaSalonImg from "@/app/assets/exhibition-categories/natural-beauty/spa-salon.png";
 
 const productSegments = [
   {
-    title: "Organic Manures &\nSoil Amendments",
-    items: ["Farmyard manure & compost", "Vermicompost & vermiwash", "Green manure & cover crops", "Soil conditioners & enhancers"],
-    image: organicManuresImg
+    title: "Natural & Organic\nSkincare",
+    items: ["Face, body & lip care", "Moisturizers & serums", "Anti-aging & skin solutions", "Sun care & protection"],
+    image: naturalOrganicSkinCare
   },
   {
-    title: "Bio-Fertilizers &\nMicrobial Inoculants",
-    items: ["Nitrogen fixing bio-fertilizers", "Phosphate solubilizers", "Potash mobilizers", "Multi-strain microbial consortia"],
-    image: bioFertilizersImg
+    title: "Natural Haircare\nProducts",
+    items: ["Shampoos & conditioners", "Hair oils & serums", "Hair color & treatments", "Scalp care & solutions"],
+    image: naturalHaircareImg
   },
   {
-    title: "Organic Seeds &\nSeed Varieties",
-    items: ["Certified organic seeds", "Open pollinated varieties", "Hybrid & indigenous seeds", "Vegetable, field & oilseeds"],
-    image: organicSeedsImg
+    title: "Essential Oils &\nAromatherapy",
+    items: ["Pure essential oils", "Aromatherapy blends", "Diffusers & accessories", "Carrier oils & absolutes"],
+    image: essentialOilsImg
   },
   {
-    title: "Bio-Pesticides &\nBio-Control Solutions",
-    items: ["Botanical pesticides & extracts", "Bio-insecticides & fungicides", "Bio-nematicides & miticides", "Beneficial insects & predators"],
-    image: bioPesticidesImg
+    title: "Natural Soaps &\nBath Essentials",
+    items: ["Handmade & herbal soaps", "Bath salts & bath bombs", "Shower gels & body washes", "Loofahs & bath accessories"],
+    image: naturalSoapsImg
   },
   {
-    title: "Plant Growth Promoters &\nBiostimulants",
-    items: ["Amino acids & protein extracts", "Humic & fulvic acid", "Seaweed extracts", "Natural growth enhancers"],
-    image: plantGrowthImg
+    title: "Natural & Organic\nMakeup",
+    items: ["Face makeup", "Eye, lip & nail care", "Organic color cosmetics", "Makeup removers"],
+    image: naturalMakeupImg
   },
   {
-    title: "Soil & Crop Health\nManagement Solutions",
-    items: ["Soil testing kits & equipment", "pH regulators & buffers", "Mycorrhiza & root enhancers", "Soil health monitoring tools"],
-    image: soilCropImg
+    title: "Oral Care &\nHygiene Products",
+    items: ["Natural toothpastes", "Mouthwashes & dental care", "Dental floss & accessories", "Oral hygiene solutions"],
+    image: oralCareImg
   },
   {
-    title: "Seed Treatment &\nCoating Solutions",
-    items: ["Bio-priming solutions", "Seed coatings & protectants", "Bio-film & polymer coatings", "Seed germination enhancers"],
-    image: seedTreatmentImg
+    title: "Natural Perfumes &\nFragrances",
+    items: ["Eau de parfum & oils", "Herbal attars", "Solid perfumes", "Incense & natural scents"],
+    image: naturalPerfumesImg
   },
   {
-    title: "Organic Nutrient Supplements\n& Trace Elements",
-    items: ["Organic trace minerals", "Micronutrient formulations", "Chelated micronutrients", "Natural nutrient supplements"],
-    image: organicNutrientImg
+    title: "Wellness & Lifestyle\nProducts",
+    items: ["Wellness supplements", "Sleep, stress & immunity", "Herbal teas & infusions", "Detox & ayurvedic care"],
+    image: wellnessLifestyleImg
   },
   {
-    title: "Bio-Input Cultures &\nFormulations",
-    items: ["Trichoderma & Pseudomonas", "Azospirillum & Azotobacter", "PSB, KMB & other cultures", "Custom bio-formulations"],
-    image: bioInputImg
+    title: "Eco-Friendly & Sustainable\nPersonal Care",
+    items: ["Menstrual care products", "Reusable & biodegradable items", "Bamboo & wooden products", "Plastic-free solutions"],
+    image: ecoFriendlyImg
   },
   {
-    title: "Nursery &\nPropagation Inputs",
-    items: ["Cocopeat & growing media", "Seedling trays & pots", "Rooting hormones (natural)", "Organic potting mixes"],
-    image: nurseryImg
+    title: "Spa, Salon &\nProfessional Care",
+    items: ["Spa & salon essentials", "Massage oils & lotions", "Professional skincare", "Salon equipment & tools"],
+    image: spaSalonImg
   }
 ];
 
 const exhibitors = [
-  { label: "Bio-Input Manufacturers", icon: Factory },
-  { label: "Organic Input Suppliers", icon: Store },
-  { label: "Seed Companies & Breeders", icon: Sprout },
-  { label: "Bio-Fertilizer Producers", icon: FlaskConical },
-  { label: "Agri-Input Exporters", icon: Truck },
-  { label: "Research & Development Institutes", icon: TestTube },
-  { label: "Quality Testing Laboratories", icon: Microscope },
-  { label: "Consultants & Service Providers", icon: Briefcase },
-  { label: "Distributors & Importers", icon: Globe },
-  { label: "Agri Tech Startups", icon: Building2 }
+  { label: "Natural Personal Care Brands", icon: Droplet },
+  { label: "Organic Beauty Companies", icon: Sparkles },
+  { label: "Herbal & Ayurveda Brands", icon: Leaf },
+  { label: "Essential Oil Manufacturers", icon: Factory },
+  { label: "Cosmetic Ingredient Suppliers", icon: TestTube },
+  { label: "Wellness & Lifestyle Brands", icon: Heart },
+  { label: "Eco-Friendly Product Makers", icon: Sprout },
+  { label: "Salon & Spa Product Suppliers", icon: Scissors },
+  { label: "Research & R&D Institutes", icon: Microscope },
+  { label: "Distributors & Importers", icon: Globe }
 ];
 
 const whyExhibit = [
-  "Tap into the fast-growing organic farming market",
-  "Showcase innovative & eco-friendly input solutions",
-  "Connect with farmers, FPOs & agri communities",
-  "Build trust & long-term partnerships",
-  "Expand distribution & reach new geographies",
-  "Support sustainable agriculture & food security"
+  "Tap into the fast-growing natural & personal care market",
+  "Showcase innovative, safe & chemical-free products",
+  "Meet conscious consumers & lifestyle influencers",
+  "Build brand trust with a health-focused audience",
+  "Expand distribution & global business opportunities",
+  "Promote sustainability & eco-friendly living"
 ];
 
 const targetVisitors = [
-  { label: "Farmers & FPOs", icon: Users },
-  { label: "Agri Entrepreneurs", icon: Briefcase },
-  { label: "Agri Input Dealers", icon: Store },
-  { label: "Organic Growers", icon: Plant },
-  { label: "Nursery Operators", icon: Trees },
-  { label: "Government Officials", icon: Building2 },
-  { label: "Agronomists & Scientists", icon: TestTube },
-  { label: "Agri Consultants", icon: FileText },
-  { label: "Exporters & Importers", icon: Globe },
-  { label: "Agri Tech Companies", icon: Factory }
+  { label: "Retailers & Distributors", icon: Store },
+  { label: "Beauty Stores & Salons", icon: Scissors },
+  { label: "Spa & Wellness Centers", icon: Bath },
+  { label: "Health & Lifestyle Influencers", icon: Heart },
+  { label: "E-commerce Platforms", icon: Globe },
+  { label: "Pharmacists & Chemists", icon: Briefcase },
+  { label: "Importers & Exporters", icon: Truck },
+  { label: "Wellness Coaches", icon: Users },
+  { label: "Consumers & Buyers", icon: Smile },
+  { label: "Hospitality & Resorts", icon: Handshake }
 ];
 
 const exhibitorExamples = [
-  { label: "Organic Input\nManufacturers", icon: Factory },
-  { label: "Bio-Fertilizer\nCompanies", icon: FlaskConical },
-  { label: "Seed Companies\n& Breeders", icon: Sprout },
-  { label: "Bio-Pesticide\nProducers", icon: TestTube },
-  { label: "Soil Health\nSolution Providers", icon: Heart },
-  { label: "Research &\nInstitutes", icon: Microscope },
-  { label: "Agri Tech\nStartups", icon: Building2 },
-  { label: "Distributors\n& Importers", icon: Globe },
-  { label: "Exporters\n& Traders", icon: Truck }
+  { label: "Natural Skincare\nBrands", icon: Droplet },
+  { label: "Herbal Haircare\nCompanies", icon: Scissors },
+  { label: "Essential Oil\nProducers", icon: Factory },
+  { label: "Organic Makeup\nBrands", icon: Sparkles },
+  { label: "Ayurvedic & Herbal\nCompanies", icon: Leaf },
+  { label: "Eco-Friendly\nProduct Makers", icon: Sprout },
+  { label: "Wellness &\nLifestyle Brands", icon: Heart },
+  { label: "Spa & Salon\nSuppliers", icon: Bath },
+  { label: "Personal Care\nIngredient Suppliers", icon: TestTube }
 ];
 
-export default function OrganicInputsShowcase() {
+export default function NaturalBeautyShowcase() {
   return (
-    <div id="organic-inputs" className="w-full bg-white font-inter text-gray-900 border-t border-gray-300 scroll-mt-[100px]">
+    <div id="natural-beauty-personal-care" className="w-full bg-white font-inter text-gray-900 border-t border-gray-300 scroll-mt-[100px]">
 
       {/* ---------------- 1. HEADER SECTION ---------------- */}
       <section className="relative w-full bg-white overflow-hidden flex items-center shadow-inner">
@@ -134,31 +134,30 @@ export default function OrganicInputsShowcase() {
           {/* Left Text Block */}
           <div className="lg:w-[60%] flex flex-col relative z-20">
             <h1 className="text-[18px] lg:text-[56px] font-semibold uppercase leading-[0.9] tracking-[-0.02em] font-poppins mb-3">
-              <span className="text-[#113d20]">ORGANIC INPUTS,</span><br />
-              <span className="text-[#e44c20]">SEEDS & BIO-INPUTS</span>
+              <span className="text-[#113d20]">NATURAL BEAUTY &</span><br />
+              <span className="text-[#e44c20]">PERSONAL CARE</span>
             </h1>
 
             {/* Subtitle with diamond lines */}
             <div className="flex items-center gap-4 my-2">
               <h3 className="text-[#3b8c2a] font-semibold text-[18px] lg:text-[21px] tracking-wide ">
-                Right Input. Strong Roots. Better Harvest. Sustainable Future.
+                Pure. Safe. Natural. Better for You. Better for the Planet.
               </h3>
             </div>
 
             <p className="text-[14px] lg:text-[15.5px] font-medium text-gray-800 max-w-[600px] leading-relaxed mt-2 pb-10">
-              Discover a complete range of certified organic inputs, quality seeds and innovative bio-input solutions that enrich soil, protect crops and increase productivity - naturally and sustainably.
+              Discover the finest natural and organic personal care, beauty and wellness products that nurture body, mind and lifestyle while protecting our planet.
             </p>
           </div>
 
           {/* Circular Badge - Positioned perfectly over the blend line */}
           <div className="hidden lg:flex absolute left-[52%] top-2/3 -translate-y-1/2 w-[160px] h-[160px] rounded-full border-[3px] border-[#113d20] bg-white items-center justify-center shadow-2xl z-30">
             <div className="w-[146px] h-[146px] rounded-full border-[1.5px] border-dashed border-[#113d20] flex flex-col items-center justify-center p-2 text-center relative">
-              <span className="text-[#113d20] font-bold text-[13px] leading-[1.3]">
-                NOURISH<br />THE SOIL,<br />NURTURE LIFE,<br />GROW<br />SUSTAINABLY
-              </span>
-              <div className="flex items-center gap-0.5 mt-1.5 justify-center">
-                <Leaf className="text-[#113d20] w-5 h-5 -rotate-12" strokeWidth={2} />
-                <Leaf className="text-[#113d20] w-5 h-5 -scale-x-100 rotate-12" strokeWidth={2} />
+              <h2 className="text-[#113d20] font-bold text-[16px] leading-[1.5]">
+                NATURAL<br />IS THE NEW<br />BEAUTIFUL
+              </h2>
+              <div className="flex items-center gap-0.5 mt-2 justify-center">
+                <Sparkles className="text-[#113d20] w-5 h-5" strokeWidth={2} />
               </div>
             </div>
           </div>
@@ -172,7 +171,7 @@ export default function OrganicInputsShowcase() {
         <div className=" w-full  p-2 lg:px-14 lg:py-6 lg:pb-0 flex flex-col lg:flex-row gap-2">
 
           {/* LEFT: PRODUCTS & SEGMENTS (70%) */}
-          <div className="lg:w-[75%] flex flex-col">
+          <div className="lg:w-[73%] flex flex-col">
 
             {/* Products Title */}
             <div className="flex items-center justify-center gap-4 mb-4">
@@ -197,7 +196,7 @@ export default function OrganicInputsShowcase() {
                   {/* Card Image Area */}
                   <div className="relative w-full h-[140px] bg-gray-100">
                     <Image
-                      src={prod.image || heroBg} // Needs actual category image later
+                      src={prod.image}
                       alt={prod.title.replace('\n', ' ')}
                       fill
                       className="object-cover"
@@ -227,7 +226,7 @@ export default function OrganicInputsShowcase() {
 
 
           {/* RIGHT: SIDEBAR (30%) */}
-          <div className="lg:w-[25%] flex flex-col gap-2">
+          <div className="lg:w-[27%] flex flex-col gap-2">
 
             {/* Box 1: WHO CAN EXHIBIT? */}
             <div className="border border-gray-200 rounded-[16px] bg-white p-2 shadow-sm">
@@ -341,7 +340,7 @@ export default function OrganicInputsShowcase() {
 
               <div className="relative z-10 w-[80%]">
                 <h3 className="text-white text-[13px] font-semibold mb-3 leading-[1.4] uppercase">
-                  BE PART OF INDIA'S PREMIER PLATFORM FOR ORGANIC AGRICULTURE
+                  BE PART OF INDIA'S PREMIER PLATFORM FOR NATURAL LIVING & PERSONAL CARE
                 </h3>
 
                 <div className="flex items-center gap-2">
@@ -351,18 +350,6 @@ export default function OrganicInputsShowcase() {
                       BOOK A STALL NOW <ArrowRight className="w-4 h-4" />
                     </a>
                   </div>
-
-                  {/* <div className="w-[1px] h-14 bg-white/40 mx-3"></div>
-
-                  <div className="flex flex-col gap-1.5 justify-center">
-                    <span className="text-white text-[11px]">Or Contact Us</span>
-                    <div className="flex items-center gap-1.5 text-white/90 text-[10.5px]">
-                      <Phone className="w-3.5 h-3.5" /> 9354811889, 9205645544
-                    </div>
-                    <div className="flex items-center gap-1.5 text-white/90 text-[10.5px]">
-                      <Globe className="w-3.5 h-3.5" /> www.bharatorganicexpo.com
-                    </div>
-                  </div> */}
                 </div>
               </div>
             </div>
@@ -388,7 +375,7 @@ export default function OrganicInputsShowcase() {
           {/* Bottom Trust Bar */}
           <div className="pt-2 border-t border-gray-200 flex flex-col md:flex-row items-start md:items-center justify-between gap-4 overflow-hidden">
             {[
-              { icon: ShieldCheck, title: "Certified & Trusted Platform", desc: "India's largest organic hub." },
+              { icon: ShieldCheck, title: "Certified & Trusted Platform", desc: "India's largest natural hub." },
               { icon: Users, title: "High Quality Buyers", desc: "Meet verified buyers & retailers." },
               { icon: Globe, title: "Global Market Access", desc: "Connect with international partners." },
               { icon: Handshake, title: "Strong Business Network", desc: "Generate leads and expand market." },

@@ -30,11 +30,11 @@ const sectionData = {
     { id: "organic-natural-farming", icon: Sprout, title: "Organic Natural Farming", desc: "Natural farming practices, organic cultivation methods, innovations and farm-to-market solutions.", color: "#22c55e", image: sectors3, imageAlt: "Organic Natural Farming Sector" },
     { id: "organic-inputs", icon: Package, title: "Organic Inputs, Seeds & Bio- Inputs", desc: "Bio-fertilisers, organic manures, soil enhancers, pesticides and high-quality seeds.", color: "#fb923c", image: sectors4, imageAlt: "Organic Inputs, Seeds & Bio-Inputs Sector" },
     { id: "dairy-livestock", icon: Milk, title: "Dairy, Livestock & Allied", desc: "Organic dairy products, livestock nutrition, animal health solutions and sustainable practices.", color: "#f472b6", image: sectors5, imageAlt: "Dairy, Livestock & Allied Sector" },
-    { icon: Droplet, title: "Natural Beauty & Personal Care", desc: "Herbal skincare, haircare, personal care and eco-friendly beauty products.", color: "#60a5fa", image: sectors7, imageAlt: "Natural Beauty & Personal Care Sector" },
-    { icon: Pill, title: "Nutraceuticals & Functional Nutrition", desc: "Dietary supplements, functional foods, immunity boosters and wellness nutrition products.", color: "#34d399", image: sectors6, imageAlt: "Nutraceuticals & Functional Nutrition Sector" },
-    { icon: Box, title: "Sustainable Packaging & Processing", desc: "Eco-friendly, biodegradable, recyclable and sustainable packaging solutions.", color: "#3b82f6", image: sectors9, imageAlt: "Sustainable Packaging & Processing Sector" },
-    { icon: Tractor, title: "AgriTech, GreenTech & Innovation", desc: "Innovative agri technologies, smart farming, irrigation, farm mechanization and digital solutions.", color: "#10b981", image: sectors10, imageAlt: "AgriTech, GreenTech & Innovation Sector" },
-    { icon: Globe, title: "Certification, Export, Trade & Services", desc: "Exporters, importers, trade associations and global business opportunities for organic products.", color: "#f59e0b", image: sectors8, imageAlt: "Certification, Export, Trade & Services Sector" },
+    { id: "natural-beauty-personal-care", icon: Droplet, title: "Natural Beauty & Personal Care", desc: "Herbal skincare, haircare, personal care and eco-friendly beauty products.", color: "#60a5fa", image: sectors7, imageAlt: "Natural Beauty & Personal Care Sector" },
+    { id: "nutraceuticals-functional-nutrition", icon: Pill, title: "Nutraceuticals & Functional Nutrition", desc: "Dietary supplements, functional foods, immunity boosters and wellness nutrition products.", color: "#34d399", image: sectors6, imageAlt: "Nutraceuticals & Functional Nutrition Sector" },
+    { id: "sustainable-packaging-processing", icon: Box, title: "Sustainable Packaging & Processing", desc: "Eco-friendly, biodegradable, recyclable and sustainable packaging solutions.", color: "#3b82f6", image: sectors9, imageAlt: "Sustainable Packaging & Processing Sector" },
+    { id: "agritech-greentech-innovation", icon: Tractor, title: "AgriTech, GreenTech & Innovation", desc: "Innovative agri technologies, smart farming, irrigation, farm mechanization and digital solutions.", color: "#10b981", image: sectors10, imageAlt: "AgriTech, GreenTech & Innovation Sector" },
+    { id: "certification-export-trade", icon: Globe, title: "Certification, Export, Trade & Services", desc: "Exporters, importers, trade associations and global business opportunities for organic products.", color: "#f59e0b", image: sectors8, imageAlt: "Certification, Export, Trade & Services Sector" },
   ]
 };
 
@@ -97,12 +97,12 @@ export default function ExhibitionSectors() {
                   </p> */}
 
                   {/* View More Link */}
-                  {/* <div className="mt-auto w-full flex justify-between items-center pt-2.5 border-t border-slate-100">
-                    <span className="text-[#f58220] group-hover:text-[#d35400] text-[10.5px] md:text-[11px] font-bold uppercase tracking-widest transition-colors duration-300">
-                      Explore
-                    </span>
-                    <ArrowRight size={14} strokeWidth={2.5} className="text-[#f58220] group-hover:text-[#d35400] group-hover:translate-x-1 transition-all duration-300" />
-                  </div> */}
+                    <div className="mt-auto w-full flex justify-between items-center pt-2.5 border-t border-slate-100">
+                      <span className="text-[#f58220] group-hover:text-[#d35400] text-[10.5px] md:text-[11px] font-bold uppercase tracking-widest transition-colors duration-300">
+                        Explore
+                      </span>
+                      <ArrowRight size={14} strokeWidth={2.5} className="text-[#f58220] group-hover:text-[#d35400] group-hover:translate-x-1 transition-all duration-300" />
+                    </div>
                 </div>
               </a>
             );
