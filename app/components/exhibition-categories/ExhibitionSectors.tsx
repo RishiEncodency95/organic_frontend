@@ -34,7 +34,7 @@ const sectionData = {
     { id: "nutraceuticals-functional-nutrition", icon: Pill, title: "Nutraceuticals & Functional Nutrition", desc: "Dietary supplements, functional foods, immunity boosters and wellness nutrition products.", color: "#34d399", image: sectors6, imageAlt: "Nutraceuticals & Functional Nutrition Sector" },
     { id: "sustainable-packaging-processing", icon: Box, title: "Sustainable Packaging & Processing", desc: "Eco-friendly, biodegradable, recyclable and sustainable packaging solutions.", color: "#3b82f6", image: sectors9, imageAlt: "Sustainable Packaging & Processing Sector" },
     { id: "agritech-greentech-innovation", icon: Tractor, title: "AgriTech, GreenTech & Innovation", desc: "Innovative agri technologies, smart farming, irrigation, farm mechanization and digital solutions.", color: "#10b981", image: sectors10, imageAlt: "AgriTech, GreenTech & Innovation Sector" },
-    { icon: Globe, title: "Certification, Export, Trade & Services", desc: "Exporters, importers, trade associations and global business opportunities for organic products.", color: "#f59e0b", image: sectors8, imageAlt: "Certification, Export, Trade & Services Sector" },
+    { id: "certification-export-trade", icon: Globe, title: "Certification, Export, Trade & Services", desc: "Exporters, importers, trade associations and global business opportunities for organic products.", color: "#f59e0b", image: sectors8, imageAlt: "Certification, Export, Trade & Services Sector" },
   ]
 };
 
