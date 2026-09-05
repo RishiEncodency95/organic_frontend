@@ -1,8 +1,8 @@
 "use client";
 import React, { useRef, useEffect } from "react";
 import Link from "next/link";
-import { CalendarDays, MapPin, ArrowRight } from "lucide-react";
-import bannerImg from "@/app/assets/participate/msme/home-banner.png";
+import { CalendarDays, MapPin, ArrowRight, Hand, Handshake } from "lucide-react";
+import bannerImg from "@/app/assets/participate/msme/home-banner1.png";
 import leafImg from "@/app/assets/icons/leafs.png";
 import gsap from "gsap";
 import SectionContainer from "@/app/components/layout/SectionContainer";
@@ -160,14 +160,15 @@ export default function MsmePmsBanner({
           <SectionContainer>
           <div className="max-w-2xl text-left mt-6 md:mt-0 space-y-3.5 md:space-y-4 w-full bg-white/75 md:bg-transparent backdrop-blur-md md:backdrop-blur-none p-4 sm:p-6 md:p-0 rounded-2xl border border-white/60 md:border-none shadow-lg md:shadow-none">
             <div className="flex flex-col items-start justify-start">
-              <div className="w-full text-left">
+              <div className="w-full text-left mt-4">
 
               {/* Tagline */}
-              <div className="flex items-center justify-start gap-2.5 mb-1">
-                <span className="w-8 h-[2.5px] bg-[#c2410c] shrink-0" />
-                <p className="text-[#c2410c] text-[12px] md:text-[15px] lg:text-[16px] font-semibold uppercase tracking-[0.18em] text-left">
+              <div className=" mb-1 flex gap-2">
+                <Handshake size={35} className="text-[#d4a017]/60 inline-block mr-2" />
+                <span className="text-[#1b5e20] text-[12px] md:text-[15px] lg:text-[16px] font-semibold uppercase text-left">
                   MSME procurement & marketing support
-                </p>
+                <span className="block h-[2.5px] bg-[#c2410c]/20 shrink-0" />
+                </span>
               </div>
 
               {/* Heading */}
@@ -176,7 +177,7 @@ export default function MsmePmsBanner({
                 style={{ textShadow: "1px 1px 2px rgba(0,0,0,0.4)" }}
               >
                 <span className="block overflow-hidden">
-                  <span ref={line1Ref} style={{ opacity: 0, display: "block" }} className="text-[#4B1426] text-2xl sm:text-4xl md:text-5xl lg:text-[58px] font-semibold tracking-tight">
+                  <span ref={line1Ref} style={{ opacity: 0, display: "block" }} className="text-[#1b5e20] text-2xl sm:text-4xl md:text-5xl lg:text-[58px] font-semibold tracking-tight">
                     MSME PMS <span className="capitalize">Scheme</span>
                   </span>
                 </span>
@@ -188,12 +189,13 @@ export default function MsmePmsBanner({
               </h1>
 
               {/* Subtitle */}
-              <div className="flex items-center gap-2.5">
-                <div className="w-8 md:w-12 h-1 bg-[#ea580c] rounded-full shrink-0"></div>
-                <span className="text-[#1b5e20] font-semibold text-[12px] sm:text-[14px] md:text-[16px] tracking-widest uppercase">
+              <div className="gap-2.5">
+                {/* <div className="w-8 md:w-12 h-1 bg-[#ea580c] rounded-full shrink-0"></div> */}
+                <span className=" font-semibold text-[12px] sm:text-[14px] md:text-[16px] uppercase">
                   Exhibit. Connect. Grow with  Government Support
                 </span>
-                <div className="w-8 md:w-12 h-1 bg-[#ea580c] rounded-full shrink-0"></div>
+                <div className="w-8 md:w-12 h-1 bg-[#d4a017] rounded-full shrink-0"></div>
+                {/* <div className="w-8 md:w-12 h-1 bg-[#ea580c] rounded-full shrink-0"></div> */}
               </div>
 
               {/* Description */}
@@ -211,7 +213,7 @@ export default function MsmePmsBanner({
               <div
                 ref={metaRef}
                 style={{ opacity: 0 }}
-                className="flex flex-col sm:flex-row items-start sm:items-center gap-2.5 sm:gap-4 mt-4 md:mt-5 mb-5 md:mb-6 text-[#4B1426] text-xs sm:text-sm md:text-[15px] font-extrabold"
+                className="flex flex-col sm:flex-row items-start sm:items-center gap-2.5 sm:gap-4 mt-2 md:mt-2 mb-4 md:mb-4 text-[#4B1426] text-xs sm:text-sm md:text-[15px] font-semibold"
               >
                 <div className="flex items-center gap-2">
                   <CalendarDays size={17} className="shrink-0 text-[#ea580c]" />

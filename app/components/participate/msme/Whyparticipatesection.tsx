@@ -17,24 +17,24 @@ const features: FeatureCard[] = [
     icon: pmsApprovedIcon.src,
     title: "PMS Approved Event*",
     description:
-      "Opportunity for eligible MSEs to explore applicable PMS assistance.",
+      "Opportunity for eligible<br/> MSEs to explore applicable<br/> PMS assistance.",
   },
   {
     icon: focusedIndustryIcon.src,
     title: "Focused Industry Platform",
     description:
-      "Organic • Food • Nutrition • AYUSH • Herbal • Wellness • Agriculture • GreenTech",
+      "Organic • Food • Nutrition •<br/> AYUSH • Herbal • Wellness •<br/> Agriculture • GreenTech",
   },
   {
     icon: b2bOpportunitiesIcon.src,
     title: "B2B Opportunities",
     description:
-      "Connect with buyers, distributors and industry professionals.",
+      "Connect with buyers,<br/> distributors and industry<br/> professionals.",
   },
   {
     icon: dedicatedSupportIcon.src,
     title: "Dedicated PMS Support",
-    description: "Guidance before, during and after exhibition participation.",
+    description: "Guidance before, during<br/> and after exhibition<br/> participation.",
   },
 ];
 
@@ -56,7 +56,7 @@ export default function WhyParticipateSection() {
       <SectionContainer>
       <div className="relative z-10 mx-auto flex w-full flex-col items-center">
         {/* Sub-eyebrow */}
-        <div className="mt-2 flex items-center gap-3 text-[11px] font-semibold tracking-[0.2em] text-[#1b5e20] sm:text-[12px]">
+        <div className="mt-2 flex items-center gap-3 text-[20px] font-semibold text-[#1b5e20] sm:text-[22px]">
           <span className="h-px w-8 bg-[#1b5e20] sm:w-10" aria-hidden="true" />
           <span>WHY PARTICIPATE</span>
           <span className="h-px w-8 bg-[#1b5e20] sm:w-10" aria-hidden="true" />
@@ -65,7 +65,7 @@ export default function WhyParticipateSection() {
         {/* Heading */}
         <h2
           id="why-participate-heading"
-          className="mt-2 max-w-4xl text-balance text-center text-[18px] font-semibold leading-tight text-slate-900 md:text-[28px] lg:text-[32px]"
+          className="mt-2 max-w-4xl text-balance text-center text-[24px] font-semibold leading-tight text-slate-900 md:text-[34px] lg:text-[40px]"
         >
           More Than an{" "}
           <span className="relative inline-block text-[#1b5e20]">
@@ -107,8 +107,8 @@ export default function WhyParticipateSection() {
                   className="my-2 h-0.5 w-8 rounded-full bg-[#3b8c2a]"
                   aria-hidden="true"
                 />
-                <p className="text-[13px] leading-relaxed text-slate-600 sm:text-sm">
-                  {feature.description}
+                <p className="text-[13px] leading-relaxed sm:text-sm" dangerouslySetInnerHTML={{ __html: feature.description }}>
+                  
                 </p>
               </div>
               <span

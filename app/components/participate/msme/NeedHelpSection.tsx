@@ -4,6 +4,7 @@ import {
   MessageCircle,
   Globe,
   Headset,
+  FileText,
   CheckCircle,
   Users,
   ShieldCheck,
@@ -29,7 +30,7 @@ const connectMethods = [
     icon: Mail,
     title: "EMAIL US",
     detail: "info@namogangewellness.com",
-    sub: "We typically reply within 24 hours.",
+    sub: "We typically reply\n within 24 hours.",
   },
   {
     icon: Phone,
@@ -41,13 +42,13 @@ const connectMethods = [
     icon: MessageCircle,
     title: "WHATSAPP",
     detail: "+91 96549 00525",
-    sub: "Quick responses during working hours.",
+    sub: "Quick responses\n during working hours.",
   },
   {
     icon: Globe,
     title: "VISIT WEBSITE",
     detail: "www.bharatorganicexpo.in",
-    sub: "Explore PMS details, guidelines & more.",
+    sub: "Explore PMS details,\n guidelines & more.",
   },
 ];
 
@@ -60,35 +61,35 @@ const features = [
 
 export default function NeedHelpSection() {
   return (
-    <section className="bg-gray-100 pt-6 pb-0">
+    <section className="pt-6 pb-0">
       <SectionContainer>
         {/* Top row */}
-        <div className="grid grid-cols-1 gap-5 lg:grid-cols-2">
+        <div className="grid grid-cols-1 gap-5 lg:grid-cols-[1fr_1.4fr]">
           {/* Left: Heading + commitment */}
           <div>
-            <h2 className="text-[28px] font-extrabold uppercase leading-tight text-[#0d4a1a] sm:text-[36px]">
+            <h2 className="text-[28px] font-semibold uppercase leading-tight text-[#0d4a1a] sm:text-[54px]">
               Need Help?
             </h2>
-            <h3 className="text-[22px] font-extrabold uppercase leading-tight text-slate-900 sm:text-[28px]">
+            <h3 className="text-[22px] font-semibold uppercase leading-tight sm:text-[28px]">
               We&apos;re Here to Support You
             </h3>
             <span className="mt-1 block h-[3px] w-16 rounded-full bg-[#1b5e20]" />
 
-            <p className="mt-3 max-w-md text-[14px] leading-relaxed text-slate-600">
+            <p className="mt-3 max-w-md text-[14px] leading-relaxed">
               Our dedicated team is ready to assist you at every step of your
               PMS application journey.
             </p>
 
             {/* Our commitment */}
-            <div className="mt-4 flex items-start gap-3 rounded-xl bg-white p-4 shadow-sm ring-1 ring-black/5">
-              <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-[#1b5e20]">
-                <Headset className="h-6 w-6 text-white" aria-hidden="true" />
+            <div className="mt-4 flex items-start gap-3 rounded-xl bg-blue-50 p-4 shadow-sm ring-1 ring-black/5">
+              <span className="flex h-16 w-16 shrink-0 items-center justify-center rounded-full bg-[#1b5e20]">
+                <Headset className="h-10 w-10 text-white" aria-hidden="true" />
               </span>
               <div>
-                <p className="text-[14px] font-semibold text-slate-900">
+                <p className="text-[14px] font-semibold">
                   OUR COMMITMENT
                 </p>
-                <p className="mt-0.5 text-[13px] leading-snug text-slate-600">
+                <p className="mt-0.5 text-[13px] leading-snug">
                   Transparent guidance. Timely support.
                   <br />
                   Stronger together for a sustainable future.
@@ -111,21 +112,23 @@ export default function NeedHelpSection() {
                 return (
                   <div
                     key={m.title}
-                    className={`flex flex-col items-center px-3 py-2 text-center ${!isLast ? "border-r border-gray-200" : ""}`}
+                    className={`flex flex-col items-center px-3 py-2 text-center ${!isLast ? "border-r border-[#1b5e20]" : ""}`}
                   >
                     <span className="mb-2 flex h-12 w-12 items-center justify-center rounded-full bg-[#EFF7EE]">
                       <m.icon className="h-6 w-6 text-[#1b5e20]" aria-hidden="true" />
                     </span>
-                    <p className="text-[12px] font-semibold uppercase text-slate-900">
+                    <p className="text-[12px] font-semibold uppercase text-[#1b5e20]">
                       {m.title}
                     </p>
-                    <p className="mt-0.5 text-[12px] font-semibold text-[#1b5e20] break-all">
+                    <p className="mt-0.5 text-[12px] font-semibold break-all">
                       {m.detail}
                     </p>
-                    <span className="my-2 h-px w-6 bg-gray-200" />
-                    <p className="text-[11px] leading-snug text-slate-500 whitespace-pre-line">
-                      {m.sub}
-                    </p>
+                    <div className="mt-auto flex flex-col items-center">
+                      <span className="my-2 h-[2px] w-6 bg-[#1b5e20]/50" />
+                      <p className="text-[12px] leading-snug whitespace-pre-line">
+                        {m.sub}
+                      </p>
+                    </div>
                   </div>
                 );
               })}
@@ -137,7 +140,7 @@ export default function NeedHelpSection() {
         <div className="mt-5 grid grid-cols-1 gap-5 lg:grid-cols-2">
           {/* Why reach out */}
           <div className="flex items-center gap-4 rounded-2xl border border-gray-200 bg-white p-5 shadow-sm">
-            <div className="flex-1">
+            <div className="flex-1 border-r border-gray-200 pr-4">
               <div className="flex items-center gap-2">
                 <h4 className="text-[16px] font-semibold text-[#1b5e20]">
                   WHY REACH OUT TO US?
@@ -149,7 +152,7 @@ export default function NeedHelpSection() {
                 {whyReachOut.map((item) => (
                   <li key={item} className="flex items-start gap-2">
                     <CheckCircle className="mt-0.5 h-4 w-4 shrink-0 text-[#1b5e20]" />
-                    <span className="text-[13px] leading-snug text-slate-700">
+                    <span className="text-[13px] leading-snug">
                       {item}
                     </span>
                   </li>
@@ -165,16 +168,16 @@ export default function NeedHelpSection() {
           </div>
 
           {/* Dedicated relationship managers */}
-          <div className="rounded-2xl border border-gray-200 bg-white p-5 shadow-sm">
+          <div className="rounded-2xl border border-gray-200 bg-blue-50 p-5 shadow-sm">
             <div className="flex items-start gap-3">
               <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-[#1b5e20]">
                 <Users className="h-6 w-6 text-white" aria-hidden="true" />
               </span>
               <div>
-                <p className="text-[15px] font-semibold text-slate-900">
+                <p className="text-[15px] font-semibold text-[#1b5e20]">
                   DEDICATED RELATIONSHIP MANAGERS
                 </p>
-                <p className="mt-0.5 text-[13px] leading-snug text-slate-600">
+                <p className="mt-0.5 text-[13px] leading-snug">
                   Personalised assistance from start to finish.
                   <br />
                   Your success is our priority.
@@ -182,13 +185,13 @@ export default function NeedHelpSection() {
               </div>
             </div>
 
-            <div className="mt-4 grid grid-cols-4 gap-3">
-              {features.map((f) => (
-                <div key={f.label} className="flex flex-col items-center text-center">
-                  <span className="mb-2 flex h-11 w-11 items-center justify-center rounded-full bg-[#EFF7EE]">
-                    <f.icon className="h-5 w-5 text-[#1b5e20]" aria-hidden="true" />
+            <div className="mt-4 grid grid-cols-4 gap-3 border-t border-gray-200 pt-4">
+              {features.map((f, i) => (
+                <div key={f.label} className={`flex flex-col items-center text-center ${i < features.length - 1 ? "border-r border-gray-200" : ""}`}>
+                  <span className="mb-2 flex h-11 w-11 items-center justify-center">
+                    <f.icon className="h-7 w-7 text-[#1b5e20]" aria-hidden="true" />
                   </span>
-                  <p className="text-[10px] font-semibold uppercase leading-tight text-slate-700 whitespace-pre-line">
+                  <p className="text-[12px] font-semibold uppercase leading-tight whitespace-pre-line">
                     {f.label}
                   </p>
                 </div>
@@ -213,7 +216,7 @@ export default function NeedHelpSection() {
               />
             </span>
             <div>
-              <p className="text-[14px] font-semibold uppercase leading-tight text-white sm:text-[15px]">
+              <p className="text-[14px] font-semibold uppercase leading-tight text-white sm:text-[15px] border-b-2 border-white pb-1">
                 Together, Let&apos;s Grow
                 <br />A Sustainable India
               </p>
@@ -229,14 +232,14 @@ export default function NeedHelpSection() {
           {/* Right */}
           <div className="flex flex-1 items-center justify-between gap-3 rounded-2xl bg-white px-5 py-2 sm:py-2">
             <div className="flex items-center gap-3">
-              <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-[#EFF7EE]">
-                <Headset className="h-8 w-8 text-[#1b5e20]" aria-hidden="true" />
+              <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-[#1b5e20]">
+                <FileText className="h-8 w-8 text-white" aria-hidden="true" />
               </span>
               <div>
-                <p className="text-[13px] font-semibold uppercase text-slate-900">
+                <p className="text-[13px] font-semibold uppercase">
                   Ready to Move Ahead?
                 </p>
-                <p className="text-[12px] text-slate-600">
+                <p className="text-[12px]">
                   Start your PMS application today and unlock
                   <br />
                   government support for your growth.
