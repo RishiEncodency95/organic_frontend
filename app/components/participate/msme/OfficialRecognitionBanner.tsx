@@ -128,11 +128,11 @@ export default function OfficialRecognitionBanner() {
               <div className="absolute -inset-3 bg-white/20 backdrop-blur-md rounded-[28px] z-0" />
 
               {/* Absolute Checkmark Icon at Top */}
-              <div className="absolute -top-2 left-1/2 -translate-x-1/2 z-20">
+              <div className="absolute -top-4 left-1/2 -translate-x-1/2 z-20">
                 <img
                   src={approvedImg.src}
                   alt=""
-                  className="h-20 w-20 object-contain"
+                  className="h-16 w-16 object-contain"
                 />
               </div>
 
