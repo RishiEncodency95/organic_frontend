@@ -108,13 +108,13 @@ const IntroductionSection = () => {
       <img
         src={leafog.src}
         alt="Leaf Decoration"
-        className="absolute -left-20 md:-left-32 top-1/2 -translate-y-1/2 w-40 md:w-64 object-contain pointer-events-none z-0 opacity-50"
+        className="absolute -left-16 md:-left-32 top-1/2 -translate-y-1/2 w-32 md:w-64 object-contain pointer-events-none z-0 opacity-30 md:opacity-50"
       />
       <div className="absolute top-0 right-0 w-[600px] h-[600px] bg-[#3b8c2a]/5 rounded-full blur-[100px] -z-10 translate-x-1/3 -translate-y-1/4"></div>
       <div className="absolute bottom-0 left-0 w-[400px] h-[400px] bg-[#3b6fd4]/5 rounded-full blur-[80px] -z-10 -translate-x-1/4 translate-y-1/4"></div>
 
       <div className="w-full px-4 sm:px-6 lg:px-14 relative z-10">
-        <div className="flex flex-col lg:flex-row gap-6 items-center mb-2">
+        <div className="flex flex-col lg:flex-row gap-2 lg:gap-6 items-center mb-2">
 
           {/* LEFT: Content */}
           <motion.div
@@ -133,24 +133,24 @@ const IntroductionSection = () => {
             </div>
 
             {/* Title */}
-            <h2 className="text-[24px] sm:text-[28px] md:text-[32px] lg:text-[36px] font-semibold font-poppins text-slate-900 leading-[1.3] md:leading-[1.4] mb-4 tracking-tight">
+            <h2 className="text-[22px] sm:text-[28px] md:text-[32px] lg:text-[36px] font-semibold font-poppins text-slate-900 leading-[1.3] md:leading-[1.4] mb-4 tracking-tight">
               {staticData.title.prefix}{" "}
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#3b8c2a] to-[#1a6b3a] relative inline-block">
-                {staticData.title.highlightMain}{" "}
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#3b8c2a] to-[#1a6b3a] relative inline-block max-w-full">
+                <span className="whitespace-normal break-words">{staticData.title.highlightMain}</span>{" "}
                 <span className="text-[#F2B40E] inline-block">{staticData.title.highlightYear}</span>
-                <svg className="absolute w-full h-3 -bottom-1 left-0 text-[#F2B40E]/40" viewBox="0 0 100 10" preserveAspectRatio="none"><path d="M0 5 Q 50 10 100 5" stroke="currentColor" strokeWidth="4" fill="transparent" /></svg>
+                <svg className="absolute w-full h-2 md:h-3 -bottom-0.5 md:-bottom-1 left-0 text-[#F2B40E]/40" viewBox="0 0 100 10" preserveAspectRatio="none"><path d="M0 5 Q 50 10 100 5" stroke="currentColor" strokeWidth="4" fill="transparent" /></svg>
               </span>
               {" "}
-              <span className="text-[14px] sm:text-[15px] md:text-[18px] font-medium text-black mt-2 sm:mt-4 block tracking-normal">
+              <span className="text-[13px] sm:text-[15px] md:text-[18px] font-medium text-black mt-3 block tracking-normal leading-snug">
                 {staticData.title.suffix}
               </span>
             </h2>
 
-            <div className="mb-4 space-y-3 sm:space-y-4">
+            <div className="mb-2 lg:mb-4 space-y-3 sm:space-y-4">
               {staticData.paragraphs.map((p) => (
-                <p 
-                  key={p.id} 
-                  className={p.hasBorder 
+                <p
+                  key={p.id}
+                  className={p.hasBorder
                     ? "text-[14px] sm:text-[15px] md:text-[16px] leading-[1.7] text-slate-700 font-medium border-l-4 border-[#F2B40E] pl-3.5 sm:pl-5 bg-gradient-to-r from-[#F2B40E]/5 to-transparent py-3 sm:py-4 rounded-r-xl shadow-sm"
                     : "text-[13.5px] sm:text-[14px] md:text-[16px] leading-[1.7] text-slate-600"}
                 >
@@ -161,7 +161,7 @@ const IntroductionSection = () => {
             </div>
 
             {/* Action Buttons */}
-            <div className="flex items-center gap-4 pt-1">
+            <div className="flex items-center gap-4 pt-1 lg:pt-4">
               <a
                 href={staticData.button.link}
                 className="w-full sm:w-auto text-center px-6 py-2.5 bg-[#3b8c2a] border-2 border-[#F2B40E] hover:bg-[#F2B40E] hover:text-[#0b2912] text-white text-[12px] font-bold uppercase tracking-wider rounded-full shadow-[0_10px_20px_rgba(59,140,42,0.2)] hover:shadow-[0_15px_30px_rgba(59,140,42,0.3)] transition-all duration-300"
@@ -177,7 +177,7 @@ const IntroductionSection = () => {
             whileInView={{ opacity: 1, scale: 1 }}
             viewport={{ once: true }}
             transition={{ duration: 1, ease: "easeOut" }}
-            className="w-full lg:w-[40%] flex flex-col items-center gap-4 relative mt-4 lg:mt-0"
+            className="w-full lg:w-[40%] flex flex-col items-center gap-4 relative mt-2 lg:mt-0"
           >
             {/* Highly Highlighted White Countdown Timer */}
             <div className="w-full sm:w-fit self-center bg-white rounded-xl p-2 sm:p-2.5 shadow-[0_15px_40px_rgba(59,140,42,0.25)] border-2 border-[#3b8c2a] flex flex-col items-center justify-center transform hover:-translate-y-1 transition-all duration-500 group relative z-20 overflow-hidden">
@@ -195,11 +195,11 @@ const IntroductionSection = () => {
                 {['DAYS', 'HOURS', 'MINS', 'SECS'].map((label, idx) => {
                   const value = idx === 0 ? timeLeft.days : idx === 1 ? timeLeft.hours : idx === 2 ? timeLeft.mins : timeLeft.secs;
                   return (
-                    <div key={label} className="bg-gradient-to-b from-[#f6fbf7] to-white border border-[#3b8c2a]/30 rounded-lg px-1.5 py-1 sm:px-3 sm:py-1 min-w-[54px] sm:min-w-[65px] flex flex-col items-center justify-center shadow-inner group-hover:border-[#F2B40E] group-hover:shadow-[0_4px_15px_rgba(242,180,14,0.2)] transition-all duration-300">
-                      <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#1a6b3a] to-[#3b8c2a] text-lg sm:text-xl font-semibold leading-none tracking-tighter drop-shadow-[0_2px_2px_rgba(0,0,0,0.1)]">
+                    <div key={label} className="flex-1 max-w-[80px] bg-gradient-to-b from-[#f6fbf7] to-white border border-[#3b8c2a]/30 rounded-lg px-1 py-1.5 sm:px-3 sm:py-2 flex flex-col items-center justify-center shadow-inner group-hover:border-[#F2B40E] group-hover:shadow-[0_4px_15px_rgba(242,180,14,0.2)] transition-all duration-300">
+                      <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#1a6b3a] to-[#3b8c2a] text-lg sm:text-2xl font-bold leading-none tracking-tighter drop-shadow-[0_2px_2px_rgba(0,0,0,0.1)]">
                         {value.toString().padStart(2, '0')}
                       </span>
-                      <span className="text-[#F2B40E] text-[10px] sm:text-[12px] font-semibold uppercase mt-0.5">
+                      <span className="text-[#F2B40E] text-[9px] sm:text-[12px] font-bold uppercase mt-1">
                         {label}
                       </span>
                     </div>
@@ -218,10 +218,10 @@ const IntroductionSection = () => {
                   height={480}
                   sizes="(max-width: 768px) 100vw, 40vw"
                   quality={75}
-                  className="w-full h-auto object-cover rounded-2xl"
+                  className="w-full aspect-[16/9] md:aspect-auto h-[200px] sm:h-[260px] md:h-auto object-cover rounded-2xl"
                 />
               ) : (
-                <div className="w-full aspect-[4/3] rounded-2xl bg-slate-100 flex items-center justify-center">
+                <div className="w-full aspect-video md:aspect-[4/3] rounded-2xl bg-slate-100 flex items-center justify-center">
                   <span className="text-slate-400 font-bold">Image Placeholder</span>
                 </div>
               )}
