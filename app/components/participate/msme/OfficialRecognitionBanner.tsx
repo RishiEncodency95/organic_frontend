@@ -76,7 +76,7 @@ export default function OfficialRecognitionBanner() {
 
               <div className="mb-4 h-[3px] w-[70px] mt-4 bg-[#d4a017]" aria-hidden="true" />
 
-              <p className="mb-4 max-w-[550px] text-base leading-[1.7] text-gray-700 font-medium text-justify">
+              <p className="mb-4 max-w-[550px] text-base leading-[1.7] font-medium text-justify">
                 Bharat Organic Expo <strong className="text-[#1b5e20]">2027</strong> has
                 received approval/sanction under the applicable{" "}
                 <strong className="text-gray-900">
@@ -107,7 +107,7 @@ export default function OfficialRecognitionBanner() {
                 </div>
               </div>
 
-              <div className="flex items-center gap-3">
+              <div className="flex flex-col sm:flex-row items-start sm:items-center gap-3">
                 <button className="flex items-center gap-2 rounded-full bg-[#0d3b15] py-3 px-4 text-[14px] font-bold text-white transition-colors hover:bg-[#0a2e11]">
                   <FileText className="h-5 w-5" aria-hidden="true" />
                   View Official Approval

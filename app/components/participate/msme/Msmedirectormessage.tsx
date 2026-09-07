@@ -1288,7 +1288,7 @@ function FeatureItem({
             ? "border-x border-[#d7ddcf] px-[8%]"
             : withLeftPadding
             ? "pl-[8%]"
-            : ""
+            : "pl-[8%]"
         }
       `}
     >

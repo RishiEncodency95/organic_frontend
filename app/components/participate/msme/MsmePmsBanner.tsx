@@ -6,7 +6,8 @@ import bannerImg from "@/app/assets/participate/msme/home-banner1.png";
 import leafImg from "@/app/assets/icons/leafs.png";
 import gsap from "gsap";
 import SectionContainer from "@/app/components/layout/SectionContainer";
-
+import handShake from "@/app/assets/participate/msme/handshake.png";
+import Image from "next/image";
 interface MsmePmsBannerProps {
   eligibilityHref?: string;
   supportHref?: string;
@@ -164,7 +165,7 @@ export default function MsmePmsBanner({
 
               {/* Tagline */}
               <div className=" mb-1 flex gap-2">
-                <Handshake size={35} className="text-[#d4a017]/60 inline-block mr-2" />
+                <Image src={handShake} alt="Handshake" className="w-12 h-8" />
                 <span className="text-[#1b5e20] text-[12px] md:text-[15px] lg:text-[16px] font-semibold uppercase text-left">
                   MSME procurement & marketing support
                 <span className="block h-[2.5px] bg-[#c2410c]/20 shrink-0" />

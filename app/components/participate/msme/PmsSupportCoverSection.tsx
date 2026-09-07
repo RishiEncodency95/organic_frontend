@@ -1136,7 +1136,7 @@ const PmsSupportCoverSection: FC = () => {
             <p
               className="
                 pr-[15px]
-                text-[14px]
+                text-[12px]
                 font-semibold
                 leading-[1.5]
                 text-[#252525]
@@ -1145,9 +1145,7 @@ const PmsSupportCoverSection: FC = () => {
               "
             >
               * Terms, limits and eligibility are subject to the applicable
-              <br />
               Procurement &amp; Marketing Support (PMS) Scheme guidelines
-              <br />
               and competent-authority approval.
             </p>
 
