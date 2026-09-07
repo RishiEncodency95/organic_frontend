@@ -56,7 +56,7 @@ const sectionData = {
 
 const WhyParticipate = () => {
   return (
-    <section className="bg-[#F9FCF9] pt-4 pb-12 overflow-hidden font-inter">
+    <section className="bg-[#F9FCF9] py-2 md:pt-4 md:pb-6 overflow-hidden font-inter">
       {/* ── Inject same keyframe animations as Footer ── */}
       <style jsx global>{`
         @keyframes goldShift {
@@ -112,7 +112,7 @@ const WhyParticipate = () => {
         }
       `}</style>
 
-      <SectionContainer className="flex flex-col lg:flex-row items-center gap-12 lg:gap-16">
+      <SectionContainer className="flex flex-col lg:flex-row items-center gap-4 md:gap-8 lg:gap-12">
 
         {/* LEFT CONTENT */}
         <motion.div
@@ -129,26 +129,26 @@ const WhyParticipate = () => {
             </span>
           </div>
 
-          <h2 className="font-poppins font-semibold text-2xl sm:text-3xl md:text-[34px] lg:text-[38px] text-[#001810] leading-[1.1] mb-2.5 uppercase tracking-tight">
+          <h2 className="font-poppins font-semibold text-xl md:text-[34px] lg:text-[34px] text-[#001810] leading-[1.1] mb-2.5 uppercase tracking-tight">
             {sectionData.titleMain} <br className="hidden sm:block" />
             <span className="text-[#f58220]">{sectionData.titleHighlight}</span>
           </h2>
 
-          <p className="font-inter text-sm sm:text-base font-bold text-[#131730] leading-relaxed mb-4 max-w-xl">
+          <p className="font-inter text-sm sm:text-base font-semibold text-[#131730] leading-relaxed mb-4 max-w-xl">
             {sectionData.description}
           </p>
 
-          <div className="space-y-3 mb-8 font-inter">
+          <div className="space-y-2 md:space-y-3 mb-4 md:mb-8 font-inter">
             {sectionData.points.map((point: string, index: number) => (
-              <div key={index} className="flex items-center gap-3">
-                <CheckCircle2 className="w-5 h-5 text-[#1b5e20] shrink-0" fill="#1b5e20" color="#fff" />
-                <span className="text-[13.5px] sm:text-[14px] font-bold text-[#131730]">{point}</span>
+              <div key={index} className="flex items-start md:items-center gap-2.5 md:gap-3">
+                <CheckCircle2 className="w-4 h-4 md:w-5 md:h-5 mt-0.5 md:mt-0 text-[#1b5e20] shrink-0" fill="#1b5e20" color="#fff" />
+                <span className="text-[12.5px] sm:text-[14px] leading-snug md:leading-normal font-medium lg:font-semibold text-[#131730]">{point}</span>
               </div>
             ))}
           </div>
 
           {/* ── BUTTONS ROW ── */}
-          <div className="flex flex-wrap items-center gap-3 md:gap-4">
+          <div className="flex flex-wrap items-center gap-2.5 md:gap-4">
 
             {/* ── GOLDEN "BOOK A STALL" BUTTON with sparkles ── */}
             <div className="relative group/btn">
@@ -221,19 +221,19 @@ const WhyParticipate = () => {
           {/* Green background block behind image */}
           <div className="hidden md:block absolute bottom-[-18px] right-[-18px] w-[180px] h-[180px] bg-[#2f8f3a] rounded-[20px] z-0" />
 
-          <div className="relative rounded-[2rem] overflow-hidden shadow-2xl border-[7px] border-white/70 z-10">
+          <div className="relative rounded-[1.5rem] md:rounded-[2rem] overflow-hidden shadow-xl md:shadow-2xl border-[5px] md:border-[7px] border-white/70 z-10">
             <Image
               src={sectionData.image}
               alt={sectionData.imageAlt}
               sizes="(max-width: 1024px) 100vw, 50vw"
-              className="w-full h-[280px] md:h-[330px] object-cover"
+              className="w-full h-[200px] sm:h-[240px] md:h-[390px] object-cover"
             />
 
             {/* Floating Badge */}
-            <div className="absolute bottom-6 right-6 bg-white p-3 md:p-4 rounded-2xl shadow-xl border-l-[5px] border-[#2f8f3a] max-w-[170px] md:max-w-[190px] z-20 transform hover:-translate-y-2 transition-transform duration-300">
-              <div className="flex items-start gap-2 md:gap-3">
-                <Leaf className="w-3.5 h-3.5 md:w-4 md:h-4 text-[#2f8f3a] shrink-0 mt-[2px]" fill="#2f8f3a" />
-                <p className="text-[10px] md:text-[12px] font-bold text-[#071c3d] leading-tight whitespace-pre-line font-inter">
+            <div className="absolute bottom-3 right-3 md:bottom-6 md:right-6 bg-white p-2.5 md:p-4 rounded-xl md:rounded-2xl shadow-lg md:shadow-xl border-l-[4px] md:border-l-[5px] border-[#2f8f3a] max-w-[140px] md:max-w-[190px] z-20 transform hover:-translate-y-2 transition-transform duration-300">
+              <div className="flex items-start gap-1.5 md:gap-3">
+                <Leaf className="w-3 h-3 md:w-4 md:h-4 text-[#2f8f3a] shrink-0 mt-[2px]" fill="#2f8f3a" />
+                <p className="text-[9px] md:text-[12px] font-bold text-[#071c3d] leading-tight whitespace-pre-line font-inter">
                   {sectionData.imageBadgeText}
                 </p>
               </div>
@@ -241,11 +241,11 @@ const WhyParticipate = () => {
           </div>
 
           {/* 3-point bullets below image */}
-          <div className="flex flex-wrap justify-center md:justify-start items-center gap-4 md:gap-8 mt-6 md:mt-8 md:ml-6 font-poppins">
+          <div className="flex flex-wrap justify-center md:justify-start items-center gap-3 md:gap-8 mt-4 md:mt-8 md:ml-6 font-poppins">
             {sectionData.mainPoints.map((point: string, index: number) => (
-              <div key={index} className="flex items-center gap-2">
-                <CheckCircle2 className="w-5 h-5 text-[#2f8f3a] shrink-0" fill="#2f8f3a" color="#fff" />
-                <span className="text-[13px] md:text-[14px] font-bold text-[#071c3d] tracking-tight uppercase">{point}</span>
+              <div key={index} className="flex items-center gap-1.5 md:gap-2">
+                <CheckCircle2 className="w-4 h-4 md:w-5 md:h-5 text-[#2f8f3a] shrink-0" fill="#2f8f3a" color="#fff" />
+                <span className="text-[12px] md:text-[14px] font-bold text-[#071c3d] tracking-tight uppercase">{point}</span>
               </div>
             ))}
           </div>
