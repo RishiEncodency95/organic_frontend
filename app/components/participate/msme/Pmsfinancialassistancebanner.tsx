@@ -42,6 +42,7 @@ interface SupportCard {
   eyebrow: string;
   eyebrowColor: string;
   value: React.ReactNode;
+  valueClassName?: string;
   title: string;
   titleColor: string;
   description: string;
@@ -60,6 +61,7 @@ const SUPPORT_CARDS: SupportCard[] = [
     eyebrow: "UP TO",
     eyebrowColor: "text-[#1b5e20]",
     value: <>80%<sup>*</sup></>,
+    valueClassName: "text-[40px] sm:text-[52px] md:text-[60px]",
     title: "General MSMEs",
     titleColor: "text-[#1b5e20]",
     description:
@@ -77,6 +79,7 @@ const SUPPORT_CARDS: SupportCard[] = [
     eyebrow: "UP TO",
     eyebrowColor: "text-[#cd9000]",
     value: <>100%<sup>*</sup></>,
+    valueClassName: "text-[40px] sm:text-[52px] md:text-[60px]",
     title: "Women / SC / ST & Applicable Eligible Categories",
     titleColor: "text-[#cd9000]",
     description: "As per applicable PMS scheme provisions and conditions.",
@@ -108,7 +111,7 @@ const PMSFinancialAssistanceBanner: FC = () => {
     <>
       <section
         aria-labelledby="pms-banner-heading"
-        className="relative w-full overflow-hidden bg-[#fcfbfa] pb-4"
+        className="relative w-full overflow-hidden bg-[#fcfbfa] pb-4 border-t-4 border-[#033815]"
       >
         {/* Top-right absolute image */}
         <img
@@ -164,7 +167,7 @@ const PMSFinancialAssistanceBanner: FC = () => {
                     <img
                       src={supportRight.src}
                       alt=""
-                      className="hidden h-8 w-auto object-contain opacity-40 sm:h-10 md:h-10 md:inline"
+                      className="hidden h-8 w-auto object-contain sm:h-10 md:h-10 md:inline"
                     />
                   </span>
                 </h1>
@@ -197,7 +200,7 @@ const PMSFinancialAssistanceBanner: FC = () => {
                         {card.eyebrow}
                       </p>
                       <p
-                        className={`text-2xl font-extrabold leading-tight sm:text-4xl ${card.titleColor}`}
+                        className={`font-extrabold leading-tight ${card.valueClassName || "text-2xl sm:text-4xl"} ${card.titleColor}`}
                       >
                         {card.value}
                       </p>
@@ -237,7 +240,7 @@ const PMSFinancialAssistanceBanner: FC = () => {
       </section>
 
       {/* ============ Footer strip (outside section so left image doesn't overlap) ============ */}
-      <SectionContainer className="relative pb-8 pt-2">
+      <SectionContainer className="relative pb-8 pt-2 border-b-4 border-[#033815]">
         <div className="relative overflow-visible rounded-2xl bg-white shadow-lg">
           {/* Background image - full width */}
           <div className="pointer-events-none absolute inset-0">
@@ -270,7 +273,7 @@ const PMSFinancialAssistanceBanner: FC = () => {
               {/* Government support */}
               <div className="flex w-full items-center gap-3 md:w-[25%]">
                 <span className="flex h-20 w-20 shrink-0 items-center justify-center rounded-full bg-[#e9edda]">
-                  <Image alt="government support" src={government_support} width={48} height={48} className="h-12 w-12 text-[#1b5e20]" aria-hidden="true" />
+                  <Image alt="government support" src={government_support} width={52} height={52} className="h-12 w-12 text-[#1b5e20]" aria-hidden="true" />
                 </span>
                 <p className="text-sm font-semibold leading-relaxed text-slate-900 ml-4">
                   Government Support.

@@ -148,8 +148,8 @@ export default function MsmePmsScheme() {
 
           <div className="flex w-full items-center justify-center">
             {/* left golden line */}
-              <div className="flex flex-1 items-center">
-              <Image src={leftArrow} alt="left arrow" width={50} height={10} />
+            <div className="flex flex-1 items-center">
+              <Image src={leftArrow} alt="left arrow" className="h-auto w-full" />
             </div>
 
             {/* center title */}
@@ -194,7 +194,7 @@ export default function MsmePmsScheme() {
 
             {/* right golden line */}
             <div className="flex flex-1 items-center">
-              <Image src={rightArrow} alt="right arrow" width={50} height={10} />
+              <Image src={rightArrow} alt="right arrow" className="h-auto w-full" />
             </div>
           </div>
 
@@ -342,7 +342,7 @@ export default function MsmePmsScheme() {
                 </h3>
 
                 {/* =============================================
-                    GOLD DIVIDER
+                    BAR IMAGE DIVIDER
                 ============================================== */}
 
                 <div
@@ -354,19 +354,7 @@ export default function MsmePmsScheme() {
                     justify-center
                   "
                 >
-                  <span className="h-px w-[57px] bg-[#c3a039]" />
-
-                  <span
-                    className="
-                      mx-[5px]
-                      h-[7px]
-                      w-[7px]
-                      rounded-full
-                      bg-[#b99727]
-                    "
-                  />
-
-                  <span className="h-px w-[57px] bg-[#c3a039]" />
+                  <Image src={bottomDecor} alt="" className="h-auto w-[120px]" />
                 </div>
 
                 {/* =============================================
