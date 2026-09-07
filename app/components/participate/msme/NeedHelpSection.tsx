@@ -17,6 +17,9 @@ import SectionContainer from "@/app/components/layout/SectionContainer";
 import supportRightImg from "@/app/assets/participate/msme/support_right.png";
 import whyReachOutImg from "@/app/assets/participate/msme/why_reach_out.png";
 import ourCommitmentRightImg from "@/app/assets/participate/msme/our_commitment_right.png";
+import need_help_deco from "@/app/assets/participate/msme/need_help_deco.png";
+import dedicated_relation from "@/app/assets/participate/msme/dedicated_relation.png";
+import Image from "next/image";
 
 const whyReachOut = [
   "Clarify PMS scheme guidelines & eligibility",
@@ -68,8 +71,8 @@ export default function NeedHelpSection() {
         <div className="grid grid-cols-1 gap-5 lg:grid-cols-[1fr_1.6fr]">
           {/* Left: Heading + commitment */}
           <div>
-            <h2 className="text-[28px] font-semibold uppercase leading-tight text-[#0d4a1a] sm:text-[54px]">
-              Need Help?
+            <h2 className="text-[28px] font-semibold uppercase leading-tight text-[#0d4a1a] sm:text-[54px] flex items-end">
+              Need Help? <Image src={need_help_deco.src} alt="Need Help" className="ml-2 h-12 w-12 object-contain" width={48} height={48} />
             </h2>
             <h3 className="text-[22px] font-semibold uppercase leading-tight sm:text-[28px]">
               We&apos;re Here to Support You
@@ -177,11 +180,9 @@ export default function NeedHelpSection() {
           {/* Dedicated relationship managers */}
           <div className="rounded-2xl border border-gray-200 bg-blue-50 p-5 shadow-sm">
             <div className="flex items-start gap-3">
-              <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-[#1b5e20]">
-                <Users className="h-6 w-6 text-white" aria-hidden="true" />
-              </span>
+                <Image src={dedicated_relation.src} alt="Dedicated Relationship Managers" className="h-16 w-16" width={64} height={64} />
               <div>
-                <p className="text-[15px] font-semibold text-[#1b5e20]">
+                <p className="text-[15px] font-semibold text-[#0d4a1a]">
                   DEDICATED RELATIONSHIP MANAGERS
                 </p>
                 <p className="mt-0.5 text-[14px] leading-snug">
@@ -255,7 +256,7 @@ export default function NeedHelpSection() {
             </div>
 
             <a
-              href="#apply"
+              href="/registration/book-a-stand"
               className="inline-flex shrink-0 items-center gap-1.5 rounded-lg bg-[#1b5e20] px-4 py-2.5 text-[14px] font-semibold uppercase tracking-wide text-white transition-colors hover:bg-[#2d7a2d]"
             >
               Start Your Application

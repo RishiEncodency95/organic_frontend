@@ -43,7 +43,7 @@ export default function ParticipationSidebar() {
           <div className="bg-white rounded-full py-1.5 px-3 flex items-center justify-center gap-1.5 w-max mx-auto shadow-sm">
             <Tag size={12} className="text-[#176b27]" strokeWidth={2.5} />
             <span className="text-[11px] font-semibold text-[#176b27]">
-              Women MSE Category
+              Women MSME Category
             </span>
           </div>
         </div>

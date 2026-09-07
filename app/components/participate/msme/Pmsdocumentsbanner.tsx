@@ -990,7 +990,7 @@ function DocumentCard({
       <p
         className="
           mt-[6%]
-          text-[clamp(9px,0.82vw,12px)]
+          text-sm
           font-[500]
           leading-[1.38]
           text-[#303640]
@@ -1390,7 +1390,7 @@ export default function PMSDocumentsBanner() {
           className="
             absolute
             left-1/2
-            top-[92.1%]
+            top-[88%]
             flex
             h-[5.9%]
             w-[41.5%]
@@ -1451,7 +1451,8 @@ export default function PMSDocumentsBanner() {
           w-full
           max-w-[900px]
           px-5
-          py-5
+          pt-5
+          pb-2
           lg:hidden
         "
       >

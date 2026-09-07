@@ -17,12 +17,13 @@ import additionalSupport from "@/app/assets/participate/msme/addition_support.pn
 import governmentmsme from "@/app/assets/participate/msme/government_msme.png";
 import provisioning from "@/app/assets/participate/msme/provisioning.png";
 import graph from "@/app/assets/participate/msme/graph.png";
+import eligibilityButtonImg from "@/app/assets/participate/msme/eligibiily-button.png";
 import SectionContainer from "../../layout/SectionContainer";
 /**
  * PMSFinancialAssistanceBanner
  * ------------------------------------------------------------------
  * Promotional banner: "How Much Support May You Get?" — PMS Scheme
- * financial assistance for eligible MSEs.
+ * financial assistance for eligible MSMEs.
  *
  * NOTE: The left hero photograph and the bottom-right plant photograph
  * are intentionally left as placeholder containers (bg-hero-photo /
@@ -57,7 +58,7 @@ const SUPPORT_CARDS: SupportCard[] = [
     eyebrow: "UP TO",
     eyebrowColor: "text-[#1b5e20]",
     value: <>80%<sup>*</sup></>,
-    title: "General MSEs",
+    title: "General MSMEs",
     titleColor: "text-[#1b5e20]",
     description:
       "Of eligible built-up space rent assistance subject to PMS provisions.",
@@ -146,7 +147,7 @@ const PMSFinancialAssistanceBanner: FC = () => {
                     Financial Assistance
                   </p>
                   <p className="text-base text-slate-700 sm:text-lg">
-                    For Eligible MSEs
+                    For Eligible MSMEs
                   </p>
                 </div>
               </div>
@@ -254,8 +255,8 @@ const PMSFinancialAssistanceBanner: FC = () => {
                   alt=""
                   className="h-20 w-20 shrink-0 object-contain"
                 />
-                <p className="text-xs leading-relaxed text-slate-700 sm:text-sm pr-4 md:pr-8">
-                  <strong className="font-semibold text-slate-900">
+                <p className="text-xs leading-relaxed sm:text-sm pr-4 md:pr-8 font-semibold">
+                  <strong className="font-semibold text-[#1b5e20]">
                     *Important Note:<br />
                   </strong>{" "}
                   Assistance is subject to applicable PMS guidelines,
@@ -284,10 +285,10 @@ const PMSFinancialAssistanceBanner: FC = () => {
             {/* CTA button - half inside half outside */}
             <div className="absolute left-1/2 bottom-0 z-10 -translate-x-1/2 translate-y-1/2">
               <a
-                href="#eligibility"
+                href="/participate/msme/eligibility-check"
                 className="inline-flex items-center gap-1.5 rounded-full bg-[#1b5e20] px-4 py-2 text-[14px] font-semibold uppercase tracking-wide text-white shadow-md transition-colors hover:bg-[#2d7a2d]"
               >
-                <Target className="h-4 w-4" aria-hidden="true" />
+                <img src={eligibilityButtonImg.src} alt="" className="h-5 w-5 object-contain" aria-hidden="true" />
                 Check My Eligibility
                 <ChevronRight className="h-4 w-4" aria-hidden="true" />
               </a>

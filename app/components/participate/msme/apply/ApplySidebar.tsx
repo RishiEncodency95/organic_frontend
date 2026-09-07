@@ -60,7 +60,7 @@ export default function ApplySidebar() {
           </h3>
         </div>
         <p className="text-[14px] text-gray-700 font-medium leading-relaxed mb-4">
-          The MSME Promotion & Marketing Assistance (PMS) Scheme provides financial assistance to eligible MSEs for participating in approved exhibitions.
+          The MSME Promotion & Marketing Assistance (PMS) Scheme provides financial assistance to eligible MSMEs for participating in approved exhibitions.
         </p>
         <Link href="#" className="inline-flex items-center gap-1.5 text-[12px] font-extrabold text-[#176b27] hover:underline">
           View Scheme Guidelines <ArrowRight size={14} strokeWidth={3} />
@@ -80,7 +80,7 @@ export default function ApplySidebar() {
             <TimerIcon size={24} className="text-[#176b27] shrink-0 mt-0.5" strokeWidth={1.5} />
             <div>
               <h4 className="text-[13px] font-extrabold text-[#111827] mb-0.5">100% Assistance</h4>
-              <p className="text-[12px] text-gray-600 font-medium leading-snug">For Women Enterprises,<br />SC/ST category MSEs</p>
+              <p className="text-[12px] text-gray-600 font-medium leading-snug">For Women Enterprises,<br />SC/ST category MSMEs</p>
             </div>
           </div>
 
@@ -88,7 +88,7 @@ export default function ApplySidebar() {
             <UserIcon size={24} className="text-[#176b27] shrink-0 mt-0.5" strokeWidth={1.5} />
             <div>
               <h4 className="text-[13px] font-extrabold text-[#111827] mb-0.5">80% Assistance</h4>
-              <p className="text-[12px] text-gray-600 font-medium leading-snug">For General (Male)<br />category MSEs</p>
+              <p className="text-[12px] text-gray-600 font-medium leading-snug">For General (Male)<br />category MSMEs</p>
             </div>
           </div>
 

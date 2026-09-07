@@ -39,7 +39,7 @@ const EligibilityHero = () => {
       <div className="relative z-10 max-w-7xl mx-auto mt-12 flex flex-wrap items-center gap-6 text-white text-[12px] md:text-[13px] font-medium">
         <div className="flex items-center gap-2">
           <UserCheck className="text-[#facc15]" size={20} />
-          <span>For Eligible<br />MSEs Only</span>
+          <span>For Eligible<br />MSMEs Only</span>
         </div>
         <div className="flex items-center gap-2">
           <TrendingUp className="text-[#facc15]" size={20} />

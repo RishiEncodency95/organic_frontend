@@ -178,7 +178,7 @@ export default function MsmePmsScheme() {
                 className="
                   whitespace-nowrap
                   text-[15px]
-                  font-bold
+                  font-semibold
                   uppercase
                   leading-none
                   tracking-[0.01em]
@@ -232,13 +232,13 @@ export default function MsmePmsScheme() {
               mt-[14px]
               flex
               w-full
-              max-w-[280px]
+              max-w-[180px]
               items-center
               justify-center
             "
           >
             <span className="h-[2px] flex-1 bg-[#b89528]" />
-            <span className="mx-[6px] h-[10px] w-[10px] rotate-45 bg-[#b89528]" />
+            <span className="mx-[6px] h-[10px] w-[10px] rotate-45 bg-[#b89528] rounded-full" />
             <span className="h-[2px] flex-1 bg-[#b89528]" />
           </div>
 
@@ -260,14 +260,14 @@ export default function MsmePmsScheme() {
             "
           >
             The{" "}
-            <strong className="font-bold text-[#075128]">
+            <strong className="font-semibold text-[#075128]">
               Procurement &amp; Marketing Support (PMS) Scheme
             </strong>{" "}
             is an initiative of the Ministry of MSME
             <br className="hidden md:block" />
             aimed at improving market access for Micro &amp; Small Enterprises.
             <br className="hidden md:block" />
-            Eligible MSEs can explore applicable financial assistance for
+            Eligible MSMEs can explore applicable financial assistance for
             participation in
             <br className="hidden md:block" />
             approved trade fairs and exhibitions.
@@ -465,7 +465,7 @@ export default function MsmePmsScheme() {
                   lg:text-[17px]
                 "
               >
-                The PMS Scheme empowers MSEs to participate, promote and
+                The PMS Scheme empowers MSMEs to participate, promote and
                 prosper.
               </p>
 
@@ -473,7 +473,7 @@ export default function MsmePmsScheme() {
                 className="
                   mt-[2px]
                   text-[14px]
-                  font-extrabold
+                  font-semibold
                   leading-[1.35]
                   text-[#075128]
                   sm:text-[16px]

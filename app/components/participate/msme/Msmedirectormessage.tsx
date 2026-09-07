@@ -19,6 +19,11 @@ import {
 
 import vleafImg from "@/app/assets/icons/vleaf.png";
 import ministryImg from "@/app/assets/participate/msme/ministry.webp";
+import officialIconImg from "@/app/assets/participate/msme/official_icon.png";
+import forAllMsmeImg from "@/app/assets/participate/msme/for_all_msme.png";
+import governmentApprovedImg from "@/app/assets/participate/msme/governnent_support.png";
+import quoteLeftImg from "@/app/assets/participate/msme/quote_left.png";
+import quoteRightImg from "@/app/assets/participate/msme/quote_right.png";
 
 /* ================================================================
    TYPES
@@ -664,25 +669,24 @@ export default function OfficialMessageBanner({
                 pr-[3%]
               "
             >
-              <span
+              <img
+                src={quoteLeftImg.src}
+                alt=""
                 className="
                   absolute
                   left-0
-                  top-[-7px]
-                  text-[29px]
-                  font-serif
-                  leading-none
-                  text-[#7da048]
+                  top-[-4px]
+                  h-[18px]
+                  w-auto
+                  object-contain
                 "
-              >
-                “
-              </span>
+              />
 
               <blockquote
                 className="
-                  text-[clamp(11px,1.13vw,15px)]
+                  text-[clamp(12px,1.2vw,16px)]
                   font-[400]
-                  leading-[1.68]
+                  leading-[1.75]
                   text-[#262c38]
                 "
               >
@@ -700,19 +704,18 @@ export default function OfficialMessageBanner({
                 their products, build business, and expand globally.
               </blockquote>
 
-              <span
+              <img
+                src={quoteRightImg.src}
+                alt=""
                 className="
                   absolute
-                  bottom-[-17px]
+                  bottom-[-12px]
                   right-[1%]
-                  text-[29px]
-                  font-serif
-                  leading-none
-                  text-[#7da048]
+                  h-[18px]
+                  w-auto
+                  object-contain
                 "
-              >
-                ”
-              </span>
+              />
             </div>
 
             {/* DASHED DIVIDER */}
@@ -826,9 +829,9 @@ export default function OfficialMessageBanner({
           className="
             absolute
             left-[13.1%]
-            top-[79.5%]
+            top-[82%]
             grid
-            h-[13.4%]
+            h-[11%]
             w-[76.2%]
             grid-cols-3
             items-center
@@ -843,10 +846,7 @@ export default function OfficialMessageBanner({
         >
           <FeatureItem
             icon={
-              <ShieldCheck
-                className="h-[31px] w-[31px]"
-                strokeWidth={1.7}
-              />
+              <img src={officialIconImg.src} alt="" className="h-[80px] w-[80px] object-contain" />
             }
             title="Official Message"
             description="Direct message from MSME Leadership"
@@ -855,10 +855,7 @@ export default function OfficialMessageBanner({
           <FeatureItem
             withBorder
             icon={
-              <Users
-                className="h-[31px] w-[31px]"
-                strokeWidth={1.7}
-              />
+              <img src={forAllMsmeImg.src} alt="" className="h-[80px] w-[80px] object-contain" />
             }
             title="For All MSMEs"
             description="Encouragement for every entrepreneur across India"
@@ -866,10 +863,7 @@ export default function OfficialMessageBanner({
 
           <FeatureItem
             icon={
-              <Award
-                className="h-[31px] w-[31px]"
-                strokeWidth={1.7}
-              />
+              <img src={governmentApprovedImg.src} alt="" className="h-[80px] w-[80px] object-contain" />
             }
             title="Government Support"
             description="Strong support for growth, competitiveness & global reach"
@@ -890,7 +884,8 @@ export default function OfficialMessageBanner({
           w-full
           max-w-[900px]
           px-5
-          py-9
+          pt-9
+          pb-2
           lg:hidden
         "
       >
@@ -1223,7 +1218,7 @@ export default function OfficialMessageBanner({
 
         <div
           className="
-            mt-4
+            mt-2
             grid
             gap-3
             rounded-xl
@@ -1235,19 +1230,19 @@ export default function OfficialMessageBanner({
           "
         >
           <MobileFeature
-            icon={<ShieldCheck className="h-6 w-6" />}
+            icon={<img src={officialIconImg.src} alt="" className="h-14 w-14 object-contain" />}
             title="Official Message"
             description="Direct message from MSME Leadership"
           />
 
           <MobileFeature
-            icon={<Users className="h-6 w-6" />}
+            icon={<img src={forAllMsmeImg.src} alt="" className="h-14 w-14 object-contain" />}
             title="For All MSMEs"
             description="Encouragement for every entrepreneur across India"
           />
 
           <MobileFeature
-            icon={<Award className="h-6 w-6" />}
+            icon={<img src={governmentApprovedImg.src} alt="" className="h-14 w-14 object-contain" />}
             title="Government Support"
             description="Strong support for growth, competitiveness & global reach"
           />
@@ -1302,7 +1297,6 @@ function FeatureItem({
           items-center
           justify-center
           rounded-full
-          bg-[#edf2de]
           text-[#315f17]
         "
       >
@@ -1325,7 +1319,7 @@ function FeatureItem({
         <p
           className="
             mt-[5px]
-            text-[clamp(8px,0.82vw,11px)]
+            text-[14px]
             font-[400]
             leading-[1.45]
             text-[#343944]
@@ -1368,7 +1362,6 @@ function MobileFeature({
           items-center
           justify-center
           rounded-full
-          bg-[#edf2de]
           text-[#315f17]
         "
       >

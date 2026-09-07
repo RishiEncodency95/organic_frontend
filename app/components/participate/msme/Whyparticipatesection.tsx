@@ -17,7 +17,7 @@ const features: FeatureCard[] = [
     icon: pmsApprovedIcon.src,
     title: "PMS Approved Event*",
     description:
-      "Opportunity for eligible<br/> MSEs to explore applicable<br/> PMS assistance.",
+      "Opportunity for eligible<br/> MSMEs to explore applicable<br/> PMS assistance.",
   },
   {
     icon: focusedIndustryIcon.src,
@@ -121,7 +121,7 @@ export default function WhyParticipateSection() {
 
         {/* CTA */}
         <a
-          href="#book-stand"
+          href="/registration/book-a-stand"
           className="mt-6 inline-flex w-full items-center justify-center gap-3 rounded-full bg-[#1b5e20] px-12 py-3 text-[14px] font-semibold tracking-wide text-white shadow-lg transition-transform duration-200 hover:bg-[#2d7a2d] sm:w-auto sm:text-[15px]"
         >
           <Calendar className="h-7 w-7" aria-hidden="true" />

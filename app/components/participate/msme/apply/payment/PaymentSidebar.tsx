@@ -36,7 +36,7 @@ export default function PaymentSidebar() {
         </div>
         
         <div className="bg-white text-[#124b1f] px-4 py-2 rounded-md font-semibold text-[12px] flex items-center gap-2 shadow-sm w-fit">
-          <User size={14} strokeWidth={2.5} /> Women MSE Category
+          <User size={14} strokeWidth={2.5} /> Women MSME Category
         </div>
       </div>
 

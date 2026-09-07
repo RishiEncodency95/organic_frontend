@@ -135,7 +135,7 @@ export default function PaymentMain() {
             </div>
             <div className="flex justify-between items-center py-1.5 border-b border-gray-100">
               <span className="text-gray-600 font-medium">PMS Category</span>
-              <span className="text-gray-900 font-semibold">Women MSE</span>
+              <span className="text-gray-900 font-semibold">Women MSME</span>
             </div>
             <div className="flex justify-between items-center py-1.5 border-b border-gray-100">
               <span className="text-gray-600 font-medium">Potential Assistance</span>
