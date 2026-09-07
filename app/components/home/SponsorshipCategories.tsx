@@ -172,7 +172,7 @@ const SponsorshipCategories = () => {
   };
 
   return (
-    <section className="w-full bg-[#EFF7EE] font-inter relative px-2 lg:px-14 py-4 lg:py-6 overflow-hidden border-b border-gray-100">
+    <section className="w-full bg-[#EFF7EE] font-inter relative px-2 lg:px-14 py-2 md:py-4 lg:py-6 overflow-hidden border-b border-gray-100">
       <style>{`
         @keyframes sparkleAnim {
           0%, 100% { opacity: 0; transform: scale(0.4) rotate(0deg); }
@@ -182,18 +182,18 @@ const SponsorshipCategories = () => {
       <div className="max-w-[1500px] mx-auto relative z-10">
 
         {/* HEADER */}
-        <div className="flex items-center justify-center gap-3 mb-6">
-          <div className="h-[2px] w-12 bg-[#3b8c2a]/60"></div>
-          <Leaf className="w-4 h-4 text-[#3b8c2a]" />
-          <h2 className="text-[16px] md:text-[20px] font-semibold text-[#0b2912] uppercase tracking-widest font-poppins">
+        <div className="flex items-center justify-center gap-1.5 md:gap-3 mb-3 md:mb-6">
+          <div className="h-[2px] w-8 md:w-12 bg-[#3b8c2a]/60"></div>
+          <Leaf className="w-3.5 h-3.5 md:w-4 md:h-4 text-[#3b8c2a]" />
+          <h2 className="text-[14px] md:text-[20px] font-semibold text-[#0b2912] uppercase tracking-widest font-poppins text-center leading-tight">
             {sectionData.headerTitle}
           </h2>
-          <Leaf className="w-4 h-4 text-[#3b8c2a] scale-x-[-1]" />
-          <div className="h-[2px] w-12 bg-[#3b8c2a]/60"></div>
+          <Leaf className="w-3.5 h-3.5 md:w-4 md:h-4 text-[#3b8c2a] scale-x-[-1]" />
+          <div className="h-[2px] w-8 md:w-12 bg-[#3b8c2a]/60"></div>
         </div>
 
         {/* TOP GRID: CATEGORIES */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-2 mb-5">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-1.5 md:gap-2 mb-3 md:mb-5">
           {sectionData.categories.map((sponsor, idx) => {
             // Use properties from sectionData.categories or defaults
             const isExclusive = sponsor.exclusive;
@@ -217,27 +217,27 @@ const SponsorshipCategories = () => {
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true, margin: "-50px" }}
                   transition={{ duration: 0.4, delay: idx * 0.05 }}
-                  className={`bg-white rounded-2xl p-2 lg:px-4 lg:py-3 flex flex-col sm:flex-row items-start sm:items-center gap-4 border border-gray-200 ${hoverBorder} hover:-translate-y-1.5 transition-all duration-300 group relative overflow-hidden cursor-pointer`}
+                  className={`bg-white rounded-xl md:rounded-2xl p-1.5 md:p-2 lg:px-4 lg:py-3 flex flex-row items-center gap-2.5 md:gap-4 border border-gray-200 ${hoverBorder} hover:-translate-y-1.5 transition-all duration-300 group relative overflow-hidden cursor-pointer`}
                   style={{ boxShadow: "rgba(0, 0, 0, 0.02) 0px 1px 3px 0px, rgba(27, 31, 35, 0.15) 0px 0px 0px 1px" }}
                 >
                   {/* Exclusive Badge */}
                   {isExclusive && (
-                    <div className="absolute top-0 right-0 bg-gradient-to-r from-[#F2B40E] to-[#f58220] text-[#0b2912] text-[10px] font-black px-3 py-1 rounded-bl-lg uppercase tracking-widest z-10 shadow-sm">
+                    <div className="absolute top-0 right-0 bg-gradient-to-r from-[#F2B40E] to-[#f58220] text-[#0b2912] text-[8px] md:text-[10px] font-black px-2 md:px-3 py-0.5 md:py-1 rounded-bl-lg uppercase tracking-widest z-10 shadow-sm">
                       Exclusive
                     </div>
                   )}
 
                   {/* Icon Container */}
-                  <div className={`w-14 h-14 rounded-[14px] ${iconBg} ${iconBorder} border flex items-center justify-center shrink-0 ${hoverBg} group-hover:scale-105 group-hover:-rotate-3 group-hover:shadow-md transition-all duration-300 shadow-sm relative z-10`}>
-                    <sponsor.icon className={`w-6 h-6 ${iconColor} ${hoverIconColor} group-hover:scale-110 transition-all duration-300`} strokeWidth={1.5} />
+                  <div className={`w-10 h-10 md:w-14 md:h-14 rounded-lg md:rounded-[14px] ${iconBg} ${iconBorder} border flex items-center justify-center shrink-0 ${hoverBg} group-hover:scale-105 group-hover:-rotate-3 group-hover:shadow-md transition-all duration-300 shadow-sm relative z-10`}>
+                    <sponsor.icon className={`w-5 h-5 md:w-6 md:h-6 ${iconColor} ${hoverIconColor} group-hover:scale-110 transition-all duration-300`} strokeWidth={1.5} />
                   </div>
 
                   {/* Content */}
-                  <div className="flex flex-col z-10 flex-1 font-inter">
-                    <h3 className={`text-[13px] sm:text-[14px] font-semibold text-[#1b5e20] leading-tight mb-1 uppercase tracking-wide transition-colors ${isExclusive ? 'group-hover:text-[#f58220]' : 'group-hover:text-[#3b8c2a]'}`}>
+                  <div className="flex flex-col z-10 flex-1 font-inter min-w-0">
+                    <h3 className={`text-[11.5px] sm:text-[14px] font-semibold text-[#1b5e20] leading-tight mb-0.5 md:mb-1 uppercase tracking-wide transition-colors truncate md:whitespace-normal ${isExclusive ? 'group-hover:text-[#f58220]' : 'group-hover:text-[#3b8c2a]'}`}>
                       {sponsor.title}
                     </h3>
-                    <p className="text-[11.5px] sm:text-[12px] text-gray-700 leading-relaxed font-medium pr-2">
+                    <p className="text-[10px] sm:text-[12px] text-gray-700 leading-tight md:leading-relaxed font-medium pr-0 md:pr-2 line-clamp-1 md:line-clamp-2">
                       {sponsor.desc}
                     </p>
                   </div>
@@ -251,34 +251,34 @@ const SponsorshipCategories = () => {
         </div>
 
         {/* BOTTOM SECTION: SPLIT LAYOUT */}
-        <div className="flex flex-col lg:flex-row gap-4">
+        <div className="flex flex-col lg:flex-row gap-2.5 md:gap-4">
 
           {/* LEFT: INFO & STATS */}
-          <div className="flex-1 flex flex-col gap-3">
+          <div className="flex-1 flex flex-col gap-2.5 md:gap-3">
             {/* Alert Banner */}
-            <div className="w-full bg-[#f2f8f4] border border-[#3b8c2a]/20 rounded-xl p-3 flex flex-col sm:flex-row items-center sm:items-start gap-4">
-              <div className="flex items-center gap-3 w-[50%]">
-                <div className="w-11 h-11 rounded-xl bg-gradient-to-br from-[#F2B40E] to-[#f58220] flex items-center justify-center shrink-0 shadow-[0_4px_15px_rgba(242,180,14,0.3)] border border-[#F2B40E]/50">
-                  <Calendar className="w-5 h-5 text-[#0b2912]" strokeWidth={2.5} />
+            <div className="w-full bg-[#f2f8f4] border border-[#3b8c2a]/20 rounded-lg md:rounded-xl p-2 md:p-3 flex flex-col sm:flex-row items-start gap-2 md:gap-4">
+              <div className="flex items-center gap-2 md:gap-3 w-full sm:w-[50%]">
+                <div className="w-8 h-8 md:w-11 md:h-11 rounded-md md:rounded-xl bg-gradient-to-br from-[#F2B40E] to-[#f58220] flex items-center justify-center shrink-0 shadow-[0_4px_15px_rgba(242,180,14,0.3)] border border-[#F2B40E]/50">
+                  <Calendar className="w-4 h-4 md:w-5 md:h-5 text-[#0b2912]" strokeWidth={2.5} />
                 </div>
-                <div className='flex flex-col gap-1'>
-                  <h3 className="text-[14px] font-semibold text-[#0b2912] uppercase leading-tight">{sectionData.promoBox.bannerTitle}</h3>
-                  <p className="text-[13px] md:text-[14px] text-gray-600 font-medium leading-tight">{sectionData.promoBox.bannerSubtitle}</p>
+                <div className='flex flex-col gap-0 md:gap-1 min-w-0'>
+                  <h3 className="text-[12px] md:text-[14px] font-semibold text-[#0b2912] uppercase leading-tight truncate">{sectionData.promoBox.bannerTitle}</h3>
+                  <p className="text-[11px] md:text-[14px] text-gray-600 font-medium leading-tight truncate">{sectionData.promoBox.bannerSubtitle}</p>
                 </div>
               </div>
               <div className="hidden sm:block w-[1px] h-10 bg-gray-300"></div>
-              <div className="flex items-center gap-4 w-[50%]">
-                <div className="w-8 h-8 rounded bg-white flex items-center justify-center shrink-0 border border-gray-200">
-                  <Star className="w-4 h-4 text-[#3b8c2a]" />
+              <div className="flex items-center gap-2.5 md:gap-4 w-full sm:w-[50%] mt-1 sm:mt-0">
+                <div className="w-6 h-6 md:w-8 md:h-8 rounded bg-white flex items-center justify-center shrink-0 border border-gray-200">
+                  <Star className="w-3.5 h-3.5 md:w-4 md:h-4 text-[#3b8c2a]" />
                 </div>
-                <p className="text-[13px] md:text-[14px] text-gray-700 font-medium leading-snug">
+                <p className="text-[11.5px] md:text-[14px] text-gray-700 font-medium leading-tight md:leading-snug">
                   {sectionData.promoBox.bannerFeature}
                 </p>
               </div>
             </div>
 
             {/* Dark Green Box EXACT REPLICA */}
-            <div className="rounded-[24px] relative overflow-hidden flex-1 shadow-lg flex min-h-[300px] bg-[#0b2912]">
+            <div className="rounded-xl md:rounded-[24px] relative overflow-hidden flex-1 shadow-lg flex min-h-[180px] md:min-h-[300px] bg-[#0b2912]">
               {/* Background Image on Right */}
               <div className="absolute top-0 right-0 bottom-0 w-[50%] z-0">
                 <img src={sectionData.promoBox.image}
@@ -305,35 +305,35 @@ const SponsorshipCategories = () => {
               </div>
 
               {/* GO ORGANIC GO BETTER Badge */}
-              <div className="absolute bottom-4 right-5 border border-white/30 rounded-full px-4 py-1.5 flex items-center gap-2 bg-black/40 backdrop-blur-md z-20">
-                <Leaf className="w-5 h-5 text-[#F2B40E]" strokeWidth={1.5} />
-                <span className="text-[11px] font-bold text-white uppercase leading-tight tracking-wider text-center">
+              <div className="absolute bottom-3 right-3 md:bottom-4 md:right-5 border border-white/30 rounded-full px-2 py-1 md:px-4 md:py-1.5 flex items-center gap-1.5 md:gap-2 bg-black/40 backdrop-blur-md z-20">
+                <Leaf className="w-3.5 h-3.5 md:w-5 md:h-5 text-[#F2B40E]" strokeWidth={1.5} />
+                <span className="text-[8px] md:text-[11px] font-bold text-white uppercase leading-tight tracking-wider text-center">
                   {sectionData.promoBox.badgeLine1}<br />{sectionData.promoBox.badgeLine2}
                 </span>
               </div>
 
               {/* Content on Left (relative z-20) */}
-              <div className="relative z-20 p-5 lg:p-6 w-full lg:w-[55%] flex flex-col justify-between pointer-events-auto font-inter">
+              <div className="relative z-20 p-3 md:p-5 lg:p-6 w-full lg:w-[55%] flex flex-col justify-between pointer-events-auto font-inter">
                 <div>
-                  <h3 className="text-[20px] md:text-[24px] lg:text-[26px] font-semibold text-white uppercase leading-[1.2] mb-2 tracking-tight font-poppins">
+                  <h3 className="text-[15px] md:text-[24px] lg:text-[26px] font-semibold text-white uppercase leading-[1.2] mb-1 md:mb-2 tracking-tight font-poppins">
                     {sectionData.promoBox.titlePrefix} <br />
                     <span className="text-[#F2B40E]">{sectionData.promoBox.titleHighlight}</span>
                   </h3>
-                  <p className="text-[13px] md:text-[14px] text-gray-200 font-normal leading-[1.6] max-w-[360px] mb-4">
+                  <p className="text-[11px] md:text-[14px] text-gray-200 font-normal leading-tight md:leading-[1.6] max-w-[65%] sm:max-w-[360px] mb-2 md:mb-4">
                     {sectionData.promoBox.description}
                   </p>
                 </div>
 
                 {/* Stats 2x2 Grid */}
-                <div className="grid grid-cols-2 gap-y-2 gap-x-2 mb-4 mt-1">
+                <div className="grid grid-cols-2 gap-y-1 gap-x-1.5 md:gap-y-2 md:gap-x-2 mb-2 md:mb-4 mt-1 w-[65%] sm:w-full">
                   {sectionData.promoBox.stats.map((stat, idx) => (
-                    <div key={idx} className="flex w-full items-center gap-2.5 bg-white/5 border border-white/10 rounded-lg px-3 py-2 hover:bg-white/10 transition-colors">
-                      <div className="w-8 h-8 rounded-full border border-[#F2B40E] flex items-center justify-center shrink-0">
-                        <stat.icon className="w-4 h-4 text-[#F2B40E]" strokeWidth={2} />
+                    <div key={idx} className="flex w-full items-center gap-1.5 md:gap-2.5 bg-white/5 border border-white/10 rounded-md md:rounded-lg px-1.5 py-1.5 md:px-3 md:py-2 hover:bg-white/10 transition-colors">
+                      <div className="w-5 h-5 md:w-8 md:h-8 rounded-full border border-[#F2B40E] flex items-center justify-center shrink-0">
+                        <stat.icon className="w-3 h-3 md:w-4 md:h-4 text-[#F2B40E]" strokeWidth={2} />
                       </div>
-                      <div className="flex flex-col">
-                        <span className="text-[16px] md:text-[18px] font-semibold text-[#F2B40E] leading-none mb-1">{stat.count}</span>
-                        <span className="text-[11px] md:text-[12px] font-bold text-gray-300 uppercase tracking-widest leading-tight">{stat.label}</span>
+                      <div className="flex flex-col min-w-0">
+                        <span className="text-[11px] md:text-[18px] font-semibold text-[#F2B40E] leading-none mb-0.5 md:mb-1">{stat.count}</span>
+                        <span className="text-[7.5px] md:text-[12px] font-bold text-gray-300 uppercase tracking-widest leading-none md:leading-tight truncate">{stat.label}</span>
                       </div>
                     </div>
                   ))}
@@ -372,12 +372,12 @@ const SponsorshipCategories = () => {
           </div>
 
           {/* RIGHT: CONTACT FORM */}
-          <div className="w-full lg:w-[400px] bg-white rounded-xl shadow-md border border-gray-200 p-4 shrink-0">
-            <h3 className="text-[16px] md:text-[18px] font-semibold text-[#0b2912] uppercase text-center mb-1">{sectionData.form.title}</h3>
-            <div className="w-12 h-1 bg-[#3b8c2a] mx-auto mb-4"></div>
+          <div className="w-full lg:w-[400px] bg-white rounded-xl shadow-md border border-gray-200 p-3 md:p-4 shrink-0">
+            <h3 className="text-[14px] md:text-[18px] font-semibold text-[#0b2912] uppercase text-center mb-1">{sectionData.form.title}</h3>
+            <div className="w-8 md:w-12 h-1 bg-[#3b8c2a] mx-auto mb-3 md:mb-4"></div>
 
-            <form className="flex flex-col gap-3" onSubmit={handleSubmit}>
-              <div className="grid grid-cols-2 gap-3">
+            <form className="flex flex-col gap-2 md:gap-3" onSubmit={handleSubmit}>
+              <div className="grid grid-cols-2 gap-2 md:gap-3">
                 <input
                   type="text"
                   placeholder="Full Name*"

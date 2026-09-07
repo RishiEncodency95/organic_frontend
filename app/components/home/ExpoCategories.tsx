@@ -42,7 +42,7 @@ const sectionData = {
 
 const ExpoCategories = () => {
   return (
-    <section className="py-2 md:py-4 lg:py-8 bg-[#EFF7EE] border-t border-b border-[#CDE3C9] relative overflow-hidden">
+    <section className="py-2 md:py-4 lg:py-6 bg-[#EFF7EE] border-t border-b border-[#CDE3C9] relative overflow-hidden">
       <style>{`
         @keyframes float-flower {
           0% { transform: translateY(0px) rotate(0deg); }
@@ -58,7 +58,7 @@ const ExpoCategories = () => {
       <div className="w-full px-0 relative z-10">
 
         {/* Section Header */}
-        <div className="px-4 md:px-14 w-full flex flex-col items-center text-center mb-6 relative z-10">
+        <div className="px-4 md:px-14 w-full flex flex-col items-center text-center mb-4 md:mb-6 relative z-10">
           {/* Elegant Badge */}
           <div className="inline-flex items-center justify-center gap-2 px-4 py-1.5 mb-2 rounded-full bg-white border border-[#3b8c2a]/20 shadow-[0_2px_10px_rgba(59,140,42,0.05)]">
             <span className="w-1.5 h-1.5 rounded-full bg-[#f58634] animate-pulse"></span>
@@ -68,19 +68,19 @@ const ExpoCategories = () => {
           </div>
 
           {/* Title */}
-          <h2 className="text-[#1a3821] text-[18px] md:text-[30px] lg:text-[32px] font-medium leading-[1.2] mb-4 font-poppins tracking-tight">
-            {sectionData.titleMain} <br className="sm:hidden" />
+          <h2 className="text-[#1a3821] text-[18px] md:text-[30px] lg:text-[32px] font-medium leading-[1.2] mb-3 font-poppins tracking-tight">
+            {sectionData.titleMain} {" "}
             <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#3b8c2a] to-[#F2B40E]">{sectionData.titleHighlight}</span>
           </h2>
 
           {/* Description */}
-          <p className="text-slate-600 text-[15px] md:text-[17px]  font-medium leading-[1.7]">
-            <span className="font-bold text-[#1a3821]">{sectionData.descriptionPrefix}</span>{sectionData.description}
+          <p className="text-slate-700 text-[14px] md:text-[17px] font-medium leading-[1.2] lg:leading-[1.7]">
+            <span className="font-semibold lg:font-bold text-[#1a3821]">{sectionData.descriptionPrefix}</span>{sectionData.description}
           </p>
         </div>
 
         {/* Static Grid Layout (No Slider) */}
-        <div className="w-full mb-6 py-2 px-2 md:px-14 grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-x-2 lg:gap-x-2 gap-y-4 lg:gap-y-4 justify-center">
+        <div className="w-full mb-2 lg:mb-4 py-2 px-2 md:px-14 grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-x-2 lg:gap-x-2 gap-y-2 lg:gap-y-4 justify-center">
           {sectionData.categories.map((item, index) => {
             const Icon = item.icon;
             const displayIndex = index + 1; // Numbering 1 to 10
@@ -90,37 +90,37 @@ const ExpoCategories = () => {
                 href="/exhibition-categories"
                 target="_blank"
                 key={index}
-                className="group flex flex-col w-full h-auto bg-[#f6f4f0] rounded-2xl cursor-pointer border-[1px] border-[#c0b7af] shadow-sm hover:shadow-2xl hover:-translate-y-2 hover:border-[#3b8c2a]/50 transition-all duration-500 relative mt-4"
+                className="group flex flex-col w-full h-auto bg-[#f6f4f0] rounded-2xl cursor-pointer border-[1px] border-[#c0b7af] shadow-sm hover:shadow-2xl hover:-translate-y-2 hover:border-[#3b8c2a]/50 transition-all duration-500 relative mt-3 md:mt-4"
               >
                 {/* Top-Center Badge */}
-                <div className="absolute top-[-20px] left-1/2 -translate-x-1/2 w-14 h-14 rounded-full border-2 border-[#e8c051] shadow-md z-20 overflow-hidden flex items-center justify-center bg-gradient-to-b from-[#1c3f25] to-[#0a170d]">
+                <div className="absolute top-[-16px] md:top-[-20px] left-1/2 -translate-x-1/2 w-10 h-10 md:w-14 md:h-14 rounded-full border-2 border-[#e8c051] shadow-md z-20 overflow-hidden flex items-center justify-center bg-gradient-to-b from-[#1c3f25] to-[#0a170d]">
                   <div className="w-[110%] h-[110%] absolute inset-0 rounded-full border-[3px] border-white z-0 pointer-events-none scale-105" />
-                  {Icon && <Icon className="w-6 h-6 text-white relative z-10" strokeWidth={2} />}
+                  {Icon && <Icon className="w-4 h-4 md:w-6 md:h-6 text-white relative z-10" strokeWidth={2} />}
                 </div>
 
                 {/* Top Half: Image */}
-                <div className="relative w-full h-[140px] lg:h-[180px] shrink-0 overflow-hidden rounded-t-[15px] bg-gray-200">
+                <div className="relative w-full h-[90px] sm:h-[110px] md:h-[140px] lg:h-[180px] shrink-0 overflow-hidden rounded-t-[15px] bg-gray-200">
                   <Image src={item.image} alt={item.imageAlt} fill sizes="(max-width: 640px) 50vw, (max-width: 1024px) 25vw, 20vw" className="object-cover group-hover:scale-110 transition-transform duration-700" />
                 </div>
 
                 {/* Bottom Half: Content */}
-                <div className="px-3 py-3 md:px-4 md:py-4 relative z-10 flex flex-col flex-grow items-start text-left bg-white rounded-b-2xl w-full">
+                <div className="px-2 py-2.5 md:px-4 md:py-4 relative z-10 flex flex-col flex-grow items-start text-left bg-white rounded-b-2xl w-full">
                   {/* Title */}
-                  <h3 className="text-[13.5px] md:text-[16px] font-semibold text-[#3b8c2a] leading-[1.2] mb-2.5 line-clamp-2 w-full">
+                  <h3 className="text-[12px] sm:text-[13.5px] md:text-[16px] font-semibold text-[#3b8c2a] leading-[1.2] mb-1.5 md:mb-2.5 line-clamp-2 w-full">
                     {item.title}
                   </h3>
 
                   {/* Description */}
-                  <p className="text-[11.5px] md:text-[14px] text-gray-700 font-normal leading-[1.4] mb-3 flex-grow line-clamp-3 w-full text-left">
+                  <p className="text-[10px] sm:text-[11.5px] md:text-[14px] text-gray-700 font-normal leading-[1.3] md:leading-[1.4] mb-2 md:mb-3 flex-grow line-clamp-2 md:line-clamp-3 w-full text-left">
                     {item.desc}
                   </p>
 
                   {/* View More Link */}
-                  <div className="mt-auto w-full flex justify-between items-center pt-2.5 border-t border-slate-100">
-                    <span className="text-[#f58220] group-hover:text-[#d35400] text-[10.5px] md:text-[11px] font-bold uppercase tracking-widest transition-colors duration-300">
+                  <div className="mt-auto w-full flex justify-between items-center pt-2 md:pt-2.5 border-t border-slate-100">
+                    <span className="text-[#f58220] group-hover:text-[#d35400] text-[9.5px] md:text-[11px] font-bold uppercase tracking-widest transition-colors duration-300">
                       {sectionData.exploreText}
                     </span>
-                    <ArrowRight size={14} strokeWidth={2.5} className="text-[#f58220] group-hover:text-[#d35400] group-hover:translate-x-1 transition-all duration-300" />
+                    <ArrowRight className="text-[#f58220] group-hover:text-[#d35400] group-hover:translate-x-1 transition-all duration-300 w-3 h-3 md:w-[14px] md:h-[14px]" strokeWidth={2.5} />
                   </div>
                 </div>
 

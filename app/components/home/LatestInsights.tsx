@@ -55,33 +55,33 @@ const LatestInsights = () => {
   return (
     <section className="relative w-full py-3 md:py-5 overflow-hidden border-t border-gray-100 font-inter" style={{ backgroundColor: "#F7F8F0" }}>
 
-      <div className="w-full px-4 md:px-14 relative z-10">
+      <div className="w-full px-2 md:px-14 relative z-10">
 
         {/* BRANDED HEADING (Matching WhoCanParticipate font-poppins & font-semibold) */}
-        <div className="flex flex-col md:flex-row md:items-end justify-between mb-4 md:mb-5 gap-3 md:gap-4">
+        <div className="flex flex-col md:flex-row md:items-end justify-between mb-3 md:mb-5 gap-2 md:gap-4">
           <div>
-            <div className="flex items-center gap-3 mb-1.5">
-              <div className="h-px w-8 bg-[#1b5e20]" />
+            <div className="flex items-center gap-1.5 md:gap-3 mb-1 md:mb-1.5">
+              <div className="h-px w-6 md:w-8 bg-[#1b5e20]" />
               <span className="uppercase tracking-[0.3em] md:tracking-[0.4em] text-[#1b5e20] font-bold text-[10px] md:text-xs font-poppins">
                 {sectionData.header.badge}
               </span>
-              <div className="h-px w-8 bg-[#1b5e20]" />
+              <div className="h-px w-6 md:w-8 bg-[#1b5e20]" />
             </div>
-            <h2 className="text-xl md:text-2xl lg:text-3xl font-semibold text-[#1b5e20] uppercase leading-[1.1] font-poppins">
+            <h2 className="text-[17px] md:text-2xl lg:text-3xl font-semibold text-[#1b5e20] uppercase leading-[1.1] font-poppins">
               {sectionData.header.titlePrefix} <span className="text-[#d26019]">{sectionData.header.titleHighlight}</span>
             </h2>
 
           </div>
           <Link
             href={sectionData.header.linkHref}
-            className="flex items-center gap-2 text-[#d26019] font-poppins font-bold text-[11px] md:text-xs uppercase tracking-widest hover:gap-4 transition-all w-fit"
+            className="flex items-center gap-1 md:gap-2 text-[#d26019] font-poppins font-bold text-[10px] md:text-xs uppercase tracking-widest hover:gap-4 transition-all w-fit"
           >
-            {sectionData.header.linkText} <ArrowRight className="w-4 h-4" />
+            {sectionData.header.linkText} <ArrowRight className="w-3 h-3 md:w-4 md:h-4" />
           </Link>
         </div>
 
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 mb-4 font-inter">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3 md:gap-5 mb-3 md:mb-4 font-inter">
           {sectionData.articles.map((article) => (
             <Link
               href={article.link}
@@ -91,45 +91,45 @@ const LatestInsights = () => {
             >
 
               {/* Image Container */}
-              <div className="relative h-[200px] md:h-[220px] w-full overflow-hidden">
+              <div className="relative h-[160px] md:h-[220px] w-full overflow-hidden">
                 <img src={article.image} alt={article.title} className="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-[1.03]" />
 
                 {/* Featured Badge */}
                 {article.badge && (
-                  <div className="absolute top-4 left-4 bg-[#1b5e20] text-white text-[10px] font-semibold tracking-wider uppercase px-3 py-1.5 rounded-md shadow-md z-20 font-poppins">
+                  <div className="absolute top-2 left-2 md:top-4 md:left-4 bg-[#1b5e20] text-white text-[9px] md:text-[10px] font-semibold tracking-wider uppercase px-2 py-1 md:px-3 md:py-1.5 rounded-md shadow-md z-20 font-poppins">
                     {article.badge}
                   </div>
                 )}
               </div>
 
               {/* Content */}
-              <div className="p-4 lg:p-5 flex flex-col flex-1 relative bg-white font-inter">
+              <div className="p-3 md:p-4 lg:p-5 flex flex-col flex-1 relative bg-white font-inter">
                 {/* Subtle Leaf bg inside card */}
                 <div className="absolute bottom-3 right-3 w-10 h-10 opacity-[0.06] pointer-events-none">
                   <Leaf className="w-full h-full text-[#3b8c2a] fill-[#3b8c2a]" />
                 </div>
 
-                <div className="flex items-center gap-2 mb-3">
-                  <Calendar className="w-4 h-4 text-[#3b8c2a]" strokeWidth={2.5} />
-                  <span className="text-gray-700 font-semibold text-xs">{article.date}</span>
+                <div className="flex items-center gap-1.5 md:gap-2 mb-2 md:mb-3">
+                  <Calendar className="w-3 h-3 md:w-4 md:h-4 text-[#3b8c2a]" strokeWidth={2.5} />
+                  <span className="text-gray-700 font-semibold text-[10px] md:text-xs">{article.date}</span>
                 </div>
 
-                <h3 className="text-base md:text-lg font-semibold text-[#1b5e20] leading-snug mb-2 font-poppins group-hover:text-[#3b8c2a] transition-colors line-clamp-2">
+                <h3 className="text-[13px] md:text-lg font-semibold text-[#1b5e20] leading-[1.2] md:leading-snug mb-1.5 md:mb-2 font-poppins group-hover:text-[#3b8c2a] transition-colors line-clamp-2">
                   {article.title}
                 </h3>
 
-                <p className="text-gray-700 text-xs md:text-sm font-semibold leading-relaxed mb-4 flex-1 line-clamp-3 font-inter">
+                <p className="text-gray-700 text-[11px] md:text-sm font-medium md:font-semibold leading-tight md:leading-relaxed mb-3 md:mb-4 flex-1 line-clamp-3 font-inter">
                   {article.description}
                 </p>
 
                 <div className="flex items-center justify-between mt-auto">
-                  <div className="flex items-center text-[#1b5e20] font-semibold text-xs md:text-sm group/btn transition-colors hover:text-[#3b8c2a] font-poppins">
+                  <div className="flex items-center text-[#1b5e20] font-semibold text-[10.5px] md:text-sm group/btn transition-colors hover:text-[#3b8c2a] font-poppins">
                     Read more
-                    <ArrowRight className="w-4 h-4 ml-1 transition-transform group-hover/btn:translate-x-1" strokeWidth={2.5} />
+                    <ArrowRight className="w-3 h-3 md:w-4 md:h-4 ml-1 transition-transform group-hover/btn:translate-x-1" strokeWidth={2.5} />
                   </div>
 
-                  <div className="flex items-center gap-1.5 text-gray-600 font-semibold text-xs">
-                    <Clock className="w-3.5 h-3.5 text-gray-500" />
+                  <div className="flex items-center gap-1 md:gap-1.5 text-gray-600 font-semibold text-[9.5px] md:text-xs">
+                    <Clock className="w-3 h-3 md:w-3.5 md:h-3.5 text-gray-500" />
                     <span>{article.readTime}</span>
                   </div>
                 </div>
@@ -139,19 +139,19 @@ const LatestInsights = () => {
         </div>
 
         {/* Pagination/Controls */}
-        <div className="flex items-center justify-center gap-4">
-          <button aria-label="Previous articles" className="w-10 h-10 rounded-full bg-white border border-gray-200 flex items-center justify-center text-gray-600 hover:bg-[#f4fcf6] hover:text-[#3b8c2a] hover:border-[#3b8c2a] transition-all shadow-sm">
-            <ChevronLeft className="w-5 h-5" />
+        <div className="flex items-center justify-center gap-3 md:gap-4">
+          <button aria-label="Previous articles" className="w-8 h-8 md:w-10 md:h-10 rounded-full bg-white border border-gray-200 flex items-center justify-center text-gray-600 hover:bg-[#f4fcf6] hover:text-[#3b8c2a] hover:border-[#3b8c2a] transition-all shadow-sm">
+            <ChevronLeft className="w-4 h-4 md:w-5 md:h-5" />
           </button>
 
-          <div className="flex items-center gap-2">
-            <div className="w-2 h-2 rounded-full bg-[#0f5c2e]"></div>
-            <div className="w-2 h-2 rounded-full bg-gray-300"></div>
-            <div className="w-2 h-2 rounded-full bg-gray-300"></div>
+          <div className="flex items-center gap-1.5 md:gap-2">
+            <div className="w-1.5 h-1.5 md:w-2 md:h-2 rounded-full bg-[#0f5c2e]"></div>
+            <div className="w-1.5 h-1.5 md:w-2 md:h-2 rounded-full bg-gray-300"></div>
+            <div className="w-1.5 h-1.5 md:w-2 md:h-2 rounded-full bg-gray-300"></div>
           </div>
 
-          <button aria-label="Next articles" className="w-10 h-10 rounded-full bg-white border border-gray-200 flex items-center justify-center text-gray-600 hover:bg-[#f4fcf6] hover:text-[#3b8c2a] hover:border-[#3b8c2a] transition-all shadow-sm">
-            <ChevronRight className="w-5 h-5" />
+          <button aria-label="Next articles" className="w-8 h-8 md:w-10 md:h-10 rounded-full bg-white border border-gray-200 flex items-center justify-center text-gray-600 hover:bg-[#f4fcf6] hover:text-[#3b8c2a] hover:border-[#3b8c2a] transition-all shadow-sm">
+            <ChevronRight className="w-4 h-4 md:w-5 md:h-5" />
           </button>
         </div>
 
