@@ -18,6 +18,7 @@ import governmentmsme from "@/app/assets/participate/msme/government_msme.png";
 import provisioning from "@/app/assets/participate/msme/provisioning.png";
 import graph from "@/app/assets/participate/msme/graph.png";
 import eligibilityButtonImg from "@/app/assets/participate/msme/eligibiily-button.png";
+import handImg from "@/app/assets/icons/hand.png";
 import SectionContainer from "../../layout/SectionContainer";
 /**
  * PMSFinancialAssistanceBanner
@@ -216,13 +217,13 @@ const PMSFinancialAssistanceBanner: FC = () => {
                       </p>
 
                       {/* Bottom icon with background */}
-                      <div className={`absolute bottom-0 left-0 right-0 h-7 rounded-b-2xl ${card.footIconBg}`}>
-                        <span className={`absolute left-1/2 -top-7 flex h-[44px] w-[44px] -translate-x-1/2 items-center justify-center rounded-full ${card.footIconBg} z-0`}>
+                      <div className={`absolute bottom-0 left-0 right-0 h-8 rounded-b-2xl ${card.footIconBg}`}>
+                        <span className={`absolute left-1/2 -top-7 flex h-[56px] w-[56px] -translate-x-1/2 items-center justify-center rounded-full ${card.footIconBg} z-0`}>
                           <img
                             src={card.footIcon.src}
                             alt=""
                             aria-hidden="true"
-                            className="h-8 w-8 object-contain"
+                            className="h-12 w-12 object-contain"
                           />
                         </span>
                       </div>
@@ -246,7 +247,7 @@ const PMSFinancialAssistanceBanner: FC = () => {
             />
           </div>
 
-          <div className="relative flex flex-col gap-4 px-3 py-4 sm:px-4 sm:py-5 md:gap-6 md:px-5 md:py-6 border border-[#1b5e20]/20 rounded-2xl">
+          <div className="relative flex flex-col gap-3 px-3 py-2 sm:px-4 sm:py-2.5 md:gap-4 md:px-5 md:py-3 border border-[#1b5e20]/20 rounded-2xl">
             <div className="flex flex-col gap-4 md:flex-row md:items-center md:gap-16 ">
               {/* Important note */}
               <div className="flex w-full items-start gap-3 md:w-[38%] border-r border-dotted border-[#1b5e20] pr-3 md:pr-4">
@@ -261,14 +262,20 @@ const PMSFinancialAssistanceBanner: FC = () => {
                   </strong>{" "}
                   Assistance is subject to applicable PMS guidelines,
                   prescribed financial limits, enterprise category, approved
-                  event/component, documentation and final sanction.
+                  event/component, documentation
+                  <br />
+                  and final sanction.
                 </p>
               </div>
 
               {/* Government support */}
               <div className="flex w-full items-center gap-3 md:w-[25%]">
                 <span className="flex h-20 w-20 shrink-0 items-center justify-center rounded-full bg-[#1b5e20]/10">
-                  <Handshake className="h-12 w-12 text-[#1b5e20]" aria-hidden="true" />
+                  <img
+                    src={handImg.src}
+                    alt="Government Support"
+                    className="h-16 w-16 object-contain"
+                  />
                 </span>
                 <p className="text-sm font-semibold leading-relaxed text-slate-900 ml-4">
                   Government Support.

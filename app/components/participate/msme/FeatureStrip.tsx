@@ -93,7 +93,7 @@ export default function FeatureStrip() {
                       <IconComponent className="w-5 h-5 md:w-6 md:h-6 text-white stroke-[2]" />
                     </div>
                     <div className="flex flex-col text-left justify-center pt-0.5">
-                      <h4 className="text-[11px] sm:text-[12px] md:text-[13px] font-bold text-white leading-tight font-inter mb-0.5">
+                      <h4 className="text-[11px] sm:text-[12px] md:text-[13px] font-semibold text-white leading-tight font-inter mb-0.5">
                         {item.title}
                       </h4>
                       <p className="text-[10px] sm:text-[11px] md:text-[11.5px] font-medium text-[#a5d6a7] leading-[1.2] font-inter">

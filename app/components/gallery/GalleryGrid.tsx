@@ -4,50 +4,14 @@ import { Camera, X, ChevronLeft, ChevronRight, ZoomIn } from 'lucide-react';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
-import image1 from '@/app/assets/image/gall1og.webp';
-import image2 from '@/app/assets/image/gall2og.webp';
-import image3 from '@/app/assets/image/gall3og.webp';
-import image4 from '@/app/assets/image/gall4og.webp';
-import image5 from '@/app/assets/image/image5.webp';
-import image6 from '@/app/assets/image/image6.webp';
-import image7 from '@/app/assets/image/image7.webp';
-import image8 from '@/app/assets/image/image8.webp';
-import image9 from '@/app/assets/image/image9.webp';
-import image10 from '@/app/assets/image/image10.webp';
-import image11 from '@/app/assets/image/image11.webp';
-import image12 from '@/app/assets/image/image12.webp';
+import { GALLERY_ITEMS, GalleryItem } from '@/app/data/galleryImages';
 import SectionContainer from '@/app/components/layout/SectionContainer';
 
 if (typeof window !== 'undefined') {
   gsap.registerPlugin(ScrollTrigger);
 }
 
-const ALL_IMAGES = [
-  { id:1,  src:image1,  title:'Inauguration Ceremony', category:'Inauguration',        year:'2025', style:{ gridColumn:'span 5', gridRow:'span 12' }, hasLabel:true },
-  { id:2,  src:image2,  title:'Stage',                 category:'Exhibition (Expo)',   year:'2025', style:{ gridColumn:'span 3', gridRow:'span 8'  } },
-  { id:3,  src:image3,  title:'Speaker Sessions',      category:'Scientific Sessions', year:'2024', style:{ gridColumn:'span 2', gridRow:'span 8'  } },
-  { id:4,  src:image4,  title:'Audience',              category:'Networking',          year:'2025', style:{ gridColumn:'span 2', gridRow:'span 8'  } },
-  { id:5,  src:image5,  title:'Panel Discussions',     category:'Panel Discussions',   year:'2024', style:{ gridColumn:'span 4', gridRow:'span 8'  } },
-  { id:6,  src:image6,  title:'Exhibition Area',       category:'Exhibition (Expo)',   year:'2023', style:{ gridColumn:'span 3', gridRow:'span 8'  } },
-  { id:7,  src:image7,  title:'Awards',                category:'Awards',              year:'2025', style:{ gridColumn:'span 3', gridRow:'span 7'  } },
-  { id:8,  src:image8,  title:'Cultural Programs',     category:'Cultural Programs',   year:'2024', style:{ gridColumn:'span 2', gridRow:'span 14' } },
-  { id:9,  src:image9,  title:'Interaction',           category:'Networking',          year:'2023', style:{ gridColumn:'span 2', gridRow:'span 10' } },
-  { id:10, src:image10, title:'Audience',              category:'Speakers',            year:'2025', style:{ gridColumn:'span 2', gridRow:'span 10' } },
-  { id:11, src:image11, title:'Certificate',           category:'Awards',              year:'2024', style:{ gridColumn:'span 3', gridRow:'span 10' } },
-  { id:12, src:image12, title:'Sessions',              category:'Workshops',           year:'2025', style:{ gridColumn:'span 3', gridRow:'span 7'  } },
-  { id:13, src:image7,  title:'Awards Night',          category:'Awards',              year:'2024', style:{ gridColumn:'span 5', gridRow:'span 12' }, hasLabel:true },
-  { id:14, src:image1,  title:'Opening Ceremony',      category:'Inauguration',        year:'2023', style:{ gridColumn:'span 3', gridRow:'span 8'  } },
-  { id:15, src:image5,  title:'Keynote Address',       category:'Speakers',            year:'2025', style:{ gridColumn:'span 2', gridRow:'span 8'  } },
-  { id:16, src:image4,  title:'Delegates',             category:'Networking',          year:'2024', style:{ gridColumn:'span 2', gridRow:'span 8'  } },
-  { id:17, src:image11, title:'Certificates',          category:'Awards',              year:'2023', style:{ gridColumn:'span 4', gridRow:'span 8'  } },
-  { id:18, src:image2,  title:'Main Stage',            category:'Inauguration',        year:'2025', style:{ gridColumn:'span 3', gridRow:'span 8'  } },
-  { id:19, src:image10, title:'Crowd',                 category:'Networking',          year:'2024', style:{ gridColumn:'span 3', gridRow:'span 7'  } },
-  { id:20, src:image6,  title:'Expo Stalls',           category:'Exhibition (Expo)',   year:'2025', style:{ gridColumn:'span 2', gridRow:'span 14' } },
-  { id:21, src:image3,  title:'Workshop',              category:'Workshops',           year:'2023', style:{ gridColumn:'span 2', gridRow:'span 10' } },
-  { id:22, src:image9,  title:'Networking',            category:'Networking',          year:'2025', style:{ gridColumn:'span 2', gridRow:'span 10' } },
-  { id:23, src:image12, title:'Breakout Sessions',     category:'Panel Discussions',   year:'2024', style:{ gridColumn:'span 3', gridRow:'span 10' } },
-  { id:24, src:image8,  title:'Cultural Dance',        category:'Cultural Programs',   year:'2025', style:{ gridColumn:'span 3', gridRow:'span 7'  } },
-];
+const ALL_IMAGES: GalleryItem[] = GALLERY_ITEMS;
 
 const PAGE_SIZE = 12;
 
@@ -174,6 +138,7 @@ const GalleryCard = ({ img, index, onOpen, animKey }: any) => {
   const overlayRef = useRef<HTMLDivElement>(null);
   const labelRef   = useRef<HTMLDivElement>(null);
   const zoomRef    = useRef<HTMLDivElement>(null);
+  const [isLoaded, setIsLoaded] = useState(false);
 
   useEffect(() => {
     const el = cardRef.current;
@@ -181,21 +146,21 @@ const GalleryCard = ({ img, index, onOpen, animKey }: any) => {
 
     gsap.set(el, { 
       opacity: 0, 
-      y: 50, 
-      scale: 0.96 
+      y: 40, 
+      scale: 0.97 
     });
 
-    const delay = (index % 4) * 0.1;
+    const delay = (index % 4) * 0.08;
 
     const st = ScrollTrigger.create({
       trigger: el, 
-      start: 'top 90%',
+      start: 'top 95%',
       onEnter: () => {
         gsap.to(el, { 
           opacity: 1, 
           y: 0, 
           scale: 1, 
-          duration: 0.8, 
+          duration: 0.6, 
           delay: delay, 
           ease: 'power3.out', 
           clearProps: 'transform'
@@ -230,11 +195,30 @@ const GalleryCard = ({ img, index, onOpen, animKey }: any) => {
 
   return (
     <div ref={cardRef} onClick={handleClick} onMouseEnter={onEnter} onMouseLeave={onLeave}
-      style={{ ...img.style, position:'relative', borderRadius:14, overflow:'hidden', cursor:'pointer' }}
+      style={{ 
+        ...img.style, 
+        position:'relative', 
+        borderRadius:14, 
+        overflow:'hidden', 
+        cursor:'pointer',
+        backgroundColor: '#eef2ee',
+      }}
     >
-      <div ref={imgRef} style={{ width:'100%', height:'100%', overflow:'hidden' }}>
-        <img src={getImgSrc(img.src)} alt={img.title}
-          style={{ width:'100%', height:'100%', objectFit:'cover', display:'block' }}
+      <div ref={imgRef} style={{ width:'100%', height:'100%', overflow:'hidden', position:'relative' }}>
+        <img 
+          src={getImgSrc(img.src)} 
+          alt={img.title}
+          loading={index < 4 ? "eager" : "lazy"}
+          decoding="async"
+          onLoad={() => setIsLoaded(true)}
+          style={{ 
+            width:'100%', 
+            height:'100%', 
+            objectFit:'cover', 
+            display:'block',
+            transition:'opacity 0.3s ease-in-out',
+            opacity: isLoaded ? 1 : 0.8,
+          }}
         />
       </div>
 
@@ -406,10 +390,16 @@ const styleCycle = [
 interface GalleryGridProps {
   activeYear?: string;
   activeCategory?: string;
+  searchQuery?: string;
   dbGallery?: any[];
 }
 
-const GalleryGrid: React.FC<GalleryGridProps> = ({ activeYear = 'All Years', activeCategory = 'All Activities', dbGallery = [] }) => {
+const GalleryGrid: React.FC<GalleryGridProps> = ({ 
+  activeYear = 'All Years', 
+  activeCategory = 'All Activities', 
+  searchQuery = '',
+  dbGallery = [] 
+}) => {
   const [page, setPage]                   = useState(1);
   const [animKey, setAnimKey]             = useState(0);
   const [lightboxIndex, setLightboxIndex] = useState<number | null>(null);
@@ -434,19 +424,21 @@ const GalleryGrid: React.FC<GalleryGridProps> = ({ activeYear = 'All Years', act
   }, [dbGallery]);
 
   const filteredImages = React.useMemo(() => {
+    const q = (searchQuery || '').trim().toLowerCase();
     return dynamicImages.filter(img => {
       const matchYear = activeYear === 'All Years' || img.year === activeYear;
       const matchCategory = activeCategory === 'All Activities' || img.category === activeCategory;
-      return matchYear && matchCategory;
+      const matchSearch = !q || img.title.toLowerCase().includes(q) || img.category.toLowerCase().includes(q);
+      return matchYear && matchCategory && matchSearch;
     });
-  }, [activeYear, activeCategory, dynamicImages]);
+  }, [activeYear, activeCategory, searchQuery, dynamicImages]);
 
   const TOTAL_PAGES = Math.ceil(filteredImages.length / PAGE_SIZE);
 
   useEffect(() => {
     setPage(1);
     setAnimKey(prev => prev + 1);
-  }, [activeYear, activeCategory]);
+  }, [activeYear, activeCategory, searchQuery]);
 
   const pageImages = filteredImages.slice((page-1)*PAGE_SIZE, page*PAGE_SIZE);
 
@@ -499,9 +491,17 @@ const GalleryGrid: React.FC<GalleryGridProps> = ({ activeYear = 'All Years', act
             gridAutoRows:'14px',
             gap:'8px',
           }}>
-            {pageImages.map((img, index) => (
-              <GalleryCard key={`${img.id}-${animKey}`} img={img} index={index} onOpen={openLightbox} animKey={animKey}/>
-            ))}
+            {pageImages.map((img, index) => {
+              const s = styleCycle[index % styleCycle.length];
+              const styledImg = {
+                ...img,
+                style: { gridColumn: s.gridColumn, gridRow: s.gridRow },
+                hasLabel: s.hasLabel || false,
+              };
+              return (
+                <GalleryCard key={`${img.id}-${animKey}`} img={styledImg} index={index} onOpen={openLightbox} animKey={animKey}/>
+              );
+            })}
           </div>
         )}
 

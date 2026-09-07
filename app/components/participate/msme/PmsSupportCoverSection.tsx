@@ -249,15 +249,6 @@ const PmsSupportCoverSection: FC = () => {
             object-right-top
           "
         />
-        <div
-          className="
-            absolute
-            inset-y-0
-            left-0
-            w-[40%]
-            bg-gradient-to-r from-[#fbfcf8] to-transparent
-          "
-        />
       </div>
 
       <SectionContainer>
@@ -318,7 +309,7 @@ const PmsSupportCoverSection: FC = () => {
                 More Than Just
                 <br />
 
-                <span className="">
+                <span className="text-[#051323]">
                   Stall Space Rent
                 </span>
               </h3>
@@ -364,7 +355,7 @@ const PmsSupportCoverSection: FC = () => {
                   rounded-[12px]
                   border
                   border-[#bdc9b4]
-                  bg-[#f7faf2]
+                  bg-[#f5f7f1]
                   px-[18px]
                   pb-[10px]
                   pt-[25px]
@@ -537,14 +528,14 @@ const PmsSupportCoverSection: FC = () => {
           <div
             className="
               relative
-              mt-[15px]
+              mt-[26px]
               rounded-[13px]
               border
               border-[#d7ded0]
               bg-white/80
               px-[16px]
               pb-[14px]
-              pt-[23px]
+              pt-[14px]
             "
           >
             {/* header */}
@@ -729,12 +720,16 @@ const PmsSupportCoverSection: FC = () => {
 
                   {/* bottom description */}
                   <div
+                    style={{
+                      boxShadow:
+                        "rgba(0, 0, 0, 0.02) 0px 1px 3px 0px, rgba(27, 31, 35, 0.15) 0px 0px 0px 1px",
+                    }}
                     className="
                       flex
                       min-h-[65px]
                       items-center
                       rounded-[8px]
-                      bg-[#f1f5e8]
+                      bg-[#edf1e3]
                       px-[9px]
                       py-[7px]
                     "

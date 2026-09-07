@@ -14,30 +14,7 @@ const API_BASE = process.env.NEXT_PUBLIC_API_BASE || "https://api.ihwe.in";
 const PAGE_SIZE = 80;
 
 const getExhibitors = async (): Promise<ApiExhibitor[]> => {
-    try {
-        const first = await fetch(`${API_BASE}/api/exhibitor?page=1&limit=${PAGE_SIZE}`, { cache: "force-cache" });
-        if (!first.ok) return fallbackExhibitors;
-        const firstJson = await first.json();
-        const totalPages = firstJson.pagination?.totalPages ?? 1;
-        const restPages =
-            totalPages > 1
-                ? await Promise.all(
-                      Array.from({ length: totalPages - 1 }, (_, i) =>
-                          fetch(`${API_BASE}/api/exhibitor?page=${i + 2}&limit=${PAGE_SIZE}`, { cache: "force-cache" }).then((r) => r.json())
-                      )
-                  )
-                : [];
-
-        const all = [firstJson, ...restPages].flatMap((j) => j.data ?? []);
-        const seen = new Set<string>();
-        const res = (all as ApiExhibitor[])
-            .filter((e) => (seen.has(e._id) ? false : (seen.add(e._id), true)))
-            .sort((a, b) => a.order - b.order);
-            
-        return res.length > 0 ? res : fallbackExhibitors;
-    } catch {
-        return fallbackExhibitors;
-    }
+    return fallbackExhibitors;
 };
 
 const ExhibitorsPage = async () => {
