@@ -137,15 +137,15 @@ export default function WhatsNextBanner() {
             {/* RIGHT */}
             <div className="flex flex-col gap-4 lg:col-span-7">
               {/* LOGO */}
-              <div className="flex items-center justify-start gap-3 lg:justify-end">
+              <div className="relative flex items-center justify-start gap-3 lg:justify-end">
                 <img
                   src={logoLeafMarkIcon.src}
                   alt=""
-                  className="h-[72px] w-auto shrink-0 object-contain"
+                  className="relative z-10 h-[72px] w-auto shrink-0 object-contain"
                   aria-hidden="true"
                 />
 
-                <p className="text-[16px] font-semibold leading-tight text-[#1b5e20] sm:text-[18px]">
+                <p className="relative z-20 text-[16px] font-semibold leading-tight text-[#1b5e20] sm:text-[18px]">
                   Bharat Organic Expo
                   <br />
                   <span className="text-[#F2B40E]">2027</span>

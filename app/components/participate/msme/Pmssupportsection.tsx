@@ -287,13 +287,13 @@ export default function PmsSupportSection() {
                   </div>
                 </div>
 
-                <button
-                  type="button"
+                <a
+                  href="/registration/book-a-stand"
                   className="inline-flex w-fit items-center gap-1.5 rounded-lg bg-[#F2B40E] px-4 py-2.5 text-[13px] font-semibold uppercase tracking-wide text-[#0b2912] transition-colors hover:bg-[#d4a00c] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#F2B40E] sm:text-sm"
                 >
                   Start Your Application
                   <ChevronRight className="h-4 w-4" aria-hidden="true" />
-                </button>
+                </a>
               </div>
             </div>
             <img

@@ -255,7 +255,7 @@ export default function NeedHelpSection() {
             </div>
 
             <a
-              href="#apply"
+              href="/registration/book-a-stand"
               className="inline-flex shrink-0 items-center gap-1.5 rounded-lg bg-[#1b5e20] px-4 py-2.5 text-[14px] font-semibold uppercase tracking-wide text-white transition-colors hover:bg-[#2d7a2d]"
             >
               Start Your Application

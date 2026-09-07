@@ -12,7 +12,6 @@ import bgImage from "@/app/assets/participate/msme/ready_to_explore.png"
 ================================================================ */
 
 export type PmsFinalCtaContent = {
-  sectionLabel: string;
 
   headingBefore: string;
   headingHighlight: string;
@@ -58,8 +57,7 @@ type Props = {
 ================================================================ */
 
 export const DEFAULT_PMS_FINAL_CTA_CONTENT: PmsFinalCtaContent = {
-  sectionLabel:
-    "SECTION 11 — FINAL CTA",
+
 
   headingBefore:
     "Ready to Explore",
@@ -607,7 +605,7 @@ export default function PmsFinalCta({
         overflow-hidden
         bg-[#FAFAF5]
 
-        lg:aspect-[2/1]
+        lg:aspect-[16/9]
       "
     >
       {/* ==========================================================
@@ -740,43 +738,6 @@ export default function PmsFinalCta({
           lg:block
         "
       >
-        {/* ========================================================
-            SECTION BADGE
-
-            reference:
-            x 439–644
-            y 24–50
-        ======================================================== */}
-
-        <div
-          className="
-            absolute
-            left-1/2
-            top-[4.4%]
-            -translate-x-1/2
-          "
-        >
-          <div
-            className="
-              flex
-              h-[4.75%]
-              min-h-[26px]
-              items-center
-              justify-center
-              rounded-[0.42vw]
-              bg-[#1F4C00]
-              px-[1.5vw]
-              py-[0.48vw]
-              text-[clamp(9px,0.92vw,14px)]
-              uppercase
-              tracking-[0.055em]
-              text-white
-            "
-          >
-            {c.sectionLabel}
-          </div>
-        </div>
-
         {/* ========================================================
             TITLE
 
@@ -939,11 +900,8 @@ export default function PmsFinalCta({
             reference y 331
         ======================================================== */}
 
-        <button
-          type="button"
-          onClick={
-            onCheckEligibility
-          }
+        <a
+          href="/participate/msme/eligibility-check"
           className="
             absolute
             left-[25.5%]
@@ -986,7 +944,7 @@ export default function PmsFinalCta({
           >
             {c.primaryButton}
           </span>
-        </button>
+        </a>
 
         {/* ========================================================
             RIGHT CTA
@@ -1289,26 +1247,11 @@ export default function PmsFinalCta({
           flex-col
           items-center
           px-5
-          py-10
+          pt-2
+          pb-5
           lg:hidden
         "
       >
-        <span
-          className="
-            rounded-[5px]
-            bg-[#204C00]
-            px-4
-            py-2
-            text-[10px]
-            font-[800]
-            uppercase
-            tracking-[0.05em]
-            text-white
-          "
-        >
-          {c.sectionLabel}
-        </span>
-
         <h2
           className="
             mt-5
@@ -1549,7 +1492,7 @@ export default function PmsFinalCta({
             <div>
               <p
                 className="
-                  text-[12px]
+                  text-[14px]
                   font-[800]
                   uppercase
                   text-[#2B4A10]
@@ -1563,7 +1506,7 @@ export default function PmsFinalCta({
               <p
                 className="
                   mt-2
-                  text-[11px]
+                  text-[14px]
                   leading-[1.6]
                   text-[#30343E]
                 "

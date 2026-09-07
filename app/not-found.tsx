@@ -19,9 +19,9 @@ export default function NotFound() {
               "url(https://cdn.dribbble.com/users/285475/screenshots/2083086/dribbble_1.gif)",
           }}
         >
-          <h1 className="text-7xl sm:text-8xl md:text-[100px] font-black text-center text-slate-800 tracking-tight font-poppins select-none drop-shadow-sm">
+          {/* <h1 className="text-7xl sm:text-8xl md:text-[100px] font-black text-center text-slate-800 tracking-tight font-poppins select-none drop-shadow-sm">
             404
-          </h1>
+          </h1> */}
         </div>
 
         {/* Content Box */}
