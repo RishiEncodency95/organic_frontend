@@ -8,10 +8,18 @@ const years = ['All Years', '2025', '2024', '2023', '2022', '2021', '2020'];
 interface YearsFilterProps {
   activeYear?: string;
   onYearChange?: (year: string) => void;
+  searchQuery?: string;
+  onSearchChange?: (query: string) => void;
   dbYears?: any[];
 }
 
-const YearsFilter: React.FC<YearsFilterProps> = ({ activeYear = 'All Years', onYearChange, dbYears = [] }) => {
+const YearsFilter: React.FC<YearsFilterProps> = ({ 
+  activeYear = 'All Years', 
+  onYearChange, 
+  searchQuery = '',
+  onSearchChange,
+  dbYears = [] 
+}) => {
   const dynamicYears = dbYears.length > 0 ? ['All Years', ...dbYears.map(y => y.year)] : years;
 
   return (
@@ -58,6 +66,8 @@ const YearsFilter: React.FC<YearsFilterProps> = ({ activeYear = 'All Years', onY
               <input
                 type="text"
                 placeholder="Search photos..."
+                value={searchQuery}
+                onChange={(e) => onSearchChange?.(e.target.value)}
                 className="w-full pl-9 pr-4 py-2 rounded-sm border border-[#1b5e20] focus:outline-none text-sm text-gray-700"
               />
             </div>

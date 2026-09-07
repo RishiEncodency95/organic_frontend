@@ -15,7 +15,7 @@ interface ExhibitorsSectionProps {
     exhibitors: ApiExhibitor[];
 }
 
-const PAGE_SIZE = 70;
+const PAGE_SIZE = 48;
 
 const ExhibitorsSection = ({ exhibitors }: ExhibitorsSectionProps) => {
     const listToUse = useMemo(() => (exhibitors && exhibitors.length > 0 ? exhibitors : fallbackExhibitors), [exhibitors]);

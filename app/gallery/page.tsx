@@ -12,6 +12,7 @@ import JoinUsBanner from '@/app/components/gallery/JoinUsBanner';
 export default function GalleryPage() {
   const [activeYear, setActiveYear] = useState('All Years');
   const [activeCategory, setActiveCategory] = useState('All Activities');
+  const [searchQuery, setSearchQuery] = useState('');
 
   return (
     <main className="min-h-screen bg-white font-inter">
@@ -19,6 +20,8 @@ export default function GalleryPage() {
       <YearsFilter 
         activeYear={activeYear} 
         onYearChange={setActiveYear} 
+        searchQuery={searchQuery}
+        onSearchChange={setSearchQuery}
       />
       <CategoryFilter 
         activeCategory={activeCategory} 
@@ -27,6 +30,7 @@ export default function GalleryPage() {
       <GalleryGrid 
         activeYear={activeYear} 
         activeCategory={activeCategory} 
+        searchQuery={searchQuery}
       />
       <Counters />
       <VideoHighlights />

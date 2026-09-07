@@ -78,7 +78,7 @@ const PartnersAndBrands = () => {
   ];
 
   return (
-    <section className="bg-white pt-6 pb-12 relative z-10 font-inter">
+    <section className="bg-white pt-4 pb-6 md:pt-6 md:pb-12 relative z-10 font-inter">
       <style>{`
         @keyframes marquee {
           0% { transform: translateX(0%); }
@@ -99,35 +99,35 @@ const PartnersAndBrands = () => {
         }
       `}</style>
 
-      <div className="w-full px-4 sm:px-6 lg:px-14">
+      <div className="w-full px-2 sm:px-6 lg:px-14">
 
         {/* ══════════════════════════════════════════
             SECTION 1: TRUSTED BY INDUSTRY LEADERS
         ══════════════════════════════════════════ */}
-        <div className="mb-10">
-          <div className="flex items-center gap-4 mb-6">
+        <div className="mb-6 md:mb-10">
+          <div className="flex items-center gap-2 md:gap-4 mb-3 md:mb-6">
             <div className="flex-1 h-[1.5px] bg-slate-300" />
-            <span className="font-poppins font-semibold text-[13px] md:text-[15px] tracking-widest uppercase text-[#1a1a1a] text-center">
+            <span className="font-poppins font-semibold text-[11px] md:text-[15px] tracking-widest uppercase text-[#1a1a1a] text-center">
               TRUSTED BY INDUSTRY LEADERS
             </span>
             <div className="flex-1 h-[1.5px] bg-slate-300" />
           </div>
 
-          <div className="overflow-hidden relative w-full mt-4">
+          <div className="overflow-hidden relative w-full mt-2 md:mt-4">
             <Marquee speed="60s">
               <div className="flex items-center">
                 {industryLeadersLogos.map((logoItem, idx) => (
                   <React.Fragment key={`industry-${idx}`}>
-                    <div className="flex items-center justify-center transition-all duration-300 hover:-translate-y-1 mx-6 md:mx-10 cursor-pointer h-16 px-2">
+                    <div className="flex items-center justify-center transition-all duration-300 hover:-translate-y-1 mx-3 md:mx-10 cursor-pointer h-10 md:h-16 px-1 md:px-2">
                       <Image
                         src={logoItem}
                         alt={`Industry Partner ${idx + 1}`}
-                        className="max-h-12 max-w-[140px] w-auto h-auto object-contain"
+                        className="max-h-8 md:max-h-12 max-w-[90px] md:max-w-[140px] w-auto h-auto object-contain"
                         height={48}
                         width={140}
                       />
                     </div>
-                    <div className="w-[1.5px] h-6 bg-slate-300" />
+                    <div className="w-[1.5px] h-4 md:h-6 bg-slate-300" />
                   </React.Fragment>
                 ))}
               </div>
@@ -138,23 +138,23 @@ const PartnersAndBrands = () => {
         {/* ══════════════════════════════════════════
             SECTION 2: 3-COLUMN LOGO SHOWCASE (9TH IHWE LAYOUT)
         ══════════════════════════════════════════ */}
-        <div className="my-10">
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 items-start divide-y md:divide-y-0 md:divide-x divide-slate-300">
+        <div className="my-6 md:my-10">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-8 items-start divide-y md:divide-y-0 md:divide-x divide-slate-300">
 
             {/* ─── COLUMN 1: KNOWLEDGE PARTNERS (LEFT) ─── */}
-            <div className="flex flex-col items-center px-4 pb-6 md:pb-0">
-              <h3 className="font-poppins font-semibold text-[12px] md:text-[14px] tracking-wider uppercase text-[#4B1426] text-center mb-6">
+            <div className="flex flex-col items-center px-2 md:px-4 pb-3 md:pb-0">
+              <h3 className="font-poppins font-semibold text-[12px] md:text-[14px] tracking-wider uppercase text-[#4B1426] text-center mb-3 md:mb-6">
                 Knowledge Partners
               </h3>
               <div className="w-full overflow-hidden">
                 <Marquee speed="45s">
                   <div className="flex items-center">
                     {knowledgeLogos.map((logoItem, idx) => (
-                      <div key={`knowledge-${idx}`} className="mx-6 md:mx-8 transition-transform duration-300 hover:-translate-y-1 flex flex-col items-center justify-center cursor-pointer h-16 px-2">
+                      <div key={`knowledge-${idx}`} className="mx-3 md:mx-8 transition-transform duration-300 hover:-translate-y-1 flex flex-col items-center justify-center cursor-pointer h-10 md:h-16 px-1 md:px-2">
                         <Image
                           src={logoItem}
                           alt={`Knowledge Partner ${idx + 1}`}
-                          className="max-h-10 max-w-[120px] w-auto h-auto object-contain"
+                          className="max-h-8 md:max-h-10 max-w-[80px] md:max-w-[120px] w-auto h-auto object-contain"
                           height={40}
                           width={120}
                         />
@@ -166,19 +166,19 @@ const PartnersAndBrands = () => {
             </div>
 
             {/* ─── COLUMN 2: WELLNESS PARTNERS (CENTER) ─── */}
-            <div className="flex flex-col items-center px-4 py-6 md:py-0">
-              <h3 className="font-poppins font-semibold text-[12px] md:text-[14px] tracking-wider uppercase text-[#4B1426] text-center mb-6">
+            <div className="flex flex-col items-center px-2 md:px-4 py-3 md:py-0">
+              <h3 className="font-poppins font-semibold text-[12px] md:text-[14px] tracking-wider uppercase text-[#4B1426] text-center mb-3 md:mb-6">
                 Wellness Partners
               </h3>
               <div className="w-full overflow-hidden">
                 <Marquee speed="45s" reverse>
                   <div className="flex items-center">
                     {wellnessLogos.map((logoItem, idx) => (
-                      <div key={`wellness-${idx}`} className="mx-6 md:mx-8 transition-transform duration-300 hover:-translate-y-1 flex flex-col items-center justify-center cursor-pointer h-16 px-2">
+                      <div key={`wellness-${idx}`} className="mx-3 md:mx-8 transition-transform duration-300 hover:-translate-y-1 flex flex-col items-center justify-center cursor-pointer h-10 md:h-16 px-1 md:px-2">
                         <Image
                           src={logoItem}
                           alt={`Wellness Partner ${idx + 1}`}
-                          className="max-h-10 max-w-[120px] w-auto h-auto object-contain"
+                          className="max-h-8 md:max-h-10 max-w-[80px] md:max-w-[120px] w-auto h-auto object-contain"
                           height={40}
                           width={120}
                         />
@@ -190,19 +190,19 @@ const PartnersAndBrands = () => {
             </div>
 
             {/* ─── COLUMN 3: SUPPORTING ASSOC. (RIGHT) ─── */}
-            <div className="flex flex-col items-center px-4 pt-6 md:pt-0">
-              <h3 className="font-poppins font-semibold text-[12px] md:text-[14px] tracking-wider uppercase text-[#4B1426] text-center mb-6">
+            <div className="flex flex-col items-center px-2 md:px-4 pt-3 md:pt-0">
+              <h3 className="font-poppins font-semibold text-[12px] md:text-[14px] tracking-wider uppercase text-[#4B1426] text-center mb-3 md:mb-6">
                 Supporting Assoc.
               </h3>
               <div className="w-full overflow-hidden">
                 <Marquee speed="45s">
                   <div className="flex items-center">
                     {supportingLogos.map((logoItem, idx) => (
-                      <div key={`supporting-${idx}`} className="mx-6 md:mx-8 transition-transform duration-300 hover:-translate-y-1 flex flex-col items-center justify-center cursor-pointer h-16 px-2">
+                      <div key={`supporting-${idx}`} className="mx-3 md:mx-8 transition-transform duration-300 hover:-translate-y-1 flex flex-col items-center justify-center cursor-pointer h-10 md:h-16 px-1 md:px-2">
                         <Image
                           src={logoItem}
                           alt={`Supporting Assoc ${idx + 1}`}
-                          className="max-h-10 max-w-[120px] w-auto h-auto object-contain"
+                          className="max-h-8 md:max-h-10 max-w-[80px] md:max-w-[120px] w-auto h-auto object-contain"
                           height={40}
                           width={120}
                         />
@@ -219,30 +219,30 @@ const PartnersAndBrands = () => {
         {/* ══════════════════════════════════════════
             SECTION 3: EMERGING ORGANIC BRANDS (UPCOMING BRANDS LAYOUT)
         ══════════════════════════════════════════ */}
-        <div className="mt-10">
-          <div className="flex items-center gap-4 mb-6">
+        <div className="mt-6 md:mt-10">
+          <div className="flex items-center gap-2 md:gap-4 mb-3 md:mb-6">
             <div className="flex-1 h-[1.5px] bg-slate-300" />
-            <span className="font-poppins font-semibold text-[13px] md:text-[15px] tracking-widest uppercase text-[#1a1a1a] text-center">
+            <span className="font-poppins font-semibold text-[11px] md:text-[15px] tracking-widest uppercase text-[#1a1a1a] text-center">
               EMERGING ORGANIC BRANDS
             </span>
             <div className="flex-1 h-[1.5px] bg-slate-300" />
           </div>
 
-          <div className="overflow-hidden relative w-full mt-4">
+          <div className="overflow-hidden relative w-full mt-2 md:mt-4">
             <Marquee speed="55s">
               <div className="flex items-center">
                 {emergingBrandsLogos.map((logoItem, idx) => (
                   <React.Fragment key={`emerging-${idx}`}>
-                    <div className="flex items-center justify-center transition-all duration-300 hover:-translate-y-1 mx-6 md:mx-8 cursor-pointer h-14 px-2">
+                    <div className="flex items-center justify-center transition-all duration-300 hover:-translate-y-1 mx-3 md:mx-8 cursor-pointer h-10 md:h-14 px-1 md:px-2">
                       <Image
                         src={logoItem}
                         alt={`Emerging Brand ${idx + 1}`}
-                        className="max-h-10 max-w-[120px] w-auto h-auto object-contain"
+                        className="max-h-8 md:max-h-10 max-w-[80px] md:max-w-[120px] w-auto h-auto object-contain"
                         height={40}
                         width={120}
                       />
                     </div>
-                    <div className="w-[1.5px] h-6 bg-slate-300" />
+                    <div className="w-[1.5px] h-4 md:h-6 bg-slate-300" />
                   </React.Fragment>
                 ))}
               </div>

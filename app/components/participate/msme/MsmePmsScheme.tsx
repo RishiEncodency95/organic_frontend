@@ -1,7 +1,12 @@
 "use client";
-
-import React from "react";
+import React, { useEffect, useRef } from "react";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 import SectionContainer from "@/app/components/layout/SectionContainer";
+
+if (typeof window !== "undefined") {
+  gsap.registerPlugin(ScrollTrigger);
+}
 
 /* =========================================================
    EXACT CROPPED ASSETS FROM REFERENCE IMAGE
@@ -106,14 +111,49 @@ const SCHEME_FEATURES = [
 ========================================================= */
 
 export default function MsmePmsScheme() {
+  const sectionRef = useRef<HTMLElement>(null);
+  const cardsRef = useRef<(HTMLLIElement | null)[]>([]);
+
+  useEffect(() => {
+    const cards = cardsRef.current.filter(Boolean);
+    if (!cards.length) return;
+
+    const ctx = gsap.context(() => {
+      gsap.fromTo(
+        cards,
+        {
+          opacity: 0,
+          y: 48,
+          scale: 0.95,
+        },
+        {
+          opacity: 1,
+          y: 0,
+          scale: 1,
+          duration: 0.8,
+          stagger: 0.16,
+          ease: "back.out(1.15)",
+          scrollTrigger: {
+            trigger: cards[0]?.parentElement || cards[0],
+            start: "top 85%",
+            toggleActions: "play none none none",
+          },
+        }
+      );
+    }, sectionRef);
+
+    return () => ctx.revert();
+  }, []);
+
   return (
     <section
+      ref={sectionRef}
       aria-labelledby="msme-pms-heading"
       className="
         relative
         w-full
         overflow-hidden
-        bg-[#fdfcf9]
+        bg-[#fdfcf8]
         py-4
       "
     >
@@ -285,9 +325,16 @@ export default function MsmePmsScheme() {
               lg:gap-[15px]
             "
           >
-            {SCHEME_FEATURES.map((feature) => (
+            {SCHEME_FEATURES.map((feature, index) => (
               <li
                 key={feature.id}
+                ref={(el) => {
+                  cardsRef.current[index] = el;
+                }}
+                style={{
+                  boxShadow:
+                    "rgba(0, 0, 0, 0.12) 0px 1px 3px, rgba(0, 0, 0, 0.24) 0px 1px 2px",
+                }}
                 className="
                   relative
                   flex
@@ -303,7 +350,10 @@ export default function MsmePmsScheme() {
                   pb-[43px]
                   pt-[18px]
                   text-center
-                  shadow-[0_2px_9px_rgba(0,0,0,0.06)]
+                  transition-all
+                  duration-300
+                  hover:-translate-y-2
+                  hover:shadow-[0_12px_24px_rgba(0,0,0,0.15)]
                 "
               >
                 {/* =============================================

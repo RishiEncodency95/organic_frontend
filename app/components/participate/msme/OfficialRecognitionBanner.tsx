@@ -178,14 +178,14 @@ export default function OfficialRecognitionBanner() {
                 <img
                   src={approvedImg.src}
                   alt=""
-                  className="h-16 w-16 object-contain"
+                  className="h-[74px] w-[74px] object-contain"
                 />
               </div>
 
               <div className="overflow-hidden rounded-[20px] bg-white border border-gray-100 flex flex-col relative z-10 h-full shadow-[0_4px_20px_rgba(0,0,0,0.12)] mt-6">
                 {/* Green Header */}
-                <div className="bg-gradient-to-b from-[#1b5e20] to-[#124215] pt-6 pb-4 px-4 text-center rounded-t-[18px] relative">
-                  <h3 className="text-[12px] font-bold uppercase tracking-widest text-white font-poppins">
+                <div className="bg-gradient-to-b from-[#1b5e20] to-[#124215] pt-8 pb-3.5 px-4 text-center rounded-t-[18px] relative">
+                  <h3 className="text-[12px] font-semibold uppercase tracking-widest text-white font-poppins mt-1">
                     MSME PMS APPROVED EVENT
                   </h3>
                 </div>
@@ -202,7 +202,7 @@ export default function OfficialRecognitionBanner() {
                         className="w-16 h-16 object-contain -mt-4"
                       />
 
-                      <p className="text-[22px] font-bold leading-[1.15] text-[#266e3b] font-poppins tracking-wide uppercase text-left">
+                      <p className="text-[22px] font-semibold leading-[1.15] text-[#266e3b] font-poppins tracking-wide uppercase text-left">
                         BHARAT
                         <br />
                         ORGANIC EXPO

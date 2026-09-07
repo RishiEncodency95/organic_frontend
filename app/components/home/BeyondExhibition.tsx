@@ -89,7 +89,7 @@ const BeyondExhibition = () => {
         <div className="flex flex-col lg:flex-row bg-white rounded-3xl overflow-hidden shadow-2xl border border-slate-100">
 
           {/* Left Hero Panel with Image Background */}
-          <div className="w-full lg:w-[35%] relative p-8 lg:p-12 flex flex-col justify-center overflow-hidden text-center lg:text-left min-h-[400px]">
+          <div className="w-full lg:w-[35%] relative p-5 md:p-8 lg:p-12 flex flex-col justify-center overflow-hidden text-center lg:text-left min-h-[220px] md:min-h-[400px]">
             {/* Background Image */}
             <Image
               src={sectionData.image}
@@ -102,24 +102,24 @@ const BeyondExhibition = () => {
             <div className="absolute inset-0 bg-gradient-to-r from-[#1a3821]/10 via-[#1a3821]/30 to-transparent z-0"></div>
 
             <div className="relative z-10">
-              <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-black/10 border border-white/30 mb-6 w-fit mx-auto lg:mx-0 shadow-md backdrop-blur-md">
+              <div className="inline-flex items-center gap-2 px-3 py-1 md:px-4 md:py-1.5 rounded-full bg-black/10 border border-white/30 mb-3 md:mb-6 w-fit mx-auto lg:mx-0 shadow-md backdrop-blur-md">
                 <span className="w-1.5 h-1.5 rounded-full bg-[#F2B40E] animate-pulse"></span>
-                <span className="text-[11px] font-bold tracking-widest uppercase text-white drop-shadow-md">{sectionData.sectionTag}</span>
+                <span className="text-[10px] md:text-[11px] font-bold tracking-widest uppercase text-white drop-shadow-md">{sectionData.sectionTag}</span>
               </div>
 
-              <h2 className="text-[18px] md:text-[32px] font-semibold text-white leading-[1.1] tracking-tight mb-5 font-poppins drop-shadow-lg" style={{ textShadow: '0 4px 12px rgba(0,0,0,0.5)' }}>
-                {sectionData.titleMain} <br className="hidden lg:block" />
+              <h2 className="text-[18px] md:text-[32px] font-semibold text-white leading-[1.1] tracking-tight mb-2 md:mb-5 font-poppins drop-shadow-lg" style={{ textShadow: '0 4px 12px rgba(0,0,0,0.5)' }}>
+                {sectionData.titleMain}{" "}
                 <span className="text-[#F2B40E]">{sectionData.titleHighlight}</span>
               </h2>
-              <p className="text-white/95 text-[15px] md:text-[16.5px] leading-[1.6] font-medium max-w-md mx-auto lg:mx-0 drop-shadow-lg" style={{ textShadow: '0 2px 8px rgba(0,0,0,0.6)' }}>
+              <p className="text-white/95 text-[12px] md:text-[16.5px] leading-snug md:leading-[1.6] font-medium max-w-md mx-auto lg:mx-0 drop-shadow-lg" style={{ textShadow: '0 2px 8px rgba(0,0,0,0.6)' }}>
                 {sectionData.description}
               </p>
             </div>
           </div>
 
           {/* Right Grid */}
-          <div className="w-full lg:w-[65%] bg-[#f4fbf4] p-6 lg:p-10 ">
-            <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-2 gap-4">
+          <div className="w-full lg:w-[65%] bg-[#f4fbf4] p-3 md:p-6 lg:p-10 ">
+            <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-2 gap-2 md:gap-4">
               {sectionData.extras.map((item, index) => (
                 <motion.div
                   key={index}
@@ -127,16 +127,18 @@ const BeyondExhibition = () => {
                   whileInView={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.4, delay: index * 0.1 }}
                   viewport={{ once: true }}
-                  className="flex items-center gap-4 p-4 bg-white rounded-2xl shadow-sm border border-slate-100 hover:shadow-md hover:border-[#3b8c2a]/30 hover:-translate-y-1 transition-all duration-300 group cursor-default"
+                  className="flex items-center gap-2.5 md:gap-4 p-2.5 md:p-4 bg-white rounded-xl md:rounded-2xl shadow-sm border border-slate-100 hover:shadow-md hover:border-[#3b8c2a]/30 hover:-translate-y-1 transition-all duration-300 group cursor-default"
                 >
-                  <div className="w-14 h-14 rounded-xl bg-gradient-to-br from-[#f8fdf9] to-[#eef5f0] flex items-center justify-center shrink-0 border border-[#d5ebd9] text-[#f58220] group-hover:bg-[#3b8c2a] group-hover:text-white transition-all duration-500 shadow-sm">
-                    {item.icon}
+                  <div className="w-10 h-10 md:w-14 md:h-14 rounded-lg md:rounded-xl bg-gradient-to-br from-[#f8fdf9] to-[#eef5f0] flex items-center justify-center shrink-0 border border-[#d5ebd9] text-[#f58220] group-hover:bg-[#3b8c2a] group-hover:text-white transition-all duration-500 shadow-sm">
+                    <div className="scale-75 md:scale-100 flex items-center justify-center">
+                       {item.icon}
+                    </div>
                   </div>
                   <div className="flex flex-col flex-1">
-                    <h4 className="text-[14px] lg:text-[15px] font-semibold text-[#1a3821] uppercase tracking-wide group-hover:text-[#3b8c2a] transition-colors leading-[1.3] mb-1">
+                    <h4 className="text-[12px] md:text-[14px] lg:text-[15px] font-semibold text-[#1a3821] uppercase tracking-wide group-hover:text-[#3b8c2a] transition-colors leading-[1.2] md:leading-[1.3] mb-0.5 md:mb-1">
                       {item.title} {item.title2}
                     </h4>
-                    <p className="text-[12.5px] text-slate-500 font-medium leading-[1.5]">
+                    <p className="text-[10px] md:text-[12.5px] text-slate-500 font-medium leading-[1.3] md:leading-[1.5]">
                       {item.subtitle}
                     </p>
                   </div>
