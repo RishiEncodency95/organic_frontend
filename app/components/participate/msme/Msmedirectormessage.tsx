@@ -21,7 +21,7 @@ import vleafImg from "@/app/assets/icons/vleaf.png";
 import ministryImg from "@/app/assets/participate/msme/ministry.webp";
 import officialIconImg from "@/app/assets/participate/msme/official_icon.png";
 import forAllMsmeImg from "@/app/assets/participate/msme/for_all_msme.png";
-import governmentApprovedImg from "@/app/assets/participate/msme/government_approved.png";
+import governmentApprovedImg from "@/app/assets/participate/msme/governnent_support.png";
 import quoteLeftImg from "@/app/assets/participate/msme/quote_left.png";
 import quoteRightImg from "@/app/assets/participate/msme/quote_right.png";
 
@@ -684,9 +684,9 @@ export default function OfficialMessageBanner({
 
               <blockquote
                 className="
-                  text-[clamp(11px,1.13vw,15px)]
+                  text-[clamp(12px,1.2vw,16px)]
                   font-[400]
-                  leading-[1.68]
+                  leading-[1.75]
                   text-[#262c38]
                 "
               >
@@ -846,7 +846,7 @@ export default function OfficialMessageBanner({
         >
           <FeatureItem
             icon={
-              <img src={officialIconImg.src} alt="" className="h-[64px] w-[64px] object-contain" />
+              <img src={officialIconImg.src} alt="" className="h-[80px] w-[80px] object-contain" />
             }
             title="Official Message"
             description="Direct message from MSME Leadership"
@@ -855,7 +855,7 @@ export default function OfficialMessageBanner({
           <FeatureItem
             withBorder
             icon={
-              <img src={forAllMsmeImg.src} alt="" className="h-[64px] w-[64px] object-contain" />
+              <img src={forAllMsmeImg.src} alt="" className="h-[80px] w-[80px] object-contain" />
             }
             title="For All MSMEs"
             description="Encouragement for every entrepreneur across India"
@@ -863,7 +863,7 @@ export default function OfficialMessageBanner({
 
           <FeatureItem
             icon={
-              <img src={governmentApprovedImg.src} alt="" className="h-[64px] w-[64px] object-contain" />
+              <img src={governmentApprovedImg.src} alt="" className="h-[80px] w-[80px] object-contain" />
             }
             title="Government Support"
             description="Strong support for growth, competitiveness & global reach"
@@ -1230,19 +1230,19 @@ export default function OfficialMessageBanner({
           "
         >
           <MobileFeature
-            icon={<img src={officialIconImg.src} alt="" className="h-12 w-12 object-contain" />}
+            icon={<img src={officialIconImg.src} alt="" className="h-14 w-14 object-contain" />}
             title="Official Message"
             description="Direct message from MSME Leadership"
           />
 
           <MobileFeature
-            icon={<img src={forAllMsmeImg.src} alt="" className="h-12 w-12 object-contain" />}
+            icon={<img src={forAllMsmeImg.src} alt="" className="h-14 w-14 object-contain" />}
             title="For All MSMEs"
             description="Encouragement for every entrepreneur across India"
           />
 
           <MobileFeature
-            icon={<img src={governmentApprovedImg.src} alt="" className="h-12 w-12 object-contain" />}
+            icon={<img src={governmentApprovedImg.src} alt="" className="h-14 w-14 object-contain" />}
             title="Government Support"
             description="Strong support for growth, competitiveness & global reach"
           />
