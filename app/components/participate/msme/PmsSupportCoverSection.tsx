@@ -337,11 +337,11 @@ const PmsSupportCoverSection: FC = () => {
                 className="
                   mt-[12px]
                   max-w-[330px]
-                  text-[12px]
+                  text-[14px]
                   font-medium
                   leading-[1.55]
                   text-[#151515]
-                  sm:text-[13px]
+                  text-justify
                 "
               >
                 For eligible MSE participation in an approved exhibition,
@@ -1129,15 +1129,14 @@ const PmsSupportCoverSection: FC = () => {
               bg-white
               px-[12px]
               py-[6px]
-              lg:grid-cols-[290px_1fr]
+              lg:grid-cols-[390px_1fr]
             "
           >
             {/* Terms */}
             <p
               className="
                 pr-[15px]
-                text-[12px]
-                font-semibold
+                text-[14px]
                 leading-[1.5]
                 text-[#252525]
                 lg:border-r
