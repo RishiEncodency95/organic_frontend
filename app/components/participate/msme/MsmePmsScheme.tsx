@@ -13,7 +13,9 @@ if (typeof window !== "undefined") {
 ========================================================= */
 
 import knowSchemeIcon from "@/app/assets/participate/msme/scheme-reference/know-scheme-icon.png";
-
+import leftArrow from "@/app/assets/participate/msme/know_the_left.png"
+import rightArrow from "@/app/assets/participate/msme/know_the_right.png"
+import bottomDecor from "@/app/assets/participate/msme/bottom_bar.png"
 import marketAccessIcon from "@/app/assets/participate/msme/scheme-reference/market-access-icon.png";
 import exhibitionSupportIcon from "@/app/assets/participate/msme/scheme-reference/exhibition-support-icon.png";
 import buyerConnectionsIcon from "@/app/assets/participate/msme/scheme-reference/buyer-connections-icon.png";
@@ -27,6 +29,7 @@ import cardBottom04 from "@/app/assets/participate/msme/scheme-reference/card-bo
 import leftLeaves from "@/app/assets/participate/msme/scheme-reference/left-leaves.png";
 import bottomShield from "@/app/assets/participate/msme/scheme-reference/bottom-shield.png";
 import bottomRightLeaves from "@/app/assets/participate/msme/scheme-reference/bottom-right-leaves.png";
+import Image from "next/image";
 
 /* =========================================================
    DATA
@@ -186,9 +189,7 @@ export default function MsmePmsScheme() {
           <div className="flex w-full items-center justify-center">
             {/* left golden line */}
             <div className="flex flex-1 items-center">
-              <span className="h-px flex-1 bg-[#c5a23a]/75" />
-
-              <span className="h-[5px] w-[5px] shrink-0 rounded-full bg-[#b79427]" />
+              <Image src={leftArrow} alt="left arrow" className="h-auto w-full" />
             </div>
 
             {/* center title */}
@@ -233,9 +234,7 @@ export default function MsmePmsScheme() {
 
             {/* right golden line */}
             <div className="flex flex-1 items-center">
-              <span className="h-[5px] w-[5px] shrink-0 rounded-full bg-[#b79427]" />
-
-              <span className="h-px flex-1 bg-[#c5a23a]/75" />
+              <Image src={rightArrow} alt="right arrow" className="h-auto w-full" />
             </div>
           </div>
 
@@ -274,12 +273,10 @@ export default function MsmePmsScheme() {
               w-full
               max-w-[180px]
               items-center
-              justify-center
+              justify-center relative
             "
           >
-            <span className="h-[2px] flex-1 bg-[#b89528]" />
-            <span className="mx-[6px] h-[10px] w-[10px] rotate-45 bg-[#b89528] rounded-full" />
-            <span className="h-[2px] flex-1 bg-[#b89528]" />
+            <Image src={bottomDecor} width={180} height={10} alt="bottom decor" />
           </div>
 
           {/* ===================================================
@@ -348,7 +345,7 @@ export default function MsmePmsScheme() {
                   rounded-[15px]
                   border
                   border-[#ebece7]
-                  bg-white
+                  bg-[#fefdfb]
                   px-[13px]
                   pb-[43px]
                   pt-[18px]
@@ -395,7 +392,7 @@ export default function MsmePmsScheme() {
                 </h3>
 
                 {/* =============================================
-                    GOLD DIVIDER
+                    BAR IMAGE DIVIDER
                 ============================================== */}
 
                 <div
@@ -407,19 +404,7 @@ export default function MsmePmsScheme() {
                     justify-center
                   "
                 >
-                  <span className="h-px w-[57px] bg-[#c3a039]" />
-
-                  <span
-                    className="
-                      mx-[5px]
-                      h-[7px]
-                      w-[7px]
-                      rounded-full
-                      bg-[#b99727]
-                    "
-                  />
-
-                  <span className="h-px w-[57px] bg-[#c3a039]" />
+                  <Image src={bottomDecor} alt="" className="h-auto w-[120px]" />
                 </div>
 
                 {/* =============================================
@@ -476,7 +461,7 @@ export default function MsmePmsScheme() {
               items-center
               overflow-hidden
               rounded-[15px]
-              bg-[#eef3e6]
+              bg-[#f1f1e7]
               px-[20px]
               py-[12px]
               sm:px-[32px]

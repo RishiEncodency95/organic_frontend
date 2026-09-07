@@ -427,7 +427,7 @@ const HeroSection = () => {
 
       <section
         ref={sectionRef}
-        className="relative w-full overflow-hidden bg-[#fcfcf0] min-h-[500px] md:min-h-[400px] h-auto py-10 md:py-0 md:h-[72vh] lg:h-[78vh] flex items-center font-inter"
+        className="relative w-full overflow-hidden bg-[#fcfcf0] min-h-[460px] md:min-h-[400px] h-auto py-2 md:py-0 md:h-[72vh] lg:h-[78vh] flex items-center font-inter"
       >
         {/* ── BACKGROUND LAYERS ── */}
         {SLIDES.map(({ id, img }) => (
@@ -489,7 +489,7 @@ const HeroSection = () => {
 
         {/* ── CONTENT PANELS ── */}
         <SectionContainer
-          className="relative z-20 h-full grid items-center justify-items-start"
+          className="relative z-20 h-full grid items-start pt-4 pb-6 md:py-0 md:items-center justify-items-start"
           style={{ zIndex: 20 }}
         >
           {SLIDES.map((slide) => (
@@ -498,7 +498,7 @@ const HeroSection = () => {
               ref={(el) => {
                 panels.current[slide.id] = el;
               }}
-              className="col-start-1 row-start-1 w-full max-w-2xl lg:max-w-3xl mt-4 md:mt-0"
+              className="col-start-1 row-start-1 w-full max-w-2xl lg:max-w-3xl mt-0 md:mt-0"
               style={{
                 visibility: cur === slide.id ? "visible" : "hidden",
                 pointerEvents: cur === slide.id ? "auto" : "none",
@@ -515,8 +515,8 @@ const HeroSection = () => {
                 </div>
 
                 {/* Title */}
-                <h1 
-                  data-anim="2" 
+                <h1
+                  data-anim="2"
                   className="text-3xl md:text-4xl lg:text-[54px] font-semibold leading-[1.06] font-poppins mb-3"
                   style={{ textShadow: "1px 1px 2px rgba(0,0,0,0.4)" }}
                 >
@@ -611,9 +611,8 @@ const HeroSection = () => {
               aria-label={`Go to slide ${id + 1}`}
             >
               <span
-                className={`block rounded-full border border-[#2b5825]/30 transition-all duration-400 ${
-                  cur === id ? "w-5 h-2 bg-[#2b5825] dot-active-hero" : "w-2 h-2 bg-[#2b5825]/40 hover:bg-[#2b5825]/70"
-                }`}
+                className={`block rounded-full border border-[#2b5825]/30 transition-all duration-400 ${cur === id ? "w-5 h-2 bg-[#2b5825] dot-active-hero" : "w-2 h-2 bg-[#2b5825]/40 hover:bg-[#2b5825]/70"
+                  }`}
               />
             </button>
           ))}

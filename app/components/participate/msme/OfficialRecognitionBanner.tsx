@@ -65,7 +65,7 @@ export default function OfficialRecognitionBanner() {
   return (
     <section
       aria-labelledby="official-recognition-heading"
-      className="w-full py-8 font-inter relative overflow-hidden transition-all duration-500 "
+      className="w-full py-8 font-inter relative overflow-hidden transition-all duration-500 bg-[#fdfcf9]"
     >
       <SectionContainer>
         <div className="w-full relative z-10">
@@ -111,7 +111,7 @@ export default function OfficialRecognitionBanner() {
                 assistance subject to PMS guidelines and individual eligibility.
               </p>
 
-              <div className="mb-4 flex items-stretch w-full max-w-[550px] bg-[#f0f5ec] rounded-xl border border-[#a4ba96] overflow-hidden shadow-[0_4px_15px_rgba(0,0,0,0.08)] py-4">
+              <div className="mb-4 flex items-stretch w-full max-w-[550px] bg-[#f6f7f0] rounded-xl border border-[#a4ba96] overflow-hidden shadow-[0_4px_15px_rgba(0,0,0,0.08)] py-4">
                 <div className="flex-1 flex flex-col items-center justify-center gap-2 py-1 px-2 border-r border-[#a4ba96] last:border-r-0">
                   <Image
                     src={govApproved}
@@ -423,8 +423,8 @@ export default function OfficialRecognitionBanner() {
 
           {/* ---------------- Disclaimer ---------------- */}
           <div className="mt-5 flex items-center relative z-10">
-            <div className="flex items-center gap-3 rounded-xl bg-[#f0f5ec] p-4 shadow-[0_2px_10px_rgba(0,0,0,0.02)] border border-[#e5efdf] w-[60%]">
-              <div className="w-14 h-14 shrink-0 rounded-full bg-gray-300 flex items-center justify-center">
+            <div className="flex items-center gap-3 rounded-xl bg-[#f8f7f1] p-4 shadow-[0_2px_10px_rgba(0,0,0,0.02)] border border-[#e5efdf] w-[60%]">
+              <div className="w-14 h-14 shrink-0 rounded-full bg-[#e8eddf] flex items-center justify-center">
                 <Image
                   src={secureImg}
                   alt="Secure"
