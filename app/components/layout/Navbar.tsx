@@ -238,43 +238,40 @@ const Navbar = () => {
 
                     {/* ─── MOBILE TOP NAV ─── */}
                     <div className="flex xl:hidden items-center justify-between h-[60px] relative">
-                        <div className="relative z-[150] h-full flex items-center min-w-[110px]">
-                            <Link href="/" className="absolute top-1 left-0 flex items-center justify-center transition-opacity active:opacity-75 z-[200]">
+                        <div className="relative z-[150] flex items-center">
+                            <Link href="/" className="flex items-center justify-center transition-opacity active:opacity-75 z-[200]">
                                 <Image
                                     src={navbarLogo}
                                     alt="Organic Expo Logo"
-                                    width={140}
+                                    width={160}
                                     height={70}
                                     priority
-                                    className="h-[70px] w-auto object-contain drop-shadow-sm"
+                                    className="h-[60px] sm:h-[65px] w-auto object-contain drop-shadow-sm"
                                     style={{ width: "auto" }}
                                 />
                             </Link>
                         </div>
 
-                        <div className="flex items-center gap-1.5 sm:gap-3">
-                            <div className="flex flex-col items-center flex-shrink-0">
-                            </div>
-
+                        <div className="flex items-center gap-3">
                             <button
                                 onClick={() => setMobileOpen(true)}
-                                className="bg-[#60241E] hover:bg-[#4a1c17] text-white border-[1.5px] border-white rounded-xl px-3 py-2.5 text-[9px] font-black uppercase tracking-tight active:scale-95 transition-all relative z-[110] flex-shrink-0 shadow-md"
-                                style={{ boxShadow: "rgba(9, 30, 66, 0.2) 0px 1px 2px 0px" }}
+                                className="bg-[#60241E] hover:bg-[#4a1c17] text-white rounded-full px-4 sm:px-5 py-2.5 text-[10px] sm:text-[11px] font-bold uppercase tracking-wider active:scale-95 transition-all shadow-md flex items-center gap-1.5"
                             >
-                                Register ▾
+                                Register
+                                <ChevronDown className="w-3 h-3" />
                             </button>
 
                             <button
                                 onClick={() => setMobileOpen(!mobileOpen)}
                                 className={cn(
-                                    "w-9 h-9 rounded-full flex flex-col items-center justify-center gap-[4.5px] transition-all duration-300 border flex-shrink-0",
-                                    mobileOpen ? "bg-[#3b8c2a] border-[#3b8c2a]" : "bg-white border-[#3b8c2a]"
+                                    "w-10 h-10 rounded-full flex flex-col items-center justify-center gap-[5px] transition-all duration-300 flex-shrink-0",
+                                    mobileOpen ? "bg-[#3b8c2a]" : "bg-slate-100 active:bg-slate-200"
                                 )}
                                 aria-label="Toggle menu"
                             >
-                                <span className={cn("block w-[14px] h-[1.5px] rounded-full transition-all duration-300", mobileOpen ? "bg-white translate-y-[6px] rotate-45" : "bg-slate-700")} />
-                                <span className={cn("block w-[14px] h-[1.5px] rounded-full transition-all duration-300", mobileOpen ? "bg-white opacity-0" : "bg-slate-700")} />
-                                <span className={cn("block w-[14px] h-[1.5px] rounded-full transition-all duration-300", mobileOpen ? "bg-white -translate-y-[6px] -rotate-45" : "bg-slate-700")} />
+                                <span className={cn("block w-[16px] h-[2px] rounded-full transition-all duration-300", mobileOpen ? "bg-white translate-y-[7px] rotate-45" : "bg-slate-800")} />
+                                <span className={cn("block w-[16px] h-[2px] rounded-full transition-all duration-300", mobileOpen ? "bg-white opacity-0" : "bg-slate-800")} />
+                                <span className={cn("block w-[16px] h-[2px] rounded-full transition-all duration-300", mobileOpen ? "bg-white -translate-y-[7px] -rotate-45" : "bg-slate-800")} />
                             </button>
                         </div>
                     </div>
@@ -354,36 +351,38 @@ const Navbar = () => {
 
 
 
-                            {/* Registration Grid */}
+                            {/* Registration List */}
                             <div className="px-5 mt-5">
                                 <div className="text-[9px] font-semibold text-[#3b8c2a] uppercase tracking-[0.15em] mb-3">Register Now</div>
-                                <div className="grid grid-cols-3 gap-2">
+                                <div className="flex flex-col gap-2.5">
                                     {registrationOptions.map((opt) => {
                                         const commonProps = {
                                             key: opt.path,
                                             onClick: () => setMobileOpen(false),
-                                            className: "flex flex-col items-center gap-2 bg-white border border-slate-100 rounded-2xl py-3 px-2 active:scale-95 transition-all",
-                                            style: { boxShadow: "rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 1px 3px 1px" }
+                                            className: "flex items-center gap-3 bg-slate-50 hover:bg-slate-100 border border-slate-100/50 rounded-2xl p-2 active:scale-[0.98] transition-all"
                                         };
 
                                         const Content = (
                                             <>
                                                 <div className={cn(
-                                                    "w-9 h-9 rounded-xl flex items-center justify-center",
-                                                    opt.color === "green" ? "bg-[#3b8c2a]/10 text-[#3b8c2a]" : "bg-[#f59e0b]/10 text-[#f59e0b]"
+                                                    "w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0 bg-white shadow-sm",
+                                                    opt.color === "green" ? "text-[#3b8c2a]" : "text-[#f59e0b]"
                                                 )}>
-                                                    <opt.icon className="w-4 h-4" />
+                                                    <opt.icon className="w-4.5 h-4.5" />
                                                 </div>
-                                                <span className="text-[9px] font-semibold text-slate-800 uppercase tracking-wide text-center leading-tight">
-                                                    {opt.label}
-                                                </span>
+                                                <div className="flex-1 flex items-center justify-between pr-2">
+                                                    <span className="text-[11px] font-bold text-slate-700 uppercase tracking-wide">
+                                                        {opt.label}
+                                                    </span>
+                                                    <ChevronRight className="w-4 h-4 text-slate-300" />
+                                                </div>
                                             </>
                                         );
 
                                         return opt.path.startsWith("tel:") ? (
                                             <a href={opt.path} {...commonProps}>{Content}</a>
                                         ) : (
-                                            <Link href={opt.path} target="_blank" rel="noopener noreferrer" {...commonProps}>{Content}</Link>
+                                            <Link href={opt.path} target={opt.isExternal ? "_blank" : undefined} rel={opt.isExternal ? "noopener noreferrer" : undefined} {...commonProps}>{Content}</Link>
                                         );
                                     })}
                                 </div>
