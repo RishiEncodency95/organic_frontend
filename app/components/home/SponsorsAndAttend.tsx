@@ -84,13 +84,13 @@ const SponsorsAndAttend = () => {
           >
             <div className="flex flex-col md:flex-row items-start gap-1 mb-2 text-left">
               <div className="flex items-center gap-1.5">
-                <h2 className="text-[18px] md:text-[24px] lg:text-[30px] font-semibold text-[#1a1a1a] tracking-tight leading-[1.2]">
+                <h2 className="text-[16px] md:text-[24px] lg:text-[30px] font-semibold text-[#1a1a1a] tracking-tight leading-[1.2]">
                   {sectionData.leftSection.titlePrefix} <span className="bg-gradient-to-r from-[#00643b] to-[#f58220] bg-clip-text text-transparent">{sectionData.leftSection.titleHighlight}</span>
                 </h2>
-                <Leaf className="w-6 h-6 md:w-8 md:h-8 text-[#f58220] fill-[#f58220]" />
+                <Leaf className="w-5 h-5 md:w-8 md:h-8 text-[#f58220] fill-[#f58220]" />
               </div>
             </div>
-            <p className="text-[16px] md:text-[18px] text-gray-700 font-normal mb-4 leading-[1.6] max-w-[500px] text-left">
+            <p className="text-[14px] sm:text-[16px] md:text-[18px] text-gray-700 font-normal mb-2 md:mb-4 leading-[1.5] md:leading-[1.6] max-w-[500px] text-left">
               {sectionData.leftSection.description}
             </p>
 
@@ -101,89 +101,89 @@ const SponsorsAndAttend = () => {
               <div className="h-[1px] flex-grow bg-gray-200" />
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 relative border-l-0 md:border-l border-gray-100 gap-y-2 md:gap-y-0">
+            <div className="grid grid-cols-1 md:grid-cols-2 relative border-l-0 md:border-l border-gray-100 gap-y-1 md:gap-y-0 mt-1 md:mt-0">
               {/* Vertical Divider - Hidden on mobile */}
               <div className="hidden md:block absolute top-0 bottom-0 left-1/2 w-[1px] border-r border-dashed border-gray-300 z-0" />
 
               {/* Row 1 */}
-              <div className="py-1 px-0 md:px-3 border-b-0 md:border-b border-dashed border-gray-300 relative">
+              <div className="py-0.5 md:py-1 px-0 md:px-3 border-b-0 md:border-b border-dashed border-gray-300 relative">
                 {sectionData.leftSection.itemsLeft.slice(0, 1).map((item, index) => (
-                  <div key={index} className="flex gap-4 group">
-                    <div className="w-10 h-10 rounded-full flex items-center justify-center bg-[#fff8f2] shrink-0 mt-0.5 border border-[#feeddf]">
-                      {React.cloneElement(item.icon as React.ReactElement<{ className?: string }>, { className: 'w-5 h-5 text-[#f58220]' })}
+                  <div key={index} className="flex gap-2.5 md:gap-4 group">
+                    <div className="w-7 h-7 md:w-10 md:h-10 rounded-full flex items-center justify-center bg-[#fff8f2] shrink-0 mt-0.5 border border-[#feeddf]">
+                      {React.cloneElement(item.icon as React.ReactElement<{ className?: string }>, { className: 'w-3.5 h-3.5 md:w-5 md:h-5 text-[#f58220]' })}
                     </div>
                     <div className="flex-1">
-                      <h3 className="text-[16px] md:text-[18px] font-semibold text-[#00643b] mb-1 leading-none pt-1.5">{item.title}</h3>
-                      <p className="text-[14px] md:text-[15px] text-gray-600 font-normal leading-[1.6]">{item.desc}</p>
+                      <h3 className="text-[12.5px] md:text-[18px] font-semibold text-[#00643b] mb-0.5 md:mb-1 leading-none pt-0.5 md:pt-1.5">{item.title}</h3>
+                      <p className="text-[10.5px] sm:text-[11.5px] md:text-[15px] text-gray-600 font-normal leading-[1.3] md:leading-[1.6]">{item.desc}</p>
                     </div>
                   </div>
                 ))}
               </div>
-              <div className="py-2 px-0 md:px-2 border-b-0 md:border-b border-dashed border-gray-300 relative">
+              <div className="py-0.5 md:py-2 px-0 md:px-2 border-b-0 md:border-b border-dashed border-gray-300 relative">
                 {sectionData.leftSection.itemsRight.slice(0, 1).map((item, index) => (
-                  <div key={index} className="flex gap-4 group">
-                    <div className="w-10 h-10 rounded-full flex items-center justify-center bg-[#fff8f2] shrink-0 mt-0.5 border border-[#feeddf]">
-                      {React.cloneElement(item.icon as React.ReactElement<{ className?: string }>, { className: 'w-5 h-5 text-[#f58220]' })}
+                  <div key={index} className="flex gap-2.5 md:gap-4 group">
+                    <div className="w-7 h-7 md:w-10 md:h-10 rounded-full flex items-center justify-center bg-[#fff8f2] shrink-0 mt-0.5 border border-[#feeddf]">
+                      {React.cloneElement(item.icon as React.ReactElement<{ className?: string }>, { className: 'w-3.5 h-3.5 md:w-5 md:h-5 text-[#f58220]' })}
                     </div>
                     <div className="flex-1">
-                      <h3 className="text-[16px] md:text-[18px] font-semibold text-[#00643b] mb-1 leading-none pt-1.5">{item.title}</h3>
-                      <p className="text-[14px] md:text-[15px] text-gray-600 font-normal leading-[1.6]">{item.desc}</p>
+                      <h3 className="text-[12.5px] md:text-[18px] font-semibold text-[#00643b] mb-0.5 md:mb-1 leading-none pt-0.5 md:pt-1.5">{item.title}</h3>
+                      <p className="text-[10.5px] sm:text-[11.5px] md:text-[15px] text-gray-600 font-normal leading-[1.3] md:leading-[1.6]">{item.desc}</p>
                     </div>
                   </div>
                 ))}
               </div>
 
               {/* Row 2 */}
-              <div className="py-2 px-0 md:px-3 border-b-0 md:border-b border-dashed border-gray-300 relative">
+              <div className="py-0.5 md:py-2 px-0 md:px-3 border-b-0 md:border-b border-dashed border-gray-300 relative">
                 {sectionData.leftSection.itemsLeft.slice(1, 2).map((item, index) => (
-                  <div key={index} className="flex gap-4 group">
-                    <div className="w-10 h-10 rounded-full flex items-center justify-center bg-[#fff8f2] shrink-0 mt-0.5 border border-[#feeddf]">
-                      {React.cloneElement(item.icon as React.ReactElement<{ className?: string }>, { className: 'w-5 h-5 text-[#f58220]' })}
+                  <div key={index} className="flex gap-2.5 md:gap-4 group">
+                    <div className="w-7 h-7 md:w-10 md:h-10 rounded-full flex items-center justify-center bg-[#fff8f2] shrink-0 mt-0.5 border border-[#feeddf]">
+                      {React.cloneElement(item.icon as React.ReactElement<{ className?: string }>, { className: 'w-3.5 h-3.5 md:w-5 md:h-5 text-[#f58220]' })}
                     </div>
                     <div className="flex-1">
-                      <h3 className="text-[16px] md:text-[18px] font-semibold text-[#00643b] mb-1 leading-none pt-1.5">{item.title}</h3>
-                      <p className="text-[14px] md:text-[15px] text-gray-600 font-normal leading-[1.6]">{item.desc}</p>
+                      <h3 className="text-[12.5px] md:text-[18px] font-semibold text-[#00643b] mb-0.5 md:mb-1 leading-none pt-0.5 md:pt-1.5">{item.title}</h3>
+                      <p className="text-[10.5px] sm:text-[11.5px] md:text-[15px] text-gray-600 font-normal leading-[1.3] md:leading-[1.6]">{item.desc}</p>
                     </div>
                   </div>
                 ))}
               </div>
-              <div className="py-2 px-0 md:px-3 border-b-0 md:border-b border-dashed border-gray-300 relative">
+              <div className="py-0.5 md:py-2 px-0 md:px-3 border-b-0 md:border-b border-dashed border-gray-300 relative">
                 {sectionData.leftSection.itemsRight.slice(1, 2).map((item, index) => (
-                  <div key={index} className="flex gap-4 group">
-                    <div className="w-10 h-10 rounded-full flex items-center justify-center bg-[#fff8f2] shrink-0 mt-0.5 border border-[#feeddf]">
-                      {React.cloneElement(item.icon as React.ReactElement<{ className?: string }>, { className: 'w-5 h-5 text-[#f58220]' })}
+                  <div key={index} className="flex gap-2.5 md:gap-4 group">
+                    <div className="w-7 h-7 md:w-10 md:h-10 rounded-full flex items-center justify-center bg-[#fff8f2] shrink-0 mt-0.5 border border-[#feeddf]">
+                      {React.cloneElement(item.icon as React.ReactElement<{ className?: string }>, { className: 'w-3.5 h-3.5 md:w-5 md:h-5 text-[#f58220]' })}
                     </div>
                     <div className="flex-1">
-                      <h3 className="text-[16px] md:text-[18px] font-semibold text-[#00643b] mb-1 leading-none pt-1.5">{item.title}</h3>
-                      <p className="text-[14px] md:text-[15px] text-gray-600 font-normal leading-[1.6]">{item.desc}</p>
+                      <h3 className="text-[12.5px] md:text-[18px] font-semibold text-[#00643b] mb-0.5 md:mb-1 leading-none pt-0.5 md:pt-1.5">{item.title}</h3>
+                      <p className="text-[10.5px] sm:text-[11.5px] md:text-[15px] text-gray-600 font-normal leading-[1.3] md:leading-[1.6]">{item.desc}</p>
                     </div>
                   </div>
                 ))}
               </div>
 
               {/* Row 3 */}
-              <div className="py-2 px-0 md:px-3 relative">
+              <div className="py-0.5 md:py-2 px-0 md:px-3 relative">
                 {sectionData.leftSection.itemsLeft.slice(2, 3).map((item, index) => (
-                  <div key={index} className="flex gap-4 group">
-                    <div className="w-10 h-10 rounded-full flex items-center justify-center bg-[#fff8f2] shrink-0 mt-0.5 border border-[#feeddf]">
-                      {React.cloneElement(item.icon as React.ReactElement<{ className?: string }>, { className: 'w-5 h-5 text-[#f58220]' })}
+                  <div key={index} className="flex gap-2.5 md:gap-4 group">
+                    <div className="w-7 h-7 md:w-10 md:h-10 rounded-full flex items-center justify-center bg-[#fff8f2] shrink-0 mt-0.5 border border-[#feeddf]">
+                      {React.cloneElement(item.icon as React.ReactElement<{ className?: string }>, { className: 'w-3.5 h-3.5 md:w-5 md:h-5 text-[#f58220]' })}
                     </div>
                     <div className="flex-1">
-                      <h3 className="text-[16px] md:text-[18px] font-semibold text-[#00643b] mb-1 leading-none pt-1.5">{item.title}</h3>
-                      <p className="text-[14px] md:text-[15px] text-gray-600 font-normal leading-[1.6]">{item.desc}</p>
+                      <h3 className="text-[12.5px] md:text-[18px] font-semibold text-[#00643b] mb-0.5 md:mb-1 leading-none pt-0.5 md:pt-1.5">{item.title}</h3>
+                      <p className="text-[10.5px] sm:text-[11.5px] md:text-[15px] text-gray-600 font-normal leading-[1.3] md:leading-[1.6]">{item.desc}</p>
                     </div>
                   </div>
                 ))}
               </div>
-              <div className="py-2 px-0 md:px-3 relative">
+              <div className="py-0.5 md:py-2 px-0 md:px-3 relative">
                 {sectionData.leftSection.itemsRight.slice(2, 3).map((item, index) => (
-                  <div key={index} className="flex gap-4 group">
-                    <div className="w-10 h-10 rounded-full flex items-center justify-center bg-[#fff8f2] shrink-0 mt-0.5 border border-[#feeddf]">
-                      {React.cloneElement(item.icon as React.ReactElement<{ className?: string }>, { className: 'w-5 h-5 text-[#f58220]' })}
+                  <div key={index} className="flex gap-2.5 md:gap-4 group">
+                    <div className="w-7 h-7 md:w-10 md:h-10 rounded-full flex items-center justify-center bg-[#fff8f2] shrink-0 mt-0.5 border border-[#feeddf]">
+                      {React.cloneElement(item.icon as React.ReactElement<{ className?: string }>, { className: 'w-3.5 h-3.5 md:w-5 md:h-5 text-[#f58220]' })}
                     </div>
                     <div className="flex-1">
-                      <h3 className="text-[16px] md:text-[18px] font-semibold text-[#00643b] mb-1 leading-none pt-1.5">{item.title}</h3>
-                      <p className="text-[14px] md:text-[15px] text-gray-600 font-normal leading-[1.6]">{item.desc}</p>
+                      <h3 className="text-[12.5px] md:text-[18px] font-semibold text-[#00643b] mb-0.5 md:mb-1 leading-none pt-0.5 md:pt-1.5">{item.title}</h3>
+                      <p className="text-[10.5px] sm:text-[11.5px] md:text-[15px] text-gray-600 font-normal leading-[1.3] md:leading-[1.6]">{item.desc}</p>
                     </div>
                   </div>
                 ))}
@@ -202,12 +202,12 @@ const SponsorsAndAttend = () => {
             whileInView={{ opacity: 1, scale: 1 }}
             viewport={{ once: true, margin: "-50px" }}
             transition={{ duration: 0.7, delay: 0.3 }}
-            className="xl:col-span-4 self-center flex justify-center items-center relative py-2 md:py-4"
+            className="xl:col-span-4 self-center flex justify-center items-center relative py-1 md:py-4"
           >
-            <div className="relative w-[250px] h-[250px] md:w-[360px] md:h-[360px] aspect-square">
+            <div className="relative w-[200px] sm:w-[250px] h-[200px] sm:h-[250px] md:w-[360px] md:h-[360px] aspect-square">
 
               {/* Image Circle Container */}
-              <div className="absolute inset-0 rounded-full border-[5px] md:border-[8px] border-white shadow-xl overflow-hidden grid grid-cols-2 grid-rows-2 gap-1 bg-white">
+              <div className="absolute inset-0 rounded-full border-[4px] sm:border-[5px] md:border-[8px] border-white shadow-xl overflow-hidden grid grid-cols-2 grid-rows-2 gap-0.5 sm:gap-1 bg-white">
                 <div className="overflow-hidden bg-gray-50 border-r border-b border-white group">
                   <img loading="lazy" decoding="async" src="https://images.unsplash.com/photo-1542838132-92c53300491e?w=800&q=80" className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" alt="1" />
                 </div>
@@ -223,11 +223,11 @@ const SponsorsAndAttend = () => {
               </div>
 
               {/* Center Overlay Circle */}
-              <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-20 w-[110px] h-[110px] md:w-[130px] md:h-[130px] bg-white rounded-full flex flex-col items-center justify-center text-center shadow-lg p-3 border-[4px] border-white">
-                <Leaf className="w-5 h-5 md:w-6 md:h-6 text-[#00643b] mb-1" />
-                <p className="text-[10px] md:text-[11.5px] font-black text-[#00643b] leading-tight uppercase">{sectionData.centerSection.text1}</p>
-                <p className="text-[10px] md:text-[11.5px] font-black text-[#f58220] leading-tight uppercase tracking-tight">{sectionData.centerSection.text2}</p>
-                <p className="text-[10px] md:text-[11.5px] font-black text-[#00643b] leading-tight uppercase tracking-tight">{sectionData.centerSection.text3}</p>
+              <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-20 w-[90px] sm:w-[110px] h-[90px] sm:h-[110px] md:w-[130px] md:h-[130px] bg-white rounded-full flex flex-col items-center justify-center text-center shadow-lg p-2 sm:p-3 border-[3px] md:border-[4px] border-white">
+                <Leaf className="w-4 h-4 sm:w-5 sm:h-5 md:w-6 md:h-6 text-[#00643b] mb-0.5 sm:mb-1" />
+                <p className="text-[8.5px] sm:text-[10px] md:text-[11.5px] font-black text-[#00643b] leading-tight uppercase">{sectionData.centerSection.text1}</p>
+                <p className="text-[8.5px] sm:text-[10px] md:text-[11.5px] font-black text-[#f58220] leading-tight uppercase tracking-tight">{sectionData.centerSection.text2}</p>
+                <p className="text-[8.5px] sm:text-[10px] md:text-[11.5px] font-black text-[#00643b] leading-tight uppercase tracking-tight">{sectionData.centerSection.text3}</p>
               </div>
 
               {/* Rotating Ring & Dots Container */}
@@ -258,7 +258,7 @@ const SponsorsAndAttend = () => {
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true, margin: "-50px" }}
             transition={{ duration: 0.7, delay: 0.5 }}
-            className="xl:col-span-3 relative z-20 xl:mt-0 mt-4"
+            className="xl:col-span-3 relative z-20 mt-1 md:mt-4 xl:mt-0"
           >
             <div className="bg-white border border-gray-200 rounded-[1rem] overflow-hidden shadow-lg">
               <div className="bg-[#3b8c2a] text-white p-2 flex items-center justify-center relative">
@@ -268,13 +268,13 @@ const SponsorsAndAttend = () => {
                 </div>
               </div>
 
-              <div className="px-3 py-0 md:py-0">
+              <div className="px-2 md:px-3 py-0 md:py-0">
                 {sectionData.rightSection.items.map((item, index) => (
-                  <div key={index} className="flex items-center gap-3 py-1 border-b border-gray-100 last:border-0 group cursor-default">
-                    <div className="w-6 h-6 rounded bg-[#fff8f2] flex items-center justify-center text-[#f58220] group-hover:bg-[#f58220] group-hover:text-white transition-all duration-300 border border-[#feeddf] shrink-0">
-                      {React.cloneElement(item.icon as React.ReactElement<{ className?: string }>, { className: 'w-3.5 h-3.5' })}
+                  <div key={index} className="flex items-center gap-2 md:gap-3 py-0.5 md:py-1 border-b border-gray-100 last:border-0 group cursor-default">
+                    <div className="w-5 h-5 md:w-6 md:h-6 rounded bg-[#fff8f2] flex items-center justify-center text-[#f58220] group-hover:bg-[#f58220] group-hover:text-white transition-all duration-300 border border-[#feeddf] shrink-0">
+                      {React.cloneElement(item.icon as React.ReactElement<{ className?: string }>, { className: 'w-3 h-3 md:w-3.5 md:h-3.5' })}
                     </div>
-                    <span className="text-[13px] md:text-[14px] text-gray-700 font-medium group-hover:text-[#00643b] transition-colors leading-[1.5]">{item.label}</span>
+                    <span className="text-[11.5px] sm:text-[13px] md:text-[14px] text-gray-700 font-medium group-hover:text-[#00643b] transition-colors leading-[1.3] md:leading-[1.5]">{item.label}</span>
                   </div>
                 ))}
               </div>
@@ -295,7 +295,7 @@ const SponsorsAndAttend = () => {
       </section>
 
       {/* PREMIUM FULL WIDTH BAND */}
-      <section className="w-full bg-[#1b5e20] font-inter relative z-30 py-2.5 lg:py-3 border-y border-[#facc15]/20 shadow-[0_10px_40px_rgba(0,0,0,0.15)] overflow-visible">
+      <section className="hidden md:block w-full bg-[#1b5e20] font-inter relative z-30 py-2.5 lg:py-3 border-y border-[#facc15]/20 shadow-[0_10px_40px_rgba(0,0,0,0.15)] overflow-visible">
         <style>{`
           @keyframes sparkleAnim {
             0%, 100% { opacity: 0; transform: scale(0.4) rotate(0deg); }
@@ -306,7 +306,7 @@ const SponsorsAndAttend = () => {
         <div className="absolute top-1/2 left-1/4 w-96 h-96 bg-[#1b5e20]/20 rounded-full blur-[100px] -translate-y-1/2 pointer-events-none"></div>
         <div className="absolute top-1/2 right-1/4 w-96 h-96 bg-[#facc15]/10 rounded-full blur-[100px] -translate-y-1/2 pointer-events-none"></div>
 
-        <div className="px-4 md:px-14 grid grid-cols-1 sm:grid-cols-2 xl:flex xl:items-center xl:justify-between gap-4 relative z-10">
+        <div className="px-3 md:px-14 grid grid-cols-2 sm:grid-cols-2 xl:flex xl:items-center xl:justify-between gap-y-3 gap-x-2 md:gap-4 relative z-10">
 
           {/* Item 1: Date */}
           <div className="flex items-center gap-3 group">
@@ -361,7 +361,7 @@ const SponsorsAndAttend = () => {
           <div className="hidden xl:block w-[1px] h-8 bg-white/10"></div>
 
           {/* Register Button */}
-          <div className="relative shrink-0 z-30 col-span-1 sm:col-span-2 xl:col-span-1 flex justify-center">
+          <div className="relative shrink-0 z-30 col-span-2 sm:col-span-2 xl:col-span-1 flex justify-center mt-1 md:mt-0">
             <Sparkle color="#4B1426" shadow="#ffffff" style={{ top: "-12px", left: "5%", animationDelay: "0s" }} />
             <Sparkle color="#4B1426" shadow="#ffffff" style={{ top: "-15px", left: "28%", animationDelay: "0.3s" }} />
             <Sparkle color="#4B1426" shadow="#ffffff" style={{ top: "-13px", left: "50%", animationDelay: "0.6s" }} />

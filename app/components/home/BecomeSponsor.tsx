@@ -56,26 +56,26 @@ const BecomeSponsor = () => {
             transition={{ duration: 0.7 }}
             className="flex-1 w-full text-center xl:text-left flex flex-col items-center xl:items-start"
           >
-            <div className="inline-flex items-center gap-2 px-4 py-1.5 bg-[#f4fbf6] border border-[#3b8c2a]/20 rounded-full mb-4 shadow-sm transition-all duration-300 hover:shadow-md hover:bg-[#ebf8ee]">
-              <span className="relative flex h-2.5 w-2.5">
+            <div className="inline-flex items-center gap-2 px-3 py-1 md:px-4 md:py-1.5 bg-[#f4fbf6] border border-[#3b8c2a]/20 rounded-full mb-2 md:mb-4 shadow-sm transition-all duration-300 hover:shadow-md hover:bg-[#ebf8ee]">
+              <span className="relative flex h-2 md:h-2.5 w-2 md:w-2.5">
                 <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#F2B40E] opacity-75"></span>
-                <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-[#F2B40E]"></span>
+                <span className="relative inline-flex rounded-full h-2 md:h-2.5 w-2 md:w-2.5 bg-[#F2B40E]"></span>
               </span>
-              <span className="text-[12px] md:text-[13px] font-bold text-[#3b8c2a] tracking-widest uppercase">{sectionData.leftSection.tag}</span>
+              <span className="text-[10px] md:text-[13px] font-bold text-[#3b8c2a] tracking-widest uppercase">{sectionData.leftSection.tag}</span>
             </div>
 
-            <h2 className="text-[18px] md:text-[28px] lg:text-[32px] font-semibold text-[#0b2912] leading-[1.1] mb-4 tracking-tight uppercase font-poppins">
+            <h2 className="text-[18px] md:text-[28px] lg:text-[32px] font-semibold text-[#0b2912] leading-[1.1] mb-2 md:mb-4 tracking-tight uppercase font-poppins">
               {sectionData.leftSection.titlePrefix} {" "}
               <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#3b8c2a] to-[#256618]">{sectionData.leftSection.titleHighlight}</span>
             </h2>
 
-            <div className="inline-block bg-[#F2B40E]/10 border-l-4 border-[#F2B40E] px-5 py-3 mb-5 rounded-r-lg shadow-[0_4px_15px_rgba(242,180,14,0.05)]">
-              <p className="text-[14px] md:text-[15px] font-bold text-[#0b2912] uppercase tracking-wider leading-[1.4]">
+            <div className="inline-block bg-[#F2B40E]/10 border-l-4 border-[#F2B40E] px-3 py-2 md:px-5 md:py-3 mb-3 md:mb-5 rounded-r-lg shadow-[0_4px_15px_rgba(242,180,14,0.05)]">
+              <p className="text-[12px] md:text-[15px] font-bold text-[#0b2912] uppercase tracking-wider leading-snug md:leading-[1.4]">
                 {sectionData.leftSection.calloutText}
               </p>
             </div>
 
-            <p className="text-[15px] md:text-[16px] text-gray-600 font-medium leading-[1.7] max-w-[500px]">
+            <p className="text-[13px] md:text-[16px] text-gray-600 font-medium leading-[1.5] md:leading-[1.7] max-w-full md:max-w-[500px]">
               {sectionData.leftSection.description}
             </p>
           </motion.div>
@@ -86,10 +86,10 @@ const BecomeSponsor = () => {
             whileInView={{ opacity: 1, scale: 1 }}
             viewport={{ once: true, margin: "-50px" }}
             transition={{ duration: 0.7, delay: 0.2 }}
-            className="w-full xl:w-[380px] shrink-0 relative flex justify-center py-2"
+            className="w-full xl:w-[380px] shrink-0 relative flex justify-center py-1 md:py-2"
           >
 
-            <div className="relative w-full max-w-[300px] xl:max-w-[320px] aspect-square rounded-[1.5rem] overflow-hidden shadow-2xl border-[4px] border-white z-20 group">
+            <div className="relative w-full max-w-[200px] sm:max-w-[250px] md:max-w-[320px] aspect-square rounded-[1rem] md:rounded-[1.5rem] overflow-hidden shadow-2xl border-[3px] md:border-[4px] border-white z-20 group">
               <img
                 src={sectionData.centerSection.image}
                 alt={sectionData.centerSection.imageAlt}
@@ -100,11 +100,11 @@ const BecomeSponsor = () => {
               <div className="absolute inset-0 bg-gradient-to-t from-[#0b2912]/90 via-[#0b2912]/20 to-transparent"></div>
 
               {/* Overlay Text */}
-              <div className="absolute bottom-5 left-5 right-5 text-left transform translate-y-2 group-hover:translate-y-0 transition-transform duration-300">
-                <div className="inline-block px-2 py-0.5 bg-[#F2B40E] text-[#0b2912] text-[12px] font-black uppercase tracking-wider rounded-sm mb-1.5 font-poppins">
+              <div className="absolute bottom-3 left-3 right-3 md:bottom-5 md:left-5 md:right-5 text-left transform translate-y-2 group-hover:translate-y-0 transition-transform duration-300">
+                <div className="inline-block px-1.5 md:px-2 py-0.5 bg-[#F2B40E] text-[#0b2912] text-[10px] md:text-[12px] font-black uppercase tracking-wider rounded-sm mb-1 md:mb-1.5 font-poppins">
                   {sectionData.centerSection.overlayTag}
                 </div>
-                <p className="text-white font-black text-[18px] md:text-[20px] leading-tight drop-shadow-md font-poppins">
+                <p className="text-white font-black text-[14px] md:text-[20px] leading-tight drop-shadow-md font-poppins">
                   {sectionData.centerSection.overlayText}
                 </p>
               </div>
@@ -117,26 +117,26 @@ const BecomeSponsor = () => {
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true, margin: "-50px" }}
             transition={{ duration: 0.7, delay: 0.4 }}
-            className="flex-1 w-full  bg-white rounded-3xl shadow-[0_8px_30px_rgba(0,0,0,0.08)] border border-gray-100 overflow-hidden flex flex-col font-inter"
+            className="flex-1 w-full bg-white rounded-2xl md:rounded-3xl shadow-[0_8px_30px_rgba(0,0,0,0.08)] border border-gray-100 overflow-hidden flex flex-col font-inter mt-2 md:mt-0"
           >
             {/* Header */}
-            <div className="bg-gradient-to-r from-[#0b2912] via-[#154726] to-[#0b2912] text-white p-2.5 md:px-4 md:py-2 text-center relative overflow-hidden shrink-0 border-b-2 border-[#F2B40E]">
+            <div className="bg-gradient-to-r from-[#0b2912] via-[#154726] to-[#0b2912] text-white p-2 md:px-4 md:py-2 text-center relative overflow-hidden shrink-0 border-b-2 border-[#F2B40E]">
               <div className="absolute inset-0 opacity-10 bg-[radial-gradient(circle_at_center,_white_1px,_transparent_1px)] bg-[size:10px_10px]"></div>
-              <h3 className="text-[15px] md:text-[17px] font-semibold uppercase tracking-widest relative z-10 text-white drop-shadow-md font-poppins">
+              <h3 className="text-[13.5px] md:text-[17px] font-semibold uppercase tracking-widest relative z-10 text-white drop-shadow-md font-poppins">
                 {sectionData.rightSection.titlePrefix} <span className="text-[#F2B40E]">{sectionData.rightSection.titleHighlight}</span>
               </h3>
             </div>
 
             {/* Grid */}
-            <div className="p-2 md:px-3 md:py-2 grid grid-cols-1 sm:grid-cols-2 gap-3 md:gap-4 bg-[#f8fcf9] flex-grow">
+            <div className="p-1.5 md:px-3 md:py-2 grid grid-cols-1 sm:grid-cols-2 gap-1.5 md:gap-4 bg-[#f8fcf9] flex-grow">
               {sectionData.rightSection.features.map((feature, idx) => (
-                <div key={idx} className="bg-white border border-[#e6f2e8] rounded-2xl p-2 md:px-2 md:py-3 flex flex-row items-center gap-3 hover:shadow-[0_8px_25px_rgba(0,100,59,0.08)] hover:border-[#3b8c2a]/40 transition-all duration-300 group cursor-default">
-                  <div className="w-5 h-5 md:w-8 md:h-8 rounded-xl bg-[#f4fbf6] border border-[#e6f2e8] flex items-center justify-center shrink-0 group-hover:bg-[#F2B40E] group-hover:border-[#F2B40E] transition-colors duration-300 shadow-sm">
+                <div key={idx} className="bg-white border border-[#e6f2e8] rounded-xl md:rounded-2xl p-1.5 md:px-2 md:py-3 flex flex-row items-center gap-2 md:gap-3 hover:shadow-[0_8px_25px_rgba(0,100,59,0.08)] hover:border-[#3b8c2a]/40 transition-all duration-300 group cursor-default">
+                  <div className="w-6 h-6 md:w-8 md:h-8 rounded-lg md:rounded-xl bg-[#f4fbf6] border border-[#e6f2e8] flex items-center justify-center shrink-0 group-hover:bg-[#F2B40E] group-hover:border-[#F2B40E] transition-colors duration-300 shadow-sm">
                     <feature.icon className="w-3 h-3 text-[#3b8c2a] group-hover:text-[#0b2912] transition-colors duration-300" strokeWidth={2} />
                   </div>
                   <div className="flex flex-col flex-1 font-inter">
-                    <span className="text-[11.5px] md:text-[12px] text-gray-500 font-medium leading-[1.3] mb-0.5">{feature.title}</span>
-                    <span className="text-[13px] md:text-[14px] text-[#1b5e20] font-semibold leading-[1.2]">{feature.highlight}</span>
+                    <span className="text-[10px] md:text-[12px] text-gray-500 font-medium leading-tight md:leading-[1.3] mb-0 md:mb-0.5">{feature.title}</span>
+                    <span className="text-[11.5px] md:text-[14px] text-[#1b5e20] font-semibold leading-tight md:leading-[1.2]">{feature.highlight}</span>
                   </div>
                 </div>
               ))}

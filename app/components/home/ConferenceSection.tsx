@@ -149,7 +149,7 @@ const ConferenceSeminars = () => {
         }
       `}</style>
 
-      <div className="flex flex-col xl:flex-row items-center justify-between gap-6 lg:gap-10 py-2">
+      <div className="flex flex-col xl:flex-row items-center justify-between gap-4 md:gap-6 lg:gap-10 py-2">
 
         {/* LEFT IMAGE BOX */}
         <div className="flex flex-col md:flex-row items-center gap-2 lg:gap-4 flex-1 w-full">
@@ -160,29 +160,29 @@ const ConferenceSeminars = () => {
             viewport={{ once: true }}
             className="flex flex-col items-start w-full md:max-w-[70%]"
           >
-            <div className="flex items-center gap-2 mb-4">
-              <span className="text-[12px] md:text-[13px] lg:text-[14px] font-bold uppercase tracking-widest text-[#f58220] bg-[#f58220]/10 px-4 py-1.5 rounded-full border border-[#f58220]/20">
+            <div className="flex items-center gap-2 mb-2 md:mb-4">
+              <span className="text-[10px] sm:text-[12px] md:text-[13px] lg:text-[14px] font-bold uppercase tracking-widest text-[#f58220] bg-[#f58220]/10 px-3 py-1 md:px-4 md:py-1.5 rounded-full border border-[#f58220]/20">
                 {conferenceData.sectionTag}
               </span>
             </div>
 
-            <h3 className="text-[18px] md:text-[24px] lg:text-[28px] font-medium text-[#1a1a1a] leading-[1.2] mb-4">
+            <h3 className="text-[18px] md:text-[24px] lg:text-[28px] font-medium text-[#1a1a1a] leading-[1.2] mb-2 md:mb-4">
               {conferenceData.titleMain} <br className="hidden md:block" />
               <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#00643b] to-[#3b8c2a]">{conferenceData.titleHighlight}</span>
             </h3>
 
-            <p className="text-[16px] md:text-[18px] text-gray-600 leading-[1.6] mb-6 font-normal border-l-4 border-[#f58220] pl-4">
+            <p className="text-[13px] sm:text-[14px] md:text-[18px] text-gray-600 leading-[1.5] md:leading-[1.6] mb-4 md:mb-6 font-normal border-l-4 border-[#f58220] pl-3 md:pl-4">
               {conferenceData.description}
             </p>
 
             {/* Elegant Checklist */}
-            <div className="flex flex-col gap-2 mb-5 w-full">
+            <div className="flex flex-col gap-2 mb-4 md:mb-5 w-full">
               {conferenceData.checklist.map((text, idx) => (
-                <div key={idx} className="flex items-start gap-3">
+                <div key={idx} className="flex items-start gap-2 md:gap-3">
                   <div className="mt-0.5 bg-[#f58220]/10 p-0.5 rounded-full">
-                    <CheckCircle className="w-4 h-4 text-[#f58220] shrink-0" />
+                    <CheckCircle className="w-3.5 h-3.5 md:w-4 h-4 text-[#f58220] shrink-0" />
                   </div>
-                  <span className="text-[15px] md:text-[16px] font-medium text-gray-700">{text}</span>
+                  <span className="text-[13px] sm:text-[14px] md:text-[16px] leading-snug md:leading-normal font-medium text-gray-700">{text}</span>
                 </div>
               ))}
             </div>
@@ -199,9 +199,9 @@ const ConferenceSeminars = () => {
               </div>
 
               <Link href={conferenceData.button.link} target="_blank" rel="noopener noreferrer" className="relative z-10">
-                <button className="flex items-center justify-center gap-2 px-8 py-2 rounded-xl bg-gradient-to-r from-[#f58634] to-[#ff9b4f] hover:from-[#e67929] hover:to-[#f58634] text-white font-semibold uppercase tracking-wider shadow-[0_5px_15px_rgba(245,134,52,0.3)] hover:shadow-[0_8px_25px_rgba(245,134,52,0.4)] transition-all duration-300 hover:-translate-y-1 min-h-[44px] group">
-                  <span className="text-[12px] md:text-[14px]">{conferenceData.button.text}</span>
-                  <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+                <button className="flex items-center justify-center gap-2 px-5 py-1.5 md:px-8 md:py-2 rounded-xl bg-gradient-to-r from-[#f58634] to-[#ff9b4f] hover:from-[#e67929] hover:to-[#f58634] text-white font-semibold uppercase tracking-wider shadow-[0_5px_15px_rgba(245,134,52,0.3)] hover:shadow-[0_8px_25px_rgba(245,134,52,0.4)] transition-all duration-300 hover:-translate-y-1 min-h-[34px] md:min-h-[44px] group">
+                  <span className="text-[11px] md:text-[14px]">{conferenceData.button.text}</span>
+                  <ArrowRight className="w-4 h-4 md:w-5 md:h-5 group-hover:translate-x-1 transition-transform" />
                 </button>
               </Link>
             </div>
@@ -238,7 +238,7 @@ const ConferenceSeminars = () => {
           viewport={{ once: true }}
           className="w-full xl:w-[45%] shrink-0"
         >
-          <div className="relative rounded-[24px] overflow-hidden border-[8px] border-white shadow-[0_20px_50px_rgba(0,0,0,0.15)] group h-[300px] md:h-[390px]">
+          <div className="relative rounded-[16px] md:rounded-[24px] overflow-hidden border-[4px] md:border-[8px] border-white shadow-[0_10px_30px_rgba(0,0,0,0.1)] md:shadow-[0_20px_50px_rgba(0,0,0,0.15)] group h-[180px] sm:h-[220px] md:h-[390px]">
             <Image
               src={conferenceData.image}
               alt={conferenceData.imageAlt}

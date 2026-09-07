@@ -29,7 +29,7 @@ const getInitials = (name: string) => {
 // ─── Top Initials Circle ───
 const InitialsCircle = ({ name, color }: { name: string; color: string }) => (
   <div
-    className="w-14 h-14 rounded-full border-[3px] border-white flex items-center justify-center font-poppins font-bold text-base shadow-md bg-white uppercase tracking-wider"
+    className="w-10 h-10 md:w-14 md:h-14 rounded-full border-[2px] md:border-[3px] border-white flex items-center justify-center font-poppins font-bold text-[12px] md:text-base shadow-md bg-white uppercase tracking-wider"
     style={{
       boxShadow: "0 4px 14px rgba(0,0,0,0.13), 0 0 0 2px #e2e8f0",
       color: color || '#1b5e20',
@@ -146,8 +146,7 @@ const TestimonialCard = ({ item, expandedCardId, setExpandedCardId }: { item: an
 
   return (
     <div
-      className="relative flex flex-col w-[280px] md:w-[270px] flex-shrink-0 font-inter"
-      style={{ paddingTop: '32px' }}
+      className="relative flex flex-col w-[200px] md:w-[270px] flex-shrink-0 font-inter pt-[22px] md:pt-[32px]"
     >
       {/* ── Floating Logo Circle ── */}
       <div
@@ -162,10 +161,9 @@ const TestimonialCard = ({ item, expandedCardId, setExpandedCardId }: { item: an
 
       {/* ── Card Body ── */}
       <div
-        className="relative bg-white rounded-[22px] border border-slate-100 flex flex-col overflow-hidden group hover:shadow-[0_20px_40px_-10px_rgba(0,0,0,0.15)] transition-all duration-500"
+        className="relative bg-white rounded-[16px] md:rounded-[22px] border border-slate-100 flex flex-col overflow-hidden group hover:shadow-[0_20px_40px_-10px_rgba(0,0,0,0.15)] transition-all duration-500 h-[210px] md:h-[310px]"
         style={{
           boxShadow: "rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 1px 3px 1px",
-          height: '310px',
         }}
       >
         {/* ── Expanded Full-Text Overlay ── */}
@@ -236,58 +234,58 @@ const TestimonialCard = ({ item, expandedCardId, setExpandedCardId }: { item: an
         </AnimatePresence>
 
         {/* ── Top: Company Info (below floating logo) ── */}
-        <div className="pt-[50px] px-4 pb-0 text-center flex-shrink-0 min-h-[86px]">
+        <div className="pt-[24px] md:pt-[50px] px-2 md:px-4 pb-0 text-center flex-shrink-0 min-h-[54px] md:min-h-[86px]">
           {/* Company 1 Slot */}
-          <div className="min-h-[18px] mb-0.5">
-            <div className="font-bold text-[13px] leading-tight px-1 flex items-center justify-center" style={{ color: item.color || '#23471d' }}>
-              <span className={item.company1.length > 25 ? "truncate max-w-[220px]" : ""}>{item.company1}</span>
+          <div className="min-h-[14px] md:min-h-[18px] mb-0.5">
+            <div className="font-bold text-[10px] md:text-[13px] leading-tight px-1 flex items-center justify-center" style={{ color: item.color || '#23471d' }}>
+              <span className={item.company1.length > 25 ? "truncate max-w-[180px] md:max-w-[220px]" : ""}>{item.company1}</span>
             </div>
           </div>
 
           {/* Company 2 / Title Slot */}
-          <div className="min-h-[18px]">
-            <div className="font-bold text-[11.5px] leading-tight px-1 opacity-90 flex items-center justify-center" style={{ color: item.color || '#23471d' }}>
+          <div className="min-h-[12px] md:min-h-[18px]">
+            <div className="font-bold text-[8px] md:text-[11.5px] leading-tight px-1 opacity-90 flex items-center justify-center" style={{ color: item.color || '#23471d' }}>
               {item.company2 ? (
-                <span className={item.company2.length > 30 ? "truncate max-w-[220px]" : ""}>{item.company2}</span>
+                <span className={item.company2.length > 30 ? "truncate max-w-[180px] md:max-w-[220px]" : ""}>{item.company2}</span>
               ) : ""}
             </div>
           </div>
 
           {/* Location Slot */}
-          <div className="flex items-center justify-center gap-1 text-slate-500 text-[10.5px] mt-1.5">
-            <MapPin className="w-3 h-3 flex-shrink-0 text-[#d26019]" />
-            <span className="truncate max-w-[180px]">{item.location}</span>
+          <div className="flex items-center justify-center gap-1 text-slate-500 text-[8px] md:text-[10.5px] mt-0.5 md:mt-1.5">
+            <MapPin className="w-2.5 h-2.5 md:w-3 md:h-3 flex-shrink-0 text-[#d26019]" />
+            <span className="truncate max-w-[160px] md:max-w-[180px]">{item.location}</span>
           </div>
         </div>
 
         {/* ── Gradient Divider ── */}
         <div
-          className="h-[1.5px] mx-4 mt-2.5 rounded-full flex-shrink-0"
+          className="h-[1px] md:h-[1.5px] mx-3 md:mx-4 mt-1.5 md:mt-2.5 rounded-full flex-shrink-0"
           style={{ background: `linear-gradient(90deg, ${item.color || '#23471d'}, #d26019)` }}
         />
 
         {/* ── Quote Section ── */}
-        <div className="flex flex-col flex-1 px-4 pt-2.5 pb-3 relative min-h-0 font-inter">
-          <Quote className="w-4 h-4 text-[#458a16] transform -scale-x-100 opacity-70 mb-1 flex-shrink-0" />
+        <div className="flex flex-col flex-1 px-3 md:px-4 pt-1.5 md:pt-2.5 pb-2 md:pb-3 relative min-h-0 font-inter">
+          <Quote className="w-2.5 h-2.5 md:w-4 md:h-4 text-[#458a16] transform -scale-x-100 opacity-70 mb-0.5 md:mb-1 flex-shrink-0" />
 
           <div className="flex-1 overflow-hidden">
-            <p className="text-slate-700 text-[13px] font-medium leading-relaxed">
+            <p className="text-slate-700 text-[9px] md:text-[13px] font-medium leading-[1.2] md:leading-relaxed">
               {isLong
-                ? `${quoteText.substring(0, 125).trim()}…`
+                ? `${quoteText.substring(0, 110).trim()}…`
                 : quoteText
               }
             </p>
           </div>
 
           {/* ── "Read More" Button ── */}
-          <div className="mt-auto pt-2 flex-shrink-0">
+          <div className="mt-auto pt-1 md:pt-2 flex-shrink-0">
             {isLong && (
               <button
                 onClick={(e) => {
                   e.stopPropagation();
                   setIsExpanded(true);
                 }}
-                className="flex items-center gap-1 text-[10px] font-black uppercase tracking-widest px-2.5 py-1 rounded-full transition-all duration-200 hover:gap-1.5"
+                className="flex items-center gap-1 text-[8px] md:text-[10px] font-black uppercase tracking-widest px-2 md:px-2.5 py-0.5 md:py-1 rounded-full transition-all duration-200 hover:gap-1.5"
                 style={{
                   color: '#23471d',
                   background: 'linear-gradient(90deg, #eaf5e2 0%, #fff6ee 100%)',
@@ -295,7 +293,7 @@ const TestimonialCard = ({ item, expandedCardId, setExpandedCardId }: { item: an
                 }}
               >
                 Read more
-                <span className="text-[10px]">→</span>
+                <span className="text-[7.5px] md:text-[10px]">→</span>
               </button>
             )}
           </div>
@@ -317,7 +315,7 @@ const VideoCard = ({ item }: { item: any }) => {
   return (
     <div
       onClick={() => window.open(item.videoUrl, '_blank')}
-      className="relative rounded-2xl overflow-hidden flex-1 min-w-full sm:min-w-[280px] md:min-w-0 h-56 md:h-52 group cursor-pointer shadow-lg font-inter"
+      className="relative rounded-xl md:rounded-2xl overflow-hidden flex-1 min-w-full sm:min-w-[280px] md:min-w-0 h-[120px] md:h-52 group cursor-pointer shadow-lg font-inter"
     >
       <div className="absolute inset-0" style={{ background: bg }}>
         {item.thumbnail && (
@@ -326,13 +324,13 @@ const VideoCard = ({ item }: { item: any }) => {
       </div>
       <div className="absolute inset-0 bg-black/20 group-hover:bg-black/10 transition-all duration-300" />
       <div className="absolute inset-0 flex items-center justify-center">
-        <div className="w-12 h-12 rounded-full bg-white flex items-center justify-center shadow-2xl group-hover:scale-110 transition-transform duration-300">
-          <Play className="w-5 h-5 fill-[#4f8519] text-[#4f8519] ml-0.5" />
+        <div className="w-8 h-8 md:w-12 md:h-12 rounded-full bg-white flex items-center justify-center shadow-2xl group-hover:scale-110 transition-transform duration-300">
+          <Play className="w-3.5 h-3.5 md:w-5 md:h-5 fill-[#4f8519] text-[#4f8519] ml-0.5" />
         </div>
       </div>
-      <div className="absolute bottom-0 left-0 right-0 p-4 bg-gradient-to-t from-black/90 to-transparent">
-        <div className="text-white font-semibold text-xs md:text-sm truncate font-poppins">{item.title}</div>
-        <div className="text-white/70 text-[11px] font-medium mt-0.5">{item.location}</div>
+      <div className="absolute bottom-0 left-0 right-0 p-2 md:p-4 bg-gradient-to-t from-black/90 to-transparent">
+        <div className="text-white font-semibold text-[10px] md:text-sm truncate font-poppins">{item.title}</div>
+        <div className="text-white/70 text-[8.5px] md:text-[11px] font-medium mt-0 md:mt-0.5">{item.location}</div>
       </div>
     </div>
   );
@@ -340,8 +338,8 @@ const VideoCard = ({ item }: { item: any }) => {
 
 // ─── SVG Lineart Gradient Section Header ───
 const SectionDivider = ({ text }: { text: string }) => (
-  <div className="flex items-center gap-3 px-4 md:px-16 pt-5 pb-0 max-w-[1400px] mx-auto">
-    <svg className="flex-1 h-5 overflow-visible" viewBox="0 0 300 18" preserveAspectRatio="none">
+  <div className="flex items-center gap-1.5 md:gap-3 px-2 md:px-16 pt-2 md:pt-5 pb-0 max-w-[1400px] mx-auto">
+    <svg className="flex-1 h-3 md:h-5 overflow-visible" viewBox="0 0 300 18" preserveAspectRatio="none">
       <defs>
         <linearGradient id="lg-left" x1="0%" y1="0%" x2="100%" y2="0%">
           <stop offset="0%" stopColor="transparent" />
@@ -362,15 +360,15 @@ const SectionDivider = ({ text }: { text: string }) => (
       <circle cx="293" cy="9" r="2.5" fill="#23471d" opacity="0.6" />
     </svg>
 
-    <div className="flex items-center gap-2 whitespace-nowrap">
-      <Leaf className="w-3.5 h-3.5 text-[#23471d]" />
-      <span className="font-bold text-[#6E1A37] text-[13px] md:text-[15px] tracking-[0.12em] uppercase font-poppins">
+    <div className="flex items-center gap-1 md:gap-2 whitespace-nowrap">
+      <Leaf className="w-2.5 h-2.5 md:w-3.5 md:h-3.5 text-[#23471d]" />
+      <span className="font-bold text-[#6E1A37] text-[10px] md:text-[15px] tracking-[0.12em] uppercase font-poppins">
         {text}
       </span>
-      <Leaf className="w-3.5 h-3.5 text-[#d26019]" />
+      <Leaf className="w-2.5 h-2.5 md:w-3.5 md:h-3.5 text-[#d26019]" />
     </div>
 
-    <svg className="flex-1 h-5 overflow-visible" viewBox="0 0 300 18" preserveAspectRatio="none">
+    <svg className="flex-1 h-3 md:h-5 overflow-visible" viewBox="0 0 300 18" preserveAspectRatio="none">
       <defs>
         <linearGradient id="lg-right" x1="0%" y1="0%" x2="100%" y2="0%">
           <stop offset="0%" stopColor="#d26019" />
@@ -485,7 +483,7 @@ const TestimonialsCarousel = () => {
       `}</style>
 
       {/* ─── TOP HERO BANNER ─── */}
-      <div className="relative w-full min-h-[420px] md:min-h-[380px] flex items-center overflow-hidden py-10 md:py-4">
+      <div className="relative w-full min-h-[260px] md:min-h-[380px] flex items-center overflow-hidden py-6 md:py-4">
         <div className="absolute inset-0 z-0">
           <Image
             src={testImg}
@@ -500,25 +498,25 @@ const TestimonialsCarousel = () => {
           <div className="absolute inset-0 bg-white/40 md:hidden" />
         </div>
 
-        <div className="w-full px-4 lg:px-14 relative z-10 flex flex-col md:flex-row items-center gap-10 md:gap-12 w-full">
+        <div className="w-full px-2 md:px-4 lg:px-14 relative z-10 flex flex-col md:flex-row items-center gap-4 md:gap-12">
           <div className="flex flex-col justify-center w-full max-w-3xl text-left font-inter">
 
             {/* Badge */}
-            <div className="flex items-center justify-start gap-2 mb-3">
-              <div className="w-7 h-7 rounded-lg bg-[#1b5e20] flex items-center justify-center shadow">
-                <Quote className="w-3.5 h-3.5 text-white" />
+            <div className="flex items-center justify-start gap-1.5 md:gap-2 mb-1.5 md:mb-3">
+              <div className="w-5 h-5 md:w-7 md:h-7 rounded-md md:rounded-lg bg-[#1b5e20] flex items-center justify-center shadow">
+                <Quote className="w-2.5 h-2.5 md:w-3.5 md:h-3.5 text-white" />
               </div>
-              <span className="text-[#1b5e20] font-bold text-[13px] md:text-[14px] tracking-wide uppercase font-poppins">
+              <span className="text-[#1b5e20] font-bold text-[10px] md:text-[14px] tracking-wide uppercase font-poppins">
                 {sectionData.heroBanner.badge}
               </span>
             </div>
 
             {/* Title with textShadow and colors #1b5e20 / #4B1426 */}
             <h1
-              className="text-2xl sm:text-3xl md:text-[36px] lg:text-[40px] font-semibold leading-[1.15] mb-3 text-left font-poppins"
+              className="text-[17px] sm:text-3xl md:text-[36px] lg:text-[40px] font-semibold leading-[1.15] mb-1.5 md:mb-3 text-left font-poppins"
               style={{ textShadow: "1px 1px 2px rgba(0,0,0,0.4)" }}
             >
-              <span className="block text-[#1b5e20] font-semibold mb-0.5">
+              <span className="block text-[#1b5e20] font-semibold mb-0 md:mb-0.5">
                 {sectionData.heroBanner.titlePrefix}
               </span>
               <span className="block text-[#4B1426] font-semibold tracking-tight md:whitespace-nowrap">
@@ -529,12 +527,12 @@ const TestimonialsCarousel = () => {
 
 
             {/* Subtitle */}
-            <p className="text-[#131730] text-sm md:text-base max-w-3xl mb-3 font-bold leading-relaxed text-left">
+            <p className="text-[#131730] text-[11px] md:text-base max-w-3xl mb-1.5 md:mb-3 font-bold leading-snug md:leading-relaxed text-left">
               {sectionData.heroBanner.subtitle}
             </p>
 
             {/* Description */}
-            <p className="text-[#131730] text-sm md:text-[15px] max-w-2xl mb-4 font-semibold leading-relaxed text-justify">
+            <p className="text-[#131730] text-[10px] md:text-[15px] max-w-2xl mb-2 md:mb-4 font-semibold leading-tight md:leading-relaxed text-justify">
               {sectionData.heroBanner.description}
             </p>
           </div>
@@ -545,15 +543,15 @@ const TestimonialsCarousel = () => {
       <SectionDivider text={sectionData.sectionDividerText} />
 
       {/* ─── TESTIMONIAL CARDS MARQUEE (Right Scrolling) ─── */}
-      <div className="relative pt-8 pb-6">
-        <div className="w-full px-4 lg:px-14 relative z-10">
+      <div className="relative pt-3 md:pt-8 pb-3 md:pb-6">
+        <div className="w-full px-2 md:px-4 lg:px-14 relative z-10">
           <div className="w-full overflow-hidden">
             <div
-              className="marquee-wrapper-cards gap-6"
+              className="marquee-wrapper-cards gap-3 md:gap-6"
               style={{ animationDuration: `${Math.max(total * 10, 25)}s` }}
             >
               {[1, 2, 3, 4].map((set) => (
-                <div key={set} className="flex gap-6">
+                <div key={set} className="flex gap-3 md:gap-6">
                   {sectionData.testimonials.map((item: any, i: number) => (
                     <div key={`${set}-${i}`} className="flex-shrink-0">
                       <TestimonialCard
@@ -571,22 +569,22 @@ const TestimonialsCarousel = () => {
       </div>
 
       {/* ─── VIDEO SECTION ─── */}
-      <div className="relative pt-2 pb-2">
-        <div className="absolute -left-10 bottom-0 w-44 h-44 opacity-20 pointer-events-none rotate-45 select-none z-0">
+      <div className="relative pt-1 md:pt-2 pb-1 md:pb-2">
+        <div className="absolute -left-10 bottom-0 w-32 h-32 md:w-44 md:h-44 opacity-20 pointer-events-none rotate-45 select-none z-0">
           <img src={leafPng.src} alt="" className="w-full h-full object-contain" />
         </div>
 
-        <div className="px-4 lg:px-14 relative z-10">
+        <div className="px-2 md:px-4 lg:px-14 relative z-10">
           <div className="flex flex-col md:flex-row items-stretch">
             <div className="w-full overflow-hidden">
               <div
-                className="marquee-wrapper-videos gap-4"
+                className="marquee-wrapper-videos gap-2 md:gap-4"
                 style={{ animationDuration: `${Math.max(totalVideos * 10, 20)}s` }}
               >
                 {[1, 2, 3, 4].map((set) => (
-                  <div key={set} className="flex gap-4">
+                  <div key={set} className="flex gap-2 md:gap-4">
                     {sectionData.videos.map((v: any, i: number) => (
-                      <div key={`${set}-${i}`} className="w-[280px] md:w-[320px] flex-shrink-0">
+                      <div key={`${set}-${i}`} className="w-[200px] md:w-[320px] flex-shrink-0">
                         <VideoCard item={v} />
                       </div>
                     ))}
@@ -597,7 +595,7 @@ const TestimonialsCarousel = () => {
           </div>
         </div>
 
-        <div className="absolute -right-12 bottom-4 w-48 h-48 opacity-20 pointer-events-none -rotate-12 select-none z-0">
+        <div className="absolute -right-12 bottom-4 w-36 h-36 md:w-48 md:h-48 opacity-20 pointer-events-none -rotate-12 select-none z-0">
           <img src={leafPng.src} alt="" className="w-full h-full object-contain" />
         </div>
       </div>
