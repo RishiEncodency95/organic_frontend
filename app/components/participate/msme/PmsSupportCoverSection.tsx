@@ -364,7 +364,7 @@ const PmsSupportCoverSection: FC = () => {
                   rounded-[12px]
                   border
                   border-[#bdc9b4]
-                  bg-[#f7faf2]
+                  bg-[#f4f8ee]
                   px-[18px]
                   pb-[10px]
                   pt-[25px]
@@ -734,7 +734,7 @@ const PmsSupportCoverSection: FC = () => {
                       min-h-[65px]
                       items-center
                       rounded-[8px]
-                      bg-[#f1f5e8]
+                      bg-[#f2f6ec]
                       px-[9px]
                       py-[7px]
                     "
@@ -798,7 +798,7 @@ const PmsSupportCoverSection: FC = () => {
               bg-[#f1f5e8]
               px-[16px]
               py-[10px]
-              lg:grid-cols-[115px_330px_1fr_170px]
+              lg:grid-cols-[115px_450px_1fr_250px]
             "
           >
             {/* icon */}
@@ -812,16 +812,15 @@ const PmsSupportCoverSection: FC = () => {
             </div>
 
             {/* amount */}
-            <div className="px-[8px]">
+            <div className="pl-[8px] pr-4">
               <h4
                 className="
-                  text-center
-                  text-[14px]
+                  text-left
+                  text-[22px]
                   font-semibold
                   uppercase
                   leading-tight
                   text-[#07582c]
-                  sm:text-[16px]
                 "
               >
                 Additional Contingency Support
@@ -829,7 +828,7 @@ const PmsSupportCoverSection: FC = () => {
 
               <div
                 className="
-                  mt-[5px]
+                  mt-[5px] max-w-[365px]
                   rounded-[6px]
                   bg-[#07582c]
                   px-[15px]
@@ -847,6 +846,7 @@ const PmsSupportCoverSection: FC = () => {
               <div
                 className="
                   mt-[2px]
+                  max-w-[365px]
                   flex
                   items-center
                   justify-center
@@ -872,7 +872,7 @@ const PmsSupportCoverSection: FC = () => {
               className="
                 border-[#d5dcd0]
                 px-[20px]
-                lg:border-x
+                lg:border-x pr-[10%]
               "
             >
               <div className="flex items-start gap-[10px]">
@@ -880,7 +880,7 @@ const PmsSupportCoverSection: FC = () => {
                   src={checkCircleIcon.src}
                   alt=""
                   aria-hidden="true"
-                  className="mt-[1px] h-[23px] w-[23px] shrink-0 object-contain"
+                  className="mt-[1px] h-[28px] w-[28px] shrink-0 object-contain"
                 />
 
                 <p
@@ -889,7 +889,6 @@ const PmsSupportCoverSection: FC = () => {
                     font-semibold
                     leading-[1.4]
                     text-[#191919]
-                    sm:text-[14px]
                   "
                 >
                   100% of eligible contingency expenditure,
@@ -914,7 +913,7 @@ const PmsSupportCoverSection: FC = () => {
                   src={infoCircleIcon.src}
                   alt=""
                   aria-hidden="true"
-                  className="mt-[1px] h-[22px] w-[22px] shrink-0 object-contain"
+                  className="mt-[1px] h-[28px] w-[28px] shrink-0 object-contain"
                 />
 
                 <p
@@ -933,13 +932,13 @@ const PmsSupportCoverSection: FC = () => {
             </div>
 
             {/* calculator */}
-            <div className="flex items-center justify-center">
+            <div className="flex items-end justify-end">
               <img
                 src={calculatorVisual.src}
                 alt="PMS support calculation"
                 className="
-                  h-[105px]
-                  w-[145px]
+                  h-[135px]
+                  w-[185px]
                   object-contain
                 "
               />

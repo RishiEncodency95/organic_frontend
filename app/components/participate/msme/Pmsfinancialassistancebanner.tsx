@@ -19,6 +19,8 @@ import provisioning from "@/app/assets/participate/msme/provisioning.png";
 import graph from "@/app/assets/participate/msme/graph.png";
 import eligibilityButtonImg from "@/app/assets/participate/msme/eligibiily-button.png";
 import SectionContainer from "../../layout/SectionContainer";
+import government_support from "@/app/assets/participate/msme/government_support.png";
+
 /**
  * PMSFinancialAssistanceBanner
  * ------------------------------------------------------------------
@@ -106,7 +108,7 @@ const PMSFinancialAssistanceBanner: FC = () => {
     <>
       <section
         aria-labelledby="pms-banner-heading"
-        className="relative w-full overflow-hidden bg-white pb-4"
+        className="relative w-full overflow-hidden bg-[#fcfbfa] pb-4"
       >
         {/* Top-right absolute image */}
         <img
@@ -131,7 +133,7 @@ const PMSFinancialAssistanceBanner: FC = () => {
 
           <div className="relative flex flex-col lg:flex-row">
             {/* Left: spacer for absolute image */}
-            <div className="relative w-full lg:w-[34%]">
+            <div className="relative w-full lg:w-[30%]">
               <div className="relative h-[220px] w-full sm:h-[260px] lg:h-full" />
             </div>
 
@@ -195,7 +197,7 @@ const PMSFinancialAssistanceBanner: FC = () => {
                         {card.eyebrow}
                       </p>
                       <p
-                        className={`text-2xl font-semibold leading-tight sm:text-4xl ${card.titleColor}`}
+                        className={`text-2xl font-extrabold leading-tight sm:text-4xl ${card.titleColor}`}
                       >
                         {card.value}
                       </p>
@@ -255,7 +257,7 @@ const PMSFinancialAssistanceBanner: FC = () => {
                   alt=""
                   className="h-20 w-20 shrink-0 object-contain"
                 />
-                <p className="text-xs leading-relaxed sm:text-sm pr-4 md:pr-8 font-semibold">
+                <p className="text-xs leading-relaxed sm:text-sm pr-4 md:pr-8">
                   <strong className="font-semibold text-[#1b5e20]">
                     *Important Note:<br />
                   </strong>{" "}
@@ -267,8 +269,8 @@ const PMSFinancialAssistanceBanner: FC = () => {
 
               {/* Government support */}
               <div className="flex w-full items-center gap-3 md:w-[25%]">
-                <span className="flex h-20 w-20 shrink-0 items-center justify-center rounded-full bg-[#1b5e20]/10">
-                  <Handshake className="h-12 w-12 text-[#1b5e20]" aria-hidden="true" />
+                <span className="flex h-20 w-20 shrink-0 items-center justify-center rounded-full bg-[#e9edda]">
+                  <Image alt="government support" src={government_support} width={48} height={48} className="h-12 w-12 text-[#1b5e20]" aria-hidden="true" />
                 </span>
                 <p className="text-sm font-semibold leading-relaxed text-slate-900 ml-4">
                   Government Support.
