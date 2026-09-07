@@ -108,7 +108,7 @@ export default function PmsSupportSection() {
             </h2>
 
             <p className="max-w-lg text-base">
-              A simple, guided process to help eligible MSEs<br/> receive financial
+              A simple, guided process to help eligible MSMEs<br/> receive financial
               assistance for participation.
             </p>
 

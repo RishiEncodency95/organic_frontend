@@ -101,7 +101,7 @@ export const DEFAULT_PMS_FINAL_CTA_CONTENT: PmsFinalCtaContent = {
     "IMPORTANT DISCLAIMER",
 
   disclaimerText:
-    "Bharat Organic Expo / Organiser provides PMS facilitation, preliminary eligibility screening, Udyam Registration guidance, documentation and claim-process assistance. Event approval does not constitute automatic approval of an individual MSE application or reimbursement claim. Eligibility, sanction, permissible assistance and reimbursement are subject to applicable Ministry of MSME guidelines and decisions of the competent authority.",
+    "Bharat Organic Expo / Organiser provides PMS facilitation, preliminary eligibility screening, Udyam Registration guidance, documentation and claim-process assistance. Event approval does not constitute automatic approval of an individual MSME application or reimbursement claim. Eligibility, sanction, permissible assistance and reimbursement are subject to applicable Ministry of MSME guidelines and decisions of the competent authority.",
 };
 
 /* ================================================================

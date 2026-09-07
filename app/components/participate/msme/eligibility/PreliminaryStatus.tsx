@@ -63,7 +63,7 @@ const PreliminaryStatus = () => {
         </p>
         <div className="inline-flex items-center gap-1.5 border border-[#1b5e20]/30 text-[#1b5e20] bg-[#f0f9f0] px-2.5 py-1 rounded-md w-fit">
           <span className="text-[14px] leading-none mb-0.5">♀</span>
-          <span className="text-[12px] font-semibold">Women MSE Category</span>
+          <span className="text-[12px] font-semibold">Women MSME Category</span>
         </div>
       </div>
 
@@ -73,7 +73,7 @@ const PreliminaryStatus = () => {
           Why 100%?
         </span>
         <p className="text-[12px] md:text-[14px] text-gray-800 leading-relaxed font-medium">
-          Your Udyam record identifies the entrepreneur as Female. Under the applicable PMS assistance category, Women MSEs may qualify for 100% assistance on eligible built-up space rent, subject to scheme limits and final approval.
+          Your Udyam record identifies the entrepreneur as Female. Under the applicable PMS assistance category, Women MSMEs may qualify for 100% assistance on eligible built-up space rent, subject to scheme limits and final approval.
         </p>
       </div>
 

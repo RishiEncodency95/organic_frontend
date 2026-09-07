@@ -13,6 +13,7 @@ import {
   ChevronLeft,
   ChevronRight,
 } from "lucide-react";
+import Link from "next/link";
 import Image from "next/image";
 import govApproved from "@/app/assets/participate/msme/government_approved.png";
 import supportImg from "@/app/assets/participate/msme/support.png";
@@ -106,7 +107,7 @@ export default function OfficialRecognitionBanner() {
                 <strong className="text-gray-900">
                   Procurement &amp; Marketing Support (PMS) Scheme
                 </strong>{" "}
-                component, enabling eligible participating MSEs to apply for applicable exhibition
+                component, enabling eligible participating MSMEs to apply for applicable exhibition
                 assistance subject to PMS guidelines and individual eligibility.
               </p>
 
@@ -127,26 +128,26 @@ export default function OfficialRecognitionBanner() {
                 <div className="flex-1 flex flex-col items-center justify-center gap-2 py-1 px-2 border-r border-[#a4ba96] last:border-r-0">
                   <Image
                     src={supportImg}
-                    alt="Support for MSE Growth"
+                    alt="Support for MSME Growth"
                     className="w-12 h-12 object-contain"
                   />
                   <span className="text-[12px] font-semibold text-[#0c3b1d] leading-tight text-center">
                     Support for
                     <br />
-                    MSE Growth
+                    MSME Growth
                   </span>
                 </div>
 
                 <div className="flex-1 flex flex-col items-center justify-center gap-2 py-1 px-2 border-r border-[#a4ba96] last:border-r-0">
                   <Image
                     src={applicableImg}
-                    alt="Applicable for Eligible MSEs Only"
+                    alt="Applicable for Eligible MSMEs Only"
                     className="w-12 h-12 object-contain"
                   />
                   <span className="text-[12px] font-semibold text-[#0c3b1d] leading-tight text-center">
                     Applicable for Eligible
                     <br />
-                    MSEs Only
+                    MSMEs Only
                   </span>
                 </div>
               </div>
@@ -158,12 +159,12 @@ export default function OfficialRecognitionBanner() {
                   <ChevronRight />
                 </button>
 
-                <a
-                  href="#pms-scheme"
+                <Link
+                  href="/participate/msme/apply/payment"
                   className="text-[16px] font-semibold text-[#0d3b15] underline decoration-[#0d3b15]/40 underline-offset-2 hover:decoration-[#0d3b15] transition-colors whitespace-nowrap pb-2"
                 >
                   Know more about PMS Scheme →
-                </a>
+                </Link>
               </div>
             </div>
 

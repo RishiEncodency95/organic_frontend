@@ -19,12 +19,12 @@ export default function FeatureStrap() {
     {
       icon: Users,
       title: "Support for",
-      subtitle: "MSE Growth",
+      subtitle: "MSME Growth",
     },
     {
       icon: FileCheck,
       title: "Applicable for Eligible",
-      subtitle: "MSEs Only",
+      subtitle: "MSMEs Only",
     },
   ];
 

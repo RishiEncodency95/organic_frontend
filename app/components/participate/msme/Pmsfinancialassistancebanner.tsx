@@ -23,7 +23,7 @@ import SectionContainer from "../../layout/SectionContainer";
  * PMSFinancialAssistanceBanner
  * ------------------------------------------------------------------
  * Promotional banner: "How Much Support May You Get?" — PMS Scheme
- * financial assistance for eligible MSEs.
+ * financial assistance for eligible MSMEs.
  *
  * NOTE: The left hero photograph and the bottom-right plant photograph
  * are intentionally left as placeholder containers (bg-hero-photo /
@@ -58,7 +58,7 @@ const SUPPORT_CARDS: SupportCard[] = [
     eyebrow: "UP TO",
     eyebrowColor: "text-[#1b5e20]",
     value: <>80%<sup>*</sup></>,
-    title: "General MSEs",
+    title: "General MSMEs",
     titleColor: "text-[#1b5e20]",
     description:
       "Of eligible built-up space rent assistance subject to PMS provisions.",
@@ -147,7 +147,7 @@ const PMSFinancialAssistanceBanner: FC = () => {
                     Financial Assistance
                   </p>
                   <p className="text-base text-slate-700 sm:text-lg">
-                    For Eligible MSEs
+                    For Eligible MSMEs
                   </p>
                 </div>
               </div>

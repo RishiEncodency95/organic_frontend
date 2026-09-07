@@ -11,7 +11,7 @@ const EstimateSection = () => {
   const assistanceRate = selectedCategory === 'standard' ? 80 : 100;
   const eligibleAssistance = (basicRent * assistanceRate) / 100;
 
-  const categoryName = selectedCategory === 'standard' ? 'Standard General' : 'Women MSE';
+  const categoryName = selectedCategory === 'standard' ? 'Standard General' : 'Women MSME';
   const formatCurrency = (amount: number) => `₹${new Intl.NumberFormat('en-IN').format(amount)}`;
 
   return (
@@ -63,7 +63,7 @@ const EstimateSection = () => {
 
             <span className={`text-[11px] lg:text-[15px] font-semibold mb-3 uppercase tracking-wide ${selectedCategory === 'applicable' ? 'text-[#d97706]' : 'text-gray-700'}`}>YOUR APPLICABLE CATEGORY</span>
             <h4 className="text-xl lg:text-4xl font-semibold text-[#1b5e20] mb-2">Up to 100%</h4>
-            <span className="text-[11px] lg:text-lg font-semibold text-gray-800">Women MSE Category</span>
+            <span className="text-[11px] lg:text-lg font-semibold text-gray-800">Women MSME Category</span>
           </div>
 
         </div>

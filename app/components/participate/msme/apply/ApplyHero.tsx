@@ -74,7 +74,7 @@ export default function ApplyHero() {
                 <Users size={18} strokeWidth={2.5} />
               </div>
               <span className="text-xs md:text-[14px] font-semibold text-[#374151] leading-[1.3]">
-                For Eligible <br /> MSEs Only
+                For Eligible <br /> MSMEs Only
               </span>
             </div>
 

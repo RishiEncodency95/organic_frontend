@@ -267,7 +267,7 @@ export default function MsmePmsScheme() {
             <br className="hidden md:block" />
             aimed at improving market access for Micro &amp; Small Enterprises.
             <br className="hidden md:block" />
-            Eligible MSEs can explore applicable financial assistance for
+            Eligible MSMEs can explore applicable financial assistance for
             participation in
             <br className="hidden md:block" />
             approved trade fairs and exhibitions.
@@ -465,7 +465,7 @@ export default function MsmePmsScheme() {
                   lg:text-[17px]
                 "
               >
-                The PMS Scheme empowers MSEs to participate, promote and
+                The PMS Scheme empowers MSMEs to participate, promote and
                 prosper.
               </p>
 

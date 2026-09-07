@@ -344,7 +344,7 @@ const PmsSupportCoverSection: FC = () => {
                   text-justify
                 "
               >
-                For eligible MSE participation in an approved exhibition,
+                For eligible MSME participation in an approved exhibition,
                 PMS assistance may cover eligible exhibition space rent
                 along with specified contingency expenses, subject to
                 applicable scheme guidelines and approval.

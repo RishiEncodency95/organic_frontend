@@ -17,7 +17,7 @@ const features: FeatureCard[] = [
     icon: pmsApprovedIcon.src,
     title: "PMS Approved Event*",
     description:
-      "Opportunity for eligible<br/> MSEs to explore applicable<br/> PMS assistance.",
+      "Opportunity for eligible<br/> MSMEs to explore applicable<br/> PMS assistance.",
   },
   {
     icon: focusedIndustryIcon.src,
