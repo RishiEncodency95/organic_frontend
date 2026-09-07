@@ -409,7 +409,7 @@ const PmsSupportCoverSection: FC = () => {
                     tracking-[-0.045em]
                     text-[#07582c]
                     sm:text-[49px]
-                    lg:text-[52px]
+                    lg:text-[56px]
                   "
                 >
                   ₹1.50 LAKH
@@ -962,7 +962,7 @@ const PmsSupportCoverSection: FC = () => {
               bg-[#f7f8f3]
               px-[15px]
               py-[8px]
-              lg:grid-cols-[78px_1fr_250px_280px]
+              lg:grid-cols-[78px_1fr_250px_auto_280px]
             "
           >
             {/* icon */}
@@ -993,7 +993,6 @@ const PmsSupportCoverSection: FC = () => {
               <p
                 className="
                   mt-[4px]
-                  max-w-[450px]
                   text-[14px]
                   font-semibold
                   leading-[1.55]
@@ -1058,7 +1057,7 @@ const PmsSupportCoverSection: FC = () => {
                 →
               </span>
             </Link>
-
+<div className="w-px h-[80%] bg-[#07582c]/50"></div>
             {/* CTA 2 */}
             <Link
               href="/participate/msme/eligibility-check"
@@ -1192,7 +1191,6 @@ const PmsSupportCoverSection: FC = () => {
                       font-medium
                       leading-[1.25]
                       text-[#191919]
-                      sm:text-[14px]
                     "
                   >
                     {badge.label}

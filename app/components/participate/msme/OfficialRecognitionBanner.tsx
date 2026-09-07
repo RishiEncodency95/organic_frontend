@@ -428,13 +428,13 @@ export default function OfficialRecognitionBanner() {
                 <Image
                   src={secureImg}
                   alt="Secure"
-                  className="w-8 h-8 object-contain"
+                  className="w-10 h-10 object-contain"
                 />
               </div>
 
               <p className="text-[14px] leading-snug text-gray-700 font-medium m-0">
                 Event approval does not guarantee reimbursement. Individual
-                eligibility, documentation and final sanction are subject to
+                eligibility, documentation and final<br/> sanction are subject to
                 applicable PMS Scheme guidelines and decision of the competent
                 authority.
               </p>

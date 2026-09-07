@@ -20,6 +20,8 @@ import verifiedEligImg from "@/app/assets/participate/msme/verified_eligibility.
 import financialAssistImg from "@/app/assets/participate/msme/finaancial_assist.png";
 import betterOppImg from "@/app/assets/participate/msme/better_opportunities.png";
 import SectionContainer from "@/app/components/layout/SectionContainer";
+import Image from "next/image";
+import haveQuestionsImg from "@/app/assets/participate/msme/have-questions.png";
 
 const highlightCards = [
   {
@@ -92,13 +94,13 @@ export default function PmsSupportSection() {
       </div>
 
       <SectionContainer>
-      <div className="relative z-10 mx-auto flex w-full flex-col gap-4">
+      <div className="relative z-10 mx-auto flex w-full flex-col gap-8 pt-10">
         {/* ---------- Top block: heading + highlight cards ---------- */}
-        <div className="flex flex-col gap-2">
+        <div className="flex flex-col gap-4">
           <div className="flex flex-col">
             <h2
               id="pms-support-heading"
-              className="text-[18px] font-semibold uppercase leading-[1.05] tracking-tight md:text-[28px] lg:text-[46px]"
+              className="text-[18px] font-semibold uppercase leading-[1.05] tracking-tight md:text-[28px] lg:text-[56px]"
             >
               <span className="text-[#1b5e20]">
                 How to Apply
@@ -107,7 +109,7 @@ export default function PmsSupportSection() {
                 &amp; Get PMS Support
             </h2>
 
-            <p className="max-w-lg text-base">
+            <p className="max-w-lg text-md">
               A simple, guided process to help eligible MSMEs<br/> receive financial
               assistance for participation.
             </p>
@@ -153,12 +155,12 @@ export default function PmsSupportSection() {
         {/* ---------- 4-step journey ---------- */}
         <div className="relative rounded-3xl bg-gray-100 p-4 pt-4 ring-1 ring-black/5 sm:p-5 sm:pt-4">
           <div className="absolute left-1/2 top-0 z-20 -translate-x-1/2 -translate-y-1/2">
-            <h3 className="whitespace-nowrap rounded-lg bg-[#1b5e20] px-8 py-1 text-[16px] font-semibold tracking-tight text-white shadow-lg md:text-[18px] lg:text-[20px]">
+            <h3 className="whitespace-nowrap rounded-lg bg-[#1b5e20] px-8 py-1 text-[16px] font-semibold tracking-tight text-white shadow-lg md:text-[18px] lg:text-[20px] uppercase">
               Your 4-Step Journey
             </h3>
           </div>
 
-          <ol className="grid grid-cols-1 gap-y-8 pt-4 sm:grid-cols-2 sm:gap-x-6 sm:gap-y-10 lg:grid-cols-4 lg:gap-x-4">
+          <ol className="grid grid-cols-1 gap-y-8 pt-2 sm:grid-cols-2 sm:gap-x-6 sm:gap-y-10 lg:grid-cols-4 lg:gap-x-4">
             {journeySteps.map(
               ({ number, icon, title, description }, index) => (
                 <li
@@ -176,7 +178,7 @@ export default function PmsSupportSection() {
                     </span>
                   )}
 
-                  <span className="absolute top-[8px] left-1/2 z-10 flex h-8 w-8 -translate-x-1/2 items-center justify-center rounded-full bg-[#1b5e20] text-[11px] font-bold text-white shadow-lg ring-3 ring-gray-100">
+                  <span className="absolute top-[8px] left-1/2 z-10 flex h-8 w-8 -translate-x-1/2 items-center justify-center rounded-full bg-[#1b5e20] text-sm font-bold text-white shadow-lg ring-3 ring-gray-100">
                     {number}
                   </span>
 
@@ -199,7 +201,7 @@ export default function PmsSupportSection() {
               )
             )}
           </ol>
-        <div className="grid grid-cols-1 gap-4 sm:gap-5 lg:grid-cols-[1fr_0.8fr_1fr] mt-2">
+        <div className="grid grid-cols-1 gap-4 sm:gap-5 lg:grid-cols-[1fr_0.8fr_1fr] mt-4">
           {/* Expert support at every step */}
           <div className="relative rounded-2xl bg-[#0b2912] text-white">
             <img
@@ -230,7 +232,7 @@ export default function PmsSupportSection() {
           <div className="flex flex-1 flex-col gap-3 rounded-2xl border border-gray-200 bg-[#e5e7eb] p-5 shadow-sm sm:p-6">
             <div className="flex flex-row gap-2">
               <span className="flex h-16 w-16 min-h-16 min-w-16 items-center justify-center rounded-full bg-[#a5d6a7]">
-                <Users className="h-6 w-6 text-[#1b5e20]" aria-hidden="true" />
+                <Image src={haveQuestionsImg} alt="Have questions?" className="h-12 w-12 object-contain" />
               </span>
               <div>
                 <h3 className="text-[14px] font-semibold uppercase leading-tight text-[#1b5e20] sm:text-[15px]">
@@ -242,7 +244,7 @@ export default function PmsSupportSection() {
                 </p>
               </div>
             </div>
-            <address className="mt-1 flex flex-col gap-1.5 text-[13px] not-italic sm:text-sm">
+            <address className="mt-1 flex flex-col gap-1.5 text-[13px] not-italic sm:text-sm border-t pt-3 border-[#1b5e20]/50">
               <a
                 href="mailto:info@namogangewellness.com"
                 className="flex items-center gap-2 hover:underline"
@@ -267,8 +269,8 @@ export default function PmsSupportSection() {
           </div>
 
           {/* Ready to apply / CTA */}
-          <div className="flex items-center gap-4">
-            <div className="relative flex max-w-xs overflow-visible rounded-2xl bg-[#0b2912] text-white">
+          <div className="flex items-center h-full">
+            <div className="relative flex max-w-xs overflow-visible rounded-2xl bg-[#0b2912] text-white h-full">
               <div className="flex flex-1 flex-col justify-between gap-4 p-5 sm:p-6">
                 <div className="flex items-start gap-4">
                   <span className="flex h-14 w-14 shrink-0 items-center justify-center rounded-full border-2 border-white p-1">

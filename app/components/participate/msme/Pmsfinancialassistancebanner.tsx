@@ -111,7 +111,7 @@ const PMSFinancialAssistanceBanner: FC = () => {
     <>
       <section
         aria-labelledby="pms-banner-heading"
-        className="relative w-full overflow-hidden bg-[#fcfbfa] pb-4 border-t-4 border-[#033815]"
+        className="relative w-full overflow-hidden bg-[#fcfbfa] pb-4 border-t-6 border-[#033815]"
       >
         {/* Top-right absolute image */}
         <img
@@ -141,7 +141,7 @@ const PMSFinancialAssistanceBanner: FC = () => {
             </div>
 
             {/* Right: heading content */}
-            <div className="relative flex w-full flex-col px-4 py-4 sm:px-4 sm:py-5 lg:w-[72%] lg:py-5">
+            <div className="relative flex w-full flex-col px-4 pt-4 sm:px-4 sm:pt-5 lg:w-[72%] lg:pt-5">
               {/* Eyebrow */}
               <div className="mb-2 flex items-center gap-3 sm:mb-3 md:pl-30">
                 <span className="flex h-16 w-16 shrink-0 items-center justify-center rounded-full bg-[#1b5e20]/10 sm:h-20 sm:w-20">
@@ -240,7 +240,7 @@ const PMSFinancialAssistanceBanner: FC = () => {
       </section>
 
       {/* ============ Footer strip (outside section so left image doesn't overlap) ============ */}
-      <SectionContainer className="relative pb-8 pt-2 border-b-4 border-[#033815]">
+      <SectionContainer className="relative pb-8 pt-2 border-b-6 border-[#033815] mb-4">
         <div className="relative overflow-visible rounded-2xl bg-white shadow-lg">
           {/* Background image - full width */}
           <div className="pointer-events-none absolute inset-0">

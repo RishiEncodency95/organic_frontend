@@ -168,8 +168,8 @@ export default function MsmePmsScheme() {
                 alt=""
                 aria-hidden="true"
                 className="
-                  h-[48px]
-                  w-[48px]
+                  h-[58px]
+                  w-[58px]
                   shrink-0
                   object-contain
                 "
