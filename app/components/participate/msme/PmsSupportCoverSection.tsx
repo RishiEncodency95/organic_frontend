@@ -451,7 +451,7 @@ const PmsSupportCoverSection: FC = () => {
                       justify-center
                       bg-[#07582c]
                       px-[7px]
-                      text-[12px]
+                      text-[14px]
                       font-semibold
                       uppercase
                       tracking-[0.02em]
@@ -491,11 +491,10 @@ const PmsSupportCoverSection: FC = () => {
                 <p
                   className="
                     mt-[4px]
-                    text-[10px]
+                    text-[14px]
                     font-medium
                     leading-tight
                     text-[#222]
-                    sm:text-[11px]
                   "
                 >
                   (All taxes included and subject to actual eligible expenditure)
@@ -579,14 +578,12 @@ const PmsSupportCoverSection: FC = () => {
                     bg-[#07582c]
                     px-[14px]
                     py-[5px]
-                    text-[11px]
+                    text-[14px]
                     font-semibold
                     uppercase
                     leading-none
                     tracking-[0.01em]
                     text-white
-                    sm:text-[13px]
-                    lg:text-[14px]
                   "
                 >
                   Eligible Expenses Covered Under PMS for Exhibition Participation
@@ -682,7 +679,7 @@ const PmsSupportCoverSection: FC = () => {
                             justify-center
                             rounded-full
                             bg-[#07582c]
-                            text-[13px]
+                            text-[14px]
                             font-semibold
                             text-white
                           "
@@ -708,11 +705,10 @@ const PmsSupportCoverSection: FC = () => {
                       <p
                         className="
                           mt-[4px]
-                          text-[11px]
+                          text-[14px]
                           font-semibold
                           leading-tight
                           text-[#202020]
-                          lg:text-[12px]
                         "
                       >
                         {expense.subtitle}
@@ -771,11 +767,11 @@ const PmsSupportCoverSection: FC = () => {
                     <p
                       className="
                         ml-[11px]
-                        text-[12px]
+                        text-[14px]
                         font-medium
                         leading-[1.35]
                         text-[#121212]
-                        lg:text-[13px]
+                        lg:text-[14px]
                       "
                     >
                       {expense.description}
@@ -858,7 +854,7 @@ const PmsSupportCoverSection: FC = () => {
                   bg-[#ffd552]
                   px-[8px]
                   py-[4px]
-                  text-[13px]
+                  text-[14px]
                   font-semibold
                   leading-none
                 "
@@ -889,11 +885,11 @@ const PmsSupportCoverSection: FC = () => {
 
                 <p
                   className="
-                    text-[11px]
+                    text-[14px]
                     font-semibold
                     leading-[1.4]
                     text-[#191919]
-                    sm:text-[12px]
+                    sm:text-[14px]
                   "
                 >
                   100% of eligible contingency expenditure,
@@ -923,11 +919,10 @@ const PmsSupportCoverSection: FC = () => {
 
                 <p
                   className="
-                    text-[10px]
+                    text-[14px]
                     font-medium
                     leading-[1.35]
                     text-[#27220f]
-                    sm:text-[11px]
                   "
                 >
                   <strong>Important:</strong> The ₹25,000 contingency support
@@ -985,7 +980,7 @@ const PmsSupportCoverSection: FC = () => {
             <div>
               <h4
                 className="
-                  text-[13px]
+                  text-[14px]
                   font-semibold
                   uppercase
                   leading-tight
@@ -1000,11 +995,11 @@ const PmsSupportCoverSection: FC = () => {
                 className="
                   mt-[4px]
                   max-w-[450px]
-                  text-[10px]
+                  text-[14px]
                   font-semibold
                   leading-[1.55]
                   text-[#202020]
-                  sm:text-[11px]
+                  sm:text-[14px]
                 "
               >
                 Actual assistance depends on the enterprise category,
@@ -1092,7 +1087,7 @@ const PmsSupportCoverSection: FC = () => {
 
               <span
                 className="
-                  text-[13px]
+                  text-[14px]
                   font-semibold
                   uppercase
                   leading-[1.2]
@@ -1141,11 +1136,10 @@ const PmsSupportCoverSection: FC = () => {
             <p
               className="
                 pr-[15px]
-                text-[8px]
+                text-[14px]
                 font-semibold
                 leading-[1.5]
                 text-[#252525]
-                sm:text-[9px]
                 lg:border-r
                 lg:border-[#d8ddd4]
               "
@@ -1198,11 +1192,11 @@ const PmsSupportCoverSection: FC = () => {
 
                   <span
                     className="
-                      text-[8px]
+                      text-[14px]
                       font-medium
                       leading-[1.25]
                       text-[#191919]
-                      sm:text-[9px]
+                      sm:text-[14px]
                     "
                   >
                     {badge.label}

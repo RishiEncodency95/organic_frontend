@@ -128,7 +128,7 @@ export default function OfficialMessageBanner({
           className="
             absolute
             left-1/2
-            top-[5.7%]
+            top-[2.5%]
             flex
             -translate-x-1/2
             items-center
@@ -197,7 +197,7 @@ export default function OfficialMessageBanner({
           className="
             absolute
             left-1/2
-            top-[11.8%]
+            top-[8.5%]
             w-[82%]
             -translate-x-1/2
             whitespace-nowrap
@@ -225,7 +225,7 @@ export default function OfficialMessageBanner({
           className="
             absolute
             left-1/2
-            top-[17.7%]
+            top-[14.5%]
             flex
             -translate-x-1/2
             items-center
@@ -261,11 +261,11 @@ export default function OfficialMessageBanner({
           className="
             absolute
             left-1/2
-            top-[20.5%]
+            top-[17.5%]
             w-[66%]
             -translate-x-1/2
             text-center
-            text-[clamp(12px,1.25vw,17px)]
+            text-[14px]
             font-[400]
             leading-[1.55]
             text-[#252934]
@@ -294,9 +294,9 @@ export default function OfficialMessageBanner({
           className="
             absolute
             left-[4.15%]
-            top-[29.2%]
+            top-[26%]
             grid
-            h-[49.2%]
+            h-[52%]
             w-[91.7%]
             grid-cols-[1.22fr_1fr]
             gap-[1.15%]
@@ -333,7 +333,7 @@ export default function OfficialMessageBanner({
                     h-[84%]
                     w-full
                     object-cover
-                    object-center
+                    object-top
                   "
                 />
 
@@ -367,7 +367,7 @@ export default function OfficialMessageBanner({
                     rounded-full
                     bg-[#38781c]
                     px-[13px]
-                    text-[11px]
+                    text-[14px]
                     font-[600]
                     text-white
                     shadow-sm
@@ -457,7 +457,7 @@ export default function OfficialMessageBanner({
                     className="
                       ml-[10px]
                       whitespace-nowrap
-                      text-[11px]
+                      text-[14px]
                       font-[400]
                     "
                   >
@@ -826,7 +826,7 @@ export default function OfficialMessageBanner({
           className="
             absolute
             left-[13.1%]
-            top-[80.6%]
+            top-[79.5%]
             grid
             h-[13.4%]
             w-[76.2%]
@@ -873,6 +873,7 @@ export default function OfficialMessageBanner({
             }
             title="Government Support"
             description="Strong support for growth, competitiveness & global reach"
+            withLeftPadding
           />
         </div>
       </div>
@@ -918,7 +919,7 @@ export default function OfficialMessageBanner({
           <span
             className="
               text-center
-              text-[11px]
+              text-[14px]
               font-[600]
               uppercase
               tracking-[0.03em]
@@ -1132,7 +1133,7 @@ export default function OfficialMessageBanner({
           <blockquote
             className="
               mt-5
-              text-[13px]
+              text-[14px]
               font-[400]
               leading-[1.7]
               text-[#303541]
@@ -1202,7 +1203,7 @@ export default function OfficialMessageBanner({
                 <p
                   className="
                     mt-1
-                    text-[11px]
+                    text-[14px]
                     leading-[1.5]
                     text-[#555c67]
                   "
@@ -1265,11 +1266,13 @@ function FeatureItem({
   title,
   description,
   withBorder = false,
+  withLeftPadding = false,
 }: {
   icon: React.ReactNode;
   title: string;
   description: string;
   withBorder?: boolean;
+  withLeftPadding?: boolean;
 }) {
   return (
     <div
@@ -1283,6 +1286,8 @@ function FeatureItem({
         ${
           withBorder
             ? "border-x border-[#d7ddcf] px-[8%]"
+            : withLeftPadding
+            ? "pl-[8%]"
             : ""
         }
       `}
@@ -1307,7 +1312,7 @@ function FeatureItem({
       <div className="min-w-0">
         <p
           className="
-            text-[clamp(10px,1.03vw,14px)]
+            text-[14px]
             font-[600]
             uppercase
             leading-[1.2]
@@ -1373,7 +1378,7 @@ function MobileFeature({
       <div>
         <p
           className="
-            text-[12px]
+            text-[14px]
             font-[600]
             uppercase
             text-[#315b19]
@@ -1385,7 +1390,7 @@ function MobileFeature({
         <p
           className="
             mt-1
-            text-[11px]
+            text-[14px]
             font-[400]
             leading-[1.45]
             text-[#505762]

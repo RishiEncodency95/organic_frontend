@@ -16,6 +16,7 @@ import {
 import SectionContainer from "@/app/components/layout/SectionContainer";
 import supportRightImg from "@/app/assets/participate/msme/support_right.png";
 import whyReachOutImg from "@/app/assets/participate/msme/why_reach_out.png";
+import ourCommitmentRightImg from "@/app/assets/participate/msme/our_commitment_right.png";
 
 const whyReachOut = [
   "Clarify PMS scheme guidelines & eligibility",
@@ -64,7 +65,7 @@ export default function NeedHelpSection() {
     <section className="pt-6 pb-0">
       <SectionContainer>
         {/* Top row */}
-        <div className="grid grid-cols-1 gap-5 lg:grid-cols-[1fr_1.4fr]">
+        <div className="grid grid-cols-1 gap-5 lg:grid-cols-[1fr_1.6fr]">
           {/* Left: Heading + commitment */}
           <div>
             <h2 className="text-[28px] font-semibold uppercase leading-tight text-[#0d4a1a] sm:text-[54px]">
@@ -85,23 +86,29 @@ export default function NeedHelpSection() {
               <span className="flex h-16 w-16 shrink-0 items-center justify-center rounded-full bg-[#1b5e20]">
                 <Headset className="h-10 w-10 text-white" aria-hidden="true" />
               </span>
-              <div>
+              <div className="flex-1">
                 <p className="text-[14px] font-semibold">
                   OUR COMMITMENT
                 </p>
-                <p className="mt-0.5 text-[13px] leading-snug">
+                <p className="mt-0.5 text-[14px] leading-snug">
                   Transparent guidance. Timely support.
                   <br />
                   Stronger together for a sustainable future.
                 </p>
               </div>
+              <img
+                src={ourCommitmentRightImg.src}
+                alt="Our Commitment"
+                className="h-16 w-auto shrink-0 object-contain"
+                loading="lazy"
+              />
             </div>
           </div>
 
           {/* Right: Ways to connect */}
           <div className="relative rounded-2xl border border-gray-200 bg-white pt-10 pb-5 px-5 shadow-sm">
             <div className="absolute left-1/2 top-0 z-20 -translate-x-1/2 -translate-y-1/2">
-              <span className="whitespace-nowrap rounded-lg bg-[#1b5e20] px-5 py-1.5 text-[13px] font-semibold uppercase tracking-wide text-white shadow-md">
+              <span className="whitespace-nowrap rounded-lg bg-[#1b5e20] px-5 py-1.5 text-[14px] font-semibold uppercase tracking-wide text-white shadow-md">
                 Ways to Connect with Us
               </span>
             </div>
@@ -117,15 +124,15 @@ export default function NeedHelpSection() {
                     <span className="mb-2 flex h-12 w-12 items-center justify-center rounded-full bg-[#EFF7EE]">
                       <m.icon className="h-6 w-6 text-[#1b5e20]" aria-hidden="true" />
                     </span>
-                    <p className="text-[12px] font-semibold uppercase text-[#1b5e20]">
+                    <p className="text-[14px] font-semibold uppercase text-[#1b5e20]">
                       {m.title}
                     </p>
-                    <p className="mt-0.5 text-[12px] font-semibold break-all">
+                    <p className="mt-0.5 text-[14px] font-semibold break-all">
                       {m.detail}
                     </p>
                     <div className="mt-auto flex flex-col items-center">
                       <span className="my-2 h-[2px] w-6 bg-[#1b5e20]/50" />
-                      <p className="text-[12px] leading-snug whitespace-pre-line">
+                      <p className="text-[14px] leading-snug whitespace-pre-line">
                         {m.sub}
                       </p>
                     </div>
@@ -152,7 +159,7 @@ export default function NeedHelpSection() {
                 {whyReachOut.map((item) => (
                   <li key={item} className="flex items-start gap-2">
                     <CheckCircle className="mt-0.5 h-4 w-4 shrink-0 text-[#1b5e20]" />
-                    <span className="text-[13px] leading-snug">
+                    <span className="text-[14px] leading-snug">
                       {item}
                     </span>
                   </li>
@@ -177,7 +184,7 @@ export default function NeedHelpSection() {
                 <p className="text-[15px] font-semibold text-[#1b5e20]">
                   DEDICATED RELATIONSHIP MANAGERS
                 </p>
-                <p className="mt-0.5 text-[13px] leading-snug">
+                <p className="mt-0.5 text-[14px] leading-snug">
                   Personalised assistance from start to finish.
                   <br />
                   Your success is our priority.
@@ -191,7 +198,7 @@ export default function NeedHelpSection() {
                   <span className="mb-2 flex h-11 w-11 items-center justify-center">
                     <f.icon className="h-7 w-7 text-[#1b5e20]" aria-hidden="true" />
                   </span>
-                  <p className="text-[12px] font-semibold uppercase leading-tight whitespace-pre-line">
+                  <p className="text-[14px] font-semibold uppercase leading-tight whitespace-pre-line">
                     {f.label}
                   </p>
                 </div>
@@ -220,7 +227,7 @@ export default function NeedHelpSection() {
                 Together, Let&apos;s Grow
                 <br />A Sustainable India
               </p>
-              <p className="mt-0.5 text-[12px] text-white/70">
+              <p className="mt-0.5 text-[14px] text-white/70">
                 We look forward to supporting your <br/>journey at{" "}
                 <span className="font-semibold text-[#F2B40E]">
                   Bharat Organic Expo 2027.
@@ -236,10 +243,10 @@ export default function NeedHelpSection() {
                 <FileText className="h-8 w-8 text-white" aria-hidden="true" />
               </span>
               <div>
-                <p className="text-[13px] font-semibold uppercase">
+                <p className="text-[14px] font-semibold uppercase">
                   Ready to Move Ahead?
                 </p>
-                <p className="text-[12px]">
+                <p className="text-[14px]">
                   Start your PMS application today and unlock
                   <br />
                   government support for your growth.
@@ -249,7 +256,7 @@ export default function NeedHelpSection() {
 
             <a
               href="#apply"
-              className="inline-flex shrink-0 items-center gap-1.5 rounded-lg bg-[#1b5e20] px-4 py-2.5 text-[13px] font-semibold uppercase tracking-wide text-white transition-colors hover:bg-[#2d7a2d]"
+              className="inline-flex shrink-0 items-center gap-1.5 rounded-lg bg-[#1b5e20] px-4 py-2.5 text-[14px] font-semibold uppercase tracking-wide text-white transition-colors hover:bg-[#2d7a2d]"
             >
               Start Your Application
               <div className="bg-white w-6 h-6 flex items-center justify-center rounded-full">

@@ -17,6 +17,7 @@ import additionalSupport from "@/app/assets/participate/msme/addition_support.pn
 import governmentmsme from "@/app/assets/participate/msme/government_msme.png";
 import provisioning from "@/app/assets/participate/msme/provisioning.png";
 import graph from "@/app/assets/participate/msme/graph.png";
+import SectionContainer from "../../layout/SectionContainer";
 /**
  * PMSFinancialAssistanceBanner
  * ------------------------------------------------------------------
@@ -233,7 +234,7 @@ const PMSFinancialAssistanceBanner: FC = () => {
       </section>
 
       {/* ============ Footer strip (outside section so left image doesn't overlap) ============ */}
-      <div className="relative px-4 pb-8 pt-2 md:px-11">
+      <SectionContainer className="relative pb-8 pt-2">
         <div className="relative overflow-visible rounded-2xl bg-white shadow-lg">
           {/* Background image - full width */}
           <div className="pointer-events-none absolute inset-0">
@@ -293,7 +294,7 @@ const PMSFinancialAssistanceBanner: FC = () => {
             </div>
           </div>
         </div>
-      </div>
+      </SectionContainer>
     </>
   );
 };
