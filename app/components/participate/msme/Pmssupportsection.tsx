@@ -140,7 +140,7 @@ export default function PmsSupportSection() {
                         </h3>
                       </div>
                     </div>
-                    <p className="text-[13px] leading-snug sm:text-sm">
+                    <p className="text-[14px] leading-snug sm:text-sm mt-2">
                       {description}
                     </p>
                   </li>
