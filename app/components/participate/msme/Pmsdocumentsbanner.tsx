@@ -990,7 +990,7 @@ function DocumentCard({
       <p
         className="
           mt-[6%]
-          text-[clamp(9px,0.82vw,12px)]
+          text-sm
           font-[500]
           leading-[1.38]
           text-[#303640]
