@@ -675,8 +675,8 @@ export default function OfficialMessageBanner({
                 className="
                   absolute
                   left-0
-                  top-[-12px]
-                  h-[45px]
+                  top-[-4px]
+                  h-[18px]
                   w-auto
                   object-contain
                 "
@@ -709,9 +709,9 @@ export default function OfficialMessageBanner({
                 alt=""
                 className="
                   absolute
-                  bottom-[-22px]
+                  bottom-[-12px]
                   right-[1%]
-                  h-[45px]
+                  h-[18px]
                   w-auto
                   object-contain
                 "
