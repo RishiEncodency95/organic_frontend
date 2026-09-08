@@ -30,6 +30,9 @@ import trusted_support from "@/app/assets/participate/msme/trusted_support.png"
 import expert_guidance from "@/app/assets/participate/msme/expert_guidance.png";
 import better_outcomes from "@/app/assets/participate/msme/better_outcomes.png";
 import timely_assistance from "@/app/assets/participate/msme/timely_assistance.png"
+import ways_to_left from "@/app/assets/participate/msme/ways_to_left.png"
+import ways_to_right from "@/app/assets/participate/msme/ways_to_right.png"
+
 
 const whyReachOut = [
   "Clarify PMS scheme guidelines & eligibility",
@@ -131,8 +134,10 @@ export default function NeedHelpSection() {
 
           <div className="relative rounded-2xl border-2 border-[#a9b898] bg-white pt-8 pb-5 px-5 shadow-sm">
             <div className="absolute left-1/2 top-0 z-20 -translate-x-1/2 -translate-y-1/2">
-              <span className="whitespace-nowrap rounded-lg bg-[#1b5e20] px-5 py-1.5 text-[16px] font-semibold uppercase tracking-wide text-white shadow-md">
+              <span className="whitespace-nowrap rounded-lg bg-[#1b5e20] px-5 py-1.5 text-[16px] font-semibold uppercase tracking-wide text-white shadow-md flex items-center">
+                <Image src={ways_to_left} className="w-8 h-8 absolute -left-8" alt="ways to left" width={20} height={10} />
                 Ways to Connect with Us
+                <Image src={ways_to_right} className="w-8 h-8 absolute -right-8" alt="ways to left" width={20} height={10} />
               </span>
             </div>
 

@@ -183,7 +183,7 @@ const PMSFinancialAssistanceBanner: FC = () => {
               </div>
               {/* Support cards */}
               <div className="mt-2 grid grid-cols-1 gap-5 sm:grid-cols-2 sm:gap-5 lg:mt-3 lg:grid-cols-3">
-                {SUPPORT_CARDS.map((card) => (
+                {SUPPORT_CARDS.map((card, index) => (
                     <article
                       key={card.title}
                       className={`relative flex flex-col items-center rounded-2xl bg-white px-4 pb-10 pt-4 text-center overflow-visible`}
@@ -205,7 +205,7 @@ const PMSFinancialAssistanceBanner: FC = () => {
                         {card.eyebrow}
                       </p>
                       <p
-                        className={`font-extrabold leading-tight ${card.valueClassName || "text-2xl sm:text-4xl"} ${card.titleColor}`}
+                        className={`font-extrabold leading-tight ${card.valueClassName || "text-2xl sm:text-4xl"} ${card.titleColor} ${index === SUPPORT_CARDS.length - 1 ? "mb-6" : "mb-0"}`}
                       >
                         {card.value}
                       </p>
