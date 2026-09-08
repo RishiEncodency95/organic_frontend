@@ -13,7 +13,9 @@ import {
 } from "lucide-react";
 
 import faqLeftImg from "@/app/assets/participate/msme/faq-left-visual-exact.png";
-import faqLeavesImg from "@/app/assets/participate/msme/faq-leaves-exact.jpeg";
+import faqLeavesImg from "@/app/assets/participate/msme/faq-leaves-exact.png";
+import faqLeftDeco from "@/app/assets/participate/msme/faq_left.png";
+import faqRightDeco from "@/app/assets/participate/msme/faq_right.png";
 
 /* ================================================================
    TYPES
@@ -37,7 +39,7 @@ export const FAQ_ITEMS: FAQItem[] = [
     question:
       "Is Bharat Organic Expo approved under PMS?",
     answer:
-      "Yes, subject to the exact approval/sanction received for Bharat Organic Expo 2027. Official approval details should be displayed above.",
+      "Yes, subject to the exact approval/sanction received for Bharat <br/>Organic Expo 2027. Official approval details should be displayed above.",
   },
 
   {
@@ -46,7 +48,7 @@ export const FAQ_ITEMS: FAQItem[] = [
     question:
       "Who can apply for PMS support?",
     answer:
-      "Eligible Micro & Small Enterprises meeting applicable Udyam Registration, business activity, event and PMS requirements may apply.",
+      "Eligible Micro & Small Enterprises meeting applicable Udyam<br/> Registration, business activity, event and PMS requirements may apply.",
   },
 
   {
@@ -55,7 +57,7 @@ export const FAQ_ITEMS: FAQItem[] = [
     question:
       "Is reimbursement guaranteed?",
     answer:
-      "No. Event approval does not automatically guarantee reimbursement. Individual eligibility, documentation and final approval are required.",
+      "No. Event approval does not automatically guarantee reimbursement.<br/> Individual eligibility, documentation and final approval are required.",
   },
 
   {
@@ -64,7 +66,7 @@ export const FAQ_ITEMS: FAQItem[] = [
     question:
       "I am not Udyam registered. Can your team help?",
     answer:
-      "Yes. Our team can guide you regarding the Udyam Registration process and subsequent preliminary PMS eligibility screening.",
+      "Yes. Our team can guide you regarding the Udyam Registration <br/>process and subsequent preliminary PMS eligibility screening.",
   },
 
   {
@@ -73,7 +75,7 @@ export const FAQ_ITEMS: FAQItem[] = [
     question:
       "Will your team support the claim process?",
     answer:
-      "Yes. Our PMS Support Team can provide applicable process and documentation guidance for claim filing. Final approval and reimbursement remain with the competent MSME authority.",
+      "Yes. Our PMS Support Team can provide applicable process and <br/>documentation guidance for claim filing. Final approval and<br/> reimbursement remain with the competent MSME authority.",
   },
 ];
 
@@ -346,28 +348,16 @@ export default function FAQBanner() {
               gap-[0.5vw]
             "
           >
-            <span
+            <img
+              src={faqLeftDeco.src}
+              alt=""
               className="
-                h-px
-                w-[7.5vw]
-                max-w-[118px]
-                bg-[#6C8B54]
+                h-[3vw]
+                max-h-[45px]
+                min-h-[28px]
+                w-auto
+                object-contain
               "
-            />
-
-            <Leaf
-              className="
-                h-[2vw]
-                max-h-[30px]
-                min-h-[21px]
-                w-[2vw]
-                max-w-[30px]
-                min-w-[21px]
-                rotate-[-35deg]
-                text-[#306D16]
-              "
-              fill="currentColor"
-              strokeWidth={1}
             />
           </div>
 
@@ -397,27 +387,15 @@ export default function FAQBanner() {
               gap-[0.5vw]
             "
           >
-            <Leaf
+            <img
+              src={faqRightDeco.src}
+              alt=""
               className="
-                h-[2vw]
-                max-h-[30px]
-                min-h-[21px]
-                w-[2vw]
-                max-w-[30px]
-                min-w-[21px]
-                rotate-[35deg]
-                text-[#306D16]
-              "
-              fill="currentColor"
-              strokeWidth={1}
-            />
-
-            <span
-              className="
-                h-px
-                w-[7.5vw]
-                max-w-[118px]
-                bg-[#6C8B54]
+                h-[3vw]
+                max-h-[45px]
+                min-h-[28px]
+                w-auto
+                object-contain
               "
             />
           </div>
@@ -607,8 +585,8 @@ export default function FAQBanner() {
                         tracking-[-0.012em]
                         text-[#2B2F39]
                       "
+                      dangerouslySetInnerHTML={{__html:item.answer}}
                     >
-                      {item.answer}
                     </p>
                   </div>
                 </div>
@@ -654,13 +632,14 @@ export default function FAQBanner() {
             "
           />
 
-          <Leaf
+          <img
+            src={faqLeftDeco.src}
+            alt=""
             className="
-              h-5
-              w-5
-              text-[#337018]
+              h-6
+              w-auto
+              object-contain
             "
-            fill="currentColor"
           />
 
           <h2
@@ -676,13 +655,14 @@ export default function FAQBanner() {
             FAQ
           </h2>
 
-          <Leaf
+          <img
+            src={faqRightDeco.src}
+            alt=""
             className="
-              h-5
-              w-5
-              text-[#337018]
+              h-6
+              w-auto
+              object-contain
             "
-            fill="currentColor"
           />
 
           <span
@@ -856,10 +836,8 @@ export default function FAQBanner() {
                           leading-[1.6]
                           text-[#343841]
                         "
+                        dangerouslySetInnerHTML={{__html:item.answer}}
                       >
-                        {
-                          item.answer
-                        }
                       </p>
                     </div>
                   </div>

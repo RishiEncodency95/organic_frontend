@@ -16,7 +16,7 @@ import {
   Users,
   Volume2,
 } from "lucide-react";
-
+import dividerLeafIcon from "@/app/assets/participate/msme/reference-icons/divider-leaf.png";
 import vleafImg from "@/app/assets/icons/vleaf.png";
 import ministryImg from "@/app/assets/participate/msme/ministry.webp";
 import officialIconImg from "@/app/assets/participate/msme/official_icon.png";
@@ -24,7 +24,8 @@ import forAllMsmeImg from "@/app/assets/participate/msme/for_all_msme.png";
 import governmentApprovedImg from "@/app/assets/participate/msme/governnent_support.png";
 import quoteLeftImg from "@/app/assets/participate/msme/quote_left.png";
 import quoteRightImg from "@/app/assets/participate/msme/quote_right.png";
-
+import stepsTitleLeftLeafIcon from "@/app/assets/participate/msme/reference-icons/steps-title-left-leaf.png";
+import stepsTitleRightLeafIcon from "@/app/assets/participate/msme/reference-icons/steps-title-right-leaf.png";
 /* ================================================================
    TYPES
 ================================================================ */
@@ -64,16 +65,17 @@ export default function OfficialMessageBanner({
         w-screen
         -translate-x-1/2
         overflow-hidden
-        bg-[#fbfbf7]
+        bg-[#fdfcf9]
 
         lg:aspect-[1140/620]
+        pt-10
       "
     >
       {/* ==========================================================
           VERY LIGHT BACKGROUND DECORATION
       ========================================================== */}
 
-      <img
+      {/* <img
         src={vleafImg.src}
         alt=""
         aria-hidden="true"
@@ -90,9 +92,9 @@ export default function OfficialMessageBanner({
           opacity-[0.045]
           lg:block
         "
-      />
+      /> */}
 
-      <img
+      {/* <img
         src={vleafImg.src}
         alt=""
         aria-hidden="true"
@@ -109,7 +111,7 @@ export default function OfficialMessageBanner({
           opacity-[0.035]
           lg:block
         "
-      />
+      /> */}
 
       {/* ==========================================================
           DESKTOP
@@ -138,33 +140,29 @@ export default function OfficialMessageBanner({
             -translate-x-1/2
             items-center
             justify-center
-            gap-[8px]
+            gap-[12px]
           "
         >
           <span
             className="
               h-px
-              w-[47px]
+              w-[80px]
               bg-[#739052]
             "
           />
 
-          <Leaf
-            className="
-              h-[18px]
-              w-[18px]
-              -rotate-[45deg]
-              text-[#397317]
-            "
-            strokeWidth={1.7}
-            fill="currentColor"
-          />
+          <svg viewBox="0 0 32 32" className="hidden h-8 w-8 sm:block" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M16 4C16 4 8 10 8 18C8 22 12 28 16 28C20 28 24 22 24 18C24 10 16 4 16 4Z" fill="#2D6A0F"/>
+            <path d="M16 8V24" stroke="#1A4D06" strokeWidth="1.2"/>
+            <path d="M16 14L11 10" stroke="#1A4D06" strokeWidth="0.8"/>
+            <path d="M16 18L21 14" stroke="#1A4D06" strokeWidth="0.8"/>
+          </svg>
 
           <span
             className="
               whitespace-nowrap
-              text-[clamp(11px,1.35vw,17px)]
-              font-[600]
+              text-[20px]
+              font-semibold
               uppercase
               tracking-[0.025em]
               text-[#315e14]
@@ -173,21 +171,17 @@ export default function OfficialMessageBanner({
             Hear From MSME Leadership
           </span>
 
-          <Leaf
-            className="
-              h-[18px]
-              w-[18px]
-              rotate-[135deg]
-              text-[#397317]
-            "
-            strokeWidth={1.7}
-            fill="currentColor"
-          />
+          <svg viewBox="0 0 32 32" className="hidden h-8 w-8 sm:block" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M16 4C16 4 8 10 8 18C8 22 12 28 16 28C20 28 24 22 24 18C24 10 16 4 16 4Z" fill="#2D6A0F"/>
+            <path d="M16 8V24" stroke="#1A4D06" strokeWidth="1.2"/>
+            <path d="M16 14L11 10" stroke="#1A4D06" strokeWidth="0.8"/>
+            <path d="M16 18L21 14" stroke="#1A4D06" strokeWidth="0.8"/>
+          </svg>
 
           <span
             className="
               h-px
-              w-[47px]
+              w-[80px]
               bg-[#739052]
             "
           />
@@ -208,7 +202,7 @@ export default function OfficialMessageBanner({
             whitespace-nowrap
             text-center
             text-[clamp(27px,2.75vw,39px)]
-            font-[700]
+            font-semibold
             uppercase
             leading-none
             tracking-[-0.028em]
@@ -270,9 +264,9 @@ export default function OfficialMessageBanner({
             w-[66%]
             -translate-x-1/2
             text-center
-            text-[14px]
+            text-[18px]
             font-[400]
-            leading-[1.55]
+            leading-[1.8]
             text-[#252934]
           "
         >
@@ -305,6 +299,7 @@ export default function OfficialMessageBanner({
             w-[91.7%]
             grid-cols-[1.22fr_1fr]
             gap-[1.15%]
+            mt-8
           "
         >
           {/* ======================================================
@@ -602,61 +597,41 @@ export default function OfficialMessageBanner({
                 />
               </div>
 
-              <div
-                className="
-                  min-w-0
-                  flex-1
-                  pt-[2%]
-                "
-              >
-                <h3
-                  className="
-                    text-[clamp(13px,1.35vw,18px)]
-                    font-[600]
-                    uppercase
-                    leading-[1.2]
-                    text-[#285313]
-                  "
-                >
-                  Message From MSME Leadership
-                </h3>
+             <div className="w-fit">
+  <h3
+    className="
+      text-[24px]
+      font-[600]
+      uppercase
+      leading-[1.2]
+      text-[#285313]
+    "
+  >
+    Message From MSME Leadership
+  </h3>
 
-                <div
-                  className="
-                    mt-[4%]
-                    flex
-                    items-center
-                    justify-center
-                    gap-[7px]
-                  "
-                >
-                  <span
-                    className="
-                      h-px
-                      flex-1
-                      bg-[#bdc6aa]
-                    "
-                  />
+  <div
+    className="
+      mt-[4%]
+      flex
+      w-full
+      items-center
+      justify-center
+      gap-[7px]
+    "
+  >
+    <span className="h-px flex-1 bg-[#bdc6aa]" />
 
-                  <Leaf
-                    className="
-                      h-[15px]
-                      w-[15px]
-                      -rotate-[45deg]
-                      text-[#4c7a2b]
-                    "
-                    fill="currentColor"
-                  />
+        <img
+                  src={dividerLeafIcon.src}
+                  alt=""
+                  className="h-8 w-auto object-contain"
+                  aria-hidden="true"
+                />
 
-                  <span
-                    className="
-                      h-px
-                      flex-1
-                      bg-[#bdc6aa]
-                    "
-                  />
-                </div>
-              </div>
+    <span className="h-px flex-1 bg-[#bdc6aa]" />
+  </div>
+</div>
             </div>
 
             {/* QUOTE */}
@@ -690,7 +665,7 @@ export default function OfficialMessageBanner({
                   text-[#262c38]
                 "
               >
-                Government of India is committed to empowering MSMEs
+                Government of India is committed to empowering MSMEs<br/>
                 and creating more opportunities for their growth.
                 <br />
 
@@ -699,8 +674,8 @@ export default function OfficialMessageBanner({
                 <span className="font-[600] text-[#315d16]">
                   Bharat Organic Expo 2027
                 </span>{" "}
-
-                that provide a strong platform for MSMEs to showcase
+<br/>
+                that provide a strong platform for MSMEs to showcase<br/>
                 their products, build business, and expand globally.
               </blockquote>
 
@@ -775,7 +750,7 @@ export default function OfficialMessageBanner({
               <div className="min-w-0">
                 <p
                   className="
-                    text-[clamp(12px,1.2vw,16px)]
+                    text-[20px]
                     font-[600]
                     text-[#315b16]
                   "
@@ -786,9 +761,9 @@ export default function OfficialMessageBanner({
                 <p
                   className="
                     mt-[3px]
-                    text-[clamp(8px,0.8vw,11px)]
+                    text-[14px]
                     font-[400]
-                    leading-[1.55]
+                    leading-[1.5]
                     text-[#414753]
                   "
                 >
@@ -810,12 +785,13 @@ export default function OfficialMessageBanner({
               className="
                 pointer-events-none
                 absolute
-                -bottom-[1.5%]
+                bottom-0
                 right-[0.5%]
                 h-[31%]
                 w-auto
                 object-contain
                 opacity-[0.42]
+                object-bottom
               "
             />
           </div>
@@ -831,12 +807,13 @@ export default function OfficialMessageBanner({
             left-[13.1%]
             top-[82%]
             grid
-            h-[11%]
+            h-[15%]
             w-[76.2%]
             grid-cols-3
             items-center
             overflow-hidden
             rounded-[12px]
+            mt-4
             border
             border-[#e0e4da]
             bg-[rgba(255,255,252,0.97)]
@@ -846,7 +823,7 @@ export default function OfficialMessageBanner({
         >
           <FeatureItem
             icon={
-              <img src={officialIconImg.src} alt="" className="h-[80px] w-[80px] object-contain" />
+              <img src={officialIconImg.src} alt="" className="h-[100px] w-[100px] object-contain" />
             }
             title="Official Message"
             description="Direct message from MSME Leadership"
@@ -855,7 +832,7 @@ export default function OfficialMessageBanner({
           <FeatureItem
             withBorder
             icon={
-              <img src={forAllMsmeImg.src} alt="" className="h-[80px] w-[80px] object-contain" />
+              <img src={forAllMsmeImg.src} alt="" className="h-[100px] w-[100px] object-contain" />
             }
             title="For All MSMEs"
             description="Encouragement for every entrepreneur across India"
@@ -863,7 +840,7 @@ export default function OfficialMessageBanner({
 
           <FeatureItem
             icon={
-              <img src={governmentApprovedImg.src} alt="" className="h-[80px] w-[80px] object-contain" />
+              <img src={governmentApprovedImg.src} alt="" className="h-[100px] w-[100px] object-contain" />
             }
             title="Government Support"
             description="Strong support for growth, competitiveness & global reach"
@@ -896,20 +873,17 @@ export default function OfficialMessageBanner({
             flex
             items-center
             justify-center
-            gap-2
+            gap-3
           "
         >
-          <span className="h-px w-8 bg-[#799158]" />
+          <span className="h-px w-12 bg-[#799158]" />
 
-          <Leaf
-            className="
-              h-4
-              w-4
-              -rotate-45
-              fill-current
-              text-[#397317]
-            "
-          />
+          <svg viewBox="0 0 32 32" className="h-6 w-6" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M16 4C16 4 8 10 8 18C8 22 12 28 16 28C20 28 24 22 24 18C24 10 16 4 16 4Z" fill="#2D6A0F"/>
+            <path d="M16 8V24" stroke="#1A4D06" strokeWidth="1.2"/>
+            <path d="M16 14L11 10" stroke="#1A4D06" strokeWidth="0.8"/>
+            <path d="M16 18L21 14" stroke="#1A4D06" strokeWidth="0.8"/>
+          </svg>
 
           <span
             className="
@@ -924,17 +898,14 @@ export default function OfficialMessageBanner({
             Hear From MSME Leadership
           </span>
 
-          <Leaf
-            className="
-              h-4
-              w-4
-              rotate-[135deg]
-              fill-current
-              text-[#397317]
-            "
-          />
+          <svg viewBox="0 0 32 32" className="h-6 w-6" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M16 4C16 4 8 10 8 18C8 22 12 28 16 28C20 28 24 22 24 18C24 10 16 4 16 4Z" fill="#2D6A0F"/>
+            <path d="M16 8V24" stroke="#1A4D06" strokeWidth="1.2"/>
+            <path d="M16 14L11 10" stroke="#1A4D06" strokeWidth="0.8"/>
+            <path d="M16 18L21 14" stroke="#1A4D06" strokeWidth="0.8"/>
+          </svg>
 
-          <span className="h-px w-8 bg-[#799158]" />
+          <span className="h-px w-12 bg-[#799158]" />
         </div>
 
         {/* TITLE */}
@@ -1230,19 +1201,19 @@ export default function OfficialMessageBanner({
           "
         >
           <MobileFeature
-            icon={<img src={officialIconImg.src} alt="" className="h-14 w-14 object-contain" />}
+            icon={<img src={officialIconImg.src} alt="" className="h-16 w-16 object-contain" />}
             title="Official Message"
             description="Direct message from MSME Leadership"
           />
 
           <MobileFeature
-            icon={<img src={forAllMsmeImg.src} alt="" className="h-14 w-14 object-contain" />}
+            icon={<img src={forAllMsmeImg.src} alt="" className="h-16 w-16 object-contain" />}
             title="For All MSMEs"
             description="Encouragement for every entrepreneur across India"
           />
 
           <MobileFeature
-            icon={<img src={governmentApprovedImg.src} alt="" className="h-14 w-14 object-contain" />}
+            icon={<img src={governmentApprovedImg.src} alt="" className="h-16 w-16 object-contain" />}
             title="Government Support"
             description="Strong support for growth, competitiveness & global reach"
           />
@@ -1306,7 +1277,7 @@ function FeatureItem({
       <div className="min-w-0">
         <p
           className="
-            text-[14px]
+            text-[16px]
             font-[600]
             uppercase
             leading-[1.2]
@@ -1371,7 +1342,7 @@ function MobileFeature({
       <div>
         <p
           className="
-            text-[14px]
+            text-[16px]
             font-[600]
             uppercase
             text-[#315b19]

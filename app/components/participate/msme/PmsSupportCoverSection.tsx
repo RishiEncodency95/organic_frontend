@@ -44,6 +44,7 @@ import badgeTransparent from "@/app/assets/participate/msme/support-reference/ba
 import badgeTimely from "@/app/assets/participate/msme/support-reference/badge-timely.png";
 import badgeDocs from "@/app/assets/participate/msme/support-reference/badge-docs.png";
 import badgeMsme from "@/app/assets/participate/msme/support-reference/badge-msme.png";
+import { ArrowRight } from "lucide-react";
 
 /* =========================================================
    DATA
@@ -189,7 +190,7 @@ const PmsSupportCoverSection: FC = () => {
             flex
             min-h-[40px]
             items-center
-            gap-[8px]
+            gap-3
             rounded-b-[12px]
             bg-[#07582c]
             px-[22px]
@@ -207,14 +208,11 @@ const PmsSupportCoverSection: FC = () => {
             id="pms-support-cover-heading"
             className="
               whitespace-nowrap
-              text-[13px]
+              text-[16px]
               font-semibold
               uppercase
               leading-none
-              tracking-[0.015em]
               text-white
-              sm:text-[15px]
-              lg:text-[16px]
             "
           >
             What Can Your PMS Support Cover?
@@ -347,7 +345,7 @@ const PmsSupportCoverSection: FC = () => {
                 MAXIMUM ASSISTANCE
             ================================================== */}
 
-            <div className="flex min-h-[194px] items-center justify-center">
+            <div className="flex min-h-[194px] items-center justify-center pt-8">
               <div
                 className="
                   relative
@@ -395,15 +393,15 @@ const PmsSupportCoverSection: FC = () => {
                   className="
                     whitespace-nowrap
                     text-[42px]
-                    font-black
+                    font-extrabold
                     leading-none
                     tracking-[-0.045em]
                     text-[#07582c]
-                    sm:text-[49px]
-                    lg:text-[56px]
+                    sm:text-[50px]
+                    lg:text-[65px]
                   "
                 >
-                  ₹1.50 LAKH
+                  <span className="text-[40px] lg:text-[50px] font-extrabold">₹</span>1.50 LAKH
                   <sup className="ml-[2px] align-top text-[13px]">*</sup>
                 </div>
 
@@ -827,9 +825,9 @@ const PmsSupportCoverSection: FC = () => {
                   rounded-[6px]
                   bg-[#07582c]
                   px-[15px]
-                  py-[7px]
+                  py-2
                   text-center
-                  text-[22px]
+                  text-[32px]
                   font-bold
                   leading-none
                   text-white
@@ -850,14 +848,14 @@ const PmsSupportCoverSection: FC = () => {
                   px-[8px]
                   py-[4px]
                   text-[14px]
-                  font-semibold
+                  font-bold
                   leading-none
                 "
               >
                 Travel
-                <span className="px-[10px]">+</span>
+                <span className="px-[10px] font-bold">+</span>
                 Freight
-                <span className="px-[10px]">+</span>
+                <span className="px-[10px] font-bold">+</span>
                 Publicity
               </div>
             </div>
@@ -866,7 +864,7 @@ const PmsSupportCoverSection: FC = () => {
             <div
               className="
                 border-[#d5dcd0]
-                px-[20px]
+                px-[30px]
                 lg:border-x pr-[10%]
               "
             >
@@ -913,14 +911,14 @@ const PmsSupportCoverSection: FC = () => {
 
                 <p
                   className="
-                    text-[14px]
+                    text-[16px]
                     font-medium
                     leading-[1.35]
                     text-[#27220f]
                   "
                 >
                   <strong>Important:</strong> The ₹25,000 contingency support
-                  is part of the overall assistance ceiling and not ₹25,000
+                  is <br/>part of the overall assistance ceiling and not <br/>₹25,000
                   over and above ₹1.50 lakh.
                 </p>
               </div>
@@ -957,7 +955,7 @@ const PmsSupportCoverSection: FC = () => {
               bg-[#f7f8f3]
               px-[15px]
               py-[8px]
-              lg:grid-cols-[78px_1fr_250px_auto_280px]
+              lg:grid-cols-[78px_1fr_320px_auto_380px]
             "
           >
             {/* icon */}
@@ -974,12 +972,11 @@ const PmsSupportCoverSection: FC = () => {
             <div>
               <h4
                 className="
-                  text-[14px]
+                  text-[18px]
                   font-semibold
                   uppercase
                   leading-tight
                   text-[#07582c]
-                  sm:text-[14px]
                 "
               >
                 Know Before You Apply
@@ -1017,22 +1014,22 @@ const PmsSupportCoverSection: FC = () => {
                 bg-[#07582c]
                 px-[15px]
                 text-white
+                py-2
               "
             >
               <img
                 src={eligibilityCtaIcon.src}
                 alt=""
                 aria-hidden="true"
-                className="h-[48px] w-[48px] shrink-0 object-contain"
+                className="h-[60px] w-[60px] shrink-0 object-contain"
               />
 
               <span
                 className="
-                  text-[14px]
+                  text-[20px]
                   font-semibold
                   uppercase
-                  leading-[1.2]
-                  sm:text-[15px]
+                  leading-[1.5]
                 "
               >
                 Check Your
@@ -1049,7 +1046,7 @@ const PmsSupportCoverSection: FC = () => {
                   leading-none
                 "
               >
-                →
+                <ArrowRight/>
               </span>
             </Link>
 <div className="w-px h-[80%] bg-[#07582c]/50"></div>
@@ -1069,22 +1066,22 @@ const PmsSupportCoverSection: FC = () => {
                 bg-white
                 px-[15px]
                 text-[#07582c]
+                py-2
               "
             >
               <img
                 src={supportCtaIcon.src}
                 alt=""
                 aria-hidden="true"
-                className="h-[47px] w-[47px] shrink-0 object-contain"
+                className="h-[60px] w-[60px] shrink-0 object-contain"
               />
 
               <span
                 className="
-                  text-[14px]
+                  text-[20px]
                   font-semibold
                   uppercase
-                  leading-[1.2]
-                  sm:text-[14px]
+                  leading-[1.5]
                 "
               >
                 Understand Your
@@ -1101,7 +1098,7 @@ const PmsSupportCoverSection: FC = () => {
                   leading-none
                 "
               >
-                →
+              <ArrowRight/>
               </span>
             </Link>
           </div>

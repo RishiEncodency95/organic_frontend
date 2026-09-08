@@ -82,7 +82,7 @@ export default function OfficialRecognitionBanner() {
                   />
                 </span>
 
-                <span className="text-base font-semibold text-[#0c3b1d] uppercase font-poppins border-b border-[#d4a017] pb-2">
+                <span className="text-base font-semibold text-[#0c3b1d] uppercase font-poppins border-b border-[#e0d5b7] pb-2">
                   OFFICIAL RECOGNITION
                 </span>
               </div>
@@ -91,13 +91,13 @@ export default function OfficialRecognitionBanner() {
                 id="official-recognition-heading"
                 className="text-[28px] sm:text-[34px] md:text-[46px] font-semibold leading-[1.15] tracking-tight mb-2 font-poppins"
               >
-                <span className="text-[#1b5e20]">Bharat Organic Expo</span>
+                <span className="text-[#044826]">Bharat Organic Expo</span>
                 <br />
                 <span className="">Approved under PMS*</span>
               </h2>
 
               <div
-                className="mb-4 h-[3px] w-[70px] mt-4 bg-[#d4a017]"
+                className="mb-4 h-[3px] w-[70px] mt-4 bg-[#b39540]"
                 aria-hidden="true"
               />
 
@@ -422,7 +422,7 @@ export default function OfficialRecognitionBanner() {
           </div>
 
           {/* ---------------- Disclaimer ---------------- */}
-          <div className="mt-5 flex items-center relative z-10">
+          <div className="mt-10 flex items-center relative z-10">
             <div className="flex items-center gap-3 rounded-xl bg-[#f8f7f1] p-4 shadow-[0_2px_10px_rgba(0,0,0,0.02)] border border-[#e5efdf] w-[60%]">
               <div className="w-14 h-14 shrink-0 rounded-full bg-[#e8eddf] flex items-center justify-center">
                 <Image

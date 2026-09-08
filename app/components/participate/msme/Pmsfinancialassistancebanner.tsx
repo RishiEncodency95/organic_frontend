@@ -182,11 +182,15 @@ const PMSFinancialAssistanceBanner: FC = () => {
                 </p>
               </div>
               {/* Support cards */}
-              <div className="mt-2 grid grid-cols-1 gap-4 sm:grid-cols-2 sm:gap-4 lg:mt-3 lg:grid-cols-3">
+              <div className="mt-2 grid grid-cols-1 gap-5 sm:grid-cols-2 sm:gap-5 lg:mt-3 lg:grid-cols-3">
                 {SUPPORT_CARDS.map((card) => (
                     <article
                       key={card.title}
-                      className={`relative flex flex-col items-center rounded-2xl bg-white px-4 pb-10 pt-4 text-center shadow-lg ring-1 ring-black/5 overflow-visible`}
+                      className={`relative flex flex-col items-center rounded-2xl bg-white px-4 pb-10 pt-4 text-center overflow-visible`}
+                         style={{
+                  boxShadow:
+                    "rgba(0, 0, 0, 0.24) 0px 3px 8px",
+                }}
                     >
                       <img
                         src={card.icon.src}
@@ -298,11 +302,11 @@ const PMSFinancialAssistanceBanner: FC = () => {
             <div className="absolute left-1/2 bottom-0 z-10 -translate-x-1/2 translate-y-1/2">
               <a
                 href="/participate/msme/eligibility-check"
-                className="inline-flex items-center gap-1.5 rounded-full bg-[#1b5e20] px-4 py-2 text-[14px] font-semibold uppercase tracking-wide text-white shadow-md transition-colors hover:bg-[#2d7a2d]"
+                className="inline-flex items-center gap-1.5 rounded-full bg-[#1b5e20] px-4 py-2 text-base font-semibold uppercase tracking-wide text-white shadow-md transition-colors hover:bg-[#2d7a2d]"
               >
-                <img src={eligibilityButtonImg.src} alt="" className="h-5 w-5 object-contain" aria-hidden="true" />
+                <img src={eligibilityButtonImg.src} alt="" className="h-8 w-8 object-contain" aria-hidden="true" />
                 Check My Eligibility
-                <ChevronRight className="h-4 w-4" aria-hidden="true" />
+                <ChevronRight className="h-5 w-5 font-bold" aria-hidden="true" />
               </a>
             </div>
           </div>

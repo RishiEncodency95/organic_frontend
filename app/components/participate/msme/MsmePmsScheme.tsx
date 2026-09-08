@@ -286,14 +286,13 @@ export default function MsmePmsScheme() {
           <p
             className="
               mx-auto
-              mt-[22px]
+              mt-4
               max-w-[800px]
               text-center
               text-[14px]
               leading-[1.45]
               text-[#171717]
-              sm:text-[16px]
-              lg:text-[17px]
+              sm:text-[18px]
             "
           >
             The{" "}
@@ -319,10 +318,10 @@ export default function MsmePmsScheme() {
               mt-[24px]
               grid
               grid-cols-1
-              gap-[14px]
+              gap-5
               sm:grid-cols-2
               lg:grid-cols-4
-              lg:gap-[15px]
+              lg:gap-5
             "
           >
             {SCHEME_FEATURES.map((feature, index) => (
@@ -333,7 +332,7 @@ export default function MsmePmsScheme() {
                 }}
                 style={{
                   boxShadow:
-                    "rgba(0, 0, 0, 0.12) 0px 1px 3px, rgba(0, 0, 0, 0.24) 0px 1px 2px",
+                    "rgba(0, 0, 0, 0.24) 0px 3px 8px",
                 }}
                 className="
                   relative

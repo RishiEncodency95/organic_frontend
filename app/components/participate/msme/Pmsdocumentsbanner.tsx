@@ -12,7 +12,10 @@ import {
 } from "lucide-react";
 
 import documentsBgImg from "@/app/assets/participate/msme/documents_ready.jpg";
+import leftMsme from "@/app/assets/participate/msme/exhibition-lef.png"
+import rightMsme from "@/app/assets/participate/msme/exhibition-right.png"
 import docsImg from "@/app/assets/participate/msme/docs.png";
+import Image from "next/image";
 
 /* ================================================================
    TYPES
@@ -1085,27 +1088,12 @@ export default function PMSDocumentsBanner() {
             gap-[10px]
           "
         >
-          <span
-            className="
-              h-px
-              w-[49px]
-              bg-[#799557]
-            "
-          />
-
-          <span
-            className="
-              h-[5px]
-              w-[5px]
-              rounded-full
-              bg-[#426F11]
-            "
-          />
+          <Image src={leftMsme} className="h-6 w-16 object-contain sm:h-8 sm:w-20" aria-hidden="true" alt="left decoration" />
 
           <p
             className="
               whitespace-nowrap
-              text-[clamp(11px,1.35vw,18px)]
+              text-[20px]
               font-semibold
               uppercase
               tracking-[0.12em]
@@ -1114,23 +1102,7 @@ export default function PMSDocumentsBanner() {
           >
             Be Prepared
           </p>
-
-          <span
-            className="
-              h-[5px]
-              w-[5px]
-              rounded-full
-              bg-[#426F11]
-            "
-          />
-
-          <span
-            className="
-              h-px
-              w-[49px]
-              bg-[#799557]
-            "
-          />
+          <Image src={rightMsme} className="h-6 w-16 object-contain sm:h-8 sm:w-20" aria-hidden="true" alt="right decoration" />
         </div>
 
         {/* ========================================================
@@ -1240,7 +1212,7 @@ export default function PMSDocumentsBanner() {
             text-center
             text-[clamp(12px,1.48vw,19px)]
             font-[500]
-            leading-[1.25]
+            leading-[1.5]
             text-[#20232A]
           "
         >

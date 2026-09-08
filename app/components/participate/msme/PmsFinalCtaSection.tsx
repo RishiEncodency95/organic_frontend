@@ -1,21 +1,18 @@
 "use client";
 
 import Image, { StaticImageData } from "next/image";
-import type {
-  ReactNode,
-  SVGProps,
-} from "react";
-import bgImage from "@/app/assets/participate/msme/ready_to_explore.png"
+import type { ReactNode, SVGProps } from "react";
+import bgImage from "@/app/assets/participate/msme/ready_to_explore.png";
+import startLeftDeco from "@/app/assets/participate/msme/start_left.png";
+import startRightDeco from "@/app/assets/participate/msme/start_right.png";
 
 /* ================================================================
    TYPES
 ================================================================ */
 
 export type PmsFinalCtaContent = {
-
   headingBefore: string;
   headingHighlight: string;
-
   subtitle: string;
 
   leftCardTitle: string;
@@ -38,13 +35,7 @@ export type PmsFinalCtaContent = {
 type Props = {
   content?: Partial<PmsFinalCtaContent>;
 
-  /**
-   * Save uploaded reference at:
-   * /public/images/pms-final-reference.png
-   *
-   * We only reveal the side artwork regions from it.
-   */
-  referenceImage?: string|StaticImageData;
+  referenceImage?: string | StaticImageData;
 
   onCheckEligibility?: () => void;
   onUdyamGuidance?: () => void;
@@ -57,37 +48,23 @@ type Props = {
 ================================================================ */
 
 export const DEFAULT_PMS_FINAL_CTA_CONTENT: PmsFinalCtaContent = {
+  headingBefore: "Ready to Explore",
+  headingHighlight: "PMS Support?",
 
+  subtitle: "Start with a Simple Eligibility Check.",
 
-  headingBefore:
-    "Ready to Explore",
-
-  headingHighlight:
-    "PMS Support?",
-
-  subtitle:
-    "Start with a Simple Eligibility Check.",
-
-  leftCardTitle:
-    "Already Udyam registered?",
-
+  leftCardTitle: "Already Udyam registered?",
   leftCardDescription:
     "Upload your certificate and let us conduct a preliminary screening.",
 
-  rightCardTitle:
-    "Not registered yet?",
-
+  rightCardTitle: "Not registered yet?",
   rightCardDescription:
     "Start with Udyam Registration guidance.",
 
-  primaryButton:
-    "CHECK YOUR PMS ELIGIBILITY",
+  primaryButton: "CHECK YOUR PMS ELIGIBILITY",
+  secondaryButton: "GET UDYAM REGISTRATION GUIDANCE",
 
-  secondaryButton:
-    "GET UDYAM REGISTRATION GUIDANCE",
-
-  supportText:
-    "Talk to PMS Support Team",
+  supportText: "Talk to PMS Support Team",
 
   services: [
     "Registration Guidance",
@@ -97,8 +74,7 @@ export const DEFAULT_PMS_FINAL_CTA_CONTENT: PmsFinalCtaContent = {
     "Claim Assistance",
   ],
 
-  disclaimerTitle:
-    "IMPORTANT DISCLAIMER",
+  disclaimerTitle: "IMPORTANT DISCLAIMER",
 
   disclaimerText:
     "Bharat Organic Expo / Organiser provides PMS facilitation, preliminary eligibility screening, Udyam Registration guidance, documentation and claim-process assistance. Event approval does not constitute automatic approval of an individual MSME application or reimbursement claim. Eligibility, sanction, permissible assistance and reimbursement are subject to applicable Ministry of MSME guidelines and decisions of the competent authority.",
@@ -108,9 +84,7 @@ export const DEFAULT_PMS_FINAL_CTA_CONTENT: PmsFinalCtaContent = {
    ICON — CERTIFICATE
 ================================================================ */
 
-function IconCertificate(
-  props: SVGProps<SVGSVGElement>
-) {
+function IconCertificate(props: SVGProps<SVGSVGElement>) {
   return (
     <svg
       viewBox="0 0 40 40"
@@ -122,18 +96,13 @@ function IconCertificate(
       {...props}
     >
       <path d="M9.4 5.7h14.1l7.1 7.1v21.4H9.4z" />
-
       <path d="M23.5 5.7v7.1h7.1" />
 
       <path d="M14 13.2h5" />
       <path d="M14 18.1h11" />
       <path d="M14 22.9h7" />
 
-      <circle
-        cx="26"
-        cy="28"
-        r="5"
-      />
+      <circle cx="26" cy="28" r="5" />
 
       <path d="M22.7 31.6v6.1l3.3-1.9 3.3 1.9v-6.1" />
 
@@ -147,9 +116,7 @@ function IconCertificate(
    ICON — CLIPBOARD
 ================================================================ */
 
-function IconClipboard(
-  props: SVGProps<SVGSVGElement>
-) {
+function IconClipboard(props: SVGProps<SVGSVGElement>) {
   return (
     <svg
       viewBox="0 0 40 40"
@@ -180,11 +147,11 @@ function IconClipboard(
    ICON — UPLOAD
 ================================================================ */
 
-function IconUpload(
-  props: SVGProps<SVGSVGElement>
-) {
+function IconUpload(props: SVGProps<SVGSVGElement>) {
   return (
     <svg
+      width="48"
+      height="48"
       viewBox="0 0 24 24"
       fill="none"
       stroke="currentColor"
@@ -194,9 +161,7 @@ function IconUpload(
       {...props}
     >
       <path d="M12 14V3.5" />
-
       <path d="m8.1 7.2 3.9-3.7 3.9 3.7" />
-
       <path d="M4.4 13.4v6.1a1 1 0 0 0 1 1h13.2a1 1 0 0 0 1-1v-6.1" />
     </svg>
   );
@@ -206,11 +171,11 @@ function IconUpload(
    ICON — USER CIRCLE
 ================================================================ */
 
-function IconUserCircle(
-  props: SVGProps<SVGSVGElement>
-) {
+function IconUserCircle(props: SVGProps<SVGSVGElement>) {
   return (
     <svg
+      width="48"
+      height="48"
       viewBox="0 0 24 24"
       fill="none"
       stroke="currentColor"
@@ -219,30 +184,25 @@ function IconUserCircle(
       strokeLinejoin="round"
       {...props}
     >
-      <circle
-        cx="12"
-        cy="12"
-        r="9.2"
-      />
+      <circle cx="12" cy="12" r="9.2" />
 
-      <circle
-        cx="12"
-        cy="9.5"
-        r="2.8"
-      />
+      <circle cx="12" cy="9.5" r="2.8" />
 
       <path d="M6.5 18.4a6.1 6.1 0 0 1 11 0" />
     </svg>
   );
 }
 
+export {
+  IconUpload,
+  IconUserCircle,
+};
+
 /* ================================================================
    SERVICE ICONS
 ================================================================ */
 
-function IconShield(
-  props: SVGProps<SVGSVGElement>
-) {
+function IconShield(props: SVGProps<SVGSVGElement>) {
   return (
     <svg
       viewBox="0 0 24 24"
@@ -254,15 +214,12 @@ function IconShield(
       {...props}
     >
       <path d="M12 2.8 4.9 5.5v5.9c0 4.3 2.9 8.2 7.1 9.7 4.2-1.5 7.1-5.4 7.1-9.7V5.5z" />
-
       <path d="m8.6 11.8 2.2 2.2 4.5-4.7" />
     </svg>
   );
 }
 
-function IconScreening(
-  props: SVGProps<SVGSVGElement>
-) {
+function IconScreening(props: SVGProps<SVGSVGElement>) {
   return (
     <svg
       viewBox="0 0 24 24"
@@ -273,17 +230,9 @@ function IconScreening(
       strokeLinejoin="round"
       {...props}
     >
-      <circle
-        cx="10"
-        cy="10"
-        r="6"
-      />
+      <circle cx="10" cy="10" r="6" />
 
-      <circle
-        cx="10"
-        cy="8.6"
-        r="2"
-      />
+      <circle cx="10" cy="8.6" r="2" />
 
       <path d="M6.8 14.8a3.7 3.7 0 0 1 6.4 0" />
 
@@ -292,9 +241,7 @@ function IconScreening(
   );
 }
 
-function IconApplication(
-  props: SVGProps<SVGSVGElement>
-) {
+function IconApplication(props: SVGProps<SVGSVGElement>) {
   return (
     <svg
       viewBox="0 0 24 24"
@@ -318,9 +265,7 @@ function IconApplication(
   );
 }
 
-function IconFolder(
-  props: SVGProps<SVGSVGElement>
-) {
+function IconFolder(props: SVGProps<SVGSVGElement>) {
   return (
     <svg
       viewBox="0 0 24 24"
@@ -336,9 +281,7 @@ function IconFolder(
   );
 }
 
-function IconHeadset(
-  props: SVGProps<SVGSVGElement>
-) {
+function IconHeadset(props: SVGProps<SVGSVGElement>) {
   return (
     <svg
       viewBox="0 0 24 24"
@@ -376,9 +319,7 @@ function IconHeadset(
    DISCLAIMER ICON
 ================================================================ */
 
-function IconDisclaimer(
-  props: SVGProps<SVGSVGElement>
-) {
+function IconDisclaimer(props: SVGProps<SVGSVGElement>) {
   return (
     <svg
       viewBox="0 0 32 32"
@@ -405,13 +346,7 @@ function Flourish({
   reverse?: boolean;
 }) {
   return (
-    <span
-      className="
-        flex
-        items-center
-        text-[#4D762F]
-      "
-    >
+    <span className="flex items-center text-[#4D762F]">
       {!reverse && (
         <span
           className="
@@ -431,12 +366,7 @@ function Flourish({
           min-h-[8px]
           w-[1.1vw]
           min-w-[11px]
-
-          ${
-            reverse
-              ? "rotate-180"
-              : ""
-          }
+          ${reverse ? "rotate-180" : ""}
         `}
       >
         <path
@@ -473,12 +403,8 @@ function ChoiceCard({
   title,
   children,
 }: {
-  icon: React.ComponentType<
-    SVGProps<SVGSVGElement>
-  >;
-
+  icon: React.ComponentType<SVGProps<SVGSVGElement>>;
   title: string;
-
   children: ReactNode;
 }) {
   return (
@@ -514,8 +440,8 @@ function ChoiceCard({
       >
         <Icon
           className="
-            h-[55%]
-            w-[55%]
+            h-[75%]
+            w-[75%]
           "
         />
       </div>
@@ -537,9 +463,9 @@ function ChoiceCard({
       <span
         className="
           mt-[4%]
-          h-px
-          w-[26%]
-          bg-[#C8D4BF]
+          h-[1.5px]
+          w-[20%]
+          bg-[#154A0D]
         "
       />
 
@@ -566,15 +492,13 @@ function ChoiceCard({
 export default function PmsFinalCta({
   content,
 
-  referenceImage =
-    bgImage,
+  referenceImage = bgImage,
 
   onCheckEligibility,
 
   onUdyamGuidance,
 
-  supportHref =
-    "#pms-support",
+  supportHref = "#pms-support",
 }: Props) {
   const c: PmsFinalCtaContent = {
     ...DEFAULT_PMS_FINAL_CTA_CONTENT,
@@ -604,22 +528,11 @@ export default function PmsFinalCta({
         -translate-x-1/2
         overflow-hidden
         bg-[#FAFAF5]
-
         lg:aspect-[16/9]
       "
     >
       {/* ==========================================================
           DESKTOP REFERENCE SIDE ART
-
-          Same uploaded screenshot is used only as artwork.
-
-          LEFT:
-          x = 0 → ~27.7%
-
-          RIGHT:
-          x = ~77.8% → 100%
-
-          Central screenshot text/cards are NEVER displayed.
       ========================================================== */}
 
       <div
@@ -633,8 +546,7 @@ export default function PmsFinalCta({
           lg:block
         "
         style={{
-          clipPath:
-            "inset(0 74.55% 0 0)",
+          clipPath: "inset(0 74.55% 0 0)",
         }}
       >
         <Image
@@ -643,9 +555,7 @@ export default function PmsFinalCta({
           fill
           priority
           sizes="100vw"
-          className="
-            object-fill
-          "
+          className="object-fill"
         />
       </div>
 
@@ -660,8 +570,7 @@ export default function PmsFinalCta({
           lg:block
         "
         style={{
-          clipPath:
-            "inset(0 0 0 77.8%)",
+          clipPath: "inset(0 0 0 77.8%)",
         }}
       >
         <Image
@@ -670,62 +579,12 @@ export default function PmsFinalCta({
           fill
           priority
           sizes="100vw"
-          className="
-            object-fill
-          "
+          className="object-fill"
         />
       </div>
 
       {/* ==========================================================
-          CENTRE BACKGROUND
-      ========================================================== */}
-{/* 
-      <div
-        aria-hidden="true"
-        className="
-          pointer-events-none
-          absolute
-          inset-0
-          z-[1]
-          hidden
-          lg:block
-        "
-        style={{
-          background: `
-            linear-gradient(
-              90deg,
-              rgba(250,250,245,0) 0%,
-              rgba(250,250,245,0.08) 21%,
-              rgba(250,250,245,0.94) 27%,
-              rgba(250,250,245,1) 31%,
-              rgba(250,250,245,1) 76%,
-              rgba(250,250,245,0.85) 82%,
-              rgba(250,250,245,0) 100%
-            )
-          `,
-        }}
-      /> */}
-
-      {/* subtle centre haze */}
-
-      {/* <div
-        aria-hidden="true"
-        className="
-          pointer-events-none
-          absolute
-          inset-0
-          z-[2]
-          hidden
-          lg:block
-        "
-        style={{
-          background:
-            "radial-gradient(ellipse 52% 74% at 51% 44%, rgba(255,255,252,.88) 0%, rgba(255,255,252,.65) 56%, rgba(255,255,252,0) 100%)",
-        }}
-      /> */}
-
-      {/* ==========================================================
-          DESKTOP PIXEL-MATCHED CONTENT
+          DESKTOP CONTENT
       ========================================================== */}
 
       <div
@@ -738,11 +597,7 @@ export default function PmsFinalCta({
           lg:block
         "
       >
-        {/* ========================================================
-            TITLE
-
-            reference top ≈ 64px / 545
-        ======================================================== */}
+        {/* TITLE */}
 
         <h2
           className="
@@ -762,20 +617,12 @@ export default function PmsFinalCta({
         >
           {c.headingBefore}{" "}
 
-          <span
-            className="
-              text-[#295D14]
-            "
-          >
+          <span className="text-[#295D14]">
             {c.headingHighlight}
           </span>
         </h2>
 
-        {/* ========================================================
-            SUBTITLE
-
-            reference y ≈ 116px
-        ======================================================== */}
+        {/* SUBTITLE */}
 
         <div
           className="
@@ -786,10 +633,22 @@ export default function PmsFinalCta({
             -translate-x-1/2
             items-center
             justify-center
-            gap-[0.7vw]
+            gap-[1vw]
           "
         >
-          <Flourish />
+          <img
+            src={startLeftDeco.src}
+            alt=""
+            className="
+              h-[0.5vw]
+              max-h-[38px]
+              min-h-[14px]
+              w-[10vw]
+              max-w-[160px]
+              min-w-[120px]
+              object-contain
+            "
+          />
 
           <p
             className="
@@ -803,18 +662,22 @@ export default function PmsFinalCta({
             {c.subtitle}
           </p>
 
-          <Flourish reverse />
+          <img
+            src={startRightDeco.src}
+            alt=""
+            className="
+              h-[0.5vw]
+              max-h-[38px]
+              min-h-[14px]
+              w-[10vw]
+              max-w-[160px]
+              min-w-[120px]
+              object-contain
+            "
+          />
         </div>
 
-        {/* ========================================================
-            LEFT CARD
-
-            reference:
-            x 278
-            y 151
-            width ≈ 265
-            height ≈ 162
-        ======================================================== */}
+        {/* LEFT CARD */}
 
         <div
           className="
@@ -827,23 +690,13 @@ export default function PmsFinalCta({
         >
           <ChoiceCard
             icon={IconCertificate}
-            title={
-              c.leftCardTitle
-            }
+            title={c.leftCardTitle}
           >
-            {
-              c.leftCardDescription
-            }
+            {c.leftCardDescription}
           </ChoiceCard>
         </div>
 
-        {/* ========================================================
-            OR
-
-            reference:
-            centre x ≈ 51.55%
-            centre y ≈ 42.4%
-        ======================================================== */}
+        {/* OR */}
 
         <div
           className="
@@ -869,9 +722,7 @@ export default function PmsFinalCta({
           OR
         </div>
 
-        {/* ========================================================
-            RIGHT CARD
-        ======================================================== */}
+        {/* RIGHT CARD */}
 
         <div
           className="
@@ -884,21 +735,13 @@ export default function PmsFinalCta({
         >
           <ChoiceCard
             icon={IconClipboard}
-            title={
-              c.rightCardTitle
-            }
+            title={c.rightCardTitle}
           >
-            {
-              c.rightCardDescription
-            }
+            {c.rightCardDescription}
           </ChoiceCard>
         </div>
 
-        {/* ========================================================
-            LEFT CTA
-
-            reference y 331
-        ======================================================== */}
+        {/* LEFT CTA */}
 
         <a
           href="/participate/msme/eligibility-check"
@@ -937,24 +780,16 @@ export default function PmsFinalCta({
             "
           />
 
-          <span
-            className="
-              whitespace-nowrap
-            "
-          >
+          <span className="whitespace-nowrap">
             {c.primaryButton}
           </span>
         </a>
 
-        {/* ========================================================
-            RIGHT CTA
-        ======================================================== */}
+        {/* RIGHT CTA */}
 
         <button
           type="button"
-          onClick={
-            onUdyamGuidance
-          }
+          onClick={onUdyamGuidance}
           className="
             absolute
             left-[53.2%]
@@ -992,18 +827,12 @@ export default function PmsFinalCta({
             "
           />
 
-          <span
-            className="
-              whitespace-nowrap
-            "
-          >
+          <span className="whitespace-nowrap">
             {c.secondaryButton}
           </span>
         </button>
 
-        {/* ========================================================
-            SUPPORT LINK
-        ======================================================== */}
+        {/* SUPPORT LINK */}
 
         <a
           href={supportHref}
@@ -1025,20 +854,14 @@ export default function PmsFinalCta({
         >
           {c.supportText}
 
-          <span
-            className="
-              text-[1.3em]
-            "
-          >
+          <span className="text-[1.3em]">
             →
           </span>
         </a>
 
-        {/* ========================================================
+        {/* ==========================================================
             SERVICES
-
-            reference roughly x 243 → 927
-        ======================================================== */}
+        ========================================================== */}
 
         <div
           className="
@@ -1052,81 +875,72 @@ export default function PmsFinalCta({
             justify-center
           "
         >
-          {c.services.map(
-            (service, index) => {
-              const ServiceIcon =
-                serviceIcons[
-                  index
-                ] ??
-                IconShield;
+          {c.services.map((service, index) => {
+            const ServiceIcon =
+              serviceIcons[index] ?? IconShield;
 
-              return (
+            return (
+              <div
+                key={`${service}-${index}`}
+                className="
+                  flex
+                  min-w-0
+                  items-center
+                "
+              >
+                {index > 0 && (
+                  <span
+                    className="
+                      mx-[1.05vw]
+                      h-[1.65vw]
+                      max-h-[20px]
+                      min-h-[14px]
+                      w-px
+                      shrink-0
+                      bg-[#CDD6C6]
+                    "
+                  />
+                )}
+
                 <div
-                  key={`${service}-${index}`}
                   className="
                     flex
                     min-w-0
                     items-center
+                    gap-[0.55vw]
+                    whitespace-nowrap
+                    text-[clamp(8px,0.94vw,14px)]
+                    font-[500]
+                    text-[#383D47]
                   "
                 >
-                  {index > 0 && (
-                    <span
-                      className="
-                        mx-[1.05vw]
-                        h-[1.65vw]
-                        max-h-[20px]
-                        min-h-[14px]
-                        w-px
-                        shrink-0
-                        bg-[#CDD6C6]
-                      "
-                    />
-                  )}
+                  {/* SERVICE ICON — INCREASED SIZE */}
 
-                  <div
+                  <ServiceIcon
                     className="
-                      flex
-                      min-w-0
-                      items-center
-                      gap-[0.55vw]
-                      whitespace-nowrap
-                      text-[clamp(8px,0.94vw,14px)]
-                      font-[500]
-                      text-[#383D47]
+                      h-[2vw]
+                      max-h-[28px]
+                      min-h-[18px]
+                      w-[2vw]
+                      max-w-[28px]
+                      min-w-[18px]
+                      shrink-0
+                      text-[#778A65]
                     "
-                  >
-                    <ServiceIcon
-                      className="
-                        h-[1.52vw]
-                        max-h-[21px]
-                        min-h-[15px]
-                        w-[1.52vw]
-                        max-w-[21px]
-                        min-w-[15px]
-                        shrink-0
-                        text-[#778A65]
-                      "
-                    />
+                  />
 
-                    <span>
-                      {service}
-                    </span>
-                  </div>
+                  <span>
+                    {service}
+                  </span>
                 </div>
-              );
-            }
-          )}
+              </div>
+            );
+          })}
         </div>
 
-        {/* ========================================================
+        {/* ==========================================================
             DISCLAIMER
-
-            reference:
-            x ≈ 87
-            y ≈ 451
-            width ≈ 917
-            height ≈ 72
-        ======================================================== */}
+        ========================================================== */}
 
         <div
           className="
@@ -1140,6 +954,7 @@ export default function PmsFinalCta({
             border
             border-[#E0E0D4]
             bg-[rgba(250,249,244,0.96)]
+            pr-8
             shadow-[0_2px_5px_rgba(39,46,29,0.08)]
           "
         >
@@ -1151,13 +966,13 @@ export default function PmsFinalCta({
               items-center
             "
           >
-            {/* left disclaimer block */}
+            {/* LEFT DISCLAIMER BLOCK */}
 
             <div
               className="
                 flex
                 h-full
-                w-[22.8%]
+                w-[22%]
                 shrink-0
                 items-center
                 pl-[4.6%]
@@ -1166,10 +981,10 @@ export default function PmsFinalCta({
               <IconDisclaimer
                 className="
                   h-[3.8vw]
-                  max-h-[42px]
+                  max-h-[74px]
                   min-h-[30px]
-                  w-[3.8vw]
-                  max-w-[42px]
+                  w-[5vw]
+                  max-w-[74px]
                   min-w-[30px]
                   shrink-0
                   text-[#224B06]
@@ -1178,9 +993,9 @@ export default function PmsFinalCta({
 
               <p
                 className="
-                  ml-[1.45vw]
+                  ml-4
                   text-[clamp(9px,1.02vw,16px)]
-                  font-[800]
+                  font-semibold
                   uppercase
                   leading-[1.2]
                   text-[#2B4A10]
@@ -1192,7 +1007,7 @@ export default function PmsFinalCta({
               </p>
             </div>
 
-            {/* divider */}
+            {/* DIVIDER */}
 
             <span
               className="
@@ -1203,7 +1018,7 @@ export default function PmsFinalCta({
               "
             />
 
-            {/* disclaimer text */}
+            {/* DISCLAIMER TEXT */}
 
             <div
               className="
@@ -1216,7 +1031,7 @@ export default function PmsFinalCta({
             >
               <p
                 className="
-                  text-[clamp(7.5px,0.86vw,13px)]
+                  text-[14px]
                   font-[500]
                   leading-[1.45]
                   text-[#30343E]
@@ -1231,9 +1046,6 @@ export default function PmsFinalCta({
 
       {/* ==========================================================
           MOBILE / TABLET
-
-          Desktop above is locked to reference.
-          Mobile intentionally becomes responsive so nothing cuts.
       ========================================================== */}
 
       <div
@@ -1252,6 +1064,8 @@ export default function PmsFinalCta({
           lg:hidden
         "
       >
+        {/* TITLE */}
+
         <h2
           className="
             mt-5
@@ -1266,26 +1080,55 @@ export default function PmsFinalCta({
         >
           {c.headingBefore}{" "}
 
-          <span
-            className="
-              text-[#295D14]
-            "
-          >
+          <span className="text-[#295D14]">
             {c.headingHighlight}
           </span>
         </h2>
 
-        <p
+        {/* SUBTITLE */}
+
+        <div
           className="
             mt-3
-            text-center
-            text-[15px]
-            font-[500]
-            text-[#202A3E]
+            flex
+            items-center
+            justify-center
+            gap-3
           "
         >
-          {c.subtitle}
-        </p>
+          <img
+            src={startLeftDeco.src}
+            alt=""
+            className="
+              h-5
+              w-24
+              object-contain
+            "
+          />
+
+          <p
+            className="
+              text-center
+              text-[15px]
+              font-[500]
+              text-[#202A3E]
+            "
+          >
+            {c.subtitle}
+          </p>
+
+          <img
+            src={startRightDeco.src}
+            alt=""
+            className="
+              h-5
+              w-24
+              object-contain
+            "
+          />
+        </div>
+
+        {/* CARDS */}
 
         <div
           className="
@@ -1296,44 +1139,26 @@ export default function PmsFinalCta({
             md:grid-cols-2
           "
         >
-          <div
-            className="
-              h-[210px]
-            "
-          >
+          <div className="h-[210px]">
             <ChoiceCard
-              icon={
-                IconCertificate
-              }
-              title={
-                c.leftCardTitle
-              }
+              icon={IconCertificate}
+              title={c.leftCardTitle}
             >
-              {
-                c.leftCardDescription
-              }
+              {c.leftCardDescription}
             </ChoiceCard>
           </div>
 
-          <div
-            className="
-              h-[210px]
-            "
-          >
+          <div className="h-[210px]">
             <ChoiceCard
-              icon={
-                IconClipboard
-              }
-              title={
-                c.rightCardTitle
-              }
+              icon={IconClipboard}
+              title={c.rightCardTitle}
             >
-              {
-                c.rightCardDescription
-              }
+              {c.rightCardDescription}
             </ChoiceCard>
           </div>
         </div>
+
+        {/* BUTTONS */}
 
         <div
           className="
@@ -1346,9 +1171,7 @@ export default function PmsFinalCta({
         >
           <button
             type="button"
-            onClick={
-              onCheckEligibility
-            }
+            onClick={onCheckEligibility}
             className="
               flex
               min-h-[50px]
@@ -1366,8 +1189,8 @@ export default function PmsFinalCta({
           >
             <IconUpload
               className="
-                h-5
-                w-5
+                h-8
+                w-8
               "
             />
 
@@ -1376,9 +1199,7 @@ export default function PmsFinalCta({
 
           <button
             type="button"
-            onClick={
-              onUdyamGuidance
-            }
+            onClick={onUdyamGuidance}
             className="
               flex
               min-h-[50px]
@@ -1398,14 +1219,16 @@ export default function PmsFinalCta({
           >
             <IconUserCircle
               className="
-                h-5
-                w-5
+                h-8
+                w-8
               "
             />
 
             {c.secondaryButton}
           </button>
         </div>
+
+        {/* SUPPORT */}
 
         <a
           href={supportHref}
@@ -1418,6 +1241,8 @@ export default function PmsFinalCta({
           {c.supportText} →
         </a>
 
+        {/* SERVICES */}
+
         <div
           className="
             mt-6
@@ -1428,39 +1253,38 @@ export default function PmsFinalCta({
             gap-y-3
           "
         >
-          {c.services.map(
-            (service, index) => {
-              const ServiceIcon =
-                serviceIcons[
-                  index
-                ] ??
-                IconShield;
+          {c.services.map((service, index) => {
+            const ServiceIcon =
+              serviceIcons[index] ?? IconShield;
 
-              return (
-                <div
-                  key={service}
+            return (
+              <div
+                key={service}
+                className="
+                  flex
+                  items-center
+                  gap-2
+                  text-[12px]
+                  text-[#383D47]
+                "
+              >
+                {/* SERVICE ICON — INCREASED TO 24PX */}
+
+                <ServiceIcon
                   className="
-                    flex
-                    items-center
-                    gap-2
-                    text-[12px]
-                    text-[#383D47]
+                    h-6
+                    w-6
+                    text-[#778A65]
                   "
-                >
-                  <ServiceIcon
-                    className="
-                      h-5
-                      w-5
-                      text-[#778A65]
-                    "
-                  />
+                />
 
-                  {service}
-                </div>
-              );
-            }
-          )}
+                {service}
+              </div>
+            );
+          })}
         </div>
+
+        {/* DISCLAIMER */}
 
         <div
           className="
@@ -1498,9 +1322,7 @@ export default function PmsFinalCta({
                   text-[#2B4A10]
                 "
               >
-                {
-                  c.disclaimerTitle
-                }
+                {c.disclaimerTitle}
               </p>
 
               <p
@@ -1511,9 +1333,7 @@ export default function PmsFinalCta({
                   text-[#30343E]
                 "
               >
-                {
-                  c.disclaimerText
-                }
+                {c.disclaimerText}
               </p>
             </div>
           </div>

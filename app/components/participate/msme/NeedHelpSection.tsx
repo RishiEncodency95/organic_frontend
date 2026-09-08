@@ -12,14 +12,24 @@ import {
   Clock,
   TrendingUp,
   ChevronRight,
+  Check,
 } from "lucide-react";
 import SectionContainer from "@/app/components/layout/SectionContainer";
 import supportRightImg from "@/app/assets/participate/msme/support_right.png";
 import whyReachOutImg from "@/app/assets/participate/msme/why_reach_out.png";
 import ourCommitmentRightImg from "@/app/assets/participate/msme/our_commitment_right.png";
 import need_help_deco from "@/app/assets/participate/msme/need_help_deco.png";
+import need_help_top from "@/app/assets/participate/msme/need_help_top.png";
 import dedicated_relation from "@/app/assets/participate/msme/dedicated_relation.png";
+import email from "@/app/assets/participate/msme/email.png";
+import phone from "@/app/assets/participate/msme/phone.png";
+import web from "@/app/assets/participate/msme/web.png";
+import whatsapp from "@/app/assets/participate/msme/whatsapp.png";
 import Image from "next/image";
+import trusted_support from "@/app/assets/participate/msme/trusted_support.png"
+import expert_guidance from "@/app/assets/participate/msme/expert_guidance.png";
+import better_outcomes from "@/app/assets/participate/msme/better_outcomes.png";
+import timely_assistance from "@/app/assets/participate/msme/timely_assistance.png"
 
 const whyReachOut = [
   "Clarify PMS scheme guidelines & eligibility",
@@ -31,25 +41,25 @@ const whyReachOut = [
 
 const connectMethods = [
   {
-    icon: Mail,
+    icon: email,
     title: "EMAIL US",
-    detail: "info@namogangewellness.com",
+    detail: "info@namogange\nwellness.com",
     sub: "We typically reply\n within 24 hours.",
   },
   {
-    icon: Phone,
+    icon: phone,
     title: "CALL US",
     detail: "+91 96549 00525",
     sub: "Mon – Sat\n10:00 AM – 6:00 PM",
   },
   {
-    icon: MessageCircle,
+    icon: whatsapp,
     title: "WHATSAPP",
     detail: "+91 96549 00525",
     sub: "Quick responses\n during working hours.",
   },
   {
-    icon: Globe,
+    icon: web,
     title: "VISIT WEBSITE",
     detail: "www.bharatorganicexpo.in",
     sub: "Explore PMS details,\n guidelines & more.",
@@ -57,24 +67,32 @@ const connectMethods = [
 ];
 
 const features = [
-  { icon: ShieldCheck, label: "TRUSTED\nSUPPORT" },
-  { icon: Handshake, label: "EXPERT\nGUIDANCE" },
-  { icon: Clock, label: "TIMELY\nASSISTANCE" },
-  { icon: TrendingUp, label: "BETTER\nOUTCOMES" },
+  { icon: trusted_support, label: "TRUSTED\nSUPPORT" },
+  { icon: expert_guidance, label: "EXPERT\nGUIDANCE" },
+  { icon: timely_assistance, label: "TIMELY\nASSISTANCE" },
+  { icon: better_outcomes, label: "BETTER\nOUTCOMES" },
 ];
 
 export default function NeedHelpSection() {
   return (
-    <section className="pt-6 pb-0">
+    <section className="relative pt-6 pb-0">
+      <Image
+        src={need_help_top.src}
+        alt="Need Help Top"
+        className="absolute -right-2 -top-4 z-0 h-[110px] w-[110px] object-contain pointer-events-none"
+        width={350}
+        height={350}
+        priority
+      />
       <SectionContainer>
         {/* Top row */}
         <div className="grid grid-cols-1 gap-5 lg:grid-cols-[1fr_1.6fr]">
           {/* Left: Heading + commitment */}
           <div>
-            <h2 className="text-[28px] font-semibold uppercase leading-tight text-[#0d4a1a] sm:text-[54px] flex items-end">
+            <h2 className="text-[28px] font-semibold uppercase leading-tight text-[#0d4a1a] sm:text-[74px] flex items-end">
               Need Help? <Image src={need_help_deco.src} alt="Need Help" className="ml-2 h-12 w-12 object-contain" width={48} height={48} />
             </h2>
-            <h3 className="text-[22px] font-semibold uppercase leading-tight sm:text-[28px]">
+            <h3 className="text-[22px] font-semibold uppercase leading-tight sm:text-[34px]">
               We&apos;re Here to Support You
             </h3>
             <span className="mt-1 block h-[3px] w-16 rounded-full bg-[#1b5e20]" />
@@ -85,15 +103,15 @@ export default function NeedHelpSection() {
             </p>
 
             {/* Our commitment */}
-            <div className="mt-4 flex items-start gap-3 rounded-xl bg-blue-50 p-4 shadow-sm ring-1 ring-black/5">
+            <div className="mt-4 flex items-start gap-3 rounded-xl bg-[#eff2ea] p-4 shadow-sm ring-1 ring-black/5">
               <span className="flex h-16 w-16 shrink-0 items-center justify-center rounded-full bg-[#1b5e20]">
                 <Headset className="h-10 w-10 text-white" aria-hidden="true" />
               </span>
               <div className="flex-1">
-                <p className="text-[14px] font-semibold">
+                <p className="text-[18px] text-[#0d4a1a] font-semibold">
                   OUR COMMITMENT
                 </p>
-                <p className="mt-0.5 text-[14px] leading-snug">
+                <p className="mt-0.5 text-[14px] leading-[1.7]">
                   Transparent guidance. Timely support.
                   <br />
                   Stronger together for a sustainable future.
@@ -102,16 +120,18 @@ export default function NeedHelpSection() {
               <img
                 src={ourCommitmentRightImg.src}
                 alt="Our Commitment"
-                className="h-16 w-auto shrink-0 object-contain"
+                className="h-10 w-auto shrink-0 object-contain self-end"
                 loading="lazy"
               />
             </div>
           </div>
 
           {/* Right: Ways to connect */}
-          <div className="relative rounded-2xl border border-gray-200 bg-white pt-10 pb-5 px-5 shadow-sm">
+          <div className="pt-10 flex justify-end items-end">
+
+          <div className="relative rounded-2xl border-2 border-[#a9b898] bg-white pt-8 pb-5 px-5 shadow-sm">
             <div className="absolute left-1/2 top-0 z-20 -translate-x-1/2 -translate-y-1/2">
-              <span className="whitespace-nowrap rounded-lg bg-[#1b5e20] px-5 py-1.5 text-[14px] font-semibold uppercase tracking-wide text-white shadow-md">
+              <span className="whitespace-nowrap rounded-lg bg-[#1b5e20] px-5 py-1.5 text-[16px] font-semibold uppercase tracking-wide text-white shadow-md">
                 Ways to Connect with Us
               </span>
             </div>
@@ -122,20 +142,21 @@ export default function NeedHelpSection() {
                 return (
                   <div
                     key={m.title}
-                    className={`flex flex-col items-center px-3 py-2 text-center ${!isLast ? "border-r border-[#1b5e20]" : ""}`}
+                    className={`flex flex-col items-center px-3 py-2 text-center ${!isLast ? "border-r border-dashed border-[#1b5e20]" : ""}`}
                   >
-                    <span className="mb-2 flex h-12 w-12 items-center justify-center rounded-full bg-[#EFF7EE]">
+                    {/* <span className="mb-2 flex h-12 w-12 items-center justify-center rounded-full bg-[#EFF7EE]">
                       <m.icon className="h-6 w-6 text-[#1b5e20]" aria-hidden="true" />
-                    </span>
-                    <p className="text-[14px] font-semibold uppercase text-[#1b5e20]">
+                    </span> */}
+                    <Image height={68} width={68} src={m.icon} alt={m.title} />
+                    <p className="text-[18px] font-semibold uppercase text-[#082809] mt-4">
                       {m.title}
                     </p>
                     <p className="mt-0.5 text-[14px] font-semibold break-all">
                       {m.detail}
                     </p>
                     <div className="mt-auto flex flex-col items-center">
-                      <span className="my-2 h-[2px] w-6 bg-[#1b5e20]/50" />
-                      <p className="text-[14px] leading-snug whitespace-pre-line">
+                      <span className="mt-2 mb-4 h-[2px] w-6 bg-[#1b5e20]/50" />
+                      <p className="text-[14px] font-semibold leading-snug whitespace-pre-line">
                         {m.sub}
                       </p>
                     </div>
@@ -144,6 +165,8 @@ export default function NeedHelpSection() {
               })}
             </div>
           </div>
+          </div>
+
         </div>
 
         {/* Middle row */}
@@ -152,16 +175,19 @@ export default function NeedHelpSection() {
           <div className="flex items-center gap-4 rounded-2xl border border-gray-200 bg-white p-5 shadow-sm">
             <div className="flex-1 border-r border-gray-200 pr-4">
               <div className="flex items-center gap-2">
-                <h4 className="text-[16px] font-semibold text-[#1b5e20]">
+                <h4 className="text-[20px] font-semibold text-[#1b5e20]">
                   WHY REACH OUT TO US?
                 </h4>
                 <span className="text-[#1b5e20]">«</span>
               </div>
 
-              <ul className="mt-3 space-y-2">
+              <ul className="mt-3 space-y-4">
                 {whyReachOut.map((item) => (
                   <li key={item} className="flex items-start gap-2">
-                    <CheckCircle className="mt-0.5 h-4 w-4 shrink-0 text-[#1b5e20]" />
+                    <div className="flex h-5 w-5 items-center justify-center rounded-full border border-2 border-[#1b5e20]">
+
+                    <Check className="mt-0.5 h-3.5 w-3.5 shrink-0 text-[#1b5e20] font-black" />
+                    </div>
                     <span className="text-[14px] leading-snug">
                       {item}
                     </span>
@@ -178,14 +204,14 @@ export default function NeedHelpSection() {
           </div>
 
           {/* Dedicated relationship managers */}
-          <div className="rounded-2xl border border-gray-200 bg-blue-50 p-5 shadow-sm">
+          <div className="rounded-2xl border border-gray-200 bg-[#f6f7f4] p-5 shadow-sm">
             <div className="flex items-start gap-3">
-                <Image src={dedicated_relation.src} alt="Dedicated Relationship Managers" className="h-16 w-16" width={64} height={64} />
+                <Image src={dedicated_relation.src} alt="Dedicated Relationship Managers" className="h-20 w-20" width={64} height={64} />
               <div>
-                <p className="text-[15px] font-semibold text-[#0d4a1a]">
+                <p className="text-[18px] font-semibold text-[#0d4a1a]">
                   DEDICATED RELATIONSHIP MANAGERS
                 </p>
-                <p className="mt-0.5 text-[14px] leading-snug">
+                <p className="mt-0.5 text-[14px] leading-[1.8]">
                   Personalised assistance from start to finish.
                   <br />
                   Your success is our priority.
@@ -196,10 +222,10 @@ export default function NeedHelpSection() {
             <div className="mt-4 grid grid-cols-4 gap-3 border-t border-gray-200 pt-4">
               {features.map((f, i) => (
                 <div key={f.label} className={`flex flex-col items-center text-center ${i < features.length - 1 ? "border-r border-gray-200" : ""}`}>
-                  <span className="mb-2 flex h-11 w-11 items-center justify-center">
-                    <f.icon className="h-7 w-7 text-[#1b5e20]" aria-hidden="true" />
+                  <span className="mb-2 flex h-12 w-11 items-center justify-center">
+                    <Image alt={f.label} width={44} height={44} src={f.icon} className="h-12 w-12 text-[#1b5e20]" aria-hidden="true" />
                   </span>
-                  <p className="text-[14px] font-semibold uppercase leading-tight whitespace-pre-line">
+                  <p className="text-[14px] font-semibold uppercase leading-tight whitespace-pre-line text-[#012f02]">
                     {f.label}
                   </p>
                 </div>
@@ -215,20 +241,20 @@ export default function NeedHelpSection() {
         <SectionContainer>
         <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:gap-6">
           {/* Left */}
-          <div className="flex items-center gap-3 border-b-2 border-white pb-4 sm:w-1/2 sm:border-b-0 sm:border-r-2 sm:border-white sm:pr-6 sm:pb-0">
-            <span className="flex h-16 w-16 shrink-0 items-center justify-center rounded-full bg-white">
+          <div className="flex items-center gap-3 border-b-2 border-white pb-4 sm:w-1/2 sm:border-b-0 sm:border-r-2 sm:border-white sm:pr-6 sm:pb-0 py-2">
+            <span className="flex h-20 w-20 shrink-0 items-center justify-center self-start rounded-full bg-white ">
               <img
                 src={supportRightImg.src}
                 alt=""
-                className="h-12 w-12 object-contain"
+                className="h-16 w-16 object-contain"
               />
             </span>
-            <div>
-              <p className="text-[14px] font-semibold uppercase leading-tight text-white sm:text-[15px] border-b-2 border-white pb-1">
+            <div className="">
+              <p className="text-[18px] font-semibold uppercase leading-tight text-white sm:text-[18px] border-b-2 border-white/70 pb-1">
                 Together, Let&apos;s Grow
                 <br />A Sustainable India
               </p>
-              <p className="mt-0.5 text-[14px] text-white/70">
+              <p className="mt-0.5 text-[16px] text-white">
                 We look forward to supporting your <br/>journey at{" "}
                 <span className="font-semibold text-[#F2B40E]">
                   Bharat Organic Expo 2027.
@@ -238,13 +264,13 @@ export default function NeedHelpSection() {
           </div>
 
           {/* Right */}
-          <div className="flex flex-1 items-center justify-between gap-3 rounded-2xl bg-white px-5 py-2 sm:py-2">
+          <div className="flex flex-1 items-center justify-between gap-3 rounded-lg bg-white px-5 py-2 sm:py-2">
             <div className="flex items-center gap-3">
-              <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-[#1b5e20]">
-                <FileText className="h-8 w-8 text-white" aria-hidden="true" />
+              <span className="flex h-16 w-16 shrink-0 items-center justify-center rounded-full bg-[#688a28]">
+                <FileText className="h-10 w-10 text-white" aria-hidden="true" />
               </span>
               <div>
-                <p className="text-[14px] font-semibold uppercase">
+                <p className="text-[16px] font-semibold uppercase text-[#023a15]">
                   Ready to Move Ahead?
                 </p>
                 <p className="text-[14px]">
