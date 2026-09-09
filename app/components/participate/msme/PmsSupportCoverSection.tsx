@@ -290,7 +290,7 @@ const PmsSupportCoverSection: FC = () => {
                 flex-col
                 justify-center
                 pl-0
-                lg:pl-[16px]
+                md:pl-[16px]
               "
             >
               <h3
@@ -831,7 +831,8 @@ const PmsSupportCoverSection: FC = () => {
                   px-[15px]
                   py-2
                   text-center
-                  text-[32px]
+                  text-[24px]
+                  md:text-[32px]
                   font-bold
                   leading-none
                   text-white
@@ -870,10 +871,10 @@ const PmsSupportCoverSection: FC = () => {
                 border-[#d5dcd0]
                 px-[10px]
                 pt-[10px]
-                lg:px-[30px]
-                lg:pt-0
-                lg:border-x
-                lg:pr-[10%]
+                md:px-[30px]
+                md:pt-0
+                md:border-x
+                md:pr-[10%]
               "
             >
               <div className="flex items-start gap-[10px]">
@@ -933,7 +934,7 @@ const PmsSupportCoverSection: FC = () => {
             </div>
 
             {/* calculator */}
-            <div className="flex items-center justify-center lg:items-end lg:justify-end">
+            <div className="flex items-center justify-center md:items-end md:justify-end">
               <img
                 src={calculatorVisual.src}
                 alt="PMS support calculation"
@@ -963,13 +964,13 @@ const PmsSupportCoverSection: FC = () => {
               bg-[#f7f8f3]
               px-[15px]
               py-[8px]
-              lg:grid
-              lg:grid-cols-[78px_1fr_0.8fr_auto_0.9fr]
-              lg:items-center
+              md:grid
+              md:grid-cols-[78px_1fr_0.8fr_auto_0.9fr]
+              md:items-center
             "
           >
             {/* icon */}
-            <div className="flex justify-start lg:justify-center">
+            <div className="flex justify-start md:justify-center">
               <img
                 src={knowBeforeIcon.src}
                 alt=""
@@ -1007,116 +1008,108 @@ const PmsSupportCoverSection: FC = () => {
             </div>
 
             {/* CTA 1 */}
-            <div className="flex w-full flex-col items-center gap-3 lg:w-auto lg:flex-row lg:items-stretch lg:gap-0">
-              <Link
-                href="/participate/msme/eligibility-check"
-                target="_blank"
+            <Link
+              href="/participate/msme/eligibility-check"
+              target="_blank"
+              className="
+                flex
+                min-h-[71px]
+                items-center
+                justify-center
+                gap-[10px]
+                rounded-[7px]
+                bg-[#07582c]
+                px-[15px]
+                text-white
+                py-2
+              "
+            >
+              <img
+                src={eligibilityCtaIcon.src}
+                alt=""
+                aria-hidden="true"
+                className="h-[60px] w-[60px] shrink-0 object-contain"
+              />
+
+              <span
                 className="
-                  flex
-                  w-full
-                  min-h-[71px]
-                  items-center
-                  justify-center
-                  gap-[10px]
-                  rounded-[7px]
-                  bg-[#07582c]
-                  px-[15px]
-                  text-white
-                  py-2
-                  lg:w-auto
+                text-[16px]
+                  md:text-[20px]
+                  font-semibold
+                  uppercase
+                  leading-[1.5]
                 "
               >
-                <img
-                  src={eligibilityCtaIcon.src}
-                  alt=""
-                  aria-hidden="true"
-                  className="h-[60px] w-[60px] shrink-0 object-contain"
-                />
+                Check Your
+                <br />
+                PMS Eligibility
+              </span>
 
-                <span
-                  className="
-                    text-[14px]
-                    font-semibold
-                    uppercase
-                    leading-[1.5]
-                    lg:text-[20px]
-                  "
-                >
-                  Check Your
-                  <br />
-                  PMS Eligibility
-                </span>
-
-                <span
-                  aria-hidden="true"
-                  className="
-                    ml-auto
-                    text-[30px]
-                    font-light
-                    leading-none
-                  "
-                >
-                  <ArrowRight/>
-                </span>
-              </Link>
-
-              <div className="hidden w-px bg-[#07582c]/50 lg:block lg:h-[80%]"></div>
-
-              {/* CTA 2 */}
-              <Link
-                href="/participate/msme/eligibility-check"
-                target="_blank"
+              <span
+                aria-hidden="true"
                 className="
-                  flex
-                  w-full
-                  min-h-[71px]
-                  items-center
-                  justify-center
-                  gap-[10px]
-                  rounded-[7px]
-                  border
-                  border-[#07582c]
-                  bg-white
-                  px-[15px]
-                  text-[#07582c]
-                  py-2
-                  lg:w-auto
+                  ml-auto
+                  text-[30px]
+                  font-light
+                  leading-none
                 "
               >
-                <img
-                  src={supportCtaIcon.src}
-                  alt=""
-                  aria-hidden="true"
-                  className="h-[60px] w-[60px] shrink-0 object-contain"
-                />
-
-                <span
-                  className="
-                    text-[14px]
-                    font-semibold
-                    uppercase
-                    leading-[1.5]
-                    lg:text-[20px]
-                  "
-                >
-                  Understand Your
-                  <br />
-                  Estimated Support
-                </span>
-
-                <span
-                  aria-hidden="true"
-                  className="
-                    ml-auto
-                    text-[30px]
-                    font-light
-                    leading-none
-                  "
-                >
                 <ArrowRight/>
-                </span>
-              </Link>
-            </div>
+              </span>
+            </Link>
+<div className="w-px h-[80%] bg-[#07582c]/50"></div>
+            {/* CTA 2 */}
+            <Link
+              href="/participate/msme/eligibility-check"
+              target="_blank"
+              className="
+                flex
+                min-h-[71px]
+                items-center
+                justify-center
+                gap-[10px]
+                rounded-[7px]
+                border
+                border-[#07582c]
+                bg-white
+                px-[15px]
+                text-[#07582c]
+                py-2
+              "
+            >
+              <img
+                src={supportCtaIcon.src}
+                alt=""
+                aria-hidden="true"
+                className="h-[45px] w-[45px] md:h-[60px] md:w-[60px] shrink-0 object-contain"
+              />
+
+              <span
+                className="
+                   text-[16px]
+                  md:text-[20px]
+                  font-semibold
+                  uppercase
+                  leading-[1.5]
+                "
+              >
+                Understand Your
+                <br />
+                Estimated Support
+              </span>
+
+              <span
+                aria-hidden="true"
+                className="
+                  ml-auto
+                  text-[30px]
+                  font-light
+                  leading-none
+                "
+              >
+              <ArrowRight/>
+              </span>
+            </Link>
           </div>
 
           {/* ===================================================
