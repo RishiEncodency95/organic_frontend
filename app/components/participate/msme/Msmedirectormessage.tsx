@@ -143,20 +143,23 @@ export default function OfficialMessageBanner({
             gap-[12px]
           "
         >
+          <div className="flex items-center">
+
           <span
             className="
-              h-px
-              w-[80px]
-              bg-[#739052]
+            h-px
+            w-[40px]
+            bg-[#739052]
             "
-          />
+            />
 
-          <svg viewBox="0 0 32 32" className="hidden h-8 w-8 sm:block" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M16 4C16 4 8 10 8 18C8 22 12 28 16 28C20 28 24 22 24 18C24 10 16 4 16 4Z" fill="#2D6A0F"/>
-            <path d="M16 8V24" stroke="#1A4D06" strokeWidth="1.2"/>
-            <path d="M16 14L11 10" stroke="#1A4D06" strokeWidth="0.8"/>
-            <path d="M16 18L21 14" stroke="#1A4D06" strokeWidth="0.8"/>
-          </svg>
+           <img
+                  src={stepsTitleLeftLeafIcon.src}
+                  alt=""
+                  className="mr-2 hidden h-7 w-auto object-contain sm:block"
+                  aria-hidden="true"
+                  />
+                  </div>
 
           <span
             className="
@@ -170,21 +173,22 @@ export default function OfficialMessageBanner({
           >
             Hear From MSME Leadership
           </span>
-
-          <svg viewBox="0 0 32 32" className="hidden h-8 w-8 sm:block" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M16 4C16 4 8 10 8 18C8 22 12 28 16 28C20 28 24 22 24 18C24 10 16 4 16 4Z" fill="#2D6A0F"/>
-            <path d="M16 8V24" stroke="#1A4D06" strokeWidth="1.2"/>
-            <path d="M16 14L11 10" stroke="#1A4D06" strokeWidth="0.8"/>
-            <path d="M16 18L21 14" stroke="#1A4D06" strokeWidth="0.8"/>
-          </svg>
+ <div className="flex items-center">
+         <img
+                  src={stepsTitleRightLeafIcon.src}
+                  alt=""
+                  className="ml-2 hidden h-7 w-auto object-contain sm:block"
+                  aria-hidden="true"
+                />
 
           <span
             className="
               h-px
-              w-[80px]
+              w-[40px]
               bg-[#739052]
             "
           />
+          </div>
         </div>
 
         {/* ========================================================
