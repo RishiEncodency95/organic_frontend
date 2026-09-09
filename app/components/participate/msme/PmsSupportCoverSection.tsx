@@ -190,11 +190,11 @@ const PmsSupportCoverSection: FC = () => {
             flex
             min-h-[40px]
             items-center
-            gap-[2%]
+            gap-3
             rounded-b-[12px]
             bg-[#07582c]
-            px-[3%]
-            py-[1%]
+            px-[22px]
+            py-[5px]
           "
         >
           <img
@@ -260,9 +260,9 @@ const PmsSupportCoverSection: FC = () => {
               grid
               grid-cols-1
               items-start
-              gap-[4%]
+              gap-[20px]
               lg:grid-cols-[1fr_1.12fr_0.78fr]
-              lg:gap-[2%]
+              lg:gap-[22px]
             "
           >
             {/* =================================================
@@ -289,8 +289,8 @@ const PmsSupportCoverSection: FC = () => {
                 min-h-[190px]
                 flex-col
                 justify-center
-                pl-[2%]
-                lg:pl-[1%]
+                pl-[16px]
+                lg:pl-[16px]
               "
             >
               <h3
@@ -314,9 +314,9 @@ const PmsSupportCoverSection: FC = () => {
 
               <span
                 className="
-                  mt-[2%]
+                  mt-[14px]
                   h-[2px]
-                  w-[15%]
+                  w-[93px]
                   bg-[#b89528]
                 "
                 aria-hidden="true"
@@ -325,7 +325,7 @@ const PmsSupportCoverSection: FC = () => {
               <p
                 className="
                   mt-[12px]
-                  max-w-[90%]
+                  max-w-[330px]
                   text-[14px]
                   font-medium
                   leading-[1.55]
@@ -354,9 +354,9 @@ const PmsSupportCoverSection: FC = () => {
                   border
                   border-[#bdc9b4]
                   bg-[#f5f7f1]
-                  px-[3%]
-                  pb-[2%]
-                  pt-[4%]
+                  px-[18px]
+                  pb-[10px]
+                  pt-[25px]
                   text-center
                 "
               >
@@ -372,11 +372,11 @@ const PmsSupportCoverSection: FC = () => {
                 >
                   <div
                     className="
-                      min-w-[12%]
+                      min-w-[82px]
                       rounded-[4px]
                       bg-[#07582c]
-                      px-[2%]
-                      py-[1%]
+                      px-[12px]
+                      py-[4px]
                       text-[14px]
                       font-semibold
                       uppercase
@@ -410,9 +410,9 @@ const PmsSupportCoverSection: FC = () => {
                   className="
                     relative
                     mx-auto
-                    mt-[1%]
+                    mt-[7px]
                     flex
-                    max-w-[80%]
+                    max-w-[310px]
                     items-center
                     justify-center
                   "
@@ -439,7 +439,7 @@ const PmsSupportCoverSection: FC = () => {
                       items-center
                       justify-center
                       bg-[#07582c]
-                      px-[1%]
+                      px-[7px]
                       text-[14px]
                       font-semibold
                       uppercase
@@ -526,14 +526,14 @@ const PmsSupportCoverSection: FC = () => {
           <div
             className="
               relative
-              mt-[3%]
+              mt-[26px]
               rounded-[13px]
               border
               border-[#d7ded0]
               bg-white/80
-              px-[2%]
-              pb-[2%]
-              pt-[3%]
+              px-[16px]
+              pb-[14px]
+              pt-[14px]
             "
           >
             {/* header */}
@@ -565,8 +565,8 @@ const PmsSupportCoverSection: FC = () => {
                     whitespace-nowrap
                     rounded-[5px]
                     bg-[#07582c]
-                    px-[2%]
-                    py-[1%]
+                    px-[14px]
+                    py-[5px]
                     text-[14px]
                     font-semibold
                     uppercase
@@ -605,8 +605,8 @@ const PmsSupportCoverSection: FC = () => {
                   key={expense.title}
                   className={`
                     relative
-                    px-[2%]
-                    py-[1%]
+                    px-[17px]
+                    py-[3px]
 
                     ${
                       index !== 0
@@ -621,8 +621,8 @@ const PmsSupportCoverSection: FC = () => {
                       aria-hidden="true"
                       className="
                         absolute
-                        -left-[2%]
-                        top-[15%]
+                        -left-[14px]
+                        top-[78px]
                         z-20
                         hidden
                         h-[28px]
@@ -728,21 +728,21 @@ const PmsSupportCoverSection: FC = () => {
                       items-center
                       rounded-[8px]
                       bg-[#edf1e3]
-                      px-[2%]
-                      py-[2%]
+                      px-[9px]
+                      py-[7px]
                     "
                   >
                     <div
                       className="
-                      flex
-                      h-[48px]
-                      w-[18%]
-                      shrink-0
-                      items-center
-                      justify-center
-                      border-r
-                      border-[#cad2c4]
-                      pr-[2%]
+                        flex
+                        h-[48px]
+                        w-[59px]
+                        shrink-0
+                        items-center
+                        justify-center
+                        border-r
+                        border-[#cad2c4]
+                        pr-[8px]
                       "
                     >
                       <img
@@ -759,7 +759,7 @@ const PmsSupportCoverSection: FC = () => {
 
                     <p
                       className="
-                        ml-[2%]
+                        ml-[11px]
                         text-[14px]
                         font-medium
                         leading-[1.35]
@@ -781,7 +781,7 @@ const PmsSupportCoverSection: FC = () => {
 
           <div
             className="
-              mt-[2%]
+              mt-[12px]
               grid
               grid-cols-1
               items-center
@@ -789,9 +789,9 @@ const PmsSupportCoverSection: FC = () => {
               border
               border-[#dce2d6]
               bg-[#f1f5e8]
-              px-[2%]
-              py-[2%]
-              lg:grid-cols-[1fr_2fr_2fr_1fr]
+              px-[16px]
+              py-[10px]
+              lg:grid-cols-[115px_450px_1fr_250px]
             "
           >
             {/* icon */}
@@ -805,7 +805,7 @@ const PmsSupportCoverSection: FC = () => {
             </div>
 
             {/* amount */}
-              <div className="pl-[1%] pr-[2%]">
+            <div className="pl-[8px] pr-4">
               <h4
                 className="
                   text-left
@@ -821,11 +821,11 @@ const PmsSupportCoverSection: FC = () => {
 
               <div
                 className="
-                  mt-[1%] max-w-[80%]
+                  mt-[5px] max-w-[365px]
                   rounded-[6px]
                   bg-[#07582c]
-                  px-[2%]
-                  py-[1%]
+                  px-[15px]
+                  py-2
                   text-center
                   text-[32px]
                   font-bold
@@ -838,24 +838,24 @@ const PmsSupportCoverSection: FC = () => {
 
               <div
                 className="
-                  mt-[1%]
-                  max-w-[80%]
+                  mt-[2px]
+                  max-w-[365px]
                   flex
                   items-center
                   justify-center
                   rounded-[5px]
                   bg-[#ffd552]
-                  px-[2%]
-                  py-[1%]
+                  px-[8px]
+                  py-[4px]
                   text-[14px]
                   font-bold
                   leading-none
                 "
               >
                 Travel
-                <span className="px-[2%] font-bold">+</span>
+                <span className="px-[10px] font-bold">+</span>
                 Freight
-                <span className="px-[2%] font-bold">+</span>
+                <span className="px-[10px] font-bold">+</span>
                 Publicity
               </div>
             </div>
@@ -864,8 +864,8 @@ const PmsSupportCoverSection: FC = () => {
             <div
               className="
                 border-[#d5dcd0]
-                px-[4%]
-                lg:border-x pr-[5%]
+                px-[30px]
+                lg:border-x pr-[10%]
               "
             >
               <div className="flex items-start gap-[10px]">
@@ -955,7 +955,7 @@ const PmsSupportCoverSection: FC = () => {
               bg-[#f7f8f3]
               px-[15px]
               py-[8px]
-              lg:grid-cols-[78px_1fr_320px_auto_380px]
+              lg:grid-cols-[78px_1fr_0.8fr_auto_0.9fr]
             "
           >
             {/* icon */}
@@ -992,11 +992,7 @@ const PmsSupportCoverSection: FC = () => {
                   sm:text-[14px]
                 "
               >
-                Actual assistance depends on the enterprise category,
-                {/* <br className="hidden lg:block" /> */}
-                eligible expenditure, approved participation, applicable limits,
-                {/* <br className="hidden lg:block" /> */}
-                supporting documents and final sanction by the competent authority.
+                Actual assistance depends on the enterprise category, eligible expenditure, approved participation, applicable limits, supporting documents and final sanction by the competent authority.
               </p>
             </div>
 
