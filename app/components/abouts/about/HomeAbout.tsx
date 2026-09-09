@@ -5,6 +5,25 @@ import React from 'react';
 import Image from 'next/image';
 import SectionContainer from '@/app/components/layout/SectionContainer';
 
+const homeAboutData = {
+  tagline: "ABOUT ORGANIC EXPO",
+  title: "WHO WE ARE",
+  paragraphs: [
+    {
+      boldLead: "Bharat Organic Expo 2027",
+      text: " is India's premier international exhibition and conference dedicated to organic farming, natural healthcare, Ayurveda, and eco-friendly living. Our main objective is to bring together farmers, organic producers, wellness brands, trade buyers, and industry experts onto one common platform to promote a healthy and sustainable lifestyle across the globe."
+    },
+    {
+      boldLead: "",
+      text: "As a comprehensive platform for organic agriculture and natural wellness, we connect grassroots farmers and eco-friendly innovators directly with large wholesale buyers, grocery store chains, exporters, and investors. We aim to help organic producers expand their market reach, introduce innovative natural products, and create genuine business opportunities for local producers on a global stage."
+    },
+    {
+      boldLead: "",
+      text: "Every year, thousands of passionate visitors, business owners, healthcare experts, and visionary investors gather at our event. They participate in interactive discussions, discover the latest market trends, and form strong business partnerships to actively support organic farming, protect the environment, and build a cleaner, greener, and healthier future for everyone."
+    }
+  ]
+};
+
 const HomeAbout = () => {
   return (
     <section className="py-8 bg-white relative overflow-hidden border-t border-gray-100 font-inter">
@@ -56,7 +75,7 @@ const HomeAbout = () => {
           <div className="w-full flex flex-col justify-center">
             <p className="flex items-center gap-2 text-[#d26019] font-semibold text-[14px] uppercase tracking-[0.22em] mb-2">
               <span className="inline-block w-6 h-[1.5px] bg-[#d26019]" />
-              ABOUT ORGANIC EXPO
+              {homeAboutData.tagline}
               <span className="inline-block w-6 h-[1.5px] bg-[#d26019]" />
             </p>
 
@@ -64,21 +83,16 @@ const HomeAbout = () => {
               className="font-semibold text-[28px] leading-[1.2] mb-3 text-[#23471d] font-poppins"
               style={{ textShadow: "1px 1px 2px rgba(0,0,0,0.4)" }}
             >
-              WHO WE ARE
+              {homeAboutData.title}
             </h2>
 
             <div className="space-y-3">
-              <p className="text-gray-900 text-sm leading-[1.6] text-justify font-semibold">
-                <strong className="font-semibold text-[#1a2e1a]">Bharat Organic Expo 2027</strong> is India's premier international exhibition and conference dedicated to organic farming, natural healthcare, Ayurveda, and eco-friendly living. Our main objective is to bring together farmers, organic producers, wellness brands, trade buyers, and industry experts onto one common platform to promote a healthy and sustainable lifestyle across the globe.
-              </p>
-
-              <p className="text-gray-900 text-sm leading-[1.6] text-justify font-semibold">
-                As a comprehensive platform for organic agriculture and natural wellness, we connect grassroots farmers and eco-friendly innovators directly with large wholesale buyers, grocery store chains, exporters, and investors. We aim to help organic producers expand their market reach, introduce innovative natural products, and create genuine business opportunities for local producers on a global stage.
-              </p>
-
-              <p className="text-gray-900 text-sm leading-[1.6] text-justify font-semibold">
-                Every year, thousands of passionate visitors, business owners, healthcare experts, and visionary investors gather at our event. They participate in interactive discussions, discover the latest market trends, and form strong business partnerships to actively support organic farming, protect the environment, and build a cleaner, greener, and healthier future for everyone.
-              </p>
+              {homeAboutData.paragraphs.map((para, index) => (
+                <p key={index} className="text-gray-900 text-sm leading-[1.6] text-justify font-semibold">
+                  {para.boldLead && <strong className="font-semibold text-[#1a2e1a]">{para.boldLead}</strong>}
+                  {para.text}
+                </p>
+              ))}
             </div>
           </div>
 

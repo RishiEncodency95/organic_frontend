@@ -7,28 +7,34 @@ import faqImg from '@/app/assets/about/faq.png';
 import vleafImg from '@/app/assets/icons/vleaf.png';
 import SectionContainer from '@/app/components/layout/SectionContainer';
 
-const faqs = [
-  {
-    question: "What is the Bharat Organic Expo 2027?",
-    answer: "It is India's premier international exhibition & conference dedicated to organic products, natural healthcare, Ayurveda, and sustainable living solutions under one integrated platform."
-  },
-  {
-    question: "Who should attend this expo?",
-    answer: "Organic farmers, wholesale buyers, retailers, distributors, wellness entrepreneurs, policymakers, and international trade delegations looking to discover authentic organic products and build global partnerships."
-  },
-  {
-    question: "What are the key highlights of the expo?",
-    answer: "The event features a large international exhibition pavilion, technical knowledge conferences, B2B buyer-seller meets, and prestigious industry excellence recognition programs."
-  },
-  {
-    question: "What industries are covered in the expo?",
-    answer: "Key sectors include Certified Organic Foods, Natural Herbal Healthcare, Ayurveda, Organic Farming Inputs, Eco-Friendly Packaging, and Sustainable Agriculture Technologies."
-  },
-  {
-    question: "How can I participate in the expo?",
-    answer: "You can register as an exhibitor, visitor, B2B buyer, or conference delegate directly on our website or by getting in touch with our event help desk."
-  }
-];
+const faqData = {
+  tagline: "SUPPORT & INFO",
+  titlePart1: "Frequently Asked",
+  titlePart2: "Questions",
+  subtitle: "Find answers to common inquiries about the Bharat Organic Expo 2027.",
+  faqs: [
+    {
+      question: "What is the Bharat Organic Expo 2027?",
+      answer: "It is India's premier international exhibition & conference dedicated to organic products, natural healthcare, Ayurveda, and sustainable living solutions under one integrated platform."
+    },
+    {
+      question: "Who should attend this expo?",
+      answer: "Organic farmers, wholesale buyers, retailers, distributors, wellness entrepreneurs, policymakers, and international trade delegations looking to discover authentic organic products and build global partnerships."
+    },
+    {
+      question: "What are the key highlights of the expo?",
+      answer: "The event features a large international exhibition pavilion, technical knowledge conferences, B2B buyer-seller meets, and prestigious industry excellence recognition programs."
+    },
+    {
+      question: "What industries are covered in the expo?",
+      answer: "Key sectors include Certified Organic Foods, Natural Herbal Healthcare, Ayurveda, Organic Farming Inputs, Eco-Friendly Packaging, and Sustainable Agriculture Technologies."
+    },
+    {
+      question: "How can I participate in the expo?",
+      answer: "You can register as an exhibitor, visitor, B2B buyer, or conference delegate directly on our website or by getting in touch with our event help desk."
+    }
+  ]
+};
 
 const AboutFaq = () => {
   const [openIndex, setOpenIndex] = useState<number | null>(null);
@@ -36,7 +42,7 @@ const AboutFaq = () => {
   const faqSchema = {
     "@context": "https://schema.org",
     "@type": "FAQPage",
-    "mainEntity": faqs.map(faq => ({
+    "mainEntity": faqData.faqs.map(faq => ({
       "@type": "Question",
       "name": faq.question,
       "acceptedAnswer": {
@@ -106,7 +112,7 @@ const AboutFaq = () => {
           <div className="flex flex-col items-center text-center mb-6">
             <p className="flex items-center gap-2 text-[#d26019] font-bold text-[11px] md:text-[13px] uppercase tracking-[0.22em] mb-2">
               <span className="inline-block w-6 h-[1.5px] bg-[#d26019]" />
-              SUPPORT & INFO
+              {faqData.tagline}
               <span className="inline-block w-6 h-[1.5px] bg-[#d26019]" />
             </p>
 
@@ -114,11 +120,11 @@ const AboutFaq = () => {
               className="text-[22px] md:text-[28px] font-semibold text-[#23471d] leading-[1.2] mb-2 font-poppins"
               style={{ textShadow: "1px 1px 2px rgba(0,0,0,0.4)" }}
             >
-              Frequently Asked <span className="text-[#3b8c2a]">Questions</span>
+              {faqData.titlePart1} <span className="text-[#3b8c2a]">{faqData.titlePart2}</span>
             </h2>
 
             <p className="text-[13px] md:text-[14px] text-gray-600 font-medium max-w-3xl mx-auto">
-              Find answers to common inquiries about the Bharat Organic Expo 2027.
+              {faqData.subtitle}
             </p>
           </div>
 
@@ -126,7 +132,7 @@ const AboutFaq = () => {
 
             {/* Left Column: FAQ Accordion */}
             <div className="lg:w-[65%] flex flex-col gap-3">
-              {faqs.map((faq, index) => {
+              {faqData.faqs.map((faq, index) => {
                 const isOpen = openIndex === index;
 
                 return (
