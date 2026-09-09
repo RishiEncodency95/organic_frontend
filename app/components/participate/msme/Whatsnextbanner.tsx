@@ -193,7 +193,7 @@ export default function WhatsNextBanner() {
               <p className="text-[20px] font-semibold leading-relaxed z-10 relative">
                 Join{" "}
                 <span className="text-[#1f4425]">Bharat Organic Expo 2027</span>{" "}
-                and be part <br/>of India&apos;s fastest growing Organic &amp;
+                and be part <br className="hidden sm:inline" />of India&apos;s fastest growing Organic &amp;
                 Natural marketplace.
               </p>
             </div>
@@ -404,7 +404,7 @@ export default function WhatsNextBanner() {
         <img
           src={bottomLeftClusterIcon.src}
           alt=""
-          className="absolute left-0 top-1/2 z-10 h-[120px] w-auto -translate-y-1/2 object-contain"
+          className="absolute left-0 top-1/2 z-10 h-[120px] w-auto -translate-y-1/2 object-contain hidden sm:block"
           loading="lazy"
           aria-hidden="true"
         />
@@ -412,11 +412,11 @@ export default function WhatsNextBanner() {
         <SectionContainer>
           <div className="flex flex-col sm:flex-row sm:items-center">
             {/* LET'S GROW */}
-            <div className="relative flex items-center gap-3 overflow-hidden pr-4 py-3 sm:w-1/2 sm:pr-5 pl-16">
+            <div className="relative flex items-center gap-3 overflow-hidden pr-4 py-3 sm:w-1/2 sm:pr-5 pl-4 sm:pl-16">
               <img
                 src={growTogetherIcon.src}
                 alt=""
-                className="relative hidden h-16 w-16 shrink-0 object-contain sm:block"
+                className="relative h-16 w-16 shrink-0 object-contain"
                 aria-hidden="true"
               />
 

@@ -141,13 +141,13 @@ export default function NeedHelpSection() {
               </span>
             </div>
 
-            <div className="grid grid-cols-2 gap-0 sm:grid-cols-4">
+            <div className="grid grid-cols-2 gap-y-4 gap-x-0 sm:grid-cols-4 sm:gap-y-0">
               {connectMethods.map((m, i) => {
                 const isLast = i === connectMethods.length - 1;
                 return (
                   <div
                     key={m.title}
-                    className={`flex flex-col items-center px-3 py-2 text-center ${!isLast ? "border-r border-dashed border-[#1b5e20]" : ""}`}
+                    className={`flex flex-col items-center px-3 py-2 text-center border-b sm:border-b-0 border-dashed border-[#1b5e20] ${!isLast ? "sm:border-r sm:border-dashed sm:border-[#1b5e20]" : ""}`}
                   >
                     {/* <span className="mb-2 flex h-12 w-12 items-center justify-center rounded-full bg-[#EFF7EE]">
                       <m.icon className="h-6 w-6 text-[#1b5e20]" aria-hidden="true" />
@@ -156,7 +156,7 @@ export default function NeedHelpSection() {
                     <p className="text-[18px] font-semibold uppercase text-[#082809] mt-4">
                       {m.title}
                     </p>
-                    <p className="mt-0.5 text-[14px] font-semibold">
+                    <p className="mt-0.5 text-[14px] font-semibold sm:break-normal break-all">
                       {m.detail}
                     </p>
                     <div className="mt-auto flex flex-col items-center">
@@ -178,7 +178,7 @@ export default function NeedHelpSection() {
         <div className="mt-5 grid grid-cols-1 gap-5 lg:grid-cols-2">
           {/* Why reach out */}
           <div className="flex items-center gap-4 rounded-2xl border border-gray-200 bg-white p-5 shadow-sm">
-            <div className="flex-1 border-r border-gray-200 pr-4">
+            <div className="flex-1 md:border-r md:border-gray-200 md:pr-4">
               <div className="flex items-center gap-2">
                 <h4 className="text-[20px] font-semibold text-[#1b5e20]">
                   WHY REACH OUT TO US?
@@ -209,11 +209,11 @@ export default function NeedHelpSection() {
           </div>
 
           {/* Dedicated relationship managers */}
-          <div className="rounded-2xl border border-gray-200 bg-[#f6f7f4] p-5 shadow-sm">
+          <div className="w-full rounded-2xl border border-gray-200 bg-[#f6f7f4] p-5 shadow-sm">
             <div className="flex items-start gap-3">
                 <Image src={dedicated_relation.src} alt="Dedicated Relationship Managers" className="h-20 w-20" width={64} height={64} />
               <div>
-                <p className="text-[18px] font-semibold text-[#0d4a1a]">
+                <p className="text-[16px] font-semibold text-[#0d4a1a] sm:text-[18px]">
                   DEDICATED RELATIONSHIP MANAGERS
                 </p>
                 <p className="mt-0.5 text-[14px] leading-[1.8]">
@@ -224,7 +224,7 @@ export default function NeedHelpSection() {
               </div>
             </div>
 
-            <div className="mt-4 grid grid-cols-4 gap-3 border-t border-gray-200 pt-4">
+            <div className="mt-4 grid grid-cols-2 gap-3 border-t border-gray-200 pt-4 sm:grid-cols-4">
               {features.map((f, i) => (
                 <div key={f.label} className={`flex flex-col items-center text-center ${i < features.length - 1 ? "border-r border-gray-200" : ""}`}>
                   <span className="mb-2 flex h-12 w-11 items-center justify-center">
@@ -257,10 +257,10 @@ export default function NeedHelpSection() {
             <div className="">
               <p className="text-[18px] font-semibold uppercase leading-tight text-white sm:text-[18px] border-b-2 border-white/70 pb-1">
                 Together, Let&apos;s Grow
-                <br />A Sustainable India
+                <span className="hidden sm:inline"><br /></span>A Sustainable India
               </p>
               <p className="mt-0.5 text-[16px] text-white">
-                We look forward to supporting your <br/>journey at{" "}
+                We look forward to supporting your <br className="hidden sm:inline" />journey at{" "}
                 <span className="font-semibold text-[#F2B40E]">
                   Bharat Organic Expo 2027.
                 </span>
@@ -269,7 +269,7 @@ export default function NeedHelpSection() {
           </div>
 
           {/* Right */}
-          <div className="flex flex-1 items-center justify-between gap-3 rounded-lg bg-white px-5 py-2 sm:py-2">
+          <div className="flex flex-col gap-3 sm:flex-row sm:flex-1 sm:items-center sm:justify-between sm:gap-3 rounded-lg bg-white px-5 py-3 sm:py-2">
             <div className="flex items-center gap-3">
               <span className="flex h-16 w-16 shrink-0 items-center justify-center rounded-full bg-[#688a28]">
                 <FileText className="h-10 w-10 text-white" aria-hidden="true" />
@@ -287,7 +287,7 @@ export default function NeedHelpSection() {
 
             <a
               href="/registration/book-a-stand"
-              className="inline-flex shrink-0 items-center gap-1.5 rounded-lg bg-[#1b5e20] px-4 py-2.5 text-[14px] font-semibold uppercase tracking-wide text-white transition-colors hover:bg-[#2d7a2d]"
+              className="inline-flex w-full sm:w-auto shrink-0 items-center justify-center gap-1.5 rounded-lg bg-[#1b5e20] px-4 py-2.5 text-[14px] font-semibold uppercase tracking-wide text-white transition-colors hover:bg-[#2d7a2d]"
             >
               Start Your Application
               <div className="bg-white w-6 h-6 flex items-center justify-center rounded-full">

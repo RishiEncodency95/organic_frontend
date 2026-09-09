@@ -68,7 +68,10 @@ export default function OfficialMessageBanner({
         bg-[#fdfcf9]
 
         lg:aspect-[1140/620]
-        pt-10
+        pt-4
+        pb-4
+        sm:pt-10
+        sm:pb-0
       "
     >
       {/* ==========================================================
@@ -177,7 +180,7 @@ export default function OfficialMessageBanner({
          <img
                   src={stepsTitleRightLeafIcon.src}
                   alt=""
-                  className="ml-2 hidden h-7 w-auto object-contain sm:block"
+                  className="ml-2 h-7 w-auto object-contain"
                   aria-hidden="true"
                 />
 
@@ -626,12 +629,12 @@ export default function OfficialMessageBanner({
   >
     <span className="h-px flex-1 bg-[#bdc6aa]" />
 
-        <img
-                  src={dividerLeafIcon.src}
+           <img
+                  src={stepsTitleLeftLeafIcon.src}
                   alt=""
-                  className="h-8 w-auto object-contain"
+                  className="mr-2 h-7 w-auto object-contain"
                   aria-hidden="true"
-                />
+                  />
 
     <span className="h-px flex-1 bg-[#bdc6aa]" />
   </div>
@@ -880,14 +883,23 @@ export default function OfficialMessageBanner({
             gap-3
           "
         >
-          <span className="h-px w-12 bg-[#799158]" />
+                <div className="flex items-center">
 
-          <svg viewBox="0 0 32 32" className="h-6 w-6" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M16 4C16 4 8 10 8 18C8 22 12 28 16 28C20 28 24 22 24 18C24 10 16 4 16 4Z" fill="#2D6A0F"/>
-            <path d="M16 8V24" stroke="#1A4D06" strokeWidth="1.2"/>
-            <path d="M16 14L11 10" stroke="#1A4D06" strokeWidth="0.8"/>
-            <path d="M16 18L21 14" stroke="#1A4D06" strokeWidth="0.8"/>
-          </svg>
+          <span
+            className="
+            h-px
+            w-[40px]
+            bg-[#739052]
+            "
+            />
+
+           <img
+                  src={stepsTitleLeftLeafIcon.src}
+                  alt=""
+                  className="mr-2 h-7 w-auto object-contain"
+                  aria-hidden="true"
+                  />
+                  </div>
 
           <span
             className="
@@ -902,14 +914,22 @@ export default function OfficialMessageBanner({
             Hear From MSME Leadership
           </span>
 
-          <svg viewBox="0 0 32 32" className="h-6 w-6" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M16 4C16 4 8 10 8 18C8 22 12 28 16 28C20 28 24 22 24 18C24 10 16 4 16 4Z" fill="#2D6A0F"/>
-            <path d="M16 8V24" stroke="#1A4D06" strokeWidth="1.2"/>
-            <path d="M16 14L11 10" stroke="#1A4D06" strokeWidth="0.8"/>
-            <path d="M16 18L21 14" stroke="#1A4D06" strokeWidth="0.8"/>
-          </svg>
+      <div className="flex items-center">
+         <img
+                  src={stepsTitleRightLeafIcon.src}
+                  alt=""
+                  className="ml-2 h-7 w-auto object-contain"
+                  aria-hidden="true"
+                />
 
-          <span className="h-px w-12 bg-[#799158]" />
+          <span
+            className="
+              h-px
+              w-[40px]
+              bg-[#739052]
+            "
+          />
+          </div>
         </div>
 
         {/* TITLE */}

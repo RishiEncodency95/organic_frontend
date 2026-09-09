@@ -487,7 +487,7 @@ export default function MsmePmsScheme() {
                 relative
                 z-10
                 ml-[17px]
-                pr-[120px]
+                md:pr-[120px]
               "
             >
               <p

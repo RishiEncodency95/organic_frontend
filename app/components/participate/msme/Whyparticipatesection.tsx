@@ -46,7 +46,7 @@ export default function WhyParticipateSection() {
   return (
     <section
       aria-labelledby="why-participate-heading"
-      className="relative w-full overflow-hidden bg-[#EFF7EE] pt-6 pb-10"
+      className="relative w-full overflow-hidden bg-[#EFF7EE] pt-6 pb-20 sm:pb-10"
     >
       {/* Background image */}
       <div className="absolute inset-0 z-0">
@@ -76,7 +76,7 @@ export default function WhyParticipateSection() {
             Exhibition
             <div
               aria-hidden="true"
-              className="absolute -bottom-2 left-0 h-5 w-full text-[#3b8c2a]"
+              className="absolute -bottom-4 left-0 h-5 w-full text-[#3b8c2a] sm:-bottom-2"
             >
              <Image src={bottomMsme} alt="bottom msme" fill />
             </div>
@@ -85,7 +85,7 @@ export default function WhyParticipateSection() {
         </h2>
 
         {/* Cards */}
-        <ul className="mt-14 grid w-full grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
+        <ul className="mt-14 grid w-full grid-cols-1 gap-y-16 gap-x-4 sm:gap-y-4 sm:grid-cols-2 lg:grid-cols-4">
           {features.map((feature) => (
             <li
               key={feature.title}
@@ -118,7 +118,7 @@ export default function WhyParticipateSection() {
         {/* CTA */}
         <a
           href="/registration/book-a-stand"
-          className="mt-6 inline-flex w-full items-center justify-center gap-3 rounded-full bg-gradient-to-b from-[#3a8a3a] via-[#2a7a2a] to-[#1a5a1a] px-12 py-1.5 text-[20px] font-semibold tracking-wide text-white transition-transform duration-200 hover:from-[#4a9a4a] hover:via-[#3a8a3a] hover:to-[#2a7a2a] sm:w-auto"
+          className="mt-6 inline-flex w-full items-center justify-center gap-3 rounded-full bg-gradient-to-b from-[#3a8a3a] via-[#2a7a2a] to-[#1a5a1a] px-12 py-1.5 text-[14px] font-semibold tracking-wide text-white transition-transform duration-200 hover:from-[#4a9a4a] hover:via-[#3a8a3a] hover:to-[#2a7a2a] sm:w-auto sm:text-[20px]"
           style={{ boxShadow: "0 4px 0 #0d3d0d, 0 6px 16px rgba(0,0,0,0.3)" }}
         >
           <Calendar className="h-12 w-12" aria-hidden="true" />

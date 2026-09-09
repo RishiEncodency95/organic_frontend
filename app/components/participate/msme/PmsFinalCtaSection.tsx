@@ -1071,11 +1071,12 @@ export default function PmsFinalCta({
             mt-5
             text-center
             text-[32px]
-            font-[850]
+            font-[600]
             leading-[1.08]
             tracking-[-0.035em]
             text-[#091934]
             sm:text-[40px]
+            sm:font-[850]
           "
         >
           {c.headingBefore}{" "}
@@ -1297,23 +1298,16 @@ export default function PmsFinalCta({
             p-5
           "
         >
-          <div
-            className="
-              flex
-              items-start
-              gap-4
-            "
-          >
-            <IconDisclaimer
-              className="
-                h-10
-                w-10
-                shrink-0
-                text-[#224B06]
-              "
-            />
-
-            <div>
+          <div className="flex flex-col gap-4">
+            <div className="flex items-center gap-3">
+              <IconDisclaimer
+                className="
+                  h-10
+                  w-10
+                  shrink-0
+                  text-[#224B06]
+                "
+              />
               <p
                 className="
                   text-[14px]
@@ -1324,18 +1318,18 @@ export default function PmsFinalCta({
               >
                 {c.disclaimerTitle}
               </p>
-
-              <p
-                className="
-                  mt-2
-                  text-[14px]
-                  leading-[1.6]
-                  text-[#30343E]
-                "
-              >
-                {c.disclaimerText}
-              </p>
             </div>
+
+            <p
+              className="
+                text-[14px]
+                leading-[1.6]
+                text-[#30343E]
+                text-left
+              "
+            >
+              {c.disclaimerText}
+            </p>
           </div>
         </div>
       </div>

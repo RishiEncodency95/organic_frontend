@@ -289,7 +289,7 @@ const PmsSupportCoverSection: FC = () => {
                 min-h-[190px]
                 flex-col
                 justify-center
-                pl-[16px]
+                pl-0
                 lg:pl-[16px]
               "
             >
@@ -539,12 +539,16 @@ const PmsSupportCoverSection: FC = () => {
             {/* header */}
             <div
               className="
-                absolute
-                left-1/2
-                top-0
-                z-20
-                -translate-x-1/2
-                -translate-y-1/2
+                mb-4
+                flex
+                justify-center
+                md:mb-0
+                md:absolute
+                md:left-1/2
+                md:top-0
+                md:z-20
+                md:-translate-x-1/2
+                md:-translate-y-1/2
               "
             >
               <div className="flex items-center gap-[8px]">
@@ -562,7 +566,7 @@ const PmsSupportCoverSection: FC = () => {
 
                 <h4
                   className="
-                    whitespace-nowrap
+                    md:whitespace-nowrap
                     rounded-[5px]
                     bg-[#07582c]
                     px-[14px]
@@ -864,8 +868,12 @@ const PmsSupportCoverSection: FC = () => {
             <div
               className="
                 border-[#d5dcd0]
-                px-[30px]
-                lg:border-x pr-[10%]
+                px-[10px]
+                pt-[10px]
+                lg:px-[30px]
+                lg:pt-0
+                lg:border-x
+                lg:pr-[10%]
               "
             >
               <div className="flex items-start gap-[10px]">
@@ -925,7 +933,7 @@ const PmsSupportCoverSection: FC = () => {
             </div>
 
             {/* calculator */}
-            <div className="flex items-end justify-end">
+            <div className="flex items-center justify-center lg:items-end lg:justify-end">
               <img
                 src={calculatorVisual.src}
                 alt="PMS support calculation"
@@ -945,9 +953,9 @@ const PmsSupportCoverSection: FC = () => {
           <div
             className="
               mt-[9px]
-              grid
-              grid-cols-1
-              items-center
+              flex
+              flex-col
+              items-start
               gap-[12px]
               rounded-[12px]
               border
@@ -955,11 +963,13 @@ const PmsSupportCoverSection: FC = () => {
               bg-[#f7f8f3]
               px-[15px]
               py-[8px]
+              lg:grid
               lg:grid-cols-[78px_1fr_0.8fr_auto_0.9fr]
+              lg:items-center
             "
           >
             {/* icon */}
-            <div className="flex justify-center">
+            <div className="flex justify-start lg:justify-center">
               <img
                 src={knowBeforeIcon.src}
                 alt=""
@@ -997,106 +1007,116 @@ const PmsSupportCoverSection: FC = () => {
             </div>
 
             {/* CTA 1 */}
-            <Link
-              href="/participate/msme/eligibility-check"
-              target="_blank"
-              className="
-                flex
-                min-h-[71px]
-                items-center
-                justify-center
-                gap-[10px]
-                rounded-[7px]
-                bg-[#07582c]
-                px-[15px]
-                text-white
-                py-2
-              "
-            >
-              <img
-                src={eligibilityCtaIcon.src}
-                alt=""
-                aria-hidden="true"
-                className="h-[60px] w-[60px] shrink-0 object-contain"
-              />
-
-              <span
+            <div className="flex w-full flex-col items-center gap-3 lg:w-auto lg:flex-row lg:items-stretch lg:gap-0">
+              <Link
+                href="/participate/msme/eligibility-check"
+                target="_blank"
                 className="
-                  text-[20px]
-                  font-semibold
-                  uppercase
-                  leading-[1.5]
+                  flex
+                  w-full
+                  min-h-[71px]
+                  items-center
+                  justify-center
+                  gap-[10px]
+                  rounded-[7px]
+                  bg-[#07582c]
+                  px-[15px]
+                  text-white
+                  py-2
+                  lg:w-auto
                 "
               >
-                Check Your
-                <br />
-                PMS Eligibility
-              </span>
+                <img
+                  src={eligibilityCtaIcon.src}
+                  alt=""
+                  aria-hidden="true"
+                  className="h-[60px] w-[60px] shrink-0 object-contain"
+                />
 
-              <span
-                aria-hidden="true"
+                <span
+                  className="
+                    text-[14px]
+                    font-semibold
+                    uppercase
+                    leading-[1.5]
+                    lg:text-[20px]
+                  "
+                >
+                  Check Your
+                  <br />
+                  PMS Eligibility
+                </span>
+
+                <span
+                  aria-hidden="true"
+                  className="
+                    ml-auto
+                    text-[30px]
+                    font-light
+                    leading-none
+                  "
+                >
+                  <ArrowRight/>
+                </span>
+              </Link>
+
+              <div className="hidden w-px bg-[#07582c]/50 lg:block lg:h-[80%]"></div>
+
+              {/* CTA 2 */}
+              <Link
+                href="/participate/msme/eligibility-check"
+                target="_blank"
                 className="
-                  ml-auto
-                  text-[30px]
-                  font-light
-                  leading-none
+                  flex
+                  w-full
+                  min-h-[71px]
+                  items-center
+                  justify-center
+                  gap-[10px]
+                  rounded-[7px]
+                  border
+                  border-[#07582c]
+                  bg-white
+                  px-[15px]
+                  text-[#07582c]
+                  py-2
+                  lg:w-auto
                 "
               >
+                <img
+                  src={supportCtaIcon.src}
+                  alt=""
+                  aria-hidden="true"
+                  className="h-[60px] w-[60px] shrink-0 object-contain"
+                />
+
+                <span
+                  className="
+                    text-[14px]
+                    font-semibold
+                    uppercase
+                    leading-[1.5]
+                    lg:text-[20px]
+                  "
+                >
+                  Understand Your
+                  <br />
+                  Estimated Support
+                </span>
+
+                <span
+                  aria-hidden="true"
+                  className="
+                    ml-auto
+                    text-[30px]
+                    font-light
+                    leading-none
+                  "
+                >
                 <ArrowRight/>
-              </span>
-            </Link>
-<div className="w-px h-[80%] bg-[#07582c]/50"></div>
-            {/* CTA 2 */}
-            <Link
-              href="/participate/msme/eligibility-check"
-              target="_blank"
-              className="
-                flex
-                min-h-[71px]
-                items-center
-                justify-center
-                gap-[10px]
-                rounded-[7px]
-                border
-                border-[#07582c]
-                bg-white
-                px-[15px]
-                text-[#07582c]
-                py-2
-              "
-            >
-              <img
-                src={supportCtaIcon.src}
-                alt=""
-                aria-hidden="true"
-                className="h-[60px] w-[60px] shrink-0 object-contain"
-              />
-
-              <span
-                className="
-                  text-[20px]
-                  font-semibold
-                  uppercase
-                  leading-[1.5]
-                "
-              >
-                Understand Your
-                <br />
-                Estimated Support
-              </span>
-
-              <span
-                aria-hidden="true"
-                className="
-                  ml-auto
-                  text-[30px]
-                  font-light
-                  leading-none
-                "
-              >
-              <ArrowRight/>
-              </span>
-            </Link>
+                </span>
+              </Link>
+            </div>
           </div>
 
           {/* ===================================================
@@ -1140,7 +1160,8 @@ const PmsSupportCoverSection: FC = () => {
                 grid
                 grid-cols-2
                 items-center
-                sm:grid-cols-5
+                sm:grid-cols-2
+                lg:grid-cols-5
               "
             >
               {FOOTER_BADGES.map((badge, index) => (
@@ -1148,15 +1169,21 @@ const PmsSupportCoverSection: FC = () => {
                   key={index}
                   className={`
                     flex
-                    min-h-[43px]
                     items-center
-                    justify-center
-                    gap-[7px]
-                    px-[8px]
-
+                    justify-start
+                    gap-[6px]
+                    px-[10px]
+                    pt-[12px]
+                    pb-[8px]
+                    border-b
+                    border-[#d8ddd4]
+                    last:border-b-0
+                    sm:border-b-0
+                    sm:pt-0
+                    sm:justify-between
                     ${
                       index !== FOOTER_BADGES.length - 1
-                        ? "sm:border-r sm:border-[#d8ddd4]"
+                        ? "lg:border-r lg:border-[#d8ddd4]"
                         : ""
                     }
                   `}
@@ -1166,8 +1193,8 @@ const PmsSupportCoverSection: FC = () => {
                     alt=""
                     aria-hidden="true"
                     className="
-                      h-[27px]
-                      w-[27px]
+                      h-[20px]
+                      w-[20px]
                       shrink-0
                       object-contain
                     "
@@ -1175,10 +1202,12 @@ const PmsSupportCoverSection: FC = () => {
 
                   <span
                     className="
-                      text-[14px]
+                      text-[12px]
                       font-medium
-                      leading-[1.25]
+                      leading-[1.2]
                       text-[#191919]
+                      text-left
+                      lg:text-[14px]
                     "
                   >
                     {badge.label}

@@ -1349,6 +1349,8 @@ export default function PMSDocumentsBanner() {
               h-[133%]
               w-auto
               object-contain
+              hidden
+              sm:block
             "
           />
         </div>
@@ -1619,7 +1621,7 @@ export default function PMSDocumentsBanner() {
                   px-4
                   py-5
                   text-center
-                  shadow-sm
+                  shadow-[0_4px_14px_rgba(42,54,32,0.18)]
                 "
               >
                 <div
@@ -1749,6 +1751,8 @@ export default function PMSDocumentsBanner() {
               h-[95px]
               w-auto
               object-contain
+              hidden
+              sm:block
             "
           />
         </div>

@@ -88,9 +88,11 @@ export default function PmsSupportSection() {
       {/* Background image - half height from top */}
       <div className="absolute left-0 top-0 z-0 h-[60%] w-full">
         <div
-          className="h-full w-full bg-cover bg-right-top bg-no-repeat"
+          className="h-full w-full bg-cover md:bg-right-top bg-no-repeat"
           style={{ backgroundImage: `url(${howToApplyImg.src})` }}
         />
+        {/* Mobile overlay */}
+        <div className="absolute inset-0 bg-[#F7F8F0]/80 sm:bg-transparent" />
         {/* Bottom dissolve gradient */}
         <div className="absolute bottom-0 left-0 h-[10%] w-full bg-gradient-to-b from-transparent to-[#F7F8F0]" />
       </div>
@@ -102,7 +104,7 @@ export default function PmsSupportSection() {
           <div className="flex flex-col">
             <h2
               id="pms-support-heading"
-              className="text-[18px] font-semibold uppercase leading-[1.05] tracking-tight md:text-[28px] lg:text-[56px]"
+              className="text-[32px] font-semibold uppercase leading-[1.05] tracking-tight md:text-[28px] lg:text-[56px]"
             >
               <span className="text-[#1b5e20]">
                 How to Apply
@@ -228,7 +230,7 @@ export default function PmsSupportSection() {
           </ol>
           <div className="flex">
 
-        <div className="grid grid-cols-1 gap-4 sm:gap-5 lg:grid-cols-[1fr_0.7fr_0.7fr] mt-4">
+        <div className="grid grid-cols-1 gap-4 sm:gap-5 lg:grid-cols-[1fr_0.7fr_0.7fr] mt-4 w-full">
           {/* Expert support at every step */}
           <div className="relative rounded-2xl bg-[#0b2912] text-white">
             <img
@@ -237,7 +239,9 @@ export default function PmsSupportSection() {
               className="absolute -top-4 left-0 h-[calc(100%+1rem)] w-[55%] object-cover object-top"
               loading="lazy"
             />
-            <div className="relative ml-[42%] flex flex-col justify-center gap-2 p-4 sm:p-5">
+            {/* Mobile overlay */}
+            <div className="absolute inset-0 bg-[#0b2912]/60 sm:bg-transparent" />
+            <div className="relative sm:ml-[42%] flex flex-col justify-center gap-2 p-4 sm:p-5">
               <div className="flex gap-2">
                 <span className="flex h-20 w-20 shrink-0 items-center justify-center rounded-full border-2 border-white">
                   <Headphones className="h-12 w-12" aria-hidden="true" />
@@ -330,7 +334,7 @@ export default function PmsSupportSection() {
             <img
               src={leftImage.src}
               alt="Ready to apply for PMS"
-              className="h-[180px] w-[120px] object-contain self-end mb-5 -ml-1"
+              className="hidden sm:block h-[180px] w-[120px] object-contain self-end mb-5 -ml-1"
               loading="lazy"
             />
           </div>

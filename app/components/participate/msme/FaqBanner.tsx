@@ -10,6 +10,7 @@ import {
   Headset,
   Leaf,
   ChevronDown,
+  ChevronRight,
 } from "lucide-react";
 
 import faqLeftImg from "@/app/assets/participate/msme/faq-left-visual-exact.png";
@@ -624,13 +625,13 @@ export default function FAQBanner() {
             gap-4
           "
         >
-          <span
+          {/* <span
             className="
               h-px
               w-12
               bg-[#7E986C]
             "
-          />
+          /> */}
 
           <img
             src={faqLeftDeco.src}
@@ -665,13 +666,13 @@ export default function FAQBanner() {
             "
           />
 
-          <span
+          {/* <span
             className="
               h-px
               w-12
               bg-[#7E986C]
             "
-          />
+          /> */}
         </div>
 
         <div
@@ -804,6 +805,32 @@ export default function FAQBanner() {
                       {
                         item.question
                       }
+                    </span>
+
+                    {/* chevron */}
+                    <span
+                      className="
+                        pr-4
+                        shrink-0
+                      "
+                    >
+                      {isOpen ? (
+                        <ChevronDown
+                          className="
+                            h-5
+                            w-5
+                            text-[#174C13]
+                          "
+                        />
+                      ) : (
+                        <ChevronRight
+                          className="
+                            h-5
+                            w-5
+                            text-[#174C13]
+                          "
+                        />
+                      )}
                     </span>
                   </button>
 
