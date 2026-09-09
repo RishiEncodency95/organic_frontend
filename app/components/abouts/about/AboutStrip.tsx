@@ -34,13 +34,8 @@ const StatCounter = ({ value }: { value: string }) => {
   return <span ref={ref}>{displayValue.toLocaleString()}{suffix}</span>;
 };
 
-const AboutStrip = () => {
-  const bandRef = useRef<HTMLDivElement>(null);
-  const shimmerRef = useRef<HTMLDivElement>(null);
-  const itemRefs = useRef<(HTMLDivElement | null)[]>([]);
-  const dividerRefs = useRef<(HTMLDivElement | null)[]>([]);
-
-  const items = [
+const aboutStripData = {
+  items: [
     {
       title: "EXPERIENCE THAT MATTERS",
       subtitle: "Decades of collective leadership across sectors",
@@ -61,7 +56,16 @@ const AboutStrip = () => {
       subtitle: "Guiding the next generation of changemakers",
       icon: TrendingUp
     }
-  ];
+  ]
+};
+
+const AboutStrip = () => {
+  const bandRef = useRef<HTMLDivElement>(null);
+  const shimmerRef = useRef<HTMLDivElement>(null);
+  const itemRefs = useRef<(HTMLDivElement | null)[]>([]);
+  const dividerRefs = useRef<(HTMLDivElement | null)[]>([]);
+
+  const items = aboutStripData.items;
 
   itemRefs.current = [];
   dividerRefs.current = [];

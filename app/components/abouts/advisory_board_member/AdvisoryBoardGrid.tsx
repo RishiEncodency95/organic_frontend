@@ -78,6 +78,11 @@ const boardMembers = [
     }
 ];
 
+const advisoryBoardGridData = {
+    tagline: "Our Ayurveda Mission",
+    title: "Our Esteemed Advisory Board"
+};
+
 const AdvisoryBoardGrid = () => {
     return (
         <section className="w-full py-6 md:py-6 bg-[#FAF7EF] font-inter relative overflow-hidden">
@@ -103,11 +108,11 @@ const AdvisoryBoardGrid = () => {
                 <div className="w-full flex flex-col items-center text-center ">
                     <span className="flex items-center gap-2 text-[#d26019] text-[15px] md:text-[17px] font-semibold tracking-[0.18em] uppercase mb-2 font-poppins">
                         <Leaf size={16} strokeWidth={2.2} className="text-[#3b8c2a] fill-[#3b8c2a]" />
-                        Our Ayurveda Mission
+                        {advisoryBoardGridData.tagline}
                         <Leaf size={16} strokeWidth={2.2} className="text-[#3b8c2a] fill-[#3b8c2a]" />
                     </span>
                     <h2 className="font-poppins font-semibold text-[#23471d] text-[22px] sm:text-[26px] lg:text-[30px] leading-[1.2]">
-                        Our Esteemed Advisory Board
+                        {advisoryBoardGridData.title}
                     </h2>
                     <div className="mt-2 h-px w-20 bg-gradient-to-r from-transparent via-[#d26019] to-transparent" />
                 </div>

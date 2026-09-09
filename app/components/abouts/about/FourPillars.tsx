@@ -7,36 +7,39 @@ import globalExcellenceImg from '@/app/assets/about/global_excellence.png';
 import b2bImg from '@/app/assets/about/B2B.png';
 import SectionContainer from '@/app/components/layout/SectionContainer';
 
-const pillars = [
-  {
-    title: ["INTERNATIONAL", "EXHIBITION"],
-    themeColor: "#1e40af",
-    desc: "Spanning 40,000+ sq ft across three halls, featuring 200+ exhibitors from 8 key sectors including Medical, AYUSH, Wellness, and Digital Health. Witness live demos, finalize deals, and explore global innovations in dedicated country pavilions for specialized high-level networking and business growth.",
-    icon: <Globe className="w-5 h-5 text-white" />,
-    img: intlExhibImg,
-  },
-  {
-    title: ["CONFERENCE &", "KNOWLEDGE SUMMIT"],
-    themeColor: "#16a34a",
-    desc: "The 18th Edition, Arogya Sangoshthi, offers 30+ insightful sessions over 3 days, with 150+ distinguished speakers including government officials and industry CEOs. Explore critical discussions across 6 thematic tracks, attracting 2,000+ delegates for knowledge exchange and policy dialogue.",
-    icon: <GraduationCap className="w-5 h-5 text-white" />,
-    img: confKnowledgeImg,
-  },
-  {
-    title: ["GLOBAL EXCELLENCE", "AWARDS"],
-    themeColor: "#d97706",
-    desc: "Our prestigious 3rd Edition program, a formal evening ceremony on Day 2, recognizes ground breaking achievements and fosters brand authority. Categories include Best Healthcare Innovation, Excellence in AYUSH, and Wellness Entrepreneur of the Year, acknowledging pioneering start ups and influential industry leaders.",
-    icon: <Trophy className="w-5 h-5 text-white" />,
-    img: globalExcellenceImg,
-  },
-  {
-    title: ["B2B BUYER-SELLER", "MEET"],
-    themeColor: "#7c3aed",
-    desc: "Designed to forge powerful partnerships and drive global commerce, this pillar facilitates pre-scheduled 1-on-1 meetings within dedicated business lounges. We host international buyer delegations from key markets, offering professional matchmaking services with a target of 500+ impactful B2B meetings.",
-    icon: <Handshake className="w-5 h-5 text-white" />,
-    img: b2bImg,
-  },
-];
+const fourPillarsData = {
+  title: "ONE PLATFORM. FOUR POWERFUL PILLARS.",
+  pillars: [
+    {
+      title: ["INTERNATIONAL", "EXHIBITION"],
+      themeColor: "#1e40af",
+      desc: "Spanning 40,000+ sq ft across three halls, featuring 200+ exhibitors from 8 key sectors including Medical, AYUSH, Wellness, and Digital Health. Witness live demos, finalize deals, and explore global innovations in dedicated country pavilions for specialized high-level networking and business growth.",
+      icon: <Globe className="w-5 h-5 text-white" />,
+      img: intlExhibImg,
+    },
+    {
+      title: ["CONFERENCE &", "KNOWLEDGE SUMMIT"],
+      themeColor: "#16a34a",
+      desc: "The 18th Edition, Arogya Sangoshthi, offers 30+ insightful sessions over 3 days, with 150+ distinguished speakers including government officials and industry CEOs. Explore critical discussions across 6 thematic tracks, attracting 2,000+ delegates for knowledge exchange and policy dialogue.",
+      icon: <GraduationCap className="w-5 h-5 text-white" />,
+      img: confKnowledgeImg,
+    },
+    {
+      title: ["GLOBAL EXCELLENCE", "AWARDS"],
+      themeColor: "#d97706",
+      desc: "Our prestigious 3rd Edition program, a formal evening ceremony on Day 2, recognizes ground breaking achievements and fosters brand authority. Categories include Best Healthcare Innovation, Excellence in AYUSH, and Wellness Entrepreneur of the Year, acknowledging pioneering start ups and influential industry leaders.",
+      icon: <Trophy className="w-5 h-5 text-white" />,
+      img: globalExcellenceImg,
+    },
+    {
+      title: ["B2B BUYER-SELLER", "MEET"],
+      themeColor: "#7c3aed",
+      desc: "Designed to forge powerful partnerships and drive global commerce, this pillar facilitates pre-scheduled 1-on-1 meetings within dedicated business lounges. We host international buyer delegations from key markets, offering professional matchmaking services with a target of 500+ impactful B2B meetings.",
+      icon: <Handshake className="w-5 h-5 text-white" />,
+      img: b2bImg,
+    },
+  ]
+};
 
 const FourPillars = () => {
   return (
@@ -47,12 +50,12 @@ const FourPillars = () => {
             className="font-semibold text-[18px] md:text-[22px] text-[#23471d] uppercase tracking-[0.18em] font-poppins"
             style={{ textShadow: "1px 1px 2px rgba(0,0,0,0.4)" }}
           >
-            ONE PLATFORM. FOUR POWERFUL PILLARS.
+            {fourPillarsData.title}
           </h2>
         </div>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-8">
-          {pillars.map((pillar, i) => (
+          {fourPillarsData.pillars.map((pillar, i) => (
             <div
               key={i}
               className="bg-white border-[1.5px] rounded-[1.25rem] flex flex-col group transition-all duration-300 hover:shadow-xl relative"

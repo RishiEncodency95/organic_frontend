@@ -8,34 +8,40 @@ import { Reveal } from "./BlogReveal";
 import latestImg1 from "../../assets/blog/latest_1.webp";
 import latestImg2 from "../../assets/blog/latest_2.webp";
 
-const latestUpdates = [
-  {
-    tag: "Expo Update",
-    img: latestImg1.src,
-    title: "Inside Bharat Organic Expo 2026",
-    desc: "A glimpse into grand launches, leading brands, knowledge sessions and business networking at India's biggest organic expo.",
-    date: "May 7, 2026",
-    read: "3 min read",
-  },
-  {
-    tag: "Business Update",
-    img: latestImg2.src,
-    title: "Building New Opportunities Across India's Organic Ecosystem",
-    desc: "How exhibitors, buyers and partners are creating new markets and long-term growth opportunities.",
-    date: "May 5, 2026",
-    read: "4 min read",
-  },
-];
+const blogLatestData = {
+  title: "Latest from Bharat Organic Expo",
+  actionText: "View all",
+  updates: [
+    {
+      tag: "Expo Update",
+      img: latestImg1.src,
+      title: "Inside Bharat Organic Expo 2026",
+      desc: "A glimpse into grand launches, leading brands, knowledge sessions and business networking at India's biggest organic expo.",
+      date: "May 7, 2026",
+      read: "3 min read",
+      link: "/blog/indias-organic-market"
+    },
+    {
+      tag: "Business Update",
+      img: latestImg2.src,
+      title: "Building New Opportunities Across India's Organic Ecosystem",
+      desc: "How exhibitors, buyers and partners are creating new markets and long-term growth opportunities.",
+      date: "May 5, 2026",
+      read: "4 min read",
+      link: "/blog/indias-organic-market" // Optional: using the same for now
+    },
+  ]
+};
 
 const BlogLatest = () => {
   return (
     <section className="container mx-auto max-w-[1400px] px-6 lg:px-0 py-2 md:py-4 font-inter">
-      <SectionHeading action="View all">Latest from Bharat Organic Expo</SectionHeading>
+      <SectionHeading action={blogLatestData.actionText}>{blogLatestData.title}</SectionHeading>
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-        {latestUpdates.map((u, i) => (
+        {blogLatestData.updates.map((u, i) => (
           <Reveal key={u.title} delay={i * 100} direction={i % 2 === 0 ? "left" : "right"}>
             <Link
-              href="/blog/indias-organic-market"
+              href={u.link}
               target="_blank"
               rel="noopener noreferrer"
               className="group block rounded-xl overflow-hidden bg-white transition-all duration-300 hover:-translate-y-1 font-inter"

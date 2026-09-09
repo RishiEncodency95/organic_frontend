@@ -5,14 +5,16 @@ import { Building2, Users, Mic, Leaf, Calendar, Globe } from "lucide-react";
 import { Reveal, useInView } from "./BlogReveal";
 import SectionContainer from "@/app/components/layout/SectionContainer";
 
-const stats = [
-  { icon: Building2, value: 200, suffix: "+", label: "EXHIBITORS" },
-  { icon: Users, value: 8000, suffix: "+", label: "VISITORS " },
-  { icon: Mic, value: 100, suffix: "+", label: "EXPERT SPEAKERS" },
-  { icon: Leaf, value: 100, suffix: "+", label: "ORGANIC & NATURAL BRANDS" },
-  { icon: Calendar, value: 3, suffix: "+", label: "DAYS OF EXHIBITION" },
-  { icon: Globe, value: 1000, suffix: "+", label: "GLOBAL BUYERS" },
-];
+const blogStatsData = {
+  stats: [
+    { icon: Building2, value: 200, suffix: "+", label: "EXHIBITORS" },
+    { icon: Users, value: 8000, suffix: "+", label: "VISITORS " },
+    { icon: Mic, value: 100, suffix: "+", label: "EXPERT SPEAKERS" },
+    { icon: Leaf, value: 100, suffix: "+", label: "ORGANIC & NATURAL BRANDS" },
+    { icon: Calendar, value: 3, suffix: "+", label: "DAYS OF EXHIBITION" },
+    { icon: Globe, value: 1000, suffix: "+", label: "GLOBAL BUYERS" },
+  ]
+};
 
 function CountUp({
   target,
@@ -55,7 +57,7 @@ const BlogStats = () => {
     <section className="bg-[#1b5e20] py-2 md:py-2.5 font-inter shadow-md">
       <SectionContainer>
         <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-y-2 gap-x-2 items-center justify-between text-center lg:divide-x lg:divide-white/20">
-          {stats.map((s, i) => {
+          {blogStatsData.stats.map((s, i) => {
             const IconComponent = s.icon;
             return (
               <Reveal key={s.label} delay={i * 70} direction={i % 2 === 0 ? "zoom" : "up"}>
