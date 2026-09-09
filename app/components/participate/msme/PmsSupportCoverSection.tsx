@@ -918,7 +918,7 @@ const PmsSupportCoverSection: FC = () => {
                   "
                 >
                   <strong>Important:</strong> The ₹25,000 contingency support
-                  is <br/>part of the overall assistance ceiling and not <br/>₹25,000
+                  is part of the overall assistance ceiling and not ₹25,000
                   over and above ₹1.50 lakh.
                 </p>
               </div>
@@ -955,7 +955,7 @@ const PmsSupportCoverSection: FC = () => {
               bg-[#f7f8f3]
               px-[15px]
               py-[8px]
-              lg:grid-cols-[78px_1fr_320px_auto_380px]
+              lg:grid-cols-[78px_1fr_0.8fr_auto_0.9fr]
             "
           >
             {/* icon */}
@@ -992,11 +992,7 @@ const PmsSupportCoverSection: FC = () => {
                   sm:text-[14px]
                 "
               >
-                Actual assistance depends on the enterprise category,
-                <br className="hidden lg:block" />
-                eligible expenditure, approved participation, applicable limits,
-                <br className="hidden lg:block" />
-                supporting documents and final sanction by the competent authority.
+                Actual assistance depends on the enterprise category, eligible expenditure, approved participation, applicable limits, supporting documents and final sanction by the competent authority.
               </p>
             </div>
 

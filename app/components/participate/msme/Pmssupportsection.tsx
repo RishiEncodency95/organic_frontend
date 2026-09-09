@@ -10,6 +10,8 @@ import {
 import howToApplyImg from "@/app/assets/participate/msme/how_to_apply.png";
 import everySupportImg from "@/app/assets/participate/msme/every_support.png";
 import readyToApplyImg from "@/app/assets/participate/msme/ready_to_apply_right.png";
+import stepsTitleLeftLeafIcon from "@/app/assets/participate/msme/reference-icons/steps-title-left-leaf.png";
+import stepsTitleRightLeafIcon from "@/app/assets/participate/msme/reference-icons/steps-title-right-leaf.png";
 import leftImage from "@/app/assets/participate/msme/left_image.png";
 import applyOnlineImg from "@/app/assets/participate/msme/reference-icons/apply-online.png";
 import submitDocsImg from "@/app/assets/participate/msme/submit_documents.png";
@@ -121,7 +123,7 @@ export default function PmsSupportSection() {
           </div>
 
           {/* Highlight cards */}
-          <div className="w-[56%] rounded-2xl border border-gray-200 bg-white p-4 shadow-[rgba(0,0,0,0.12)_0px_1px_3px,rgba(0,0,0,0.24)_0px_1px_2px]">
+          <div className="w-full sm:w-[62%] 2xl:w-[56%] rounded-2xl border border-gray-200 bg-white p-4 shadow-[rgba(0,0,0,0.12)_0px_1px_3px,rgba(0,0,0,0.24)_0px_1px_2px]">
             <ul className="flex flex-col sm:flex-row sm:items-stretch">
               {highlightCards.map(
                 ({ icon, title, description }, index) => (
@@ -155,9 +157,21 @@ export default function PmsSupportSection() {
         {/* ---------- 4-step journey ---------- */}
         <div className="relative rounded-3xl bg-[#f5f5ed] p-4 pt-4 ring-1 ring-black/5 sm:p-5 sm:pt-4">
           <div className="absolute left-1/2 top-0 z-20 -translate-x-1/2 -translate-y-1/2">
+              <img
+                  src={stepsTitleLeftLeafIcon.src}
+                  alt=""
+                  className="mr-2 hidden h-7 w-auto object-contain sm:block"
+                  aria-hidden="true"
+                />
             <h3 className="whitespace-nowrap rounded-lg bg-[#1b5e20] px-8 py-1 text-[16px] font-semibold text-white shadow-lg md:text-[18px] lg:text-[20px] uppercase">
               Your 4-Step Journey
             </h3>
+               <img
+                  src={stepsTitleRightLeafIcon.src}
+                  alt=""
+                  className="ml-2 hidden h-7 w-auto object-contain sm:block"
+                  aria-hidden="true"
+                />
           </div>
 
           <ol className="grid grid-cols-1 gap-y-8 pt-2 sm:grid-cols-2 sm:gap-x-6 sm:gap-y-10 lg:grid-cols-4 lg:gap-x-4">

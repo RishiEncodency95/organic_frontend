@@ -370,7 +370,7 @@ export default function WhatsNextBanner() {
                       className="h-5 w-5 shrink-0 object-contain"
                       aria-hidden="true"
                     />
-                    <span className="break-all">info@namogangewellness.com</span>
+                    <span >info@namogangewellness.com</span>
                   </a>
 
                   <a

@@ -95,7 +95,7 @@ export default function NeedHelpSection() {
             <h2 className="text-[28px] font-semibold uppercase leading-tight text-[#0d4a1a] sm:text-[74px] flex items-end">
               Need Help? <Image src={need_help_deco.src} alt="Need Help" className="ml-2 h-12 w-12 object-contain" width={48} height={48} />
             </h2>
-            <h3 className="text-[22px] font-semibold uppercase leading-tight sm:text-[34px]">
+            <h3 className="text-[22px] font-semibold uppercase leading-tight sm:text-[32px] 2xl:text-[34px]">
               We&apos;re Here to Support You
             </h3>
             <span className="mt-1 block h-[3px] w-16 rounded-full bg-[#1b5e20]" />
@@ -156,7 +156,7 @@ export default function NeedHelpSection() {
                     <p className="text-[18px] font-semibold uppercase text-[#082809] mt-4">
                       {m.title}
                     </p>
-                    <p className="mt-0.5 text-[14px] font-semibold break-all">
+                    <p className="mt-0.5 text-[14px] font-semibold">
                       {m.detail}
                     </p>
                     <div className="mt-auto flex flex-col items-center">
@@ -280,7 +280,6 @@ export default function NeedHelpSection() {
                 </p>
                 <p className="text-[14px]">
                   Start your PMS application today and unlock
-                  <br />
                   government support for your growth.
                 </p>
               </div>
