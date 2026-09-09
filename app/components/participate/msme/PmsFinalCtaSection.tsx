@@ -528,7 +528,7 @@ export default function PmsFinalCta({
         -translate-x-1/2
         overflow-hidden
         bg-[#FAFAF5]
-        lg:aspect-[16/9]
+        lg:h-[680px]
       "
     >
       {/* ==========================================================
@@ -643,9 +643,7 @@ export default function PmsFinalCta({
               h-[0.5vw]
               max-h-[38px]
               min-h-[14px]
-              w-[10vw]
-              max-w-[160px]
-              min-w-[120px]
+              min-w-[50px]
               object-contain
             "
           />
@@ -669,9 +667,7 @@ export default function PmsFinalCta({
               h-[0.5vw]
               max-h-[38px]
               min-h-[14px]
-              w-[10vw]
-              max-w-[160px]
-              min-w-[120px]
+            min-w-[50px]
               object-contain
             "
           />

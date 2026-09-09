@@ -46,7 +46,7 @@ export default function WhyParticipateSection() {
   return (
     <section
       aria-labelledby="why-participate-heading"
-      className="relative w-full overflow-hidden bg-[#EFF7EE] py-6"
+      className="relative w-full overflow-hidden bg-[#EFF7EE] pt-6 pb-10"
     >
       {/* Background image */}
       <div className="absolute inset-0 z-0">
@@ -127,6 +127,7 @@ export default function WhyParticipateSection() {
         </a>
       </div>
       </SectionContainer>
+      <p className="absolute left-4 bottom-4 text-[14px]"><sup>*</sup>Subject to approval under PMS Scheme Guidelines</p>
     </section>
   );
 }

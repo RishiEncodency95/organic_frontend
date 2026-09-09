@@ -297,9 +297,9 @@ export default function OfficialMessageBanner({
           className="
             absolute
             left-[4.15%]
-            top-[26%]
+            top-[23%]
             grid
-            h-[52%]
+            h-[54%]
             w-[91.7%]
             grid-cols-[1.22fr_1fr]
             gap-[1.15%]
@@ -643,7 +643,7 @@ export default function OfficialMessageBanner({
             <div
               className="
                 relative
-                mt-[5.2%]
+                mt-[3%]
                 pl-[5.6%]
                 pr-[3%]
               "

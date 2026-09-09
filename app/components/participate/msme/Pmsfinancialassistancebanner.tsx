@@ -245,7 +245,7 @@ const PMSFinancialAssistanceBanner: FC = () => {
       </section>
 
       {/* ============ Footer strip (outside section so left image doesn't overlap) ============ */}
-      <SectionContainer className="relative pb-8 pt-2 border-b-6 border-[#033815] mb-4">
+      <SectionContainer className="relative pb-8 pt-2 border-b-6 border-[#033815] mb-2">
         <div className="relative overflow-visible rounded-2xl bg-white shadow-lg">
           {/* Background image - full width */}
           <div className="pointer-events-none absolute inset-0">
@@ -271,9 +271,7 @@ const PMSFinancialAssistanceBanner: FC = () => {
                   </strong>{" "}
                   Assistance is subject to applicable PMS guidelines,
                   prescribed financial limits, enterprise category, approved
-                  event/component, documentation
-                  <br />
-                  and final sanction.
+                  event/component, documentation and final sanction.
                 </p>
               </div>
 
