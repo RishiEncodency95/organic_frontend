@@ -4,6 +4,14 @@ import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import bannerImg from "../../assets/blog/banner.webp";
 
+const blogHeroData = {
+  tagline: "BHARAT ORGANIC EXPO",
+  titlePart1: "BLOGS &",
+  titlePart2: "NEWS",
+  subtitle: "Insights. Innovation. Impact.",
+  description: "Stay updated with the latest trends, expert perspectives, innovations and success stories shaping India's organic food, agriculture and sustainable products industry."
+};
+
 const BlogHero = () => {
   const [mounted, setMounted] = useState(false);
   useEffect(() => {
@@ -16,7 +24,7 @@ const BlogHero = () => {
       {/* Background Image */}
       <Image
         src={bannerImg.src}
-        alt="Bharat Organic Expo Blog Banner"
+        alt={`${blogHeroData.tagline} Blog Banner`}
         fill
         priority
         className="object-cover z-0"
@@ -30,7 +38,7 @@ const BlogHero = () => {
             }`}>
             <span className="w-8 h-[2.5px] bg-[#c2410c] shrink-0" />
             <p className="text-[#c2410c] text-[13px] md:text-[15px] lg:text-[16px] font-bold uppercase tracking-[0.18em] text-left">
-              BHARAT ORGANIC EXPO
+              {blogHeroData.tagline}
             </p>
             <span className="w-8 h-[2.5px] bg-[#c2410c] shrink-0" />
           </div>
@@ -42,10 +50,10 @@ const BlogHero = () => {
             style={{ textShadow: "1px 1px 2px rgba(0,0,0,0.4)" }}
           >
             <div className="text-[#1b5e20] text-[40px] md:text-[52px] lg:text-[62px] tracking-tight block" style={{ fontWeight: 600 }}>
-              BLOGS &
+              {blogHeroData.titlePart1}
             </div>
             <div className="text-[#ea580c] text-[46px] md:text-[60px] lg:text-[72px] tracking-tight block" style={{ fontWeight: 600 }}>
-              NEWS
+              {blogHeroData.titlePart2}
             </div>
           </h1>
 
@@ -54,7 +62,7 @@ const BlogHero = () => {
             }`}>
             <div className="w-12 h-1 bg-[#ea580c] rounded-full"></div>
             <span className="text-[#1b5e20] font-bold text-[14px] md:text-[16px] tracking-widest uppercase">
-              Insights. Innovation. Impact.
+              {blogHeroData.subtitle}
             </span>
             <div className="w-12 h-1 bg-[#ea580c] rounded-full"></div>
           </div>
@@ -62,8 +70,7 @@ const BlogHero = () => {
           {/* Description */}
           <p className={`text-[#131730] font-bold text-[13px] md:text-[14px] lg:text-[15px] leading-relaxed max-w-lg mt-4 transition-all delay-400 duration-700 ease-out ${mounted ? "translate-y-0 opacity-100" : "translate-y-6 opacity-0"
             }`}>
-            Stay updated with the latest trends, expert perspectives, innovations and success
-            stories shaping India's organic food, agriculture and sustainable products industry.
+            {blogHeroData.description}
           </p>
         </div>
       </div>
