@@ -410,9 +410,9 @@ export default function WhatsNextBanner() {
         />
 
         <SectionContainer>
-          <div className="flex flex-col sm:flex-row sm:items-center">
+          <div className="flex flex-col lg:flex-row sm:items-center">
             {/* LET'S GROW */}
-            <div className="relative flex items-center gap-3 overflow-hidden pr-4 py-3 sm:w-1/2 sm:pr-5 pl-4 sm:pl-16">
+            <div className="relative flex items-center gap-3 overflow-hidden pr-4 py-3 lg:w-1/2 lg:pr-5 pl-4 lg:pl-16">
               <img
                 src={growTogetherIcon.src}
                 alt=""
@@ -433,7 +433,7 @@ export default function WhatsNextBanner() {
             </div>
 
             {/* CTA */}
-            <div className="flex flex-1 flex-col gap-3 rounded-lg bg-white px-4 py-3 sm:flex-row sm:items-center sm:justify-between sm:gap-6 sm:border-l sm:border-gray-200 sm:px-5">
+            <div className="flex flex-1 flex-col gap-3 rounded-lg bg-white px-4 py-3 lg:flex-row lg:items-center lg:justify-between lg:gap-6 lg:border-l lg:border-gray-200 lg:px-5">
               <div className="flex items-center gap-3">
                 <img
                   src={readyNextStepIcon.src}

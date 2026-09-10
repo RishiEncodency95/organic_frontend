@@ -964,9 +964,9 @@ const PmsSupportCoverSection: FC = () => {
               bg-[#f7f8f3]
               px-[15px]
               py-[8px]
-              md:grid
-              md:grid-cols-[78px_1fr_0.8fr_auto_0.9fr]
-              md:items-center
+              lg:grid
+              lg:grid-cols-[78px_1fr_0.8fr_auto_0.9fr]
+              lg:items-center
             "
           >
             {/* icon */}
@@ -1057,7 +1057,7 @@ const PmsSupportCoverSection: FC = () => {
                 <ArrowRight/>
               </span>
             </Link>
-<div className="w-px h-[80%] bg-[#07582c]/50"></div>
+<div className="hidden lg:block w-px h-[80%] bg-[#07582c]/50"></div>
             {/* CTA 2 */}
             <Link
               href="/participate/msme/eligibility-check"
@@ -1151,9 +1151,9 @@ const PmsSupportCoverSection: FC = () => {
             <div
               className="
                 grid
-                grid-cols-2
+                grid-cols-1
                 items-center
-                sm:grid-cols-2
+                sm:grid-cols-3
                 lg:grid-cols-5
               "
             >
@@ -1164,7 +1164,7 @@ const PmsSupportCoverSection: FC = () => {
                     flex
                     items-center
                     justify-start
-                    gap-[6px]
+                    gap-[8px]
                     px-[10px]
                     pt-[12px]
                     pb-[8px]
@@ -1172,8 +1172,10 @@ const PmsSupportCoverSection: FC = () => {
                     border-[#d8ddd4]
                     last:border-b-0
                     sm:border-b-0
+                    sm:border-r
+                    sm:border-[#d8ddd4]
+                    sm:last:border-r-0
                     sm:pt-0
-                    sm:justify-between
                     ${
                       index !== FOOTER_BADGES.length - 1
                         ? "lg:border-r lg:border-[#d8ddd4]"
@@ -1186,8 +1188,8 @@ const PmsSupportCoverSection: FC = () => {
                     alt=""
                     aria-hidden="true"
                     className="
-                      h-[20px]
-                      w-[20px]
+                      h-[22px]
+                      w-[22px]
                       shrink-0
                       object-contain
                     "
@@ -1195,7 +1197,7 @@ const PmsSupportCoverSection: FC = () => {
 
                   <span
                     className="
-                      text-[12px]
+                      text-[13px]
                       font-medium
                       leading-[1.2]
                       text-[#191919]

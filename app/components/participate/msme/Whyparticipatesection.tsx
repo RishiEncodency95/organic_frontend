@@ -85,7 +85,7 @@ export default function WhyParticipateSection() {
         </h2>
 
         {/* Cards */}
-        <ul className="mt-14 grid w-full grid-cols-1 gap-y-16 gap-x-4 sm:gap-y-4 sm:grid-cols-2 lg:grid-cols-4">
+        <ul className="mt-14 grid w-full grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-4">
           {features.map((feature) => (
             <li
               key={feature.title}
