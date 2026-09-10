@@ -25,7 +25,7 @@ const iconMap: Record<string, any> = {
 
 const defaultItems: AudienceStripItem[] = [
   {
-    title: "UNIVERSITY/",
+    title: "UNIVERSITY",
     subtitle: "ACADEMIC PARTNERS",
     icon: GraduationCap,
     color: "text-orange-500"
