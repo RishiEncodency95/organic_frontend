@@ -74,6 +74,8 @@ const orgSchema = {
   "url": "https://bharatorganicexpo.com",
 };
 
+import StoreProvider from "./store/StoreProvider";
+
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -96,16 +98,18 @@ export default function RootLayout({
         />
       </head>
       <body suppressHydrationWarning className="min-h-full flex flex-col font-inter text-[16px] md:text-[18px] leading-[1.6] overflow-x-hidden w-full">
-        <SmoothScroll>
-          <Topbar />
-          <Navbar />
-          <main className="flex-grow overflow-x-hidden w-full">
-            {children}
-          </main>
-          <Footer />
-          <SocialSidebar />
-          <WhatsAppFloat />
-        </SmoothScroll>
+        <StoreProvider>
+          <SmoothScroll>
+            <Topbar />
+            <Navbar />
+            <main className="flex-grow overflow-x-hidden w-full">
+              {children}
+            </main>
+            <Footer />
+            <SocialSidebar />
+            <WhatsAppFloat />
+          </SmoothScroll>
+        </StoreProvider>
       </body>
     </html>
   );
