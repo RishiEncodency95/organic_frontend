@@ -5,6 +5,28 @@ import vijayImg from "@/app/assets/about/advisory_board_member/vijay.png";
 
 import SectionContainer from "@/app/components/layout/SectionContainer";
 
+const chairmanMessageData = {
+    tagline: "CHAIRMAN'S MESSAGE",
+    titlePart1: "Leading Together for a Healthier",
+    titlePart2: "Tomorrow",
+    paragraphs: [
+        {
+            text: "At ",
+            strongText: "Bharat Organic Expo 2027",
+            textAfter: ", we believe in the power of collaboration, innovation, and sustainability."
+        },
+        {
+            text: "This platform brings together visionaries, experts, and changemakers to create a lasting impact on health and organic wellness.",
+            strongText: "",
+            textAfter: ""
+        }
+    ],
+    name: "Mr. Vijay Sharma",
+    title: "Chairman, Bharat Organic Expo 2027",
+    visionTagline: "OUR VISION",
+    visionText: "A global platform for innovation and collaboration in the organic, health & wellness industry. We aim to empower communities, promote sustainable practices, and drive transformative growth by connecting visionaries and eco-conscious enterprises worldwide."
+};
+
 const ChairmanMessage = () => {
     return (
         <section className="relative w-full py-6 lg:py-8 overflow-hidden bg-white border-t border-gray-100 font-inter">
@@ -35,7 +57,7 @@ const ChairmanMessage = () => {
                             <div className="relative w-full h-full rounded-2xl overflow-hidden shadow-xl border-[4px] border-white z-10 group bg-gray-50">
                                 <Image
                                     src={vijayImg}
-                                    alt="Mr. Vijay Sharma - Chairman"
+                                    alt={chairmanMessageData.name}
                                     fill
                                     sizes="(max-width: 768px) 100vw, (max-width: 1200px) 30vw, 250px"
                                     className="object-cover object-top group-hover:scale-105 transition-transform duration-500"
@@ -50,36 +72,35 @@ const ChairmanMessage = () => {
                         <div className="flex items-center gap-2 mb-2">
                             <Leaf size={14} className="text-[#3b8c2a] fill-[#3b8c2a]" />
                             <span className="text-[#d26019] font-bold text-[13px] tracking-[0.22em] uppercase font-poppins">
-                                CHAIRMAN'S MESSAGE
+                                {chairmanMessageData.tagline}
                             </span>
                             <Leaf size={14} className="text-[#3b8c2a] fill-[#3b8c2a]" />
                         </div>
 
                         {/* Heading */}
                         <h2 className="text-[#23471d] font-semibold text-[24px] sm:text-[28px] lg:text-[32px] leading-[1.2] mb-3 font-poppins">
-                            Leading Together for a Healthier <br className="hidden sm:block" />
-                            Tomorrow
+                            {chairmanMessageData.titlePart1} <br className="hidden sm:block" />
+                            {chairmanMessageData.titlePart2}
                         </h2>
 
                         {/* Description Paragraphs */}
                         <div className="space-y-2.5 text-gray-900 font-semibold text-sm leading-[1.6] text-justify font-inter">
-                            <p>
-                                At <strong className="font-semibold text-[#1a2e1a]">Bharat Organic Expo 2027</strong>, we believe in the power of collaboration,
-                                innovation, and sustainability.
-                            </p>
-                            <p>
-                                This platform brings together visionaries, experts, and changemakers
-                                to create a lasting impact on health and organic wellness.
-                            </p>
+                            {chairmanMessageData.paragraphs.map((p, index) => (
+                                <p key={index}>
+                                    {p.text}
+                                    {p.strongText && <strong className="font-semibold text-[#1a2e1a]">{p.strongText}</strong>}
+                                    {p.textAfter}
+                                </p>
+                            ))}
                         </div>
 
                         {/* Name and Title */}
                         <div className="mt-4">
                             <h3 className="text-[#1f471b] font-bold text-base sm:text-lg font-poppins">
-                                Mr. Vijay Sharma
+                                {chairmanMessageData.name}
                             </h3>
                             <p className="text-gray-700 text-xs sm:text-sm font-semibold font-inter mt-0.5">
-                                Chairman, Bharat Organic Expo 2027
+                                {chairmanMessageData.title}
                             </p>
                         </div>
                     </div>
@@ -96,13 +117,13 @@ const ChairmanMessage = () => {
                                     <Eye size={20} strokeWidth={2.2} className="text-[#3b8c2a] relative z-10" />
                                 </div>
                                 <span className="text-[#1f471b] font-bold text-sm tracking-wider uppercase font-poppins">
-                                    OUR VISION
+                                    {chairmanMessageData.visionTagline}
                                 </span>
                             </div>
 
                             {/* Card Content */}
                             <p className="text-gray-900 font-semibold text-xs sm:text-[13px] leading-[1.6] text-justify font-inter pb-6 relative z-10">
-                                A global platform for innovation and collaboration in the organic, health & wellness industry. We aim to empower communities, promote sustainable practices, and drive transformative growth by connecting visionaries and eco-conscious enterprises worldwide.
+                                {chairmanMessageData.visionText}
                             </p>
 
                             {/* 3D Divider Line */}

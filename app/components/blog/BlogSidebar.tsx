@@ -4,16 +4,28 @@ import React, { useState } from "react";
 import { ArrowRight, Newspaper, Sprout, Apple, Package, Recycle, Lightbulb, FileText, BookOpen, Mail } from "lucide-react";
 import { Reveal } from "./BlogReveal";
 
-const categories = [
-  { icon: Newspaper, label: "Expo News", count: 26, color: "text-sky-100 bg-sky-800" },
-  { icon: Sprout, label: "Organic Farming", count: 24, color: "text-green-100 bg-green-800" },
-  { icon: Apple, label: "Organic Food", count: 22, color: "text-emerald-100 bg-emerald-800" },
-  { icon: Package, label: "Natural Products", count: 21, color: "text-orange-100 bg-orange-800" },
-  { icon: Recycle, label: "Sustainability", count: 19, color: "text-teal-100 bg-teal-800" },
-  { icon: Lightbulb, label: "Industry Insights", count: 17, color: "text-amber-100 bg-amber-800" },
-  { icon: FileText, label: "Policy & Regulations", count: 10, color: "text-rose-100 bg-rose-800" },
-  { icon: BookOpen, label: "Success Stories", count: 9, color: "text-cyan-100 bg-cyan-800" },
-];
+const blogSidebarData = {
+  categoriesTitle: "Explore Categories",
+  viewAllCategoriesText: "View all categories",
+  categories: [
+    { icon: Newspaper, label: "Expo News", count: 26, color: "text-sky-100 bg-sky-800" },
+    { icon: Sprout, label: "Organic Farming", count: 24, color: "text-green-100 bg-green-800" },
+    { icon: Apple, label: "Organic Food", count: 22, color: "text-emerald-100 bg-emerald-800" },
+    { icon: Package, label: "Natural Products", count: 21, color: "text-orange-100 bg-orange-800" },
+    { icon: Recycle, label: "Sustainability", count: 19, color: "text-teal-100 bg-teal-800" },
+    { icon: Lightbulb, label: "Industry Insights", count: 17, color: "text-amber-100 bg-amber-800" },
+    { icon: FileText, label: "Policy & Regulations", count: 10, color: "text-rose-100 bg-rose-800" },
+    { icon: BookOpen, label: "Success Stories", count: 9, color: "text-cyan-100 bg-cyan-800" },
+  ],
+  newsletter: {
+    title: "Stay Ahead.",
+    description: "Get the latest organic industry news, sustainability insights and Bharat Organic Expo updates in your inbox.",
+    inputPlaceholder: "Enter your email",
+    buttonText: "Subscribe",
+    subscribedText: "Subscribed ✓",
+    footerText: "No spam. Unsubscribe anytime."
+  }
+};
 
 const BlogSidebar = () => {
   const [email, setEmail] = useState("");
@@ -35,10 +47,10 @@ const BlogSidebar = () => {
           style={{ boxShadow: "rgba(0, 0, 0, 0.02) 0px 1px 3px 0px, rgba(27, 31, 35, 0.15) 0px 0px 0px 1px" }}
         >
           <h3 className="font-poppins font-semibold text-[17px] sm:text-[18px] text-[#1b5e20] mb-3 tracking-tight">
-            Explore Categories
+            {blogSidebarData.categoriesTitle}
           </h3>
           <ul className="space-y-0.5">
-            {categories.map((c, i) => (
+            {blogSidebarData.categories.map((c, i) => (
               <Reveal key={c.label} delay={i * 45} direction={i % 2 === 0 ? "left" : "right"}>
                 <li>
                   <a
@@ -58,7 +70,7 @@ const BlogSidebar = () => {
             ))}
           </ul>
           <a href="#" className="group mt-3 flex items-center gap-1 text-[12px] font-semibold uppercase tracking-wider text-[#3b8c2a] font-poppins">
-            View all categories
+            {blogSidebarData.viewAllCategoriesText}
             <ArrowRight className="w-3.5 h-3.5 transition-transform duration-300 group-hover:translate-x-1" />
           </a>
         </div>
@@ -74,11 +86,10 @@ const BlogSidebar = () => {
             </div>
             <div className="min-w-0 flex-1">
               <h3 className="font-poppins font-semibold text-[18px] mb-1 tracking-tight">
-                Stay Ahead.
+                {blogSidebarData.newsletter.title}
               </h3>
               <p className="text-[12px] text-white/80 leading-relaxed font-inter">
-                Get the latest organic industry news, sustainability insights and Bharat Organic
-                Expo updates in your inbox.
+                {blogSidebarData.newsletter.description}
               </p>
             </div>
           </div>
@@ -89,17 +100,17 @@ const BlogSidebar = () => {
                 required
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                placeholder="Enter your email"
+                placeholder={blogSidebarData.newsletter.inputPlaceholder}
                 className="w-full px-3.5 py-2.5 rounded-md text-sm text-gray-800 bg-white placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-[#F2B40E] transition-shadow duration-300 font-inter"
               />
               <button
                 type="submit"
                 className="w-full py-2.5 rounded-md bg-[#F2B40E] text-[#0b2912] text-[12px] font-bold uppercase tracking-wider hover:bg-[#ffc533] transition-all duration-300 hover:shadow-lg active:scale-95 font-poppins"
               >
-                {subscribed ? "Subscribed ✓" : "Subscribe"}
+                {subscribed ? blogSidebarData.newsletter.subscribedText : blogSidebarData.newsletter.buttonText}
               </button>
             </form>
-            <p className="text-[11px] text-white/50 mt-2 font-inter">No spam. Unsubscribe anytime.</p>
+            <p className="text-[11px] text-white/50 mt-2 font-inter">{blogSidebarData.newsletter.footerText}</p>
           </div>
         </div>
       </Reveal>

@@ -112,7 +112,7 @@ const PMSFinancialAssistanceBanner: FC = () => {
     <>
       <section
         aria-labelledby="pms-banner-heading"
-        className="relative w-full overflow-hidden bg-[#fcfbfa] pb-4 border-t-4 border-[#033815]"
+        className="relative w-full overflow-hidden bg-[#fcfbfa] pb-4 border-t-6 border-[#033815]"
       >
         {/* Top-right absolute image */}
         <img
@@ -122,14 +122,14 @@ const PMSFinancialAssistanceBanner: FC = () => {
         />
 
         {/* Left absolute image at section left-0 */}
-        <div className="pointer-events-none absolute left-0 top-0 z-0 h-full w-[35%] overflow-hidden lg:block">
+        <div className="pointer-events-none absolute left-0 top-0 z-0 h-full w-full overflow-hidden lg:w-[35%]">
           <img
             src={howMuchImg.src}
             alt=""
-            className="absolute inset-0 h-full w-full object-cover"
+            className="absolute inset-0 h-full w-full object-cover object-top lg:object-cover"
           />
-          {/* Right-side gradient */}
-          <div className="absolute -right-1 top-0 h-full w-[10%] bg-gradient-to-r from-transparent to-white" />
+          {/* Gradient overlay for readability */}
+          <div className="absolute inset-0 bg-gradient-to-b from-[#fcfbfa]/95 via-[#fcfbfa]/80 to-[#fcfbfa] lg:bg-gradient-to-r lg:from-transparent lg:via-transparent lg:to-white" />
         </div>
 
         {/* ============ Hero ============ */}
@@ -137,12 +137,12 @@ const PMSFinancialAssistanceBanner: FC = () => {
 
           <div className="relative flex flex-col lg:flex-row">
             {/* Left: spacer for absolute image */}
-            <div className="relative w-full lg:w-[30%]">
+            <div className="relative hidden md:block w-full lg:w-[30%]">
               <div className="relative h-[220px] w-full sm:h-[260px] lg:h-full" />
             </div>
 
             {/* Right: heading content */}
-            <div className="relative flex w-full flex-col px-4 py-4 sm:px-4 sm:py-5 lg:w-[72%] lg:py-5">
+            <div className="relative flex w-full flex-col px-4 pt-4 sm:px-4 sm:pt-5 lg:w-[72%] lg:pt-5">
               {/* Eyebrow */}
               <div className="mb-2 flex items-center gap-3 sm:mb-3 md:pl-30">
                 <span className="flex h-16 w-16 shrink-0 items-center justify-center rounded-full bg-[#1b5e20]/10 sm:h-20 sm:w-20">
@@ -160,7 +160,7 @@ const PMSFinancialAssistanceBanner: FC = () => {
                 {/* Heading with image next to "May You Get?" */}
                 <h1
                   id="pms-banner-heading"
-                  className="md:pl-0 max-w-3xl text-center text-[44px] font-semibold leading-[1.08] tracking-tight sm:text-[52px] md:text-[60px]"
+                  className="md:pl-0 max-w-3xl text-center  text-[34px] font-semibold leading-[1.08] tracking-tight sm:text-[52px] md:text-[60px]"
                 >
                   <span className="block text-[#1b5e20]">How Much Support</span>
                   <span className="relative inline-flex items-center gap-3 text-slate-900">
@@ -177,16 +177,20 @@ const PMSFinancialAssistanceBanner: FC = () => {
                 {/* Supporting copy */}
                 <p className="mt-3 max-w-3xl text-[16px] leading-relaxed md:text-[18px] text-center">
                   The <strong className="font-semibold text-[#1b5e20]">PMS Scheme</strong>{" "}
-                  provides financial assistance<br /> to reduce your participation cost
+                  provides financial assistance<br className="hidden md:inline" /> to reduce your participation cost
                   and help your business grow in new markets.
                 </p>
               </div>
               {/* Support cards */}
-              <div className="mt-2 grid grid-cols-1 gap-4 sm:grid-cols-2 sm:gap-4 lg:mt-3 lg:grid-cols-3">
-                {SUPPORT_CARDS.map((card) => (
+              <div className="mt-2 grid grid-cols-1 gap-5 sm:grid-cols-2 sm:gap-5 lg:mt-3 lg:grid-cols-3">
+                {SUPPORT_CARDS.map((card, index) => (
                     <article
                       key={card.title}
-                      className={`relative flex flex-col items-center rounded-2xl bg-white px-4 pb-10 pt-4 text-center shadow-lg ring-1 ring-black/5 overflow-visible`}
+                      className={`relative flex flex-col items-center rounded-2xl bg-white px-4 pb-10 pt-4 text-center overflow-visible`}
+                         style={{
+                  boxShadow:
+                    "rgba(0, 0, 0, 0.24) 0px 3px 8px",
+                }}
                     >
                       <img
                         src={card.icon.src}
@@ -201,7 +205,7 @@ const PMSFinancialAssistanceBanner: FC = () => {
                         {card.eyebrow}
                       </p>
                       <p
-                        className={`font-extrabold leading-tight ${card.valueClassName || "text-2xl sm:text-4xl"} ${card.titleColor}`}
+                        className={`font-extrabold leading-tight ${card.valueClassName || "text-2xl sm:text-4xl"} ${card.titleColor} ${index === SUPPORT_CARDS.length - 1 ? "mb-6" : "mb-0"}`}
                       >
                         {card.value}
                       </p>
@@ -241,7 +245,7 @@ const PMSFinancialAssistanceBanner: FC = () => {
       </section>
 
       {/* ============ Footer strip (outside section so left image doesn't overlap) ============ */}
-      <SectionContainer className="relative pb-8 pt-2 border-b-4 border-[#033815]">
+      <SectionContainer className="relative pb-2 md:pb-8 pt-2 border-b-6 border-[#033815] mb-2">
         <div className="relative overflow-visible rounded-2xl bg-white shadow-lg">
           {/* Background image - full width */}
           <div className="pointer-events-none absolute inset-0">
@@ -255,7 +259,7 @@ const PMSFinancialAssistanceBanner: FC = () => {
           <div className="relative flex flex-col gap-3 px-3 py-2 sm:px-4 sm:py-2.5 md:gap-4 md:px-5 md:py-3 border border-[#1b5e20]/20 rounded-2xl">
             <div className="flex flex-col gap-4 md:flex-row md:items-center md:gap-16 ">
               {/* Important note */}
-              <div className="flex w-full items-start gap-3 md:w-[38%] border-r border-dotted border-[#1b5e20] pr-3 md:pr-4">
+              <div className="flex w-full items-start gap-3 md:w-[38%] md:border-r md:border-dotted md:border-[#1b5e20] pr-3 md:pr-4">
                 <img
                   src={secureImg.src}
                   alt=""
@@ -267,9 +271,7 @@ const PMSFinancialAssistanceBanner: FC = () => {
                   </strong>{" "}
                   Assistance is subject to applicable PMS guidelines,
                   prescribed financial limits, enterprise category, approved
-                  event/component, documentation
-                  <br />
-                  and final sanction.
+                  event/component, documentation and final sanction.
                 </p>
               </div>
 
@@ -295,14 +297,14 @@ const PMSFinancialAssistanceBanner: FC = () => {
             </div>
 
             {/* CTA button - half inside half outside */}
-            <div className="absolute left-1/2 bottom-0 z-10 -translate-x-1/2 translate-y-1/2">
+            <div className="relative w-full px-4 mt-4 md:absolute md:left-1/2 md:bottom-0 md:z-10 md:w-auto md:-translate-x-1/2 md:translate-y-1/2 md:px-0">
               <a
                 href="/participate/msme/eligibility-check"
-                className="inline-flex items-center gap-1.5 rounded-full bg-[#1b5e20] px-4 py-2 text-[14px] font-semibold uppercase tracking-wide text-white shadow-md transition-colors hover:bg-[#2d7a2d]"
+                className="inline-flex w-full items-center justify-center gap-1.5 rounded-full bg-[#1b5e20] px-4 py-2 text-base font-semibold uppercase tracking-wide text-white shadow-md transition-colors hover:bg-[#2d7a2d] md:w-auto md:justify-start"
               >
-                <img src={eligibilityButtonImg.src} alt="" className="h-5 w-5 object-contain" aria-hidden="true" />
+                <img src={eligibilityButtonImg.src} alt="" className="h-8 w-8 object-contain" aria-hidden="true" />
                 Check My Eligibility
-                <ChevronRight className="h-4 w-4" aria-hidden="true" />
+                <ChevronRight className="h-5 w-5 font-bold" aria-hidden="true" />
               </a>
             </div>
           </div>

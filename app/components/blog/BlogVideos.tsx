@@ -8,18 +8,22 @@ import videoImg1 from "../../assets/blog/video_insight_1.webp";
 import videoImg2 from "../../assets/blog/video_insight_2.webp";
 import videoImg3 from "../../assets/blog/video_insight_3.webp";
 
-const videos = [
-  { img: videoImg1.src, title: "The Future of Organic Farming in India", duration: "6:24" },
-  { img: videoImg2.src, title: "Inside Bharat Organic Expo", duration: "4:18" },
-  { img: videoImg3.src, title: "Organic Brands & Sustainable Innovation", duration: "5:10" },
-];
+const blogVideosData = {
+  title: "Video Insights",
+  actionText: "View all",
+  videos: [
+    { img: videoImg1.src, title: "The Future of Organic Farming in India", duration: "6:24" },
+    { img: videoImg2.src, title: "Inside Bharat Organic Expo", duration: "4:18" },
+    { img: videoImg3.src, title: "Organic Brands & Sustainable Innovation", duration: "5:10" },
+  ]
+};
 
 const BlogVideos = () => {
   return (
     <section className="container mx-auto max-w-[1400px] px-6 lg:px-0 py-2 md:py-4 font-inter">
-      <SectionHeading action="View all">Video Insights</SectionHeading>
+      <SectionHeading action={blogVideosData.actionText}>{blogVideosData.title}</SectionHeading>
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-        {videos.map((v, i) => (
+        {blogVideosData.videos.map((v, i) => (
           <Reveal key={v.title} delay={i * 100} direction={["left", "zoom", "right"][i % 3] as "left" | "zoom" | "right"}>
             <a href="#" className="group block">
               <div className="relative overflow-hidden rounded-xl aspect-[2/3] shadow-sm bg-gray-100">

@@ -8,6 +8,37 @@ import { Users, Leaf, Lightbulb, TrendingUp, ArrowRight } from "lucide-react";
 // You can swap this out with the actual expo image you have
 import expoImage from "../../../assets/about/advisory_board_member/hero.png";
 
+const nominateBannerData = {
+    tagline: "BE PART OF A TRANSFORMATIVE JOURNEY",
+    titlePart1: "Nominate for the ",
+    titlePart2: "Advisory Board",
+    description: "Help us bring the right leaders together to catalyze innovation, sustainability, and industry growth. By nominating experts to our Advisory Board, you contribute directly to shaping the future of organic wellness, driving impactful policies, and fostering a global network dedicated to a sustainable tomorrow.",
+    features: [
+        {
+            icon: Users,
+            titlePart1: "Stronger",
+            titlePart2: "Leadership"
+        },
+        {
+            icon: Leaf,
+            titlePart1: "Sustainable",
+            titlePart2: "Future"
+        },
+        {
+            icon: Lightbulb,
+            titlePart1: "Innovation",
+            titlePart2: "Driven"
+        },
+        {
+            icon: TrendingUp,
+            titlePart1: "Industry",
+            titlePart2: "Growth"
+        }
+    ],
+    buttonText: "NOMINATE NOW",
+    buttonLink: "/about/nominate_advisory_board"
+};
+
 const NominateBanner = () => {
     return (
         <section className="w-full max-w-[1280px] mx-auto px-4 md:px-14 py-12 md:py-16 font-inter">
@@ -21,49 +52,33 @@ const NominateBanner = () => {
                         <div className="w-8 h-[2px] bg-[#ea580c]"></div>
                         <Leaf size={14} className="text-[#2e7d32]" />
                         <span className="text-[#ea580c] font-bold text-[10px] sm:text-[11px] md:text-[12px] tracking-[0.15em] uppercase font-poppins">
-                            BE PART OF A TRANSFORMATIVE JOURNEY
+                            {nominateBannerData.tagline}
                         </span>
                         <Leaf size={14} className="text-[#2e7d32]" />
                         <div className="w-8 h-[2px] bg-[#ea580c]"></div>
                     </div>
 
                     <h2 className="text-[#1a1a1a] text-[28px] sm:text-[32px] md:text-[36px] lg:text-[42px] font-black leading-tight mb-4 font-poppins tracking-tight">
-                        Nominate for the <span className="text-[#2e7d32]">Advisory Board</span>
+                        {nominateBannerData.titlePart1}<span className="text-[#2e7d32]">{nominateBannerData.titlePart2}</span>
                     </h2>
 
                     <p className="text-[#555] text-[13px] sm:text-[14px] md:text-[15px] leading-relaxed mb-8 max-w-2xl font-medium">
-                        Help us bring the right leaders together to catalyze innovation, sustainability,
-                        and industry growth. By nominating experts to our Advisory Board, you
-                        contribute directly to shaping the future of organic wellness, driving impactful
-                        policies, and fostering a global network dedicated to a sustainable tomorrow.
+                        {nominateBannerData.description}
                     </p>
 
                     {/* 4 Icons Row */}
                     <div className="flex items-start gap-4 sm:gap-6 md:gap-8">
-                        <div className="flex flex-col items-center text-center gap-2 max-w-[100px] border-r border-[#eaeaea] pr-4 sm:pr-6 md:pr-8 last:border-0 last:pr-0">
-                            <div className="w-10 h-10 rounded-full border border-[#c8e6c9] bg-[#f4fbf4] flex items-center justify-center">
-                                <Users size={18} className="text-[#2e7d32]" />
-                            </div>
-                            <span className="text-[#1a1a1a] font-bold text-[9px] sm:text-[10px] tracking-wider uppercase leading-tight">Stronger<br />Leadership</span>
-                        </div>
-                        <div className="flex flex-col items-center text-center gap-2 max-w-[100px] border-r border-[#eaeaea] pr-4 sm:pr-6 md:pr-8 last:border-0 last:pr-0">
-                            <div className="w-10 h-10 rounded-full border border-[#c8e6c9] bg-[#f4fbf4] flex items-center justify-center">
-                                <Leaf size={18} className="text-[#2e7d32]" />
-                            </div>
-                            <span className="text-[#1a1a1a] font-bold text-[9px] sm:text-[10px] tracking-wider uppercase leading-tight">Sustainable<br />Future</span>
-                        </div>
-                        <div className="flex flex-col items-center text-center gap-2 max-w-[100px] border-r border-[#eaeaea] pr-4 sm:pr-6 md:pr-8 last:border-0 last:pr-0">
-                            <div className="w-10 h-10 rounded-full border border-[#c8e6c9] bg-[#f4fbf4] flex items-center justify-center">
-                                <Lightbulb size={18} className="text-[#2e7d32]" />
-                            </div>
-                            <span className="text-[#1a1a1a] font-bold text-[9px] sm:text-[10px] tracking-wider uppercase leading-tight">Innovation<br />Driven</span>
-                        </div>
-                        <div className="flex flex-col items-center text-center gap-2 max-w-[100px]">
-                            <div className="w-10 h-10 rounded-full border border-[#c8e6c9] bg-[#f4fbf4] flex items-center justify-center">
-                                <TrendingUp size={18} className="text-[#2e7d32]" />
-                            </div>
-                            <span className="text-[#1a1a1a] font-bold text-[9px] sm:text-[10px] tracking-wider uppercase leading-tight">Industry<br />Growth</span>
-                        </div>
+                        {nominateBannerData.features.map((feature, i) => {
+                            const IconComponent = feature.icon;
+                            return (
+                                <div key={i} className={`flex flex-col items-center text-center gap-2 max-w-[100px] ${i !== nominateBannerData.features.length - 1 ? 'border-r border-[#eaeaea] pr-4 sm:pr-6 md:pr-8 last:border-0 last:pr-0' : ''}`}>
+                                    <div className="w-10 h-10 rounded-full border border-[#c8e6c9] bg-[#f4fbf4] flex items-center justify-center">
+                                        <IconComponent size={18} className="text-[#2e7d32]" />
+                                    </div>
+                                    <span className="text-[#1a1a1a] font-bold text-[9px] sm:text-[10px] tracking-wider uppercase leading-tight">{feature.titlePart1}<br />{feature.titlePart2}</span>
+                                </div>
+                            );
+                        })}
                     </div>
                 </div>
 
@@ -95,13 +110,13 @@ const NominateBanner = () => {
                 {/* Nominate Now Button */}
                 <div className="absolute bottom-6 right-6 md:bottom-10 md:right-10 z-20">
                     <Link
-                        href="/about/nominate_advisory_board"
+                        href={nominateBannerData.buttonLink}
                         target="_blank"
                         rel="noopener noreferrer"
                         className="group relative inline-flex items-center justify-center gap-2 px-6 py-3.5 sm:px-8 sm:py-4 rounded-full font-bold text-[13px] sm:text-[14px] uppercase tracking-wider text-[#1a1a1a] transition-all active:scale-95 shadow-xl overflow-hidden bg-[#fbbf24] hover:bg-[#f59e0b] border-2 border-[#fbbf24]"
                     >
                         <span className="absolute inset-0 bg-white/20 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-500 skew-x-12" />
-                        NOMINATE NOW <ArrowRight size={18} className="group-hover:translate-x-1 transition-transform" />
+                        {nominateBannerData.buttonText} <ArrowRight size={18} className="group-hover:translate-x-1 transition-transform" />
                     </Link>
                 </div>
 

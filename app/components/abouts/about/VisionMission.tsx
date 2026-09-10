@@ -1,6 +1,39 @@
 import React from 'react';
 import SectionContainer from '@/app/components/layout/SectionContainer';
 
+const visionMissionData = {
+  vision: {
+    tagline: "OUR VISION",
+    title: "India as a Global Wellness Hub",
+    paragraphs: [
+      {
+        text: "To position India as a Global Hub for Healthcare, Wellness, and AYUSH, by creating an integrated ecosystem that connects traditional wisdom, modern healthcare, innovation, and global markets.",
+        strongText: ""
+      },
+      {
+        text: "We envision a future where ",
+        strongText: "preventive healthcare, holistic wellness, and sustainable living",
+        textAfter: " are at the core of global development, enabling individuals, businesses, and nations to thrive in a healthier and more connected world."
+      }
+    ]
+  },
+  mission: {
+    tagline: "OUR MISSION",
+    title: "World-Class B2B Health Platform",
+    paragraphs: [
+      {
+        text: "To build a world-class B2B healthcare and wellness platform that brings together industry leaders, innovators, buyers, and global stakeholders to drive business growth and collaboration.",
+        strongText: ""
+      },
+      {
+        text: "We aim to promote ",
+        strongText: "preventive healthcare, AYUSH, digital health, and wellness innovation",
+        textAfter: ", while enabling high-value networking, international trade opportunities, and long-term ecosystem development across the global health and wellness industry."
+      }
+    ]
+  }
+};
+
 const VisionMission = () => {
   return (
     <section className="py-10 md:py-12 relative overflow-hidden bg-[#0d2a1e] font-sans border-t border-gray-100">
@@ -24,20 +57,21 @@ const VisionMission = () => {
               style={{ color: '#c8a055', letterSpacing: '1.8px' }}
             >
               <span className="w-1.5 h-1.5 rounded-full bg-amber-500 inline-block" />
-              OUR VISION
+              {visionMissionData.vision.tagline}
             </p>
             
             <h2 className="text-2xl font-semibold mb-4 leading-tight text-[#f0ece3]">
-              India as a Global Wellness Hub
+              {visionMissionData.vision.title}
             </h2>
             
             <div className="space-y-3 text-sm leading-relaxed text-[rgba(240,236,227,0.78)] font-light">
-              <p>
-                To position India as a Global Hub for Healthcare, Wellness, and AYUSH, by creating an integrated ecosystem that connects traditional wisdom, modern healthcare, innovation, and global markets.
-              </p>
-              <p>
-                We envision a future where <span className="text-[#c8a055] font-medium">preventive healthcare, holistic wellness, and sustainable living</span> are at the core of global development, enabling individuals, businesses, and nations to thrive in a healthier and more connected world.
-              </p>
+              {visionMissionData.vision.paragraphs.map((para, i) => (
+                <p key={i}>
+                  {para.text}
+                  {para.strongText && <span className="text-[#c8a055] font-medium">{para.strongText}</span>}
+                  {para.textAfter}
+                </p>
+              ))}
             </div>
           </div>
 
@@ -51,20 +85,21 @@ const VisionMission = () => {
               style={{ color: '#c8a055', letterSpacing: '1.8px' }}
             >
               <span className="w-1.5 h-1.5 rounded-full bg-amber-500 inline-block" />
-              OUR MISSION
+              {visionMissionData.mission.tagline}
             </p>
             
             <h2 className="text-2xl font-semibold mb-4 leading-tight text-[#f0ece3]">
-              World-Class B2B Health Platform
+              {visionMissionData.mission.title}
             </h2>
             
             <div className="space-y-3 text-sm leading-relaxed text-[rgba(240,236,227,0.78)] font-light">
-              <p>
-                To build a world-class B2B healthcare and wellness platform that brings together industry leaders, innovators, buyers, and global stakeholders to drive business growth and collaboration.
-              </p>
-              <p>
-                We aim to promote <span className="text-[#c8a055] font-medium">preventive healthcare, AYUSH, digital health, and wellness innovation</span>, while enabling high-value networking, international trade opportunities, and long-term ecosystem development across the global health and wellness industry.
-              </p>
+              {visionMissionData.mission.paragraphs.map((para, i) => (
+                <p key={i}>
+                  {para.text}
+                  {para.strongText && <span className="text-[#c8a055] font-medium">{para.strongText}</span>}
+                  {para.textAfter}
+                </p>
+              ))}
             </div>
           </div>
 

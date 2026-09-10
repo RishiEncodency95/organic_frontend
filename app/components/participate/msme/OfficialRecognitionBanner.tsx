@@ -69,7 +69,7 @@ export default function OfficialRecognitionBanner() {
     >
       <SectionContainer>
         <div className="w-full relative z-10">
-          <div className="grid grid-cols-1 items-stretch gap-6 lg:grid-cols-[1fr_0.67fr_0.67fr] lg:gap-5">
+          <div className="grid grid-cols-1 items-stretch gap-2 lg:grid-cols-[1fr_0.67fr_0.67fr] lg:gap-5">
 
             {/* ---------------- Left: Content ---------------- */}
             <div className="flex flex-col pt-3">
@@ -82,7 +82,7 @@ export default function OfficialRecognitionBanner() {
                   />
                 </span>
 
-                <span className="text-base font-semibold text-[#0c3b1d] uppercase font-poppins border-b border-[#d4a017] pb-2">
+                <span className="text-base font-semibold text-[#0c3b1d] uppercase font-poppins border-b border-[#e0d5b7] pb-2">
                   OFFICIAL RECOGNITION
                 </span>
               </div>
@@ -91,13 +91,13 @@ export default function OfficialRecognitionBanner() {
                 id="official-recognition-heading"
                 className="text-[28px] sm:text-[34px] md:text-[46px] font-semibold leading-[1.15] tracking-tight mb-2 font-poppins"
               >
-                <span className="text-[#1b5e20]">Bharat Organic Expo</span>
+                <span className="text-[#044826]">Bharat Organic Expo</span>
                 <br />
                 <span className="">Approved under PMS*</span>
               </h2>
 
               <div
-                className="mb-4 h-[3px] w-[70px] mt-4 bg-[#d4a017]"
+                className="mb-4 h-[3px] w-[70px] mt-4 bg-[#b39540]"
                 aria-hidden="true"
               />
 
@@ -298,7 +298,7 @@ export default function OfficialRecognitionBanner() {
             </div>
 
             {/* ---------------- Right: Certificate ---------------- */}
-            <div className="flex flex-col w-full h-full pt-[40px] min-h-0">
+            <div className="flex flex-col w-full h-full pt-4 min-h-0">
               <div className="relative h-full min-h-full rounded-[16px] border border-[#e5e7eb] bg-gray shadow-[0_4px_20px_rgba(0,0,0,0.12)] overflow-hidden">
 
                 {/* Coming Soon Overlay */}
@@ -422,19 +422,19 @@ export default function OfficialRecognitionBanner() {
           </div>
 
           {/* ---------------- Disclaimer ---------------- */}
-          <div className="mt-5 flex items-center relative z-10">
-            <div className="flex items-center gap-3 rounded-xl bg-[#f8f7f1] p-4 shadow-[0_2px_10px_rgba(0,0,0,0.02)] border border-[#e5efdf] w-[60%]">
+          <div className="mt-10 flex items-center relative z-10">
+            <div className="flex items-center gap-3 rounded-xl bg-[#f8f7f1] p-4 shadow-[0_2px_10px_rgba(0,0,0,0.02)] border border-[#e5efdf] w-full md:w-[60%]">
               <div className="w-14 h-14 shrink-0 rounded-full bg-[#e8eddf] flex items-center justify-center">
                 <Image
                   src={secureImg}
                   alt="Secure"
-                  className="w-8 h-8 object-contain"
+                  className="w-10 h-10 object-contain"
                 />
               </div>
 
               <p className="text-[14px] leading-snug text-gray-700 font-medium m-0">
                 Event approval does not guarantee reimbursement. Individual
-                eligibility, documentation and final sanction are subject to
+                eligibility, documentation and final<br/> sanction are subject to
                 applicable PMS Scheme guidelines and decision of the competent
                 authority.
               </p>
