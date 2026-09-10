@@ -21,6 +21,7 @@ export const SITE_CONFIG = {
         sessions: "100+",
         sessionsCount: 100
     },
+    apiUrl: process.env.NEXT_PUBLIC_API_URL || "http://localhost:4000/api",
     socialLinks: {
         facebook: "https://www.facebook.com/bharatorganicexpo",
         instagram: "https://www.instagram.com/bharatorganicexpo",
