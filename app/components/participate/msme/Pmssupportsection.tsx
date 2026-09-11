@@ -88,7 +88,7 @@ export default function PmsSupportSection() {
       {/* Background image - half height from top */}
       <div className="absolute left-0 top-0 z-0 h-[60%] w-full">
         <div
-          className="h-full w-full bg-cover md:bg-right-top bg-no-repeat"
+          className="h-full w-full bg-cover bg-left-top md:bg-left-top lg:bg-right-top bg-no-repeat"
           style={{ backgroundImage: `url(${howToApplyImg.src})` }}
         />
         {/* Mobile overlay */}
@@ -125,8 +125,8 @@ export default function PmsSupportSection() {
           </div>
 
           {/* Highlight cards */}
-          <div className="w-full sm:w-[62%] 2xl:w-[56%] rounded-2xl border border-gray-200 bg-white p-4 shadow-[rgba(0,0,0,0.12)_0px_1px_3px,rgba(0,0,0,0.24)_0px_1px_2px]">
-            <ul className="flex flex-col sm:flex-row sm:items-stretch">
+          <div className="w-full md:w-full lg:w-[56%] rounded-2xl border border-gray-200 bg-white p-4 shadow-[rgba(0,0,0,0.12)_0px_1px_3px,rgba(0,0,0,0.24)_0px_1px_2px]">
+            <ul className="flex flex-col md:flex-col lg:flex-row sm:items-stretch">
               {highlightCards.map(
                 ({ icon, title, description }, index) => (
                   <li
@@ -228,15 +228,13 @@ export default function PmsSupportSection() {
               )
             )}
           </ol>
-          <div className="flex">
-
         <div className="grid grid-cols-1 gap-4 sm:gap-5 lg:grid-cols-[1fr_0.7fr_0.7fr] mt-4 w-full">
           {/* Expert support at every step */}
           <div className="relative rounded-2xl bg-[#0b2912] text-white">
             <img
               src={everySupportImg.src}
               alt="Bharat Organic Expo support specialist ready to help with PMS applications"
-              className="absolute -top-4 left-0 h-[calc(100%+1rem)] w-[55%] object-cover object-top"
+              className="absolute -top-4 left-0 h-[calc(100%+1rem)] w-full md:w-full lg:w-[55%] object-cover object-top"
               loading="lazy"
             />
             {/* Mobile overlay */}
@@ -331,13 +329,6 @@ export default function PmsSupportSection() {
             </div>
           </div>
         </div>
-            <img
-              src={leftImage.src}
-              alt="Ready to apply for PMS"
-              className="hidden sm:block h-[180px] w-[120px] object-contain self-end mb-5 -ml-1"
-              loading="lazy"
-            />
-          </div>
 
         </div>
 
