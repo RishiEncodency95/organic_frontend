@@ -795,115 +795,99 @@ function FolderDocumentIcon(
    DATA
 ================================================================ */
 
-const pmsDocuments: PmsDocument[] = [
-  {
-    id: 1,
-    title:
-      "Udyam Registration Certificate",
-    description:
-      "Valid Udyam Certificate (MSME Registration).",
-    icon: UdyamCertificateIcon,
+export const PMS_DOCUMENTS_BANNER_DATA = {
+  badge: "Be Prepared",
+  heading: {
+    prefix: "Keep Your ",
+    highlight: "PMS",
+    suffix: " Documents Ready",
   },
+  subheading: {
+    part1: "Ensure these essential documents are ready for a smooth",
+    part2: "PMS claim process.",
+  },
+  documents: [
+    {
+      id: 1,
+      title: "Udyam Registration Certificate",
+      description: "Valid Udyam Certificate (MSME Registration).",
+      icon: UdyamCertificateIcon,
+    },
+    {
+      id: 2,
+      title: "PAN & GST Certificate",
+      description: "PAN Card and GST Registration Certificate.",
+      icon: PanGstIcon,
+    },
+    {
+      id: 3,
+      title: "Bank Details",
+      description: "Cancelled Cheque / Bank Passbook First Page.",
+      icon: BankIcon,
+    },
+    {
+      id: 4,
+      title: "Exhibition Participation Proof",
+      description: "Stall Allocation / Participation Confirmation / Contract.",
+      icon: ParticipationProofIcon,
+    },
+    {
+      id: 5,
+      title: "Invoices & Payment Proof",
+      description: "Tax Invoices and Payment Receipts / Proofs.",
+      icon: InvoiceIcon,
+    },
+    {
+      id: 6,
+      title: "Participation Evidence",
+      description: "Photos, Videos, Press Coverage, Brochures, etc.",
+      icon: ParticipationEvidenceIcon,
+    },
+    {
+      id: 7,
+      title: "Dispatch / Delivery Challan",
+      description: "Delivery Challans / Despatch Documents.",
+      icon: DeliveryTruckIcon,
+    },
+    {
+      id: 8,
+      title: "E-Way Bill (If Applicable)",
+      description: "E-Way Bills for dispatch of goods.",
+      icon: EwayBillIcon,
+    },
+    {
+      id: 9,
+      title: "Declaration Form",
+      description: "Self-declaration / Undertaking as per PMS format.",
+      icon: DeclarationIcon,
+    },
+    {
+      id: 10,
+      title: "MSME Affidavit / Undertaking",
+      description: "Affidavit / Undertaking on non-duplication of claim.",
+      icon: AffidavitIcon,
+    },
+    {
+      id: 11,
+      title: "Cancelled Cheque / Bank Proof",
+      description: "Bank account proof in the name of the enterprise.",
+      icon: StampIcon,
+    },
+    {
+      id: 12,
+      title: "Any Other Document (If Required)",
+      description: "Additional documents as per PMS guidelines.",
+      icon: FolderDocumentIcon,
+    },
+  ],
+  notice: "Additional documents may be required depending on applicable PMS guidelines and the individual enterprise.",
+  cta: {
+    label: "View Complete Document Checklist",
+    href: "#complete-document-checklist",
+  },
+};
 
-  {
-    id: 2,
-    title:
-      "PAN & GST Certificate",
-    description:
-      "PAN Card and GST Registration Certificate.",
-    icon: PanGstIcon,
-  },
-
-  {
-    id: 3,
-    title:
-      "Bank Details",
-    description:
-      "Cancelled Cheque / Bank Passbook First Page.",
-    icon: BankIcon,
-  },
-
-  {
-    id: 4,
-    title:
-      "Exhibition Participation Proof",
-    description:
-      "Stall Allocation / Participation Confirmation / Contract.",
-    icon: ParticipationProofIcon,
-  },
-
-  {
-    id: 5,
-    title:
-      "Invoices & Payment Proof",
-    description:
-      "Tax Invoices and Payment Receipts / Proofs.",
-    icon: InvoiceIcon,
-  },
-
-  {
-    id: 6,
-    title:
-      "Participation Evidence",
-    description:
-      "Photos, Videos, Press Coverage, Brochures, etc.",
-    icon: ParticipationEvidenceIcon,
-  },
-
-  {
-    id: 7,
-    title:
-      "Dispatch / Delivery Challan",
-    description:
-      "Delivery Challans / Despatch Documents.",
-    icon: DeliveryTruckIcon,
-  },
-
-  {
-    id: 8,
-    title:
-      "E-Way Bill (If Applicable)",
-    description:
-      "E-Way Bills for dispatch of goods.",
-    icon: EwayBillIcon,
-  },
-
-  {
-    id: 9,
-    title:
-      "Declaration Form",
-    description:
-      "Self-declaration / Undertaking as per PMS format.",
-    icon: DeclarationIcon,
-  },
-
-  {
-    id: 10,
-    title:
-      "MSME Affidavit / Undertaking",
-    description:
-      "Affidavit / Undertaking on non-duplication of claim.",
-    icon: AffidavitIcon,
-  },
-
-  {
-    id: 11,
-    title:
-      "Cancelled Cheque / Bank Proof",
-    description:
-      "Bank account proof in the name of the enterprise.",
-    icon: StampIcon,
-  },
-
-  {
-    id: 12,
-    title:
-      "Any Other Document (If Required)",
-    description:
-      "Additional documents as per PMS guidelines.",
-    icon: FolderDocumentIcon,
-  },
-];
+const pmsDocuments: PmsDocument[] = PMS_DOCUMENTS_BANNER_DATA.documents;
 
 /* ================================================================
    DOCUMENT CARD
@@ -1010,6 +994,8 @@ function DocumentCard({
 ================================================================ */
 
 export default function PMSDocumentsBanner() {
+  const data = PMS_DOCUMENTS_BANNER_DATA;
+
   return (
     <section
       id="pms-documents"
@@ -1100,7 +1086,7 @@ export default function PMSDocumentsBanner() {
               text-[#315D10]
             "
           >
-            Be Prepared
+            {data.badge}
           </p>
           <Image src={rightMsme} className="h-6 w-16 object-contain sm:h-8 sm:w-20" aria-hidden="true" alt="right decoration" />
         </div>
@@ -1126,17 +1112,17 @@ export default function PMSDocumentsBanner() {
             text-[#0D1726]
           "
         >
-          Keep Your{" "}
+          {data.heading.prefix}
 
           <span
             className="
               text-[#285C0E]
             "
           >
-            PMS
-          </span>{" "}
+            {data.heading.highlight}
+          </span>
 
-          Documents Ready
+          {data.heading.suffix}
         </h2>
 
         {/* ========================================================
@@ -1216,9 +1202,7 @@ export default function PMSDocumentsBanner() {
             text-[#20232A]
           "
         >
-          Ensure these essential
-          documents are ready for a
-          smooth
+          {data.subheading.part1}
           <br />
 
           <span
@@ -1227,16 +1211,12 @@ export default function PMSDocumentsBanner() {
               text-[#38720D]
             "
           >
-            PMS claim process.
+            {data.subheading.part2}
           </span>
         </p>
 
         {/* ========================================================
             12 CARD GRID
-
-            reference:
-            x ≈ 45 → 1092
-            y ≈ 207 → 598
         ======================================================== */}
 
         <ul
@@ -1253,7 +1233,7 @@ export default function PMSDocumentsBanner() {
             gap-y-[2.1%]
           "
         >
-          {pmsDocuments.map(
+          {data.documents.map(
             (doc) => (
               <DocumentCard
                 key={doc.id}
@@ -1324,14 +1304,7 @@ export default function PMSDocumentsBanner() {
                 text-[#202531]
               "
             >
-              Additional documents
-              may be required depending
-              on applicable PMS
-              guidelines
-              <br />
-
-              and the individual
-              enterprise.
+              {data.notice}
             </p>
           </div>
 
@@ -1358,7 +1331,7 @@ export default function PMSDocumentsBanner() {
         ======================================================== */}
 
         <a
-          href="#complete-document-checklist"
+          href={data.cta.href}
           className="
             absolute
             left-1/2
@@ -1397,8 +1370,7 @@ export default function PMSDocumentsBanner() {
               whitespace-nowrap
             "
           >
-            View Complete Document
-            Checklist
+            {data.cta.label}
           </span>
 
           <ArrowRight
@@ -1464,7 +1436,7 @@ export default function PMSDocumentsBanner() {
               text-[#315D10]
             "
           >
-            Be Prepared
+            {data.badge}
           </p>
 
           <span
@@ -1498,17 +1470,17 @@ export default function PMSDocumentsBanner() {
             text-[#0D1726]
           "
         >
-          Keep Your{" "}
+          {data.heading.prefix}
 
           <span
             className="
               text-[#285C0E]
             "
           >
-            PMS
-          </span>{" "}
+            {data.heading.highlight}
+          </span>
 
-          Documents Ready
+          {data.heading.suffix}
         </h2>
 
         {/* DOTS */}
@@ -1577,9 +1549,7 @@ export default function PMSDocumentsBanner() {
             text-[#20232A]
           "
         >
-          Ensure these essential
-          documents are ready for a
-          smooth{" "}
+          {data.subheading.part1}{" "}
 
           <span
             className="
@@ -1587,7 +1557,7 @@ export default function PMSDocumentsBanner() {
               text-[#38720D]
             "
           >
-            PMS claim process.
+            {data.subheading.part2}
           </span>
         </p>
 
@@ -1603,7 +1573,7 @@ export default function PMSDocumentsBanner() {
             md:grid-cols-3
           "
         >
-          {pmsDocuments.map(
+          {data.documents.map(
             (doc) => (
               <li
                 key={doc.id}
@@ -1731,11 +1701,7 @@ export default function PMSDocumentsBanner() {
                 text-[#202531]
               "
             >
-              Additional documents
-              may be required depending
-              on applicable PMS
-              guidelines and the
-              individual enterprise.
+              {data.notice}
             </p>
           </div>
 
@@ -1763,7 +1729,7 @@ export default function PMSDocumentsBanner() {
           "
         >
           <a
-            href="#complete-document-checklist"
+            href={data.cta.href}
             className="
               inline-flex
               min-h-[52px]
@@ -1790,8 +1756,7 @@ export default function PMSDocumentsBanner() {
               "
             />
 
-            View Complete Document
-            Checklist
+            {data.cta.label}
 
             <ArrowRight
               className="

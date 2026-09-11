@@ -32,52 +32,59 @@ interface FAQItem {
    EDITABLE CONTENT
 ================================================================ */
 
-export const FAQ_ITEMS: FAQItem[] = [
-  {
-    id: "faq-1",
-    icon: BadgeCheck,
-    question:
-      "Is Bharat Organic Expo approved under PMS?",
-    answer:
-      "Yes, subject to the exact approval/sanction received for Bharat <br/>Organic Expo 2027. Official approval details should be displayed above.",
+export const FAQ_BANNER_DATA = {
+  title: "FAQ",
+  subtitle: "Frequently Asked Questions",
+  badge: {
+    title: "Supporting",
+    highlight: "MSMEs",
+    subtitle: "Growth Together",
   },
+  faqs: [
+    {
+      id: "faq-1",
+      icon: BadgeCheck,
+      question:
+        "Is Bharat Organic Expo approved under PMS?",
+      answer:
+        "Yes, subject to the exact approval/sanction received for Bharat <br/>Organic Expo 2027. Official approval details should be displayed above.",
+    },
+    {
+      id: "faq-2",
+      icon: Users,
+      question:
+        "Who can apply for PMS support?",
+      answer:
+        "Eligible Micro & Small Enterprises meeting applicable Udyam<br/> Registration, business activity, event and PMS requirements may apply.",
+    },
+    {
+      id: "faq-3",
+      icon: FileQuestion,
+      question:
+        "Is reimbursement guaranteed?",
+      answer:
+        "No. Event approval does not automatically guarantee reimbursement.<br/> Individual eligibility, documentation and final approval are required.",
+    },
+    {
+      id: "faq-4",
+      icon: IdCard,
+      question:
+        "I am not Udyam registered. Can your team help?",
+      answer:
+        "Yes. Our team can guide you regarding the Udyam Registration <br/>process and subsequent preliminary PMS eligibility screening.",
+    },
+    {
+      id: "faq-5",
+      icon: Headset,
+      question:
+        "Will your team support the claim process?",
+      answer:
+        "Yes. Our PMS Support Team can provide applicable process and <br/>documentation guidance for claim filing. Final approval and<br/> reimbursement remain with the competent MSME authority.",
+    },
+  ],
+};
 
-  {
-    id: "faq-2",
-    icon: Users,
-    question:
-      "Who can apply for PMS support?",
-    answer:
-      "Eligible Micro & Small Enterprises meeting applicable Udyam<br/> Registration, business activity, event and PMS requirements may apply.",
-  },
-
-  {
-    id: "faq-3",
-    icon: FileQuestion,
-    question:
-      "Is reimbursement guaranteed?",
-    answer:
-      "No. Event approval does not automatically guarantee reimbursement.<br/> Individual eligibility, documentation and final approval are required.",
-  },
-
-  {
-    id: "faq-4",
-    icon: IdCard,
-    question:
-      "I am not Udyam registered. Can your team help?",
-    answer:
-      "Yes. Our team can guide you regarding the Udyam Registration <br/>process and subsequent preliminary PMS eligibility screening.",
-  },
-
-  {
-    id: "faq-5",
-    icon: Headset,
-    question:
-      "Will your team support the claim process?",
-    answer:
-      "Yes. Our PMS Support Team can provide applicable process and <br/>documentation guidance for claim filing. Final approval and<br/> reimbursement remain with the competent MSME authority.",
-  },
-];
+export const FAQ_ITEMS: FAQItem[] = FAQ_BANNER_DATA.faqs;
 
 /* ================================================================
    PAGE
