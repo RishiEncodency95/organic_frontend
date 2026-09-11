@@ -17,6 +17,15 @@ interface ExhibitorsSectionProps {
 
 const PAGE_SIZE = 48;
 
+// Mock API response / JSON array of objects
+const EXHIBITORS_SECTION_HEADER_DATA = [
+    {
+        id: "exhibitors-header-1",
+        title: "Our Previous Exhibitors",
+        subtitle: "A Platform Trusted by Industry Leaders",
+    },
+];
+
 const ExhibitorsSection = ({ exhibitors }: ExhibitorsSectionProps) => {
     const listToUse = useMemo(() => (exhibitors && exhibitors.length > 0 ? exhibitors : fallbackExhibitors), [exhibitors]);
     const [searchTerm, setSearchTerm] = useState("");
@@ -51,18 +60,20 @@ const ExhibitorsSection = ({ exhibitors }: ExhibitorsSectionProps) => {
             <AboutStrip />
             
             {/* Section Header */}
-            <SectionContainer className="pt-6 pb-3 text-center font-inter">
-                <Reveal>
-                    <div className="text-center mb-4">
-                        <h2 className="text-xl md:text-2xl font-semibold text-[#1b5e20] uppercase leading-[1.1] font-poppins relative inline-block mb-2">
-                            Our Previous Exhibitors
-                        </h2>
-                        <p className="text-sm font-semibold text-black font-inter">
-                            A Platform Trusted by Industry Leaders
-                        </p>
-                    </div>
-                </Reveal>
-            </SectionContainer>
+            {EXHIBITORS_SECTION_HEADER_DATA.map((header) => (
+                <SectionContainer key={header.id} className="pt-6 pb-3 text-center font-inter">
+                    <Reveal>
+                        <div className="text-center mb-4">
+                            <h2 className="text-xl md:text-2xl font-semibold text-[#1b5e20] uppercase leading-[1.1] font-poppins relative inline-block mb-2">
+                                {header.title}
+                            </h2>
+                            <p className="text-sm font-semibold text-black font-inter">
+                                {header.subtitle}
+                            </p>
+                        </div>
+                    </Reveal>
+                </SectionContainer>
+            ))}
 
             {/* Unified Wrapper Card */}
             <SectionContainer className="pb-12 font-inter">
