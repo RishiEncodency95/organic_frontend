@@ -1,21 +1,23 @@
 import { Check } from "lucide-react";
 import React from "react";
 
+export const APPLY_STEPS_DATA = [
+  {
+    id: 1,
+    title: "Enterprise Details",
+  },
+  {
+    id: 2,
+    title: "Participation Details",
+  },
+  {
+    id: 3,
+    title: "Payment",
+  },
+];
+
 export default function ApplySteps({ currentStep = 1 }: { currentStep?: number }) {
-  const steps = [
-    {
-      id: 1,
-      title: "Enterprise Details",
-    },
-    {
-      id: 2,
-      title: "Participation Details",
-    },
-    {
-      id: 3,
-      title: "Payment",
-    },
-  ];
+  const steps = APPLY_STEPS_DATA;
 
   return (
     <div className="w-full flex bg-white items-center justify-between px-6 py-5 rounded-xl shadow-[0_4px_20px_rgb(0,0,0,0.03)] overflow-x-auto hide-scrollbar">
