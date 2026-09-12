@@ -244,9 +244,9 @@ export default function NeedHelpSection() {
       {/* Footer strip - full width */}
       <div className="mt-5 overflow-hidden bg-[#0d4a1a] py-2">
         <SectionContainer>
-        <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:gap-6">
+        <div className="flex flex-col gap-4 lg:flex-row lg:items-center lg:gap-6">
           {/* Left */}
-          <div className="flex items-center gap-3 border-b-2 border-white pb-4 sm:w-1/2 sm:border-b-0 sm:border-r-2 sm:border-white sm:pr-6 sm:pb-0 py-2">
+          <div className="flex items-center gap-3 border-b-2 border-white pb-4 lg:w-1/2 lg:border-b-0 lg:border-r-2 lg:border-white lg:pr-6 lg:pb-0 py-2">
             <span className="flex h-20 w-20 shrink-0 items-center justify-center self-start rounded-full bg-white ">
               <img
                 src={supportRightImg.src}
@@ -257,10 +257,10 @@ export default function NeedHelpSection() {
             <div className="">
               <p className="text-[18px] font-semibold uppercase leading-tight text-white sm:text-[18px] border-b-2 border-white/70 pb-1">
                 Together, Let&apos;s Grow
-                <span className="hidden sm:inline"><br /></span>A Sustainable India
+                <span className="hidden lg:inline"><br /></span>A Sustainable India
               </p>
               <p className="mt-0.5 text-[16px] text-white">
-                We look forward to supporting your <br className="hidden sm:inline" />journey at{" "}
+                We look forward to supporting your <br className="hidden lg:inline" />journey at{" "}
                 <span className="font-semibold text-[#F2B40E]">
                   Bharat Organic Expo 2027.
                 </span>
@@ -269,7 +269,7 @@ export default function NeedHelpSection() {
           </div>
 
           {/* Right */}
-          <div className="flex flex-col gap-3 sm:flex-row sm:flex-1 sm:items-center sm:justify-between sm:gap-3 rounded-lg bg-white px-5 py-3 sm:py-2">
+          <div className="flex flex-col gap-3 lg:flex-row lg:flex-1 lg:items-center lg:justify-between lg:gap-3 rounded-lg bg-white px-5 py-3 lg:py-2">
             <div className="flex items-center gap-3">
               <span className="flex h-16 w-16 shrink-0 items-center justify-center rounded-full bg-[#688a28]">
                 <FileText className="h-10 w-10 text-white" aria-hidden="true" />

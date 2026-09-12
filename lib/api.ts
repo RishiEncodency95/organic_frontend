@@ -1,5 +1,5 @@
-export const SERVER_URL = process.env.NEXT_PUBLIC_SERVER_URL || 'http://localhost:5000';
-export const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000/api';
+export const SERVER_URL = process.env.NEXT_PUBLIC_SERVER_URL || 'http://localhost:4000';
+export const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:4000/api';
 
 const apiCall = async (endpoint: string, options: RequestInit = {}) => {
     try {
@@ -252,3 +252,9 @@ export const sponsorshipEnquiryApi = {
         return await response.json();
     }
 };
+
+export const websiteApi = {
+    getHomeHero: async () => apiCall('/website/home/home-hero'),
+    getHomeSection: async (section: string) => apiCall(`/website/home/${section}`),
+};
+

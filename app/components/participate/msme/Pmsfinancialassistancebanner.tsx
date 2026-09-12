@@ -257,9 +257,9 @@ const PMSFinancialAssistanceBanner: FC = () => {
           </div>
 
           <div className="relative flex flex-col gap-3 px-3 py-2 sm:px-4 sm:py-2.5 md:gap-4 md:px-5 md:py-3 border border-[#1b5e20]/20 rounded-2xl">
-            <div className="flex flex-col gap-4 md:flex-row md:items-center md:gap-16 ">
+            <div className="flex flex-col gap-4 md:flex-col lg:flex-row md:items-start lg:items-center md:gap-4 lg:gap-16 ">
               {/* Important note */}
-              <div className="flex w-full items-start gap-3 md:w-[38%] md:border-r md:border-dotted md:border-[#1b5e20] pr-3 md:pr-4">
+              <div className="flex w-full items-start gap-3 lg:w-[38%] lg:border-r lg:border-dotted lg:border-[#1b5e20] pr-3 lg:pr-4">
                 <img
                   src={secureImg.src}
                   alt=""
@@ -276,7 +276,7 @@ const PMSFinancialAssistanceBanner: FC = () => {
               </div>
 
               {/* Government support */}
-              <div className="flex w-full items-center gap-3 md:w-[25%]">
+              <div className="flex w-full items-center gap-3 lg:w-[25%]">
                 <span className="flex h-20 w-20 shrink-0 items-center justify-center rounded-full bg-[#1b5e20]/10">
                   <img
                     src={handImg.src}
