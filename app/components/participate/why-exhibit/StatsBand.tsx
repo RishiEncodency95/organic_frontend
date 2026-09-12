@@ -5,6 +5,15 @@ import { Users, Building2, Globe, Mic, Handshake } from "lucide-react";
 import gsap from "gsap";
 import SectionContainer from "@/app/components/layout/SectionContainer";
 
+// Mock API response / JSON array of objects
+const STATS_DATA = [
+  { id: "stat-1", icon: Users, val: "8,000+", label: "VISITORS / DELEGATES" },
+  { id: "stat-2", icon: Building2, val: "200+", label: "EXHIBITORS" },
+  { id: "stat-3", icon: Globe, val: "1,000+", label: "GLOBAL BUYERS" },
+  { id: "stat-4", icon: Mic, val: "65+", label: "EXPERT SPEAKERS" },
+  { id: "stat-5", icon: Handshake, val: "B2B", label: "MEETINGS" },
+];
+
 const StatCounter = ({ value }: { value: string }) => {
   const [displayValue, setDisplayValue] = useState(0);
   const ref = useRef(null);
@@ -36,14 +45,6 @@ export default function StatsBand() {
   const shimmerRef = useRef<HTMLDivElement>(null);
   const itemRefs = useRef<(HTMLDivElement | null)[]>([]);
   const dividerRefs = useRef<(HTMLDivElement | null)[]>([]);
-
-  const stats = [
-    { icon: Users,     val: "8,000+", label: "VISITORS / DELEGATES" },
-    { icon: Building2, val: "200+",   label: "EXHIBITORS" },
-    { icon: Globe,     val: "1,000+", label: "GLOBAL BUYERS" },
-    { icon: Mic,       val: "65+",    label: "EXPERT SPEAKERS" },
-    { icon: Handshake, val: "B2B",    label: "MEETINGS" },
-  ];
 
   itemRefs.current = [];
   dividerRefs.current = [];
@@ -107,10 +108,10 @@ export default function StatsBand() {
           />
 
           <div className="grid grid-cols-2 sm:grid-cols-3 md:flex md:flex-nowrap items-center justify-center md:justify-between gap-y-3 gap-x-2 md:gap-0">
-            {stats.map((item, i) => {
+            {STATS_DATA.map((item, i) => {
               const IconComponent = item.icon;
               return (
-                <React.Fragment key={i}>
+                <React.Fragment key={item.id}>
                   <div
                     ref={(el) => { itemRefs.current[i] = el; }}
                     style={{ opacity: 0 }}
@@ -128,7 +129,7 @@ export default function StatsBand() {
                       </p>
                     </div>
                   </div>
-                  {i < stats.length - 1 && (
+                  {i < STATS_DATA.length - 1 && (
                     <div
                       ref={(el) => { dividerRefs.current[i] = el; }}
                       className="hidden md:block w-px h-6 bg-white/20"
@@ -143,3 +144,4 @@ export default function StatsBand() {
     </div>
   );
 }
+

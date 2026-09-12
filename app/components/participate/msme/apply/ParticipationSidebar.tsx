@@ -1,6 +1,31 @@
 import { CheckCircle2, ShieldCheck, Tag } from "lucide-react";
 
+export const PARTICIPATION_SIDEBAR_DATA = {
+  eligibilitySummary: {
+    status: "ELIGIBLE",
+    potentialAssistance: "UP TO 100%",
+    category: "Women MSME Category",
+  },
+  applicationSummary: [
+    { label: "Udyam Reg. Number", value: "UDYAM-DL-02-0118490" },
+    { label: "Enterprise Name", value: "RAMMANI TRADELINK PRIVATE LIMITED" },
+    { label: "Enterprise Type", value: "Micro" },
+    { label: "Major Activity", value: "Manufacturing" },
+    { label: "Stall Type", value: "Shell Scheme" },
+    { label: "Stall Size", value: "9 sqm" },
+    { label: "Total Amount", value: "₹1,16,820", subtitle: "(Inclusive of GST)", isTotal: true },
+  ],
+  nextSteps: [
+    { id: 1, title: "Documents", desc: "Upload required documents" },
+    { id: 2, title: "Declaration", desc: "Review & submit application" },
+    { id: 3, title: "Verification", desc: "Our team will verify your application" },
+    { id: 4, title: "PMS Assistance", desc: "We will guide you through the claim process after the event" },
+  ],
+};
+
 export default function ParticipationSidebar() {
+  const data = PARTICIPATION_SIDEBAR_DATA;
+
   return (
     <div className="flex flex-col gap-6">
       
@@ -23,7 +48,7 @@ export default function ParticipationSidebar() {
               Preliminary Status
             </span>
             <div className="flex items-center gap-2">
-              <span className="text-3xl font-extrabold text-white tracking-tight">ELIGIBLE</span>
+              <span className="text-3xl font-extrabold text-white tracking-tight">{data.eligibilitySummary.status}</span>
               <CheckCircle2 size={24} className="text-[#a3d9a5]" strokeWidth={3} fill="currentColor" />
             </div>
           </div>
@@ -33,7 +58,7 @@ export default function ParticipationSidebar() {
               Potential Assistance
             </span>
             <span className="text-2xl font-extrabold text-white tracking-tight mb-1">
-              UP TO 100%
+              {data.eligibilitySummary.potentialAssistance}
             </span>
             <span className="text-[10px] text-white/80 font-medium">
               Eligible Space Rent Assistance*
@@ -43,7 +68,7 @@ export default function ParticipationSidebar() {
           <div className="bg-white rounded-full py-1.5 px-3 flex items-center justify-center gap-1.5 w-max mx-auto shadow-sm">
             <Tag size={12} className="text-[#176b27]" strokeWidth={2.5} />
             <span className="text-[11px] font-semibold text-[#176b27]">
-              Women MSME Category
+              {data.eligibilitySummary.category}
             </span>
           </div>
         </div>
@@ -56,34 +81,16 @@ export default function ParticipationSidebar() {
         </h3>
         
         <div className="flex flex-col gap-3">
-          <div className="flex justify-between items-start gap-4">
-            <span className="text-[11px] font-medium text-gray-500 w-[40%]">Udyam Reg. Number</span>
-            <span className="text-[11px] font-semibold text-gray-900 w-[60%] text-right">UDYAM-DL-02-0118490</span>
-          </div>
-          <div className="flex justify-between items-start gap-4">
-            <span className="text-[11px] font-medium text-gray-500 w-[40%]">Enterprise Name</span>
-            <span className="text-[11px] font-semibold text-gray-900 w-[60%] text-right leading-tight">RAMMANI TRADELINK PRIVATE LIMITED</span>
-          </div>
-          <div className="flex justify-between items-start gap-4">
-            <span className="text-[11px] font-medium text-gray-500 w-[40%]">Enterprise Type</span>
-            <span className="text-[11px] font-semibold text-gray-900 w-[60%] text-right">Micro</span>
-          </div>
-          <div className="flex justify-between items-start gap-4">
-            <span className="text-[11px] font-medium text-gray-500 w-[40%]">Major Activity</span>
-            <span className="text-[11px] font-semibold text-gray-900 w-[60%] text-right">Manufacturing</span>
-          </div>
-          <div className="flex justify-between items-start gap-4">
-            <span className="text-[11px] font-medium text-gray-500 w-[40%]">Stall Type</span>
-            <span className="text-[11px] font-semibold text-gray-900 w-[60%] text-right">Shell Scheme</span>
-          </div>
-          <div className="flex justify-between items-start gap-4">
-            <span className="text-[11px] font-medium text-gray-500 w-[40%]">Stall Size</span>
-            <span className="text-[11px] font-semibold text-gray-900 w-[60%] text-right">9 sqm</span>
-          </div>
-          <div className="flex justify-between items-start gap-4 pt-2 border-t border-[#edf0ed]">
-            <span className="text-[11px] font-semibold text-gray-700 w-[40%]">Total Amount <br/><span className="text-[9px] font-medium text-gray-500">(Inclusive of GST)</span></span>
-            <span className="text-[13px] font-extrabold text-[#176b27] w-[60%] text-right">₹1,16,820</span>
-          </div>
+          {data.applicationSummary.map((item, idx) => (
+            <div key={idx} className={`flex justify-between items-start gap-4 ${item.isTotal ? 'pt-2 border-t border-[#edf0ed]' : ''}`}>
+              <span className={`text-[11px] w-[40%] ${item.isTotal ? 'font-semibold text-gray-700' : 'font-medium text-gray-500'}`}>
+                {item.label} {item.subtitle && <><br/><span className="text-[9px] font-medium text-gray-500">{item.subtitle}</span></>}
+              </span>
+              <span className={`w-[60%] text-right ${item.isTotal ? 'text-[13px] font-extrabold text-[#176b27]' : 'text-[11px] font-semibold text-gray-900 leading-tight'}`}>
+                {item.value}
+              </span>
+            </div>
+          ))}
         </div>
       </div>
 
@@ -97,13 +104,8 @@ export default function ParticipationSidebar() {
           {/* Vertical Line */}
           <div className="absolute left-3 top-2 bottom-4 w-[2px] bg-gray-100 z-0"></div>
           
-          {[
-            { id: 1, title: "Documents", desc: "Upload required documents" },
-            { id: 2, title: "Declaration", desc: "Review & submit application" },
-            { id: 3, title: "Verification", desc: "Our team will verify your application" },
-            { id: 4, title: "PMS Assistance", desc: "We will guide you through the claim process after the event" },
-          ].map((step, i) => (
-            <div key={i} className="flex gap-4 relative z-10 mb-4 last:mb-0">
+          {data.nextSteps.map((step) => (
+            <div key={step.id} className="flex gap-4 relative z-10 mb-4 last:mb-0">
               <div className="w-6 h-6 rounded-full bg-[#176b27] text-white flex items-center justify-center text-[10px] font-semibold shrink-0 shadow-sm border-2 border-white">
                 {step.id}
               </div>

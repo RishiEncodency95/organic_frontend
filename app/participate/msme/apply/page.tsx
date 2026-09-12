@@ -3,20 +3,27 @@ import ApplySteps from "../../../components/participate/msme/apply/ApplySteps";
 import EnterpriseForm from "../../../components/participate/msme/apply/EnterpriseForm";
 import ApplySidebar from "../../../components/participate/msme/apply/ApplySidebar";
 import ApplyFooter from "../../../components/participate/msme/apply/ApplyFooter";
+import { settingsApi } from "@/lib/api";
 
 export const metadata = {
   title: "Apply for PMS Support | Bharat Organic Expo",
   description: "Apply for PMS Support for the Bharat Organic Expo 2027.",
 };
 
-export default function PMSApplyPage() {
+export default async function PMSApplyPage() {
+  const settings = await settingsApi.getSettings().catch(() => ({} as any));
+  const pageConfig = settings?.msmeApplyPage || {};
+  const sections = pageConfig.sections || [];
+  const stepperSec = sections.find((s: any) => s.key === "msme-apply-stepper") || {};
+  const stepLabels = [stepperSec.step1Title, stepperSec.step2Title, stepperSec.step3Title].filter(Boolean);
+
   return (
     <div className="min-h-screen bg-[#f9faf9] font-sans text-neutral-800 flex flex-col">
       <main className="flex-1 w-full pb-4">
         <ApplyHero />
 
         <div className="w-full px-4 md:px-14 mt-[-30px] relative z-20">
-          <ApplySteps />
+          <ApplySteps customLabels={stepLabels.length > 0 ? stepLabels : undefined} />
         </div>
 
         <div className="w-full px-4 md:px-14 mt-4">

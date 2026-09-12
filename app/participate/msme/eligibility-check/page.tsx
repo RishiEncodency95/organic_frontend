@@ -10,6 +10,7 @@ import EstimateSection from '@/app/components/participate/msme/eligibility/Estim
 import VerificationAlerts from '@/app/components/participate/msme/eligibility/VerificationAlerts';
 import FinalScoreFooter from '@/app/components/participate/msme/eligibility/FinalScoreFooter';
 import EligibilityDisclaimer from '@/app/components/participate/msme/eligibility/EligibilityDisclaimer';
+import { settingsApi } from '@/lib/api';
 
 export const metadata: Metadata = {
   title: "PMS Eligibility Check | Bharat Organic Expo",
@@ -19,25 +20,34 @@ export const metadata: Metadata = {
   },
 };
 
-export default function PMSEligibilityCheckPage() {
+export default async function PMSEligibilityCheckPage() {
+  const settings = await settingsApi.getSettings().catch(() => ({} as any));
+  const pageConfig = settings?.msmeEligibilityCheckPage || {};
+  const sections = pageConfig.sections || [];
+  const heroSec = sections.find((s: any) => s.key === "eligibility-hero") || {};
+  const statusSec = sections.find((s: any) => s.key === "eligibility-preliminary-status") || {};
+  const detailsSec = sections.find((s: any) => s.key === "eligibility-enterprise-details") || {};
+  const matchSec = sections.find((s: any) => s.key === "eligibility-industry-match") || {};
+  const stepsSec = sections.find((s: any) => s.key === "eligibility-calculation-steps") || {};
+
   return (
     <div className="min-h-screen bg-[#f8f9fa] font-sans text-neutral-800 pb-4">
       {/* Hero Section */}
-      <EligibilityHero />
+      <EligibilityHero customProps={heroSec} />
 
       <div className="full px-4 md:px-14 lg:px-14">
         {/* Input Bar */}
         <EligibilityInputBar />
 
         {/* Content sections */}
-        <PreliminaryStatus />
+        <PreliminaryStatus customProps={statusSec} />
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mt-4 items-stretch">
-          <EnterpriseDetails />
-          <IndustryMatch />
+          <EnterpriseDetails customProps={detailsSec} />
+          <IndustryMatch customProps={matchSec} />
         </div>
 
-        <CalculationSteps />
+        <CalculationSteps customTitle={stepsSec.title} customSteps={stepsSec.items} />
         <EstimateSection />
         <VerificationAlerts />
         <FinalScoreFooter />

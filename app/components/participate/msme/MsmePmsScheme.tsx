@@ -35,80 +35,48 @@ import Image from "next/image";
    DATA
 ========================================================= */
 
-const SCHEME_FEATURES = [
+const MSME_PMS_SCHEME_DATA = [
   {
-    id: "market-access",
-    title: "Market Access",
-    description: (
-      <>
-        Explore new domestic
-        <br />
-        and international markets
-        <br />
-        for your products
-        <br />
-        and services.
-      </>
-    ),
-    icon: marketAccessIcon,
-    bottom: cardBottom01,
-  },
-  {
-    id: "exhibition-support",
-    title: "Exhibition Support",
-    description: (
-      <>
-        Reduce the cost of
-        <br />
-        participation in approved
-        <br />
-        exhibitions and
-        <br />
-        trade fairs.
-      </>
-    ),
-    icon: exhibitionSupportIcon,
-    bottom: cardBottom02,
-  },
-  {
-    id: "buyer-connections",
-    title: "Buyer Connections",
-    description: (
-      <>
-        Meet buyers, distributors
-        <br />
-        and industry professionals
-        <br />
-        to grow your business
-        <br />
-        network.
-      </>
-    ),
-    icon: buyerConnectionsIcon,
-    bottom: cardBottom03,
-  },
-  {
-    id: "business-growth",
-    title: "Business Growth",
-    description: (
-      <>
-        Strengthen your brand,
-        <br />
-        increase visibility and
-        <br />
-        create new business
-        <br />
-        opportunities.
-      </>
-    ),
-    icon: businessGrowthIcon,
-    bottom: cardBottom04,
-  },
+    id: 1,
+    headerTagline: "KNOW THE SCHEME",
+    headingMain: "What is the MSME PMS Scheme?",
+    introLead: "Procurement & Marketing Support (PMS) Scheme",
+    introText1: "The ",
+    introText2: " is an initiative of the Ministry of MSME aimed at improving market access for Micro & Small Enterprises. Eligible MSMEs can explore applicable financial assistance for participation in approved trade fairs and exhibitions.",
+    features: [
+      {
+        id: "market-access",
+        title: "Market Access",
+        descriptionLines: ["Explore new domestic", "and international markets", "for your products", "and services."],
+        icon: marketAccessIcon,
+        bottom: cardBottom01,
+      },
+      {
+        id: "exhibition-support",
+        title: "Exhibition Support",
+        descriptionLines: ["Reduce the cost of", "participation in approved", "exhibitions and", "trade fairs."],
+        icon: exhibitionSupportIcon,
+        bottom: cardBottom02,
+      },
+      {
+        id: "buyer-connections",
+        title: "Buyer Connections",
+        descriptionLines: ["Meet buyers, distributors", "and industry professionals", "to grow your business", "network."],
+        icon: buyerConnectionsIcon,
+        bottom: cardBottom03,
+      },
+      {
+        id: "business-growth",
+        title: "Business Growth",
+        descriptionLines: ["Strengthen your brand,", "increase visibility and", "create new business", "opportunities."],
+        icon: businessGrowthIcon,
+        bottom: cardBottom04,
+      },
+    ],
+    bannerLeadText: "The PMS Scheme empowers MSMEs to participate, promote and prosper.",
+    bannerSubText: "More Participation. More Exposure. More Growth."
+  }
 ];
-
-/* =========================================================
-   COMPONENT
-========================================================= */
 
 export default function MsmePmsScheme() {
   const sectionRef = useRef<HTMLElement>(null);
@@ -157,10 +125,6 @@ export default function MsmePmsScheme() {
         py-4
       "
     >
-      {/* =====================================================
-          LEFT REFERENCE LEAVES
-      ====================================================== */}
-
       <img
         src={leftLeaves.src}
         alt=""
@@ -181,362 +145,335 @@ export default function MsmePmsScheme() {
       />
 
       <SectionContainer>
-        <div className="relative z-10 mx-auto w-full">
-          {/* ===================================================
-              KNOW THE SCHEME HEADER
-          ==================================================== */}
+        {MSME_PMS_SCHEME_DATA.map((data) => (
+          <div key={data.id} className="relative z-10 mx-auto w-full">
+            {/* ===================================================
+                KNOW THE SCHEME HEADER
+            ==================================================== */}
 
-          <div className="flex w-full items-center justify-center">
-            {/* left golden line */}
-            <div className="flex flex-1 items-center">
-              <Image src={leftArrow} alt="left arrow" className="h-auto w-full" />
-            </div>
+            <div className="flex w-full items-center justify-center">
+              <div className="flex flex-1 items-center">
+                <Image src={leftArrow} alt="left arrow" className="h-auto w-full" />
+              </div>
 
-            {/* center title */}
-            <div
-              className="
-                mx-[14px]
-                flex
-                shrink-0
-                items-center
-                gap-[10px]
-                sm:mx-[18px]
-              "
-            >
-              <img
-                src={knowSchemeIcon.src}
-                alt=""
-                aria-hidden="true"
+              <div
                 className="
-                  h-[58px]
-                  w-[58px]
-                  shrink-0
-                  object-contain
-                "
-              />
-
-              <p
-                className="
-                  whitespace-nowrap
-                  text-[15px]
-                  font-semibold
-                  uppercase
-                  leading-none
-                  tracking-[0.01em]
-                  text-[#0d5129]
-                  sm:text-[17px]
-                  lg:text-[19px]
-                "
-              >
-                KNOW THE SCHEME
-              </p>
-            </div>
-
-            {/* right golden line */}
-            <div className="flex flex-1 items-center">
-              <Image src={rightArrow} alt="right arrow" className="h-auto w-full" />
-            </div>
-          </div>
-
-          {/* ===================================================
-              MAIN HEADING
-          ==================================================== */}
-
-          <h2
-            id="msme-pms-heading"
-            className="
-              mt-[13px]
-              text-center
-              text-[27px]
-              font-semibold
-              leading-[1.05]
-              tracking-[-0.025em]
-              text-[#075128]
-              sm:text-[34px]
-              md:text-[40px]
-              lg:text-[48px]
-            "
-          >
-            What is the MSME PMS Scheme?
-          </h2>
-
-          {/* ===================================================
-              GOLDEN BORDER WITH DIAMOND
-          ==================================================== */}
-
-          <div
-            aria-hidden="true"
-            className="
-              mx-auto
-              mt-[14px]
-              flex
-              w-full
-              max-w-[180px]
-              items-center
-              justify-center relative
-            "
-          >
-            <Image src={bottomDecor} width={180} height={10} alt="bottom decor" />
-          </div>
-
-          {/* ===================================================
-              INTRO TEXT
-          ==================================================== */}
-
-          <p
-            className="
-              mx-auto
-              mt-4
-              max-w-[800px]
-              text-center
-              text-[14px]
-              leading-[1.45]
-              text-[#171717]
-              sm:text-[18px]
-            "
-          >
-            The{" "}
-            <strong className="font-semibold text-[#075128]">
-              Procurement &amp; Marketing Support (PMS) Scheme
-            </strong>{" "}
-            is an initiative of the Ministry of MSME
-            <br className="hidden md:block" />
-            aimed at improving market access for Micro &amp; Small Enterprises.
-            <br className="hidden md:block" />
-            Eligible MSMEs can explore applicable financial assistance for
-            participation in
-            <br className="hidden md:block" />
-            approved trade fairs and exhibitions.
-          </p>
-
-          {/* ===================================================
-              FEATURE CARDS
-          ==================================================== */}
-
-          <ul
-            className="
-              mt-[24px]
-              grid
-              grid-cols-1
-              gap-5
-              sm:grid-cols-2
-              lg:grid-cols-4
-              lg:gap-5
-            "
-          >
-            {SCHEME_FEATURES.map((feature, index) => (
-              <li
-                key={feature.id}
-                ref={(el) => {
-                  cardsRef.current[index] = el;
-                }}
-                style={{
-                  boxShadow:
-                    "rgba(0, 0, 0, 0.24) 0px 3px 8px",
-                }}
-                className="
-                  relative
+                  mx-[14px]
                   flex
-                  min-h-[315px]
-                  flex-col
+                  shrink-0
                   items-center
-                  overflow-hidden
-                  rounded-[15px]
-                  border
-                  border-[#ebece7]
-                  bg-[#fefdfb]
-                  px-[13px]
-                  pb-[43px]
-                  pt-[18px]
-                  text-center
-                  transition-all
-                  duration-300
-                  hover:-translate-y-2
-                  hover:shadow-[0_12px_24px_rgba(0,0,0,0.15)]
+                  gap-[10px]
+                  sm:mx-[18px]
                 "
               >
-                {/* =============================================
-                    EXACT CROPPED ICON
-                ============================================== */}
-
                 <img
-                  src={feature.icon.src}
+                  src={knowSchemeIcon.src}
                   alt=""
                   aria-hidden="true"
                   className="
-                    h-[102px]
-                    w-[102px]
+                    h-[58px]
+                    w-[58px]
                     shrink-0
                     object-contain
                   "
                 />
 
-                {/* =============================================
-                    TITLE
-                ============================================== */}
-
-                <h3
-                  className="
-                    mt-[5px]
-                    text-[17px]
-                    font-semibold
-                    leading-[1.15]
-                    tracking-[-0.015em]
-                    text-[#075128]
-                    sm:text-[19px]
-                    lg:text-[20px]
-                  "
-                >
-                  {feature.title}
-                </h3>
-
-                {/* =============================================
-                    BAR IMAGE DIVIDER
-                ============================================== */}
-
-                <div
-                  aria-hidden="true"
-                  className="
-                    mt-[9px]
-                    flex
-                    items-center
-                    justify-center
-                  "
-                >
-                  <Image src={bottomDecor} alt="" className="h-auto w-[120px]" />
-                </div>
-
-                {/* =============================================
-                    DESCRIPTION
-                ============================================== */}
-
                 <p
                   className="
-                    mt-[14px]
-                    text-[13px]
-                    leading-[1.42]
-                    text-[#181818]
-                    sm:text-[14px]
-                    lg:text-[15px]
+                    whitespace-nowrap
+                    text-[15px]
+                    font-semibold
+                    uppercase
+                    leading-none
+                    tracking-[0.01em]
+                    text-[#0d5129]
+                    sm:text-[17px]
+                    lg:text-[19px]
                   "
                 >
-                  {feature.description}
+                  {data.headerTagline}
                 </p>
+              </div>
 
-                {/* =============================================
-                    EXACT CROPPED GREEN NUMBER SHAPE
-                ============================================== */}
+              <div className="flex flex-1 items-center">
+                <Image src={rightArrow} alt="right arrow" className="h-auto w-full" />
+              </div>
+            </div>
 
-                <img
-                  src={feature.bottom.src}
-                  alt=""
-                  aria-hidden="true"
-                  className="
-                    pointer-events-none
-                    absolute
-                    bottom-[-1px]
-                    left-1/2
-                    h-[39px]
-                    w-[185px]
-                    -translate-x-1/2
-                    object-contain
-                    object-bottom
-                  "
-                />
-              </li>
-            ))}
-          </ul>
+            {/* ===================================================
+                MAIN HEADING
+            ==================================================== */}
 
-          {/* ===================================================
-              BOTTOM MESSAGE BANNER
-          ==================================================== */}
+            <h2
+              id="msme-pms-heading"
+              className="
+                mt-[13px]
+                text-center
+                text-[27px]
+                font-semibold
+                leading-[1.05]
+                tracking-[-0.025em]
+                text-[#075128]
+                sm:text-[34px]
+                md:text-[40px]
+                lg:text-[48px]
+              "
+            >
+              {data.headingMain}
+            </h2>
 
-          <div
-            className="
-              relative
-              mt-[18px]
-              flex
-              min-h-[96px]
-              items-center
-              overflow-hidden
-              rounded-[15px]
-              bg-[#f1f1e7]
-              px-[20px]
-              py-[12px]
-              sm:px-[32px]
-            "
-          >
-            {/* exact shield */}
-            <img
-              src={bottomShield.src}
-              alt=""
+            {/* ===================================================
+                GOLDEN BORDER WITH DIAMOND
+            ==================================================== */}
+
+            <div
               aria-hidden="true"
               className="
-                relative
-                z-10
-                h-[65px]
-                w-[65px]
-                shrink-0
-                object-contain
+                mx-auto
+                mt-[14px]
+                flex
+                w-full
+                max-w-[180px]
+                items-center
+                justify-center relative
               "
-            />
+            >
+              <Image src={bottomDecor} width={180} height={10} alt="bottom decor" />
+            </div>
 
-            {/* text */}
+            {/* ===================================================
+                INTRO TEXT
+            ==================================================== */}
+
+            <p
+              className="
+                mx-auto
+                mt-4
+                max-w-[800px]
+                text-center
+                text-[14px]
+                leading-[1.45]
+                text-[#171717]
+                sm:text-[18px]
+              "
+            >
+              {data.introText1}
+              <strong className="font-semibold text-[#075128]">
+                {data.introLead}
+              </strong>
+              {data.introText2}
+            </p>
+
+            {/* ===================================================
+                FEATURE CARDS
+            ==================================================== */}
+
+            <ul
+              className="
+                mt-[24px]
+                grid
+                grid-cols-1
+                gap-5
+                sm:grid-cols-2
+                lg:grid-cols-4
+                lg:gap-5
+              "
+            >
+              {data.features.map((feature, index) => (
+                <li
+                  key={feature.id}
+                  ref={(el) => {
+                    cardsRef.current[index] = el;
+                  }}
+                  style={{
+                    boxShadow:
+                      "rgba(0, 0, 0, 0.24) 0px 3px 8px",
+                  }}
+                  className="
+                    relative
+                    flex
+                    min-h-[315px]
+                    flex-col
+                    items-center
+                    overflow-hidden
+                    rounded-[15px]
+                    border
+                    border-[#ebece7]
+                    bg-[#fefdfb]
+                    px-[13px]
+                    pb-[43px]
+                    pt-[18px]
+                    text-center
+                    transition-all
+                    duration-300
+                    hover:-translate-y-2
+                    hover:shadow-[0_12px_24px_rgba(0,0,0,0.15)]
+                  "
+                >
+                  <img
+                    src={feature.icon.src}
+                    alt=""
+                    aria-hidden="true"
+                    className="
+                      h-[102px]
+                      w-[102px]
+                      shrink-0
+                      object-contain
+                    "
+                  />
+
+                  <h3
+                    className="
+                      mt-[5px]
+                      text-[17px]
+                      font-semibold
+                      leading-[1.15]
+                      tracking-[-0.015em]
+                      text-[#075128]
+                      sm:text-[19px]
+                      lg:text-[20px]
+                    "
+                  >
+                    {feature.title}
+                  </h3>
+
+                  <div
+                    aria-hidden="true"
+                    className="
+                      mt-[9px]
+                      flex
+                      items-center
+                      justify-center
+                    "
+                  >
+                    <Image src={bottomDecor} alt="" className="h-auto w-[120px]" />
+                  </div>
+
+                  <p
+                    className="
+                      mt-[14px]
+                      text-[13px]
+                      leading-[1.42]
+                      text-[#181818]
+                      sm:text-[14px]
+                      lg:text-[15px]
+                    "
+                  >
+                    {feature.descriptionLines.map((line, idx) => (
+                      <React.Fragment key={idx}>
+                        {line}
+                        {idx < feature.descriptionLines.length - 1 && <br />}
+                      </React.Fragment>
+                    ))}
+                  </p>
+
+                  <img
+                    src={feature.bottom.src}
+                    alt=""
+                    aria-hidden="true"
+                    className="
+                      pointer-events-none
+                      absolute
+                      bottom-[-1px]
+                      left-1/2
+                      h-[39px]
+                      w-[185px]
+                      -translate-x-1/2
+                      object-contain
+                      object-bottom
+                    "
+                  />
+                </li>
+              ))}
+            </ul>
+
+            {/* ===================================================
+                BOTTOM MESSAGE BANNER
+            ==================================================== */}
+
             <div
               className="
                 relative
-                z-10
-                ml-[17px]
-                md:pr-[120px]
+                mt-[18px]
+                flex
+                min-h-[96px]
+                items-center
+                overflow-hidden
+                rounded-[15px]
+                bg-[#f1f1e7]
+                px-[20px]
+                py-[12px]
+                sm:px-[32px]
               "
             >
-              <p
+              <img
+                src={bottomShield.src}
+                alt=""
+                aria-hidden="true"
                 className="
-                  text-[14px]
-                  leading-[1.45]
-                  text-[#151515]
-                  sm:text-[16px]
-                  lg:text-[17px]
+                  relative
+                  z-10
+                  h-[65px]
+                  w-[65px]
+                  shrink-0
+                  object-contain
                 "
-              >
-                The PMS Scheme empowers MSMEs to participate, promote and
-                prosper.
-              </p>
+              />
 
-              <p
+              <div
                 className="
-                  mt-[2px]
-                  text-[14px]
-                  font-semibold
-                  leading-[1.35]
-                  text-[#075128]
-                  sm:text-[16px]
-                  lg:text-[17px]
+                  relative
+                  z-10
+                  ml-[17px]
+                  pr-[120px]
                 "
               >
-                More Participation. More Exposure. More Growth.
-              </p>
+                <p
+                  className="
+                    text-[14px]
+                    leading-[1.45]
+                    text-[#151515]
+                    sm:text-[16px]
+                    lg:text-[17px]
+                  "
+                >
+                  {data.bannerLeadText}
+                </p>
+
+                <p
+                  className="
+                    mt-[2px]
+                    text-[14px]
+                    font-semibold
+                    leading-[1.35]
+                    text-[#075128]
+                    sm:text-[16px]
+                    lg:text-[17px]
+                  "
+                >
+                  {data.bannerSubText}
+                </p>
+              </div>
+
+              <img
+                src={bottomRightLeaves.src}
+                alt=""
+                aria-hidden="true"
+                className="
+                  pointer-events-none
+                  absolute
+                  bottom-0
+                  right-0
+                  z-0
+                  h-[88px]
+                  w-auto
+                  object-contain
+                  object-right-bottom
+                "
+              />
             </div>
-
-            {/* exact reference right leaves */}
-            <img
-              src={bottomRightLeaves.src}
-              alt=""
-              aria-hidden="true"
-              className="
-                pointer-events-none
-                absolute
-                bottom-0
-                right-0
-                z-0
-                h-[88px]
-                w-auto
-                object-contain
-                object-right-bottom
-              "
-            />
           </div>
-        </div>
+        ))}
       </SectionContainer>
     </section>
   );

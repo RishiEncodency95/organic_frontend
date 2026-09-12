@@ -37,58 +37,60 @@ const Arrow = () => (
   </div>
 );
 
-const CalculationSteps = () => {
+const CalculationSteps = ({ customTitle, customSteps }: { customTitle?: string; customSteps?: any[] }) => {
+  const defaultSteps = [
+    {
+      step: "1",
+      title: <>Valid Udyam<br />Registration</>,
+      subtitle: <span className="font-semibold text-gray-800">UDYAM-DL-02-0118490</span>,
+      statusText: "PASSED"
+    },
+    {
+      step: "2",
+      title: <>Micro / Small<br />Enterprise</>,
+      subtitle: <>Enterprise Classification:<br /><span className="font-semibold text-gray-800 mt-0.5 inline-block">MICRO</span></>,
+      statusText: "PASSED"
+    },
+    {
+      step: "3",
+      title: <>Manufacturing /<br />Service Activity</>,
+      subtitle: <>Major Activity:<br /><span className="font-semibold text-gray-800 mt-0.5 inline-block">MANUFACTURING</span></>,
+      statusText: "PASSED"
+    },
+    {
+      step: "4",
+      title: <>Approved Expo<br />Industry Match</>,
+      subtitle: <>Food • Spices • Pharmaceutical •<br />Medicinal • Botanical Products</>,
+      statusText: "PASSED"
+    },
+    {
+      step: "5",
+      title: <>Special PMS<br />Category Check</>,
+      subtitle: <>Entrepreneur Gender:<br /><span className="font-semibold text-gray-800 mt-0.5 inline-block">FEMALE</span></>,
+      statusText: "100% CATEGORY IDENTIFIED*"
+    }
+  ];
+
+  const stepsToRender = customSteps && customSteps.length > 0 ? customSteps : defaultSteps;
+
   return (
     <div className="w-full bg-white rounded-xl lg:rounded-2xl border border-gray-100 p-4 md:px-5 md:py-4 mt-4 shadow-sm">
       <h3 className="text-sm lg:text-base font-semibold text-[#1b5e20] uppercase tracking-wide mb-4">
-        HOW YOUR ELIGIBILITY WAS CALCULATED
+        {customTitle || "HOW YOUR ELIGIBILITY WAS CALCULATED"}
       </h3>
 
       <div className="flex flex-col md:flex-row items-stretch justify-between w-full gap-2 lg:gap-1.5">
-
-        <StepCard
-          step="1"
-          title={<>Valid Udyam<br />Registration</>}
-          subtitle={<span className="font-semibold text-gray-800">UDYAM-DL-02-0118490</span>}
-          statusText="PASSED"
-        />
-
-        <Arrow />
-
-        <StepCard
-          step="2"
-          title={<>Micro / Small<br />Enterprise</>}
-          subtitle={<>Enterprise Classification:<br /><span className="font-semibold text-gray-800 mt-0.5 inline-block">MICRO</span></>}
-          statusText="PASSED"
-        />
-
-        <Arrow />
-
-        <StepCard
-          step="3"
-          title={<>Manufacturing /<br />Service Activity</>}
-          subtitle={<>Major Activity:<br /><span className="font-semibold text-gray-800 mt-0.5 inline-block">MANUFACTURING</span></>}
-          statusText="PASSED"
-        />
-
-        <Arrow />
-
-        <StepCard
-          step="4"
-          title={<>Approved Expo<br />Industry Match</>}
-          subtitle={<>Food • Spices • Pharmaceutical •<br />Medicinal • Botanical Products</>}
-          statusText="PASSED"
-        />
-
-        <Arrow />
-
-        <StepCard
-          step="5"
-          title={<>Special PMS<br />Category Check</>}
-          subtitle={<>Entrepreneur Gender:<br /><span className="font-semibold text-gray-800 mt-0.5 inline-block">FEMALE</span></>}
-          statusText="100% CATEGORY IDENTIFIED*"
-        />
-
+        {stepsToRender.map((s: any, idx: number) => (
+          <React.Fragment key={idx}>
+            <StepCard
+              step={s.step || String(idx + 1)}
+              title={s.title}
+              subtitle={s.subtitle}
+              statusText={s.statusText || "PASSED"}
+            />
+            {idx < stepsToRender.length - 1 && <Arrow />}
+          </React.Fragment>
+        ))}
       </div>
     </div>
   );

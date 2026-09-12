@@ -85,6 +85,8 @@ const orgSchema = {
   "url": "https://bharatorganicexpo.com",
 };
 
+import StoreProvider from "./store/StoreProvider";
+
 export default function RootLayout({
   children,
 }: Readonly<{

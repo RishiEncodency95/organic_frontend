@@ -4,19 +4,19 @@ import { Users, CheckCircle, Target, ArrowUpRight, TrendingUp } from "lucide-rea
 import gsap from "gsap";
 import SectionContainer from "@/app/components/layout/SectionContainer";
 
+export const FEATURE_STRIP_DATA = [
+  { id: 1, icon: Users, title: "Curated Meetings", subtitle: "Relevant Connections" },
+  { id: 2, icon: CheckCircle, title: "Verified Business", subtitle: "Profiles" },
+  { id: 3, icon: Target, title: "Industry Focused", subtitle: "Networking" },
+  { id: 4, icon: ArrowUpRight, title: "New Opportunities", subtitle: "& Partnerships" },
+  { id: 5, icon: TrendingUp, title: "Business Growth", subtitle: "& Expansion" },
+];
+
 export default function FeatureStrip() {
   const bandRef = useRef<HTMLDivElement>(null);
   const shimmerRef = useRef<HTMLDivElement>(null);
   const itemRefs = useRef<(HTMLDivElement | null)[]>([]);
   const dividerRefs = useRef<(HTMLDivElement | null)[]>([]);
-
-  const features = [
-    { icon: Users, title: "Curated Meetings", subtitle: "Relevant Connections" },
-    { icon: CheckCircle, title: "Verified Business", subtitle: "Profiles" },
-    { icon: Target, title: "Industry Focused", subtitle: "Networking" },
-    { icon: ArrowUpRight, title: "New Opportunities", subtitle: "& Partnerships" },
-    { icon: TrendingUp, title: "Business Growth", subtitle: "& Expansion" },
-  ];
 
   itemRefs.current = [];
   dividerRefs.current = [];
@@ -80,10 +80,10 @@ export default function FeatureStrip() {
           />
 
           <div className="grid grid-cols-2 sm:grid-cols-3 md:flex md:flex-nowrap items-center justify-center md:justify-between gap-2.5 md:gap-0">
-            {features.map((item, i) => {
+            {FEATURE_STRIP_DATA.map((item, i) => {
               const IconComponent = item.icon;
               return (
-                <React.Fragment key={i}>
+                <React.Fragment key={item.id}>
                   <div
                     ref={(el) => { itemRefs.current[i] = el; }}
                     style={{ opacity: 0 }}
@@ -101,7 +101,7 @@ export default function FeatureStrip() {
                       </p>
                     </div>
                   </div>
-                  {i < features.length - 1 && (
+                  {i < FEATURE_STRIP_DATA.length - 1 && (
                     <div
                       ref={(el) => { dividerRefs.current[i] = el; }}
                       className="hidden md:block w-px h-6 bg-white/20"

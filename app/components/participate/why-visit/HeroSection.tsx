@@ -62,6 +62,51 @@ const StatCounter = ({ value }: { value: string }) => {
   return <span ref={ref}>{displayValue.toLocaleString()}{suffix}</span>;
 };
 
+const HERO_SECTION_DATA = [
+  {
+    id: 1,
+    tagline: "WHY VISIT BHARAT ORGANIC EXPO 2027",
+    headlineLine1: "Source Better.",
+    headlineLine2: "Connect Directly.",
+    headlineLine3: "Grow Your Business.",
+    description:
+      "Discover new products, meet manufacturers and suppliers, explore sourcing opportunities and build valuable business connections across India's growing organic, natural and sustainable ecosystem.",
+    buttons: [
+      {
+        id: "btn-buyer",
+        text: "REGISTER AS A BUYER",
+        href: "/registration/buyer-registration",
+        icon: UserCheck,
+        styleType: "blue",
+        sparkles: [
+          { color: "#3b82f6", shadow: "#28396C", style: { top: "-12px", left: "10%", animationDelay: "0.2s" } },
+          { color: "#3b82f6", shadow: "#28396C", style: { top: "-15px", left: "50%", animationDelay: "0.6s" } },
+          { color: "#3b82f6", shadow: "#28396C", style: { top: "-10px", right: "10%", animationDelay: "1s" } },
+        ],
+      },
+      {
+        id: "btn-visitor",
+        text: "REGISTER AS A VISITOR",
+        href: "/registration/visitor-registration",
+        icon: Users,
+        styleType: "orange",
+        sparkles: [
+          { color: "#f97316", shadow: "#c2410c", style: { top: "-12px", left: "10%", animationDelay: "0s" } },
+          { color: "#f97316", shadow: "#c2410c", style: { top: "-15px", left: "50%", animationDelay: "0.4s" } },
+          { color: "#f97316", shadow: "#c2410c", style: { top: "-10px", right: "10%", animationDelay: "0.8s" } },
+        ],
+      },
+    ],
+    stats: [
+      { id: "stat-1", icon: Users, val: "8,000+", label: "VISITORS / DELEGATES" },
+      { id: "stat-2", icon: Building2, val: "200+", label: "EXHIBITORS" },
+      { id: "stat-3", icon: Globe, val: "GLOBAL", label: "PERSPECTIVES" },
+      { id: "stat-4", icon: Mic, val: "100+", label: "EXPERT SPEAKERS" },
+      { id: "stat-5", icon: Handshake, val: "B2B", label: "MEETINGS" },
+    ],
+  },
+];
+
 export default function HeroSection() {
   const sectionRef = useRef<HTMLElement>(null);
   const line1Ref = useRef<HTMLSpanElement>(null);
@@ -75,14 +120,6 @@ export default function HeroSection() {
   const shimmerRef = useRef<HTMLDivElement>(null);
   const itemRefs = useRef<(HTMLDivElement | null)[]>([]);
   const dividerRefs = useRef<(HTMLDivElement | null)[]>([]);
-
-  const stats = [
-    { icon: Users, val: "8,000+", label: "VISITORS / DELEGATES" },
-    { icon: Building2, val: "200+", label: "EXHIBITORS" },
-    { icon: Globe, val: "GLOBAL", label: "PERSPECTIVES" },
-    { icon: Mic, val: "100+", label: "EXPERT SPEAKERS" },
-    { icon: Handshake, val: "B2B", label: "MEETINGS" },
-  ];
 
   itemRefs.current = [];
   dividerRefs.current = [];
@@ -203,190 +240,189 @@ export default function HeroSection() {
         }
       `}</style>
 
-      {/* Hero Section Banner */}
-      <section
-        ref={sectionRef}
-        className="relative w-full min-h-[380px] sm:min-h-[420px] md:min-h-[450px] lg:min-h-[470px] flex items-center overflow-hidden font-inter pt-3 md:pt-5 pb-6 md:pb-8 border-b-4 border-[#ea580c]"
-      >
-        {/* Background Image without overlay */}
-        <div
-          className="absolute inset-0 z-0"
-          style={{
-            backgroundImage: `url(${visitBanner.src})`,
-            backgroundPosition: "center -35px",
-            backgroundSize: "cover",
-            backgroundRepeat: "no-repeat",
-          }}
-        />
-
-        {/* Floating Organic Leaf - Lower opacity */}
-        <div className="absolute -left-14 sm:-left-10 lg:-left-8 top-[10%] sm:top-[12%] z-20 pointer-events-none w-28 sm:w-36 md:w-44 lg:w-[170px]">
-          <img
-            src={leafImg.src}
-            alt="Organic Leaf"
-            className="w-full h-auto object-contain filter drop-shadow-[0_5px_10px_rgba(0,0,0,0.15)] opacity-30"
-          />
-        </div>
-
-        {/* Content */}
-        <SectionContainer className="relative z-10">
-          <div className="max-w-2xl -translate-y-1 sm:-translate-y-2 md:-translate-y-3">
-
-            {/* Tagline */}
-            <div className="flex items-center justify-start gap-2 mt-1.5 translate-y-0.5 mb-1.5">
-              <span className="w-8 h-[2.5px] bg-[#c2410c] shrink-0" />
-              <p className="text-[#c2410c] text-xs sm:text-sm md:text-[15px] font-bold uppercase tracking-[0.18em] text-left font-poppins">
-                WHY VISIT BHARAT ORGANIC EXPO 2027
-              </p>
-              <span className="w-8 h-[2.5px] bg-[#c2410c] shrink-0" />
-
-            </div>
-
-            {/* Heading - 3 separate stacked lines */}
-            <h1
-              className="font-semibold leading-[1.05] mb-3 font-poppins"
-              style={{ textShadow: "1px 1px 2px rgba(0,0,0,0.4)" }}
-            >
-              <span className="block overflow-hidden mb-0.5">
-                <span
-                  ref={line1Ref}
-                  style={{ opacity: 0, display: "block" }}
-                  className="text-3xl sm:text-4xl md:text-[46px] lg:text-[52px] text-[#001810] font-semibold"
-                >
-                  Source Better.
-                </span>
-              </span>
-
-              <span className="block overflow-hidden mb-0.5">
-                <span
-                  ref={line2Ref}
-                  style={{ opacity: 0, display: "block" }}
-                  className="text-3xl sm:text-4xl md:text-[46px] lg:text-[52px] text-[#001810] font-semibold"
-                >
-                  Connect Directly.
-                </span>
-              </span>
-
-              <span className="block overflow-hidden">
-                <span
-                  ref={line3Ref}
-                  style={{ opacity: 0, display: "block" }}
-                  className="text-3xl sm:text-4xl md:text-[46px] lg:text-[52px] text-[#3b8c2a] font-semibold"
-                >
-                  Grow Your Business.
-                </span>
-              </span>
-            </h1>
-
-            {/* Description */}
-            <p
-              ref={subtitleRef}
-              style={{ opacity: 0 }}
-              className="text-black text-sm md:text-[15.5px] font-bold leading-relaxed max-w-lg mt-3 mb-4 font-inter"
-            >
-              Discover new products, meet manufacturers and suppliers, explore sourcing opportunities and build valuable business connections across India&apos;s growing organic, natural and sustainable ecosystem.
-            </p>
-
-
-
-            {/* Buttons */}
-            <div ref={btnsRef} className="flex flex-wrap items-center justify-start gap-3">
-
-              {/* Button 1: REGISTER AS A BUYER */}
-              <div className="relative w-full sm:w-auto">
-                <Sparkle color="#3b82f6" shadow="#28396C" style={{ top: "-12px", left: "10%", animationDelay: "0.2s" }} />
-                <Sparkle color="#3b82f6" shadow="#28396C" style={{ top: "-15px", left: "50%", animationDelay: "0.6s" }} />
-                <Sparkle color="#3b82f6" shadow="#28396C" style={{ top: "-10px", right: "10%", animationDelay: "1s" }} />
-                <Link
-                  href="/registration/buyer-registration"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="blue-btn-hero-exh text-white px-5 py-2.5 rounded-lg font-semibold text-xs uppercase tracking-widest flex items-center justify-start gap-2 transition-all active:scale-95 shadow-lg relative z-10 w-full sm:w-auto font-poppins"
-                >
-                  <UserCheck size={15} />
-                  <span>REGISTER AS A BUYER</span>
-                  <ArrowRight size={15} />
-                </Link>
-              </div>
-
-              {/* Button 2: REGISTER AS A VISITOR */}
-              <div className="relative w-full sm:w-auto">
-                <Sparkle color="#f97316" shadow="#c2410c" style={{ top: "-12px", left: "10%", animationDelay: "0s" }} />
-                <Sparkle color="#f97316" shadow="#c2410c" style={{ top: "-15px", left: "50%", animationDelay: "0.4s" }} />
-                <Sparkle color="#f97316" shadow="#c2410c" style={{ top: "-10px", right: "10%", animationDelay: "0.8s" }} />
-                <Link
-                  href="/registration/visitor-registration"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="group relative inline-flex items-center justify-start gap-2 px-5 py-2.5 rounded-lg font-semibold text-xs uppercase tracking-widest text-white transition-all active:scale-95 shadow-2xl z-10 w-full sm:w-auto overflow-hidden font-poppins"
-                  style={{
-                    background: "linear-gradient(135deg, #ea580c, #c2410c)",
-                    boxShadow: "0 4px 20px rgba(194,65,12,0.5), 0 0 12px rgba(249,115,22,0.3)",
-                  }}
-                >
-                  <span className="absolute inset-0 bg-white/10 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-500 skew-x-12" />
-                  <Users size={15} />
-                  <span>REGISTER AS A VISITOR</span>
-                  <ArrowRight size={15} className="group-hover:translate-x-1 transition-transform" />
-                </Link>
-              </div>
-
-            </div>
-
-          </div>
-        </SectionContainer>
-      </section>
-
-      {/* Stats Counter Band right after Hero Banner */}
-      <div className="relative z-20 -mt-6 md:-mt-8 font-inter mb-2 md:mb-3">
-        <SectionContainer>
-          <div
-            ref={bandRef}
-            style={{ opacity: 0, backgroundColor: "#1b5e20", boxShadow: "0 8px 20px -10px rgba(0,0,0,0.3)" }}
-            className="rounded-2xl border border-white/10 p-2 sm:py-2 md:py-2 md:px-4 relative overflow-hidden [perspective:1000px]"
+      {HERO_SECTION_DATA.map((hero) => (
+        <React.Fragment key={hero.id}>
+          {/* Hero Section Banner */}
+          <section
+            ref={sectionRef}
+            className="relative w-full min-h-[380px] sm:min-h-[420px] md:min-h-[450px] lg:min-h-[470px] flex items-center overflow-hidden font-inter pt-3 md:pt-5 pb-6 md:pb-8 border-b-4 border-[#ea580c]"
           >
-            {/* Shimmer overlay */}
+            {/* Background Image without overlay */}
             <div
-              ref={shimmerRef}
-              className="absolute inset-y-0 left-0 w-1/3 pointer-events-none"
-              style={{ background: "linear-gradient(100deg, transparent, rgba(255,255,255,0.18), transparent)", opacity: 0 }}
+              className="absolute inset-0 z-0"
+              style={{
+                backgroundImage: `url(${visitBanner.src})`,
+                backgroundPosition: "center -35px",
+                backgroundSize: "cover",
+                backgroundRepeat: "no-repeat",
+              }}
             />
 
-            <div className="grid grid-cols-2 sm:grid-cols-3 md:flex md:flex-nowrap items-center justify-center md:justify-between gap-y-3 gap-x-2 md:gap-0">
-              {stats.map((item, i) => {
-                const IconComponent = item.icon;
-                return (
-                  <React.Fragment key={i}>
-                    <div
-                      ref={(el) => { itemRefs.current[i] = el; }}
-                      style={{ opacity: 0 }}
-                      className="flex flex-row items-center justify-center gap-2 sm:gap-2.5 group flex-1 py-1 px-1.5 bg-white/5 md:bg-transparent rounded-xl border border-white/10 md:border-none"
-                    >
-                      <div className="w-7 h-7 md:w-8 md:h-8 rounded-full bg-white/10 flex items-center justify-center shrink-0 border border-white/15">
-                        <IconComponent className="w-3.5 h-3.5 md:w-4 md:h-4 text-[#facc15] stroke-[2]" />
-                      </div>
-                      <div className="flex flex-col text-left justify-center">
-                        <h4 className="text-[14px] sm:text-[15px] md:text-[16px] font-semibold text-white leading-none font-inter mb-0.5">
-                          <StatCounter value={item.val} />
-                        </h4>
-                        <p className="text-[9px] sm:text-[9.5px] md:text-[10px] font-semibold text-[#facc15] uppercase tracking-wider leading-none font-inter">
-                          {item.label}
-                        </p>
-                      </div>
-                    </div>
-                    {i < stats.length - 1 && (
-                      <div
-                        ref={(el) => { dividerRefs.current[i] = el; }}
-                        className="hidden md:block w-px h-6 bg-white/20"
-                      />
-                    )}
-                  </React.Fragment>
-                );
-              })}
+            {/* Floating Organic Leaf */}
+            <div className="absolute -left-14 sm:-left-10 lg:-left-8 top-[10%] sm:top-[12%] z-20 pointer-events-none w-28 sm:w-36 md:w-44 lg:w-[170px]">
+              <img
+                src={leafImg.src}
+                alt="Organic Leaf"
+                className="w-full h-auto object-contain filter drop-shadow-[0_5px_10px_rgba(0,0,0,0.15)] opacity-30"
+              />
             </div>
+
+            {/* Content */}
+            <SectionContainer className="relative z-10">
+              <div className="max-w-2xl -translate-y-1 sm:-translate-y-2 md:-translate-y-3">
+
+                {/* Tagline */}
+                <div className="flex items-center justify-start gap-2 mt-1.5 translate-y-0.5 mb-1.5">
+                  <span className="w-8 h-[2.5px] bg-[#c2410c] shrink-0" />
+                  <p className="text-[#c2410c] text-xs sm:text-sm md:text-[15px] font-bold uppercase tracking-[0.18em] text-left font-poppins">
+                    {hero.tagline}
+                  </p>
+                  <span className="w-8 h-[2.5px] bg-[#c2410c] shrink-0" />
+                </div>
+
+                {/* Heading - 3 separate stacked lines */}
+                <h1
+                  className="font-semibold leading-[1.05] mb-3 font-poppins"
+                  style={{ textShadow: "1px 1px 2px rgba(0,0,0,0.4)" }}
+                >
+                  <span className="block overflow-hidden mb-0.5">
+                    <span
+                      ref={line1Ref}
+                      style={{ opacity: 0, display: "block" }}
+                      className="text-3xl sm:text-4xl md:text-[46px] lg:text-[52px] text-[#001810] font-semibold"
+                    >
+                      {hero.headlineLine1}
+                    </span>
+                  </span>
+
+                  <span className="block overflow-hidden mb-0.5">
+                    <span
+                      ref={line2Ref}
+                      style={{ opacity: 0, display: "block" }}
+                      className="text-3xl sm:text-4xl md:text-[46px] lg:text-[52px] text-[#001810] font-semibold"
+                    >
+                      {hero.headlineLine2}
+                    </span>
+                  </span>
+
+                  <span className="block overflow-hidden">
+                    <span
+                      ref={line3Ref}
+                      style={{ opacity: 0, display: "block" }}
+                      className="text-3xl sm:text-4xl md:text-[46px] lg:text-[52px] text-[#3b8c2a] font-semibold"
+                    >
+                      {hero.headlineLine3}
+                    </span>
+                  </span>
+                </h1>
+
+                {/* Description */}
+                <p
+                  ref={subtitleRef}
+                  style={{ opacity: 0 }}
+                  className="text-black text-sm md:text-[15.5px] font-bold leading-relaxed max-w-lg mt-3 mb-4 font-inter"
+                >
+                  {hero.description}
+                </p>
+
+                {/* Buttons */}
+                <div ref={btnsRef} className="flex flex-wrap items-center justify-start gap-3">
+                  {hero.buttons.map((btn) => {
+                    const IconComp = btn.icon;
+                    return (
+                      <div key={btn.id} className="relative w-full sm:w-auto">
+                        {btn.sparkles.map((sp, idx) => (
+                          <Sparkle key={idx} color={sp.color} shadow={sp.shadow} style={sp.style} />
+                        ))}
+                        {btn.styleType === "blue" ? (
+                          <Link
+                            href={btn.href}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="blue-btn-hero-exh text-white px-5 py-2.5 rounded-lg font-semibold text-xs uppercase tracking-widest flex items-center justify-start gap-2 transition-all active:scale-95 shadow-lg relative z-10 w-full sm:w-auto font-poppins"
+                          >
+                            <IconComp size={15} />
+                            <span>{btn.text}</span>
+                            <ArrowRight size={15} />
+                          </Link>
+                        ) : (
+                          <Link
+                            href={btn.href}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="group relative inline-flex items-center justify-start gap-2 px-5 py-2.5 rounded-lg font-semibold text-xs uppercase tracking-widest text-white transition-all active:scale-95 shadow-2xl z-10 w-full sm:w-auto overflow-hidden font-poppins"
+                            style={{
+                              background: "linear-gradient(135deg, #ea580c, #c2410c)",
+                              boxShadow: "0 4px 20px rgba(194,65,12,0.5), 0 0 12px rgba(249,115,22,0.3)",
+                            }}
+                          >
+                            <span className="absolute inset-0 bg-white/10 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-500 skew-x-12" />
+                            <IconComp size={15} />
+                            <span>{btn.text}</span>
+                            <ArrowRight size={15} className="group-hover:translate-x-1 transition-transform" />
+                          </Link>
+                        )}
+                      </div>
+                    );
+                  })}
+                </div>
+
+              </div>
+            </SectionContainer>
+          </section>
+
+          {/* Stats Counter Band right after Hero Banner */}
+          <div className="relative z-20 -mt-6 md:-mt-8 font-inter mb-2 md:mb-3">
+            <SectionContainer>
+              <div
+                ref={bandRef}
+                style={{ opacity: 0, backgroundColor: "#1b5e20", boxShadow: "0 8px 20px -10px rgba(0,0,0,0.3)" }}
+                className="rounded-2xl border border-white/10 p-2 sm:py-2 md:py-2 md:px-4 relative overflow-hidden [perspective:1000px]"
+              >
+                {/* Shimmer overlay */}
+                <div
+                  ref={shimmerRef}
+                  className="absolute inset-y-0 left-0 w-1/3 pointer-events-none"
+                  style={{ background: "linear-gradient(100deg, transparent, rgba(255,255,255,0.18), transparent)", opacity: 0 }}
+                />
+
+                <div className="grid grid-cols-2 sm:grid-cols-3 md:flex md:flex-nowrap items-center justify-center md:justify-between gap-y-3 gap-x-2 md:gap-0">
+                  {hero.stats.map((item, i) => {
+                    const IconComponent = item.icon;
+                    return (
+                      <React.Fragment key={item.id}>
+                        <div
+                          ref={(el) => { itemRefs.current[i] = el; }}
+                          style={{ opacity: 0 }}
+                          className="flex flex-row items-center justify-center gap-2 sm:gap-2.5 group flex-1 py-1 px-1.5 bg-white/5 md:bg-transparent rounded-xl border border-white/10 md:border-none"
+                        >
+                          <div className="w-7 h-7 md:w-8 md:h-8 rounded-full bg-white/10 flex items-center justify-center shrink-0 border border-white/15">
+                            <IconComponent className="w-3.5 h-3.5 md:w-4 md:h-4 text-[#facc15] stroke-[2]" />
+                          </div>
+                          <div className="flex flex-col text-left justify-center">
+                            <h4 className="text-[14px] sm:text-[15px] md:text-[16px] font-semibold text-white leading-none font-inter mb-0.5">
+                              <StatCounter value={item.val} />
+                            </h4>
+                            <p className="text-[9px] sm:text-[9.5px] md:text-[10px] font-semibold text-[#facc15] uppercase tracking-wider leading-none font-inter">
+                              {item.label}
+                            </p>
+                          </div>
+                        </div>
+                        {i < hero.stats.length - 1 && (
+                          <div
+                            ref={(el) => { dividerRefs.current[i] = el; }}
+                            className="hidden md:block w-px h-6 bg-white/20"
+                          />
+                        )}
+                      </React.Fragment>
+                    );
+                  })}
+                </div>
+              </div>
+            </SectionContainer>
           </div>
-        </SectionContainer>
-      </div>
+        </React.Fragment>
+      ))}
     </>
   );
 }
