@@ -1,19 +1,19 @@
 import { Check } from "lucide-react";
 import React from "react";
 
-export default function ApplySteps({ currentStep = 1 }: { currentStep?: number }) {
+export default function ApplySteps({ currentStep = 1, customLabels }: { currentStep?: number; customLabels?: string[] }) {
   const steps = [
     {
       id: 1,
-      title: "Enterprise Details",
+      title: customLabels?.[0] || "Enterprise Details",
     },
     {
       id: 2,
-      title: "Participation Details",
+      title: customLabels?.[1] || "Participation Details",
     },
     {
       id: 3,
-      title: "Payment",
+      title: customLabels?.[2] || "Payment",
     },
   ];
 
