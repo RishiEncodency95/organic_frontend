@@ -47,24 +47,33 @@ import l46 from "@/app/assets/list/46.jpg";
 import l47 from "@/app/assets/list/47.jpg";
 import l48 from "@/app/assets/list/48.jpg";
 
-export const API_BASE = "https://api.ihwe.in";
+export const BACKEND_URL = process.env.NEXT_PUBLIC_BACKEND_URL || "http://localhost:4000";
 
 export interface ApiExhibitor {
     _id: string;
     title: string;
+    name?: string;
     location: string;
     category: string;
     order: number;
     websiteUrl?: string;
-    image: any;
+    image?: any;
+    logo?: any;
     altText?: string;
+    status?: string;
 }
 
 export const toAbsoluteImage = (image: any): string => {
     if (!image) return "";
     if (typeof image === "object" && image.src) return image.src;
     if (typeof image !== "string") return "";
-    return image.startsWith("http") || image.startsWith("/") || image.startsWith("data:") ? image : `${API_BASE}${image}`;
+    if (image.startsWith("http://") || image.startsWith("https://") || image.startsWith("data:")) {
+        return image;
+    }
+    if (image.startsWith("/uploads/")) {
+        return `${BACKEND_URL}${image}`;
+    }
+    return image;
 };
 
 export const fallbackExhibitors: ApiExhibitor[] = [
