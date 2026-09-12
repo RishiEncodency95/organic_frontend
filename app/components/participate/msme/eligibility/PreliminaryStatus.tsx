@@ -18,7 +18,7 @@ const RibbonStarIcon = ({ className, size = 48 }: { className?: string, size?: n
   </svg>
 );
 
-const PreliminaryStatus = () => {
+const PreliminaryStatus = ({ customProps }: { customProps?: any }) => {
   return (
     <div className="w-full bg-[#F9F9F9] rounded-xl shadow-[0_2px_10px_rgba(0,0,0,0.05)] border border-gray-100 mt-4 flex flex-col md:flex-row overflow-hidden relative">
 
@@ -38,13 +38,13 @@ const PreliminaryStatus = () => {
           </div>
           <div className="flex flex-col">
             <span className="text-[10.5px] md:text-[11.5px] font-semibold tracking-widest text-white/90 uppercase mb-0.5">
-              Preliminary Status
+              {customProps?.eyebrow || "Preliminary Status"}
             </span>
             <h3 className="text-3xl md:text-4xl font-semibold tracking-wide mb-1 leading-none text-white">
-              ELIGIBLE
+              {customProps?.title || "ELIGIBLE"}
             </h3>
             <p className="text-[12.5px] md:text-[14px] font-medium text-white/90 leading-snug">
-              Your enterprise appears eligible<br className="hidden md:block" />for PMS Support.
+              {customProps?.subtitle || "Your enterprise appears eligible for PMS Support."}
             </p>
           </div>
         </div>
@@ -53,27 +53,27 @@ const PreliminaryStatus = () => {
       {/* Middle Block */}
       <div className="px-4 md:px-5 md:py-2 flex-1 border-b md:border-b-0 md:border-r border-gray-100 flex flex-col justify-center  ">
         <span className="text-[12px] md:text-[14px] font-semibold text-[#1b5e20] uppercase tracking-wider mb-1">
-          Potential PMS Support
+          {customProps?.supportTitle || "Potential PMS Support"}
         </span>
         <h3 className="text-xl md:text-2xl font-semibold text-[#1b5e20] mb-1 leading-none">
-          UP TO 100%
+          {customProps?.supportValue || "UP TO 100%"}
         </h3>
         <p className="text-[14px] font-semibold text-gray-800 mb-2.5">
-          Eligible Space Rent Assistance*
+          {customProps?.supportDescription || "Eligible Space Rent Assistance*"}
         </p>
         <div className="inline-flex items-center gap-1.5 border border-[#1b5e20]/30 text-[#1b5e20] bg-[#f0f9f0] px-2.5 py-1 rounded-md w-fit">
           <span className="text-[14px] leading-none mb-0.5">♀</span>
-          <span className="text-[12px] font-semibold">Women MSME Category</span>
+          <span className="text-[12px] font-semibold">{customProps?.categoryBadge || "Women MSME Category"}</span>
         </div>
       </div>
 
       {/* Right Block */}
       <div className="px-4 md:px-5 md:py-2 flex-[1.2] flex flex-col justify-center">
         <span className="text-[10px] md:text-[14px] font-semibold text-[#1b5e20] uppercase tracking-wider mb-2">
-          Why 100%?
+          {customProps?.whyTitle || "Why 100%?"}
         </span>
         <p className="text-[12px] md:text-[14px] text-gray-800 leading-relaxed font-medium">
-          Your Udyam record identifies the entrepreneur as Female. Under the applicable PMS assistance category, Women MSMEs may qualify for 100% assistance on eligible built-up space rent, subject to scheme limits and final approval.
+          {customProps?.whyDescription || "Your Udyam record identifies the entrepreneur as Female. Under the applicable PMS assistance category, Women MSMEs may qualify for 100% assistance on eligible built-up space rent, subject to scheme limits and final approval."}
         </p>
       </div>
 

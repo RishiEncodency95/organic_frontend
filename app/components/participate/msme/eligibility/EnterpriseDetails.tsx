@@ -1,11 +1,11 @@
 import React from 'react';
 import { Building2, Settings2, Factory, Layout, UserCircle2, Venus, Calendar, MapPin, ShieldCheck, CheckCircle2, Star } from 'lucide-react';
 
-const EnterpriseDetails = () => {
+const EnterpriseDetails = ({ customProps }: { customProps?: any }) => {
   return (
     <div className="w-full bg-white rounded-xl shadow-[0_2px_10px_rgba(0,0,0,0.05)] border border-gray-100 p-4 md:px-5 md:py-2 flex flex-col h-full">
       <h3 className="text-[12px] md:text-[16px] font-semibold text-[#1b5e20] uppercase tracking-wider mb-4">
-        Your Enterprise Details
+        {customProps?.title || "Your Enterprise Details"}
       </h3>
 
       <div className="flex flex-col text-xs md:text-sm font-medium text-gray-600 mb-4 flex-1">
