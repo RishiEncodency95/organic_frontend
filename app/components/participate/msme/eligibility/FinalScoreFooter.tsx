@@ -158,6 +158,7 @@ interface ActionButtonProps {
   primary?: boolean;
   icon: React.ReactNode;
   href?: string;
+  target?: string;
 }
 
 const ActionButton = ({
@@ -165,12 +166,13 @@ const ActionButton = ({
   primary = false,
   icon,
   href,
+  target,
 }: ActionButtonProps) => {
   const className = `h-[44px] w-full rounded-[6px] px-4 flex items-center justify-center gap-2 text-[12px] font-semibold uppercase transition-all ${primary ? `bg-[#176b27] text-white hover:bg-[#115d20]` : `bg-white border border-[#91a592] text-[#28552f] hover:bg-[#f7faf7]`}`;
   
   if (href) {
     return (
-      <Link href={href} target="_blank" className={className}>
+      <Link href={href} target={target} className={className}>
         <span>{children}</span>
         {icon}
       </Link>
@@ -333,6 +335,7 @@ const FinalScoreFooter = () => {
           {/* Apply */}
           <ActionButton
             primary
+            href="/participate/msme/apply"
             icon={<ArrowRight size={18} strokeWidth={2.3} />}
           >
             Apply for PMS Support
@@ -341,6 +344,7 @@ const FinalScoreFooter = () => {
 
           {/* Book */}
           <ActionButton
+            href="/participate/why-exhibit"
             icon={
               <ArrowRight
                 size={28}
@@ -367,6 +371,7 @@ const FinalScoreFooter = () => {
 
           {/* Support */}
           <ActionButton
+            href="/contact"
             icon={
               <Headphones
                 size={27}
@@ -482,12 +487,14 @@ const FinalScoreFooter = () => {
 
           <ActionButton
             primary
+            href="/participate/msme/apply"
             icon={<ArrowRight size={20} />}
           >
             Apply for PMS Support
           </ActionButton>
 
           <ActionButton
+            href="/participate/why-exhibit"
             icon={<ArrowRight size={20} />}
           >
             Book Your Stall
@@ -500,6 +507,7 @@ const FinalScoreFooter = () => {
           </ActionButton>
 
           <ActionButton
+            href="/contact"
             icon={<Headphones size={20} />}
           >
             Talk to PMS Support Team

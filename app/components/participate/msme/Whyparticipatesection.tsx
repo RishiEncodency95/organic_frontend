@@ -10,39 +10,48 @@ import leftMsme from "@/app/assets/participate/msme/exhibition-lef.png"
 import rightMsme from "@/app/assets/participate/msme/exhibition-right.png"
 import bottomMsme from "@/app/assets/participate/msme/exibition-bottom.png"
 
-interface FeatureCard {
-  icon: string;
-  title: string;
-  description: string;
-}
-
-const features: FeatureCard[] = [
-  {
-    icon: pmsApprovedIcon.src,
-    title: "PMS Approved Event*",
-    description:
-      "Opportunity for eligible<br/> MSMEs to explore applicable<br/> PMS assistance.",
+export const WHY_PARTICIPATE_SECTION_DATA = {
+  eyebrow: "WHY PARTICIPATE",
+  heading: {
+    prefix: "More Than an ",
+    highlight: "Exhibition",
+    suffix: " Opportunity",
   },
-  {
-    icon: focusedIndustryIcon.src,
-    title: "Focused Industry Platform",
-    description:
-      "Organic • Food • Nutrition •<br/> AYUSH • Herbal • Wellness •<br/> Agriculture • GreenTech",
+  features: [
+    {
+      icon: pmsApprovedIcon.src,
+      title: "PMS Approved Event*",
+      description:
+        "Opportunity for eligible<br/> MSMEs to explore applicable<br/> PMS assistance.",
+    },
+    {
+      icon: focusedIndustryIcon.src,
+      title: "Focused Industry Platform",
+      description:
+        "Organic • Food • Nutrition •<br/> AYUSH • Herbal • Wellness •<br/> Agriculture • GreenTech",
+    },
+    {
+      icon: b2bOpportunitiesIcon.src,
+      title: "B2B Opportunities",
+      description:
+        "Connect with buyers,<br/> distributors and industry<br/> professionals.",
+    },
+    {
+      icon: dedicatedSupportIcon.src,
+      title: "Dedicated PMS Support",
+      description: "Guidance before, during<br/> and after exhibition<br/> participation.",
+    },
+  ],
+  cta: {
+    label: "BOOK YOUR STAND",
+    href: "/registration/book-a-stand",
   },
-  {
-    icon: b2bOpportunitiesIcon.src,
-    title: "B2B Opportunities",
-    description:
-      "Connect with buyers,<br/> distributors and industry<br/> professionals.",
-  },
-  {
-    icon: dedicatedSupportIcon.src,
-    title: "Dedicated PMS Support",
-    description: "Guidance before, during<br/> and after exhibition<br/> participation.",
-  },
-];
+  footnote: "*Subject to approval under PMS Scheme Guidelines",
+};
 
 export default function WhyParticipateSection() {
+  const data = WHY_PARTICIPATE_SECTION_DATA;
+
   return (
     <section
       aria-labelledby="why-participate-heading"
@@ -62,7 +71,7 @@ export default function WhyParticipateSection() {
         {/* Sub-eyebrow */}
         <div className="mt-2 flex items-center gap-3 text-[20px] font-semibold text-[#1b5e20] sm:text-[22px]">
           <Image src={leftMsme} className="h-6 w-16 object-contain sm:h-8 sm:w-20" aria-hidden="true" alt="left decoration" />
-          <span>WHY PARTICIPATE</span>
+          <span>{data.eyebrow}</span>
           <Image src={rightMsme} className="h-6 w-16 object-contain sm:h-8 sm:w-20" aria-hidden="true" alt="right decoration" />
         </div>
 
@@ -71,22 +80,22 @@ export default function WhyParticipateSection() {
           id="why-participate-heading"
           className="mt-2 text-balance text-center text-[24px] font-semibold leading-tight text-slate-900 md:text-[34px] lg:text-[50px]"
         >
-          More Than an{" "}
+          {data.heading.prefix}
           <span className="relative inline-block text-[#1b5e20]">
-            Exhibition
+            {data.heading.highlight}
             <div
               aria-hidden="true"
               className="absolute -bottom-4 left-0 h-5 w-full text-[#3b8c2a] sm:-bottom-2"
             >
              <Image src={bottomMsme} alt="bottom msme" fill />
             </div>
-          </span>{" "}
-          Opportunity
+          </span>
+          {data.heading.suffix}
         </h2>
 
         {/* Cards */}
         <ul className="mt-14 grid w-full grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-4">
-          {features.map((feature) => (
+          {data.features.map((feature) => (
             <li
               key={feature.title}
           className="relative flex flex-col items-center overflow-visible rounded-2xl border border-gray-100 bg-white pt-20 pb-8 text-center shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-md"
@@ -117,17 +126,17 @@ export default function WhyParticipateSection() {
 
         {/* CTA */}
         <a
-          href="/registration/book-a-stand"
-          className="mt-6 inline-flex w-full items-center justify-center gap-3 rounded-full bg-gradient-to-b from-[#3a8a3a] via-[#2a7a2a] to-[#1a5a1a] px-12 py-1.5 text-[14px] font-semibold tracking-wide text-white transition-transform duration-200 hover:from-[#4a9a4a] hover:via-[#3a8a3a] hover:to-[#2a7a2a] sm:w-auto sm:text-[20px]"
+          href={data.cta.href}
+          className="mt-6 inline-flex w-full items-center justify-center gap-3 rounded-full bg-gradient-to-b from-[#3a8a3a] via-[#2a7a2a] to-[#1a5a1a] px-12 py-1.5 text-[20px] font-semibold tracking-wide text-white transition-transform duration-200 hover:from-[#4a9a4a] hover:via-[#3a8a3a] hover:to-[#2a7a2a] sm:w-auto"
           style={{ boxShadow: "0 4px 0 #0d3d0d, 0 6px 16px rgba(0,0,0,0.3)" }}
         >
           <Calendar className="h-12 w-12" aria-hidden="true" />
-          BOOK YOUR STAND
+          {data.cta.label}
           <ArrowRight className="h-5 w-5" strokeWidth={2.5} aria-hidden="true" />
         </a>
       </div>
       </SectionContainer>
-      <p className="absolute left-4 bottom-4 text-[14px]"><sup>*</sup>Subject to approval under PMS Scheme Guidelines</p>
+      <p className="absolute left-4 bottom-4 text-[14px]"><sup>*</sup>{data.footnote.replace(/^\*/, '')}</p>
     </section>
   );
 }

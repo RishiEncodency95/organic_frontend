@@ -4,8 +4,10 @@ import { motion, AnimatePresence } from "framer-motion";
 import { MapPin, Quote } from "lucide-react";
 import SectionContainer from "@/app/components/layout/SectionContainer";
 
-const defaultTestimonials = [
+// Mock API response / JSON array of objects
+const TESTIMONIALS_DATA = [
   {
+    id: "t1",
     companyName1: "Green Earth Organics Pvt. Ltd.",
     companyName2: "Organic Food & Agri",
     location: "Mumbai, India",
@@ -14,6 +16,7 @@ const defaultTestimonials = [
     color: "#1b5e20",
   },
   {
+    id: "t2",
     companyName1: "NatureFarm Exports",
     companyName2: "Agriculture & Exports",
     location: "Pune, India",
@@ -22,6 +25,7 @@ const defaultTestimonials = [
     color: "#4B1426",
   },
   {
+    id: "t3",
     companyName1: "Herbal Heritage India",
     companyName2: "Ayush & Herbal Products",
     location: "Delhi, India",
@@ -30,6 +34,7 @@ const defaultTestimonials = [
     color: "#0e3b1c",
   },
   {
+    id: "t4",
     companyName1: "PureGrow Technologies",
     companyName2: "Sustainable Agri-Tech",
     location: "Bengaluru, India",
@@ -38,6 +43,7 @@ const defaultTestimonials = [
     color: "#1b5e20",
   },
   {
+    id: "t5",
     companyName1: "Vedic Wellness Corp",
     companyName2: "Natural Personal Care",
     location: "Jaipur, India",
@@ -46,6 +52,7 @@ const defaultTestimonials = [
     color: "#4B1426",
   },
   {
+    id: "t6",
     companyName1: "OrganicIndia Solutions",
     companyName2: "Certification & Compliance",
     location: "Hyderabad, India",
@@ -57,7 +64,7 @@ const defaultTestimonials = [
 
 const CHAR_LIMIT = 155;
 
-const TestimonialCard = ({ item, index, expandedId, setExpandedId }: { item: typeof defaultTestimonials[0]; index: number; expandedId: number | null; setExpandedId: (id: number | null) => void }) => {
+const TestimonialCard = ({ item, index, expandedId, setExpandedId }: { item: typeof TESTIMONIALS_DATA[0]; index: number; expandedId: number | null; setExpandedId: (id: number | null) => void }) => {
   const isExpanded = expandedId === index;
   const isLong = item.quote.length > CHAR_LIMIT;
 
@@ -151,7 +158,7 @@ const TestimonialCard = ({ item, index, expandedId, setExpandedId }: { item: typ
 
 const TestimonialsSection = () => {
   const [expandedId, setExpandedId] = useState<number | null>(null);
-  const doubled = [...defaultTestimonials, ...defaultTestimonials];
+  const doubled = [...TESTIMONIALS_DATA, ...TESTIMONIALS_DATA];
 
   return (
     <section className="pt-4 pb-4 bg-white relative overflow-hidden font-inter">
@@ -192,3 +199,4 @@ const TestimonialsSection = () => {
 };
 
 export default TestimonialsSection;
+

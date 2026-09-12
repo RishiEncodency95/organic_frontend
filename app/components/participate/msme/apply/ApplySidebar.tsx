@@ -47,7 +47,54 @@ function BuildingIcon(props: LucideProps) {
   );
 }
 
+export const APPLY_SIDEBAR_DATA = {
+  aboutScheme: {
+    title: "About PMS Scheme",
+    description:
+      "The MSME Promotion & Marketing Assistance (PMS) Scheme provides financial assistance to eligible MSMEs for participating in approved exhibitions.",
+    linkText: "View Scheme Guidelines",
+    linkHref: "#",
+  },
+  assistanceStructure: [
+    {
+      id: 1,
+      icon: TimerIcon,
+      title: "100% Assistance",
+      subtitle: "For Women Enterprises,\nSC/ST category MSMEs",
+    },
+    {
+      id: 2,
+      icon: UserIcon,
+      title: "80% Assistance",
+      subtitle: "For General (Male)\ncategory MSMEs",
+    },
+    {
+      id: 3,
+      icon: BadgeCheckIcon,
+      title: "Up to ₹1.5 Lakh",
+      subtitle: "Maximum reimbursement\nper eligible enterprise",
+    },
+    {
+      id: 4,
+      icon: BuildingIcon,
+      title: "Min. 9 sqm Stall",
+      subtitle: "Minimum stall size required\nto be eligible",
+    },
+  ],
+  documentsRequired: [
+    "Udyam Registration Certificate",
+    "PAN Card",
+    "GST Registration Certificate (if applicable)",
+    "Bank Account Details (Cancelled Cheque)",
+    "Bharat Organic Expo Booking Confirmation",
+    "Stall Invoice / Payment Proof",
+    "Other documents as per PMS guidelines",
+  ],
+};
+
 export default function ApplySidebar() {
+  const data = APPLY_SIDEBAR_DATA;
+
   return (
     <div className="flex flex-col gap-6">
 
@@ -56,14 +103,14 @@ export default function ApplySidebar() {
         <div className="flex items-center gap-2 mb-4">
           <Info size={20} className="text-[#176b27]" strokeWidth={2.5} />
           <h3 className="text-[14px] font-semibold uppercase text-[#176b27] tracking-wide">
-            About PMS Scheme
+            {data.aboutScheme.title}
           </h3>
         </div>
         <p className="text-[14px] text-gray-700 font-medium leading-relaxed mb-4">
-          The MSME Promotion & Marketing Assistance (PMS) Scheme provides financial assistance to eligible MSMEs for participating in approved exhibitions.
+          {data.aboutScheme.description}
         </p>
-        <Link href="#" className="inline-flex items-center gap-1.5 text-[12px] font-extrabold text-[#176b27] hover:underline">
-          View Scheme Guidelines <ArrowRight size={14} strokeWidth={3} />
+        <Link href={data.aboutScheme.linkHref} className="inline-flex items-center gap-1.5 text-[12px] font-extrabold text-[#176b27] hover:underline">
+          {data.aboutScheme.linkText} <ArrowRight size={14} strokeWidth={3} />
         </Link>
       </div>
 
@@ -76,37 +123,18 @@ export default function ApplySidebar() {
         </div>
 
         <div className="flex flex-col gap-5">
-          <div className="flex items-start gap-4">
-            <TimerIcon size={24} className="text-[#176b27] shrink-0 mt-0.5" strokeWidth={1.5} />
-            <div>
-              <h4 className="text-[13px] font-extrabold text-[#111827] mb-0.5">100% Assistance</h4>
-              <p className="text-[12px] text-gray-600 font-medium leading-snug">For Women Enterprises,<br />SC/ST category MSMEs</p>
-            </div>
-          </div>
-
-          <div className="flex items-start gap-4">
-            <UserIcon size={24} className="text-[#176b27] shrink-0 mt-0.5" strokeWidth={1.5} />
-            <div>
-              <h4 className="text-[13px] font-extrabold text-[#111827] mb-0.5">80% Assistance</h4>
-              <p className="text-[12px] text-gray-600 font-medium leading-snug">For General (Male)<br />category MSMEs</p>
-            </div>
-          </div>
-
-          <div className="flex items-start gap-4">
-            <BadgeCheckIcon size={24} className="text-[#176b27] shrink-0 mt-0.5" strokeWidth={1.5} />
-            <div>
-              <h4 className="text-[13px] font-extrabold text-[#111827] mb-0.5">Up to ₹1.5 Lakh</h4>
-              <p className="text-[12px] text-gray-600 font-medium leading-snug">Maximum reimbursement<br />per eligible enterprise</p>
-            </div>
-          </div>
-
-          <div className="flex items-start gap-4">
-            <BuildingIcon size={24} className="text-[#176b27] shrink-0 mt-0.5" strokeWidth={1.5} />
-            <div>
-              <h4 className="text-[13px] font-extrabold text-[#111827] mb-0.5">Min. 9 sqm Stall</h4>
-              <p className="text-[12px] text-gray-600 font-medium leading-snug">Minimum stall size required<br />to be eligible</p>
-            </div>
-          </div>
+          {data.assistanceStructure.map((item) => {
+            const IconComp = item.icon;
+            return (
+              <div key={item.id} className="flex items-start gap-4">
+                <IconComp size={24} className="text-[#176b27] shrink-0 mt-0.5" strokeWidth={1.5} />
+                <div>
+                  <h4 className="text-[13px] font-extrabold text-[#111827] mb-0.5">{item.title}</h4>
+                  <p className="text-[12px] text-gray-600 font-medium leading-snug whitespace-pre-line">{item.subtitle}</p>
+                </div>
+              </div>
+            );
+          })}
         </div>
       </div>
 
@@ -126,15 +154,7 @@ export default function ApplySidebar() {
         </div>
 
         <ul className="flex flex-col gap-3 mt-5">
-          {[
-            "Udyam Registration Certificate",
-            "PAN Card",
-            "GST Registration Certificate (if applicable)",
-            "Bank Account Details (Cancelled Cheque)",
-            "Bharat Organic Expo Booking Confirmation",
-            "Stall Invoice / Payment Proof",
-            "Other documents as per PMS guidelines",
-          ].map((doc, i) => (
+          {data.documentsRequired.map((doc, i) => (
             <li key={i} className="flex items-start gap-2.5">
               <CircleCheck size={16} className="text-[#176b27] shrink-0 mt-[1px]" strokeWidth={2} />
               <span className="text-[12px] font-medium text-gray-700 leading-tight">

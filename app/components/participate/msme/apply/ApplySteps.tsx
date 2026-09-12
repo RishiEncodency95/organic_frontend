@@ -1,21 +1,23 @@
 import { Check } from "lucide-react";
 import React from "react";
 
-export default function ApplySteps({ currentStep = 1, customLabels }: { currentStep?: number; customLabels?: string[] }) {
-  const steps = [
-    {
-      id: 1,
-      title: customLabels?.[0] || "Enterprise Details",
-    },
-    {
-      id: 2,
-      title: customLabels?.[1] || "Participation Details",
-    },
-    {
-      id: 3,
-      title: customLabels?.[2] || "Payment",
-    },
-  ];
+export const APPLY_STEPS_DATA = [
+  {
+    id: 1,
+    title: "Enterprise Details",
+  },
+  {
+    id: 2,
+    title: "Participation Details",
+  },
+  {
+    id: 3,
+    title: "Payment",
+  },
+];
+
+export default function ApplySteps({ currentStep = 1 }: { currentStep?: number }) {
+  const steps = APPLY_STEPS_DATA;
 
   return (
     <div className="w-full flex bg-white items-center justify-between px-6 py-5 rounded-xl shadow-[0_4px_20px_rgb(0,0,0,0.03)] overflow-x-auto hide-scrollbar">

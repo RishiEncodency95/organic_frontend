@@ -107,6 +107,84 @@ const SUPPORT_CARDS: SupportCard[] = [
   },
 ];
 
+const PMS_FINANCIAL_ASSISTANCE_DATA = [
+  {
+    id: 1,
+    sectionCategory: "Financial Assistance",
+    sectionCategorySub: "For Eligible MSMEs",
+    titleLine1: "How Much Support",
+    titleLine2: "May You Get?",
+    descriptionLead: "The ",
+    descriptionHighlight: "PMS Scheme",
+    descriptionText: " provides financial assistance to reduce your participation cost and help your business grow in new markets.",
+    cards: [
+      {
+        id: "general",
+        icon: percent,
+        iconBg: "bg-[#1b5e20]",
+        iconColor: "text-[#1b5e20]",
+        cardBg: "bg-[#1b5e20]/5",
+        eyebrow: "UP TO",
+        eyebrowColor: "text-[#1b5e20]",
+        valueText: "80%",
+        hasSuper: true,
+        valueClassName: "text-[40px] sm:text-[52px] md:text-[60px]",
+        title: "General MSMEs",
+        titleColor: "text-[#1b5e20]",
+        description: "Of eligible built-up space rent assistance subject to PMS provisions.",
+        footIcon: governmentmsme,
+        footIconColor: "text-white",
+        footIconBg: "bg-[#1b5e20]/10",
+        borderColor: "#1b5e20",
+      },
+      {
+        id: "women-sc-st",
+        icon: eligibile,
+        iconBg: "bg-[#cd9000]",
+        iconColor: "text-[#cd9000]",
+        cardBg: "bg-[#cd9000]/5",
+        eyebrow: "UP TO",
+        eyebrowColor: "text-[#cd9000]",
+        valueText: "100%",
+        hasSuper: true,
+        valueClassName: "text-[40px] sm:text-[52px] md:text-[60px]",
+        title: "Women / SC / ST & Applicable Eligible Categories",
+        titleColor: "text-[#cd9000]",
+        description: "As per applicable PMS scheme provisions and conditions.",
+        footIcon: provisioning,
+        footIconColor: "text-white",
+        footIconBg: "bg-[#cd9000]/10",
+        borderColor: "#cd9000",
+      },
+      {
+        id: "additional",
+        icon: additionalSupport,
+        iconBg: "bg-[#1b5e20]",
+        iconColor: "text-[#1b5e20]",
+        cardBg: "bg-[#1b5e20]/5",
+        eyebrow: "ADDITIONAL",
+        eyebrowColor: "text-[#1b5e20]",
+        valueText: "SUPPORT",
+        hasSuper: true,
+        title: "Eligible Expenses",
+        titleColor: "text-[#1b5e20]",
+        description: "Other eligible expenses as applicable under current PMS guidelines.",
+        footIcon: graph,
+        footIconColor: "text-white",
+        footIconBg: "bg-[#1b5e20]/10",
+        borderColor: "#1b5e20",
+      },
+    ],
+    importantNoteTitle: "*Important Note:",
+    importantNoteText: "Assistance is subject to applicable PMS guidelines, prescribed financial limits, enterprise category, approved event/component, documentation and final sanction.",
+    supportTagline1: "Government Support.",
+    supportTagline2: "Stronger Business.",
+    supportTagline3: "Sustainable Growth.",
+    ctaLabel: "Check My Eligibility",
+    ctaHref: "/participate/msme/eligibility-check"
+  }
+];
+
 const PMSFinancialAssistanceBanner: FC = () => {
   return (
     <>
@@ -134,37 +212,38 @@ const PMSFinancialAssistanceBanner: FC = () => {
 
         {/* ============ Hero ============ */}
         <div className="relative mx-auto w-full px-4 md:px-11">
-
-          <div className="relative flex flex-col lg:flex-row">
-            {/* Left: spacer for absolute image */}
-            <div className="relative hidden md:block w-full lg:w-[30%]">
-              <div className="relative h-[220px] w-full sm:h-[260px] lg:h-full" />
-            </div>
-
-            {/* Right: heading content */}
-            <div className="relative flex w-full flex-col px-4 pt-4 sm:px-4 sm:pt-5 lg:w-[72%] lg:pt-5">
-              {/* Eyebrow */}
-              <div className="mb-2 flex items-center gap-3 sm:mb-3 md:pl-30">
-                <span className="flex h-16 w-16 shrink-0 items-center justify-center rounded-full bg-[#1b5e20]/10 sm:h-20 sm:w-20">
-                  <Image src={moneyInHandImg} alt="Financial Assistance" className="h-12 w-12 object-contain sm:h-16 sm:w-16" />
-                </span>
-                <div>
-                  <p className="text-lg font-semibold uppercase tracking-wide text-[#1b5e20] sm:text-xl">
-                    Financial Assistance
-                  </p>
-                  <p className="text-base text-slate-700 sm:text-lg">
-                    For Eligible MSMEs
-                  </p>
-                </div>
+          {PMS_FINANCIAL_ASSISTANCE_DATA.map((data) => (
+            <div key={data.id} className="relative flex flex-col lg:flex-row">
+              {/* Left: spacer for absolute image */}
+              <div className="relative w-full lg:w-[30%]">
+                <div className="relative h-[220px] w-full sm:h-[260px] lg:h-full" />
               </div>
+
+              {/* Right: heading content */}
+              <div className="relative flex w-full flex-col px-4 pt-4 sm:px-4 sm:pt-5 lg:w-[72%] lg:pt-5">
+                {/* Eyebrow */}
+                <div className="mb-2 flex items-center gap-3 sm:mb-3 md:pl-30">
+                  <span className="flex h-16 w-16 shrink-0 items-center justify-center rounded-full bg-[#1b5e20]/10 sm:h-20 sm:w-20">
+                    <Image src={moneyInHandImg} alt="Financial Assistance" className="h-12 w-12 object-contain sm:h-16 sm:w-16" />
+                  </span>
+                  <div>
+                    <p className="text-lg font-semibold uppercase tracking-wide text-[#1b5e20] sm:text-xl">
+                      {data.sectionCategory}
+                    </p>
+                    <p className="text-base text-slate-700 sm:text-lg">
+                      {data.sectionCategorySub}
+                    </p>
+                  </div>
+                </div>
+
                 {/* Heading with image next to "May You Get?" */}
                 <h1
                   id="pms-banner-heading"
                   className="md:pl-0 max-w-3xl text-center  text-[34px] font-semibold leading-[1.08] tracking-tight sm:text-[52px] md:text-[60px]"
                 >
-                  <span className="block text-[#1b5e20]">How Much Support</span>
+                  <span className="block text-[#1b5e20]">{data.titleLine1}</span>
                   <span className="relative inline-flex items-center gap-3 text-slate-900">
-                    May You Get?
+                    {data.titleLine2}
                     <img
                       src={supportRight.src}
                       alt=""
@@ -172,25 +251,23 @@ const PMSFinancialAssistanceBanner: FC = () => {
                     />
                   </span>
                 </h1>
-              <div className="md:pl-12">
 
-                {/* Supporting copy */}
-                <p className="mt-3 max-w-3xl text-[16px] leading-relaxed md:text-[18px] text-center">
-                  The <strong className="font-semibold text-[#1b5e20]">PMS Scheme</strong>{" "}
-                  provides financial assistance<br className="hidden md:inline" /> to reduce your participation cost
-                  and help your business grow in new markets.
-                </p>
-              </div>
-              {/* Support cards */}
-              <div className="mt-2 grid grid-cols-1 gap-5 sm:grid-cols-2 sm:gap-5 lg:mt-3 lg:grid-cols-3">
-                {SUPPORT_CARDS.map((card, index) => (
+                <div className="md:pl-12">
+                  {/* Supporting copy */}
+                  <p className="mt-3 max-w-3xl text-[16px] leading-relaxed md:text-[18px] text-center">
+                    {data.descriptionLead}<strong className="font-semibold text-[#1b5e20]">{data.descriptionHighlight}</strong>{data.descriptionText}
+                  </p>
+                </div>
+
+                {/* Support cards */}
+                <div className="mt-2 grid grid-cols-1 gap-5 sm:grid-cols-2 sm:gap-5 lg:mt-3 lg:grid-cols-3">
+                  {data.cards.map((card, index) => (
                     <article
-                      key={card.title}
+                      key={card.id}
                       className={`relative flex flex-col items-center rounded-2xl bg-white px-4 pb-10 pt-4 text-center overflow-visible`}
-                         style={{
-                  boxShadow:
-                    "rgba(0, 0, 0, 0.24) 0px 3px 8px",
-                }}
+                      style={{
+                        boxShadow: "rgba(0, 0, 0, 0.24) 0px 3px 8px",
+                      }}
                     >
                       <img
                         src={card.icon.src}
@@ -205,9 +282,9 @@ const PMSFinancialAssistanceBanner: FC = () => {
                         {card.eyebrow}
                       </p>
                       <p
-                        className={`font-extrabold leading-tight ${card.valueClassName || "text-2xl sm:text-4xl"} ${card.titleColor} ${index === SUPPORT_CARDS.length - 1 ? "mb-6" : "mb-0"}`}
+                        className={`font-extrabold leading-tight ${card.valueClassName || "text-2xl sm:text-4xl"} ${card.titleColor} ${index === data.cards.length - 1 ? "mb-6" : "mb-0"}`}
                       >
-                        {card.value}
+                        {card.valueText}{card.hasSuper && <sup>*</sup>}
                       </p>
 
                       <div className="my-1.5 flex w-full items-start justify-start" aria-hidden="true">
@@ -238,77 +315,77 @@ const PMSFinancialAssistanceBanner: FC = () => {
                       </div>
                     </article>
                   ))}
+                </div>
               </div>
             </div>
-          </div>
+          ))}
         </div>
       </section>
 
-      {/* ============ Footer strip (outside section so left image doesn't overlap) ============ */}
-      <SectionContainer className="relative pb-2 md:pb-8 pt-2 border-b-6 border-[#033815] mb-2">
-        <div className="relative overflow-visible rounded-2xl bg-white shadow-lg">
-          {/* Background image - full width */}
-          <div className="pointer-events-none absolute inset-0">
-            <img
-              src={financialImg.src}
-              alt=""
-              className="absolute inset-0 h-full w-full object-cover object-top rounded-2xl"
-            />
-          </div>
+      {/* ============ Footer strip ============ */}
+      <SectionContainer className="relative pb-8 pt-2 border-b-6 border-[#033815] mb-2">
+        {PMS_FINANCIAL_ASSISTANCE_DATA.map((data) => (
+          <div key={data.id} className="relative overflow-visible rounded-2xl bg-white shadow-lg">
+            <div className="pointer-events-none absolute inset-0">
+              <img
+                src={financialImg.src}
+                alt=""
+                className="absolute inset-0 h-full w-full object-cover object-top rounded-2xl"
+              />
+            </div>
 
-          <div className="relative flex flex-col gap-3 px-3 py-2 sm:px-4 sm:py-2.5 md:gap-4 md:px-5 md:py-3 border border-[#1b5e20]/20 rounded-2xl">
-            <div className="flex flex-col gap-4 md:flex-col lg:flex-row md:items-start lg:items-center md:gap-4 lg:gap-16 ">
-              {/* Important note */}
-              <div className="flex w-full items-start gap-3 lg:w-[38%] lg:border-r lg:border-dotted lg:border-[#1b5e20] pr-3 lg:pr-4">
-                <img
-                  src={secureImg.src}
-                  alt=""
-                  className="h-20 w-20 shrink-0 object-contain"
-                />
-                <p className="text-xs leading-relaxed sm:text-sm pr-4 md:pr-8">
-                  <strong className="font-semibold text-[#1b5e20]">
-                    *Important Note:<br />
-                  </strong>{" "}
-                  Assistance is subject to applicable PMS guidelines,
-                  prescribed financial limits, enterprise category, approved
-                  event/component, documentation and final sanction.
-                </p>
-              </div>
-
-              {/* Government support */}
-              <div className="flex w-full items-center gap-3 lg:w-[25%]">
-                <span className="flex h-20 w-20 shrink-0 items-center justify-center rounded-full bg-[#1b5e20]/10">
+            <div className="relative flex flex-col gap-3 px-3 py-2 sm:px-4 sm:py-2.5 md:gap-4 md:px-5 md:py-3 border border-[#1b5e20]/20 rounded-2xl">
+              <div className="flex flex-col gap-4 md:flex-row md:items-center md:gap-16 ">
+                {/* Important note */}
+                <div className="flex w-full items-start gap-3 md:w-[38%] border-r border-dotted border-[#1b5e20] pr-3 md:pr-4">
                   <img
-                    src={handImg.src}
-                    alt="Government Support"
-                    className="h-16 w-16 object-contain"
+                    src={secureImg.src}
+                    alt=""
+                    className="h-20 w-20 shrink-0 object-contain"
                   />
-                </span>
-                <p className="text-sm font-semibold leading-relaxed text-slate-900 ml-4">
-                  Government Support.
-                  <br />
-                  Stronger Business.
-                  <br />
-                  <span className="font-semibold text-[#1b5e20]">
-                    Sustainable Growth.
+                  <p className="text-xs leading-relaxed sm:text-sm pr-4 md:pr-8">
+                    <strong className="font-semibold text-[#1b5e20]">
+                      {data.importantNoteTitle}<br />
+                    </strong>{" "}
+                    {data.importantNoteText}
+                  </p>
+                </div>
+
+                {/* Government support */}
+                <div className="flex w-full items-center gap-3 md:w-[25%]">
+                  <span className="flex h-20 w-20 shrink-0 items-center justify-center rounded-full bg-[#1b5e20]/10">
+                    <img
+                      src={handImg.src}
+                      alt="Government Support"
+                      className="h-16 w-16 object-contain"
+                    />
                   </span>
-                </p>
+                  <p className="text-sm font-semibold leading-relaxed text-slate-900 ml-4">
+                    {data.supportTagline1}
+                    <br />
+                    {data.supportTagline2}
+                    <br />
+                    <span className="font-semibold text-[#1b5e20]">
+                      {data.supportTagline3}
+                    </span>
+                  </p>
+                </div>
+              </div>
+
+              {/* CTA button */}
+              <div className="absolute left-1/2 bottom-0 z-10 -translate-x-1/2 translate-y-1/2">
+                <a
+                  href={data.ctaHref}
+                  className="inline-flex items-center gap-1.5 rounded-full bg-[#1b5e20] px-4 py-2 text-base font-semibold uppercase tracking-wide text-white shadow-md transition-colors hover:bg-[#2d7a2d]"
+                >
+                  <img src={eligibilityButtonImg.src} alt="" className="h-8 w-8 object-contain" aria-hidden="true" />
+                  {data.ctaLabel}
+                  <ChevronRight className="h-5 w-5 font-bold" aria-hidden="true" />
+                </a>
               </div>
             </div>
-
-            {/* CTA button - half inside half outside */}
-            <div className="relative w-full px-4 mt-4 md:absolute md:left-1/2 md:bottom-0 md:z-10 md:w-auto md:-translate-x-1/2 md:translate-y-1/2 md:px-0">
-              <a
-                href="/participate/msme/eligibility-check"
-                className="inline-flex w-full items-center justify-center gap-1.5 rounded-full bg-[#1b5e20] px-4 py-2 text-base font-semibold uppercase tracking-wide text-white shadow-md transition-colors hover:bg-[#2d7a2d] md:w-auto md:justify-start"
-              >
-                <img src={eligibilityButtonImg.src} alt="" className="h-8 w-8 object-contain" aria-hidden="true" />
-                Check My Eligibility
-                <ChevronRight className="h-5 w-5 font-bold" aria-hidden="true" />
-              </a>
-            </div>
           </div>
-        </div>
+        ))}
       </SectionContainer>
     </>
   );

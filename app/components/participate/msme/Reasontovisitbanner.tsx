@@ -29,59 +29,77 @@ import SectionContainer from "@/app/components/layout/SectionContainer";
  *   6-column layout from ~lg upward.
  */
 
-type Feature = {
-  id: string;
-  icon: ReactNode;
-  title: string;
-  description: string;
+export const REASON_TO_VISIT_BANNER_DATA = {
+  badge: {
+    line1: "Be part of India's leading",
+    line2: "Organic & Sustainable Future",
+  },
+  heading: {
+    word1: "Reason",
+    word2: "To Visit",
+  },
+  subheading: {
+    title: "More than an Expo. A Gateway to Growth.",
+    description:
+      "Bharat Organic Expo brings together the entire organic ecosystem to create opportunities, inspire innovation and build a healthier tomorrow.",
+  },
+  features: [
+    {
+      id: "01",
+      icon: <PackageOpen className="h-9 w-9" strokeWidth={1.75} />,
+      title: "Discover New Products",
+      description:
+        "Explore the latest organic, natural, AYUSH and sustainable products from leading brands and innovators.",
+    },
+    {
+      id: "02",
+      icon: <Users className="h-9 w-9" strokeWidth={1.75} />,
+      title: "Learn From Industry Experts",
+      description:
+        "Gain insights from 150+ speakers through seminars, panel discussions and knowledge sessions.",
+    },
+    {
+      id: "03",
+      icon: <Globe2 className="h-9 w-9" strokeWidth={1.75} />,
+      title: "Expand Your Network",
+      description:
+        "Connect with industry leaders, decision-makers, distributors and partners from across the globe.",
+    },
+    {
+      id: "04",
+      icon: <TrendingUp className="h-9 w-9" strokeWidth={1.75} />,
+      title: "Stay Ahead of Trends",
+      description:
+        "Stay updated with emerging trends, innovations and technologies shaping the organic industry.",
+    },
+    {
+      id: "05",
+      icon: <Award className="h-9 w-9" strokeWidth={1.75} />,
+      title: "Recognition & Celebration",
+      description:
+        "Celebrate excellence at Bharat Organic Excellence Awards and honor the changemakers.",
+    },
+    {
+      id: "06",
+      icon: <Sprout className="h-9 w-9" strokeWidth={1.75} />,
+      title: "Be Part of a Better Tomorrow",
+      description:
+        "Join the movement towards a healthier, sustainable and environmentally responsible future.",
+    },
+  ],
+  bannerStrip: {
+    tagline: "One Platform. Unlimited Opportunities.",
+    highlight: "Don't Miss It!",
+  },
+  cta: {
+    label: "Plan Your Visit Now",
+    href: "#plan-your-visit",
+  },
 };
 
-const FEATURES: Feature[] = [
-  {
-    id: "01",
-    icon: <PackageOpen className="h-9 w-9" strokeWidth={1.75} />,
-    title: "Discover New Products",
-    description:
-      "Explore the latest organic, natural, AYUSH and sustainable products from leading brands and innovators.",
-  },
-  {
-    id: "02",
-    icon: <Users className="h-9 w-9" strokeWidth={1.75} />,
-    title: "Learn From Industry Experts",
-    description:
-      "Gain insights from 150+ speakers through seminars, panel discussions and knowledge sessions.",
-  },
-  {
-    id: "03",
-    icon: <Globe2 className="h-9 w-9" strokeWidth={1.75} />,
-    title: "Expand Your Network",
-    description:
-      "Connect with industry leaders, decision-makers, distributors and partners from across the globe.",
-  },
-  {
-    id: "04",
-    icon: <TrendingUp className="h-9 w-9" strokeWidth={1.75} />,
-    title: "Stay Ahead of Trends",
-    description:
-      "Stay updated with emerging trends, innovations and technologies shaping the organic industry.",
-  },
-  {
-    id: "05",
-    icon: <Award className="h-9 w-9" strokeWidth={1.75} />,
-    title: "Recognition & Celebration",
-    description:
-      "Celebrate excellence at Bharat Organic Excellence Awards and honor the changemakers.",
-  },
-  {
-    id: "06",
-    icon: <Sprout className="h-9 w-9" strokeWidth={1.75} />,
-    title: "Be Part of a Better Tomorrow",
-    description:
-      "Join the movement towards a healthier, sustainable and environmentally responsible future.",
-  },
-];
-
 export default function ReasonToVisitBanner() {
+  const data = REASON_TO_VISIT_BANNER_DATA;
+
   return (
     <section className="relative w-full overflow-hidden pb-4" style={{ backgroundImage: `url(${reasonToVisitBg.src})`, backgroundSize: 'cover', backgroundPosition: 'center', backgroundRepeat: 'no-repeat' }}>
       <div className="absolute inset-0 bg-[#EFF7EE]/60 lg:bg-[#EFF7EE]/40" />
@@ -103,32 +121,30 @@ export default function ReasonToVisitBanner() {
                   strokeWidth={2}
                 />
                 <p className="text-[11px] font-semibold uppercase tracking-wide text-[#1b5e20] sm:text-[12px]">
-                  Be part of India&rsquo;s leading{" "}<br/>
+                  {data.badge.line1}{" "}<br/>
                   <span className="block text-[#14231A] sm:inline">
-                    Organic &amp; Sustainable Future
+                    {data.badge.line2}
                   </span>
                 </p>
               </div>
 
               <h1 className="relative font-sans text-[24px] font-semibold uppercase leading-[1.1] tracking-tight text-slate-900 md:text-[32px] lg:text-[40px]">
-                Reason
+                {data.heading.word1}
                 <Leaf
                   className="ml-1 inline-block h-6 w-6 -translate-y-3 rotate-45 text-[#1b5e20] sm:h-7 sm:w-7"
                   strokeWidth={2}
                 />
                 <br />
-                To Visit
+                {data.heading.word2}
               </h1>
 
               <div className="mt-4 max-w-md">
                 <h2 className="text-[18px] font-semibold text-[#1b5e20] md:text-[20px]">
-                  More than an Expo. A Gateway to Growth.
+                  {data.subheading.title}
                 </h2>
                 <span className="mt-1 block h-[3px] w-14 bg-[#3b8c2a]" />
                 <p className="mt-4 text-[14px] leading-relaxed text-slate-600 md:text-[15px]">
-                  Bharat Organic Expo brings together the entire organic
-                  ecosystem to create opportunities, inspire innovation and
-                  build a healthier tomorrow.
+                  {data.subheading.description}
                 </p>
               </div>
             </div>
@@ -144,7 +160,7 @@ export default function ReasonToVisitBanner() {
 
           {/* ===================== FEATURES STRIP ===================== */}
           <div className="mt-4 grid grid-cols-2 gap-x-4 gap-y-6 border-t border-gray-300 pt-4 sm:grid-cols-3 sm:gap-x-6 lg:grid-cols-6 lg:divide-x lg:divide-gray-300">
-            {FEATURES.map((feature) => (
+            {data.features.map((feature) => (
               <article
                 key={feature.id}
                 className="flex flex-col items-center px-2 text-center lg:px-4"
@@ -169,20 +185,20 @@ export default function ReasonToVisitBanner() {
           <div className="mt-6 flex flex-col items-center gap-4 sm:flex-row sm:justify-center sm:gap-6">
             <div className="flex items-center gap-4 rounded-lg border border-gray-200 bg-gray-100 px-6 py-2 sm:w-auto">
               <span className="text-[14px] font-medium italic text-[#1b5e20] sm:text-[15px]">
-                One Platform. Unlimited Opportunities.
+                {data.bannerStrip.tagline}
               </span>
               <span className="hidden h-6 w-px bg-gray-300 sm:block" />
               <span className="flex items-center gap-2 text-[14px] font-semibold uppercase tracking-wide text-slate-900 sm:text-[15px]">
-                Don&rsquo;t Miss It!
+                {data.bannerStrip.highlight}
                 <Leaf className="h-4 w-4 shrink-0 rotate-90" strokeWidth={2} />
               </span>
             </div>
 
             <a
-              href="#plan-your-visit"
+              href={data.cta.href}
               className="group flex items-center justify-center gap-3 rounded-lg bg-[#1b5e20] px-6 py-2 text-[14px] font-semibold uppercase tracking-wide text-white transition-colors hover:bg-[#2d7a2d] sm:text-[15px]"
             >
-              Plan Your Visit Now
+              {data.cta.label}
               <span className="flex h-7 w-7 items-center justify-center rounded-full border-2 border-white transition-transform group-hover:translate-x-0.5">
                 <ArrowRight className="h-4 w-4" strokeWidth={2.5} />
               </span>
