@@ -6,6 +6,32 @@ import leafImg from "../../../assets/icons/leafs.png";
 import { Users, Store, Presentation, Globe, Handshake, Leaf } from "lucide-react";
 import SectionContainer from "@/app/components/layout/SectionContainer";
 
+const ICON_MAP: Record<string, React.ReactNode> = {
+  Users: <Users className="w-5 h-5 md:w-6 md:h-6 text-[#2e7d32]" strokeWidth={1.5} />,
+  Store: <Store className="w-5 h-5 md:w-6 md:h-6 text-[#2e7d32]" strokeWidth={1.5} />,
+  Presentation: <Presentation className="w-5 h-5 md:w-6 md:h-6 text-[#2e7d32]" strokeWidth={1.5} />,
+  Globe: <Globe className="w-5 h-5 md:w-6 md:h-6 text-[#2e7d32]" strokeWidth={1.5} />,
+  Handshake: <Handshake className="w-5 h-5 md:w-6 md:h-6 text-[#2e7d32]" strokeWidth={1.5} />,
+};
+
+export const HERO_SECTION_DATA = [
+  {
+    id: 1,
+    titleLine1: "SPONSORSHIP",
+    titleHighlight: "OPPORTUNITIES",
+    badgeText: "Partner. Promote. Make an Impact.",
+    descriptionBold: "Align your brand with India's Premier Organic Expo",
+    descriptionText: "and connect with the right audience, build credibility and drive real impact.",
+    stats: [
+      { iconKey: "Users", number: "8,000+", label: "BUSINESS\nVISITORS" },
+      { iconKey: "Store", number: "200+", label: "EXHIBITORS" },
+      { iconKey: "Presentation", number: "150+", label: "SPEAKERS" },
+      { iconKey: "Globe", number: "25+", label: "COUNTRIES" },
+      { iconKey: "Handshake", number: "UNLIMITED", label: "BUSINESS\nOPPORTUNITIES" },
+    ],
+  },
+];
+
 const AnimatedCounter = ({ value }: { value: string }) => {
   const [count, setCount] = useState(0);
   const [isClient, setIsClient] = useState(false);
@@ -65,13 +91,7 @@ const AnimatedCounter = ({ value }: { value: string }) => {
 };
 
 export default function HeroSection() {
-  const stats = [
-    { icon: <Users className="w-5 h-5 md:w-6 md:h-6 text-[#2e7d32]" strokeWidth={1.5} />, number: "8,000+", label: "BUSINESS\nVISITORS" },
-    { icon: <Store className="w-5 h-5 md:w-6 md:h-6 text-[#2e7d32]" strokeWidth={1.5} />, number: "200+", label: "EXHIBITORS" },
-    { icon: <Presentation className="w-5 h-5 md:w-6 md:h-6 text-[#2e7d32]" strokeWidth={1.5} />, number: "150+", label: "SPEAKERS" },
-    { icon: <Globe className="w-5 h-5 md:w-6 md:h-6 text-[#2e7d32]" strokeWidth={1.5} />, number: "25+", label: "COUNTRIES" },
-    { icon: <Handshake className="w-5 h-5 md:w-6 md:h-6 text-[#2e7d32]" strokeWidth={1.5} />, number: "UNLIMITED", label: "BUSINESS\nOPPORTUNITIES" },
-  ];
+  const data = HERO_SECTION_DATA[0];
 
   return (
     <section className="relative w-full min-h-[380px] sm:min-h-[420px] md:min-h-[450px] lg:min-h-[470px] flex items-center bg-[#f4f7f6] overflow-hidden font-inter pt-3 md:pt-5 pb-4 md:pb-6">
@@ -96,7 +116,7 @@ export default function HeroSection() {
         />
       </div>
 
-      {/* Mobile-only gradient overlay for text readability (desktop remains untouched) */}
+      {/* Mobile-only gradient overlay */}
       <div className="absolute inset-0 z-[1] bg-gradient-to-r from-white/95 via-white/85 to-transparent/30 md:hidden pointer-events-none" />
 
       {/* Content Container */}
@@ -104,36 +124,34 @@ export default function HeroSection() {
         <div className="pl-1 sm:pl-3 md:pl-10 lg:pl-14">
           <div className="max-w-2xl pt-2 md:pt-4 lg:pt-5">
             <h1 className="text-3xl sm:text-4xl md:text-6xl lg:text-[64px] font-bold text-[#001810] leading-tight md:leading-none mb-2 font-poppins tracking-tight">
-              SPONSORSHIP <br />
-              <span className="text-[#7ea82a]">OPPORTUNITIES</span>
+              {data.titleLine1} <br />
+              <span className="text-[#7ea82a]">{data.titleHighlight}</span>
             </h1>
             
             <div className="flex items-center gap-2 md:gap-3 mb-2 md:mb-3 pl-0.5">
               <div className="w-10 md:w-16 h-[2px] bg-[#d97706]"></div>
               <Leaf className="text-[#d97706] w-3.5 h-3.5 md:w-4 md:h-4 fill-[#d97706] -rotate-12" />
               <span className="text-[#d97706] font-semibold text-sm sm:text-base md:text-lg tracking-wide font-poppins">
-                Partner. Promote. Make an Impact.
+                {data.badgeText}
               </span>
             </div>
 
             <p className="text-gray-900 text-sm sm:text-base md:text-xl font-medium leading-relaxed max-w-lg mb-4 md:mb-6">
-              <span className="font-semibold text-black">Align your brand with India's Premier Organic Expo</span>{" "}
-              and connect with the <span className="font-bold text-[#4B1426]">right audience</span>, build
-              credibility and drive real impact.
+              <span className="font-semibold text-black">{data.descriptionBold}</span>{" "}
+              {data.descriptionText}
             </p>
           </div>
 
-          {/* Stats Bar - Aligned directly underneath the description text */}
+          {/* Stats Bar */}
           <div className="pt-2 pb-2 flex flex-wrap lg:flex-nowrap justify-start items-center gap-3 sm:gap-4 lg:gap-10">
-            {stats.map((stat, idx) => (
+            {data.stats.map((stat, idx) => (
               <div key={idx} className="flex flex-col items-center text-center relative w-[30%] sm:w-auto">
-                {/* Divider */}
-                {idx !== stats.length - 1 && (
+                {idx !== data.stats.length - 1 && (
                   <div className="hidden lg:block absolute -right-5 top-1/2 -translate-y-1/2 w-[1px] h-11 bg-gray-300"></div>
                 )}
                 
                 <div className="mb-1">
-                  {stat.icon}
+                  {ICON_MAP[stat.iconKey]}
                 </div>
                 <span className="text-xs sm:text-sm md:text-base lg:text-[17px] font-semibold text-[#d97706] font-poppins leading-none mb-0.5">
                   <AnimatedCounter value={stat.number} />

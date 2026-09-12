@@ -1,11 +1,38 @@
 "use client";
 import React, { useState, useEffect, useRef } from "react";
-import Image from "next/image";
 import { Users, Store, UserCheck, Globe, Calendar, MapPin, Briefcase } from "lucide-react";
 import bgImg from "../../../assets/banner/partog.webp";
 import leafImg from "../../../assets/icons/leafs.png";
 import gsap from "gsap";
 import SectionContainer from "@/app/components/layout/SectionContainer";
+
+const ICON_MAP: Record<string, React.ReactNode> = {
+  Users: <Users className="w-3.5 h-3.5 md:w-4 md:h-4 text-[#facc15] stroke-[2]" />,
+  Store: <Store className="w-3.5 h-3.5 md:w-4 md:h-4 text-[#facc15] stroke-[2]" />,
+  Globe: <Globe className="w-3.5 h-3.5 md:w-4 md:h-4 text-[#facc15] stroke-[2]" />,
+  UserCheck: <UserCheck className="w-3.5 h-3.5 md:w-4 md:h-4 text-[#facc15] stroke-[2]" />,
+  Briefcase: <Briefcase className="w-3.5 h-3.5 md:w-4 md:h-4 text-[#facc15] stroke-[2]" />,
+};
+
+export const HERO_PARTNERSHIP_DATA = [
+  {
+    id: 1,
+    badgeText: "PARTNERSHIP / COLLABORATION",
+    titleLine1: "Let's Grow",
+    titleLine2: "Organic.",
+    titleLine3: "Together.",
+    subtitle: "Partner with Bharat Organic Expo 2027 and be a part of India's leading platform for organic business, innovation, wellness and sustainability.",
+    dates: "19 – 21 February 2027",
+    location: "Bharat Mandapam, New Delhi",
+    stats: [
+      { iconKey: "Users", value: "8,000+", label: "VISITORS / DELEGATES" },
+      { iconKey: "Store", value: "200+", label: "EXHIBITORS" },
+      { iconKey: "Globe", value: "1,000+", label: "GLOBAL BUYERS" },
+      { iconKey: "UserCheck", value: "65+", label: "EXPERT SPEAKERS" },
+      { iconKey: "Briefcase", value: "B2B", label: "MEETINGS" }
+    ]
+  }
+];
 
 const AnimatedCounter = ({ value }: { value: string }) => {
   const [count, setCount] = useState(0);
@@ -78,14 +105,14 @@ export default function HeroSection() {
   itemRefs.current = [];
   dividerRefs.current = [];
 
+  const data = HERO_PARTNERSHIP_DATA[0];
+
   useEffect(() => {
     const ctx = gsap.context(() => {
       const tl = gsap.timeline({ defaults: { ease: "power3.out" } });
 
-      // Badge fade in
       tl.fromTo(badgeRef.current, { opacity: 0, y: -10 }, { opacity: 1, y: 0, duration: 0.6 }, 0);
 
-      // Heading lines — masked reveal with 3D tilt
       tl.fromTo(line1Ref.current,
         { yPercent: 110, rotationX: 60, opacity: 0 },
         { yPercent: 0, rotationX: 0, opacity: 1, duration: 0.9, ease: "expo.out" }, 0.2
@@ -97,38 +124,32 @@ export default function HeroSection() {
         { yPercent: 0, rotationX: 0, opacity: 1, duration: 0.9, ease: "expo.out" }, 0.5
       );
 
-      // Subtitle blur-fade
       tl.fromTo(subtitleRef.current,
         { opacity: 0, y: 20, filter: "blur(8px)" },
         { opacity: 1, y: 0, filter: "blur(0px)", duration: 0.85 }, 0.65
       );
 
-      // Meta row
       tl.fromTo(metaRef.current,
         { opacity: 0, y: 16 },
         { opacity: 1, y: 0, duration: 0.7 }, 0.85
       );
 
-      // Band wipe reveal
       tl.fromTo(bandRef.current,
         { opacity: 0, y: 20, clipPath: "inset(0% 100% 0% 0%)" },
         { opacity: 1, y: 0, clipPath: "inset(0% 0% 0% 0%)", duration: 0.9, ease: "power4.inOut" }, 1.0
       );
 
-      // Shimmer sweep
       tl.fromTo(shimmerRef.current,
         { xPercent: -130, opacity: 0.8 },
         { xPercent: 230, opacity: 0, duration: 1.0, ease: "power1.inOut" }, 1.6
       );
 
-      // Dividers grow
       tl.fromTo(
         dividerRefs.current.filter(Boolean),
         { scaleY: 0 },
         { scaleY: 1, duration: 0.4, stagger: 0.06, ease: "power2.out" }, 1.55
       );
 
-      // Stat items 3D flip
       tl.fromTo(
         itemRefs.current.filter(Boolean),
         { opacity: 0, rotationX: -80, y: 20, transformOrigin: "top center" },
@@ -138,14 +159,6 @@ export default function HeroSection() {
 
     return () => ctx.revert();
   }, []);
-
-  const stats = [
-    { icon: <Users className="w-3.5 h-3.5 md:w-4 md:h-4 text-[#facc15] stroke-[2]" />, value: "8,000+", label: "VISITORS / DELEGATES" },
-    { icon: <Store className="w-3.5 h-3.5 md:w-4 md:h-4 text-[#facc15] stroke-[2]" />, value: "200+", label: "EXHIBITORS" },
-    { icon: <Globe className="w-3.5 h-3.5 md:w-4 md:h-4 text-[#facc15] stroke-[2]" />, value: "1,000+", label: "GLOBAL BUYERS" },
-    { icon: <UserCheck className="w-3.5 h-3.5 md:w-4 md:h-4 text-[#facc15] stroke-[2]" />, value: "65+", label: "EXPERT SPEAKERS" },
-    { icon: <Briefcase className="w-3.5 h-3.5 md:w-4 md:h-4 text-[#facc15] stroke-[2]" />, value: "B2B", label: "MEETINGS" }
-  ];
 
   return (
     <>
@@ -187,18 +200,18 @@ export default function HeroSection() {
               style={{ opacity: 0 }}
               className="text-[13px] md:text-[15px] lg:text-[16px] font-bold text-[#c2410c] tracking-[0.15em] uppercase mb-2"
             >
-              PARTNERSHIP / COLLABORATION
+              {data.badgeText}
             </h4>
 
             <h1 className="text-4xl md:text-[58px] lg:text-[66px] font-black text-[#1b5e20] leading-[1.05] mb-3 font-poppins tracking-tight">
               <span className="block overflow-hidden">
-                <span ref={line1Ref} style={{ opacity: 0, display: "block", fontWeight: 600 }}>Let&apos;s Grow</span>
+                <span ref={line1Ref} style={{ opacity: 0, display: "block", fontWeight: 600 }}>{data.titleLine1}</span>
               </span>
               <span className="block overflow-hidden">
-                <span ref={line2Ref} style={{ opacity: 0, display: "block", fontWeight: 600 }}>Organic.</span>
+                <span ref={line2Ref} style={{ opacity: 0, display: "block", fontWeight: 600 }}>{data.titleLine2}</span>
               </span>
               <span className="block overflow-hidden">
-                <span ref={line3Ref} style={{ opacity: 0, display: "block" }} className="font-serif italic text-[#ea580c] font-bold tracking-normal text-4xl md:text-[50px] lg:text-[58px]">Together.</span>
+                <span ref={line3Ref} style={{ opacity: 0, display: "block" }} className="font-serif italic text-[#ea580c] font-bold tracking-normal text-4xl md:text-[50px] lg:text-[58px]">{data.titleLine3}</span>
               </span>
             </h1>
 
@@ -207,29 +220,26 @@ export default function HeroSection() {
               style={{ opacity: 0 }}
               className="text-[#131730] text-[12px] md:text-[14px] lg:text-[15px] font-bold leading-relaxed max-w-md mb-5"
             >
-              Partner with Bharat Organic Expo 2027 and be a part of India&apos;s leading platform for organic business, innovation, wellness and sustainability.
+              {data.subtitle}
             </p>
 
             <div ref={metaRef} style={{ opacity: 0 }} className="flex items-center gap-4 md:gap-5 mt-2">
-              {/* Date */}
               <div className="flex items-center gap-2">
                 <Calendar className="text-[#4B1426] shrink-0" size={18} strokeWidth={2} />
-                <span className="text-[12px] md:text-[14px] font-bold text-[#4B1426] leading-tight whitespace-nowrap">19 &ndash; 21 February 2027</span>
+                <span className="text-[12px] md:text-[14px] font-bold text-[#4B1426] leading-tight whitespace-nowrap">{data.dates}</span>
               </div>
 
-              {/* Divider */}
               <div className="w-px h-5 bg-[#4B1426] shrink-0" />
 
-              {/* Location */}
               <div className="flex items-center gap-2">
                 <MapPin className="text-[#4B1426] shrink-0" size={18} strokeWidth={2} />
-                <span className="text-[12px] md:text-[14px] font-bold text-[#4B1426] leading-tight whitespace-nowrap">Bharat Mandapam, New Delhi</span>
+                <span className="text-[12px] md:text-[14px] font-bold text-[#4B1426] leading-tight whitespace-nowrap">{data.location}</span>
               </div>
             </div>
           </div>
         </SectionContainer>
 
-        {/* Stats Bar - animated like FeatureStrip */}
+        {/* Stats Bar */}
         <div className="absolute left-0 right-0 bottom-0 translate-y-1/2 z-30">
           <SectionContainer>
             <div
@@ -237,14 +247,13 @@ export default function HeroSection() {
               style={{ opacity: 0, backgroundColor: "#1b5e20", boxShadow: "0 8px 20px -10px rgba(0,0,0,0.3)" }}
               className="rounded-2xl border border-white/10 p-2 sm:py-2 md:py-2 md:px-4 relative overflow-hidden [perspective:1000px]"
             >
-              {/* Shimmer overlay */}
               <div
                 ref={shimmerRef}
                 className="absolute inset-y-0 left-0 w-1/3 pointer-events-none"
                 style={{ background: "linear-gradient(100deg, transparent, rgba(255,255,255,0.18), transparent)", opacity: 0 }}
               />
               <div className="grid grid-cols-2 sm:grid-cols-3 md:flex md:flex-nowrap items-center justify-center md:justify-between gap-y-3 gap-x-2 md:gap-0">
-                {stats.map((stat, idx) => (
+                {data.stats.map((stat, idx) => (
                   <React.Fragment key={idx}>
                     <div
                       ref={(el) => { itemRefs.current[idx] = el; }}
@@ -252,7 +261,7 @@ export default function HeroSection() {
                       className="flex flex-row items-center justify-center gap-2 sm:gap-2.5 group flex-1 py-1 px-1.5 bg-white/5 md:bg-transparent rounded-xl border border-white/10 md:border-none"
                     >
                       <div className="w-7 h-7 md:w-8 md:h-8 rounded-full bg-white/10 flex items-center justify-center shrink-0 border border-white/15">
-                        <span className="text-[#facc15]">{stat.icon}</span>
+                        <span className="text-[#facc15]">{ICON_MAP[stat.iconKey]}</span>
                       </div>
                       <div className="flex flex-col text-left justify-center">
                         <h4 className="text-[14px] sm:text-[15px] md:text-[16px] font-semibold text-white leading-none font-inter mb-0.5">
@@ -263,7 +272,7 @@ export default function HeroSection() {
                         </p>
                       </div>
                     </div>
-                    {idx < stats.length - 1 && (
+                    {idx < data.stats.length - 1 && (
                       <div
                         ref={(el) => { dividerRefs.current[idx] = el; }}
                         className="hidden md:block w-px h-6 bg-white/20 shrink-0"

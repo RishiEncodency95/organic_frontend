@@ -6,6 +6,7 @@ import bgImage from "../../assets/banner/b2b2og.png";
 import leafImg from "../../assets/icons/leafs.png";
 import gsap from "gsap";
 import SectionContainer from "@/app/components/layout/SectionContainer";
+import { HERO_DATA } from "@/app/data/buyerSellerMeetData";
 
 const Sparkle = ({ style, color = "#F2B40E", shadow }: { style?: React.CSSProperties; color?: string; shadow?: string }) => (
   <span
@@ -152,88 +153,90 @@ export default function HeroSection() {
         </div>
 
         <SectionContainer className="relative z-20 py-1 md:py-2 [perspective:800px]">
-          <div className="flex flex-col lg:flex-row items-center justify-start">
-            <div className="w-full lg:w-[60%] xl:w-[50%] text-left shrink-0 ml-0 lg:ml-8 xl:ml-12">
+          {HERO_DATA.map((data) => (
+            <div key={data.id} className="flex flex-col lg:flex-row items-center justify-start">
+              <div className="w-full lg:w-[60%] xl:w-[50%] text-left shrink-0 ml-0 lg:ml-8 xl:ml-12">
 
-              {/* Heading */}
-              <h1
-                className="text-2xl sm:text-4xl md:text-5xl lg:text-[68px] font-semibold leading-[1.05] mb-3 md:mb-4 text-left font-poppins"
-                style={{ textShadow: "1px 1px 2px rgba(0,0,0,0.4)" }}
-              >
-                <span className="block overflow-hidden">
-                  <span ref={line1Ref} style={{ opacity: 0, display: "block" }} className="text-[#1b5e20] text-2xl sm:text-4xl md:text-5xl lg:text-[64px] font-semibold mb-1">
-                    BUYER-SELLER
+                {/* Heading */}
+                <h1
+                  className="text-2xl sm:text-4xl md:text-5xl lg:text-[68px] font-semibold leading-[1.05] mb-3 md:mb-4 text-left font-poppins"
+                  style={{ textShadow: "1px 1px 2px rgba(0,0,0,0.4)" }}
+                >
+                  <span className="block overflow-hidden">
+                    <span ref={line1Ref} style={{ opacity: 0, display: "block" }} className="text-[#1b5e20] text-2xl sm:text-4xl md:text-5xl lg:text-[64px] font-semibold mb-1">
+                      {data.titleLine1}
+                    </span>
                   </span>
-                </span>
-                <span className="block overflow-hidden">
-                  <span ref={line2Ref} style={{ opacity: 0, display: "block" }} className="text-[#4B1426] text-2xl sm:text-4xl md:text-5xl lg:text-[64px] font-semibold tracking-tight whitespace-nowrap">
-                    MEET 2027
+                  <span className="block overflow-hidden">
+                    <span ref={line2Ref} style={{ opacity: 0, display: "block" }} className="text-[#4B1426] text-2xl sm:text-4xl md:text-5xl lg:text-[64px] font-semibold tracking-tight whitespace-nowrap">
+                      {data.titleLine2}
+                    </span>
                   </span>
-                </span>
-              </h1>
+                </h1>
 
-              {/* Subtitle */}
-              <p
-                ref={subtitleRef}
-                style={{ opacity: 0 }}
-                className="text-slate-950 text-xs sm:text-sm md:text-base max-w-lg mb-4 md:mb-5 font-bold leading-relaxed text-left"
-              >
-                Connect with the Right Businesses. Create Real Opportunities. A focused B2B networking platform at Bharat Organic Expo 2027.
-              </p>
+                {/* Subtitle */}
+                <p
+                  ref={subtitleRef}
+                  style={{ opacity: 0 }}
+                  className="text-slate-950 text-xs sm:text-sm md:text-base max-w-lg mb-4 md:mb-5 font-bold leading-relaxed text-left"
+                >
+                  {data.subtitle}
+                </p>
 
-              {/* Date & Venue */}
-              <div
-                ref={metaRef}
-                style={{ opacity: 0 }}
-                className="flex flex-col sm:flex-row items-start sm:items-center gap-2.5 sm:gap-4 mb-5 md:mb-6 text-[#4B1426] text-xs sm:text-sm md:text-[15px] font-extrabold"
-              >
-                <div className="flex items-center gap-2">
-                  <CalendarDays size={17} className="shrink-0 text-[#ea580c]" />
-                  <span>19-21 February 2027</span>
+                {/* Date & Venue */}
+                <div
+                  ref={metaRef}
+                  style={{ opacity: 0 }}
+                  className="flex flex-col sm:flex-row items-start sm:items-center gap-2.5 sm:gap-4 mb-5 md:mb-6 text-[#4B1426] text-xs sm:text-sm md:text-[15px] font-extrabold"
+                >
+                  <div className="flex items-center gap-2">
+                    <CalendarDays size={17} className="shrink-0 text-[#ea580c]" />
+                    <span>{data.dates}</span>
+                  </div>
+                  <div className="hidden sm:block w-px h-5 bg-[#4B1426]/30"></div>
+                  <div className="flex items-center gap-2">
+                    <MapPin size={17} className="shrink-0 text-[#ea580c]" />
+                    <span>{data.venue}</span>
+                  </div>
                 </div>
-                <div className="hidden sm:block w-px h-5 bg-[#4B1426]/30"></div>
-                <div className="flex items-center gap-2">
-                  <MapPin size={17} className="shrink-0 text-[#ea580c]" />
-                  <span>Hall 12, Bharat Mandapam, New Delhi</span>
-                </div>
-              </div>
 
-              {/* Buttons */}
-              <div ref={btnsRef} className="flex flex-col sm:flex-row items-start sm:items-center justify-start gap-3">
-                <div className="relative w-fit sm:w-auto">
-                  <Sparkle color="#4ade80" shadow="#1b5e20" style={{ top: "-12px", left: "10%", animationDelay: "0.2s" }} />
-                  <Sparkle color="#4ade80" shadow="#1b5e20" style={{ top: "-15px", left: "50%", animationDelay: "0.6s" }} />
-                  <Sparkle color="#4ade80" shadow="#1b5e20" style={{ top: "-10px", right: "10%", animationDelay: "1s" }} />
-                  <Link
-                    href="/registration/buyer-registration"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="blue-btn-hero text-white px-4 py-2 rounded-lg font-semibold text-[10px] uppercase tracking-widest flex items-center justify-center gap-2 transition-all active:scale-95 shadow-lg relative z-10 w-fit sm:w-auto"
-                  >
-                    REGISTER AS A BUYER <ArrowRight size={14} />
-                  </Link>
-                </div>
-                <div className="relative w-fit sm:w-auto">
-                  <Sparkle color="#f97316" shadow="#c2410c" style={{ top: "-12px", left: "10%", animationDelay: "0s" }} />
-                  <Sparkle color="#f97316" shadow="#c2410c" style={{ top: "-15px", left: "50%", animationDelay: "0.4s" }} />
-                  <Sparkle color="#f97316" shadow="#c2410c" style={{ top: "-10px", right: "10%", animationDelay: "0.8s" }} />
-                  <Link
-                    href="/participate_as_exhibiture"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="group relative inline-flex items-center justify-center gap-2 px-4 py-2 rounded-lg font-semibold text-[10px] uppercase tracking-widest text-white transition-all active:scale-95 shadow-2xl z-10 w-fit sm:w-auto overflow-hidden"
-                    style={{
-                      background: "linear-gradient(135deg, #ea580c, #c2410c)",
-                      boxShadow: "0 4px 20px rgba(194,65,12,0.5), 0 0 12px rgba(249,115,22,0.3)",
-                    }}
-                  >
-                    <span className="absolute inset-0 bg-white/10 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-500 skew-x-12" />
-                    PARTICIPATE AS AN EXHIBITOR <ArrowRight size={14} className="group-hover:translate-x-1 transition-transform" />
-                  </Link>
+                {/* Buttons */}
+                <div ref={btnsRef} className="flex flex-col sm:flex-row items-start sm:items-center justify-start gap-3">
+                  <div className="relative w-fit sm:w-auto">
+                    <Sparkle color="#4ade80" shadow="#1b5e20" style={{ top: "-12px", left: "10%", animationDelay: "0.2s" }} />
+                    <Sparkle color="#4ade80" shadow="#1b5e20" style={{ top: "-15px", left: "50%", animationDelay: "0.6s" }} />
+                    <Sparkle color="#4ade80" shadow="#1b5e20" style={{ top: "-10px", right: "10%", animationDelay: "1s" }} />
+                    <Link
+                      href={data.buyerButtonHref}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="blue-btn-hero text-white px-4 py-2 rounded-lg font-semibold text-[10px] uppercase tracking-widest flex items-center justify-center gap-2 transition-all active:scale-95 shadow-lg relative z-10 w-fit sm:w-auto"
+                    >
+                      {data.buyerButtonLabel} <ArrowRight size={14} />
+                    </Link>
+                  </div>
+                  <div className="relative w-fit sm:w-auto">
+                    <Sparkle color="#f97316" shadow="#c2410c" style={{ top: "-12px", left: "10%", animationDelay: "0s" }} />
+                    <Sparkle color="#f97316" shadow="#c2410c" style={{ top: "-15px", left: "50%", animationDelay: "0.4s" }} />
+                    <Sparkle color="#f97316" shadow="#c2410c" style={{ top: "-10px", right: "10%", animationDelay: "0.8s" }} />
+                    <Link
+                      href={data.exhibitorButtonHref}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="group relative inline-flex items-center justify-center gap-2 px-4 py-2 rounded-lg font-semibold text-[10px] uppercase tracking-widest text-white transition-all active:scale-95 shadow-2xl z-10 w-fit sm:w-auto overflow-hidden"
+                      style={{
+                        background: "linear-gradient(135deg, #ea580c, #c2410c)",
+                        boxShadow: "0 4px 20px rgba(194,65,12,0.5), 0 0 12px rgba(249,115,22,0.3)",
+                      }}
+                    >
+                      <span className="absolute inset-0 bg-white/10 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-500 skew-x-12" />
+                      {data.exhibitorButtonLabel} <ArrowRight size={14} className="group-hover:translate-x-1 transition-transform" />
+                    </Link>
+                  </div>
                 </div>
               </div>
             </div>
-          </div>
+          ))}
         </SectionContainer>
       </section>
     </>
