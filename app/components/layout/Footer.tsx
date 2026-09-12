@@ -1,17 +1,15 @@
 "use client";
 
-import React from "react";
+import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { SITE_CONFIG } from "@/app/constants/siteConfig";
+import { settingsApi } from "@/lib/api";
 import footerLogo from "../../assets/logos/footerlogo.png";
-import footerBottomImg from "../../assets/logos/footerimg.png";
 import namoLogo from "../../assets/logos/namo1.png";
-import placeholderImg from "../../assets/image/image1.webp";
 import footogImg from "../../assets/image/bottog.webp";
 import foot1ogImg from "../../assets/icons/foot1og.png";
 import foot2ogImg from "../../assets/icons/foot2og.png";
-import foot3ogImg from "../../assets/icons/foot3og.png";
 import uuogImg from "../../assets/icons/uuog.png";
 import foot1 from "../../assets/icons/foot1.png";
 import foot2 from "../../assets/icons/foot2.png";
@@ -30,7 +28,7 @@ const Facebook = (props: any) => (<svg viewBox="0 0 24 24" fill="none" stroke="c
 const Instagram = (props: any) => (<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" {...props}><rect x="2" y="2" width="20" height="20" rx="5" ry="5" /><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z" /><line x1="17.5" y1="6.5" x2="17.51" y2="6.5" /></svg>);
 const Twitter = (props: any) => (<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" {...props}><path d="M22 4s-.7 2.1-2 3.4c1.6 10-9.4 17.3-18 11.6 2.2.1 4.4-.6 6-2C3 15.5.5 9.6 3 5c2.2 2.6 5.6 4.1 9 4-.9-4.2 4-6.6 7-3.8 1.1 0 3-1.2 3-1.2z" /></svg>);
 const Linkedin = (props: any) => (<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" {...props}><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z" /><rect x="2" y="9" width="4" height="12" /><circle cx="4" cy="4" r="2" /></svg>);
-const Youtube = (props: any) => (<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" {...props}><path d="M22.54 6.42a2.78 2.78 0 0 0-1.94-2C18.88 4 12 4 12 4s-6.88 0-8.6.46a2.78 2.78 0 0 0-1.94 2A29 29 0 0 0 1 11.75a29 29 0 0 0 .46 5.33A2.78 2.78 0 0 0 3.4 19c1.72.46 8.6.46 8.6.46s6.88 0 8.6-.46a2.78 2.78 0 0 0 1.94-2 29 29 0 0 0 .46-5.25 29 29 0 0 0-.46-5.33z" /><polygon points="9.75 15.02 15.5 11.75 9.75 8.48 9.75 15.02" /></svg>);
+const Youtube = (props: any) => (<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" {...props}><path d="M22.54 6.42a2.78 2.78 0 0 0-1.94-2C18.88 4 12 4 12 4s-6.88 0-8.6.46a2.78 2.78 0 0 0-1.94 2A29 29 0 0 0 1 11.75a29 29 0 0 0 .46 5.33A2.78 2.78 0 0 0 3.4 19c1.72.46 8.6.46 8.6.46s6.88 0 8.6-.46a2.78 2.78 0 0 0 1.94-2 29 29 0 0 0-.46-5.25 29 29 0 0 0-.46-5.33z" /><polygon points="9.75 15.02 15.5 11.75 9.75 8.48 9.75 15.02" /></svg>);
 
 // Sparkle component to enhance logo visibility
 const Sparkle = ({ style, color = '#F3B71B' }: { style?: React.CSSProperties; color?: string }) => (
@@ -52,7 +50,21 @@ const Sparkle = ({ style, color = '#F3B71B' }: { style?: React.CSSProperties; co
 );
 
 export default function Footer() {
-  const quickLinks = [
+  const [footerData, setFooterData] = useState<any>(null);
+
+  useEffect(() => {
+    settingsApi.get()
+      .then((res: any) => {
+        const sections = res?.landingPage?.sections || res?.data?.landingPage?.sections || [];
+        const found = sections.find((s: any) => s.key === "footer");
+        if (found) {
+          setFooterData(found);
+        }
+      })
+      .catch(() => {});
+  }, []);
+
+  const defaultQuickLinks = [
     { name: "Home", path: "/" },
     { name: "About Us", path: "/about" },
     { name: "Exhibitor Registration", path: "/registration/book-a-stand" },
@@ -65,13 +77,13 @@ export default function Footer() {
     { name: "Contact Us", path: "/contact" }
   ];
 
-  const subLinks = [
-    { name: "Speakers", path: "/conference" },
-    { name: "Agenda", path: "/conference" },
-    { name: "Exhibition", path: "/exhibitors" },
-    { name: "Awards", path: "/awards" },
-    { name: "Contact Us", path: "/contact" }
-  ];
+  const quickLinks =
+    footerData?.items && footerData.items.length > 0
+      ? footerData.items.map((item: any) => ({
+          name: item.label || item.name || "Link",
+          path: item.href || item.path || "/",
+        }))
+      : defaultQuickLinks;
 
   const highlights = [
     { icon: foot2, title: "Keynote Leaders", desc: "Global thought leaders share their vision" },
@@ -79,6 +91,47 @@ export default function Footer() {
     { icon: foot11, title: "Workshops", desc: "Hands on learning from experts" },
     { icon: foot22, title: "Networking", desc: "Connect. Collaborate. Create Impact." },
     { icon: foot33, title: "Innovation Showcase", desc: "Discover breakthrough organic solutions" }
+  ];
+
+  if (footerData && footerData.enabled === false) {
+    return null;
+  }
+
+  const resolveImg = (img: any, fallback: any) => {
+    if (!img) return fallback;
+    if (typeof img === "string") {
+      if (img.startsWith("http://") || img.startsWith("https://") || img.startsWith("data:")) return img;
+      if (img.startsWith("/")) return `http://localhost:4000${img}`;
+      return `http://localhost:4000/${img}`;
+    }
+    return img;
+  };
+
+  const logoSrc = resolveImg(footerData?.logoImage, footerLogo);
+  const leafSrc = resolveImg(footerData?.leafImage, foot1ogImg.src);
+  const downSrc = resolveImg(footerData?.downImage, foot2ogImg);
+  const namoLogoSrc = resolveImg(footerData?.organisedByLogo, namoLogo);
+  const bountySrc = resolveImg(footerData?.bottomBannerImage, footogImg);
+
+  const descriptionText =
+    footerData?.description ||
+    "A global platform uniting over 500+ exhibitors from across the organic value chain, showcasing certified products, advanced agritech, sustainable practices, and the rich heritage of traditional wellness. Discover organic living with conferences and B2B opportunities.";
+
+  const phoneNumber = footerData?.phoneNumber || "+91 96549 00525";
+  const contactEmail = footerData?.contactEmail || "info@namogangewellness.com";
+  const contactAddress = footerData?.contactAddress || "Hall 12, Pragati Maidan,\nNew Delhi, India 110001";
+  const conferenceHelpline = footerData?.conferenceHelpline || footerData?.altPhoneNumber || "+91 98183 53841";
+  const websiteUrl = footerData?.websiteUrl || "www.bharatorganicexpo.com";
+  const websiteHref = websiteUrl.startsWith("http://") || websiteUrl.startsWith("https://")
+    ? websiteUrl
+    : `https://${websiteUrl}`;
+
+  const socialList = [
+    { Icon: Facebook, label: "Facebook", url: footerData?.facebookUrl || SITE_CONFIG.socialLinks.facebook },
+    { Icon: Twitter, label: "Twitter", url: footerData?.twitterUrl || SITE_CONFIG.socialLinks.twitter },
+    { Icon: Linkedin, label: "LinkedIn", url: footerData?.linkedinUrl || SITE_CONFIG.socialLinks.linkedin },
+    { Icon: Instagram, label: "Instagram", url: footerData?.instagramUrl || SITE_CONFIG.socialLinks.instagram },
+    { Icon: Youtube, label: "YouTube", url: footerData?.youtubeUrl || SITE_CONFIG.socialLinks.youtube },
   ];
 
   return (
@@ -95,7 +148,11 @@ export default function Footer() {
       {/* Decorative Cream Background for Left Column (Desktop) */}
       <div className="hidden lg:block absolute top-0 left-0 bottom-0 w-[28%] bg-[#F1DEC4] rounded-r-[90px] z-0 shadow-2xl overflow-hidden border-r-2 border-[#d6ad60]/40">
         {/* foot1og image on left edge */}
-        <img src={foot1ogImg.src} alt="Decorative" className="absolute -left-4 top-1/2 -translate-y-1/2 w-24 opacity-100 object-contain pointer-events-none z-10" />
+        <img
+          src={typeof leafSrc === "string" ? leafSrc : leafSrc?.src}
+          alt="Decorative Leaf"
+          className="absolute -left-4 top-1/2 -translate-y-1/2 w-24 opacity-100 object-contain pointer-events-none z-10"
+        />
         
         {/* Subtle decorative mandala/circle overlay at bottom */}
         <div className="absolute -bottom-16 -left-10 w-56 h-56 border border-[#d8c39e] rounded-full opacity-40 pointer-events-none" />
@@ -115,18 +172,46 @@ export default function Footer() {
             <Sparkle color="#d68523" style={{ bottom: '10px', left: '5%', animationDelay: '0.2s' }} />
             <Sparkle color="#d68523" style={{ bottom: '-10px', right: '20%', animationDelay: '0.6s' }} />
             
-            <Image src={footerLogo} alt="Bharat Organic Expo" width={224} height={90} className="w-full h-auto object-contain" style={{ width: "auto", height: "auto", filter: "drop-shadow(0 0 1px rgba(255,255,255,0.6))" }} />
+            {typeof logoSrc === "string" ? (
+              <img
+                src={logoSrc}
+                alt="Bharat Organic Expo"
+                className="w-full h-auto max-h-[90px] object-contain mx-auto"
+                style={{ filter: "drop-shadow(0 0 1px rgba(255,255,255,0.6))" }}
+              />
+            ) : (
+              <Image
+                src={logoSrc}
+                alt="Bharat Organic Expo"
+                width={224}
+                height={90}
+                className="w-full h-auto object-contain"
+                style={{ width: "auto", height: "auto", filter: "drop-shadow(0 0 1px rgba(255,255,255,0.6))" }}
+              />
+            )}
           </div>
 
-          <p className="text-[13.5px] sm:text-[14px] font-semibold leading-relaxed max-w-[340px] text-black text-center mx-auto">
-            A global platform uniting over <span className="font-extrabold text-[#4B1426]">500+ exhibitors</span><br />
-            from across the organic value chain, showcasing<br />
-            certified products, advanced agritech,<br />
-            sustainable practices, and the rich heritage of<br />
-            traditional wellness. Discover organic living<br />
-            with conferences and B2B opportunities.
+          <p className="text-[13.5px] sm:text-[14px] font-semibold leading-relaxed max-w-[340px] text-black text-center mx-auto whitespace-pre-line">
+            {descriptionText}
           </p>
-          <Image src={foot2ogImg} alt="Decoration" width={320} height={120} quality={75} className="hidden lg:block w-full max-w-[320px] h-auto object-contain relative top-2 -mb-14 pointer-events-none" style={{ width: "auto", height: "auto" }} />
+
+          {typeof downSrc === "string" ? (
+            <img
+              src={downSrc}
+              alt="Decoration"
+              className="hidden lg:block w-full max-w-[320px] h-auto object-contain relative top-2 -mb-14 pointer-events-none"
+            />
+          ) : (
+            <Image
+              src={downSrc}
+              alt="Decoration"
+              width={320}
+              height={120}
+              quality={75}
+              className="hidden lg:block w-full max-w-[320px] h-auto object-contain relative top-2 -mb-14 pointer-events-none"
+              style={{ width: "auto", height: "auto" }}
+            />
+          )}
         </div>
 
         {/* Right Area (Dark Green) */}
@@ -140,7 +225,7 @@ export default function Footer() {
             <img src={uuogImg.src} alt="divider" className="h-3.5 w-auto -mt-1.5 mb-2.5 object-contain" />
 
             <ul className="grid grid-cols-2 sm:grid-cols-1 lg:grid-cols-1 gap-x-3 gap-y-2 text-[13px] sm:text-[14px] text-gray-200 font-medium">
-              {quickLinks.map((link, i) => (
+              {quickLinks.map((link: any, i: number) => (
                 <li key={i}>
                   <Link
                     href={link.path}
@@ -188,46 +273,51 @@ export default function Footer() {
             <div className="text-[12px] text-gray-200 font-medium space-y-1.5 mb-4 break-all md:whitespace-nowrap">
               <p>
                 <span className="text-gray-400 font-medium">Phone:</span>{" "}
-                <a href="tel:+919654900525" className="hover:text-[#F3B71B] transition-colors">
-                  +91 96549 00525
+                <a href={`tel:${phoneNumber.replace(/\s+/g, "")}`} className="hover:text-[#F3B71B] transition-colors">
+                  {phoneNumber}
                 </a>
               </p>
               <p>
                 <span className="text-gray-400 font-medium">Email:</span>{" "}
-                <a href="mailto:info@namogangewellness.com" className="hover:text-[#F3B71B] transition-colors">
-                  info@namogangewellness.com
+                <a href={`mailto:${contactEmail}`} className="hover:text-[#F3B71B] transition-colors">
+                  {contactEmail}
                 </a>
               </p>
               <p>
                 <span className="text-gray-400 font-medium">Web:</span>{" "}
                 <a
-                  href="/"
+                  href={websiteHref}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="hover:text-[#F3B71B] transition-colors underline decoration-white/20"
                 >
-                  www.bharatorganicexpo.com
+                  {websiteUrl}
                 </a>
               </p>
             </div>
 
             <h5 className="font-poppins font-semibold text-gray-400 uppercase mb-1 text-[11px] tracking-widest">ADDRESS:</h5>
-            <p className="text-[12px] text-gray-200 font-medium mb-3 leading-relaxed">
-              Hall 12, Pragati Maidan,<br/>New Delhi, India 110001
+            <p className="text-[12px] text-gray-200 font-medium mb-3 leading-relaxed whitespace-pre-line">
+              {contactAddress}
             </p>
-            <button className="border border-white/40 text-gray-200 text-[10px] font-semibold px-3 py-1 rounded-md mb-4 uppercase tracking-wider hover:bg-white hover:text-[#001810] transition-colors font-poppins bg-white/5">
+            <a
+              href="https://maps.google.com"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-block border border-white/40 text-gray-200 text-[10px] font-semibold px-3 py-1 rounded-md mb-4 uppercase tracking-wider hover:bg-white hover:text-[#001810] transition-colors font-poppins bg-white/5"
+            >
               VIEW ON GOOGLE MAPS
-            </button>
+            </a>
 
             <h5 className="font-poppins font-semibold text-gray-400 uppercase mb-1.5 text-[11px] tracking-widest">CONFERENCE HELPLINE</h5>
             <a
-              href="tel:+919818353841"
+              href={`tel:${conferenceHelpline.replace(/\s+/g, "")}`}
               className="flex items-center gap-2 text-white font-semibold text-[14px] font-poppins hover:opacity-90 transition-opacity"
             >
               <div className="w-7 h-7 rounded-full border border-[#F3B71B] flex items-center justify-center text-[#F3B71B] bg-[#F3B71B]/10">
                 <Phone size={14} />
               </div>
-              <span className="text-[#F3B71B]">+91 98183 53841</span>
+              <span className="text-[#F3B71B]">{conferenceHelpline}</span>
             </a>
           </div>
 
@@ -244,7 +334,23 @@ export default function Footer() {
               <Sparkle color="#FFFFFF" style={{ top: '-10px', right: '15%', animationDelay: '0.8s' }} />
               <Sparkle color="#FFFFFF" style={{ bottom: '4px', left: '5%', animationDelay: '0.2s' }} />
               <Sparkle color="#FFFFFF" style={{ bottom: '-8px', right: '10%', animationDelay: '0.6s' }} />
-              <Image src={namoLogo} alt="Namo Gange Wellness" width={176} height={60} className="w-full h-auto object-contain mx-auto sm:mx-0" style={{ width: "auto", height: "auto" }} />
+              
+              {typeof namoLogoSrc === "string" ? (
+                <img
+                  src={namoLogoSrc}
+                  alt="Organised by Namo Gange"
+                  className="w-full h-auto max-h-[60px] object-contain mx-auto sm:mx-0"
+                />
+              ) : (
+                <Image
+                  src={namoLogoSrc}
+                  alt="Namo Gange Wellness"
+                  width={176}
+                  height={60}
+                  className="w-full h-auto object-contain mx-auto sm:mx-0"
+                  style={{ width: "auto", height: "auto" }}
+                />
+              )}
             </div>
 
             <p className="text-gray-200 text-[11.5px] mb-3 leading-relaxed font-medium max-w-[280px]">
@@ -253,19 +359,35 @@ export default function Footer() {
 
             {/* Nature's Bounty Image */}
             <div className="w-full max-w-[280px] sm:max-w-none overflow-hidden rounded-xl border border-white/10 shadow-md mb-4">
-              <Image src={footogImg} alt="Nature's Bounty" width={300} height={96} quality={75} className="w-full h-24 object-cover" />
+              {typeof bountySrc === "string" ? (
+                <img
+                  src={bountySrc}
+                  alt="Nature's Bounty"
+                  className="w-full h-24 object-cover"
+                />
+              ) : (
+                <Image
+                  src={bountySrc}
+                  alt="Nature's Bounty"
+                  width={300}
+                  height={96}
+                  quality={75}
+                  className="w-full h-24 object-cover"
+                />
+              )}
             </div>
 
             <h5 className="font-poppins font-semibold text-[#F3B71B] uppercase mb-2 text-[12px] tracking-wider">CONNECT WITH US</h5>
             <div className="flex items-center justify-center sm:justify-start gap-2.5">
-              {[
-                { Icon: Facebook, label: "Facebook", url: SITE_CONFIG.socialLinks.facebook },
-                { Icon: Twitter, label: "Twitter", url: SITE_CONFIG.socialLinks.twitter },
-                { Icon: Linkedin, label: "LinkedIn", url: SITE_CONFIG.socialLinks.linkedin },
-                { Icon: Instagram, label: "Instagram", url: SITE_CONFIG.socialLinks.instagram },
-                { Icon: Youtube, label: "YouTube", url: SITE_CONFIG.socialLinks.youtube }
-              ].map(({ Icon, label, url }, idx) => (
-                <a key={idx} href={url} target="_blank" rel="noopener noreferrer" aria-label={label} className="w-8 h-8 rounded-lg bg-white/5 border border-white/10 flex items-center justify-center text-[#f3b71b] hover:bg-[#f3b71b] hover:text-[#001810] transition-all duration-300 shadow-sm">
+              {socialList.map(({ Icon, label, url }, idx) => (
+                <a
+                  key={idx}
+                  href={url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label={label}
+                  className="w-8 h-8 rounded-lg bg-white/5 border border-white/10 flex items-center justify-center text-[#f3b71b] hover:bg-[#f3b71b] hover:text-[#001810] transition-all duration-300 shadow-sm"
+                >
                   <Icon size={15} />
                 </a>
               ))}

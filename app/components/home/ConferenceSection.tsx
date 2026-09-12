@@ -1,16 +1,16 @@
 "use client";
 
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Leaf, ArrowRight, Calendar, MapPin, Users, CheckCircle, Mic, BookOpen } from 'lucide-react';
 import { motion } from 'framer-motion';
 import Link from 'next/link';
 import Image from 'next/image';
+import { websiteApi } from '@/lib/api';
 import global1 from '../../assets/home/global1.png';
 
-
-
-// ── Dynamic Data Configuration ──
-const conferenceData = {
+// ── Default Data Configuration ──
+const DEFAULT_CONFERENCE_DATA = {
+  enabled: true,
   sectionTag: "GLOBAL CONFERENCE & SEMINARS",
   titleMain: "Where Knowledge Meets",
   titleHighlight: "the Future of Organic",
@@ -31,7 +31,7 @@ const conferenceData = {
     { icon: Mic, title: '50+ GLOBAL', sub: 'SPEAKERS' },
     { icon: BookOpen, title: '20+ KEY', sub: 'SESSIONS' },
   ],
-  image: global1,
+  image: global1 as any,
   imageAlt: "Conference and Seminars"
 };
 
@@ -55,6 +55,87 @@ const OrangeSparkle = ({ style }: { style?: React.CSSProperties }) => (
 );
 
 const ConferenceSeminars = () => {
+  const [data, setData] = useState(DEFAULT_CONFERENCE_DATA);
+
+  useEffect(() => {
+    let isMounted = true;
+    const fetchConferenceData = async () => {
+      try {
+        const res = await websiteApi.getConferenceSeminars();
+        const serverData = res?.data || res;
+        if (serverData && isMounted) {
+          const checklist = [
+            serverData.keyPoint1,
+            serverData.keyPoint2,
+            serverData.keyPoint3,
+          ].filter(Boolean);
+
+          const finalChecklist =
+            checklist.length > 0
+              ? checklist
+              : Array.isArray(serverData.checklist) && serverData.checklist.length > 0
+              ? serverData.checklist
+              : DEFAULT_CONFERENCE_DATA.checklist;
+
+          const eventStats = [
+            {
+              icon: Calendar,
+              title: serverData.stat1Title || serverData.eventInfo?.[0]?.title || DEFAULT_CONFERENCE_DATA.eventInfo[0].title,
+              sub: serverData.stat1Sub || serverData.eventInfo?.[0]?.sub || DEFAULT_CONFERENCE_DATA.eventInfo[0].sub,
+            },
+            {
+              icon: MapPin,
+              title: serverData.stat2Title || serverData.eventInfo?.[1]?.title || DEFAULT_CONFERENCE_DATA.eventInfo[1].title,
+              sub: serverData.stat2Sub || serverData.eventInfo?.[1]?.sub || DEFAULT_CONFERENCE_DATA.eventInfo[1].sub,
+            },
+            {
+              icon: Users,
+              title: serverData.stat3Title || serverData.eventInfo?.[2]?.title || DEFAULT_CONFERENCE_DATA.eventInfo[2].title,
+              sub: serverData.stat3Sub || serverData.eventInfo?.[2]?.sub || DEFAULT_CONFERENCE_DATA.eventInfo[2].sub,
+            },
+            {
+              icon: Mic,
+              title: serverData.stat4Title || serverData.eventInfo?.[3]?.title || DEFAULT_CONFERENCE_DATA.eventInfo[3].title,
+              sub: serverData.stat4Sub || serverData.eventInfo?.[3]?.sub || DEFAULT_CONFERENCE_DATA.eventInfo[3].sub,
+            },
+            {
+              icon: BookOpen,
+              title: serverData.stat5Title || serverData.eventInfo?.[4]?.title || DEFAULT_CONFERENCE_DATA.eventInfo[4].title,
+              sub: serverData.stat5Sub || serverData.eventInfo?.[4]?.sub || DEFAULT_CONFERENCE_DATA.eventInfo[4].sub,
+            },
+          ];
+
+          setData({
+            enabled: serverData.enabled !== false,
+            sectionTag: serverData.eyebrow || serverData.sectionTag || DEFAULT_CONFERENCE_DATA.sectionTag,
+            titleMain: serverData.titlePrimary || serverData.titleMain || DEFAULT_CONFERENCE_DATA.titleMain,
+            titleHighlight: serverData.titleSecondary || serverData.titleHighlight || DEFAULT_CONFERENCE_DATA.titleHighlight,
+            description: serverData.description || DEFAULT_CONFERENCE_DATA.description,
+            checklist: finalChecklist,
+            button: {
+              text: serverData.buttonLabel || serverData.button?.text || DEFAULT_CONFERENCE_DATA.button.text,
+              link: serverData.buttonHref || serverData.button?.link || DEFAULT_CONFERENCE_DATA.button.link,
+            },
+            eventInfo: eventStats,
+            image: serverData.image && serverData.image.trim() !== "" ? serverData.image : global1,
+            imageAlt: serverData.imageAlt || DEFAULT_CONFERENCE_DATA.imageAlt,
+          });
+        }
+      } catch (err) {
+        console.error("Failed to load ConferenceSeminars data:", err);
+      }
+    };
+
+    fetchConferenceData();
+    return () => {
+      isMounted = false;
+    };
+  }, []);
+
+  if (!data.enabled) {
+    return null;
+  }
+
   return (
     <section className="bg-white py-2 md:py-4 lg:py-6 px-4 md:px-14 overflow-hidden relative shadow-[0_0_60px_rgba(245,130,32,0.1)] border-y border-[#f58220]/20 z-20">
       {/* Subtle Glowing Highlights */}
@@ -162,22 +243,22 @@ const ConferenceSeminars = () => {
           >
             <div className="flex items-center gap-2 mb-2 md:mb-4">
               <span className="text-[10px] sm:text-[12px] md:text-[13px] lg:text-[14px] font-bold uppercase tracking-widest text-[#f58220] bg-[#f58220]/10 px-3 py-1 md:px-4 md:py-1.5 rounded-full border border-[#f58220]/20">
-                {conferenceData.sectionTag}
+                {data.sectionTag}
               </span>
             </div>
 
             <h3 className="text-[18px] md:text-[24px] lg:text-[28px] font-medium text-[#1a1a1a] leading-[1.2] mb-2 md:mb-4">
-              {conferenceData.titleMain} <br className="hidden md:block" />
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#00643b] to-[#3b8c2a]">{conferenceData.titleHighlight}</span>
+              {data.titleMain} <br className="hidden md:block" />
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#00643b] to-[#3b8c2a]">{data.titleHighlight}</span>
             </h3>
 
             <p className="text-[13px] sm:text-[14px] md:text-[18px] text-gray-600 leading-[1.5] md:leading-[1.6] mb-4 md:mb-6 font-normal border-l-4 border-[#f58220] pl-3 md:pl-4">
-              {conferenceData.description}
+              {data.description}
             </p>
 
             {/* Elegant Checklist */}
             <div className="flex flex-col gap-2 mb-4 md:mb-5 w-full">
-              {conferenceData.checklist.map((text, idx) => (
+              {data.checklist.map((text, idx) => (
                 <div key={idx} className="flex items-start gap-2 md:gap-3">
                   <div className="mt-0.5 bg-[#f58220]/10 p-0.5 rounded-full">
                     <CheckCircle className="w-3.5 h-3.5 md:w-4 h-4 text-[#f58220] shrink-0" />
@@ -198,9 +279,9 @@ const ConferenceSeminars = () => {
                 <OrangeSparkle style={{ bottom: '-11px', right: '28%', animationDelay: '0.55s' }} />
               </div>
 
-              <Link href={conferenceData.button.link} target="_blank" rel="noopener noreferrer" className="relative z-10">
+              <Link href={data.button.link} target="_blank" rel="noopener noreferrer" className="relative z-10">
                 <button className="flex items-center justify-center gap-2 px-5 py-1.5 md:px-8 md:py-2 rounded-xl bg-gradient-to-r from-[#f58634] to-[#ff9b4f] hover:from-[#e67929] hover:to-[#f58634] text-white font-semibold uppercase tracking-wider shadow-[0_5px_15px_rgba(245,134,52,0.3)] hover:shadow-[0_8px_25px_rgba(245,134,52,0.4)] transition-all duration-300 hover:-translate-y-1 min-h-[34px] md:min-h-[44px] group">
-                  <span className="text-[11px] md:text-[14px]">{conferenceData.button.text}</span>
+                  <span className="text-[11px] md:text-[14px]">{data.button.text}</span>
                   <ArrowRight className="w-4 h-4 md:w-5 md:h-5 group-hover:translate-x-1 transition-transform" />
                 </button>
               </Link>
@@ -212,7 +293,7 @@ const ConferenceSeminars = () => {
 
           {/* Event Info Stack */}
           <div className="hidden md:flex flex-col gap-5 pl-2 shrink-0">
-            {conferenceData.eventInfo.map((item, i) => (
+            {data.eventInfo.map((item, i) => (
               <div key={i} className="flex items-center gap-4 group">
                 <div className="w-12 h-12 rounded-full bg-[#fdf5ed] group-hover:bg-[#f58220] transition-colors duration-300 flex items-center justify-center border border-[#f58220]/30 shadow-sm shrink-0">
                   <item.icon className="w-5 h-5 text-[#f58220] group-hover:text-white transition-colors duration-300" />
@@ -239,15 +320,26 @@ const ConferenceSeminars = () => {
           className="w-full xl:w-[45%] shrink-0"
         >
           <div className="relative rounded-[16px] md:rounded-[24px] overflow-hidden border-[4px] md:border-[8px] border-white shadow-[0_10px_30px_rgba(0,0,0,0.1)] md:shadow-[0_20px_50px_rgba(0,0,0,0.15)] group h-[180px] sm:h-[220px] md:h-[390px]">
-            <Image
-              src={conferenceData.image}
-              alt={conferenceData.imageAlt}
-              width={600}
-              height={400}
-              sizes="(max-width: 1280px) 100vw, 45vw"
-              quality={75}
-              className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
-            />
+            {typeof data.image === "string" ? (
+              <Image
+                src={data.image}
+                alt={data.imageAlt}
+                width={600}
+                height={400}
+                unoptimized
+                className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
+              />
+            ) : (
+              <Image
+                src={data.image}
+                alt={data.imageAlt}
+                width={600}
+                height={400}
+                sizes="(max-width: 1280px) 100vw, 45vw"
+                quality={75}
+                className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
+              />
+            )}
             <div className="absolute inset-0 bg-[#00643b]/10 group-hover:bg-transparent transition-colors duration-500"></div>
           </div>
         </motion.div>
@@ -256,4 +348,4 @@ const ConferenceSeminars = () => {
   );
 };
 
-export default ConferenceSeminars;
+export default ConferenceSeminars;

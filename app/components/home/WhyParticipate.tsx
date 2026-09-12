@@ -1,11 +1,12 @@
 "use client";
 
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { motion } from 'framer-motion';
 import { CheckCircle2, FileDown, ArrowRight, Leaf, Store, Info } from 'lucide-react';
 import SectionContainer from '../layout/SectionContainer';
+import { websiteApi } from '@/lib/api';
 
 import meetingImg from "../../assets/home/bs_meet.webp";
 
@@ -28,8 +29,9 @@ const Sparkle = ({ style, color = '#fff176' }: { style?: React.CSSProperties; co
   </span>
 );
 
-// ── Dynamic Data Configuration ──
-const sectionData = {
+// ── Default Data Configuration ──
+const DEFAULT_WHY_PARTICIPATE = {
+  enabled: true,
   sectionTag: "WHY PARTICIPATE",
   titleMain: "Your Gateway to",
   titleHighlight: "Global Opportunities",
@@ -43,8 +45,8 @@ const sectionData = {
     "Connect with investors, CEOs, doctors, and key decision-makers",
     "Achieve higher ROI with direct customer engagement and trust building"
   ],
-  image: meetingImg,
-  imageAlt: "Business Meeting at Expo",
+  image: meetingImg as any,
+  imageAlt: "Why Participate in Expo",
   imageBadgeText: "Build Relationships.\nGenerate Leads.\nGrow Your Business.",
   mainPoints: ["Exhibit", "Connect", "Grow"],
   buttons: {
@@ -55,6 +57,83 @@ const sectionData = {
 };
 
 const WhyParticipate = () => {
+  const [data, setData] = useState(DEFAULT_WHY_PARTICIPATE);
+
+  useEffect(() => {
+    let isMounted = true;
+    const fetchWhyParticipate = async () => {
+      try {
+        const res = await websiteApi.getWhyParticipate();
+        const serverData = res?.data || res;
+        if (serverData && isMounted) {
+          const keyPoints = [
+            serverData.keyPoint1,
+            serverData.keyPoint2,
+            serverData.keyPoint3,
+            serverData.keyPoint4,
+            serverData.keyPoint5,
+            serverData.keyPoint6,
+            serverData.keyPoint7,
+          ].filter(Boolean);
+
+          const points =
+            keyPoints.length > 0
+              ? [
+                  serverData.keyPoint1 || DEFAULT_WHY_PARTICIPATE.points[0],
+                  serverData.keyPoint2 || DEFAULT_WHY_PARTICIPATE.points[1],
+                  serverData.keyPoint3 || DEFAULT_WHY_PARTICIPATE.points[2],
+                  serverData.keyPoint4 || DEFAULT_WHY_PARTICIPATE.points[3],
+                  serverData.keyPoint5 || DEFAULT_WHY_PARTICIPATE.points[4],
+                  serverData.keyPoint6 || DEFAULT_WHY_PARTICIPATE.points[5],
+                  serverData.keyPoint7 || DEFAULT_WHY_PARTICIPATE.points[6],
+                ]
+              : Array.isArray(serverData.points) && serverData.points.length > 0
+              ? serverData.points
+              : DEFAULT_WHY_PARTICIPATE.points;
+
+          setData({
+            enabled: serverData.enabled !== false,
+            sectionTag: serverData.eyebrow || serverData.sectionTag || DEFAULT_WHY_PARTICIPATE.sectionTag,
+            titleMain: serverData.titlePrimary || serverData.titleMain || DEFAULT_WHY_PARTICIPATE.titleMain,
+            titleHighlight: serverData.titleSecondary || serverData.titleHighlight || DEFAULT_WHY_PARTICIPATE.titleHighlight,
+            description: serverData.description || DEFAULT_WHY_PARTICIPATE.description,
+            points: points,
+            image: serverData.image && serverData.image.trim() !== "" ? serverData.image : meetingImg,
+            imageAlt: serverData.imageAlt || DEFAULT_WHY_PARTICIPATE.imageAlt,
+            imageBadgeText: serverData.imageBadgeText || DEFAULT_WHY_PARTICIPATE.imageBadgeText,
+            mainPoints: Array.isArray(serverData.mainPoints) && serverData.mainPoints.length > 0
+              ? serverData.mainPoints
+              : DEFAULT_WHY_PARTICIPATE.mainPoints,
+            buttons: {
+              stall: {
+                text: serverData.buttonLabel || serverData.buttons?.stall?.text || DEFAULT_WHY_PARTICIPATE.buttons.stall.text,
+                link: serverData.buttonHref || serverData.buttons?.stall?.link || DEFAULT_WHY_PARTICIPATE.buttons.stall.link,
+              },
+              brochure: {
+                text: serverData.secondaryButtonLabel || serverData.buttons?.brochure?.text || DEFAULT_WHY_PARTICIPATE.buttons.brochure.text,
+                link: serverData.secondaryButtonHref || serverData.buttons?.brochure?.link || DEFAULT_WHY_PARTICIPATE.buttons.brochure.link,
+              },
+              moreInfo: {
+                text: serverData.tertiaryButtonLabel || serverData.buttons?.moreInfo?.text || DEFAULT_WHY_PARTICIPATE.buttons.moreInfo.text,
+                link: serverData.tertiaryButtonHref || serverData.buttons?.moreInfo?.link || DEFAULT_WHY_PARTICIPATE.buttons.moreInfo.link,
+              },
+            },
+          });
+        }
+      } catch (err) {
+        console.error("Failed to load WhyParticipate data:", err);
+      }
+    };
+
+    fetchWhyParticipate();
+    return () => {
+      isMounted = false;
+    };
+  }, []);
+
+  if (!data.enabled) {
+    return null;
+  }
   return (
     <section className="bg-[#F9FCF9] py-2 md:pt-4 md:pb-6 overflow-hidden font-inter">
       {/* ── Inject same keyframe animations as Footer ── */}
@@ -125,21 +204,21 @@ const WhyParticipate = () => {
           <div className="flex items-center gap-2 mb-2.5">
             <Leaf className="w-5 h-5 text-[#1b5e20] shrink-0" fill="#1b5e20" />
             <span className="font-poppins font-semibold text-sm sm:text-base text-[#1b5e20] tracking-widest uppercase">
-              {sectionData.sectionTag}
+              {data.sectionTag}
             </span>
           </div>
 
           <h2 className="font-poppins font-semibold text-xl md:text-[34px] lg:text-[34px] text-[#001810] leading-[1.1] mb-2.5 uppercase tracking-tight">
-            {sectionData.titleMain} <br className="hidden sm:block" />
-            <span className="text-[#f58220]">{sectionData.titleHighlight}</span>
+            {data.titleMain} <br className="hidden sm:block" />
+            <span className="text-[#f58220]">{data.titleHighlight}</span>
           </h2>
 
           <p className="font-inter text-sm sm:text-base font-semibold text-[#131730] leading-relaxed mb-4 max-w-xl">
-            {sectionData.description}
+            {data.description}
           </p>
 
           <div className="space-y-2 md:space-y-3 mb-4 md:mb-8 font-inter">
-            {sectionData.points.map((point: string, index: number) => (
+            {data.points.map((point: string, index: number) => (
               <div key={index} className="flex items-start md:items-center gap-2.5 md:gap-3">
                 <CheckCircle2 className="w-4 h-4 md:w-5 md:h-5 mt-0.5 md:mt-0 text-[#1b5e20] shrink-0" fill="#1b5e20" color="#fff" />
                 <span className="text-[12.5px] sm:text-[14px] leading-snug md:leading-normal font-medium lg:font-semibold text-[#131730]">{point}</span>
@@ -160,13 +239,13 @@ const WhyParticipate = () => {
               <Sparkle style={{ bottom: '-12px', right: '30%', animationDelay: '0.6s' }} />
 
               <Link
-                href={sectionData.buttons.stall.link}
+                href={data.buttons.stall.link}
                 target="_blank"
                 className="golden-btn-wp flex items-center gap-1.5 px-4 h-8 rounded-lg relative z-10 hover:scale-[1.02] transition-transform"
               >
                 <Store className="w-[14px] h-[14px] text-[#050A1A] shrink-0" />
                 <span className="font-bold text-[10px] tracking-widest text-[#050A1A] font-poppins uppercase">
-                  {sectionData.buttons.stall.text}
+                  {data.buttons.stall.text}
                 </span>
                 <ArrowRight className="w-3 h-3 text-[#050A1A] group-hover/btn:translate-x-1 transition-transform" />
               </Link>
@@ -182,14 +261,18 @@ const WhyParticipate = () => {
               <Sparkle color="#28396C" style={{ bottom: '-12px', right: '30%', animationDelay: '0.7s' }} />
 
               <a
-                href={sectionData.buttons.brochure.link}
+                href={
+                  data.buttons.brochure.link?.startsWith("/uploads")
+                    ? `http://localhost:4000${data.buttons.brochure.link}`
+                    : data.buttons.brochure.link || "#"
+                }
                 target="_blank"
                 rel="noopener noreferrer"
                 className="blue-btn-wp flex items-center gap-1.5 px-4 h-8 rounded-lg relative z-10 hover:scale-[1.02] transition-transform"
               >
                 <FileDown className="w-[14px] h-[14px] text-white shrink-0" />
                 <span className="font-bold text-[10px] tracking-widest text-white uppercase font-poppins">
-                  {sectionData.buttons.brochure.text}
+                  {data.buttons.brochure.text}
                 </span>
                 <ArrowRight className="w-3 h-3 text-white group-hover/btn:translate-x-1 transition-transform" />
               </a>
@@ -197,14 +280,14 @@ const WhyParticipate = () => {
 
             {/* ── More Info Button ── */}
             <Link
-              href={sectionData.buttons.moreInfo.link}
+              href={data.buttons.moreInfo.link}
               target="_blank"
               rel="noopener noreferrer"
               className="flex items-center gap-1.5 px-3 h-8 rounded-lg border border-[#2f8f3a] bg-[#F9FCF9] text-[#2f8f3a] hover:bg-[#2f8f3a]/5 transition-all hover:scale-[1.02] shadow-sm relative z-10 font-poppins"
             >
               <Info className="w-[14px] h-[14px] shrink-0" />
               <span className="font-bold text-[10px] tracking-widest uppercase">
-                {sectionData.buttons.moreInfo.text}
+                {data.buttons.moreInfo.text}
               </span>
             </Link>
           </div>
@@ -222,19 +305,30 @@ const WhyParticipate = () => {
           <div className="hidden md:block absolute bottom-[-18px] right-[-18px] w-[180px] h-[180px] bg-[#2f8f3a] rounded-[20px] z-0" />
 
           <div className="relative rounded-[1.5rem] md:rounded-[2rem] overflow-hidden shadow-xl md:shadow-2xl border-[5px] md:border-[7px] border-white/70 z-10">
-            <Image
-              src={sectionData.image}
-              alt={sectionData.imageAlt}
-              sizes="(max-width: 1024px) 100vw, 50vw"
-              className="w-full h-[200px] sm:h-[240px] md:h-[390px] object-cover"
-            />
+            {typeof data.image === "string" ? (
+              <Image
+                src={data.image}
+                alt={data.imageAlt}
+                width={700}
+                height={450}
+                unoptimized
+                className="w-full h-[200px] sm:h-[240px] md:h-[390px] object-cover"
+              />
+            ) : (
+              <Image
+                src={data.image}
+                alt={data.imageAlt}
+                sizes="(max-width: 1024px) 100vw, 50vw"
+                className="w-full h-[200px] sm:h-[240px] md:h-[390px] object-cover"
+              />
+            )}
 
             {/* Floating Badge */}
             <div className="absolute bottom-3 right-3 md:bottom-6 md:right-6 bg-white p-2.5 md:p-4 rounded-xl md:rounded-2xl shadow-lg md:shadow-xl border-l-[4px] md:border-l-[5px] border-[#2f8f3a] max-w-[140px] md:max-w-[190px] z-20 transform hover:-translate-y-2 transition-transform duration-300">
               <div className="flex items-start gap-1.5 md:gap-3">
                 <Leaf className="w-3 h-3 md:w-4 md:h-4 text-[#2f8f3a] shrink-0 mt-[2px]" fill="#2f8f3a" />
                 <p className="text-[9px] md:text-[12px] font-bold text-[#071c3d] leading-tight whitespace-pre-line font-inter">
-                  {sectionData.imageBadgeText}
+                  {data.imageBadgeText}
                 </p>
               </div>
             </div>
@@ -242,7 +336,7 @@ const WhyParticipate = () => {
 
           {/* 3-point bullets below image */}
           <div className="flex flex-wrap justify-center md:justify-start items-center gap-3 md:gap-8 mt-4 md:mt-8 md:ml-6 font-poppins">
-            {sectionData.mainPoints.map((point: string, index: number) => (
+            {data.mainPoints.map((point: string, index: number) => (
               <div key={index} className="flex items-center gap-1.5 md:gap-2">
                 <CheckCircle2 className="w-4 h-4 md:w-5 md:h-5 text-[#2f8f3a] shrink-0" fill="#2f8f3a" color="#fff" />
                 <span className="text-[12px] md:text-[14px] font-bold text-[#071c3d] tracking-tight uppercase">{point}</span>

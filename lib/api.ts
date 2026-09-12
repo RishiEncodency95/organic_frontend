@@ -256,5 +256,27 @@ export const sponsorshipEnquiryApi = {
 export const websiteApi = {
     getHomeHero: async () => apiCall('/website/home/home-hero'),
     getHomeSection: async (section: string) => apiCall(`/website/home/${section}`),
+    getAudienceStrip: async () => apiCall('/website/home/audience-strip'),
+    getIntroductionSection: async () => apiCall('/website/home/introduction-section'),
+    getGlobalPlatform: async () => apiCall('/website/home/global-platform'),
+    getWhyParticipate: async () => apiCall('/website/home/why-participate'),
+    getConferenceSeminars: async () => apiCall('/website/home/conference-seminars'),
+    getExpoCategories: async () => apiCall('/website/home/expo-categories'),
+    getBeyondExhibition: async () => apiCall('/website/home/beyond-exhibition'),
+    getSponsorsAndAttend: async () => apiCall('/website/home/sponsors-attend'),
 };
+
+export const seoApi = {
+    getByPage: async (page: string = "home", env?: string) => {
+        const query = env ? `?env=${env}` : "";
+        return apiCall(`/seo/${page}${query}`);
+    },
+    save: async (page: string, data: any) => {
+        return apiCall(`/seo/${page}`, {
+            method: 'PUT',
+            body: JSON.stringify(data),
+        });
+    },
+};
+
 

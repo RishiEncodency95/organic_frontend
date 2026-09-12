@@ -1,14 +1,15 @@
 "use client";
 
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { motion } from 'framer-motion';
 import {
   Lightbulb, Handshake, TrendingUp, BookOpen, PackageSearch, Zap,
-  Users, Target, Star, Leaf, ShoppingCart, Globe, Hospital,
+  Users, Star, Leaf, ShoppingCart, Globe, Hospital,
   Stethoscope, Dumbbell, Flower2, Sprout, Heart,
-  CalendarDays, MapPin, Trophy, ArrowRight, Sparkles
+  CalendarDays, MapPin, Trophy, ArrowRight
 } from 'lucide-react';
+import { websiteApi } from '@/lib/api';
 
 const Sparkle = ({ style, color = "#facc15", shadow = "#4B1426" }: { style?: React.CSSProperties; color?: string; shadow?: string }) => (
   <span
@@ -28,47 +29,133 @@ const Sparkle = ({ style, color = "#facc15", shadow = "#4B1426" }: { style?: Rea
   </span>
 );
 
-// ── Dynamic Data Configuration ──
-const sectionData = {
-  leftSection: {
-    titlePrefix: "WHY",
-    titleHighlight: "ATTEND?",
-    description: "Explore innovations, build connections and gain insights that drive better health and stronger businesses.",
-    itemsLeft: [
-      { title: "DISCOVER", desc: "Explore the latest organic products and eco-friendly services driving a sustainable future.", icon: <Lightbulb className="w-5 h-5 text-[#f58220]" /> },
-      { title: "CONNECT", desc: "Meet leading organic brands, manufacturers and sustainable suppliers under one roof.", icon: <Handshake className="w-5 h-5 text-[#f58220]" /> },
-      { title: "GROW", desc: "Unlock new green business opportunities, partnerships and eco-investment possibilities.", icon: <TrendingUp className="w-5 h-5 text-[#f58220]" /> }
-    ],
-    itemsRight: [
-      { title: "LEARN", desc: "Attend seminars, workshops and live demos by organic agriculture and sustainability experts.", icon: <BookOpen className="w-5 h-5 text-[#f58220]" /> },
-      { title: "SOURCE", desc: "Find trusted organic suppliers, distributors and eco-franchise opportunities.", icon: <PackageSearch className="w-5 h-5 text-[#f58220]" /> },
-      { title: "STAY AHEAD", desc: "Stay updated with market trends, conscious consumer insights and future organic industry developments.", icon: <Zap className="w-5 h-5 text-[#f58220]" /> }
-    ]
-  },
-  centerSection: {
-    text1: "ONE PLATFORM.",
-    text2: "ORGANIC",
-    text3: "OPPORTUNITIES."
-  },
-  rightSection: {
-    title: "WHO SHOULD ATTEND?",
-    bottomText: "Whether you're sourcing, learning or networking — this is the place to be!",
-    items: [
-      { label: "Organic Distributors, Wholesalers & Retailers", icon: <ShoppingCart className="w-4 h-4" /> },
-      { label: "Eco-Importers & Exporters", icon: <Globe className="w-4 h-4" /> },
-      { label: "Ayurvedic Institutions & Wellness Centers", icon: <Hospital className="w-4 h-4" /> },
-      { label: "Nutritionists, Farmers & Wellness Experts", icon: <Stethoscope className="w-4 h-4" /> },
-      { label: "Gym Owners, Spa & Eco-Fitness Professionals", icon: <Dumbbell className="w-4 h-4" /> },
-      { label: "Organic Farming & Natural Product Buyers", icon: <Sprout className="w-4 h-4" /> },
-      { label: "Sustainable Packaging & Eco-friendly Brands", icon: <Flower2 className="w-4 h-4" /> },
-      { label: "Investors, Franchise Seekers & Green Business", icon: <Handshake className="w-4 h-4" /> },
-      { label: "Supermarkets & Organic Grocery Chains", icon: <Users className="w-4 h-4" /> },
-      { label: "Health-Conscious Consumers & Eco-Enthusiasts", icon: <Heart className="w-4 h-4" /> },
-    ]
-  }
+const DEFAULT_ATTEND_DATA = {
+  enabled: true,
+  titlePrefix: "WHY",
+  titleHighlight: "ATTEND?",
+  description: "Explore innovations, build connections and gain insights that drive better health and stronger businesses.",
+  image: "",
+  imageAlt: "Why Attend Bharat Organic Expo",
+  buttonLabel: "REGISTER AS VISITOR!",
+  buttonHref: "/registration/visitor-registration",
+
+  feature1Title: "DISCOVER",
+  feature1Desc: "Explore the latest organic products and eco-friendly services driving a sustainable future.",
+  feature2Title: "LEARN",
+  feature2Desc: "Attend seminars, workshops and live demos by organic agriculture and sustainability experts.",
+  feature3Title: "CONNECT",
+  feature3Desc: "Meet leading organic brands, manufacturers and sustainable suppliers under one roof.",
+  feature4Title: "SOURCE",
+  feature4Desc: "Find trusted organic suppliers, distributors and eco-franchise opportunities.",
+  feature5Title: "GROW",
+  feature5Desc: "Unlock new green business opportunities, partnerships and eco-investment possibilities.",
+  feature6Title: "STAY AHEAD",
+  feature6Desc: "Stay updated with market trends, conscious consumer insights and future organic industry developments.",
+
+  keyPoints: [
+    { label: "Organic Distributors, Wholesalers & Retailers", icon: <ShoppingCart className="w-4 h-4" /> },
+    { label: "Eco-Importers & Exporters", icon: <Globe className="w-4 h-4" /> },
+    { label: "Ayurvedic Institutions & Wellness Centers", icon: <Hospital className="w-4 h-4" /> },
+    { label: "Nutritionists, Farmers & Wellness Experts", icon: <Stethoscope className="w-4 h-4" /> },
+    { label: "Gym Owners, Spa & Eco-Fitness Professionals", icon: <Dumbbell className="w-4 h-4" /> },
+    { label: "Organic Farming & Natural Product Buyers", icon: <Sprout className="w-4 h-4" /> },
+    { label: "Sustainable Packaging & Eco-friendly Brands", icon: <Flower2 className="w-4 h-4" /> },
+    { label: "Investors, Franchise Seekers & Green Business", icon: <Handshake className="w-4 h-4" /> },
+    { label: "Supermarkets & Organic Grocery Chains", icon: <Users className="w-4 h-4" /> },
+    { label: "Health-Conscious Consumers & Eco-Enthusiasts", icon: <Heart className="w-4 h-4" /> },
+  ],
+  rightTitle: "WHO SHOULD ATTEND?",
+  rightBottomText: "Whether you're sourcing, learning or networking — this is the place to be!",
+  centerText1: "ONE PLATFORM.",
+  centerText2: "ORGANIC",
+  centerText3: "OPPORTUNITIES."
 };
 
+const DEFAULT_ATTENDEE_ICONS = [
+  <ShoppingCart key="1" className="w-4 h-4" />,
+  <Globe key="2" className="w-4 h-4" />,
+  <Hospital key="3" className="w-4 h-4" />,
+  <Stethoscope key="4" className="w-4 h-4" />,
+  <Dumbbell key="5" className="w-4 h-4" />,
+  <Sprout key="6" className="w-4 h-4" />,
+  <Flower2 key="7" className="w-4 h-4" />,
+  <Handshake key="8" className="w-4 h-4" />,
+  <Users key="9" className="w-4 h-4" />,
+  <Heart key="10" className="w-4 h-4" />,
+];
+
 const SponsorsAndAttend = () => {
+  const [data, setData] = useState(DEFAULT_ATTEND_DATA);
+
+  useEffect(() => {
+    let isMounted = true;
+    const fetchSponsorsAndAttend = async () => {
+      try {
+        const res = await websiteApi.getSponsorsAndAttend();
+        const serverData = res?.data || res;
+        if (serverData && isMounted) {
+          const rawKeyPoints = [
+            serverData.keyPoint1 || serverData.rightSection?.items?.[0]?.label || DEFAULT_ATTEND_DATA.keyPoints[0].label,
+            serverData.keyPoint2 || serverData.rightSection?.items?.[1]?.label || DEFAULT_ATTEND_DATA.keyPoints[1].label,
+            serverData.keyPoint3 || serverData.rightSection?.items?.[2]?.label || DEFAULT_ATTEND_DATA.keyPoints[2].label,
+            serverData.keyPoint4 || serverData.rightSection?.items?.[3]?.label || DEFAULT_ATTEND_DATA.keyPoints[3].label,
+            serverData.keyPoint5 || serverData.rightSection?.items?.[4]?.label || DEFAULT_ATTEND_DATA.keyPoints[4].label,
+            serverData.keyPoint6 || serverData.rightSection?.items?.[5]?.label || DEFAULT_ATTEND_DATA.keyPoints[5].label,
+            serverData.keyPoint7 || serverData.rightSection?.items?.[6]?.label || DEFAULT_ATTEND_DATA.keyPoints[6].label,
+            serverData.keyPoint8 || serverData.rightSection?.items?.[7]?.label || DEFAULT_ATTEND_DATA.keyPoints[7].label,
+            serverData.keyPoint9 || serverData.rightSection?.items?.[8]?.label || DEFAULT_ATTEND_DATA.keyPoints[8].label,
+            serverData.keyPoint10 || serverData.rightSection?.items?.[9]?.label || DEFAULT_ATTEND_DATA.keyPoints[9].label,
+          ];
+
+          setData({
+            enabled: serverData.enabled !== false,
+            titlePrefix: serverData.titlePrefix || serverData.leftSection?.titlePrefix || DEFAULT_ATTEND_DATA.titlePrefix,
+            titleHighlight: serverData.titleHighlight || serverData.leftSection?.titleHighlight || DEFAULT_ATTEND_DATA.titleHighlight,
+            description: serverData.description || serverData.leftSection?.description || DEFAULT_ATTEND_DATA.description,
+            image: serverData.image || "",
+            imageAlt: serverData.imageAlt || DEFAULT_ATTEND_DATA.imageAlt,
+            buttonLabel: serverData.buttonLabel || DEFAULT_ATTEND_DATA.buttonLabel,
+            buttonHref: serverData.buttonHref || DEFAULT_ATTEND_DATA.buttonHref,
+
+            feature1Title: serverData.feature1Title || serverData.leftSection?.itemsLeft?.[0]?.title || DEFAULT_ATTEND_DATA.feature1Title,
+            feature1Desc: serverData.feature1Desc || serverData.leftSection?.itemsLeft?.[0]?.desc || DEFAULT_ATTEND_DATA.feature1Desc,
+            feature2Title: serverData.feature2Title || serverData.leftSection?.itemsRight?.[0]?.title || DEFAULT_ATTEND_DATA.feature2Title,
+            feature2Desc: serverData.feature2Desc || serverData.leftSection?.itemsRight?.[0]?.desc || DEFAULT_ATTEND_DATA.feature2Desc,
+            feature3Title: serverData.feature3Title || serverData.leftSection?.itemsLeft?.[1]?.title || DEFAULT_ATTEND_DATA.feature3Title,
+            feature3Desc: serverData.feature3Desc || serverData.leftSection?.itemsLeft?.[1]?.desc || DEFAULT_ATTEND_DATA.feature3Desc,
+            feature4Title: serverData.feature4Title || serverData.leftSection?.itemsRight?.[1]?.title || DEFAULT_ATTEND_DATA.feature4Title,
+            feature4Desc: serverData.feature4Desc || serverData.leftSection?.itemsRight?.[1]?.desc || DEFAULT_ATTEND_DATA.feature4Desc,
+            feature5Title: serverData.feature5Title || serverData.leftSection?.itemsLeft?.[2]?.title || DEFAULT_ATTEND_DATA.feature5Title,
+            feature5Desc: serverData.feature5Desc || serverData.leftSection?.itemsLeft?.[2]?.desc || DEFAULT_ATTEND_DATA.feature5Desc,
+            feature6Title: serverData.feature6Title || serverData.leftSection?.itemsRight?.[2]?.title || DEFAULT_ATTEND_DATA.feature6Title,
+            feature6Desc: serverData.feature6Desc || serverData.leftSection?.itemsRight?.[2]?.desc || DEFAULT_ATTEND_DATA.feature6Desc,
+
+            keyPoints: rawKeyPoints.map((label, idx) => ({
+              label,
+              icon: DEFAULT_ATTENDEE_ICONS[idx % DEFAULT_ATTENDEE_ICONS.length],
+            })),
+            rightTitle: serverData.rightSection?.title || DEFAULT_ATTEND_DATA.rightTitle,
+            rightBottomText: serverData.rightSection?.bottomText || DEFAULT_ATTEND_DATA.rightBottomText,
+            centerText1: serverData.centerSection?.text1 || DEFAULT_ATTEND_DATA.centerText1,
+            centerText2: serverData.centerSection?.text2 || DEFAULT_ATTEND_DATA.centerText2,
+            centerText3: serverData.centerSection?.text3 || DEFAULT_ATTEND_DATA.centerText3,
+          });
+        }
+      } catch (err) {
+        console.error("Failed to load SponsorsAndAttend:", err);
+      }
+    };
+
+    fetchSponsorsAndAttend();
+    return () => {
+      isMounted = false;
+    };
+  }, []);
+
+  if (!data.enabled) {
+    return null;
+  }
+
   return (
     <>
       <section className="w-full relative z-10 py-2 md:py-6 lg:py-6 overflow-hidden bg-[#EFF7EE]">
@@ -85,13 +172,13 @@ const SponsorsAndAttend = () => {
             <div className="flex flex-col md:flex-row items-start gap-1 mb-2 text-left">
               <div className="flex items-center gap-1.5">
                 <h2 className="text-[16px] md:text-[24px] lg:text-[30px] font-semibold text-[#1a1a1a] tracking-tight leading-[1.2]">
-                  {sectionData.leftSection.titlePrefix} <span className="bg-gradient-to-r from-[#00643b] to-[#f58220] bg-clip-text text-transparent">{sectionData.leftSection.titleHighlight}</span>
+                  {data.titlePrefix} <span className="bg-gradient-to-r from-[#00643b] to-[#f58220] bg-clip-text text-transparent">{data.titleHighlight}</span>
                 </h2>
                 <Leaf className="w-5 h-5 md:w-8 md:h-8 text-[#f58220] fill-[#f58220]" />
               </div>
             </div>
             <p className="text-[14px] sm:text-[16px] md:text-[18px] text-gray-700 font-normal mb-2 md:mb-4 leading-[1.5] md:leading-[1.6] max-w-[500px] text-left">
-              {sectionData.leftSection.description}
+              {data.description}
             </p>
 
             {/* Divider with Leaf */}
@@ -105,88 +192,76 @@ const SponsorsAndAttend = () => {
               {/* Vertical Divider - Hidden on mobile */}
               <div className="hidden md:block absolute top-0 bottom-0 left-1/2 w-[1px] border-r border-dashed border-gray-300 z-0" />
 
-              {/* Row 1 */}
+              {/* Row 1: DISCOVER & LEARN */}
               <div className="py-0.5 md:py-1 px-0 md:px-3 border-b-0 md:border-b border-dashed border-gray-300 relative">
-                {sectionData.leftSection.itemsLeft.slice(0, 1).map((item, index) => (
-                  <div key={index} className="flex gap-2.5 md:gap-4 group">
-                    <div className="w-7 h-7 md:w-10 md:h-10 rounded-full flex items-center justify-center bg-[#fff8f2] shrink-0 mt-0.5 border border-[#feeddf]">
-                      {React.cloneElement(item.icon as React.ReactElement<{ className?: string }>, { className: 'w-3.5 h-3.5 md:w-5 md:h-5 text-[#f58220]' })}
-                    </div>
-                    <div className="flex-1">
-                      <h3 className="text-[12.5px] md:text-[18px] font-semibold text-[#00643b] mb-0.5 md:mb-1 leading-none pt-0.5 md:pt-1.5">{item.title}</h3>
-                      <p className="text-[10.5px] sm:text-[11.5px] md:text-[15px] text-gray-600 font-normal leading-[1.3] md:leading-[1.6]">{item.desc}</p>
-                    </div>
+                <div className="flex gap-2.5 md:gap-4 group">
+                  <div className="w-7 h-7 md:w-10 md:h-10 rounded-full flex items-center justify-center bg-[#fff8f2] shrink-0 mt-0.5 border border-[#feeddf]">
+                    <Lightbulb className="w-3.5 h-3.5 md:w-5 md:h-5 text-[#f58220]" />
                   </div>
-                ))}
+                  <div className="flex-1">
+                    <h3 className="text-[12.5px] md:text-[18px] font-semibold text-[#00643b] mb-0.5 md:mb-1 leading-none pt-0.5 md:pt-1.5">{data.feature1Title}</h3>
+                    <p className="text-[10.5px] sm:text-[11.5px] md:text-[15px] text-gray-600 font-normal leading-[1.3] md:leading-[1.6]">{data.feature1Desc}</p>
+                  </div>
+                </div>
               </div>
               <div className="py-0.5 md:py-2 px-0 md:px-2 border-b-0 md:border-b border-dashed border-gray-300 relative">
-                {sectionData.leftSection.itemsRight.slice(0, 1).map((item, index) => (
-                  <div key={index} className="flex gap-2.5 md:gap-4 group">
-                    <div className="w-7 h-7 md:w-10 md:h-10 rounded-full flex items-center justify-center bg-[#fff8f2] shrink-0 mt-0.5 border border-[#feeddf]">
-                      {React.cloneElement(item.icon as React.ReactElement<{ className?: string }>, { className: 'w-3.5 h-3.5 md:w-5 md:h-5 text-[#f58220]' })}
-                    </div>
-                    <div className="flex-1">
-                      <h3 className="text-[12.5px] md:text-[18px] font-semibold text-[#00643b] mb-0.5 md:mb-1 leading-none pt-0.5 md:pt-1.5">{item.title}</h3>
-                      <p className="text-[10.5px] sm:text-[11.5px] md:text-[15px] text-gray-600 font-normal leading-[1.3] md:leading-[1.6]">{item.desc}</p>
-                    </div>
+                <div className="flex gap-2.5 md:gap-4 group">
+                  <div className="w-7 h-7 md:w-10 md:h-10 rounded-full flex items-center justify-center bg-[#fff8f2] shrink-0 mt-0.5 border border-[#feeddf]">
+                    <BookOpen className="w-3.5 h-3.5 md:w-5 md:h-5 text-[#f58220]" />
                   </div>
-                ))}
+                  <div className="flex-1">
+                    <h3 className="text-[12.5px] md:text-[18px] font-semibold text-[#00643b] mb-0.5 md:mb-1 leading-none pt-0.5 md:pt-1.5">{data.feature2Title}</h3>
+                    <p className="text-[10.5px] sm:text-[11.5px] md:text-[15px] text-gray-600 font-normal leading-[1.3] md:leading-[1.6]">{data.feature2Desc}</p>
+                  </div>
+                </div>
               </div>
 
-              {/* Row 2 */}
+              {/* Row 2: CONNECT & SOURCE */}
               <div className="py-0.5 md:py-2 px-0 md:px-3 border-b-0 md:border-b border-dashed border-gray-300 relative">
-                {sectionData.leftSection.itemsLeft.slice(1, 2).map((item, index) => (
-                  <div key={index} className="flex gap-2.5 md:gap-4 group">
-                    <div className="w-7 h-7 md:w-10 md:h-10 rounded-full flex items-center justify-center bg-[#fff8f2] shrink-0 mt-0.5 border border-[#feeddf]">
-                      {React.cloneElement(item.icon as React.ReactElement<{ className?: string }>, { className: 'w-3.5 h-3.5 md:w-5 md:h-5 text-[#f58220]' })}
-                    </div>
-                    <div className="flex-1">
-                      <h3 className="text-[12.5px] md:text-[18px] font-semibold text-[#00643b] mb-0.5 md:mb-1 leading-none pt-0.5 md:pt-1.5">{item.title}</h3>
-                      <p className="text-[10.5px] sm:text-[11.5px] md:text-[15px] text-gray-600 font-normal leading-[1.3] md:leading-[1.6]">{item.desc}</p>
-                    </div>
+                <div className="flex gap-2.5 md:gap-4 group">
+                  <div className="w-7 h-7 md:w-10 md:h-10 rounded-full flex items-center justify-center bg-[#fff8f2] shrink-0 mt-0.5 border border-[#feeddf]">
+                    <Handshake className="w-3.5 h-3.5 md:w-5 md:h-5 text-[#f58220]" />
                   </div>
-                ))}
+                  <div className="flex-1">
+                    <h3 className="text-[12.5px] md:text-[18px] font-semibold text-[#00643b] mb-0.5 md:mb-1 leading-none pt-0.5 md:pt-1.5">{data.feature3Title}</h3>
+                    <p className="text-[10.5px] sm:text-[11.5px] md:text-[15px] text-gray-600 font-normal leading-[1.3] md:leading-[1.6]">{data.feature3Desc}</p>
+                  </div>
+                </div>
               </div>
               <div className="py-0.5 md:py-2 px-0 md:px-3 border-b-0 md:border-b border-dashed border-gray-300 relative">
-                {sectionData.leftSection.itemsRight.slice(1, 2).map((item, index) => (
-                  <div key={index} className="flex gap-2.5 md:gap-4 group">
-                    <div className="w-7 h-7 md:w-10 md:h-10 rounded-full flex items-center justify-center bg-[#fff8f2] shrink-0 mt-0.5 border border-[#feeddf]">
-                      {React.cloneElement(item.icon as React.ReactElement<{ className?: string }>, { className: 'w-3.5 h-3.5 md:w-5 md:h-5 text-[#f58220]' })}
-                    </div>
-                    <div className="flex-1">
-                      <h3 className="text-[12.5px] md:text-[18px] font-semibold text-[#00643b] mb-0.5 md:mb-1 leading-none pt-0.5 md:pt-1.5">{item.title}</h3>
-                      <p className="text-[10.5px] sm:text-[11.5px] md:text-[15px] text-gray-600 font-normal leading-[1.3] md:leading-[1.6]">{item.desc}</p>
-                    </div>
+                <div className="flex gap-2.5 md:gap-4 group">
+                  <div className="w-7 h-7 md:w-10 md:h-10 rounded-full flex items-center justify-center bg-[#fff8f2] shrink-0 mt-0.5 border border-[#feeddf]">
+                    <PackageSearch className="w-3.5 h-3.5 md:w-5 md:h-5 text-[#f58220]" />
                   </div>
-                ))}
+                  <div className="flex-1">
+                    <h3 className="text-[12.5px] md:text-[18px] font-semibold text-[#00643b] mb-0.5 md:mb-1 leading-none pt-0.5 md:pt-1.5">{data.feature4Title}</h3>
+                    <p className="text-[10.5px] sm:text-[11.5px] md:text-[15px] text-gray-600 font-normal leading-[1.3] md:leading-[1.6]">{data.feature4Desc}</p>
+                  </div>
+                </div>
               </div>
 
-              {/* Row 3 */}
+              {/* Row 3: GROW & STAY AHEAD */}
               <div className="py-0.5 md:py-2 px-0 md:px-3 relative">
-                {sectionData.leftSection.itemsLeft.slice(2, 3).map((item, index) => (
-                  <div key={index} className="flex gap-2.5 md:gap-4 group">
-                    <div className="w-7 h-7 md:w-10 md:h-10 rounded-full flex items-center justify-center bg-[#fff8f2] shrink-0 mt-0.5 border border-[#feeddf]">
-                      {React.cloneElement(item.icon as React.ReactElement<{ className?: string }>, { className: 'w-3.5 h-3.5 md:w-5 md:h-5 text-[#f58220]' })}
-                    </div>
-                    <div className="flex-1">
-                      <h3 className="text-[12.5px] md:text-[18px] font-semibold text-[#00643b] mb-0.5 md:mb-1 leading-none pt-0.5 md:pt-1.5">{item.title}</h3>
-                      <p className="text-[10.5px] sm:text-[11.5px] md:text-[15px] text-gray-600 font-normal leading-[1.3] md:leading-[1.6]">{item.desc}</p>
-                    </div>
+                <div className="flex gap-2.5 md:gap-4 group">
+                  <div className="w-7 h-7 md:w-10 md:h-10 rounded-full flex items-center justify-center bg-[#fff8f2] shrink-0 mt-0.5 border border-[#feeddf]">
+                    <TrendingUp className="w-3.5 h-3.5 md:w-5 md:h-5 text-[#f58220]" />
                   </div>
-                ))}
+                  <div className="flex-1">
+                    <h3 className="text-[12.5px] md:text-[18px] font-semibold text-[#00643b] mb-0.5 md:mb-1 leading-none pt-0.5 md:pt-1.5">{data.feature5Title}</h3>
+                    <p className="text-[10.5px] sm:text-[11.5px] md:text-[15px] text-gray-600 font-normal leading-[1.3] md:leading-[1.6]">{data.feature5Desc}</p>
+                  </div>
+                </div>
               </div>
               <div className="py-0.5 md:py-2 px-0 md:px-3 relative">
-                {sectionData.leftSection.itemsRight.slice(2, 3).map((item, index) => (
-                  <div key={index} className="flex gap-2.5 md:gap-4 group">
-                    <div className="w-7 h-7 md:w-10 md:h-10 rounded-full flex items-center justify-center bg-[#fff8f2] shrink-0 mt-0.5 border border-[#feeddf]">
-                      {React.cloneElement(item.icon as React.ReactElement<{ className?: string }>, { className: 'w-3.5 h-3.5 md:w-5 md:h-5 text-[#f58220]' })}
-                    </div>
-                    <div className="flex-1">
-                      <h3 className="text-[12.5px] md:text-[18px] font-semibold text-[#00643b] mb-0.5 md:mb-1 leading-none pt-0.5 md:pt-1.5">{item.title}</h3>
-                      <p className="text-[10.5px] sm:text-[11.5px] md:text-[15px] text-gray-600 font-normal leading-[1.3] md:leading-[1.6]">{item.desc}</p>
-                    </div>
+                <div className="flex gap-2.5 md:gap-4 group">
+                  <div className="w-7 h-7 md:w-10 md:h-10 rounded-full flex items-center justify-center bg-[#fff8f2] shrink-0 mt-0.5 border border-[#feeddf]">
+                    <Zap className="w-3.5 h-3.5 md:w-5 md:h-5 text-[#f58220]" />
                   </div>
-                ))}
+                  <div className="flex-1">
+                    <h3 className="text-[12.5px] md:text-[18px] font-semibold text-[#00643b] mb-0.5 md:mb-1 leading-none pt-0.5 md:pt-1.5">{data.feature6Title}</h3>
+                    <p className="text-[10.5px] sm:text-[11.5px] md:text-[15px] text-gray-600 font-normal leading-[1.3] md:leading-[1.6]">{data.feature6Desc}</p>
+                  </div>
+                </div>
               </div>
             </div>
             <div className="flex items-center gap-4 mb-2 md:mb-1">
@@ -207,27 +282,37 @@ const SponsorsAndAttend = () => {
             <div className="relative w-[200px] sm:w-[250px] h-[200px] sm:h-[250px] md:w-[360px] md:h-[360px] aspect-square">
 
               {/* Image Circle Container */}
-              <div className="absolute inset-0 rounded-full border-[4px] sm:border-[5px] md:border-[8px] border-white shadow-xl overflow-hidden grid grid-cols-2 grid-rows-2 gap-0.5 sm:gap-1 bg-white">
-                <div className="overflow-hidden bg-gray-50 border-r border-b border-white group">
-                  <img loading="lazy" decoding="async" src="https://images.unsplash.com/photo-1542838132-92c53300491e?w=800&q=80" className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" alt="1" />
-                </div>
-                <div className="overflow-hidden bg-gray-50 border-l border-b border-white group">
-                  <img loading="lazy" decoding="async" src="https://images.unsplash.com/photo-1552664730-d307ca884978?w=800&q=80" className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" alt="2" />
-                </div>
-                <div className="overflow-hidden bg-gray-50 border-r border-t border-white group">
-                  <img loading="lazy" decoding="async" src="https://images.unsplash.com/photo-1540555700478-4be289fbecef?w=800&q=80" className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" alt="3" />
-                </div>
-                <div className="overflow-hidden bg-gray-50 border-l border-t border-white group">
-                  <img loading="lazy" decoding="async" src="https://images.unsplash.com/photo-1515187029135-18ee286d815b?w=800&q=80" className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" alt="4" />
-                </div>
+              <div className="absolute inset-0 rounded-full border-[4px] sm:border-[5px] md:border-[8px] border-white shadow-xl overflow-hidden bg-white">
+                {data.image && data.image.trim() !== "" ? (
+                  <img
+                    src={data.image}
+                    alt={data.imageAlt}
+                    className="w-full h-full object-cover transition-transform duration-700 hover:scale-105"
+                  />
+                ) : (
+                  <div className="w-full h-full grid grid-cols-2 grid-rows-2 gap-0.5 sm:gap-1 bg-white">
+                    <div className="overflow-hidden bg-gray-50 border-r border-b border-white group">
+                      <img loading="lazy" decoding="async" src="https://images.unsplash.com/photo-1542838132-92c53300491e?w=800&q=80" className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" alt="1" />
+                    </div>
+                    <div className="overflow-hidden bg-gray-50 border-l border-b border-white group">
+                      <img loading="lazy" decoding="async" src="https://images.unsplash.com/photo-1552664730-d307ca884978?w=800&q=80" className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" alt="2" />
+                    </div>
+                    <div className="overflow-hidden bg-gray-50 border-r border-t border-white group">
+                      <img loading="lazy" decoding="async" src="https://images.unsplash.com/photo-1540555700478-4be289fbecef?w=800&q=80" className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" alt="3" />
+                    </div>
+                    <div className="overflow-hidden bg-gray-50 border-l border-t border-white group">
+                      <img loading="lazy" decoding="async" src="https://images.unsplash.com/photo-1515187029135-18ee286d815b?w=800&q=80" className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" alt="4" />
+                    </div>
+                  </div>
+                )}
               </div>
 
               {/* Center Overlay Circle */}
               <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-20 w-[90px] sm:w-[110px] h-[90px] sm:h-[110px] md:w-[130px] md:h-[130px] bg-white rounded-full flex flex-col items-center justify-center text-center shadow-lg p-2 sm:p-3 border-[3px] md:border-[4px] border-white">
                 <Leaf className="w-4 h-4 sm:w-5 sm:h-5 md:w-6 md:h-6 text-[#00643b] mb-0.5 sm:mb-1" />
-                <p className="text-[8.5px] sm:text-[10px] md:text-[11.5px] font-black text-[#00643b] leading-tight uppercase">{sectionData.centerSection.text1}</p>
-                <p className="text-[8.5px] sm:text-[10px] md:text-[11.5px] font-black text-[#f58220] leading-tight uppercase tracking-tight">{sectionData.centerSection.text2}</p>
-                <p className="text-[8.5px] sm:text-[10px] md:text-[11.5px] font-black text-[#00643b] leading-tight uppercase tracking-tight">{sectionData.centerSection.text3}</p>
+                <p className="text-[8.5px] sm:text-[10px] md:text-[11.5px] font-black text-[#00643b] leading-tight uppercase">{data.centerText1}</p>
+                <p className="text-[8.5px] sm:text-[10px] md:text-[11.5px] font-black text-[#f58220] leading-tight uppercase tracking-tight">{data.centerText2}</p>
+                <p className="text-[8.5px] sm:text-[10px] md:text-[11.5px] font-black text-[#00643b] leading-tight uppercase tracking-tight">{data.centerText3}</p>
               </div>
 
               {/* Rotating Ring & Dots Container */}
@@ -264,15 +349,15 @@ const SponsorsAndAttend = () => {
               <div className="bg-[#3b8c2a] text-white p-2 flex items-center justify-center relative">
                 <div className="flex items-center gap-2">
                   <Users className="w-4 h-4 text-[#f58220]" />
-                  <span className="text-[16px] md:text-[18px] font-semibold uppercase tracking-wider">{sectionData.rightSection.title}</span>
+                  <span className="text-[16px] md:text-[18px] font-semibold uppercase tracking-wider">{data.rightTitle}</span>
                 </div>
               </div>
 
               <div className="px-2 md:px-3 py-0 md:py-0">
-                {sectionData.rightSection.items.map((item, index) => (
+                {data.keyPoints.map((item, index) => (
                   <div key={index} className="flex items-center gap-2 md:gap-3 py-0.5 md:py-1 border-b border-gray-100 last:border-0 group cursor-default">
                     <div className="w-5 h-5 md:w-6 md:h-6 rounded bg-[#fff8f2] flex items-center justify-center text-[#f58220] group-hover:bg-[#f58220] group-hover:text-white transition-all duration-300 border border-[#feeddf] shrink-0">
-                      {React.cloneElement(item.icon as React.ReactElement<{ className?: string }>, { className: 'w-3 h-3 md:w-3.5 md:h-3.5' })}
+                      {item.icon}
                     </div>
                     <span className="text-[11.5px] sm:text-[13px] md:text-[14px] text-gray-700 font-medium group-hover:text-[#00643b] transition-colors leading-[1.3] md:leading-[1.5]">{item.label}</span>
                   </div>
@@ -285,7 +370,7 @@ const SponsorsAndAttend = () => {
                   <Star className="w-3.5 h-3.5 text-white" />
                 </div>
                 <p className="text-[14px] text-[#00643b] font-semibold leading-[1.4]">
-                  {sectionData.rightSection.bottomText}
+                  {data.rightBottomText}
                 </p>
               </div>
             </div>
@@ -368,14 +453,14 @@ const SponsorsAndAttend = () => {
             <Sparkle color="#4B1426" shadow="#ffffff" style={{ top: "-15px", left: "72%", animationDelay: "0.9s" }} />
             <Sparkle color="#4B1426" shadow="#ffffff" style={{ top: "-12px", right: "5%", animationDelay: "1.2s" }} />
             <Link
-              href="/registration/visitor-registration"
+              href={data.buttonHref || "/registration/visitor-registration"}
               target="_blank"
               rel="noopener noreferrer"
               className="group relative inline-flex items-center justify-start gap-2.5 bg-[#4B1426] hover:bg-[#360e1b] text-white px-6 py-2.5 rounded-full shadow-[0_4px_20px_rgba(75,20,38,0.6)] transition-all duration-300 transform hover:-translate-y-0.5 shrink-0 font-inter overflow-hidden border border-white/20"
             >
               <span className="absolute inset-0 bg-white/15 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-500 skew-x-12" />
               <span className="text-white font-semibold text-[13px] lg:text-[14px] tracking-widest uppercase relative z-10">
-                REGISTER AS VISITOR!
+                {data.buttonLabel || "REGISTER AS VISITOR!"}
               </span>
               <div className="w-6 h-6 bg-white/20 rounded-full flex items-center justify-center text-white group-hover:bg-white group-hover:text-[#4B1426] transition-colors relative z-10">
                 <ArrowRight className="w-3.5 h-3.5" strokeWidth={3} />

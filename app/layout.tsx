@@ -21,17 +21,28 @@ const inter = Inter({
   display: "swap",
 });
 
+import DynamicCanonical from "./components/DynamicCanonical";
+
+const defaultSiteUrl =
+  process.env.NEXT_PUBLIC_SITE_URL ||
+  (process.env.NODE_ENV !== "production"
+    ? "http://localhost:3002"
+    : "https://bharatorganicexpo.com");
+
 export const metadata: Metadata = {
-  metadataBase: new URL("https://bharatorganicexpo.com"), // Placeholder domain
+  metadataBase: new URL(defaultSiteUrl),
   title: {
     default: "Bharat Organic Expo 2027",
     template: "%s | Bharat Organic Expo 2027",
   },
   description: "Join Bharat Organic Expo 2027, the premier exhibition and conference for organic food, agriculture, and natural products in India.",
+  alternates: {
+    canonical: "./",
+  },
   openGraph: {
     title: "Bharat Organic Expo 2027",
     description: "Join Bharat Organic Expo 2027, the premier exhibition and conference for organic food, agriculture, and natural products in India.",
-    url: "https://bharatorganicexpo.com",
+    url: defaultSiteUrl,
     siteName: "Bharat Organic Expo 2027",
     type: "website",
   },
@@ -96,6 +107,7 @@ export default function RootLayout({
         />
       </head>
       <body suppressHydrationWarning className="min-h-full flex flex-col font-inter text-[16px] md:text-[18px] leading-[1.6] overflow-x-hidden w-full">
+        <DynamicCanonical />
         <SmoothScroll>
           <Topbar />
           <Navbar />
