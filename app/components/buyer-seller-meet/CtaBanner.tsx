@@ -1,11 +1,14 @@
 "use client";
 import React from "react";
 import Link from "next/link";
-import { ArrowRight, UserPlus, HelpCircle } from "lucide-react";
+import { ArrowRight, HelpCircle } from "lucide-react";
 import imgPlaceholder from "../../assets/image/footog.webp";
 import SectionContainer from "@/app/components/layout/SectionContainer";
+import { CTA_BANNER_DATA } from "@/app/data/buyerSellerMeetData";
 
 export default function CtaBanner() {
+  const data = CTA_BANNER_DATA[0];
+
   return (
     <section className="bg-[#0f2115] relative overflow-hidden font-inter border-b-4 border-green-700">
       <SectionContainer>
@@ -21,11 +24,11 @@ export default function CtaBanner() {
             {/* Text side */}
             <div className="flex-1 text-center md:text-left w-full">
               <h2 className="text-xl sm:text-2xl md:text-3xl font-poppins font-semibold text-white leading-[1.15] mb-2 uppercase">
-                READY TO CONNECT WITH <br className="hidden md:block" />
-                <span className="text-[#facc15] whitespace-nowrap">NEW BUSINESS OPPORTUNITIES?</span>
+                {data.headingLine1} <br className="hidden md:block" />
+                <span className="text-[#facc15] whitespace-nowrap">{data.headingHighlight}</span>
               </h2>
               <p className="text-white/80 text-sm font-medium">
-                Join the Buyer-Seller Meet at Bharat Organic Expo 2027.
+                {data.subtitle}
               </p>
             </div>
 
@@ -33,26 +36,26 @@ export default function CtaBanner() {
             <div className="flex flex-col items-center xl:items-end gap-3 shrink-0 w-full xl:w-auto">
               <div className="flex flex-col sm:flex-row items-center justify-center xl:justify-end gap-3 w-full">
                 <Link
-                  href="/registration/buyer-registration"
+                  href={data.buyerButtonHref}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="flex items-center justify-center gap-2 bg-[#1b5e20] hover:bg-[#144a18] text-white px-5 py-2.5 rounded-lg font-bold text-xs uppercase tracking-wide transition-colors w-full sm:w-auto"
                 >
-                  REGISTER AS A BUYER <ArrowRight size={16} />
+                  {data.buyerButtonLabel} <ArrowRight size={16} />
                 </Link>
                 <Link
-                  href="/participate_as_exhibiture"
+                  href={data.exhibitorButtonHref}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="flex items-center justify-center gap-2 bg-gradient-to-r from-[#ea580c] to-[#c2410c] hover:opacity-90 text-white px-5 py-2.5 rounded-lg font-bold text-xs uppercase tracking-wide transition-opacity shadow-lg w-full sm:w-auto"
                 >
-                  PARTICIPATE AS AN EXHIBITOR <ArrowRight size={16} />
+                  {data.exhibitorButtonLabel} <ArrowRight size={16} />
                 </Link>
               </div>
 
               <div className="flex items-center justify-center xl:justify-end gap-2 text-[11px] md:text-xs font-bold text-[#facc15]">
                 <HelpCircle size={14} />
-                <span>Need Help? +91 96549 00525  |  info@namogangewellness.com</span>
+                <span>{data.helpText}</span>
               </div>
             </div>
 
