@@ -5,24 +5,40 @@ import leafsImg from "@/app/assets/icons/leafs.png";
 import hotelog from "@/app/assets/icons/hotelog.png";
 import SectionContainer from "@/app/components/layout/SectionContainer";
 
+export const WHY_PARTNER_HOTEL_DATA = [
+  {
+    id: 1,
+    leftTitleLine1: "WHY PARTNER AS",
+    leftTitleLine2: "HOTEL & STAY PARTNER?",
+    formTitle: "PARTNER WITH US",
+    formSubtitle: "Fill in your details and our team will connect with you shortly.",
+    contactEmail: "info@namogangewellness.com",
+    contactPhone: "+91-9654900525",
+    contactWebsite: "bharatorganicexpo.com",
+    contactWebsiteUrl: "https://bharatorganicexpo.com/",
+    contactLocationLine1: "Pragati Maidan,",
+    contactLocationLine2: "New Delhi, India",
+    points: [
+      "Reach a targeted audience of high-value delegates and exhibitors",
+      "Gain direct bookings from event participants",
+      "Position your property as the preferred accommodation partner",
+      "Build long-term relationships with corporates & industry leaders",
+      "Increase brand visibility & recall across all platforms",
+      "Support a premium, well-organized event experience"
+    ],
+    statesList: [
+      "Delhi", "Maharashtra", "Karnataka", "Tamil Nadu", "Gujarat", 
+      "Uttar Pradesh", "Haryana", "Telangana", "West Bengal", "Other"
+    ],
+  }
+];
+
 export default function WhyPartnerHotel() {
   const [stateVal, setStateVal] = useState("");
   const [categoryVal, setCategoryVal] = useState("Hotel & Stay Partner");
   const [agreed, setAgreed] = useState(false);
 
-  const points = [
-    "Reach a targeted audience of high-value delegates and exhibitors",
-    "Gain direct bookings from event participants",
-    "Position your property as the preferred accommodation partner",
-    "Build long-term relationships with corporates & industry leaders",
-    "Increase brand visibility & recall across all platforms",
-    "Support a premium, well-organized event experience"
-  ];
-
-  const statesList = [
-    "Delhi", "Maharashtra", "Karnataka", "Tamil Nadu", "Gujarat", 
-    "Uttar Pradesh", "Haryana", "Telangana", "West Bengal", "Other"
-  ];
+  const data = WHY_PARTNER_HOTEL_DATA[0];
 
   return (
     <section className="pt-4 pb-4 bg-white font-inter relative overflow-hidden">
@@ -37,15 +53,15 @@ export default function WhyPartnerHotel() {
         
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch">
           
-          {/* Left Column: Why Partner */}
+          {/* Left Column */}
           <div className="lg:col-span-4 bg-[#F5F4EF] p-8 pb-0 rounded-2xl border border-gray-150 flex flex-col justify-between relative overflow-hidden">
             <div>
               <h3 className="text-base md:text-lg lg:text-[17px] xl:text-[19px] font-semibold text-[#1b5e20] uppercase font-poppins mb-6 leading-tight">
-                WHY PARTNER AS<br />HOTEL & STAY PARTNER?
+                {data.leftTitleLine1}<br />{data.leftTitleLine2}
               </h3>
               
               <ul className="space-y-5 relative z-10">
-                {points.map((pt, idx) => (
+                {data.points.map((pt, idx) => (
                   <li key={idx} className="flex items-start gap-3">
                     <div className="w-6 h-6 rounded-full border border-[#1b5e20] bg-transparent flex items-center justify-center shrink-0 mt-0.5">
                       <div className="w-4 h-4 text-[#1b5e20]">
@@ -73,12 +89,12 @@ export default function WhyPartnerHotel() {
               <div className="flex items-center gap-4 mb-4 w-full justify-center">
                 <div className="h-[1px] flex-1 bg-gray-300"></div>
                 <h3 className="text-xl md:text-2xl font-semibold text-[#1b5e20] uppercase font-poppins text-center px-2 shrink-0">
-                  PARTNER WITH US
+                  {data.formTitle}
                 </h3>
                 <div className="h-[1px] flex-1 bg-gray-300"></div>
               </div>
               <p className="text-xs font-bold text-gray-800 w-full text-left">
-                Fill in your details and our team will connect with you shortly.
+                {data.formSubtitle}
               </p>
             </div>
 
@@ -126,7 +142,7 @@ export default function WhyPartnerHotel() {
                     <select required value={stateVal} onChange={(e) => setStateVal(e.target.value)}
                       className={`w-full px-4 py-2 border border-gray-200 rounded-md bg-white text-sm focus:outline-none focus:ring-1 focus:ring-[#113217] focus:border-[#113217] appearance-none ${!stateVal ? 'text-gray-500' : 'text-gray-900'}`}>
                       <option value="" disabled>Select state</option>
-                      {statesList.map(st => <option key={st} value={st} className="text-gray-900">{st}</option>)}
+                      {data.statesList.map(st => <option key={st} value={st} className="text-gray-900">{st}</option>)}
                     </select>
                     <div className="absolute inset-y-0 right-0 flex items-center px-2 pointer-events-none text-gray-500">
                       <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7"/></svg>
@@ -190,24 +206,24 @@ export default function WhyPartnerHotel() {
           <div className="hidden lg:block border-l border-gray-300 h-6 shrink-0" />
           <div className="flex items-center gap-2">
             <div className="w-8 h-8 rounded-full bg-[#d6a549] flex items-center justify-center text-white shrink-0"><Mail size={16} /></div>
-            <a href="mailto:info@namogangewellness.com" className="text-xs lg:text-[13px] font-bold text-gray-900 hover:text-[#113217] transition-colors whitespace-nowrap">info@namogangewellness.com</a>
+            <a href={`mailto:${data.contactEmail}`} className="text-xs lg:text-[13px] font-bold text-gray-900 hover:text-[#113217] transition-colors whitespace-nowrap">{data.contactEmail}</a>
           </div>
           <div className="hidden lg:block border-l border-gray-300 h-6 shrink-0" />
           <div className="flex items-center gap-2">
             <div className="w-8 h-8 rounded-full bg-[#d6a549] flex items-center justify-center text-white shrink-0"><Phone size={16} /></div>
-            <a href="tel:+919654900525" className="text-xs lg:text-[13px] font-bold text-gray-900 hover:text-[#113217] transition-colors whitespace-nowrap">+91-9654900525</a>
+            <a href={`tel:${data.contactPhone}`} className="text-xs lg:text-[13px] font-bold text-gray-900 hover:text-[#113217] transition-colors whitespace-nowrap">{data.contactPhone}</a>
           </div>
           <div className="hidden lg:block border-l border-gray-300 h-6 shrink-0" />
           <div className="flex items-center gap-2">
             <div className="w-8 h-8 rounded-full bg-[#d6a549] flex items-center justify-center text-white shrink-0"><Globe size={16} /></div>
-            <a href="https://bharatorganicexpo.com/" target="_blank" rel="noopener noreferrer" className="text-xs lg:text-[13px] font-bold text-blue-600 hover:underline transition-colors whitespace-nowrap">bharatorganicexpo.com</a>
+            <a href={data.contactWebsiteUrl} target="_blank" rel="noopener noreferrer" className="text-xs lg:text-[13px] font-bold text-blue-600 hover:underline transition-colors whitespace-nowrap">{data.contactWebsite}</a>
           </div>
           <div className="hidden lg:block border-l border-gray-300 h-6 shrink-0" />
           <div className="flex items-center gap-2.5">
             <MapPin size={24} className="text-[#d6a549] shrink-0" />
             <div className="text-[10px] lg:text-[11px] font-bold text-gray-900 leading-tight">
-              <div className="whitespace-nowrap">Pragati Maidan,</div>
-              <div className="whitespace-nowrap">New Delhi, India</div>
+              <div className="whitespace-nowrap">{data.contactLocationLine1}</div>
+              <div className="whitespace-nowrap">{data.contactLocationLine2}</div>
             </div>
           </div>
         </div>

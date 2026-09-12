@@ -9,92 +9,110 @@ import s4og from "../../../assets/icons/s4og.png";
 import s5og from "../../../assets/icons/s5og.png";
 import SectionContainer from "@/app/components/layout/SectionContainer";
 
+const ICON_MAP: Record<string, any> = {
+  s1og,
+  s2og,
+  s3og,
+  s4og,
+  s5og,
+};
+
+export const SPONSORSHIP_PACKAGES_DATA = [
+  {
+    id: 1,
+    heading: "OUR SPONSORSHIP PACKAGES",
+    subtitle: "Choose the package that best suits your brand goals",
+    footerNote: "Packages can be customized as per your branding and engagement objectives.",
+    packages: [
+      { 
+        name: "PLATINUM\nSPONSOR", 
+        type: "(Exclusive)", 
+        price: "₹10,00,000", 
+        color: "#1e40af", 
+        lightBg: "#eff6ff",
+        buttonColor: "bg-[#1e40af] hover:bg-[#1e3a8a]",
+        iconKey: "s1og",
+        features: [
+          "Premium logo placement on all event collaterals", 
+          "Speaking opportunity (15 minutes)", 
+          "Stall space (24 sqm)", 
+          "Branding on stage backdrop", 
+          "Full page ad in show catalogue", 
+          "10 delegate passes", 
+          "Social media & website recognition", 
+          "Logo on visitor pre-registration emails"
+        ] 
+      },
+      { 
+        name: "GOLD\nSPONSOR", 
+        type: "(Limited)", 
+        price: "₹5,00,000", 
+        color: "#d97706", 
+        lightBg: "#fffbeb",
+        buttonColor: "bg-[#d97706] hover:bg-[#b45309]",
+        iconKey: "s2og",
+        features: [
+          "Logo on all major collaterals", 
+          "Speaking opportunity (10 minutes)", 
+          "Stall space (18 sqm)", 
+          "Half page ad in show catalogue", 
+          "6 delegate passes", 
+          "Social media & website recognition", 
+          "Logo on selected emailers"
+        ] 
+      },
+      { 
+        name: "SILVER\nSPONSOR", 
+        type: "(Limited)", 
+        price: "₹3,00,000", 
+        color: "#6b7280", 
+        lightBg: "#f9fafb",
+        buttonColor: "bg-[#6b7280] hover:bg-[#4b5563]",
+        iconKey: "s3og",
+        features: [
+          "Logo on major collaterals", 
+          "Stall space (12 sqm)", 
+          "Quarter page ad in show catalogue", 
+          "4 delegate passes", 
+          "Social media & website recognition"
+        ] 
+      },
+      { 
+        name: "ASSOCIATE\nSPONSOR", 
+        type: "(Multiple)", 
+        price: "₹1,50,000", 
+        color: "#2e7d32", 
+        lightBg: "#f0fdf4",
+        buttonColor: "bg-[#2e7d32] hover:bg-[#1b5e20]",
+        iconKey: "s4og",
+        features: [
+          "Logo on event website", 
+          "Stall space (9 sqm)", 
+          "Listing in show catalogue", 
+          "2 delegate passes", 
+          "Social media recognition"
+        ] 
+      },
+      { 
+        name: "SUPPORTING\nSPONSOR", 
+        type: "(Multiple)", 
+        price: "₹75,000", 
+        color: "#b45309", 
+        lightBg: "#fff7ed",
+        buttonColor: "bg-[#b45309] hover:bg-[#92400e]",
+        iconKey: "s5og",
+        features: [
+          "Logo on event website", 
+          "Listing in show catalogue", 
+          "1 delegate pass"
+        ] 
+      }
+    ]
+  }
+];
+
 export default function SponsorshipPackages() {
-  const packages = [
-    { 
-      name: "PLATINUM\nSPONSOR", 
-      type: "(Exclusive)", 
-      price: "₹10,00,000", 
-      color: "#1e40af", 
-      lightBg: "#eff6ff",
-      buttonColor: "bg-[#1e40af] hover:bg-[#1e3a8a]",
-      iconSrc: s1og,
-      features: [
-        "Premium logo placement on all event collaterals", 
-        "Speaking opportunity (15 minutes)", 
-        "Stall space (24 sqm)", 
-        "Branding on stage backdrop", 
-        "Full page ad in show catalogue", 
-        "10 delegate passes", 
-        "Social media & website recognition", 
-        "Logo on visitor pre-registration emails"
-      ] 
-    },
-    { 
-      name: "GOLD\nSPONSOR", 
-      type: "(Limited)", 
-      price: "₹5,00,000", 
-      color: "#d97706", 
-      lightBg: "#fffbeb",
-      buttonColor: "bg-[#d97706] hover:bg-[#b45309]",
-      iconSrc: s2og,
-      features: [
-        "Logo on all major collaterals", 
-        "Speaking opportunity (10 minutes)", 
-        "Stall space (18 sqm)", 
-        "Half page ad in show catalogue", 
-        "6 delegate passes", 
-        "Social media & website recognition", 
-        "Logo on selected emailers"
-      ] 
-    },
-    { 
-      name: "SILVER\nSPONSOR", 
-      type: "(Limited)", 
-      price: "₹3,00,000", 
-      color: "#6b7280", 
-      lightBg: "#f9fafb",
-      buttonColor: "bg-[#6b7280] hover:bg-[#4b5563]",
-      iconSrc: s3og,
-      features: [
-        "Logo on major collaterals", 
-        "Stall space (12 sqm)", 
-        "Quarter page ad in show catalogue", 
-        "4 delegate passes", 
-        "Social media & website recognition"
-      ] 
-    },
-    { 
-      name: "ASSOCIATE\nSPONSOR", 
-      type: "(Multiple)", 
-      price: "₹1,50,000", 
-      color: "#2e7d32", 
-      lightBg: "#f0fdf4",
-      buttonColor: "bg-[#2e7d32] hover:bg-[#1b5e20]",
-      iconSrc: s4og,
-      features: [
-        "Logo on event website", 
-        "Stall space (9 sqm)", 
-        "Listing in show catalogue", 
-        "2 delegate passes", 
-        "Social media recognition"
-      ] 
-    },
-    { 
-      name: "SUPPORTING\nSPONSOR", 
-      type: "(Multiple)", 
-      price: "₹75,000", 
-      color: "#b45309", 
-      lightBg: "#fff7ed",
-      buttonColor: "bg-[#b45309] hover:bg-[#92400e]",
-      iconSrc: s5og,
-      features: [
-        "Logo on event website", 
-        "Listing in show catalogue", 
-        "1 delegate pass"
-      ] 
-    }
-  ];
+  const data = SPONSORSHIP_PACKAGES_DATA[0];
 
   return (
     <section className="pt-10 pb-2 bg-white font-inter">
@@ -102,16 +120,16 @@ export default function SponsorshipPackages() {
         {/* Header */}
         <div className="flex flex-col items-center text-center mb-8">
           <h2 className="text-xl md:text-2xl font-semibold text-[#1b5e20] uppercase leading-[1.1] font-poppins mb-1">
-            OUR SPONSORSHIP PACKAGES
+            {data.heading}
           </h2>
           <p className="text-sm text-black font-medium leading-relaxed max-w-2xl">
-            Choose the package that best suits your brand goals
+            {data.subtitle}
           </p>
         </div>
 
         {/* Packages Grid */}
         <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-5 gap-5">
-          {packages.map((pkg, idx) => (
+          {data.packages.map((pkg, idx) => (
             <div 
               key={idx} 
               className="rounded-2xl flex flex-col h-full transition-shadow duration-300 relative overflow-hidden"
@@ -121,9 +139,8 @@ export default function SponsorshipPackages() {
               }}
             >
               <div className="p-3 pt-4 flex flex-col items-center text-center relative z-10 pb-1.5 border-b border-gray-100/30">
-                {/* Image instead of SVG wrapper */}
                 <Image 
-                  src={pkg.iconSrc} 
+                  src={ICON_MAP[pkg.iconKey]} 
                   alt={pkg.name.replace('\n', ' ')}
                   width={64}
                   height={64}
@@ -176,11 +193,9 @@ export default function SponsorshipPackages() {
         
         {/* Footer Note */}
         <div className="mt-5 text-center text-xs md:text-sm font-semibold text-[#4B1426]">
-          Packages can be customized as per your branding and engagement objectives.
+          {data.footerNote}
         </div>
       </SectionContainer>
     </section>
   );
 }
-
-
