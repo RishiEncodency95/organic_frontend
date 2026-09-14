@@ -34,13 +34,33 @@ interface CategoryFilterProps {
 }
 
 const CategoryFilter: React.FC<CategoryFilterProps> = ({ activeCategory = 'Inauguration', onCategoryChange, dbCategories = [] }) => {
-  const dynamicCategories = dbCategories.length > 0 ? [
-    ...dbCategories.map(c => {
-      const existing = categories.find(hc => hc.name.toLowerCase() === c.category.toLowerCase());
-      return { name: c.category, icon: existing ? existing.icon : LayoutGrid };
+  const parsedCats = (dbCategories || [])
+    .map((c: any) => (typeof c === 'string' ? c : (c?.category || c?.name || '')))
+    .filter((c: string) => Boolean(c) && c.toLowerCase() !== 'all activities');
+
+  const baseList = parsedCats.length > 0
+    ? parsedCats
+    : [
+        'Inauguration',
+        'Scientific Sessions',
+        'Panel Discussions',
+        'Speakers',
+        'Workshops',
+        'Exhibition (Expo)',
+        'Cultural Programs',
+        'Awards',
+        'Networking',
+      ];
+
+  const uniqueCats = Array.from(new Set(baseList));
+
+  const dynamicCategories = [
+    ...uniqueCats.map((catName) => {
+      const existing = categories.find((hc) => hc.name.toLowerCase() === catName.toLowerCase());
+      return { name: catName, icon: existing ? existing.icon : LayoutGrid };
     }),
-    { name: 'All Activities', icon: LayoutGrid }
-  ] : categories;
+    { name: 'All Activities', icon: LayoutGrid },
+  ];
 
   return (
     <section className="w-full pt-0 pb-4 font-inter">

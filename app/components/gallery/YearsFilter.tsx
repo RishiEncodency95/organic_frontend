@@ -20,7 +20,12 @@ const YearsFilter: React.FC<YearsFilterProps> = ({
   onSearchChange,
   dbYears = [] 
 }) => {
-  const dynamicYears = dbYears.length > 0 ? ['All Years', ...dbYears.map(y => y.year)] : years;
+  const parsedYears = (dbYears || [])
+    .map((y: any) => (typeof y === 'string' ? y : y?.year || ''))
+    .filter(Boolean);
+  const baseList = parsedYears.length > 0 ? parsedYears : ['2026', '2025', '2024', '2023', '2022', '2021', '2020'];
+  const uniqueYears = Array.from(new Set(baseList.filter((y: string) => y !== 'All Years')));
+  const dynamicYears = ['All Years', ...uniqueYears];
 
   return (
     <section className="w-full pt-4 pb-4 font-inter">

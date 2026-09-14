@@ -407,28 +407,44 @@ const GalleryGrid: React.FC<GalleryGridProps> = ({
   const sectionRef = useRef<HTMLDivElement>(null);
 
   const dynamicImages = React.useMemo(() => {
-    return dbGallery.length > 0 
-      ? dbGallery.map((g, i) => {
-          const s = styleCycle[i % styleCycle.length];
-          return {
-            id: g._id,
-            src: g.image,
-            title: g.title,
-            category: g.category,
-            year: g.year,
-            style: { gridColumn: s.gridColumn, gridRow: s.gridRow },
-            hasLabel: s.hasLabel || false
-          };
-      })
-      : ALL_IMAGES;
+    const publishedBackend = (dbGallery || [])
+      .filter((g: any) => !g.status || g.status === 'Published')
+      .map((g: any, i: number) => {
+        const s = styleCycle[i % styleCycle.length];
+        return {
+          id: g._id || g.id || `uploaded-${i}`,
+          src: g.image,
+          title: g.title || g.category || 'Photo Asset',
+          category: g.category,
+          year: String(g.year),
+          style: { gridColumn: s.gridColumn, gridRow: s.gridRow },
+          hasLabel: true,
+        };
+      });
+
+    if (publishedBackend.length === 0) {
+      return ALL_IMAGES;
+    }
+
+    // Newly uploaded images appear first, followed by existing static demo images as fallback
+    const fallbackRemaining = ALL_IMAGES.filter(
+      (img) => !publishedBackend.some((b) => b.title && b.title === img.title)
+    );
+
+    return [...publishedBackend, ...fallbackRemaining];
   }, [dbGallery]);
 
   const filteredImages = React.useMemo(() => {
     const q = (searchQuery || '').trim().toLowerCase();
-    return dynamicImages.filter(img => {
-      const matchYear = activeYear === 'All Years' || img.year === activeYear;
-      const matchCategory = activeCategory === 'All Activities' || img.category === activeCategory;
-      const matchSearch = !q || img.title.toLowerCase().includes(q) || img.category.toLowerCase().includes(q);
+    return dynamicImages.filter((img) => {
+      const matchYear = activeYear === 'All Years' || String(img.year) === String(activeYear);
+      const matchCategory =
+        activeCategory === 'All Activities' ||
+        img.category?.toLowerCase() === activeCategory?.toLowerCase();
+      const matchSearch =
+        !q ||
+        img.title?.toLowerCase().includes(q) ||
+        img.category?.toLowerCase().includes(q);
       return matchYear && matchCategory && matchSearch;
     });
   }, [activeYear, activeCategory, searchQuery, dynamicImages]);
