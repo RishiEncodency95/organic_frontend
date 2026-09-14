@@ -3,7 +3,20 @@ import { ArrowRight } from "lucide-react";
 import cogIcon from "../../../assets/icons/cog.png";
 import SectionContainer from "@/app/components/layout/SectionContainer";
 
+export const CONTACT_CTA_DATA = [
+  {
+    id: 1,
+    heading: "LET'S DISCUSS YOUR SPONSORSHIP GOALS",
+    descriptionLine1: "Our team will help you choose the right package to",
+    descriptionLine2: "maximize your brand visibility and impact.",
+    buttonText: "CONTACT US TODAY",
+    buttonHref: "/contact",
+  },
+];
+
 export default function ContactCTA() {
+  const data = CONTACT_CTA_DATA[0];
+
   return (
     <section className="pt-2 pb-8 bg-[#fcfcf0] font-inter">
       <SectionContainer>
@@ -20,23 +33,23 @@ export default function ContactCTA() {
             
             <div className="text-left flex-1">
               <h3 className="text-[#a3e635] text-base md:text-lg font-semibold uppercase tracking-wide font-poppins mb-1.5">
-                LET'S DISCUSS YOUR SPONSORSHIP GOALS
+                {data.heading}
               </h3>
               <p className="text-gray-300 text-sm md:text-[15px] font-medium leading-relaxed max-w-lg font-poppins">
-                Our team will help you choose the right package to<br className="hidden md:block" />
-                maximize your brand visibility and impact.
+                {data.descriptionLine1}<br className="hidden md:block" />
+                {data.descriptionLine2}
               </p>
             </div>
           </div>
           
           <div className="relative z-10 w-full md:w-auto mt-4 md:mt-0">
             <a 
-              href="/contact"
+              href={data.buttonHref}
               target="_blank"
               rel="noopener noreferrer"
               className="flex items-center justify-center gap-2 px-8 py-3.5 bg-[#ea580c] hover:bg-[#c2410c] text-white text-[10px] md:text-xs font-bold uppercase tracking-wider rounded-lg transition-colors shadow-md w-full md:w-auto font-poppins"
             >
-              CONTACT US TODAY
+              {data.buttonText}
               <ArrowRight size={18} />
             </a>
           </div>

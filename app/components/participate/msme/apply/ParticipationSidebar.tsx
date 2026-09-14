@@ -23,8 +23,20 @@ export const PARTICIPATION_SIDEBAR_DATA = {
   ],
 };
 
-export default function ParticipationSidebar() {
-  const data = PARTICIPATION_SIDEBAR_DATA;
+export default function ParticipationSidebar({ section }: { section?: any }) {
+  const data = section ? {
+    eligibilitySummary: {
+      status: section.statusText || PARTICIPATION_SIDEBAR_DATA.eligibilitySummary.status,
+      potentialAssistance: section.value || PARTICIPATION_SIDEBAR_DATA.eligibilitySummary.potentialAssistance,
+      category: section.tag || PARTICIPATION_SIDEBAR_DATA.eligibilitySummary.category,
+    },
+    applicationSummary: PARTICIPATION_SIDEBAR_DATA.applicationSummary,
+    nextSteps: section.items && section.items.length > 0 ? section.items.map((item: any, idx: number) => ({
+      id: idx + 1,
+      title: item.title || "",
+      desc: item.description || "",
+    })) : PARTICIPATION_SIDEBAR_DATA.nextSteps,
+  } : PARTICIPATION_SIDEBAR_DATA;
 
   return (
     <div className="flex flex-col gap-6">
@@ -104,7 +116,7 @@ export default function ParticipationSidebar() {
           {/* Vertical Line */}
           <div className="absolute left-3 top-2 bottom-4 w-[2px] bg-gray-100 z-0"></div>
           
-          {data.nextSteps.map((step) => (
+          {data.nextSteps.map((step: any) => (
             <div key={step.id} className="flex gap-4 relative z-10 mb-4 last:mb-0">
               <div className="w-6 h-6 rounded-full bg-[#176b27] text-white flex items-center justify-center text-[10px] font-semibold shrink-0 shadow-sm border-2 border-white">
                 {step.id}

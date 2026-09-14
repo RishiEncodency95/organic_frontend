@@ -14,9 +14,15 @@ const loadScript = (src: string) => {
   });
 };
 
-export default function PaymentMain() {
+export default function PaymentMain({ section }: { section?: any }) {
   const [selectedMethod, setSelectedMethod] = useState("online");
   const [isLoading, setIsLoading] = useState(false);
+
+  const mainTitle = section?.title || "3. PAYMENT DETAILS";
+  const mainSubtitle = section?.subtitle || "Review your payment summary and make the secure payment to complete your PMS Support application.";
+  const mainBannerText = section?.description || "Once payment is successful, your application will be submitted for verification.";
+  const methodTitle = section?.eyebrow || "CHOOSE PAYMENT METHOD";
+  const buttonLabel = section?.buttonLabel || "Proceed to Payment";
 
   const handlePayment = async () => {
     setIsLoading(true);
@@ -95,17 +101,17 @@ export default function PaymentMain() {
       {/* 3. PAYMENT DETAILS Block */}
       <div className="bg-white rounded-xl shadow-[0_4px_20px_rgb(0,0,0,0.03)] p-4 md:p-5">
         <h2 className="text-[17px] font-semibold uppercase text-[#176b27] tracking-wide mb-2">
-          3. PAYMENT DETAILS
+          {mainTitle}
         </h2>
         <p className="text-gray-500 text-[13px] font-medium mb-3">
-          Review your payment summary and make the secure payment to complete your PMS Support application.
+          {mainSubtitle}
         </p>
 
         {/* Banner */}
         <div className="bg-[#f7faf7] border border-[#dce7dc] rounded-md px-4 py-3 flex items-start gap-3">
           <CheckCircle2 size={18} className="text-[#176b27] shrink-0 mt-0.5" />
           <p className="text-[13px] text-gray-700 font-medium leading-snug">
-            Once payment is successful, your application will be submitted for verification.
+            {mainBannerText}
           </p>
         </div>
       </div>
@@ -167,7 +173,7 @@ export default function PaymentMain() {
       <div className="bg-white rounded-xl shadow-[0_4px_20px_rgb(0,0,0,0.03)] overflow-hidden">
         <div className="bg-[#f7faf7] border-b border-[#e5e7eb] px-5 py-3">
           <h3 className="text-[14px] font-semibold uppercase text-[#265a29] tracking-wide">
-            CHOOSE PAYMENT METHOD
+            {methodTitle}
           </h3>
         </div>
 
@@ -229,7 +235,7 @@ export default function PaymentMain() {
         >
           {isLoading ? "Processing..." : (
             <>
-              Proceed to Payment <ArrowRight size={16} strokeWidth={2.5} />
+              {buttonLabel} <ArrowRight size={16} strokeWidth={2.5} />
             </>
           )}
         </button>

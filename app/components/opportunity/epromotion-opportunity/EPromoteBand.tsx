@@ -4,19 +4,34 @@ import { Users, CheckCircle, Target, ArrowUpRight, TrendingUp } from "lucide-rea
 import gsap from "gsap";
 import SectionContainer from "@/app/components/layout/SectionContainer";
 
+const ICON_MAP: Record<string, any> = {
+  Users,
+  CheckCircle,
+  Target,
+  ArrowUpRight,
+  TrendingUp,
+};
+
+export const EPROMOTE_BAND_DATA = [
+  {
+    id: 1,
+    features: [
+      { iconKey: "Users", title: "Curated Meetings", subtitle: "Relevant Connections" },
+      { iconKey: "CheckCircle", title: "Verified Business", subtitle: "Profiles" },
+      { iconKey: "Target", title: "Industry Focused", subtitle: "Networking" },
+      { iconKey: "ArrowUpRight", title: "New Opportunities", subtitle: "& Partnerships" },
+      { iconKey: "TrendingUp", title: "Business Growth", subtitle: "& Expansion" },
+    ],
+  },
+];
+
 export default function EPromoteBand() {
   const bandRef = useRef<HTMLDivElement>(null);
   const shimmerRef = useRef<HTMLDivElement>(null);
   const itemRefs = useRef<(HTMLDivElement | null)[]>([]);
   const dividerRefs = useRef<(HTMLDivElement | null)[]>([]);
 
-  const features = [
-    { icon: Users, title: "Curated Meetings", subtitle: "Relevant Connections" },
-    { icon: CheckCircle, title: "Verified Business", subtitle: "Profiles" },
-    { icon: Target, title: "Industry Focused", subtitle: "Networking" },
-    { icon: ArrowUpRight, title: "New Opportunities", subtitle: "& Partnerships" },
-    { icon: TrendingUp, title: "Business Growth", subtitle: "& Expansion" },
-  ];
+  const data = EPROMOTE_BAND_DATA[0];
 
   itemRefs.current = [];
   dividerRefs.current = [];
@@ -24,11 +39,10 @@ export default function EPromoteBand() {
   useEffect(() => {
     const ctx = gsap.context(() => {
       const tl = gsap.timeline({
-        delay: 1.2, // fires right after hero animation completes
+        delay: 1.2,
         defaults: { ease: "power3.out" },
       });
 
-      // Band wipe reveal left→right
       tl.fromTo(
         bandRef.current,
         { opacity: 0, y: 20, clipPath: "inset(0% 100% 0% 0%)" },
@@ -36,7 +50,6 @@ export default function EPromoteBand() {
         0
       );
 
-      // Shimmer sweep
       tl.fromTo(
         shimmerRef.current,
         { xPercent: -130, opacity: 0.8 },
@@ -44,7 +57,6 @@ export default function EPromoteBand() {
         0.6
       );
 
-      // Dividers grow
       tl.fromTo(
         dividerRefs.current.filter(Boolean),
         { scaleY: 0 },
@@ -52,7 +64,6 @@ export default function EPromoteBand() {
         0.55
       );
 
-      // Stat items 3D flip
       tl.fromTo(
         itemRefs.current.filter(Boolean),
         { opacity: 0, rotationX: -80, y: 20, transformOrigin: "top center" },
@@ -80,8 +91,8 @@ export default function EPromoteBand() {
           />
 
           <div className="grid grid-cols-2 sm:grid-cols-3 md:flex md:flex-nowrap items-center justify-center md:justify-between gap-2 md:gap-0">
-            {features.map((item, i) => {
-              const IconComponent = item.icon;
+            {data.features.map((item, i) => {
+              const IconComponent = ICON_MAP[item.iconKey] || Users;
               return (
                 <React.Fragment key={i}>
                   <div
@@ -103,7 +114,7 @@ export default function EPromoteBand() {
                       </p>
                     </div>
                   </div>
-                  {i < features.length - 1 && (
+                  {i < data.features.length - 1 && (
                     <div
                       ref={(el) => { dividerRefs.current[i] = el; }}
                       className="hidden md:block w-px h-6 bg-white/20"

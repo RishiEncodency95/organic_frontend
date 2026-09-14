@@ -8,69 +8,92 @@ import {
 import footerRightImg from "@/app/assets/icons/footerright.webp";
 import SectionContainer from "@/app/components/layout/SectionContainer";
 
+const ICON_MAP: Record<string, React.ReactNode> = {
+  Globe: <Globe className="w-5 h-5" />,
+  LayoutGrid: <LayoutGrid className="w-5 h-5" />,
+  FileText: <FileText className="w-5 h-5" />,
+  Mic: <Mic className="w-5 h-5" />,
+  BookOpen: <BookOpen className="w-5 h-5" />,
+  Ticket: <Ticket className="w-5 h-5" />,
+  Mail: <Mail className="w-5 h-5" />,
+  MapPin: <MapPin className="w-5 h-5" />,
+  Share2: <Share2 className="w-5 h-5" />,
+  Hotel: <Hotel className="w-5 h-5" />,
+  HeartHandshake: <HeartHandshake className="w-5 h-5" />,
+  Star: <Star className="w-5 h-5" />,
+};
+
+export const DELIVERABLES_HOTEL_DATA = [
+  {
+    id: 1,
+    heading: "PARTNER DELIVERABLES",
+    deliverables: [
+      {
+        iconKey: "Globe",
+        title: "Logo on official hotel & stay partner section on website",
+        desc: "Your logo will be displayed on the partner page with direct link to your website."
+      },
+      {
+        iconKey: "LayoutGrid",
+        title: "Logo on signage & at venue (high visibility)",
+        desc: "Prominent logo placement on directional signage, welcome boards & key areas."
+      },
+      {
+        iconKey: "FileText",
+        title: "Brand mention on event collateral (digital)",
+        desc: "Your brand will be highlighted on banners, e-invites, social media creatives & more."
+      },
+      {
+        iconKey: "Mic",
+        title: "Acknowledgement during inaugural & valedictory sessions",
+        desc: "Special recognition from the stage as our valued partner."
+      },
+      {
+        iconKey: "BookOpen",
+        title: "Name in partner directory (digital & print)",
+        desc: "Your property profile will be listed in the official partner directory."
+      },
+      {
+        iconKey: "Ticket",
+        title: "Complimentary Delegate Passes",
+        desc: "Receive delegate passes for your team to network and connect during the event."
+      },
+      {
+        iconKey: "Mail",
+        title: "Logo in event emails & newsletters",
+        desc: "Your brand will be featured in promotional emails sent to our subscriber database."
+      },
+      {
+        iconKey: "MapPin",
+        title: "Brochure / Advertisement in e-brochure",
+        desc: "Your advertisement / property profile will be displayed in the official event e-brochure."
+      },
+      {
+        iconKey: "Share2",
+        title: "Social media shoutouts & tag mentions",
+        desc: "Your hotel will be promoted across our social media platforms with dedicated posts."
+      },
+      {
+        iconKey: "Hotel",
+        title: "Showcase your property & special offers",
+        desc: "Opportunity to showcase your rooms, amenities & exclusive event offers."
+      },
+      {
+        iconKey: "HeartHandshake",
+        title: "Co-branding on key communications",
+        desc: "Your logo will be included in select event communications as our hotel partner."
+      },
+      {
+        iconKey: "Star",
+        title: "Opportunity for joint campaigns & promotions",
+        desc: "Collaborate with us on special offers to attract more delegates and guests."
+      }
+    ]
+  }
+];
+
 export default function Deliverables() {
-  const deliverables = [
-    {
-      icon: <Globe className="w-5 h-5" />,
-      title: "Logo on official hotel & stay partner section on website",
-      desc: "Your logo will be displayed on the partner page with direct link to your website."
-    },
-    {
-      icon: <LayoutGrid className="w-5 h-5" />,
-      title: "Logo on signage & at venue (high visibility)",
-      desc: "Prominent logo placement on directional signage, welcome boards & key areas."
-    },
-    {
-      icon: <FileText className="w-5 h-5" />,
-      title: "Brand mention on event collateral (digital)",
-      desc: "Your brand will be highlighted on banners, e-invites, social media creatives & more."
-    },
-    {
-      icon: <Mic className="w-5 h-5" />,
-      title: "Acknowledgement during inaugural & valedictory sessions",
-      desc: "Special recognition from the stage as our valued partner."
-    },
-    {
-      icon: <BookOpen className="w-5 h-5" />,
-      title: "Name in partner directory (digital & print)",
-      desc: "Your property profile will be listed in the official partner directory."
-    },
-    {
-      icon: <Ticket className="w-5 h-5" />,
-      title: "Complimentary Delegate Passes",
-      desc: "Receive delegate passes for your team to network and connect during the event."
-    },
-    {
-      icon: <Mail className="w-5 h-5" />,
-      title: "Logo in event emails & newsletters",
-      desc: "Your brand will be featured in promotional emails sent to our subscriber database."
-    },
-    {
-      icon: <MapPin className="w-5 h-5" />,
-      title: "Brochure / Advertisement in e-brochure",
-      desc: "Your advertisement / property profile will be displayed in the official event e-brochure."
-    },
-    {
-      icon: <Share2 className="w-5 h-5" />,
-      title: "Social media shoutouts & tag mentions",
-      desc: "Your hotel will be promoted across our social media platforms with dedicated posts."
-    },
-    {
-      icon: <Hotel className="w-5 h-5" />,
-      title: "Showcase your property & special offers",
-      desc: "Opportunity to showcase your rooms, amenities & exclusive event offers."
-    },
-    {
-      icon: <HeartHandshake className="w-5 h-5" />,
-      title: "Co-branding on key communications",
-      desc: "Your logo will be included in select event communications as our hotel partner."
-    },
-    {
-      icon: <Star className="w-5 h-5" />,
-      title: "Opportunity for joint campaigns & promotions",
-      desc: "Collaborate with us on special offers to attract more delegates and guests."
-    }
-  ];
+  const data = DELIVERABLES_HOTEL_DATA[0];
 
   const getBorderClasses = (idx: number) => {
     let classes = "";
@@ -102,18 +125,18 @@ export default function Deliverables() {
           <div className="flex items-center gap-4 mb-8 w-full justify-center">
             <div className="h-[1px] flex-1 bg-gray-200"></div>
             <h2 className="text-lg md:text-xl font-semibold text-[#1b5e20] uppercase font-poppins tracking-wide text-center px-2 shrink-0">
-              PARTNER DELIVERABLES
+              {data.heading}
             </h2>
             <div className="h-[1px] flex-1 bg-gray-200"></div>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4">
-            {deliverables.map((item, idx) => (
+            {data.deliverables.map((item, idx) => (
               <div 
                 key={idx}
                 className={`flex items-start gap-4 px-5 py-4 lg:px-6 lg:py-5 ${getBorderClasses(idx)}`}
               >
                 <div className="w-10 h-10 rounded-full bg-[#1b5e20]/10 flex items-center justify-center shrink-0 text-[#1b5e20] mt-0.5">
-                  {item.icon}
+                  {ICON_MAP[item.iconKey]}
                 </div>
                 <div className="flex flex-col gap-1">
                   <p className="text-[10px] md:text-[11px] font-bold text-gray-950 uppercase tracking-wide leading-tight font-inter">

@@ -3,17 +3,26 @@ import ApplySteps from "../../../../components/participate/msme/apply/ApplySteps
 import PaymentMain from "../../../../components/participate/msme/apply/payment/PaymentMain";
 import PaymentSidebar from "../../../../components/participate/msme/apply/payment/PaymentSidebar";
 import ApplyFooter from "../../../../components/participate/msme/apply/ApplyFooter";
+import { settingsApi } from "@/lib/api";
 
 export const metadata = {
   title: "Payment Details | Apply for PMS Support | Bharat Organic Expo",
   description: "Review and complete payment for your PMS Support application.",
 };
 
-export default function PaymentDetailsPage() {
+export default async function PaymentDetailsPage() {
+  const settings = await settingsApi.getSettings().catch(() => ({} as any));
+  const pageConfig = settings?.msmeApplyPaymentPage || {};
+  const sections = pageConfig.sections || [];
+  const heroSec = sections.find((s: any) => s.key === "msme-payment-hero");
+  const mainSec = sections.find((s: any) => s.key === "msme-payment-main-config");
+  const sidebarSec = sections.find((s: any) => s.key === "msme-payment-sidebar");
+  const footerSec = sections.find((s: any) => s.key === "msme-payment-footer-help");
+
   return (
     <div className="min-h-screen bg-[#f9faf9] font-sans text-neutral-800 flex flex-col">
       <main className="flex-1 w-full pb-10">
-        <ApplicationHero />
+        <ApplicationHero section={heroSec} />
         
         <div className="w-full px-4 md:px-14 mt-[-30px] relative z-20">
           {/* We pass currentStep={3} to highlight the Payment step */}
@@ -25,19 +34,19 @@ export default function PaymentDetailsPage() {
             
             {/* Left Column - Main Content */}
             <div className="w-full lg:w-[65%] flex flex-col gap-4">
-              <PaymentMain />
+              <PaymentMain section={mainSec} />
             </div>
 
             {/* Right Column - Sidebar Widgets */}
             <div className="w-full lg:w-[35%] shrink-0 sticky top-4">
-              <PaymentSidebar />
+              <PaymentSidebar section={sidebarSec} />
             </div>
 
           </div>
         </div>
 
         {/* Footer (Only Help Banner for this step) */}
-        <ApplyFooter showDeclaration={false} showActions={false} />
+        <ApplyFooter showDeclaration={false} showActions={false} section={footerSec} />
       </main>
     </div>
   );

@@ -9,47 +9,18 @@ import img6 from "../../assets/image/16og.webp";
 import footerRightImg from "../../assets/icons/footerright.png";
 
 import SectionContainer from "@/app/components/layout/SectionContainer";
+import { WHAT_TO_SOURCE_DATA } from "@/app/data/buyerSellerMeetData";
+
+const IMG_MAP: Record<string, string> = {
+  img1: img1.src,
+  img2: img2.src,
+  img3: img3.src,
+  img4: img4.src,
+  img5: img5.src,
+  img6: img6.src,
+};
 
 export default function WhatToSource() {
-  const cards = [
-    {
-      img: img1.src,
-      title: "ORGANIC FOOD & NUTRITION",
-      list: ["Food", "Beverages", "Nutraceuticals", "Functional Nutrition"],
-      color: "text-[#1b5e20]",
-    },
-    {
-      img: img2.src,
-      title: "AYUSH, HERBAL\n& WELLNESS",
-      list: ["Ayurveda", "Herbal", "Wellness", "Traditional Health Solutions"],
-      color: "text-[#5d4037]",
-    },
-    {
-      img: img3.src,
-      title: "ORGANIC AGRICULTURE",
-      list: ["Farming", "Inputs", "Seeds", "Bio-Inputs"],
-      color: "text-[#2e7d32]",
-    },
-    {
-      img: img4.src,
-      title: "NATURAL LIVING &\nPERSONAL CARE",
-      list: ["Beauty", "Personal Care", "Natural Lifestyle Products"],
-      color: "text-[#6a1b9a]",
-    },
-    {
-      img: img5.src,
-      title: "GREENTECH &\nSUSTAINABILITY",
-      list: ["AgriTech", "GreenTech", "Sustainable Packaging", "Processing"],
-      color: "text-[#00695c]",
-    },
-    {
-      img: img6.src,
-      title: "TRADE, CERTIFICATION\n& GLOBAL BUSINESS",
-      list: ["Certification", "Export", "Import", "Trade & Business Services"],
-      color: "text-[#e65100]",
-    },
-  ];
-
   return (
     <section className="pt-8 pb-8 bg-white font-inter relative overflow-hidden">
       {/* Decorative Right Image */}
@@ -58,40 +29,44 @@ export default function WhatToSource() {
       </div>
 
       <SectionContainer className="relative z-10">
-        <div className="text-center mb-6 flex flex-col items-center justify-center">
-          <h2 className="text-xl md:text-2xl font-semibold text-[#1b5e20] uppercase leading-[1.1] font-poppins relative inline-block mb-0">
-            WHAT CAN BUYERS SOURCE?
-          </h2>
-          <p className="text-sm font-bold text-gray-800 mt-0">
-            6 Industry Segments. One Business Platform.
-          </p>
-        </div>
-
-        <div className="grid grid-cols-1 sm:grid-cols-3 lg:grid-cols-6 gap-4">
-          {cards.map((card, i) => (
-            <div 
-              key={i} 
-              className="bg-white rounded-xl overflow-hidden group"
-              style={{ boxShadow: "rgba(0, 0, 0, 0.02) 0px 1px 3px 0px, rgba(27, 31, 35, 0.15) 0px 0px 0px 1px" }}
-            >
-              <div className="h-40 overflow-hidden relative">
-                <img src={card.img} alt={card.title} className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" />
-                <div className="absolute inset-0 bg-black/20" />
-              </div>
-              <div className="p-4 relative">
-                <h3 className={`text-[13px] font-semibold ${card.color} mb-4 mt-0 h-auto min-h-[2rem] flex items-center uppercase text-center justify-center leading-tight whitespace-pre-line font-poppins`}>{card.title}</h3>
-                <ul className="space-y-2 font-inter">
-                  {card.list.map((li, idx) => (
-                    <li key={idx} className="text-[12px] text-slate-800 font-semibold flex items-center gap-2">
-                      <span className="w-1 h-1 rounded-full bg-slate-400 shrink-0" />
-                      {li}
-                    </li>
-                  ))}
-                </ul>
-              </div>
+        {WHAT_TO_SOURCE_DATA.map((data) => (
+          <React.Fragment key={data.id}>
+            <div className="text-center mb-6 flex flex-col items-center justify-center">
+              <h2 className="text-xl md:text-2xl font-semibold text-[#1b5e20] uppercase leading-[1.1] font-poppins relative inline-block mb-0">
+                {data.title}
+              </h2>
+              <p className="text-sm font-bold text-gray-800 mt-0">
+                {data.subtitle}
+              </p>
             </div>
-          ))}
-        </div>
+
+            <div className="grid grid-cols-1 sm:grid-cols-3 lg:grid-cols-6 gap-4">
+              {data.cards.map((card, i) => (
+                <div 
+                  key={i} 
+                  className="bg-white rounded-xl overflow-hidden group"
+                  style={{ boxShadow: "rgba(0, 0, 0, 0.02) 0px 1px 3px 0px, rgba(27, 31, 35, 0.15) 0px 0px 0px 1px" }}
+                >
+                  <div className="h-40 overflow-hidden relative">
+                    <img src={IMG_MAP[card.img] || card.img} alt={card.title} className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" />
+                    <div className="absolute inset-0 bg-black/20" />
+                  </div>
+                  <div className="p-4 relative">
+                    <h3 className={`text-[13px] font-semibold ${card.color} mb-4 mt-0 h-auto min-h-[2rem] flex items-center uppercase text-center justify-center leading-tight whitespace-pre-line font-poppins`}>{card.title}</h3>
+                    <ul className="space-y-2 font-inter">
+                      {card.list.map((li, idx) => (
+                        <li key={idx} className="text-[12px] text-slate-800 font-semibold flex items-center gap-2">
+                          <span className="w-1 h-1 rounded-full bg-slate-400 shrink-0" />
+                          {li}
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </React.Fragment>
+        ))}
       </SectionContainer>
     </section>
   );

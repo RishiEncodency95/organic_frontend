@@ -25,6 +25,19 @@ const nextConfig: NextConfig = {
       },
     ],
   },
+  async headers() {
+    return [
+      {
+        source: "/:path*",
+        headers: [
+          {
+            key: "Content-Security-Policy",
+            value: "frame-ancestors 'self' http://localhost:3001;",
+          },
+        ],
+      },
+    ];
+  },
   async rewrites() {
     return [
       {

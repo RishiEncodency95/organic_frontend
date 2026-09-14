@@ -52,8 +52,25 @@ export const APPLY_HERO_DATA = {
   ],
 };
 
-export default function ApplyHero() {
-  const data = APPLY_HERO_DATA;
+export default function ApplyHero({ section }: { section?: any }) {
+  const data = section ? {
+    breadcrumbs: APPLY_HERO_DATA.breadcrumbs,
+    tagline: section.eyebrow || APPLY_HERO_DATA.tagline,
+    heading: {
+      prefix: section.titlePrimary || APPLY_HERO_DATA.heading.prefix,
+      highlight: section.titleSecondary || APPLY_HERO_DATA.heading.highlight,
+    },
+    description: {
+      assistanceAmount: section.subtitle || APPLY_HERO_DATA.description.assistanceAmount,
+      schemeName: section.description || APPLY_HERO_DATA.description.schemeName,
+    },
+    infoItems: section.items && section.items.length > 0 ? section.items.map((item: any, idx: number) => ({
+      id: idx + 1,
+      icon: APPLY_HERO_DATA.infoItems[idx]?.icon || Users,
+      line1: item.title || "",
+      line2: item.subtitle || "",
+    })) : APPLY_HERO_DATA.infoItems,
+  } : APPLY_HERO_DATA;
 
   return (
     <div className="relative w-full overflow-hidden bg-[#fafbfa]">
@@ -120,7 +137,7 @@ export default function ApplyHero() {
         <div className="bg-white rounded-2xl shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-[#edf0ed] p-2 md:p-1 overflow-x-auto">
           <div className="flex items-center min-w-[800px] md:min-w-0 divide-x divide-[#edf0ed]">
 
-            {data.infoItems.map((item) => {
+            {data.infoItems.map((item: any) => {
               const IconComp = item.icon;
               return (
                 <div key={item.id} className="flex-1 flex items-center gap-3 p-3 md:px-5">

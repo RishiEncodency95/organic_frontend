@@ -2,7 +2,22 @@
 import React from "react";
 import { Award, CheckCircle2, User, FileText, Check, HandCoins } from "lucide-react";
 
-export default function PaymentSidebar() {
+export default function PaymentSidebar({ section }: { section?: any }) {
+  const title = section?.title || "Your PMS Eligibility Summary";
+  const statusText = section?.statusText || "ELIGIBLE";
+  const potentialAssistance = section?.value || "UP TO 100%";
+  const categoryTag = section?.tag || "Women MSME Category";
+
+  const nextSteps = section?.items && section.items.length > 0 ? section.items.map((item: any, idx: number) => ({
+    id: idx + 1,
+    title: item.title || "",
+    desc: item.description || "",
+  })) : [
+    { id: 1, title: "Payment", desc: "Complete your payment" },
+    { id: 2, title: "Submission", desc: "Application will be submitted" },
+    { id: 3, title: "Verification", desc: "Our team will verify your application" },
+    { id: 4, title: "PMS Assistance", desc: "We will guide you through the claim process after the event" },
+  ];
   return (
     <div className="flex flex-col gap-4">
       {/* 1. PMS Eligibility Summary */}
@@ -94,49 +109,17 @@ export default function PaymentSidebar() {
           {/* Vertical Line */}
           <div className="absolute left-[19px] top-4 bottom-6 w-[2px] bg-gray-200 z-0"></div>
           
-          {/* Step 1 */}
-          <div className="flex items-start gap-4 mb-5 relative z-10">
-            <div className="w-6 h-6 rounded-full bg-[#176b27] text-white flex items-center justify-center font-semibold text-[11px] shrink-0 mt-0.5">
-              1
+          {nextSteps.map((step: any, index: number) => (
+            <div key={step.id || index} className="flex items-start gap-4 mb-5 last:mb-0 relative z-10">
+              <div className={`w-6 h-6 rounded-full ${index === 0 ? 'bg-[#176b27] text-white' : 'bg-[#e5e7eb] text-gray-500 border border-gray-300'} flex items-center justify-center font-semibold text-[11px] shrink-0 mt-0.5`}>
+                {step.id || index + 1}
+              </div>
+              <div className="flex flex-col">
+                <span className="text-[13px] font-semibold text-gray-900">{step.title}</span>
+                <span className="text-[11px] font-medium text-gray-500 leading-tight mt-0.5">{step.desc}</span>
+              </div>
             </div>
-            <div className="flex flex-col">
-              <span className="text-[13px] font-semibold text-gray-900">Payment</span>
-              <span className="text-[11px] font-medium text-gray-500 leading-tight mt-0.5">Complete your payment</span>
-            </div>
-          </div>
-          
-          {/* Step 2 */}
-          <div className="flex items-start gap-4 mb-5 relative z-10">
-            <div className="w-6 h-6 rounded-full bg-[#e5e7eb] text-gray-500 border border-gray-300 flex items-center justify-center font-semibold text-[11px] shrink-0 mt-0.5">
-              2
-            </div>
-            <div className="flex flex-col">
-              <span className="text-[13px] font-semibold text-gray-800">Submission</span>
-              <span className="text-[11px] font-medium text-gray-500 leading-tight mt-0.5">Application will be submitted</span>
-            </div>
-          </div>
-          
-          {/* Step 3 */}
-          <div className="flex items-start gap-4 mb-5 relative z-10">
-            <div className="w-6 h-6 rounded-full bg-[#e5e7eb] text-gray-500 border border-gray-300 flex items-center justify-center font-semibold text-[11px] shrink-0 mt-0.5">
-              3
-            </div>
-            <div className="flex flex-col">
-              <span className="text-[13px] font-semibold text-gray-800">Verification</span>
-              <span className="text-[11px] font-medium text-gray-500 leading-tight mt-0.5">Our team will verify your application</span>
-            </div>
-          </div>
-          
-          {/* Step 4 */}
-          <div className="flex items-start gap-4 relative z-10">
-            <div className="w-6 h-6 rounded-full bg-[#e5e7eb] text-gray-500 border border-gray-300 flex items-center justify-center font-semibold text-[11px] shrink-0 mt-0.5">
-              4
-            </div>
-            <div className="flex flex-col">
-              <span className="text-[13px] font-semibold text-gray-800">PMS Assistance</span>
-              <span className="text-[11px] font-medium text-gray-500 leading-tight mt-0.5">We will guide you through the claim process after the event</span>
-            </div>
-          </div>
+          ))}
         </div>
       </div>
       

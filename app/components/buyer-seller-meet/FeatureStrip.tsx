@@ -3,6 +3,15 @@ import React, { useRef, useEffect } from "react";
 import { Users, CheckCircle, Target, ArrowUpRight, TrendingUp } from "lucide-react";
 import gsap from "gsap";
 import SectionContainer from "@/app/components/layout/SectionContainer";
+import { FEATURE_STRIP_DATA } from "@/app/data/buyerSellerMeetData";
+
+const ICON_MAP: Record<string, any> = {
+  Users,
+  CheckCircle,
+  Target,
+  ArrowUpRight,
+  TrendingUp,
+};
 
 export default function FeatureStrip() {
   const bandRef = useRef<HTMLDivElement>(null);
@@ -10,12 +19,12 @@ export default function FeatureStrip() {
   const itemRefs = useRef<(HTMLDivElement | null)[]>([]);
   const dividerRefs = useRef<(HTMLDivElement | null)[]>([]);
 
-  const features = [
-    { icon: Users, title: "Curated Meetings", subtitle: "Relevant Connections" },
-    { icon: CheckCircle, title: "Verified Business", subtitle: "Profiles" },
-    { icon: Target, title: "Industry Focused", subtitle: "Networking" },
-    { icon: ArrowUpRight, title: "New Opportunities", subtitle: "& Partnerships" },
-    { icon: TrendingUp, title: "Business Growth", subtitle: "& Expansion" },
+  const features = FEATURE_STRIP_DATA[0]?.features || [
+    { icon: "Users", title: "Curated Meetings", subtitle: "Relevant Connections" },
+    { icon: "CheckCircle", title: "Verified Business", subtitle: "Profiles" },
+    { icon: "Target", title: "Industry Focused", subtitle: "Networking" },
+    { icon: "ArrowUpRight", title: "New Opportunities", subtitle: "& Partnerships" },
+    { icon: "TrendingUp", title: "Business Growth", subtitle: "& Expansion" },
   ];
 
   itemRefs.current = [];
@@ -81,7 +90,7 @@ export default function FeatureStrip() {
 
           <div className="grid grid-cols-2 sm:grid-cols-3 md:flex md:flex-nowrap items-center justify-center md:justify-between gap-y-3 gap-x-2 md:gap-0">
             {features.map((item, i) => {
-              const IconComponent = item.icon;
+              const IconComponent = typeof item.icon === "string" ? (ICON_MAP[item.icon] || Users) : item.icon;
               return (
                 <React.Fragment key={i}>
                   <div
