@@ -13,16 +13,22 @@ import sustainability from "@/app/assets/awards/sustainability.png"
 import lifetime from "@/app/assets/awards/lifetime_achievement.png"
 import grand_award from "@/app/assets/awards/grand_award.png"
 import card_bg from "@/app/assets/awards/card_bg.png"
-const GRAND_AWARDS = [
-  { icon: entrepreneur, label: "Organic Entrepreneur of the Year" },
-  { icon: startup, label: "Organic Startup of the Year" },
-  { icon: brand, label: "Organic Brand of the Year" },
-  { icon: innovation, label: "Innovation of the Year" },
-  { icon: sustainability, label: "Sustainability Leadership Award" },
-  { icon: lifetime, label: "Lifetime Achievement Award" },
-];
+const data = {
+  enabled: true,
+  title: "Prestigious Grand Awards",
+  awards: [
+    { id: 1, icon: entrepreneur, label: "Organic Entrepreneur of the Year" },
+    { id: 2, icon: startup, label: "Organic Startup of the Year" },
+    { id: 3, icon: brand, label: "Organic Brand of the Year" },
+    { id: 4, icon: innovation, label: "Innovation of the Year" },
+    { id: 5, icon: sustainability, label: "Sustainability Leadership Award" },
+    { id: 6, icon: lifetime, label: "Lifetime Achievement Award" },
+  ],
+};
 
 const AwardsGrandAwards = () => {
+  if (!data.enabled) return null;
+
   return (
  <section className="bg-[#fff7ed] py-4 md:py-4 font-inter">
   <SectionContainer>
@@ -59,7 +65,7 @@ const AwardsGrandAwards = () => {
           <div className="flex-1">
             <div className="flex flex-col items-center justify-center gap-0 lg:justify-start">
               <h2 className="text-center text-lg font-semibold uppercase tracking-wide md:text-xl font-poppins lg:text-left">
-                Prestigious Grand Awards
+                {data.title}
               </h2>
 
               <div className="flex items-center gap-2">
@@ -70,10 +76,10 @@ const AwardsGrandAwards = () => {
             </div>
 
             <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-6">
-              {GRAND_AWARDS.map((g, i) => (
+              {data.awards.map((g, i) => (
                 <Reveal key={g.label} delay={i * 70}>
                   <div
-                    className={`group flex h-full flex-col items-center gap-2 ${i < GRAND_AWARDS.length - 1 ? "border-r border-[#fed7aa]" : ""} p-4 pr-5 text-center font-inter transition-all duration-300 hover:-translate-y-1 ${i < GRAND_AWARDS.length - 1 ? "hover:border-[#f97316]" : ""}`}
+                    className={`group flex h-full flex-col items-center gap-2 ${i < data.awards.length - 1 ? "border-r border-[#fed7aa]" : ""} p-4 pr-5 text-center font-inter transition-all duration-300 hover:-translate-y-1 ${i < data.awards.length - 1 ? "hover:border-[#f97316]" : ""}`}
                   >
                     <Image
                       src={g.icon}

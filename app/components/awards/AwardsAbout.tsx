@@ -17,22 +17,25 @@ function SectionHeading({ children }: { children: React.ReactNode }) {
   );
 }
 
+const data = {
+  enabled: true,
+  title: "About the Awards",
+  description:
+    "Bharat Organic Excellence Awards 2027 recognise outstanding organisations, brands, entrepreneurs, farmers and professionals for their remarkable contribution to the growth and promotion of the organic, natural and sustainable industry.",
+};
+
 const AwardsAbout = () => {
+  if (!data.enabled) return null;
+
   return (
     <section className="bg-white py-4 font-inter">
       <SectionContainer>
         <div className="mx-auto max-w-4xl">
-          <SectionHeading>About the Awards</SectionHeading>
+          <SectionHeading>{data.title}</SectionHeading>
           <Reveal delay={100}>
-            <div
-              className="bg-white p-4 rounded-xl text-center"
-              // style={{ boxShadow: "rgba(0, 0, 0, 0.02) 0px 1px 3px 0px, rgba(27, 31, 35, 0.15) 0px 0px 0px 1px" }}
-            >
+            <div className="bg-white p-4 rounded-xl text-center">
               <p className="text-xs sm:text-sm leading-relaxed text-gray-900 font-medium">
-                Bharat Organic Excellence Awards 2027 recognise outstanding
-                organisations, brands, entrepreneurs, farmers and professionals
-                for their remarkable contribution to the growth and promotion of
-                the organic, natural and sustainable industry.
+                {data.description}
               </p>
             </div>
           </Reveal>

@@ -2,7 +2,7 @@
 import React, { useState } from "react";
 import { ArrowRight, Mail, Phone, Globe, MapPin, Plane } from "lucide-react";
 import leafsImg from "@/app/assets/icons/leafs.png";
-import traog from "@/app/assets/icons/traog.png";
+import traog from "@/app/assets/icons/planog.png";
 import SectionContainer from "@/app/components/layout/SectionContainer";
 
 export const WHY_PARTNER_TRAVEL_DATA = [

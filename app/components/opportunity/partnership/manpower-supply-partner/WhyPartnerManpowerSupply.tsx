@@ -2,7 +2,7 @@
 import React, { useState } from "react";
 import { ArrowRight, Mail, Phone, Globe, MapPin, Users } from "lucide-react";
 import leafsImg from "@/app/assets/icons/leafs.png";
-import mogImg from "@/app/assets/icons/mog.png";
+import mogImg from "@/app/assets/icons/manog.png";
 import SectionContainer from "@/app/components/layout/SectionContainer";
 
 export const WHY_PARTNER_MANPOWER_DATA = [

@@ -23,12 +23,49 @@ const Sparkle = ({ style, color = "#F2B40E", shadow }: { style?: React.CSSProper
   </span>
 );
 
+const data = {
+  enabled: true,
+  tagline: "BHARAT ORGANIC",
+  titlePrimary: "EXCELLENCE",
+  titleSecondary: "AWARDS 2027",
+  highlights: [
+    { id: 1, text: "Celebrating Excellence" },
+    { id: 2, text: "Innovation" },
+    { id: 3, text: "Sustainability" },
+  ],
+  description: "Honouring the changemakers, organisations and innovations driving India's organic, natural and sustainable future.",
+  dateLine1: "19 - 21",
+  dateLine2: "February 2027",
+  venueLine1: "Hall 12, Bharat Mandapam",
+  venueLine2: "PRAGATI MAIDAN, NEW DELHI, INDIA",
+  buttons: [
+    {
+      id: "nominate",
+      label: "NOMINATE NOW",
+      href: "/awards/nominations",
+      target: "_blank",
+      rel: "noopener noreferrer",
+      variant: "primary",
+      icon: Award,
+    },
+    {
+      id: "categories",
+      label: "VIEW CATEGORIES",
+      href: "#categories",
+      variant: "secondary",
+      icon: Medal,
+    },
+  ],
+};
+
 const AwardsHero = () => {
   const [mounted, setMounted] = useState(false);
   useEffect(() => {
     const t = setTimeout(() => setMounted(true), 60);
     return () => clearTimeout(t);
   }, []);
+
+  if (!data.enabled) return null;
 
   return (
     <>
@@ -86,7 +123,7 @@ const AwardsHero = () => {
             <div className="flex items-center gap-2 mb-2">
               <span className="w-[3px] h-4.5 bg-[#0b3b18] inline-block rounded-xs" />
               <span className="text-[#0b3b18] text-base sm:text-md font-bold uppercase tracking-[0.18em]">
-                BHARAT ORGANIC
+                {data.tagline}
               </span>
             </div>
 
@@ -96,25 +133,28 @@ const AwardsHero = () => {
               style={{ textShadow: "1px 1px 2px rgba(0,0,0,0.2)" }}
             >
               <span className="block text-[#0b3b18] text-4xl sm:text-5xl md:text-[56px] lg:text-[66px] font-semibold tracking-tight uppercase mb-0.5">
-                EXCELLENCE
+                {data.titlePrimary}
               </span>
               <span className="block text-[#0b3b18] text-4xl sm:text-5xl md:text-[56px] lg:text-[66px] font-semibold tracking-tight uppercase">
-                AWARDS 2027
+                {data.titleSecondary}
               </span>
             </h1>
 
             {/* Subtitle / Key Highlights */}
             <p className="mb-2.5 flex flex-wrap items-center gap-x-2.5 gap-y-1 text-xs sm:text-[13.5px] font-bold uppercase tracking-wider text-[#0b3b18]">
-              <span>Celebrating Excellence</span>
-              <span className="text-[#ea580c] text-sm">•</span>
-              <span>Innovation</span>
-              <span className="text-[#ea580c] text-sm">•</span>
-              <span>Sustainability</span>
+              {data.highlights.map((h, idx) => (
+                <React.Fragment key={h.id}>
+                  <span>{h.text}</span>
+                  {idx < data.highlights.length - 1 && (
+                    <span className="text-[#ea580c] text-sm">•</span>
+                  )}
+                </React.Fragment>
+              ))}
             </p>
 
             {/* Description */}
             <p className="text-[#131730] font-medium text-xs sm:text-[13.5px] md:text-sm leading-relaxed max-w-lg mb-2">
-              Honouring the changemakers, organisations and innovations driving India&apos;s organic, natural and sustainable future.
+              {data.description}
             </p>
 
             {/* Date & Venue */}
@@ -122,48 +162,54 @@ const AwardsHero = () => {
               <div className="flex items-center gap-3">
                 <Calendar className="h-[25px] w-[25px] shrink-0 text-emerald-900" />
                 <div>
-                  
-                <p>19 - 21</p>
-                <p className="uppercase">February 2027</p>
+                  <p>{data.dateLine1}</p>
+                  <p className="uppercase">{data.dateLine2}</p>
                 </div>
               </div>
               <span className="hidden h-4 w-px bg-[#4B1426]/30 sm:block" />
               <div className="flex items-center gap-3">
                 <MapPin className="h-[25px] w-[25px] shrink-0 text-emerald-900" />
                 <div>
-                  
-                <p>Hall 12, Bharat Mandapam</p>
-                <p className="uppercase">PRAGATI MAIDAN, NEW DELHI, INDIA</p>
+                  <p>{data.venueLine1}</p>
+                  <p className="uppercase">{data.venueLine2}</p>
                 </div>
               </div>
             </div>
 
             {/* Buttons */}
             <div className="flex flex-wrap items-center justify-start gap-3 my-4">
-              <div className="relative w-full sm:w-auto">
-                <Sparkle color="#4ade80" shadow="#1b5e20" style={{ top: "-12px", left: "10%", animationDelay: "0.2s" }} />
-                <Sparkle color="#86efac" shadow="#16a34a" style={{ top: "-15px", left: "50%", animationDelay: "0.6s" }} />
-                <Sparkle color="#4ade80" shadow="#1b5e20" style={{ top: "-10px", right: "10%", animationDelay: "1s" }} />
-                <a
-                  href="/awards/nominations"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="blue-btn-hero text-white px-4 py-2.5 rounded-full font-semibold text-[10px] md:text-[10.5px] uppercase tracking-widest flex items-center justify-start gap-2 transition-all active:scale-95 shadow-lg relative z-10 w-full sm:w-auto"
-                >
-                  <Award className="h-4 w-4 text-[#F2B40E]" />
-                  NOMINATE NOW <ArrowRight size={14} />
-                </a>
-              </div>
-
-              <div className="relative w-full sm:w-auto">
-                <a
-                  href="#categories"
-                  className="group relative inline-flex items-center justify-start gap-2 px-4 py-2.5 rounded-full font-semibold text-[10px] md:text-[10.5px] uppercase tracking-widest text-[#0b3b18] bg-white/90 border border-[#0b3b18]/30 transition-all active:scale-95 shadow-sm z-10 w-full sm:w-auto hover:bg-[#0b3b18] hover:text-white"
-                >
-                  <Medal className="h-4 w-4" />
-                  VIEW CATEGORIES <ArrowRight size={14} className="group-hover:translate-x-1 transition-transform" />
-                </a>
-              </div>
+              {data.buttons.map((btn) => {
+                const Icon = btn.icon;
+                if (btn.variant === "primary") {
+                  return (
+                    <div key={btn.id} className="relative w-full sm:w-auto">
+                      <Sparkle color="#4ade80" shadow="#1b5e20" style={{ top: "-12px", left: "10%", animationDelay: "0.2s" }} />
+                      <Sparkle color="#86efac" shadow="#16a34a" style={{ top: "-15px", left: "50%", animationDelay: "0.6s" }} />
+                      <Sparkle color="#4ade80" shadow="#1b5e20" style={{ top: "-10px", right: "10%", animationDelay: "1s" }} />
+                      <a
+                        href={btn.href}
+                        target={btn.target}
+                        rel={btn.rel}
+                        className="blue-btn-hero text-white px-4 py-2.5 rounded-full font-semibold text-[10px] md:text-[10.5px] uppercase tracking-widest flex items-center justify-start gap-2 transition-all active:scale-95 shadow-lg relative z-10 w-full sm:w-auto"
+                      >
+                        {Icon && <Icon className="h-4 w-4 text-[#F2B40E]" />}
+                        {btn.label} <ArrowRight size={14} />
+                      </a>
+                    </div>
+                  );
+                }
+                return (
+                  <div key={btn.id} className="relative w-full sm:w-auto">
+                    <a
+                      href={btn.href}
+                      className="group relative inline-flex items-center justify-start gap-2 px-4 py-2.5 rounded-full font-semibold text-[10px] md:text-[10.5px] uppercase tracking-widest text-[#0b3b18] bg-white/90 border border-[#0b3b18]/30 transition-all active:scale-95 shadow-sm z-10 w-full sm:w-auto hover:bg-[#0b3b18] hover:text-white"
+                    >
+                      {Icon && <Icon className="h-4 w-4" />}
+                      {btn.label} <ArrowRight size={14} className="group-hover:translate-x-1 transition-transform" />
+                    </a>
+                  </div>
+                );
+              })}
             </div>
 
           </div>
