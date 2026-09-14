@@ -47,9 +47,26 @@ const INDUSTRIES_DATA = [
   },
 ];
 
-const IndustriesSection = () => (
-  <section className="pt-4 pb-8 bg-white relative overflow-hidden font-inter">
-    {INDUSTRIES_DATA.map((section) => (
+const IndustriesSection = ({ sectionData }: { sectionData?: any }) => {
+  const section = INDUSTRIES_DATA[0];
+  const sectionTitle = sectionData?.title || section.sectionTitle;
+  const categories = Array.isArray(sectionData?.items) && sectionData.items.length > 0
+    ? sectionData.items.map((it: any, idx: number) => {
+        const fallback = section.categories[idx % section.categories.length];
+        const rawImg = it.image || it.img;
+        const imgSrc = rawImg && typeof rawImg === "string" && rawImg.trim() !== "" ? rawImg : fallback.image;
+        return {
+          ...fallback,
+          id: it.id || fallback.id,
+          title: it.title || fallback.title,
+          desc: it.desc || it.description || fallback.desc,
+          image: imgSrc,
+        };
+      })
+    : section.categories;
+
+  return (
+    <section className="pt-4 pb-8 bg-white relative overflow-hidden font-inter">
       <React.Fragment key={section.id}>
         {/* Decorative Leaf Image on Far Left of Section */}
         <img
@@ -65,7 +82,7 @@ const IndustriesSection = () => (
             <div className="flex items-center justify-center gap-4 mb-4">
               <span className="w-12 h-[2px] bg-[#1b5e20]" />
               <h2 className="text-[#1b5e20] font-semibold text-lg md:text-xl uppercase tracking-[0.08em] font-poppins">
-                {section.sectionTitle}
+                {sectionTitle}
               </h2>
               <span className="w-12 h-[2px] bg-[#1b5e20]" />
             </div>
@@ -73,7 +90,7 @@ const IndustriesSection = () => (
 
           {/* Static Grid Layout */}
           <div className="w-full py-2 grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-x-2 lg:gap-x-2 gap-y-4 lg:gap-y-4 justify-center">
-            {section.categories.map((item) => {
+            {categories.map((item) => {
               const Icon = item.icon;
 
               return (
@@ -90,13 +107,23 @@ const IndustriesSection = () => (
 
                   {/* Top Half: Image */}
                   <div className="relative w-full h-[140px] lg:h-[180px] shrink-0 overflow-hidden rounded-t-[15px] bg-gray-200">
-                    <Image
-                      src={item.image}
-                      alt={item.title}
-                      fill
-                      sizes="(max-width: 640px) 50vw, (max-width: 1024px) 25vw, 20vw"
-                      className="object-cover group-hover:scale-110 transition-transform duration-700"
-                    />
+                    {typeof item.image === "string" ? (
+                      <img
+                        loading="lazy"
+                        decoding="async"
+                        src={item.image}
+                        alt={item.title}
+                        className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
+                      />
+                    ) : (
+                      <Image
+                        src={item.image}
+                        alt={item.title}
+                        fill
+                        sizes="(max-width: 640px) 50vw, (max-width: 1024px) 25vw, 20vw"
+                        className="object-cover group-hover:scale-110 transition-transform duration-700"
+                      />
+                    )}
                   </div>
 
                   {/* Bottom Half: Content */}
@@ -125,9 +152,9 @@ const IndustriesSection = () => (
           </div>
         </SectionContainer>
       </React.Fragment>
-    ))}
-  </section>
-);
+    </section>
+  );
+};
 
 export default IndustriesSection;
 

@@ -264,6 +264,7 @@ export const websiteApi = {
     getExpoCategories: async () => apiCall('/website/home/expo-categories'),
     getBeyondExhibition: async () => apiCall('/website/home/beyond-exhibition'),
     getSponsorsAndAttend: async () => apiCall('/website/home/sponsors-attend'),
+    getTestimonialsCarousel: async () => apiCall('/website/home/testimonials-carousel'),
 };
 
 export const seoApi = {

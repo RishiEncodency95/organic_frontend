@@ -48,6 +48,10 @@ const nextConfig: NextConfig = {
         source: "/uploads/:path*",
         destination: "http://localhost:4000/uploads/:path*",
       },
+      {
+        source: "/participate/why-exhibit",
+        destination: "/why-exhibit",
+      },
     ];
   },
 };

@@ -61,9 +61,29 @@ const Sparkle = ({ style, color = "#ffdd00", shadow = "#ffa500" }: { style?: Rea
   </span>
 );
 
-const BuyersSection = () => (
-  <section className="py-6 bg-[#f8fbfa] overflow-hidden relative font-inter">
-    {BUYERS_SECTION_DATA.map((section) => (
+const BuyersSection = ({ sectionData }: { sectionData?: any }) => {
+  const baseSection = BUYERS_SECTION_DATA[0];
+  const attendees = Array.isArray(sectionData?.items) && sectionData.items.length > 0
+    ? sectionData.items.map((it: any, idx: number) => ({
+        id: it.id || `att-${idx}`,
+        text: it.title || it.text || (baseSection.attendees[idx % baseSection.attendees.length]?.text ?? ""),
+      }))
+    : baseSection.attendees;
+
+  const section = {
+    ...baseSection,
+    titlePrefix: sectionData?.title ? `${sectionData.title} ` : baseSection.titlePrefix,
+    titleHighlight: sectionData?.subtitle || baseSection.titleHighlight,
+    attendees,
+    button: {
+      ...baseSection.button,
+      label: sectionData?.buttonLabel || baseSection.button.label,
+      href: sectionData?.buttonHref || baseSection.button.href,
+    },
+  };
+
+  return (
+    <section className="py-6 bg-[#f8fbfa] overflow-hidden relative font-inter">
       <SectionContainer key={section.id}>
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-center">
           {/* Left Content */}
@@ -131,9 +151,9 @@ const BuyersSection = () => (
           </div>
         </div>
       </SectionContainer>
-    ))}
-  </section>
-);
+    </section>
+  );
+};
 
 export default BuyersSection;
 

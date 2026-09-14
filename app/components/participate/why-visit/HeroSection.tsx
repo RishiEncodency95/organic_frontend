@@ -10,6 +10,8 @@ import visitBanner from "@/app/assets/banner/visitog.png";
 import leafImg from "@/app/assets/icons/leafs.png";
 import SectionContainer from "@/app/components/layout/SectionContainer";
 
+import * as LucideIcons from "lucide-react";
+
 const Sparkle = ({
   style,
   color = "#ffdd00",
@@ -41,7 +43,7 @@ const StatCounter = ({ value }: { value: string }) => {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: "-50px" });
 
-  if (!/^[\d,]+/.test(value)) return <span>{value}</span>;
+  if (!value || !/^[\d,]+/.test(value)) return <span>{value || ""}</span>;
 
   const numericValue = parseInt(value.replace(/,/g, "")) || 0;
   const suffix = value.replace(/[0-9,]/g, "");
@@ -60,6 +62,12 @@ const StatCounter = ({ value }: { value: string }) => {
   }, [isInView, numericValue]);
 
   return <span ref={ref}>{displayValue.toLocaleString()}{suffix}</span>;
+};
+
+const getStatIcon = (iconName?: string) => {
+  if (!iconName) return Users;
+  const IconComp = (LucideIcons as any)[iconName];
+  return IconComp || Users;
 };
 
 const HERO_SECTION_DATA = [
@@ -107,7 +115,43 @@ const HERO_SECTION_DATA = [
   },
 ];
 
-export default function HeroSection() {
+export default function HeroSection({ sectionData }: { sectionData?: any }) {
+  const fallback = HERO_SECTION_DATA[0];
+  const tagline = sectionData?.eyebrow || fallback.tagline;
+  const headlineLine1 = sectionData?.titlePrimary || fallback.headlineLine1;
+  const headlineLine2 = sectionData?.titleSecondary || fallback.headlineLine2;
+  const headlineLine3 = sectionData?.titleHighlight || fallback.headlineLine3;
+  const description = sectionData?.description || fallback.description;
+  const rawBg = sectionData?.image || sectionData?.bgImage;
+  const bgImg = rawBg && typeof rawBg === "string" && rawBg.trim() !== "" ? rawBg : visitBanner.src;
+
+  const buttons = [
+    {
+      id: "btn-buyer",
+      text: sectionData?.buttonLabel || fallback.buttons[0].text,
+      href: sectionData?.buttonHref || fallback.buttons[0].href,
+      icon: UserCheck,
+      styleType: "blue",
+      sparkles: fallback.buttons[0].sparkles,
+    },
+    {
+      id: "btn-visitor",
+      text: sectionData?.secondaryButtonLabel || fallback.buttons[1].text,
+      href: sectionData?.secondaryButtonHref || fallback.buttons[1].href,
+      icon: Users,
+      styleType: "orange",
+      sparkles: fallback.buttons[1].sparkles,
+    },
+  ];
+
+  const stats = Array.isArray(sectionData?.items) && sectionData.items.length > 0
+    ? sectionData.items.map((it: any, idx: number) => ({
+        id: `stat-${idx}`,
+        icon: getStatIcon(it.icon),
+        val: it.val || it.value || "",
+        label: it.label || it.title || "",
+      }))
+    : fallback.stats;
   const sectionRef = useRef<HTMLElement>(null);
   const line1Ref = useRef<HTMLSpanElement>(null);
   const line2Ref = useRef<HTMLSpanElement>(null);
@@ -240,189 +284,185 @@ export default function HeroSection() {
         }
       `}</style>
 
-      {HERO_SECTION_DATA.map((hero) => (
-        <React.Fragment key={hero.id}>
-          {/* Hero Section Banner */}
-          <section
-            ref={sectionRef}
-            className="relative w-full min-h-[380px] sm:min-h-[420px] md:min-h-[450px] lg:min-h-[470px] flex items-center overflow-hidden font-inter pt-3 md:pt-5 pb-6 md:pb-8 border-b-4 border-[#ea580c]"
-          >
-            {/* Background Image without overlay */}
-            <div
-              className="absolute inset-0 z-0"
-              style={{
-                backgroundImage: `url(${visitBanner.src})`,
-                backgroundPosition: "center -35px",
-                backgroundSize: "cover",
-                backgroundRepeat: "no-repeat",
-              }}
-            />
+      {/* Hero Section Banner */}
+      <section
+        ref={sectionRef}
+        className="relative w-full min-h-[380px] sm:min-h-[420px] md:min-h-[450px] lg:min-h-[470px] flex items-center overflow-hidden font-inter pt-3 md:pt-5 pb-6 md:pb-8 border-b-4 border-[#ea580c]"
+      >
+        {/* Background Image without overlay */}
+        <div
+          className="absolute inset-0 z-0"
+          style={{
+            backgroundImage: `url(${typeof bgImg === "string" ? bgImg : bgImg.src})`,
+            backgroundPosition: "center -35px",
+            backgroundSize: "cover",
+            backgroundRepeat: "no-repeat",
+          }}
+        />
 
-            {/* Floating Organic Leaf */}
-            <div className="absolute -left-14 sm:-left-10 lg:-left-8 top-[10%] sm:top-[12%] z-20 pointer-events-none w-28 sm:w-36 md:w-44 lg:w-[170px]">
-              <img
-                src={leafImg.src}
-                alt="Organic Leaf"
-                className="w-full h-auto object-contain filter drop-shadow-[0_5px_10px_rgba(0,0,0,0.15)] opacity-30"
-              />
+        {/* Floating Organic Leaf */}
+        <div className="absolute -left-14 sm:-left-10 lg:-left-8 top-[10%] sm:top-[12%] z-20 pointer-events-none w-28 sm:w-36 md:w-44 lg:w-[170px]">
+          <img
+            src={leafImg.src}
+            alt="Organic Leaf"
+            className="w-full h-auto object-contain filter drop-shadow-[0_5px_10px_rgba(0,0,0,0.15)] opacity-30"
+          />
+        </div>
+
+        {/* Content */}
+        <SectionContainer className="relative z-10">
+          <div className="max-w-2xl -translate-y-1 sm:-translate-y-2 md:-translate-y-3">
+
+            {/* Tagline */}
+            <div className="flex items-center justify-start gap-2 mt-1.5 translate-y-0.5 mb-1.5">
+              <span className="w-8 h-[2.5px] bg-[#c2410c] shrink-0" />
+              <p className="text-[#c2410c] text-xs sm:text-sm md:text-[15px] font-bold uppercase tracking-[0.18em] text-left font-poppins">
+                {tagline}
+              </p>
+              <span className="w-8 h-[2.5px] bg-[#c2410c] shrink-0" />
             </div>
 
-            {/* Content */}
-            <SectionContainer className="relative z-10">
-              <div className="max-w-2xl -translate-y-1 sm:-translate-y-2 md:-translate-y-3">
-
-                {/* Tagline */}
-                <div className="flex items-center justify-start gap-2 mt-1.5 translate-y-0.5 mb-1.5">
-                  <span className="w-8 h-[2.5px] bg-[#c2410c] shrink-0" />
-                  <p className="text-[#c2410c] text-xs sm:text-sm md:text-[15px] font-bold uppercase tracking-[0.18em] text-left font-poppins">
-                    {hero.tagline}
-                  </p>
-                  <span className="w-8 h-[2.5px] bg-[#c2410c] shrink-0" />
-                </div>
-
-                {/* Heading - 3 separate stacked lines */}
-                <h1
-                  className="font-semibold leading-[1.05] mb-3 font-poppins"
-                  style={{ textShadow: "1px 1px 2px rgba(0,0,0,0.4)" }}
+            {/* Heading - 3 separate stacked lines */}
+            <h1
+              className="font-semibold leading-[1.05] mb-3 font-poppins"
+              style={{ textShadow: "1px 1px 2px rgba(0,0,0,0.4)" }}
+            >
+              <span className="block overflow-hidden mb-0.5">
+                <span
+                  ref={line1Ref}
+                  style={{ opacity: 0, display: "block" }}
+                  className="text-3xl sm:text-4xl md:text-[46px] lg:text-[52px] text-[#001810] font-semibold"
                 >
-                  <span className="block overflow-hidden mb-0.5">
-                    <span
-                      ref={line1Ref}
-                      style={{ opacity: 0, display: "block" }}
-                      className="text-3xl sm:text-4xl md:text-[46px] lg:text-[52px] text-[#001810] font-semibold"
-                    >
-                      {hero.headlineLine1}
-                    </span>
-                  </span>
+                  {headlineLine1}
+                </span>
+              </span>
 
-                  <span className="block overflow-hidden mb-0.5">
-                    <span
-                      ref={line2Ref}
-                      style={{ opacity: 0, display: "block" }}
-                      className="text-3xl sm:text-4xl md:text-[46px] lg:text-[52px] text-[#001810] font-semibold"
-                    >
-                      {hero.headlineLine2}
-                    </span>
-                  </span>
-
-                  <span className="block overflow-hidden">
-                    <span
-                      ref={line3Ref}
-                      style={{ opacity: 0, display: "block" }}
-                      className="text-3xl sm:text-4xl md:text-[46px] lg:text-[52px] text-[#3b8c2a] font-semibold"
-                    >
-                      {hero.headlineLine3}
-                    </span>
-                  </span>
-                </h1>
-
-                {/* Description */}
-                <p
-                  ref={subtitleRef}
-                  style={{ opacity: 0 }}
-                  className="text-black text-sm md:text-[15.5px] font-bold leading-relaxed max-w-lg mt-3 mb-4 font-inter"
+              <span className="block overflow-hidden mb-0.5">
+                <span
+                  ref={line2Ref}
+                  style={{ opacity: 0, display: "block" }}
+                  className="text-3xl sm:text-4xl md:text-[46px] lg:text-[52px] text-[#001810] font-semibold"
                 >
-                  {hero.description}
-                </p>
+                  {headlineLine2}
+                </span>
+              </span>
 
-                {/* Buttons */}
-                <div ref={btnsRef} className="flex flex-wrap items-center justify-start gap-3">
-                  {hero.buttons.map((btn) => {
-                    const IconComp = btn.icon;
-                    return (
-                      <div key={btn.id} className="relative w-full sm:w-auto">
-                        {btn.sparkles.map((sp, idx) => (
-                          <Sparkle key={idx} color={sp.color} shadow={sp.shadow} style={sp.style} />
-                        ))}
-                        {btn.styleType === "blue" ? (
-                          <Link
-                            href={btn.href}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="blue-btn-hero-exh text-white px-5 py-2.5 rounded-lg font-semibold text-xs uppercase tracking-widest flex items-center justify-start gap-2 transition-all active:scale-95 shadow-lg relative z-10 w-full sm:w-auto font-poppins"
-                          >
-                            <IconComp size={15} />
-                            <span>{btn.text}</span>
-                            <ArrowRight size={15} />
-                          </Link>
-                        ) : (
-                          <Link
-                            href={btn.href}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="group relative inline-flex items-center justify-start gap-2 px-5 py-2.5 rounded-lg font-semibold text-xs uppercase tracking-widest text-white transition-all active:scale-95 shadow-2xl z-10 w-full sm:w-auto overflow-hidden font-poppins"
-                            style={{
-                              background: "linear-gradient(135deg, #ea580c, #c2410c)",
-                              boxShadow: "0 4px 20px rgba(194,65,12,0.5), 0 0 12px rgba(249,115,22,0.3)",
-                            }}
-                          >
-                            <span className="absolute inset-0 bg-white/10 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-500 skew-x-12" />
-                            <IconComp size={15} />
-                            <span>{btn.text}</span>
-                            <ArrowRight size={15} className="group-hover:translate-x-1 transition-transform" />
-                          </Link>
-                        )}
-                      </div>
-                    );
-                  })}
-                </div>
+              <span className="block overflow-hidden">
+                <span
+                  ref={line3Ref}
+                  style={{ opacity: 0, display: "block" }}
+                  className="text-3xl sm:text-4xl md:text-[46px] lg:text-[52px] text-[#3b8c2a] font-semibold"
+                >
+                  {headlineLine3}
+                </span>
+              </span>
+            </h1>
 
-              </div>
-            </SectionContainer>
-          </section>
+            {/* Description */}
+            <p
+              ref={subtitleRef}
+              style={{ opacity: 0 }}
+              className="text-black text-sm md:text-[15.5px] font-bold leading-relaxed max-w-lg mt-3 mb-4 font-inter"
+            >
+              {description}
+            </p>
 
-          {/* Stats Counter Band right after Hero Banner */}
-          <div className="relative z-20 -mt-6 md:-mt-8 font-inter mb-2 md:mb-3">
-            <SectionContainer>
-              <div
-                ref={bandRef}
-                style={{ opacity: 0, backgroundColor: "#1b5e20", boxShadow: "0 8px 20px -10px rgba(0,0,0,0.3)" }}
-                className="rounded-2xl border border-white/10 p-2 sm:py-2 md:py-2 md:px-4 relative overflow-hidden [perspective:1000px]"
-              >
-                {/* Shimmer overlay */}
-                <div
-                  ref={shimmerRef}
-                  className="absolute inset-y-0 left-0 w-1/3 pointer-events-none"
-                  style={{ background: "linear-gradient(100deg, transparent, rgba(255,255,255,0.18), transparent)", opacity: 0 }}
-                />
+            {/* Buttons */}
+            <div ref={btnsRef} className="flex flex-wrap items-center justify-start gap-3">
+              {buttons.map((btn) => {
+                const IconComp = btn.icon;
+                return (
+                  <div key={btn.id} className="relative w-full sm:w-auto">
+                    {btn.sparkles?.map((sp, idx) => (
+                      <Sparkle key={idx} color={sp.color} shadow={sp.shadow} style={sp.style} />
+                    ))}
+                    {btn.styleType === "blue" ? (
+                      <Link
+                        href={btn.href}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="blue-btn-hero-exh text-white px-5 py-2.5 rounded-lg font-semibold text-xs uppercase tracking-widest flex items-center justify-start gap-2 transition-all active:scale-95 shadow-lg relative z-10 w-full sm:w-auto font-poppins"
+                      >
+                        <IconComp size={15} />
+                        <span>{btn.text}</span>
+                        <ArrowRight size={15} />
+                      </Link>
+                    ) : (
+                      <Link
+                        href={btn.href}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="group relative inline-flex items-center justify-start gap-2 px-5 py-2.5 rounded-lg font-semibold text-xs uppercase tracking-widest text-white transition-all active:scale-95 shadow-2xl z-10 w-full sm:w-auto overflow-hidden font-poppins"
+                        style={{
+                          background: "linear-gradient(135deg, #ea580c, #c2410c)",
+                          boxShadow: "0 4px 20px rgba(194,65,12,0.5), 0 0 12px rgba(249,115,22,0.3)",
+                        }}
+                      >
+                        <span className="absolute inset-0 bg-white/10 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-500 skew-x-12" />
+                        <IconComp size={15} />
+                        <span>{btn.text}</span>
+                        <ArrowRight size={15} className="group-hover:translate-x-1 transition-transform" />
+                      </Link>
+                    )}
+                  </div>
+                );
+              })}
+            </div>
 
-                <div className="grid grid-cols-2 sm:grid-cols-3 md:flex md:flex-nowrap items-center justify-center md:justify-between gap-y-3 gap-x-2 md:gap-0">
-                  {hero.stats.map((item, i) => {
-                    const IconComponent = item.icon;
-                    return (
-                      <React.Fragment key={item.id}>
-                        <div
-                          ref={(el) => { itemRefs.current[i] = el; }}
-                          style={{ opacity: 0 }}
-                          className="flex flex-row items-center justify-center gap-2 sm:gap-2.5 group flex-1 py-1 px-1.5 bg-white/5 md:bg-transparent rounded-xl border border-white/10 md:border-none"
-                        >
-                          <div className="w-7 h-7 md:w-8 md:h-8 rounded-full bg-white/10 flex items-center justify-center shrink-0 border border-white/15">
-                            <IconComponent className="w-3.5 h-3.5 md:w-4 md:h-4 text-[#facc15] stroke-[2]" />
-                          </div>
-                          <div className="flex flex-col text-left justify-center">
-                            <h4 className="text-[14px] sm:text-[15px] md:text-[16px] font-semibold text-white leading-none font-inter mb-0.5">
-                              <StatCounter value={item.val} />
-                            </h4>
-                            <p className="text-[9px] sm:text-[9.5px] md:text-[10px] font-semibold text-[#facc15] uppercase tracking-wider leading-none font-inter">
-                              {item.label}
-                            </p>
-                          </div>
-                        </div>
-                        {i < hero.stats.length - 1 && (
-                          <div
-                            ref={(el) => { dividerRefs.current[i] = el; }}
-                            className="hidden md:block w-px h-6 bg-white/20"
-                          />
-                        )}
-                      </React.Fragment>
-                    );
-                  })}
-                </div>
-              </div>
-            </SectionContainer>
           </div>
-        </React.Fragment>
-      ))}
+        </SectionContainer>
+      </section>
+
+      {/* Stats Counter Band right after Hero Banner */}
+      <div className="relative z-20 -mt-6 md:-mt-8 font-inter mb-2 md:mb-3">
+        <SectionContainer>
+          <div
+            ref={bandRef}
+            style={{ opacity: 0, backgroundColor: "#1b5e20", boxShadow: "0 8px 20px -10px rgba(0,0,0,0.3)" }}
+            className="rounded-2xl border border-white/10 p-2 sm:py-2 md:py-2 md:px-4 relative overflow-hidden [perspective:1000px]"
+          >
+            {/* Shimmer overlay */}
+            <div
+              ref={shimmerRef}
+              className="absolute inset-y-0 left-0 w-1/3 pointer-events-none"
+              style={{ background: "linear-gradient(100deg, transparent, rgba(255,255,255,0.18), transparent)", opacity: 0 }}
+            />
+
+            <div className="grid grid-cols-2 sm:grid-cols-3 md:flex md:flex-nowrap items-center justify-center md:justify-between gap-y-3 gap-x-2 md:gap-0">
+              {stats.map((item, i) => {
+                const IconComponent = item.icon;
+                return (
+                  <React.Fragment key={item.id}>
+                    <div
+                      ref={(el) => { itemRefs.current[i] = el; }}
+                      style={{ opacity: 0 }}
+                      className="flex flex-row items-center justify-center gap-2 sm:gap-2.5 group flex-1 py-1 px-1.5 bg-white/5 md:bg-transparent rounded-xl border border-white/10 md:border-none"
+                    >
+                      <div className="w-7 h-7 md:w-8 md:h-8 rounded-full bg-white/10 flex items-center justify-center shrink-0 border border-white/15">
+                        <IconComponent className="w-3.5 h-3.5 md:w-4 md:h-4 text-[#facc15] stroke-[2]" />
+                      </div>
+                      <div className="flex flex-col text-left justify-center">
+                        <h4 className="text-[14px] sm:text-[15px] md:text-[16px] font-semibold text-white leading-none font-inter mb-0.5">
+                          <StatCounter value={item.val} />
+                        </h4>
+                        <p className="text-[9px] sm:text-[9.5px] md:text-[10px] font-semibold text-[#facc15] uppercase tracking-wider leading-none font-inter">
+                          {item.label}
+                        </p>
+                      </div>
+                    </div>
+                    {i < stats.length - 1 && (
+                      <div
+                        ref={(el) => { dividerRefs.current[i] = el; }}
+                        className="hidden md:block w-px h-6 bg-white/20"
+                      />
+                    )}
+                  </React.Fragment>
+                );
+              })}
+            </div>
+          </div>
+        </SectionContainer>
+      </div>
     </>
   );
 }

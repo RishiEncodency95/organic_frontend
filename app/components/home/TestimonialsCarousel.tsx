@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import {
   Quote, ChevronRight, MapPin, Play, ArrowRight,
@@ -8,6 +8,7 @@ import {
 } from 'lucide-react';
 import Link from 'next/link';
 import Image from 'next/image';
+import { websiteApi } from '@/lib/api';
 import SectionContainer from '../layout/SectionContainer';
 
 import testImg from "../../assets/banner/testbg.webp";
@@ -27,16 +28,20 @@ const getInitials = (name: string) => {
 };
 
 // ─── Top Initials Circle ───
-const InitialsCircle = ({ name, color }: { name: string; color: string }) => (
+const InitialsCircle = ({ name, color, logo }: { name: string; color: string; logo?: string }) => (
   <div
-    className="w-10 h-10 md:w-14 md:h-14 rounded-full border-[2px] md:border-[3px] border-white flex items-center justify-center font-poppins font-bold text-[12px] md:text-base shadow-md bg-white uppercase tracking-wider"
+    className="w-10 h-10 md:w-14 md:h-14 rounded-full border-[2px] md:border-[3px] border-white flex items-center justify-center font-poppins font-bold text-[12px] md:text-base shadow-md bg-white uppercase tracking-wider overflow-hidden"
     style={{
       boxShadow: "0 4px 14px rgba(0,0,0,0.13), 0 0 0 2px #e2e8f0",
       color: color || '#1b5e20',
-      background: `linear-gradient(135deg, #ffffff 0%, ${color}12 100%)`
+      background: `linear-gradient(135deg, #ffffff 0%, ${color || '#1b5e20'}12 100%)`
     }}
   >
-    {getInitials(name)}
+    {logo ? (
+      <img src={logo} alt={name} className="w-full h-full object-cover" />
+    ) : (
+      getInitials(name)
+    )}
   </div>
 );
 
@@ -61,76 +66,8 @@ const sectionData = {
     )
   },
   sectionDividerText: "MORE INSPIRING STORIES",
-  testimonials: [
-    {
-      _id: "1",
-      company1: "Achaspati Kulwant",
-      company2: "Chancellor, University of Patanjali",
-      location: "Haridwar",
-      quote: "The change is organizing activities with a vision. I wish the project a great success. It's a wonderful initiative for sustainable future. We must all come together to ensure that our environment is protected and cherished by the coming generations, creating a harmonious balance.",
-      color: "#1b5e20",
-      logoText: "PATANJALI"
-    },
-    {
-      _id: "2",
-      company1: "Khyati Nayak",
-      company2: "PRO – Gujarat Tourism",
-      location: "Gujarat",
-      quote: "This platform will open eyes of our new generations towards organic living. It provides a unique opportunity to learn from global experts. By adopting these sustainable methodologies, we can actively contribute to a greener ecosystem and promote healthier lifestyle choices.",
-      color: "#d26019",
-      logoText: "GUJARAT\nTOURISM"
-    },
-    {
-      _id: "3",
-      company1: "Mukesh Kumar",
-      company2: "The Yogshala Head",
-      location: "New Delhi",
-      quote: "It made me realize the impact of holistic wellness in our daily decisions. Every small step taken today safeguards our natural resources. Whether it is choosing chemical-free products or supporting local farmers, these choices collectively lead to a monumental positive shift in society.",
-      color: "#00643b",
-      logoText: "YOGSHALA"
-    },
-    {
-      _id: "4",
-      company1: "Dr. Subramanian Swamy",
-      company2: "Bharatiya Janata Party (BJP)",
-      location: "New Delhi",
-      quote: "The Yogshala Expo is a great step towards a healthier and self-reliant India. It beautifully bridges traditional wisdom with modern practices. The integration of Ayurveda into everyday life ensures that our citizens maintain not just physical strength but also mental and spiritual well-being.",
-      color: "#23471d",
-      logoText: "BJP\nINDIA"
-    },
-    {
-      _id: "5",
-      company1: "Qazhf Khan",
-      company2: "Father of Kairana Model",
-      location: "Kairana",
-      quote: "The Yogshala Expo ensures honest and responsible contributions. The collective commitment shown here will build a robust organic market. We are witnessing an incredible movement where ethical farming and conscientious consumption are becoming the new standard for a thriving nation.",
-      color: "#164429",
-      logoText: "KAIRANA"
-    }
-  ],
-  videos: [
-    {
-      _id: "v1",
-      title: "Bharat Organic Expo 2027: A New Era for Sustainable Farming",
-      location: "Bharat Mandapam, New Delhi",
-      videoUrl: "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
-      thumbnail: "https://images.unsplash.com/photo-1540575467063-178a50c2df87?q=80&w=800&auto=format&fit=crop"
-    },
-    {
-      _id: "v2",
-      title: "Exhibitors Speak: B2B Growth & Global Buyer Connections",
-      location: "New Delhi, India",
-      videoUrl: "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
-      thumbnail: "https://images.unsplash.com/photo-1511578314322-379afb476865?q=80&w=800&auto=format&fit=crop"
-    },
-    {
-      _id: "v3",
-      title: "Industry Leaders Panel: Insights into Organic & Eco Markets",
-      location: "Hall 12, New Delhi",
-      videoUrl: "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
-      thumbnail: "https://images.unsplash.com/photo-1551836022-d5d88e9218df?q=80&w=800&auto=format&fit=crop"
-    }
-  ]
+  testimonials: [],
+  videos: []
 };
 
 
@@ -156,6 +93,7 @@ const TestimonialCard = ({ item, expandedCardId, setExpandedCardId }: { item: an
         <InitialsCircle
           name={item.company1}
           color={item.color || '#1b5e20'}
+          logo={item.logo}
         />
       </div>
 
@@ -219,7 +157,7 @@ const TestimonialCard = ({ item, expandedCardId, setExpandedCardId }: { item: an
                     {item.company1}
                   </div>
                   {item.company2 && (
-                    <div className="font-semibold text-[10.5px] leading-tight opacity-80 mt-0.5" style={{ color: item.color || '#23471d' }}>
+                    <div className="font-semibold text-[10.5px] leading-tight text-[#4B1426] mt-0.5">
                       {item.company2}
                     </div>
                   )}
@@ -244,7 +182,7 @@ const TestimonialCard = ({ item, expandedCardId, setExpandedCardId }: { item: an
 
           {/* Company 2 / Title Slot */}
           <div className="min-h-[12px] md:min-h-[18px]">
-            <div className="font-bold text-[8px] md:text-[11.5px] leading-tight px-1 opacity-90 flex items-center justify-center" style={{ color: item.color || '#23471d' }}>
+            <div className="font-bold text-[8px] md:text-[11.5px] text-[#4B1426] leading-tight px-1 flex items-center justify-center">
               {item.company2 ? (
                 <span className={item.company2.length > 30 ? "truncate max-w-[180px] md:max-w-[220px]" : ""}>{item.company2}</span>
               ) : ""}
@@ -304,33 +242,63 @@ const TestimonialCard = ({ item, expandedCardId, setExpandedCardId }: { item: an
 };
 
 // ─── Video Card Component ───
-const VideoCard = ({ item }: { item: any }) => {
-  const colors = [
+const VideoCard = ({ item, onSelectVideo }: { item: any; onSelectVideo: (item: any) => void }) => {
+  const defaultColors = [
     "linear-gradient(160deg,#4a5568,#1a202c)",
     "linear-gradient(160deg,#3b5ea6,#1a2d5a)",
     "linear-gradient(160deg,#2d5a2d,#1a3a1a)"
   ];
-  const bg = colors[item._id ? item._id.charCodeAt(0) % colors.length : 0];
+  const bg = item.overlayGradient || defaultColors[item._id ? item._id.charCodeAt(0) % defaultColors.length : 0];
+  const showOverlay = item.showOverlay !== false;
+
+  let displayThumb = item.thumbnail;
+  if (!displayThumb || displayThumb.includes("unsplash.com")) {
+    const ytId = extractYouTubeId(item.videoUrl);
+    if (ytId) {
+      displayThumb = `https://img.youtube.com/vi/${ytId}/hqdefault.jpg`;
+    }
+  }
 
   return (
     <div
-      onClick={() => window.open(item.videoUrl, '_blank')}
-      className="relative rounded-xl md:rounded-2xl overflow-hidden flex-1 min-w-full sm:min-w-[280px] md:min-w-0 h-[120px] md:h-52 group cursor-pointer shadow-lg font-inter"
+      onClick={() => onSelectVideo(item)}
+      className="relative rounded-xl md:rounded-2xl overflow-hidden flex-1 min-w-full sm:min-w-[280px] md:min-w-0 h-[120px] md:h-52 group cursor-pointer shadow-lg font-inter bg-slate-900"
     >
-      <div className="absolute inset-0" style={{ background: bg }}>
-        {item.thumbnail && (
-          <img src={item.thumbnail} className="w-full h-full object-cover opacity-80 group-hover:opacity-100 transition-opacity duration-300" alt="" />
+      <div className="absolute inset-0">
+        {displayThumb ? (
+          <img
+            src={displayThumb}
+            className={`w-full h-full object-cover transition-opacity duration-300 ${
+              showOverlay ? "opacity-80 group-hover:opacity-100" : "opacity-100"
+            }`}
+            alt={item.title || ""}
+          />
+        ) : (
+          <div className="w-full h-full" style={{ background: bg }} />
         )}
       </div>
-      <div className="absolute inset-0 bg-black/20 group-hover:bg-black/10 transition-all duration-300" />
+
+      {/* Dark Overlay (Controlled dynamically by user in Admin) */}
+      {showOverlay && (
+        <div
+          className="absolute inset-0 transition-opacity duration-300 group-hover:opacity-60"
+          style={{ background: bg, opacity: 0.72 }}
+        />
+      )}
+
+      {/* Play Icon */}
       <div className="absolute inset-0 flex items-center justify-center">
         <div className="w-8 h-8 md:w-12 md:h-12 rounded-full bg-white flex items-center justify-center shadow-2xl group-hover:scale-110 transition-transform duration-300">
           <Play className="w-3.5 h-3.5 md:w-5 md:h-5 fill-[#4f8519] text-[#4f8519] ml-0.5" />
         </div>
       </div>
-      <div className="absolute bottom-0 left-0 right-0 p-2 md:p-4 bg-gradient-to-t from-black/90 to-transparent">
+
+      {/* Bottom Title & Location */}
+      <div className="absolute bottom-0 left-0 right-0 p-2 md:p-4 bg-gradient-to-t from-black/95 via-black/60 to-transparent">
         <div className="text-white font-semibold text-[10px] md:text-sm truncate font-poppins">{item.title}</div>
-        <div className="text-white/70 text-[8.5px] md:text-[11px] font-medium mt-0 md:mt-0.5">{item.location}</div>
+        {item.location ? (
+          <div className="text-white/80 text-[8.5px] md:text-[11px] font-medium mt-0 md:mt-0.5">{item.location}</div>
+        ) : null}
       </div>
     </div>
   );
@@ -360,43 +328,106 @@ const SectionDivider = ({ text }: { text: string }) => (
       <circle cx="293" cy="9" r="2.5" fill="#23471d" opacity="0.6" />
     </svg>
 
-    <div className="flex items-center gap-1 md:gap-2 whitespace-nowrap">
-      <Leaf className="w-2.5 h-2.5 md:w-3.5 md:h-3.5 text-[#23471d]" />
-      <span className="font-bold text-[#6E1A37] text-[10px] md:text-[15px] tracking-[0.12em] uppercase font-poppins">
-        {text}
-      </span>
-      <Leaf className="w-2.5 h-2.5 md:w-3.5 md:h-3.5 text-[#d26019]" />
-    </div>
+    <h2 className="text-center font-bold text-[10px] md:text-[14px] text-[#131730] tracking-widest uppercase font-poppins shrink-0 px-1">
+      {text}
+    </h2>
 
     <svg className="flex-1 h-3 md:h-5 overflow-visible" viewBox="0 0 300 18" preserveAspectRatio="none">
       <defs>
-        <linearGradient id="lg-right" x1="0%" y1="0%" x2="100%" y2="0%">
-          <stop offset="0%" stopColor="#d26019" />
-          <stop offset="35%" stopColor="#22c55e" stopOpacity="0.75" />
-          <stop offset="75%" stopColor="#3b82f6" stopOpacity="0.35" />
-          <stop offset="100%" stopColor="transparent" />
+        <linearGradient id="lg-right" x1="100%" y1="0%" x2="0%" y2="0%">
+          <stop offset="0%" stopColor="transparent" />
+          <stop offset="25%" stopColor="#3b82f6" stopOpacity="0.35" />
+          <stop offset="65%" stopColor="#22c55e" stopOpacity="0.75" />
+          <stop offset="100%" stopColor="#23471d" />
         </linearGradient>
-        <linearGradient id="lg-right2" x1="0%" y1="0%" x2="100%" y2="0%">
-          <stop offset="0%" stopColor="#4ade80" stopOpacity="0.35" />
-          <stop offset="60%" stopColor="#93c5fd" stopOpacity="0.18" />
-          <stop offset="100%" stopColor="transparent" />
+        <linearGradient id="lg-right2" x1="100%" y1="0%" x2="0%" y2="0%">
+          <stop offset="0%" stopColor="transparent" />
+          <stop offset="40%" stopColor="#93c5fd" stopOpacity="0.18" />
+          <stop offset="100%" stopColor="#4ade80" stopOpacity="0.35" />
         </linearGradient>
       </defs>
-      <circle cx="7" cy="9" r="2.5" fill="#d26019" opacity="0.6" />
-      <path d="M0 9 Q35 13 60 9 Q90 5 120 9 Q150 14 180 9 Q210 4 240 9 Q270 14 300 9"
+      <path d="M300 9 Q270 4 240 9 Q210 14 180 9 Q150 4 120 9 Q90 13 60 9 Q35 5 0 9"
         fill="none" stroke="url(#lg-right)" strokeWidth="1.5" strokeLinecap="round" />
-      <path d="M0 11 Q35 9 80 12 Q120 15 160 11 Q200 7 240 11 Q260 13 300 12"
+      <path d="M300 12 Q260 8 220 12 Q180 16 140 12 Q100 8 60 11 Q35 13 0 11"
         fill="none" stroke="url(#lg-right2)" strokeWidth="0.8" strokeLinecap="round" />
+      <circle cx="7" cy="9" r="2.5" fill="#23471d" opacity="0.6" />
     </svg>
   </div>
 );
 
+// Helper: Robust YouTube ID Extractor (supports Shorts, Watch, Live, Embed, youtu.be, and query params)
+const extractYouTubeId = (url: string): string | null => {
+  if (!url || typeof url !== "string") return null;
+  const trimmed = url.trim();
+  if (/^[a-zA-Z0-9_-]{11}$/.test(trimmed)) return trimmed;
+  const regExp = /(?:youtube\.com\/(?:[^\/]+\/.+\/|(?:v|e(?:mbed)?)\/|.*[?&]v=|shorts\/|live\/)|youtu\.be\/)([^"&?/\s]{11})/i;
+  const match = trimmed.match(regExp);
+  if (match && match[1]) return match[1];
+  try {
+    const parsed = new URL(trimmed.startsWith("http") ? trimmed : `https://${trimmed}`);
+    if (parsed.searchParams.has("v")) {
+      const v = parsed.searchParams.get("v");
+      if (v && v.length === 11) return v;
+    }
+    const parts = parsed.pathname.split("/").filter(Boolean);
+    const last = parts[parts.length - 1];
+    if (last && last.length === 11) return last;
+  } catch {}
+  return null;
+};
+
 // ─── Main Component ───
 const TestimonialsCarousel = () => {
   const [expandedCardId, setExpandedCardId] = useState<string | null>(null);
+  const [testimonialsList, setTestimonialsList] = useState<any[]>([]);
+  const [videosList, setVideosList] = useState<any[]>([]);
+  const [activeVideoModal, setActiveVideoModal] = useState<any | null>(null);
 
-  const total = sectionData.testimonials.length;
-  const totalVideos = sectionData.videos.length;
+  useEffect(() => {
+    let isMounted = true;
+    const fetchTestimonials = async () => {
+      try {
+        const res = await websiteApi.getTestimonialsCarousel();
+        const serverData = res?.data || res;
+        if (isMounted && serverData) {
+          if (Array.isArray(serverData.testimonials)) {
+            const active = serverData.testimonials.filter((t: any) => t.status !== "Hidden");
+            setTestimonialsList(active);
+          }
+          if (Array.isArray(serverData.videos)) {
+            const activeVids = serverData.videos.filter((v: any) => v.status !== "Hidden");
+            setVideosList(activeVids);
+          }
+        }
+      } catch (err) {
+        console.error("Failed to load testimonials:", err);
+      }
+    };
+    fetchTestimonials();
+    return () => {
+      isMounted = false;
+    };
+  }, []);
+
+  const handleSelectVideo = (item: any) => {
+    if (item.videoType === "instagram" || (item.videoUrl && item.videoUrl.includes("instagram.com"))) {
+      if (item.videoUrl) {
+        window.open(item.videoUrl, "_blank");
+        return;
+      }
+    }
+    const ytId = extractYouTubeId(item.videoUrl);
+    if (ytId || (item.videoUrl && (item.videoUrl.includes("youtube.com") || item.videoUrl.includes("youtu.be")))) {
+      setActiveVideoModal(item);
+    } else if (item.videoType === "upload" && item.videoUrl) {
+      setActiveVideoModal(item);
+    } else if (item.videoUrl) {
+      window.open(item.videoUrl, "_blank");
+    }
+  };
+
+  const total = testimonialsList.length;
+  const totalVideos = videosList.length;
 
   return (
     <section className="relative bg-white overflow-hidden py-4">
@@ -539,66 +570,109 @@ const TestimonialsCarousel = () => {
         </div>
       </div>
 
-      {/* ─── SECTION HEADER ─── */}
-      <SectionDivider text={sectionData.sectionDividerText} />
+      {/* ─── SECTION HEADER & TESTIMONIAL CARDS MARQUEE (Right Scrolling) ─── */}
+      {testimonialsList.length > 0 && (
+        <>
+          <SectionDivider text={sectionData.sectionDividerText} />
 
-      {/* ─── TESTIMONIAL CARDS MARQUEE (Right Scrolling) ─── */}
-      <div className="relative pt-3 md:pt-8 pb-3 md:pb-6">
-        <div className="w-full px-2 md:px-4 lg:px-14 relative z-10">
-          <div className="w-full overflow-hidden">
-            <div
-              className="marquee-wrapper-cards gap-3 md:gap-6"
-              style={{ animationDuration: `${Math.max(total * 10, 25)}s` }}
-            >
-              {[1, 2, 3, 4].map((set) => (
-                <div key={set} className="flex gap-3 md:gap-6">
-                  {sectionData.testimonials.map((item: any, i: number) => (
-                    <div key={`${set}-${i}`} className="flex-shrink-0">
-                      <TestimonialCard
-                        item={item}
-                        expandedCardId={expandedCardId}
-                        setExpandedCardId={setExpandedCardId}
-                      />
+          <div className="relative pt-3 md:pt-8 pb-3 md:pb-6">
+            <div className="w-full px-2 md:px-4 lg:px-14 relative z-10">
+              <div className="w-full overflow-hidden">
+                <div
+                  className="marquee-wrapper-cards gap-3 md:gap-6"
+                  style={{ animationDuration: `${Math.max(testimonialsList.length * 10, 25)}s` }}
+                >
+                  {[1, 2, 3, 4].map((set) => (
+                    <div key={set} className="flex gap-3 md:gap-6">
+                      {testimonialsList.map((item: any, i: number) => (
+                        <div key={`${set}-${item._id || i}`} className="flex-shrink-0">
+                          <TestimonialCard
+                            item={item}
+                            expandedCardId={expandedCardId}
+                            setExpandedCardId={setExpandedCardId}
+                          />
+                        </div>
+                      ))}
                     </div>
                   ))}
                 </div>
-              ))}
-            </div>
-          </div>
-        </div>
-      </div>
-
-      {/* ─── VIDEO SECTION ─── */}
-      <div className="relative pt-1 md:pt-2 pb-1 md:pb-2">
-        <div className="absolute -left-10 bottom-0 w-32 h-32 md:w-44 md:h-44 opacity-20 pointer-events-none rotate-45 select-none z-0">
-          <img src={leafPng.src} alt="" className="w-full h-full object-contain" />
-        </div>
-
-        <div className="px-2 md:px-4 lg:px-14 relative z-10">
-          <div className="flex flex-col md:flex-row items-stretch">
-            <div className="w-full overflow-hidden">
-              <div
-                className="marquee-wrapper-videos gap-2 md:gap-4"
-                style={{ animationDuration: `${Math.max(totalVideos * 10, 20)}s` }}
-              >
-                {[1, 2, 3, 4].map((set) => (
-                  <div key={set} className="flex gap-2 md:gap-4">
-                    {sectionData.videos.map((v: any, i: number) => (
-                      <div key={`${set}-${i}`} className="w-[200px] md:w-[320px] flex-shrink-0">
-                        <VideoCard item={v} />
-                      </div>
-                    ))}
-                  </div>
-                ))}
               </div>
             </div>
           </div>
-        </div>
+        </>
+      )}
 
-        <div className="absolute -right-12 bottom-4 w-36 h-36 md:w-48 md:h-48 opacity-20 pointer-events-none -rotate-12 select-none z-0">
-          <img src={leafPng.src} alt="" className="w-full h-full object-contain" />
+      {/* ─── VIDEO SECTION ─── */}
+      {videosList.length > 0 && (
+        <div className="relative pt-1 md:pt-2 pb-1 md:pb-2">
+          <div className="absolute -left-10 bottom-0 w-32 h-32 md:w-44 md:h-44 opacity-20 pointer-events-none rotate-45 select-none z-0">
+            <img src={leafPng.src} alt="" className="w-full h-full object-contain" />
+          </div>
+
+          <div className="px-2 md:px-4 lg:px-14 relative z-10">
+            <div className="flex flex-col md:flex-row items-stretch">
+              <div className="w-full overflow-hidden">
+                <div
+                  className="marquee-wrapper-videos gap-2 md:gap-4"
+                  style={{ animationDuration: `${Math.max(totalVideos * 10, 20)}s` }}
+                >
+                  {(totalVideos <= 2 ? [1, 2, 3, 4, 5, 6, 7, 8] : [1, 2, 3, 4]).map((set) => (
+                    <div key={set} className="flex gap-2 md:gap-4">
+                      {videosList.map((v: any, i: number) => (
+                        <div key={`${set}-${v._id || i}`} className="w-[200px] md:w-[320px] flex-shrink-0">
+                          <VideoCard item={v} onSelectVideo={handleSelectVideo} />
+                        </div>
+                      ))}
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div className="absolute -right-12 bottom-4 w-36 h-36 md:w-48 md:h-48 opacity-20 pointer-events-none -rotate-12 select-none z-0">
+            <img src={leafPng.src} alt="" className="w-full h-full object-contain" />
+          </div>
         </div>
-      </div>
+      )}
+
+      {/* ─── VIDEO LIGHTBOX MODAL ─── */}
+      {activeVideoModal && (
+        <div
+          className="fixed inset-0 z-[999] bg-black/85 backdrop-blur-sm flex items-center justify-center p-4 font-inter"
+          onClick={() => setActiveVideoModal(null)}
+        >
+          <div
+            className="relative w-full max-w-3xl aspect-video bg-black rounded-2xl overflow-hidden shadow-2xl border border-white/10"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <button
+              onClick={() => setActiveVideoModal(null)}
+              className="absolute top-3 right-3 z-20 w-8 h-8 rounded-full bg-black/70 text-white flex items-center justify-center hover:bg-black transition cursor-pointer"
+            >
+              ✕
+            </button>
+
+            {extractYouTubeId(activeVideoModal.videoUrl) ? (
+              <iframe
+                src={`https://www.youtube-nocookie.com/embed/${extractYouTubeId(activeVideoModal.videoUrl)}?autoplay=1&rel=0`}
+                title={activeVideoModal.title}
+                className="w-full h-full border-0"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                referrerPolicy="strict-origin-when-cross-origin"
+                allowFullScreen
+              />
+            ) : (
+              <video
+                src={activeVideoModal.videoUrl}
+                controls
+                autoPlay
+                className="w-full h-full object-contain"
+              />
+            )}
+          </div>
+        </div>
+      )}
 
     </section>
   );

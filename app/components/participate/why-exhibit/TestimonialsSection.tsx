@@ -156,9 +156,32 @@ const TestimonialCard = ({ item, index, expandedId, setExpandedId }: { item: typ
   );
 };
 
-const TestimonialsSection = () => {
+const TestimonialsSection = ({ sectionData }: { sectionData?: any }) => {
   const [expandedId, setExpandedId] = useState<number | null>(null);
-  const doubled = [...TESTIMONIALS_DATA, ...TESTIMONIALS_DATA];
+  const title = sectionData?.title || "What Our Exhibitors Say";
+  const items = Array.isArray(sectionData?.items) && sectionData.items.length > 0
+    ? sectionData.items.map((it: any, idx: number) => {
+        const fallback = TESTIMONIALS_DATA[idx % TESTIMONIALS_DATA.length];
+        const nameStr = it.companyName1 || it.company1 || it.name || fallback.companyName1;
+        const words = nameStr.trim().split(/\s+/).filter(Boolean);
+        const autoInitials = words.length >= 2 ? (words[0][0] + words[words.length - 1][0]).toUpperCase() : (words[0] ? words[0].substring(0, 2).toUpperCase() : "BO");
+        return {
+          id: it.id || `t-${idx}`,
+          companyName1: nameStr,
+          companyName2: it.companyName2 !== undefined ? it.companyName2 : (it.company2 !== undefined ? it.company2 : (it.role || fallback.companyName2)),
+          location: it.location || fallback.location,
+          quote: it.quote || it.message || fallback.quote,
+          initials: it.initials || autoInitials,
+          color: it.color || fallback.color,
+        };
+      })
+    : TESTIMONIALS_DATA;
+
+  let repeated = [...items];
+  while (repeated.length < 6 && items.length > 0) {
+    repeated = [...repeated, ...items];
+  }
+  const doubled = [...repeated, ...repeated];
 
   return (
     <section className="pt-4 pb-4 bg-white relative overflow-hidden font-inter">
@@ -181,7 +204,7 @@ const TestimonialsSection = () => {
         <div className="text-center mb-10 px-4">
           <div className="flex items-center justify-center gap-4">
             <span className="w-10 md:w-16 h-[2px] bg-[#1b5e20] rounded-full" />
-            <h2 className="text-xl md:text-2xl font-bold text-[#1b5e20] uppercase tracking-tight font-poppins">What Our Exhibitors Say</h2>
+            <h2 className="text-xl md:text-2xl font-bold text-[#1b5e20] uppercase tracking-tight font-poppins">{title}</h2>
             <span className="w-10 md:w-16 h-[2px] bg-[#1b5e20] rounded-full" />
           </div>
         </div>

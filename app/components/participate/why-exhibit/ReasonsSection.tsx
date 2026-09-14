@@ -64,31 +64,66 @@ const REASONS_DATA = [
   },
 ];
 
-const ReasonsSection = () => (
-  <section className="mt-4 pt-4 pb-4 relative overflow-hidden font-inter" style={{ backgroundColor: "#fbf8f3" }}>
-    {/* Decorative right image */}
-    <img
-      loading="lazy"
-      decoding="async"
-      src={getImgSrc(footerRight)}
-      alt=""
-      aria-hidden="true"
-      className="absolute right-0 top-1/2 -translate-y-1/2 w-36 md:w-48 lg:w-60 h-auto object-contain pointer-events-none select-none opacity-100"
-      style={{ zIndex: 0 }}
-    />
-    <SectionContainer className="relative" style={{ zIndex: 1 }}>
-      <div className="text-center mb-4">
-        <div className="flex items-center justify-center gap-4 mb-4">
-          <span className="w-12 h-[2px] bg-[#1b5e20]" />
-          <h2 className="text-[#1b5e20] font-semibold text-lg md:text-xl uppercase tracking-[0.08em] font-poppins">
-            Top Reasons to Exhibit at Bharat Organic Expo 2027
-          </h2>
-          <span className="w-12 h-[2px] bg-[#1b5e20]" />
-        </div>
-      </div>
+const ReasonsSection = ({ sectionData }: { sectionData?: any }) => {
+  const title = sectionData?.title || "Top Reasons to Exhibit at Bharat Organic Expo 2027";
+  const items = Array.isArray(sectionData?.items) && sectionData.items.length > 0
+    ? sectionData.items.map((it: any, idx: number) => {
+        const fallback = REASONS_DATA[idx % REASONS_DATA.length];
+        const rawImg = it.image || it.img;
+        let imgSrc = fallback.img;
+        if (rawImg && typeof rawImg === "string" && rawImg.trim() !== "") {
+          imgSrc = rawImg;
+        }
+        const descText = it.description !== undefined && it.description !== ""
+          ? it.description
+          : (fallback.descLines ? fallback.descLines.join(" ") : "");
+        const featList = [it.feature1, it.feature2, it.feature3].filter((f: any) => f && typeof f === "string" && f.trim() !== "");
+        const pointsList = featList.length > 0
+          ? featList
+          : Array.isArray(it.features) && it.features.length > 0
+          ? it.features
+          : Array.isArray(it.points) && it.points.length > 0
+          ? it.points
+          : typeof it.features === "string" && it.features.trim() !== ""
+          ? it.features.split(",").map((s: string) => s.trim()).filter(Boolean)
+          : fallback.points;
 
-      <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-2 md:gap-4">
-        {REASONS_DATA.map((reason) => (
+        return {
+          id: it.id || `reason-${idx}`,
+          img: imgSrc,
+          title1: it.title1 || fallback.title1,
+          title2: it.title2 !== undefined ? it.title2 : fallback.title2,
+          descLines: descText ? [descText] : [],
+          points: pointsList,
+        };
+      })
+    : REASONS_DATA;
+
+  return (
+    <section className="mt-4 pt-4 pb-4 relative overflow-hidden font-inter" style={{ backgroundColor: "#fbf8f3" }}>
+      {/* Decorative right image */}
+      <img
+        loading="lazy"
+        decoding="async"
+        src={getImgSrc(footerRight)}
+        alt=""
+        aria-hidden="true"
+        className="absolute right-0 top-1/2 -translate-y-1/2 w-36 md:w-48 lg:w-60 h-auto object-contain pointer-events-none select-none opacity-100"
+        style={{ zIndex: 0 }}
+      />
+      <SectionContainer className="relative" style={{ zIndex: 1 }}>
+        <div className="text-center mb-4">
+          <div className="flex items-center justify-center gap-4 mb-4">
+            <span className="w-12 h-[2px] bg-[#1b5e20]" />
+            <h2 className="text-[#1b5e20] font-semibold text-lg md:text-xl uppercase tracking-[0.08em] font-poppins">
+              {title}
+            </h2>
+            <span className="w-12 h-[2px] bg-[#1b5e20]" />
+          </div>
+        </div>
+
+        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-2 md:gap-4">
+          {items.map((reason) => (
           <div
             key={reason.id}
             className="bg-white p-3 md:p-4 rounded-xl border border-transparent flex flex-col items-center text-center group transition-all duration-300 hover:shadow-2xl hover:-translate-y-1 font-inter"
@@ -127,7 +162,8 @@ const ReasonsSection = () => (
       </div>
     </SectionContainer>
   </section>
-);
+  );
+};
 
 export default ReasonsSection;
 

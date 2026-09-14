@@ -1,7 +1,61 @@
 "use client";
 import React, { useRef, useEffect, useState } from "react";
 import { useInView, animate } from "framer-motion";
-import { Users, Building2, Globe, Mic, Handshake } from "lucide-react";
+import {
+  Users,
+  Building2,
+  Globe,
+  Mic,
+  Handshake,
+  TrendingUp,
+  Award,
+  Medal,
+  ShieldCheck,
+  Target,
+  Lightbulb,
+  Trophy,
+  UserCheck,
+  Briefcase,
+  Sparkles,
+  Zap,
+  Calendar,
+  CalendarDays,
+  Eye,
+  Sprout,
+  HeartPulse,
+  Megaphone,
+  Leaf,
+  GraduationCap,
+  Stethoscope,
+  Landmark,
+  Store,
+  Presentation,
+  IdCard,
+  Plug,
+  Contact,
+  Wifi,
+  ShoppingBag,
+  Coffee,
+  Newspaper,
+  FileText,
+  Camera,
+  Headphones,
+  MessageCircle,
+  Clock,
+  Phone,
+  Mail,
+  MapPin,
+  Heart,
+  Star,
+  CheckCircle,
+  Info,
+  Apple,
+  Package,
+  Droplet,
+  Pill,
+  Box,
+  Tractor,
+} from "lucide-react";
 import gsap from "gsap";
 import SectionContainer from "@/app/components/layout/SectionContainer";
 
@@ -40,7 +94,131 @@ const StatCounter = ({ value }: { value: string }) => {
   return <span ref={ref}>{displayValue.toLocaleString()}{suffix}</span>;
 };
 
-export default function StatsBand() {
+const ICON_MAP: Record<string, any> = {
+  Users,
+  users: Users,
+  Building2,
+  building2: Building2,
+  Globe,
+  globe: Globe,
+  Mic,
+  mic: Mic,
+  Handshake,
+  handshake: Handshake,
+  TrendingUp,
+  trendingup: TrendingUp,
+  Award,
+  award: Award,
+  Medal,
+  medal: Medal,
+  ShieldCheck,
+  shieldcheck: ShieldCheck,
+  Target,
+  target: Target,
+  Lightbulb,
+  lightbulb: Lightbulb,
+  Trophy,
+  trophy: Trophy,
+  UserCheck,
+  usercheck: UserCheck,
+  Briefcase,
+  briefcase: Briefcase,
+  Sparkles,
+  sparkles: Sparkles,
+  Zap,
+  zap: Zap,
+  Calendar,
+  calendar: Calendar,
+  CalendarDays,
+  calendardays: CalendarDays,
+  Eye,
+  eye: Eye,
+  Sprout,
+  sprout: Sprout,
+  HeartPulse,
+  heartpulse: HeartPulse,
+  Megaphone,
+  megaphone: Megaphone,
+  Leaf,
+  leaf: Leaf,
+  GraduationCap,
+  graduationcap: GraduationCap,
+  Stethoscope,
+  stethoscope: Stethoscope,
+  Landmark,
+  landmark: Landmark,
+  Store,
+  store: Store,
+  Presentation,
+  presentation: Presentation,
+  IdCard,
+  idcard: IdCard,
+  Plug,
+  plug: Plug,
+  Contact,
+  contact: Contact,
+  Wifi,
+  wifi: Wifi,
+  ShoppingBag,
+  shoppingbag: ShoppingBag,
+  Coffee,
+  coffee: Coffee,
+  Newspaper,
+  newspaper: Newspaper,
+  FileText,
+  filetext: FileText,
+  Camera,
+  camera: Camera,
+  Headphones,
+  headphones: Headphones,
+  MessageCircle,
+  messagecircle: MessageCircle,
+  Clock,
+  clock: Clock,
+  Phone,
+  phone: Phone,
+  Mail,
+  mail: Mail,
+  MapPin,
+  mappin: MapPin,
+  Heart,
+  heart: Heart,
+  Star,
+  star: Star,
+  CheckCircle,
+  checkcircle: CheckCircle,
+  Info,
+  info: Info,
+  Apple,
+  apple: Apple,
+  Package,
+  package: Package,
+  Droplet,
+  droplet: Droplet,
+  Pill,
+  pill: Pill,
+  Box,
+  box: Box,
+  Tractor,
+  tractor: Tractor,
+};
+
+export default function StatsBand({ sectionData }: { sectionData?: any }) {
+  const rawItems = Array.isArray(sectionData?.items) && sectionData.items.length > 0
+    ? sectionData.items
+    : STATS_DATA;
+
+  const items = rawItems.map((it: any, idx: number) => {
+    const fallback = STATS_DATA[idx % STATS_DATA.length] || STATS_DATA[0];
+    const rawIcon = it.icon || it.iconName;
+    const IconComponent = (rawIcon && (ICON_MAP[rawIcon] || ICON_MAP[String(rawIcon).toLowerCase()])) || (typeof fallback.icon === "function" ? fallback.icon : Users);
+    return {
+      id: it.id || `stat-${idx}`,
+      val: it.val !== undefined && it.val !== null && it.val !== "" ? it.val : fallback.val,
+      label: it.label !== undefined && it.label !== null && it.label !== "" ? it.label : fallback.label,
+      icon: IconComponent,
+    };
+  });
   const bandRef = useRef<HTMLDivElement>(null);
   const shimmerRef = useRef<HTMLDivElement>(null);
   const itemRefs = useRef<(HTMLDivElement | null)[]>([]);
@@ -108,7 +286,7 @@ export default function StatsBand() {
           />
 
           <div className="grid grid-cols-2 sm:grid-cols-3 md:flex md:flex-nowrap items-center justify-center md:justify-between gap-y-3 gap-x-2 md:gap-0">
-            {STATS_DATA.map((item, i) => {
+            {items.map((item, i) => {
               const IconComponent = item.icon;
               return (
                 <React.Fragment key={item.id}>
@@ -129,7 +307,7 @@ export default function StatsBand() {
                       </p>
                     </div>
                   </div>
-                  {i < STATS_DATA.length - 1 && (
+                  {i < items.length - 1 && (
                     <div
                       ref={(el) => { dividerRefs.current[i] = el; }}
                       className="hidden md:block w-px h-6 bg-white/20"
