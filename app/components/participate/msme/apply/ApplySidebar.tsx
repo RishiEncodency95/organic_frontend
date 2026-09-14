@@ -92,8 +92,22 @@ export const APPLY_SIDEBAR_DATA = {
   ],
 };
 
-export default function ApplySidebar() {
-  const data = APPLY_SIDEBAR_DATA;
+export default function ApplySidebar({ section }: { section?: any }) {
+  const data = section ? {
+    aboutScheme: {
+      title: section.title || APPLY_SIDEBAR_DATA.aboutScheme.title,
+      description: section.description || APPLY_SIDEBAR_DATA.aboutScheme.description,
+      linkText: section.buttonLabel || APPLY_SIDEBAR_DATA.aboutScheme.linkText,
+      linkHref: section.buttonHref || APPLY_SIDEBAR_DATA.aboutScheme.linkHref,
+    },
+    assistanceStructure: section.items && section.items.length > 0 ? section.items.map((item: any, idx: number) => ({
+      id: idx + 1,
+      icon: APPLY_SIDEBAR_DATA.assistanceStructure[idx]?.icon || TimerIcon,
+      title: item.title || "",
+      subtitle: item.subtitle || "",
+    })) : APPLY_SIDEBAR_DATA.assistanceStructure,
+    documentsRequired: APPLY_SIDEBAR_DATA.documentsRequired,
+  } : APPLY_SIDEBAR_DATA;
 
   return (
     <div className="flex flex-col gap-6">
@@ -123,7 +137,7 @@ export default function ApplySidebar() {
         </div>
 
         <div className="flex flex-col gap-5">
-          {data.assistanceStructure.map((item) => {
+          {data.assistanceStructure.map((item: any) => {
             const IconComp = item.icon;
             return (
               <div key={item.id} className="flex items-start gap-4">

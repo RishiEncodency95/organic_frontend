@@ -24,12 +24,25 @@ export default function ApplyFooter({
   nextLink = "/participate/msme/apply/participation-details",
   showDeclaration = true,
   showActions = true,
+  section,
 }: { 
   nextLink?: string;
   showDeclaration?: boolean;
   showActions?: boolean;
+  section?: any;
 }) {
-  const data = APPLY_FOOTER_DATA;
+  const data = section ? {
+    declarationText: section.description || APPLY_FOOTER_DATA.declarationText,
+    actions: APPLY_FOOTER_DATA.actions,
+    helpBanner: {
+      title: section.title || APPLY_FOOTER_DATA.helpBanner.title,
+      description: section.description || APPLY_FOOTER_DATA.helpBanner.description,
+      supportBtnLabel: section.buttonLabel || APPLY_FOOTER_DATA.helpBanner.supportBtnLabel,
+      helplineTitle: section.eyebrow || APPLY_FOOTER_DATA.helpBanner.helplineTitle,
+      helplineNumber: section.location || APPLY_FOOTER_DATA.helpBanner.helplineNumber,
+      helplineTiming: section.date || APPLY_FOOTER_DATA.helpBanner.helplineTiming,
+    },
+  } : APPLY_FOOTER_DATA;
 
   return (
     <div className="flex flex-col">

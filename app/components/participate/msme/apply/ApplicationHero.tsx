@@ -3,7 +3,11 @@ import Link from "next/link";
 import Image from "next/image";
 import bgImage from "@/app/assets/msme/apply.png";
 
-export default function ApplicationHero() {
+export default function ApplicationHero({ section }: { section?: any }) {
+  const tagline = section?.eyebrow || "PMS SCHEME";
+  const titlePrimary = section?.titlePrimary || "PMS SUPPORT ";
+  const titleSecondary = section?.titleSecondary || "APPLICATION";
+  const subtitle = section?.subtitle || "Fill in your participation and stall details to complete your PMS Support application.";
   return (
     <div className="relative w-full overflow-hidden bg-[#fafbfa]">
       {/* Background Section with Curved Bottom */}
@@ -33,15 +37,15 @@ export default function ApplicationHero() {
             </div>
 
             <span className="text-[#176b27] font-semibold text-[14px] tracking-wider uppercase mb-3 block">
-              PMS SCHEME
+              {tagline}
             </span>
             <h1 className="text-4xl md:text-[52px] font-semibold text-[#111827] leading-[1.3] mb-2 tracking-tight">
-              PMS SUPPORT <br />
-              <span className="text-[#176b27]">APPLICATION</span>
+              {titlePrimary} <br />
+              <span className="text-[#176b27]">{titleSecondary}</span>
             </h1>
 
             <p className="text-[14px] md:text-[16px] text-gray-700 leading-[1.6] font-medium pr-4 mt-6 max-w-lg">
-              Fill in your participation and stall details to complete your PMS Support application.
+              {subtitle}
             </p>
           </div>
         </div>
