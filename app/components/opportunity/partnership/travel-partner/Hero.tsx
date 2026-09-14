@@ -1,7 +1,7 @@
 "use client";
 import React from "react";
 import { Calendar, MapPin } from "lucide-react";
-import traBg from "@/app/assets/banner/traog.webp";
+import traBg from "@/app/assets/banner/travelog.webp";
 import SectionContainer from "@/app/components/layout/SectionContainer";
 
 export const HERO_TRAVEL_DATA = [

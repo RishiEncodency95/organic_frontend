@@ -5,19 +5,19 @@ import { Trophy, Award, Users, Globe2, Medal } from "lucide-react";
 import SectionContainer from "@/app/components/layout/SectionContainer";
 import gsap from "gsap";
 
+const items = [
+  { id: 1, icon: Trophy, title: "200+", subtitle: "CATEGORIES" },
+  { id: 2, icon: Award, title: "30+", subtitle: "GRAND AWARDS" },
+  { id: 3, icon: Users, title: "EXPERT", subtitle: "JURY PANEL" },
+  { id: 4, icon: Globe2, title: "NATIONWIDE &", subtitle: "GLOBAL RECOGNITION" },
+  { id: 5, icon: Medal, title: "CREDIBILITY", subtitle: "& TRANSPARENCY" },
+];
+
 export default function AwardsStats() {
   const bandRef = useRef<HTMLDivElement>(null);
   const shimmerRef = useRef<HTMLDivElement>(null);
   const itemRefs = useRef<(HTMLDivElement | null)[]>([]);
   const dividerRefs = useRef<(HTMLDivElement | null)[]>([]);
-
-  const items = [
-    { icon: Trophy, title: "200+", subtitle: "CATEGORIES" },
-    { icon: Award, title: "30+", subtitle: "GRAND AWARDS" },
-    { icon: Users, title: "EXPERT", subtitle: "JURY PANEL" },
-    { icon: Globe2, title: "NATIONWIDE &", subtitle: "GLOBAL RECOGNITION" },
-    { icon: Medal, title: "CREDIBILITY", subtitle: "& TRANSPARENCY" },
-  ];
 
   itemRefs.current = [];
   dividerRefs.current = [];

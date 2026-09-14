@@ -21,47 +21,59 @@ function SectionHeading({ children }: { children: React.ReactNode }) {
   );
 }
 
-const PROCESS_STEPS = [
-  {
-    image: nominationImg,
-    title: "Nomination",
-    desc: "Submit your nomination online in the relevant category.",
-  },
-  {
-    image: eligibilityImg,
-    title: "Eligibility Check",
-    desc: "Our team verifies eligibility and supporting documents.",
-  },
-  {
-    image: evaluationImg,
-    title: "Evaluation",
-    desc: "Nominations are evaluated by our expert jury panel based on defined criteria.",
-  },
-  {
-    image: shortlistingImg,
-    title: "Shortlisting",
-    desc: "Top nominees are shortlisted in each category.",
-  },
-  {
-    image: evaluationImg,
-    title: "Jury Assessment",
-    desc: "Final assessment by the jury to select the award winners.",
-  },
-  {
-    image: recognitionImg,
-    title: "Recognition",
-    desc: "Winners are honoured at the Bharat Organic Expo 2027.",
-  },
-];
+const data = {
+  enabled: true,
+  title: "Our Evaluation Process",
+  steps: [
+    {
+      id: 1,
+      image: nominationImg,
+      title: "Nomination",
+      desc: "Submit your nomination online in the relevant category.",
+    },
+    {
+      id: 2,
+      image: eligibilityImg,
+      title: "Eligibility Check",
+      desc: "Our team verifies eligibility and supporting documents.",
+    },
+    {
+      id: 3,
+      image: evaluationImg,
+      title: "Evaluation",
+      desc: "Nominations are evaluated by our expert jury panel based on defined criteria.",
+    },
+    {
+      id: 4,
+      image: shortlistingImg,
+      title: "Shortlisting",
+      desc: "Top nominees are shortlisted in each category.",
+    },
+    {
+      id: 5,
+      image: evaluationImg,
+      title: "Jury Assessment",
+      desc: "Final assessment by the jury to select the award winners.",
+    },
+    {
+      id: 6,
+      image: recognitionImg,
+      title: "Recognition",
+      desc: "Winners are honoured at the Bharat Organic Expo 2027.",
+    },
+  ],
+};
 
 const AwardsProcess = () => {
+  if (!data.enabled) return null;
+
   return (
     <section className="bg-[#f9f9f9] py-4 font-inter">
       <SectionContainer>
-        <SectionHeading>Our Evaluation Process</SectionHeading>
+        <SectionHeading>{data.title}</SectionHeading>
 
         <div className="mt-8 flex flex-col gap-6 md:flex-row md:items-start md:justify-center">
-          {PROCESS_STEPS.map((step, i) => {
+          {data.steps.map((step, i) => {
             return (
               <React.Fragment key={step.title}>
                 <Reveal delay={i * 90} className="relative w-full md:w-[140px]">
@@ -83,7 +95,7 @@ const AwardsProcess = () => {
                     </p>
                   </div>
                 </Reveal>
-                {i < PROCESS_STEPS.length - 1 && (
+                {i < data.steps.length - 1 && (
                   <div className="hidden md:flex items-center justify-center pt-5 px-2">
                     <ArrowRight className="h-6 w-6 text-[#1b5e20]/30" />
                   </div>

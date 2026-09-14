@@ -8,7 +8,21 @@ import SectionContainer from "@/app/components/layout/SectionContainer";
 import right_plant from "@/app/assets/awards/right_plant.png";
 import award from "@/app/assets/awards/award.png";
 
+const data = {
+  enabled: true,
+  titleLine1: "Be Recognised.",
+  titleLine2: "Be Celebrated.",
+  titleHighlight: "Be Part of India's",
+  titleLine3: "Organic Revolution.",
+  description: "Nominate yourself or someone who inspires change in the organic and sustainable world.",
+  buttonLabel: "Nominate Now",
+  buttonHref: "/awards/nominations",
+  deadlineText: "Deadline: 31 December 2026",
+};
+
 const AwardsCta = () => {
+  if (!data.enabled) return null;
+
   return (
     <section className="bg-[#f9f9f9] py-4  font-inter">
       <SectionContainer>
@@ -33,33 +47,32 @@ const AwardsCta = () => {
 
             <div className="relative flex w-full flex-col items-center sm:w-auto sm:flex-row sm:items-center">
               <h3 className="text-base font-semibold uppercase leading-snug tracking-wide text-white font-poppins md:text-lg">
-                Be Recognised.<br/> Be Celebrated.{" "}
+                {data.titleLine1}<br/> {data.titleLine2}{" "}
                 <p className="text-[#ea580c]">
-                  Be Part of India&apos;s
+                  {data.titleHighlight}
                 </p>
-                 Organic Revolution.
+                {data.titleLine3}
               </h3>
               <div className="flex items-center justify-center">
 
               <p className="mt-3 max-w-sm py-2 text-right text-xs font-medium leading-relaxed text-white/80 sm:mx-6 sm:mt-1 sm:border-x sm:border-white/20 sm:px-6 sm:py-0 sm:text-left sm:text-sm">
-                Nominate yourself or someone who inspires change in the organic
-                and sustainable world.
+                {data.description}
               </p>
               </div>
             </div>
 
             <div className="relative flex w-full shrink-0 flex-col items-center gap-1.5 sm:w-auto sm:items-end">
               <a
-                href="/awards/nominations"
+                href={data.buttonHref}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="group flex items-center gap-2 rounded-lg bg-[#ea580c] px-5 py-2.5 text-[11px] font-semibold uppercase tracking-wider text-white shadow-md transition-all duration-300 hover:bg-[#c2410c] hover:shadow-lg hover:-translate-y-0.5"
               >
-                Nominate Now
+                {data.buttonLabel}
                 <ArrowRight className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" />
               </a>
               <span className="text-[11px] font-semibold text-[#facc15]">
-                Deadline: 31 December 2026
+                {data.deadlineText}
               </span>
             </div>
 

@@ -28,91 +28,98 @@ function SectionHeading({ children }: { children: React.ReactNode }) {
   );
 }
 
-const CATEGORIES = [
-  {
-    icon: organic,
-    title: "Organic Food & Nutrition Excellence",
-    items: [
-      "Organic Food Brand of the Year",
-      "Organic Beverage Brand of the Year",
-      "Nutrition Innovation Award",
-      "Emerging Organic Food Brand",
-    ],
-    cardBg: "bg-[#e8f5e9]",
-  },
-
-  {
-    icon: ayush,
-    title: "Ayush, Herbal & Wellness Excellence",
-    items: [
-      "Ayurveda Brand Excellence",
-      "Herbal Product Innovation",
-      "Wellness Brand of the Year",
-      "Traditional Wellness Excellence",
-    ],
-    cardBg: "bg-[#fff8e1]",
-  },
-
-  {
-    icon: organic_agriculture,
-    title: "Organic Agriculture Excellence",
-    items: [
-      "Organic Farmer Excellence",
-      "Organic Farming Innovation",
-      "Bio-Input Excellence",
-      "Sustainable Agriculture Initiative",
-    ],
-    cardBg: "bg-[#fdf1e3]",
-  },
-
-  {
-    icon: natural,
-    title: "Natural Living & Personal Care Excellence",
-    items: [
-      "Natural Beauty Brand",
-      "Natural Personal Care Innovation",
-      "Sustainable Lifestyle Brand",
-      "Emerging Natural Brand",
-    ],
-    cardBg: "bg-[#e0f2f1]",
-  },
-
-  {
-    icon: greentech,
-    title: "GreenTech & Sustainability Excellence",
-    items: [
-      "GreenTech Innovation",
-      "Sustainable Packaging Excellence",
-      "AgriTech Innovation",
-      "Sustainability Initiative of the Year",
-    ],
-    cardBg: "bg-[#e8f5e9]",
-  },
-
-  {
-    icon: trade,
-    title: "Trade, Certification & Global Business Excellence",
-    items: [
-      "Organic Export Excellence",
-      "International Market Development",
-      "Certification & Quality Excellence",
-      "Organic Trade Promotion",
-    ],
-    cardBg: "bg-[#f3e5f5]",
-  },
-];
+const data = {
+  enabled: true,
+  title: "Award Categories",
+  categories: [
+    {
+      id: 1,
+      icon: organic,
+      title: "Organic Food & Nutrition Excellence",
+      items: [
+        "Organic Food Brand of the Year",
+        "Organic Beverage Brand of the Year",
+        "Nutrition Innovation Award",
+        "Emerging Organic Food Brand",
+      ],
+      cardBg: "bg-[#e8f5e9]",
+    },
+    {
+      id: 2,
+      icon: ayush,
+      title: "Ayush, Herbal & Wellness Excellence",
+      items: [
+        "Ayurveda Brand Excellence",
+        "Herbal Product Innovation",
+        "Wellness Brand of the Year",
+        "Traditional Wellness Excellence",
+      ],
+      cardBg: "bg-[#fff8e1]",
+    },
+    {
+      id: 3,
+      icon: organic_agriculture,
+      title: "Organic Agriculture Excellence",
+      items: [
+        "Organic Farmer Excellence",
+        "Organic Farming Innovation",
+        "Bio-Input Excellence",
+        "Sustainable Agriculture Initiative",
+      ],
+      cardBg: "bg-[#fdf1e3]",
+    },
+    {
+      id: 4,
+      icon: natural,
+      title: "Natural Living & Personal Care Excellence",
+      items: [
+        "Natural Beauty Brand",
+        "Natural Personal Care Innovation",
+        "Sustainable Lifestyle Brand",
+        "Emerging Natural Brand",
+      ],
+      cardBg: "bg-[#e0f2f1]",
+    },
+    {
+      id: 5,
+      icon: greentech,
+      title: "GreenTech & Sustainability Excellence",
+      items: [
+        "GreenTech Innovation",
+        "Sustainable Packaging Excellence",
+        "AgriTech Innovation",
+        "Sustainability Initiative of the Year",
+      ],
+      cardBg: "bg-[#e8f5e9]",
+    },
+    {
+      id: 6,
+      icon: trade,
+      title: "Trade, Certification & Global Business Excellence",
+      items: [
+        "Organic Export Excellence",
+        "International Market Development",
+        "Certification & Quality Excellence",
+        "Organic Trade Promotion",
+      ],
+      cardBg: "bg-[#f3e5f5]",
+    },
+  ],
+};
 
 const AwardsCategories = () => {
+  if (!data.enabled) return null;
+
   return (
     <section
       id="categories"
       className="bg-[#f9f9f9] py-4 font-inter"
     >
       <SectionContainer>
-        <SectionHeading>Award Categories</SectionHeading>
+        <SectionHeading>{data.title}</SectionHeading>
 
         <div className="mt-6 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
-          {CATEGORIES.map((cat, i) => {
+          {data.categories.map((cat, i) => {
             return (
               <Reveal
                 key={cat.title}

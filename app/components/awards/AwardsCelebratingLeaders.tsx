@@ -5,14 +5,24 @@ import { Trophy, Sprout, Store, Globe2, Lightbulb } from "lucide-react";
 import { Reveal } from "../shared/Reveal";
 import bgImg from "../../assets/awards/celebrating_leaders.png";
 
-const LEADER_TYPES = [
-  { icon: Sprout, label: "Farmers & Producer Groups" },
-  { icon: Store, label: "Brands & Companies" },
-  { icon: Lightbulb, label: "Startups & Innovators" },
-  { icon: Globe2, label: "Exporters & Traders" },
-];
+const data = {
+  enabled: true,
+  badge: "Bharat Organic Excellence Awards 2027",
+  titlePrimary: "Celebrating India's",
+  titleSecondary: "Organic Leaders",
+  description:
+    "From farm to shelf, we honour the changemakers who are building a cleaner, healthier and more sustainable India.",
+  leaderTypes: [
+    { id: 1, icon: Sprout, label: "Farmers & Producer Groups" },
+    { id: 2, icon: Store, label: "Brands & Companies" },
+    { id: 3, icon: Lightbulb, label: "Startups & Innovators" },
+    { id: 4, icon: Globe2, label: "Exporters & Traders" },
+  ],
+};
 
 const AwardsCelebratingLeaders = () => {
+  if (!data.enabled) return null;
+
   return (
     <section className="relative w-full overflow-hidden bg-[#0b2912] py-2 md:py-4">
       <div className="absolute inset-0 z-0">
@@ -29,28 +39,27 @@ const AwardsCelebratingLeaders = () => {
           <Reveal>
             <span className="inline-flex items-center gap-2 text-[12px] md:text-[13px] font-extrabold tracking-widest uppercase text-[#F2B40E]">
               <Trophy className="w-4 h-4" />
-              Bharat Organic Excellence Awards 2027
+              {data.badge}
             </span>
           </Reveal>
 
           <Reveal delay={100}>
             <h2 className="mt-3 text-[24px] md:text-[32px] lg:text-[38px] font-black uppercase leading-[1.1] tracking-tight text-white">
-              Celebrating India&apos;s
+              {data.titlePrimary}
               <br />
-              <span className="text-[#F2B40E]">Organic Leaders</span>
+              <span className="text-[#F2B40E]">{data.titleSecondary}</span>
             </h2>
           </Reveal>
 
           <Reveal delay={200}>
             <p className="mt-4 text-[15px] md:text-[16px] leading-relaxed text-[#e6f2e6] max-w-md">
-              From farm to shelf, we honour the changemakers who are
-              building a cleaner, healthier and more sustainable India.
+              {data.description}
             </p>
           </Reveal>
 
           <Reveal delay={300}>
             <div className="mt-6 flex flex-wrap gap-3">
-              {LEADER_TYPES.map((l) => {
+              {data.leaderTypes.map((l) => {
                 const Icon = l.icon;
                 return (
                   <span
