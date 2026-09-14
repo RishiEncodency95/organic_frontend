@@ -283,7 +283,7 @@ const SponsorsAndAttend = () => {
 
               {/* Image Circle Container */}
               <div className="absolute inset-0 rounded-full border-[4px] sm:border-[5px] md:border-[8px] border-white shadow-xl overflow-hidden bg-white">
-                {data.image && data.image.trim() !== "" ? (
+                {data.image && typeof data.image === "string" && data.image.trim() !== "" ? (
                   <img
                     src={data.image}
                     alt={data.imageAlt}

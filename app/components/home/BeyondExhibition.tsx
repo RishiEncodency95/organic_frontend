@@ -152,7 +152,7 @@ const BeyondExhibition = () => {
             titleMain: serverData.titleMain || DEFAULT_BEYOND_DATA.titleMain,
             titleHighlight: serverData.titleHighlight || DEFAULT_BEYOND_DATA.titleHighlight,
             description: serverData.description || DEFAULT_BEYOND_DATA.description,
-            image: serverData.image && serverData.image.trim() !== "" ? serverData.image : seminarsImg,
+            image: typeof serverData.image === "string" && serverData.image.trim() !== "" ? serverData.image.trim() : (serverData.image || seminarsImg),
             imageAlt: serverData.imageAlt || DEFAULT_BEYOND_DATA.imageAlt,
             extras: mappedItems,
           });

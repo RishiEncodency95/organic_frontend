@@ -98,7 +98,7 @@ const WhyParticipate = () => {
             titleHighlight: serverData.titleSecondary || serverData.titleHighlight || DEFAULT_WHY_PARTICIPATE.titleHighlight,
             description: serverData.description || DEFAULT_WHY_PARTICIPATE.description,
             points: points,
-            image: serverData.image && serverData.image.trim() !== "" ? serverData.image : meetingImg,
+            image: typeof serverData.image === "string" && serverData.image.trim() !== "" ? serverData.image.trim() : (serverData.image || meetingImg),
             imageAlt: serverData.imageAlt || DEFAULT_WHY_PARTICIPATE.imageAlt,
             imageBadgeText: serverData.imageBadgeText || DEFAULT_WHY_PARTICIPATE.imageBadgeText,
             mainPoints: Array.isArray(serverData.mainPoints) && serverData.mainPoints.length > 0

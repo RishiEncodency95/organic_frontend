@@ -15,7 +15,7 @@ import leafPng from "../../assets/home/leaf.webp";
 
 // ─── Initials Generator ───
 const getInitials = (name: string) => {
-  if (!name) return "";
+  if (!name || typeof name !== "string") return "";
   const words = name.trim().split(/\s+/).filter(Boolean);
   if (words.length === 0) return "";
   if (words.length === 1) return words[0].substring(0, 2).toUpperCase();

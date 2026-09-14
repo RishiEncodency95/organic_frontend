@@ -85,15 +85,32 @@ const ExpoCategories = () => {
             ? serverData.items
             : DEFAULT_EXPO_DATA.categories;
 
-          const mappedCats = rawCats.map((item: any, index: number) => ({
-            title: item.title || DEFAULT_EXPO_DATA.categories[index]?.title || "Category",
-            desc: item.desc || item.description || DEFAULT_EXPO_DATA.categories[index]?.desc || "",
-            image: item.image && item.image.trim() !== "" ? item.image : DEFAULT_SECTOR_IMAGES[index % DEFAULT_SECTOR_IMAGES.length],
-            imageAlt: item.imageAlt || item.title || "Category",
-            href: item.href || item.link || DEFAULT_EXPO_DATA.categories[index]?.href || "/exhibition-categories",
-            exploreText: item.exploreText || DEFAULT_EXPO_DATA.categories[index]?.exploreText || "Explore",
-            icon: DEFAULT_ICONS[index % DEFAULT_ICONS.length],
-          }));
+          const mappedCats = rawCats.map((item: any, index: number) => {
+            const fallbackImg = DEFAULT_EXPO_DATA.categories[index]?.image || DEFAULT_SECTOR_IMAGES[index % DEFAULT_SECTOR_IMAGES.length];
+            let catImage = fallbackImg;
+
+            if (typeof item?.image === "string" && item.image.trim() !== "") {
+              catImage = item.image.trim();
+            } else if (item?.image && typeof item.image === "object") {
+              if (typeof item.image.url === "string" && item.image.url.trim() !== "") {
+                catImage = item.image.url.trim();
+              } else if (item.image.src) {
+                catImage = item.image;
+              } else {
+                catImage = item.image;
+              }
+            }
+
+            return {
+              title: item?.title || DEFAULT_EXPO_DATA.categories[index]?.title || "Category",
+              desc: item?.desc || item?.description || DEFAULT_EXPO_DATA.categories[index]?.desc || "",
+              image: catImage,
+              imageAlt: item?.imageAlt || item?.title || "Category",
+              href: item?.href || item?.link || DEFAULT_EXPO_DATA.categories[index]?.href || "/exhibition-categories",
+              exploreText: item?.exploreText || DEFAULT_EXPO_DATA.categories[index]?.exploreText || "Explore",
+              icon: DEFAULT_ICONS[index % DEFAULT_ICONS.length],
+            };
+          });
 
           setData({
             enabled: serverData.enabled !== false,

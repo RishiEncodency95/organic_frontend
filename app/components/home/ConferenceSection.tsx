@@ -117,7 +117,7 @@ const ConferenceSeminars = () => {
               link: serverData.buttonHref || serverData.button?.link || DEFAULT_CONFERENCE_DATA.button.link,
             },
             eventInfo: eventStats,
-            image: serverData.image && serverData.image.trim() !== "" ? serverData.image : global1,
+            image: typeof serverData.image === "string" && serverData.image.trim() !== "" ? serverData.image.trim() : (serverData.image || global1),
             imageAlt: serverData.imageAlt || DEFAULT_CONFERENCE_DATA.imageAlt,
           });
         }
