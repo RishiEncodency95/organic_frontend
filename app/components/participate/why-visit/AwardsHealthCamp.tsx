@@ -72,7 +72,38 @@ const AWARDS_HEALTH_CAMP_DATA = [
   },
 ];
 
-const AwardsHealthCamp = () => {
+const AwardsHealthCamp = ({ sectionData }: { sectionData?: any }) => {
+  const defaultData = AWARDS_HEALTH_CAMP_DATA[0];
+
+  const data = {
+    ...defaultData,
+    header: {
+      badge: sectionData?.eyebrow || defaultData.header.badge,
+      title: sectionData?.title || defaultData.header.title,
+      subline: sectionData?.subtitle || defaultData.header.subline,
+      desc: sectionData?.description || defaultData.header.desc,
+    },
+    // Main right image
+    mainImage: sectionData?.image || award2.src,
+    valueCards: sectionData?.items?.length
+      ? sectionData.items.map((item: any, idx: number) => {
+          const fallback = defaultData.valueCards[idx % defaultData.valueCards.length];
+          const rawImg = item.image || item.img;
+          // Split title on space if not provided as line1/line2
+          const titleWords = item.title ? item.title.split(" ") : [];
+          const titleLine1 = titleWords.length > 0 ? titleWords[0] : fallback.titleLine1;
+          const titleLine2 = titleWords.length > 1 ? titleWords.slice(1).join(" ") : fallback.titleLine2;
+
+          return {
+            titleLine1,
+            titleLine2,
+            desc: item.description || fallback.desc,
+            image: rawImg && typeof rawImg === "string" && rawImg.trim() !== "" ? rawImg : fallback.image.src,
+          };
+        })
+      : defaultData.valueCards.map(c => ({ ...c, image: c.image.src })),
+  };
+
   return (
     <section className="py-2.5 sm:py-3.5 bg-white font-inter relative overflow-hidden flex items-center min-h-[380px] sm:min-h-[420px]">
       {/* Top Left Leaf Decor Asset */}
@@ -83,11 +114,10 @@ const AwardsHealthCamp = () => {
       />
 
       <SectionContainer className="relative z-10 py-0.5">
-        {AWARDS_HEALTH_CAMP_DATA.map((data) => (
           <div key={data.id} className="w-full">
             {/* HEADER SECTION WITH RIGHT SIDE AWARD TROPHY IMAGE */}
             <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 mb-1">
-              <div className="text-center max-w-3xl mx-auto -mt-12 sm:-mt-18 lg:-mt-24">
+              <div className="text-center max-w-3xl mx-auto -mt-24 sm:-mt-32 lg:-mt-44">
                 {/* Top Capsule Badge with Leaf Icons */}
                 <div className="flex items-center justify-center mb-2">
                   <div className="inline-flex items-center gap-2 bg-[#1b5e20] text-white px-3.5 py-1 rounded-md font-poppins font-semibold text-[11px] uppercase tracking-widest shadow-sm">
@@ -119,16 +149,16 @@ const AwardsHealthCamp = () => {
 
               {/* Right Side Award2 Trophy Image */}
               <img
-                src={award2.src}
-                alt="Bharat Organic Excellence Award Trophy"
-                className="w-52 sm:w-[300px] md:w-[420px] lg:w-[500px] xl:w-[540px] h-auto object-contain shrink-0 self-center sm:self-auto translate-y-4 sm:translate-y-6 lg:translate-y-8 pointer-events-none"
+                src={data.mainImage}
+                alt={data.header.title}
+                className="w-52 sm:w-[300px] md:w-[420px] lg:w-[500px] xl:w-[540px] h-[400px] object-cover shrink-0 self-center sm:self-auto translate-y-4 sm:translate-y-6 lg:translate-y-8"
               />
             </div>
 
             {/* 5 VALUE CARDS IN WHITE BACKDROP CONTAINER */}
-            <div className="max-w-4xl ml-0 mr-auto bg-white/95 backdrop-blur-md rounded-2xl p-3 sm:p-3.5 border border-slate-300 shadow-sm flex flex-col justify-center -mt-12 sm:-mt-18 lg:-mt-28 relative z-20">
+            <div className="max-w-4xl ml-0 mr-auto bg-white/95 backdrop-blur-md rounded-2xl p-3 sm:p-3.5 border border-slate-300 shadow-sm flex flex-col justify-center -mt-20 sm:-mt-28 lg:-mt-40 relative z-20">
               <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-2 divide-y sm:divide-y-0 lg:divide-x divide-slate-300">
-                {data.valueCards.map((card, idx) => {
+                {data.valueCards.map((card: any, idx: number) => {
                   return (
                     <div
                       key={idx}
@@ -137,7 +167,7 @@ const AwardsHealthCamp = () => {
                       }`}
                     >
                       <img
-                        src={card.image.src}
+                        src={card.image}
                         alt=""
                         className="w-11 h-11 sm:w-13 sm:h-13 object-contain mb-2 mx-auto shrink-0"
                       />
@@ -155,7 +185,6 @@ const AwardsHealthCamp = () => {
               </div>
             </div>
           </div>
-        ))}
       </SectionContainer>
     </section>
   );

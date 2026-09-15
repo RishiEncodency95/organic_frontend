@@ -56,16 +56,16 @@ const DEFAULT_EXPO_DATA = {
   buttonText: "VIEW ALL CATEGORIES",
   buttonHref: "/exhibition-categories",
   categories: [
-    { title: "Organic Food & Beverages", desc: "Wide range of certified organic foods, beverages, healthy snacks, grains, pulses, and ingredients.", color: "#4ade80", image: sectors1 as any, imageAlt: "Organic Food & Beverages Sector", href: "/exhibition-categories", exploreText: "Explore", icon: Apple },
-    { title: "AYUSH, Ayurveda & Herba", desc: "Ayurvedic medicines, herbal supplements, essential oils, teas, wellness products and holistic solutions.", color: "#14b8a6", image: sectors2 as any, imageAlt: "AYUSH, Ayurveda & Herbs Sector", href: "/exhibition-categories", exploreText: "Explore", icon: Leaf },
-    { title: "Organic Natural Farming", desc: "Natural farming practices, organic cultivation methods, innovations and farm-to-market solutions.", color: "#22c55e", image: sectors3 as any, imageAlt: "Organic Natural Farming Sector", href: "/exhibition-categories", exploreText: "Explore", icon: Sprout },
-    { title: "Organic Inputs, Seeds & Bio- Inputs", desc: "Bio-fertilisers, organic manures, soil enhancers, pesticides and high-quality seeds.", color: "#fb923c", image: sectors4 as any, imageAlt: "Organic Inputs, Seeds & Bio-Inputs Sector", href: "/exhibition-categories", exploreText: "Explore", icon: Package },
-    { title: "Dairy, Livestock & Allied", desc: "Organic dairy products, livestock nutrition, animal health solutions and sustainable practices.", color: "#f472b6", image: sectors5 as any, imageAlt: "Dairy, Livestock & Allied Sector", href: "/exhibition-categories", exploreText: "Explore", icon: Milk },
-    { title: "Natural Beauty & Personal Care", desc: "Herbal skincare, haircare, personal care and eco-friendly beauty products.", color: "#60a5fa", image: sectors7 as any, imageAlt: "Natural Beauty & Personal Care Sector", href: "/exhibition-categories", exploreText: "Explore", icon: Droplet },
-    { title: "Nutraceuticals & Functional Nutrition", desc: "Dietary supplements, functional foods, immunity boosters and wellness nutrition products.", color: "#34d399", image: sectors6 as any, imageAlt: "Nutraceuticals & Functional Nutrition Sector", href: "/exhibition-categories", exploreText: "Explore", icon: Pill },
-    { title: "Sustainable Packaging & Processing", desc: "Eco-friendly, biodegradable, recyclable and sustainable packaging solutions.", color: "#3b82f6", image: sectors9 as any, imageAlt: "Sustainable Packaging & Processing Sector", href: "/exhibition-categories", exploreText: "Explore", icon: Box },
-    { title: "AgriTech, GreenTech & Innovation", desc: "Innovative agri technologies, smart farming, irrigation, farm mechanization and digital solutions.", color: "#10b981", image: sectors10 as any, imageAlt: "AgriTech, GreenTech & Innovation Sector", href: "/exhibition-categories", exploreText: "Explore", icon: Tractor },
-    { title: "Certification, Export, Trade & Services", desc: "Exporters, importers, trade associations and global business opportunities for organic products.", color: "#f59e0b", image: sectors8 as any, imageAlt: "Certification, Export, Trade & Services Sector", href: "/exhibition-categories", exploreText: "Explore", icon: Globe },
+    { title: "Organic Food & Beverages", desc: "Wide range of certified organic foods, beverages, healthy snacks, grains, pulses, and ingredients.", color: "#4ade80", image: sectors1 as any, imageAlt: "Organic Food & Beverages Sector", href: "/exhibition-categories#organic-food-beverages", exploreText: "Explore", icon: Apple },
+    { title: "AYUSH, Ayurveda & Herba", desc: "Ayurvedic medicines, herbal supplements, essential oils, teas, wellness products and holistic solutions.", color: "#14b8a6", image: sectors2 as any, imageAlt: "AYUSH, Ayurveda & Herbs Sector", href: "/exhibition-categories#ayush-ayurveda-herbal", exploreText: "Explore", icon: Leaf },
+    { title: "Organic Natural Farming", desc: "Natural farming practices, organic cultivation methods, innovations and farm-to-market solutions.", color: "#22c55e", image: sectors3 as any, imageAlt: "Organic Natural Farming Sector", href: "/exhibition-categories#organic-natural-farming", exploreText: "Explore", icon: Sprout },
+    { title: "Organic Inputs, Seeds & Bio- Inputs", desc: "Bio-fertilisers, organic manures, soil enhancers, pesticides and high-quality seeds.", color: "#fb923c", image: sectors4 as any, imageAlt: "Organic Inputs, Seeds & Bio-Inputs Sector", href: "/exhibition-categories#organic-inputs", exploreText: "Explore", icon: Package },
+    { title: "Dairy, Livestock & Allied", desc: "Organic dairy products, livestock nutrition, animal health solutions and sustainable practices.", color: "#f472b6", image: sectors5 as any, imageAlt: "Dairy, Livestock & Allied Sector", href: "/exhibition-categories#dairy-livestock", exploreText: "Explore", icon: Milk },
+    { title: "Natural Beauty & Personal Care", desc: "Herbal skincare, haircare, personal care and eco-friendly beauty products.", color: "#60a5fa", image: sectors7 as any, imageAlt: "Natural Beauty & Personal Care Sector", href: "/exhibition-categories#natural-beauty-personal-care", exploreText: "Explore", icon: Droplet },
+    { title: "Nutraceuticals & Functional Nutrition", desc: "Dietary supplements, functional foods, immunity boosters and wellness nutrition products.", color: "#34d399", image: sectors6 as any, imageAlt: "Nutraceuticals & Functional Nutrition Sector", href: "/exhibition-categories#nutraceuticals-functional-nutrition", exploreText: "Explore", icon: Pill },
+    { title: "Sustainable Packaging & Processing", desc: "Eco-friendly, biodegradable, recyclable and sustainable packaging solutions.", color: "#3b82f6", image: sectors9 as any, imageAlt: "Sustainable Packaging & Processing Sector", href: "/exhibition-categories#sustainable-packaging-processing", exploreText: "Explore", icon: Box },
+    { title: "AgriTech, GreenTech & Innovation", desc: "Innovative agri technologies, smart farming, irrigation, farm mechanization and digital solutions.", color: "#10b981", image: sectors10 as any, imageAlt: "AgriTech, GreenTech & Innovation Sector", href: "/exhibition-categories#agritech-greentech-innovation", exploreText: "Explore", icon: Tractor },
+    { title: "Certification, Export, Trade & Services", desc: "Exporters, importers, trade associations and global business opportunities for organic products.", color: "#f59e0b", image: sectors8 as any, imageAlt: "Certification, Export, Trade & Services Sector", href: "/exhibition-categories#certification-export-trade", exploreText: "Explore", icon: Globe },
   ]
 };
 
@@ -101,12 +101,17 @@ const ExpoCategories = () => {
               }
             }
 
+            let finalHref = item?.href || item?.link || DEFAULT_EXPO_DATA.categories[index]?.href || "/exhibition-categories";
+            if (finalHref === "/exhibition-categories" && DEFAULT_EXPO_DATA.categories[index]?.href) {
+              finalHref = DEFAULT_EXPO_DATA.categories[index].href;
+            }
+
             return {
               title: item?.title || DEFAULT_EXPO_DATA.categories[index]?.title || "Category",
               desc: item?.desc || item?.description || DEFAULT_EXPO_DATA.categories[index]?.desc || "",
               image: catImage,
               imageAlt: item?.imageAlt || item?.title || "Category",
-              href: item?.href || item?.link || DEFAULT_EXPO_DATA.categories[index]?.href || "/exhibition-categories",
+              href: finalHref,
               exploreText: item?.exploreText || DEFAULT_EXPO_DATA.categories[index]?.exploreText || "Explore",
               icon: DEFAULT_ICONS[index % DEFAULT_ICONS.length],
             };

@@ -359,7 +359,7 @@ const HeroSection = ({ sectionData }: { sectionData?: any }) => {
 
             {/* Feature Highlights with Icons */}
             <div className="flex flex-wrap items-center justify-start gap-2.5 md:gap-3 mb-5">
-              {hero.highlights.map((item, i, arr) => {
+              {hero.highlights.map((item: any, i: number, arr: any[]) => {
                 const IconComponent = item.icon ? ICON_MAP[item.icon] : null;
                 const fallbackImg = DEFAULT_ICONS[i % DEFAULT_ICONS.length];
                 const rawImg = item.img || (item as any).image;

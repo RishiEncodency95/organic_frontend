@@ -123,7 +123,7 @@ const ReasonsSection = ({ sectionData }: { sectionData?: any }) => {
         </div>
 
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-2 md:gap-4">
-          {items.map((reason) => (
+          {items.map((reason: any) => (
           <div
             key={reason.id}
             className="bg-white p-3 md:p-4 rounded-xl border border-transparent flex flex-col items-center text-center group transition-all duration-300 hover:shadow-2xl hover:-translate-y-1 font-inter"
@@ -144,13 +144,13 @@ const ReasonsSection = ({ sectionData }: { sectionData?: any }) => {
             </h3>
 
             <div className="text-slate-800 text-[11px] md:text-[12px] font-semibold leading-snug mb-3 flex-1 flex flex-col items-center justify-center font-inter">
-              {reason.descLines.map((line, idx) => (
+              {reason.descLines.map((line: string, idx: number) => (
                 <p key={idx}>{line}</p>
               ))}
             </div>
 
             <ul className="space-y-1 w-full text-left border-t border-slate-100 pt-2.5 mt-auto font-inter">
-              {reason.points.map((point, idx) => (
+              {reason.points.map((point: string, idx: number) => (
                 <li key={idx} className="flex items-start gap-1.5 text-[10px] md:text-[11px] font-semibold text-slate-700 font-inter">
                   <span className="w-1 h-1 rounded-full bg-slate-400 mt-1.5 shrink-0" />
                   {point}

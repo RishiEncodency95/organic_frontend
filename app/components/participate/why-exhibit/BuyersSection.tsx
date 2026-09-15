@@ -97,7 +97,7 @@ const BuyersSection = ({ sectionData }: { sectionData?: any }) => {
             </h2>
 
             <div className="space-y-2 mb-5">
-              {section.attendees.map((item) => (
+              {section.attendees.map((item: any) => (
                 <div key={item.id} className="flex items-center gap-2.5">
                   <div className="w-4 h-4 md:w-5 md:h-5 rounded-full bg-[#1b5e20] flex items-center justify-center shrink-0 shadow-sm">
                     <Check size={11} className="text-white" strokeWidth={3.5} />
@@ -109,7 +109,7 @@ const BuyersSection = ({ sectionData }: { sectionData?: any }) => {
 
             {/* Golden Hero Style Button */}
             <div className="relative w-fit mx-auto lg:mx-0">
-              {section.button.sparkles.map((sp, idx) => (
+              {section.button.sparkles.map((sp: any, idx: number) => (
                 <Sparkle key={idx} color={sp.color} shadow={sp.shadow} style={sp.style} />
               ))}
               <a
@@ -127,7 +127,7 @@ const BuyersSection = ({ sectionData }: { sectionData?: any }) => {
           {/* Right Visual Images */}
           <div className="lg:col-span-7 pr-2 md:pr-4">
             <div className="flex gap-2.5 h-[260px] md:h-[320px] w-full">
-              {section.visuals.map((item) => (
+              {section.visuals.map((item: any) => (
                 <div
                   key={item.id}
                   className="flex-1 overflow-hidden border-[3px] border-white shadow-xl transform -skew-x-12 rounded-[20px] relative group"

@@ -90,7 +90,7 @@ const IndustriesSection = ({ sectionData }: { sectionData?: any }) => {
 
           {/* Static Grid Layout */}
           <div className="w-full py-2 grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-x-2 lg:gap-x-2 gap-y-4 lg:gap-y-4 justify-center">
-            {categories.map((item) => {
+            {categories.map((item: any) => {
               const Icon = item.icon;
 
               return (

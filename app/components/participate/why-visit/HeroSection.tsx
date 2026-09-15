@@ -293,7 +293,7 @@ export default function HeroSection({ sectionData }: { sectionData?: any }) {
         <div
           className="absolute inset-0 z-0"
           style={{
-            backgroundImage: `url(${typeof bgImg === "string" ? bgImg : bgImg.src})`,
+            backgroundImage: `url(${bgImg})`,
             backgroundPosition: "center -35px",
             backgroundSize: "cover",
             backgroundRepeat: "no-repeat",
@@ -429,7 +429,7 @@ export default function HeroSection({ sectionData }: { sectionData?: any }) {
             />
 
             <div className="grid grid-cols-2 sm:grid-cols-3 md:flex md:flex-nowrap items-center justify-center md:justify-between gap-y-3 gap-x-2 md:gap-0">
-              {stats.map((item, i) => {
+              {stats.map((item: any, i: number) => {
                 const IconComponent = item.icon;
                 return (
                   <React.Fragment key={item.id}>

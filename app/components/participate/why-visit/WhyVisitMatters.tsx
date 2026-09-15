@@ -140,7 +140,7 @@ export default function WhyVisitMatters({ sectionData }: { sectionData?: any }) 
 
         {/* 6 CARDS GRID */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 sm:gap-6 mb-5 sm:mb-6 max-w-5xl mx-auto">
-          {cards.map((card, i) => (
+          {cards.map((card: any, i: number) => (
             <div
               key={i}
               className="bg-white p-5 rounded-xl text-center hover:shadow-md transition-shadow relative flex flex-col items-center"

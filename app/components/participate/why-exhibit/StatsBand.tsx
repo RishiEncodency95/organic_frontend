@@ -286,7 +286,7 @@ export default function StatsBand({ sectionData }: { sectionData?: any }) {
           />
 
           <div className="grid grid-cols-2 sm:grid-cols-3 md:flex md:flex-nowrap items-center justify-center md:justify-between gap-y-3 gap-x-2 md:gap-0">
-            {items.map((item, i) => {
+            {items.map((item: any, i: number) => {
               const IconComponent = item.icon;
               return (
                 <React.Fragment key={item.id}>
