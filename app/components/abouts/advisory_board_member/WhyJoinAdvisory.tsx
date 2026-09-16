@@ -183,9 +183,9 @@ const WhyJoinAdvisory = () => {
                                             {feature.isSvgRaw ? (
                                                 <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                                                     {feature.iconPath?.split(' M').map((path, index) => (
-                                                        index === 0 
-                                                        ? <path key={index} d={path} /> 
-                                                        : (path.includes('V') || path.includes('L') ? <polyline key={index} points={path} /> : <path key={index} d={`M${path}`} />)
+                                                        index === 0
+                                                            ? <path key={index} d={path} />
+                                                            : (path.includes('V') || path.includes('L') ? <polyline key={index} points={path} /> : <path key={index} d={`M${path}`} />)
                                                     ))}
                                                 </svg>
                                             ) : (
@@ -208,10 +208,13 @@ const WhyJoinAdvisory = () => {
                                 href={whyJoinAdvisoryData.bottomSection.buttonLink}
                                 target="_blank"
                                 rel="noopener noreferrer"
-                                className="group inline-flex items-center gap-3 bg-[#f5c742] text-[#1f471b] px-6 py-3 rounded-full font-bold text-[12px] md:text-[13px] tracking-widest uppercase transition-all shadow-lg hover:shadow-xl hover:bg-[#e0b536] hover:-translate-y-0.5 z-20 shrink-0"
+                                className="group relative overflow-hidden inline-flex items-center justify-center gap-3 px-8 py-2 rounded-full border-2 border-[#F2B40E] bg-[#3b8c2a] text-white text-[13px] md:text-[14px] font-bold uppercase tracking-wider hover:text-[#0b2912] hover:shadow-[0_0_20px_rgba(242,180,14,0.5)] hover:-translate-y-1 transition-all duration-500 z-20 shrink-0"
                             >
-                                {whyJoinAdvisoryData.bottomSection.buttonText}
-                                <ArrowRight size={16} strokeWidth={2.5} className="group-hover:translate-x-1 transition-transform" />
+                                {/* Sweeping fill background effect */}
+                                <div className="absolute inset-0 bg-[#F2B40E] transform -translate-x-full group-hover:translate-x-0 transition-transform duration-500 ease-out -z-10 rounded-full"></div>
+                                
+                                <span className="relative z-10">{whyJoinAdvisoryData.bottomSection.buttonText}</span>
+                                <ArrowRight size={18} strokeWidth={2.5} className="relative z-10 group-hover:translate-x-1.5 transition-transform duration-300" />
                             </Link>
                         </div>
 

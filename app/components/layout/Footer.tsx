@@ -365,7 +365,7 @@ export default function Footer() {
             </p>
 
             {/* Nature's Bounty Image */}
-            <div className="w-full max-w-[300px] sm:max-w-[280px] mb-2 bg-[#F1DEC4] p-2 rounded-xl shadow-[0_4px_20px_rgba(0,0,0,0.3)] border border-[#d6ad60]/40">
+            <div className="w-full max-w-[300px] sm:max-w-[280px] mb-2 bg-[#F1DEC4] p-1 rounded-xl shadow-[0_4px_20px_rgba(0,0,0,0.3)] border border-[#d6ad60]/40">
               {typeof bountySrc === "string" ? (
                 <img
                   src={bountySrc}
