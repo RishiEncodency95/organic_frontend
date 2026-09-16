@@ -10,9 +10,9 @@ const ContactMap = () => {
         
         {/* Map Container */}
         <div className="w-full h-[250px] md:h-[400px] rounded-2xl overflow-hidden border border-gray-200 shadow-sm relative">
-          {/* Using an iframe for Google Maps - Defaulting to Pragati Maidan */}
+          {/* Using an iframe for Google Maps - Defaulting to Ghaziabad Address */}
           <iframe 
-            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d14008.971553531641!2d77.2346049!3d28.6186411!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x390ce2d6771d9d43%3A0x6e9f1661642c8bc5!2sPragati%20Maidan%2C%20New%20Delhi%2C%20Delhi%20110001!5e0!3m2!1sen!2sin!4v1700000000000!5m2!1sen!2sin" 
+            src="https://maps.google.com/maps?q=12/29,%20Site%20II%20Industrial%20Area,%20Loni%20Rd,%20Mohan%20Nagar,%20Ghaziabad,%20Uttar%20Pradesh%20201007,%20India&t=&z=15&ie=UTF8&iwloc=&output=embed" 
             width="100%" 
             height="100%" 
             style={{ border: 0 }} 

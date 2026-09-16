@@ -5,7 +5,7 @@ import AboutStrip from "@/app/components/abouts/about/AboutStrip";
 import ChairmanMessage from "@/app/components/abouts/advisory_board_member/ChairmanMessage";
 import AdvisoryBoardGrid from "@/app/components/abouts/advisory_board_member/AdvisoryBoardGrid";
 import WhyJoinAdvisory from "@/app/components/abouts/advisory_board_member/WhyJoinAdvisory";
-import AdvisoryPartners from "@/app/components/abouts/advisory_board_member/AdvisoryPartners";
+// import AdvisoryPartners from "@/app/components/abouts/advisory_board_member/AdvisoryPartners";
 
 export const metadata: Metadata = {
   title: "Advisory Board Members | Bharat Organic Expo 2027",
@@ -23,7 +23,7 @@ const AdvisoryBoardMemberPage = () => {
       <ChairmanMessage />
       <AdvisoryBoardGrid />
       <WhyJoinAdvisory />
-      <AdvisoryPartners />
+      {/* <AdvisoryPartners /> */}
     </div>
   );
 };
