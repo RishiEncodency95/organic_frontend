@@ -370,7 +370,10 @@ export default function Footer() {
                 <img
                   src={bountySrc}
                   alt="Nature's Bounty"
+                  width={250}
+                  height={100}
                   className="w-full h-auto object-contain drop-shadow-sm"
+                  style={{ width: "auto", height: "auto" }}
                 />
               ) : (
                 <Image
