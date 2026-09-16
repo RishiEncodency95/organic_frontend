@@ -61,7 +61,7 @@ export default function Footer() {
           setFooterData(found);
         }
       })
-      .catch(() => {});
+      .catch(() => { });
   }, []);
 
   const defaultQuickLinks = [
@@ -69,7 +69,7 @@ export default function Footer() {
     { name: "About Us", path: "/about" },
     { name: "Exhibitor Registration", path: "/registration/book-a-stand" },
     { name: "Delegate Registration", path: "https://arogya.namogange.org/" },
-    { name: "Conference Tracks", path: "https://arogya.namogange.org/" },
+    { name: "Conference ", path: "https://arogya.namogange.org/" },
     { name: "Buyer Seller Meet", path: "/buyer-seller-meet" },
     { name: "Exhibitor List", path: "/exhibitors" },
     { name: "Blogs", path: "/blog" },
@@ -80,9 +80,9 @@ export default function Footer() {
   const quickLinks =
     footerData?.items && footerData.items.length > 0
       ? footerData.items.map((item: any) => ({
-          name: item.label || item.name || "Link",
-          path: item.href || item.path || "/",
-        }))
+        name: item.label || item.name || "Link",
+        path: item.href || item.path || "/",
+      }))
       : defaultQuickLinks;
 
   const highlights = [
@@ -100,9 +100,16 @@ export default function Footer() {
   const resolveImg = (img: any, fallback: any) => {
     if (!img) return fallback;
     if (typeof img === "string") {
-      if (img.startsWith("http://") || img.startsWith("https://") || img.startsWith("data:")) return img;
-      if (img.startsWith("/")) return `http://localhost:4000${img}`;
-      return `http://localhost:4000/${img}`;
+      const baseUrl = SITE_CONFIG.apiUrl.replace(/\/api$/, "");
+
+      let resolvedImg = img;
+      if (resolvedImg.startsWith("http://localhost:4000")) {
+        resolvedImg = resolvedImg.replace("http://localhost:4000", baseUrl);
+      }
+
+      if (resolvedImg.startsWith("http://") || resolvedImg.startsWith("https://") || resolvedImg.startsWith("data:")) return resolvedImg;
+      if (resolvedImg.startsWith("/")) return `${baseUrl}${resolvedImg}`;
+      return `${baseUrl}/${resolvedImg}`;
     }
     return img;
   };
@@ -119,7 +126,7 @@ export default function Footer() {
 
   const phoneNumber = footerData?.phoneNumber || "+91 96549 00525";
   const contactEmail = footerData?.contactEmail || "info@namogangewellness.com";
-  const contactAddress = footerData?.contactAddress || "Hall 12, Pragati Maidan,\nNew Delhi, India 110001";
+  const contactAddress = footerData?.contactAddress || "12/29, Site II Industrial Area, Loni Rd, Mohan Nagar, Ghaziabad, Uttar Pradesh 201007, India";
   const conferenceHelpline = footerData?.conferenceHelpline || footerData?.altPhoneNumber || "+91 98183 53841";
   const websiteUrl = footerData?.websiteUrl || "www.bharatorganicexpo.com";
   const websiteHref = websiteUrl.startsWith("http://") || websiteUrl.startsWith("https://")
@@ -153,7 +160,7 @@ export default function Footer() {
           alt="Decorative Leaf"
           className="absolute -left-4 top-1/2 -translate-y-1/2 w-24 opacity-100 object-contain pointer-events-none z-10"
         />
-        
+
         {/* Subtle decorative mandala/circle overlay at bottom */}
         <div className="absolute -bottom-16 -left-10 w-56 h-56 border border-[#d8c39e] rounded-full opacity-40 pointer-events-none" />
         <div className="absolute -bottom-10 -left-4 w-40 h-40 border border-[#d8c39e] rounded-full opacity-40 pointer-events-none" />
@@ -163,7 +170,7 @@ export default function Footer() {
 
         {/* Column 1: Cream Area Content */}
         <div className="w-full lg:w-[28%] bg-[#F1DEC4] lg:bg-transparent rounded-b-3xl lg:rounded-none px-6 pt-6 pb-6 text-gray-900 flex flex-col items-center text-center font-inter relative mb-4 lg:mb-0">
-          
+
           {/* Logo with Sparkles */}
           <div className="relative inline-block w-48 md:w-56 mb-4">
             <Sparkle color="#d68523" style={{ top: '-10px', left: '10%', animationDelay: '0s' }} />
@@ -171,7 +178,7 @@ export default function Footer() {
             <Sparkle color="#d68523" style={{ top: '-15px', right: '15%', animationDelay: '0.8s' }} />
             <Sparkle color="#d68523" style={{ bottom: '10px', left: '5%', animationDelay: '0.2s' }} />
             <Sparkle color="#d68523" style={{ bottom: '-10px', right: '20%', animationDelay: '0.6s' }} />
-            
+
             {typeof logoSrc === "string" ? (
               <img
                 src={logoSrc}
@@ -301,7 +308,7 @@ export default function Footer() {
               {contactAddress}
             </p>
             <a
-              href="https://maps.google.com"
+              href="https://www.google.com/maps/search/?api=1&query=12/29,+Site+II+Industrial+Area,+Loni+Rd,+Mohan+Nagar,+Ghaziabad,+Uttar+Pradesh+201007,+India"
               target="_blank"
               rel="noopener noreferrer"
               className="inline-block border border-white/40 text-gray-200 text-[10px] font-semibold px-3 py-1 rounded-md mb-4 uppercase tracking-wider hover:bg-white hover:text-[#001810] transition-colors font-poppins bg-white/5"
@@ -328,57 +335,58 @@ export default function Footer() {
             </h4>
 
             {/* Namo Logo with Sparkles */}
-            <div className="relative inline-block w-44 my-2">
-              <Sparkle color="#FFFFFF" style={{ top: '-8px', left: '10%', animationDelay: '0s' }} />
-              <Sparkle color="#FFFFFF" style={{ top: '12px', left: '-12px', animationDelay: '0.4s' }} />
-              <Sparkle color="#FFFFFF" style={{ top: '-10px', right: '15%', animationDelay: '0.8s' }} />
-              <Sparkle color="#FFFFFF" style={{ bottom: '4px', left: '5%', animationDelay: '0.2s' }} />
-              <Sparkle color="#FFFFFF" style={{ bottom: '-8px', right: '10%', animationDelay: '0.6s' }} />
-              
+            <div className="relative inline-block w-56 my-2 bg-white rounded-md p-2 shadow-sm">
+              <Sparkle color="#F3B71B" style={{ top: '-8px', left: '10%', animationDelay: '0s' }} />
+              <Sparkle color="#F3B71B" style={{ top: '12px', left: '-12px', animationDelay: '0.4s' }} />
+              <Sparkle color="#F3B71B" style={{ top: '-10px', right: '15%', animationDelay: '0.8s' }} />
+              <Sparkle color="#F3B71B" style={{ bottom: '4px', left: '5%', animationDelay: '0.2s' }} />
+              <Sparkle color="#F3B71B" style={{ bottom: '-8px', right: '10%', animationDelay: '0.6s' }} />
+
               {typeof namoLogoSrc === "string" ? (
                 <img
                   src={namoLogoSrc}
                   alt="Organised by Namo Gange"
-                  className="w-full h-auto max-h-[60px] object-contain mx-auto sm:mx-0"
+                  className="w-full h-auto max-h-[80px] object-contain mx-auto sm:mx-0"
                 />
               ) : (
                 <Image
                   src={namoLogoSrc}
                   alt="Namo Gange Wellness"
-                  width={176}
-                  height={60}
+                  width={224}
+                  height={80}
                   className="w-full h-auto object-contain mx-auto sm:mx-0"
                   style={{ width: "auto", height: "auto" }}
                 />
               )}
             </div>
 
-            <p className="text-gray-200 text-[11.5px] mb-3 leading-relaxed font-medium max-w-[280px]">
+            <p className="text-gray-200 text-[12px] mb-3 leading-relaxed font-medium max-w-[280px]">
               Your conference companion for agenda, updates and networking.
             </p>
 
             {/* Nature's Bounty Image */}
-            <div className="w-full max-w-[280px] sm:max-w-none overflow-hidden rounded-xl border border-white/10 shadow-md mb-4">
+            <div className="w-full max-w-[300px] sm:max-w-[280px] mb-2 bg-[#F1DEC4] p-2 rounded-xl shadow-[0_4px_20px_rgba(0,0,0,0.3)] border border-[#d6ad60]/40">
               {typeof bountySrc === "string" ? (
                 <img
                   src={bountySrc}
                   alt="Nature's Bounty"
-                  className="w-full h-24 object-cover"
+                  className="w-full h-auto object-contain drop-shadow-sm"
                 />
               ) : (
                 <Image
                   src={bountySrc}
                   alt="Nature's Bounty"
-                  width={300}
-                  height={96}
-                  quality={75}
-                  className="w-full h-24 object-cover"
+                  width={250}
+                  height={100}
+                  quality={100}
+                  className="w-full h-auto object-contain drop-shadow-sm"
+                  style={{ width: "auto", height: "auto" }}
                 />
               )}
             </div>
 
             <h5 className="font-poppins font-semibold text-[#F3B71B] uppercase mb-2 text-[12px] tracking-wider">CONNECT WITH US</h5>
-            <div className="flex items-center justify-center sm:justify-start gap-2.5">
+            <div className="flex items-center justify-center sm:justify-start gap-2.5 mt-1">
               {socialList.map(({ Icon, label, url }, idx) => (
                 <a
                   key={idx}
@@ -386,9 +394,9 @@ export default function Footer() {
                   target="_blank"
                   rel="noopener noreferrer"
                   aria-label={label}
-                  className="w-8 h-8 rounded-lg bg-white/5 border border-white/10 flex items-center justify-center text-[#f3b71b] hover:bg-[#f3b71b] hover:text-[#001810] transition-all duration-300 shadow-sm"
+                  className="group w-9 h-9 p-1.5 rounded-full bg-[#f3b71b]/10 border border-[#f3b71b]/30 flex items-center justify-center text-[#f3b71b] hover:bg-[#f3b71b] hover:text-[#001810] hover:scale-110 hover:shadow-[0_0_15px_rgba(243,183,27,0.5)] transition-all duration-300"
                 >
-                  <Icon size={15} />
+                  <Icon size={13} className="transform group-hover:scale-110 transition-transform duration-300" />
                 </a>
               ))}
             </div>
@@ -400,7 +408,7 @@ export default function Footer() {
       {/* Bottom Legal Bar */}
       <div className="border-t border-white/20 py-3 pb-16 md:pb-3 bg-[#00100a] relative z-20 font-inter">
         <div className="container mx-auto max-w-[1536px] px-4 md:px-8 xl:px-12 flex flex-col sm:flex-row flex-wrap items-center justify-between gap-3 text-[11px] sm:text-[12px] text-gray-300 font-medium text-center sm:text-left">
-          
+
           <div className="flex items-center gap-3">
             <span className="text-white font-normal tracking-wide">Bharat Organic Expo</span>
           </div>
@@ -420,7 +428,7 @@ export default function Footer() {
           <div className="flex items-center gap-1.5 text-gray-300">
             Designed with <Heart size={14} className="text-[#cba344] fill-[#cba344]" /> for organic future
           </div>
-          
+
         </div>
       </div>
     </footer>

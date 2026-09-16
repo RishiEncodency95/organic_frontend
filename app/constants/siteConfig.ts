@@ -3,7 +3,7 @@ export const SITE_CONFIG = {
     email: "info@namogangewellness.com",
     phone: "+91-9654900525",
     rawPhone: "+919654900525",
-    address: "Pragati Maidan, New Delhi, India",
+    address: "12/29, Site II Industrial Area, , Loni Rd, Mohan Nagar, Ghaziabad, Uttar Pradesh 201007, India",
     website: "www.namogangewellness.com",
     deligate: "https://arogya.namogange.org/register-now",
     // Approved Event Metrics
