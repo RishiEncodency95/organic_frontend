@@ -255,18 +255,18 @@ export default function CareerPage() {
           <div className="flex h-full items-center px-[clamp(28px,5.2vw,84px)] py-[clamp(22px,2.2vh,36px)]">
             <div className="w-[47%] max-w-[690px]">
               <div className="translate-y-[clamp(10px,1.7vw,28px)]">
-                <div className="mb-[clamp(6px,0.8vh,12px)] text-[clamp(12px,0.9vw,16px)] font-extrabold uppercase tracking-[0.28em] text-[#0a5536]">
+                <div className="mb-[clamp(6px,0.8vh,12px)] text-[clamp(15px,1.15vw,20px)] font-extrabold uppercase tracking-[0.28em] text-[#0a5536]">
                   Career
                 </div>
-                <div className="mb-[clamp(9px,1.1vh,15px)] h-[2px] w-12 bg-[#0a5536]" />
+                <div className="mb-[clamp(9px,1.1vh,15px)] h-[2.5px] w-14 bg-[#0a5536]" />
 
-                <h1 className="max-w-[680px] text-[clamp(46px,4.35vw,76px)] font-black leading-[0.96] tracking-[-0.04em] text-[#07553a]">
+                <h1 className="max-w-[750px] text-[clamp(48px,4.5vw,80px)] font-black leading-[0.98] tracking-[-0.04em] text-[#07553a]">
                   Be Part of
                   <br />
-                  Something <span className="text-[#f5791b]">Bigger</span>
+                  <span className="whitespace-nowrap">Something <span className="text-[#f5791b]">Bigger</span></span>
                 </h1>
 
-                <p className="mt-[clamp(12px,1.4vh,18px)] max-w-[650px] text-[clamp(15px,1.1vw,20px)] leading-[1.35] text-[#14253a]">
+                <p className="mt-[clamp(12px,1.4vh,18px)] max-w-[650px] text-[clamp(16px,1.25vw,22px)] leading-[1.35] text-[#14253a]">
                   Build your career with Bharat Organic Expo and contribute to a
                   sustainable, healthier and more conscious tomorrow.
                 </p>
@@ -287,7 +287,7 @@ export default function CareerPage() {
               </div>
             </div>
 
-            <div className="absolute bottom-[6%] right-[3.8%] w-[34%] rounded-[2px] bg-[#00683e]/90 px-[clamp(16px,1.8vw,30px)] py-[clamp(10px,1.2vh,16px)] text-[clamp(13px,1vw,18px)] font-semibold leading-snug text-white backdrop-blur-[1px]">
+            <div className="absolute bottom-[6%] right-0 w-fit max-w-[440px] rounded-l-[4px] bg-[#00683e]/90 px-[clamp(16px,1.5vw,26px)] py-[clamp(10px,1.2vh,14px)] text-[clamp(13px,1.05vw,17px)] font-semibold leading-snug text-white backdrop-blur-[1px]">
               Join the people who connect
               <br />
               business, nature and a better tomorrow.
@@ -327,7 +327,7 @@ export default function CareerPage() {
                 </span>
 
                 <div>
-                  <h2 className="text-[clamp(24px,1.9vw,34px)] font-black leading-[1.12] tracking-[-0.04em] text-[#0a1831]">
+                  <h2 className="text-[clamp(26px,2.2vw,38px)] font-black leading-[1.12] tracking-[-0.04em] text-[#0a1831]">
                     Current Openings{" "}
                     {openingCount > 0 ? (
                       <span className="align-baseline text-[0.78em] text-[#0c7b46]">
@@ -335,7 +335,7 @@ export default function CareerPage() {
                       </span>
                     ) : null}
                   </h2>
-                  <p className="mt-2 text-[clamp(12px,0.9vw,16px)] leading-snug text-[#314256]">
+                  <p className="mt-2 text-[clamp(13px,1vw,17px)] leading-snug text-[#314256]">
                     Explore exciting opportunities and find the right role for
                     you.
                     {openingCount === 0 ? (
@@ -348,9 +348,9 @@ export default function CareerPage() {
               {openingCount > 0 ? (
                 <a
                   href="#current-openings"
-                  className="mb-1 inline-flex items-center gap-2 border-b border-[#0a7140] pb-1 text-[clamp(11px,0.78vw,13px)] font-bold text-[#0a643b]"
+                  className="mb-1 inline-flex items-center gap-2 border-b-2 border-[#0a7140] pb-1 text-[clamp(14px,1vw,17px)] font-extrabold text-[#0a643b] hover:text-[#074f2e] transition-colors"
                 >
-                  View All Positions <ArrowRight className="h-[18px] w-[18px]" />
+                  View All Positions <ArrowRight className="h-[20px] w-[20px]" />
                 </a>
               ) : null}
             </div>
