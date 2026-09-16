@@ -3,6 +3,7 @@ import type { Metadata } from "next";
 import HeroSection from "./components/home/HeroSection";
 import AudienceStrip from "./components/home/AudienceStrip";
 import { seoApi } from "../lib/api";
+import SchemaInjector from "./components/SchemaInjector";
 
 // Lazy load below-the-fold components
 const IntroductionSection = lazy(() => import("./components/home/IntroductionSection"));
@@ -115,6 +116,7 @@ const Index = async () => {
 
   return (
     <>
+      <SchemaInjector schema={schemaContent} />
       <link rel="canonical" href={canonicalUrl} />
       {schemaContent && (
         <script

@@ -1,4 +1,4 @@
-import ParticipateAsExhibitorPage, { metadata } from "@/app/participate-as-exhibitor/page";
+import ParticipateAsExhibitorPage, { generateMetadata } from "@/app/participate-as-exhibitor/page";
 
-export { metadata };
+export { generateMetadata };
 export default ParticipateAsExhibitorPage;

@@ -241,9 +241,9 @@ const BeyondExhibition = () => {
                       </div>
                     </div>
                     <div className="flex flex-col flex-1">
-                      <h4 className="text-[12px] md:text-[14px] lg:text-[15px] font-semibold text-[#1a3821] uppercase tracking-wide group-hover:text-[#3b8c2a] transition-colors leading-[1.2] md:leading-[1.3] mb-0.5 md:mb-1">
+                      <h3 className="text-[12px] md:text-[14px] lg:text-[15px] font-semibold text-[#1a3821] uppercase tracking-wide group-hover:text-[#166534] transition-colors leading-[1.2] md:leading-[1.3] mb-0.5 md:mb-1">
                         {item.title}
-                      </h4>
+                      </h3>
                       <p className="text-[10px] md:text-[12.5px] text-slate-500 font-medium leading-[1.3] md:leading-[1.5]">
                         {item.description}
                       </p>

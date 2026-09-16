@@ -279,7 +279,10 @@ const IntroductionSection = () => {
                   <img
                     src={activeImage}
                     alt={data.imageAlt || "Bharat Organic Expo"}
-                    className="w-full aspect-[16/9] md:aspect-auto h-[200px] sm:h-[260px] md:h-auto object-cover rounded-2xl"
+                    width={640}
+                    height={480}
+                    loading="lazy"
+                    className="w-full aspect-[4/3] h-auto object-cover rounded-2xl"
                   />
                 ) : (
                   <Image
@@ -289,7 +292,8 @@ const IntroductionSection = () => {
                     height={480}
                     sizes="(max-width: 768px) 100vw, 40vw"
                     quality={75}
-                    className="w-full aspect-[16/9] md:aspect-auto h-[200px] sm:h-[260px] md:h-auto object-cover rounded-2xl"
+                    loading="lazy"
+                    className="w-full aspect-[4/3] h-auto object-cover rounded-2xl"
                   />
                 )
               ) : (

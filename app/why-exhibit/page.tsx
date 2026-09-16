@@ -6,6 +6,7 @@ import IndustriesSection from "@/app/components/participate/why-exhibit/Industri
 import BuyersSection from "@/app/components/participate/why-exhibit/BuyersSection";
 import TestimonialsSection from "@/app/components/participate/why-exhibit/TestimonialsSection";
 import { settingsApi, seoApi, websiteApi } from "@/lib/api";
+import SchemaInjector from "@/app/components/SchemaInjector";
 
 export const dynamic = "force-dynamic";
 export const revalidate = 0;
@@ -170,15 +171,7 @@ export default async function WhyExhibitPage() {
 
   return (
     <>
-      <link rel="canonical" href={canonicalUrl} />
-      {schemaContent && (
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{
-            __html: typeof schemaContent === "string" ? schemaContent : JSON.stringify(schemaContent),
-          }}
-        />
-      )}
+      <SchemaInjector schema={schemaContent} />
       <div className="bg-white min-h-screen overflow-x-hidden font-inter">
       <style>{`
         @keyframes goldShift {

@@ -1,4 +1,4 @@
-import SponsorshipPage, { metadata } from "../sponsorship/page";
+import SponsorshipPage, { generateMetadata } from "../sponsorship/page";
 
-export { metadata };
+export { generateMetadata };
 export default SponsorshipPage;

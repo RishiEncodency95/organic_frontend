@@ -145,142 +145,347 @@ const bottomBannerData = [
 ];
 // --- DYNAMIC DATA END ---
 
-export default function BlogDetail() {
-    return (
-        <div className="min-h-screen bg-white font-sans text-neutral-800">
-            <div className="w-full px-4 md:px-8 lg:px-14 py-6">
-                {/* Breadcrumbs */}
-                <nav className="flex items-center text-[13px] text-neutral-500 mt-7 mb-2 whitespace-nowrap overflow-x-auto">
-                    {blogData.breadcrumbs.map((crumb, idx) => (
-                        <React.Fragment key={idx}>
-                            <Link href={crumb.href} className="hover:text-green-700 transition-colors">{crumb.label}</Link>
-                            <ChevronRight className="w-3.5 h-3.5 mx-2 flex-shrink-0 text-neutral-400" />
-                        </React.Fragment>
-                    ))}
-                    <span className="text-neutral-500 truncate">{blogData.title}</span>
-                </nav>
+import { Metadata } from "next";
+import BlogSeoInjector from "@/app/components/blog/BlogSeoInjector";
 
-                <div className="grid grid-cols-1 lg:grid-cols-[1fr_300px] gap-10 lg:gap-14">
-                    {/* Main Content Column */}
-                    <main>
-                        {/* Header */}
-                        <div className="mb-4">
-                            <span className="inline-block bg-[#2D6A4F] text-white text-[11px] font-bold px-3 py-1 rounded-[4px] uppercase tracking-wide mb-2">
-                                {blogData.category}
-                            </span>
-                            <h1 className="text-xl md:text-3xl font-semibold text-[#2D6A4F] leading-[1.2] mb-2">
-                                {blogData.title}
-                            </h1>
-                            <p className="text-[15px] text-neutral-600 mb-4 leading-relaxed">
-                                {blogData.description}
-                            </p>
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ slug: string }>;
+}): Promise<Metadata> {
+  const { slug } = await params;
+  const backendUrl = "http://localhost:4000/api";
 
-                            <div className="flex flex-wrap items-center gap-6 text-[13px] text-neutral-500 font-medium border-b border-gray-100 pb-2">
-                                <div className="flex items-center gap-1.5">
-                                    <Calendar className="w-4 h-4 text-neutral-400" />
-                                    <span>{blogData.meta.date}</span>
-                                </div>
-                                <div className="flex items-center gap-1.5">
-                                    <Clock className="w-4 h-4 text-neutral-400" />
-                                    <span>{blogData.meta.readTime}</span>
-                                </div>
-                                <div className="flex items-center gap-1.5">
-                                    <Eye className="w-4 h-4 text-neutral-400" />
-                                    <span>{blogData.meta.views}</span>
-                                </div>
+  try {
+    const res = await fetch(`${backendUrl}/blogs/${slug}`, { cache: "no-store" });
+    if (res.ok) {
+      const json = await res.json();
+      const post = json?.data || json;
+      if (post && post.title) {
+        const rawCanonical = (post.canonicalTag || post.canonicalUrl || "").trim();
+        let canonical = `http://localhost:3002/blog/${slug}`;
+        if (rawCanonical) {
+          const hrefMatch = rawCanonical.match(/href=["']([^"']+)["']/i);
+          canonical = hrefMatch ? hrefMatch[1] : rawCanonical.replace(/<[^>]*>/g, "").trim();
+        }
+
+        // Parse any additional custom OG tags into metadata.other
+        const customOther: Record<string, string> = {};
+        if (post.openGraphTags) {
+          const metaRegex = /<meta\s+(?:[^>]*?\s+)?(?:property|name)=["']([^"']+)["']\s+(?:[^>]*?\s+)?content=["']([^"']+)["']/gi;
+          let match;
+          while ((match = metaRegex.exec(post.openGraphTags)) !== null) {
+            customOther[match[1]] = match[2];
+          }
+        }
+
+        const seoTitle = post.metaTitle
+          ? { absolute: post.metaTitle }
+          : `${post.title} | Bharat Organic Expo`;
+        const seoDesc = post.metaDescription || cleanExcerpt(post.excerpt) || "Stay updated with the latest trends and perspectives in the organic sector.";
+        const ogTitle = post.ogTitle || post.metaTitle || post.title;
+        const ogDesc = post.ogDescription || post.metaDescription || cleanExcerpt(post.excerpt);
+        const ogImg = post.ogImage || post.image;
+
+        return {
+          title: seoTitle,
+          description: seoDesc,
+          keywords: post.metaKeywords ? post.metaKeywords.split(",").map((k: string) => k.trim()) : undefined,
+          alternates: {
+            canonical,
+          },
+          openGraph: {
+            title: ogTitle,
+            description: ogDesc,
+            url: canonical,
+            siteName: "Bharat Organic Expo",
+            type: "article",
+            images: ogImg ? [{ url: ogImg, alt: post.imageAlt || post.title }] : [],
+          },
+          twitter: {
+            card: "summary_large_image",
+            title: ogTitle,
+            description: ogDesc,
+            images: ogImg ? [ogImg] : [],
+          },
+          other: Object.keys(customOther).length > 0 ? customOther : undefined,
+        };
+      }
+    }
+  } catch {}
+
+  return {
+    title: "India's Organic Market: Growth, Opportunities & Future Outlook | Bharat Organic Expo",
+    description: "Stay updated with the latest trends and perspectives in the organic sector.",
+  };
+}
+
+function formatBlogDate(dateVal?: string | Date) {
+  if (!dateVal) return "May 20, 2026";
+  try {
+    const d = new Date(dateVal);
+    if (isNaN(d.getTime())) return String(dateVal);
+    return d.toLocaleDateString("en-US", {
+      month: "short",
+      day: "numeric",
+      year: "numeric",
+    });
+  } catch {
+    return String(dateVal);
+  }
+}
+
+function cleanExcerpt(val?: string) {
+  if (!val) return "";
+  return val
+    .replace(/&lt;[^&]*&gt;/gi, " ")
+    .replace(/<[^>]*>/gi, " ")
+    .replace(/&nbsp;/gi, " ")
+    .replace(/&amp;/gi, "&")
+    .replace(/&quot;/gi, '"')
+    .replace(/&#39;/gi, "'")
+    .replace(/\s+/g, " ")
+    .trim();
+}
+
+function formatArticleContent(content?: string): string {
+  if (!content) return "";
+  let html = content.trim();
+
+  // 1. If HTML tags are escaped as &lt;tag&gt; or &lt;/tag&gt; (which causes raw tag text to be visible on screen), decode them:
+  if (/&lt;\s*\/?\s*(h[1-6]|p|div|ul|ol|li|strong|b|em|i|u|span|blockquote|br|a|img|hr)\b/i.test(html)) {
+    html = html
+      .replace(/&lt;/gi, "<")
+      .replace(/&gt;/gi, ">")
+      .replace(/&quot;/gi, '"')
+      .replace(/&#39;/gi, "'")
+      .replace(/&amp;/gi, "&");
+  }
+
+  // 2. If after one pass there are still encoded tags:
+  if (/&lt;\s*\/?\s*(h[1-6]|p|div|ul|ol|li|strong|b|em|i|u|span|blockquote|br|a|img|hr)\b/i.test(html)) {
+    html = html
+      .replace(/&lt;/gi, "<")
+      .replace(/&gt;/gi, ">");
+  }
+
+  // 3. If there are NO html block tags at all (user typed plain text without tags):
+  if (!/<(h[1-6]|p|div|ul|ol|li|blockquote|br)\b/i.test(html)) {
+    html = html
+      .split(/\n{2,}/)
+      .map((block) => `<p class="leading-relaxed mb-4">${block.replace(/\n/g, "<br>")}</p>`)
+      .join("");
+  }
+
+  return html;
+}
+
+export default async function BlogDetail({
+  params,
+}: {
+  params: Promise<{ slug: string }>;
+}) {
+  const { slug } = await params;
+  let dynamicPost: any = null;
+
+  try {
+    const backendUrl = "http://localhost:4000/api";
+    const res = await fetch(`${backendUrl}/blogs/${slug}?view=true`, { cache: "no-store" });
+    if (res.ok) {
+      const json = await res.json();
+      dynamicPost = json?.data || json;
+    }
+  } catch (err) {
+    console.warn("Failed to fetch blog post:", err);
+  }
+
+  const isDynamic = Boolean(dynamicPost && dynamicPost.title);
+
+  const displayTitle = isDynamic ? (dynamicPost.h1Title || dynamicPost.title) : blogData.title;
+  const displayCategory = isDynamic ? (dynamicPost.category || "Expo News") : blogData.category;
+  const displayDate = isDynamic ? formatBlogDate(dynamicPost.scheduledDate || dynamicPost.publishDate || dynamicPost.createdAt) : blogData.meta.date;
+  const displayReadTime = isDynamic ? (dynamicPost.readTime || "4 min read") : blogData.meta.readTime;
+  const displayViews = isDynamic ? `${dynamicPost.views || 0} Views` : blogData.meta.views;
+  const displayImage = isDynamic ? (dynamicPost.image || blogData.image) : blogData.image;
+  const displayImageAlt = isDynamic ? (dynamicPost.imageAlt || dynamicPost.title) : "Bharat Organic Expo Blog";
+  const displayAuthor = isDynamic ? (dynamicPost.author || "Bharat Organic Expo Admin") : sidebarData.author.name;
+
+  const rawCanonical = isDynamic ? (dynamicPost.canonicalTag || dynamicPost.canonicalUrl || "").trim() : "";
+  const canonicalUrl = rawCanonical
+    ? (rawCanonical.match(/href=["']([^"']+)["']/i)?.[1] || rawCanonical.replace(/<[^>]*>/g, "").trim())
+    : `http://localhost:3002/blog/${slug}`;
+
+  return (
+    <div className="min-h-screen bg-white font-sans text-neutral-800">
+      {/* Dynamic SEO & Head Tags Injector */}
+      {isDynamic && (
+        <BlogSeoInjector
+          metaTitle={dynamicPost.metaTitle || `${dynamicPost.title} | Bharat Organic Expo`}
+          metaDescription={dynamicPost.metaDescription || cleanExcerpt(dynamicPost.excerpt)}
+          metaKeywords={dynamicPost.metaKeywords}
+          canonicalUrl={canonicalUrl}
+          ogTitle={dynamicPost.ogTitle || dynamicPost.metaTitle || dynamicPost.title}
+          ogDescription={dynamicPost.ogDescription || dynamicPost.metaDescription || cleanExcerpt(dynamicPost.excerpt)}
+          ogImage={dynamicPost.ogImage || dynamicPost.image}
+          openGraphTags={dynamicPost.openGraphTags}
+          schemaMarkup={dynamicPost.schemaMarkup}
+        />
+      )}
+
+      {/* JSON-LD Schema Markup injection */}
+      {isDynamic && dynamicPost.schemaMarkup && (
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: dynamicPost.schemaMarkup }}
+        />
+      )}
+
+      <div className="w-full px-4 md:px-8 lg:px-14 py-6">
+        {/* Breadcrumbs */}
+        <nav className="flex items-center text-[13px] text-neutral-500 mt-7 mb-2 whitespace-nowrap overflow-x-auto">
+          <Link href="/" className="hover:text-green-700 transition-colors">Home</Link>
+          <ChevronRight className="w-3.5 h-3.5 mx-2 flex-shrink-0 text-neutral-400" />
+          <Link href="/blog" className="hover:text-green-700 transition-colors">Blog</Link>
+          <ChevronRight className="w-3.5 h-3.5 mx-2 flex-shrink-0 text-neutral-400" />
+          <span className="text-green-700">{displayCategory}</span>
+          <ChevronRight className="w-3.5 h-3.5 mx-2 flex-shrink-0 text-neutral-400" />
+          <span className="text-neutral-500 truncate">{displayTitle}</span>
+        </nav>
+
+        <div className="grid grid-cols-1 lg:grid-cols-[1fr_300px] gap-10 lg:gap-14">
+          {/* Main Content Column */}
+          <main>
+            {/* Header */}
+            <div className="mb-4">
+              <span className="inline-block bg-[#2D6A4F] text-white text-[11px] font-bold px-3 py-1 rounded-[4px] uppercase tracking-wide mb-2">
+                {displayCategory}
+              </span>
+              <h1 className="text-xl md:text-3xl font-semibold text-[#2D6A4F] leading-[1.2] mb-2 font-poppins">
+                {displayTitle}
+              </h1>
+
+              {isDynamic && dynamicPost.excerpt && (
+                <p className="text-[15px] text-neutral-600 mb-4 leading-relaxed font-inter">
+                  {cleanExcerpt(dynamicPost.excerpt)}
+                </p>
+              )}
+              {!isDynamic && (
+                <p className="text-[15px] text-neutral-600 mb-4 leading-relaxed font-inter">
+                  {blogData.description}
+                </p>
+              )}
+
+              <div className="flex flex-wrap items-center gap-6 text-[13px] text-neutral-500 font-medium border-b border-gray-100 pb-2">
+                <div className="flex items-center gap-1.5">
+                  <Calendar className="w-4 h-4 text-neutral-400" />
+                  <span>{displayDate}</span>
+                </div>
+                <div className="flex items-center gap-1.5">
+                  <Clock className="w-4 h-4 text-neutral-400" />
+                  <span>{displayReadTime}</span>
+                </div>
+                <div className="flex items-center gap-1.5">
+                  <Eye className="w-4 h-4 text-neutral-400" />
+                  <span>{displayViews}</span>
+                </div>
+              </div>
+            </div>
+
+            {/* Featured Image */}
+            <div className="w-full aspect-[3/1] relative rounded-xl overflow-hidden mb-4 shadow-sm bg-neutral-100">
+              <img
+                src={displayImage}
+                alt={displayImageAlt}
+                className="w-full h-full object-cover"
+              />
+            </div>
+
+            {/* Article Content */}
+            {isDynamic && dynamicPost.content ? (
+              <div
+                className="text-[15px] text-neutral-700 max-w-none space-y-4 leading-relaxed font-inter [&_h1]:font-poppins [&_h1]:text-2xl [&_h1]:font-bold [&_h1]:text-[#1B4332] [&_h2]:font-poppins [&_h2]:text-xl [&_h2]:font-bold [&_h2]:text-[#1B4332] [&_h3]:font-poppins [&_h3]:text-lg [&_h3]:font-semibold [&_h3]:text-[#1B4332] [&_p]:leading-relaxed [&_ul]:list-disc [&_ul]:pl-5 [&_ol]:list-decimal [&_ol]:pl-5 [&_blockquote]:border-l-4 [&_blockquote]:border-[#34A853] [&_blockquote]:pl-4 [&_blockquote]:italic [&_blockquote]:bg-[#F9FBF9] [&_blockquote]:py-2 [&_img]:rounded-lg [&_img]:my-4"
+                dangerouslySetInnerHTML={{ __html: formatArticleContent(dynamicPost.content) }}
+              />
+            ) : (
+              <div className="text-[15px] text-neutral-700 max-w-none space-y-2">
+                {blogData.paragraphs.map((para, idx) => (
+                  <p key={idx} className="leading-relaxed">{para}</p>
+                ))}
+
+                {/* Dynamic Sections */}
+                {blogData.sections.map((section) => (
+                  <div key={section.id} className="pt-2">
+                    <h2 className="flex items-center gap-3 text-lg font-semibold text-[#1B4332] mb-1">
+                      <span className="flex items-center justify-center w-7 h-7 rounded-full bg-[#34A853] text-white text-[15px] shrink-0">{section.id}</span>
+                      {section.title}
+                    </h2>
+                    {section.content && (
+                      <p className="mb-6 text-[15px] text-neutral-700 leading-relaxed">
+                        {section.content}
+                      </p>
+                    )}
+
+                    {/* Stats Type */}
+                    {section.type === "stats" && (
+                      <div className="grid grid-cols-2 md:grid-cols-4 bg-[#F4FBF4] rounded-lg border border-green-50/50">
+                        {(section.data as any[]).map((stat: any, idx: number) => {
+                          const IconComponent = iconMap[stat.icon];
+                          return (
+                            <div key={idx} className={`text-center p-3 border-r border-gray-300/30 md:border-r ${idx === (section.data as any[]).length - 1 ? 'border-0 md:border-r-0' : ''}`}>
+                              {IconComponent && <IconComponent className="w-6 h-6 mx-auto text-[#34A853] mb-2" />}
+                              <div className="font-bold text-lg text-[#1B4332]">{stat.value}</div>
+                              <div className="text-[12px] text-neutral-500 mt-1">{stat.label}</div>
                             </div>
+                          );
+                        })}
+                      </div>
+                    )}
+
+                    {/* List Type */}
+                    {section.type === "list" && (
+                      <ul className="space-y-3 list-none pl-0 text-[15px] text-neutral-700">
+                        {(section.data as any[]).map((item: any, idx: number) => (
+                          <li key={idx} className="flex items-start gap-2.5">
+                            <CheckCircle2 className="w-5 h-5 text-[#34A853] shrink-0 mt-0.5 fill-[#34A853] text-white" />
+                            <div><span className="font-semibold text-[#1B4332]">{item.title}</span> {item.desc}</div>
+                          </li>
+                        ))}
+                      </ul>
+                    )}
+
+                    {/* Cards Type */}
+                    {section.type === "cards" && (
+                      <div className="grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-4 mt-3">
+                        {(section.data as any[]).map((card: any, idx: number) => {
+                          const IconComponent = iconMap[card.icon];
+                          return (
+                            <div key={idx} className="group text-center px-2 py-4 bg-[#F9FBF9] rounded-lg border border-gray-200 hover:border-[#2D6A4F]/40 hover:shadow-md hover:-translate-y-1 transition-all duration-300">
+                              <div className="w-[42px] h-[42px] mx-auto rounded-full border border-[#2D6A4F] flex items-center justify-center mb-3 bg-white shadow-sm group-hover:bg-[#2D6A4F] transition-colors duration-300">
+                                {IconComponent && <IconComponent className="w-[22px] h-[22px] text-[#2D6A4F] group-hover:text-white transition-colors duration-300" />}
+                              </div>
+                              <div className="font-bold text-[#1B4332] text-[12.5px] leading-snug mb-2" dangerouslySetInnerHTML={{ __html: card.title.replace(' ', '<br class="hidden md:block" /> ') }}></div>
+                              <div className="text-[11px] text-neutral-600 leading-relaxed">{card.desc}</div>
+                            </div>
+                          );
+                        })}
+                      </div>
+                    )}
+
+                    {/* Quote Type */}
+                    {section.type === "quote" && (
+                      <div className="flex gap-4 px-5 py-2 bg-[#F9FBF9] rounded-lg border-l-[3px] border-[#34A853]">
+                        <Leaf className="w-6 h-6 text-[#34A853] shrink-0 fill-[#34A853]" />
+                        <div>
+                          <p className="italic text-[15px] font-semibold text-[#1B4332] mb-1">{(section.data as any).main}</p>
+                          <p className="italic text-[14px] text-[#34A853]">{(section.data as any).sub}</p>
                         </div>
-
-                        {/* Featured Image */}
-                        <div className="w-full aspect-[3/1] relative rounded-xl overflow-hidden mb-2 shadow-sm">
-                            <Image
-                                src={blogData.image}
-                                alt="Organic farm field at sunset"
-                                fill
-                                className="object-cover"
-                                priority
-                            />
-                        </div>
-
-                        {/* Article Content */}
-                        <div className="text-[15px] text-neutral-700 max-w-none space-y-2">
-                            {blogData.paragraphs.map((para, idx) => (
-                                <p key={idx} className="leading-relaxed">{para}</p>
-                            ))}
-
-                            {/* Dynamic Sections */}
-                            {blogData.sections.map((section) => (
-                                <div key={section.id} className="pt-2">
-                                    <h2 className="flex items-center gap-3 text-lg font-semibold text-[#1B4332] mb-1">
-                                        <span className="flex items-center justify-center w-7 h-7 rounded-full bg-[#34A853] text-white text-[15px] shrink-0">{section.id}</span>
-                                        {section.title}
-                                    </h2>
-                                    {section.content && (
-                                        <p className="mb-6 text-[15px] text-neutral-700 leading-relaxed">
-                                            {section.content}
-                                        </p>
-                                    )}
-
-                                    {/* Stats Type */}
-                                    {section.type === "stats" && (
-                                        <div className="grid grid-cols-2 md:grid-cols-4 bg-[#F4FBF4] rounded-lg border border-green-50/50">
-                                            {(section.data as any[]).map((stat: any, idx: number) => {
-                                                const IconComponent = iconMap[stat.icon];
-                                                return (
-                                                    <div key={idx} className={`text-center p-3 border-r border-gray-300/30 md:border-r ${idx === (section.data as any[]).length - 1 ? 'border-0 md:border-r-0' : ''}`}>
-                                                        {IconComponent && <IconComponent className="w-6 h-6 mx-auto text-[#34A853] mb-2" />}
-                                                        <div className="font-bold text-lg text-[#1B4332]">{stat.value}</div>
-                                                        <div className="text-[12px] text-neutral-500 mt-1">{stat.label}</div>
-                                                    </div>
-                                                );
-                                            })}
-                                        </div>
-                                    )}
-
-                                    {/* List Type */}
-                                    {section.type === "list" && (
-                                        <ul className="space-y-3 list-none pl-0 text-[15px] text-neutral-700">
-                                            {(section.data as any[]).map((item: any, idx: number) => (
-                                                <li key={idx} className="flex items-start gap-2.5">
-                                                    <CheckCircle2 className="w-5 h-5 text-[#34A853] shrink-0 mt-0.5 fill-[#34A853] text-white" />
-                                                    <div><span className="font-semibold text-[#1B4332]">{item.title}</span> {item.desc}</div>
-                                                </li>
-                                            ))}
-                                        </ul>
-                                    )}
-
-                                    {/* Cards Type */}
-                                    {section.type === "cards" && (
-                                        <div className="grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-4 mt-3">
-                                            {(section.data as any[]).map((card: any, idx: number) => {
-                                                const IconComponent = iconMap[card.icon];
-                                                return (
-                                                    <div key={idx} className="group text-center px-2 py-4 bg-[#F9FBF9] rounded-lg border border-gray-200 hover:border-[#2D6A4F]/40 hover:shadow-md hover:-translate-y-1 transition-all duration-300">
-                                                        <div className="w-[42px] h-[42px] mx-auto rounded-full border border-[#2D6A4F] flex items-center justify-center mb-3 bg-white shadow-sm group-hover:bg-[#2D6A4F] transition-colors duration-300">
-                                                            {IconComponent && <IconComponent className="w-[22px] h-[22px] text-[#2D6A4F] group-hover:text-white transition-colors duration-300" />}
-                                                        </div>
-                                                        <div className="font-bold text-[#1B4332] text-[12.5px] leading-snug mb-2" dangerouslySetInnerHTML={{ __html: card.title.replace(' ', '<br class="hidden md:block" /> ') }}></div>
-                                                        <div className="text-[11px] text-neutral-600 leading-relaxed">{card.desc}</div>
-                                                    </div>
-                                                );
-                                            })}
-                                        </div>
-                                    )}
-
-                                    {/* Quote Type */}
-                                    {section.type === "quote" && (
-                                        <div className="flex gap-4 px-5 py-2 bg-[#F9FBF9] rounded-lg border-l-[3px] border-[#34A853]">
-                                            <Leaf className="w-6 h-6 text-[#34A853] shrink-0 fill-[#34A853]" />
-                                            <div>
-                                                <p className="italic text-[15px] font-semibold text-[#1B4332] mb-1">{(section.data as any).main}</p>
-                                                <p className="italic text-[14px] text-[#34A853]">{(section.data as any).sub}</p>
-                                            </div>
-                                        </div>
-                                    )}
-                                </div>
-                            ))}
-                        </div>
-                    </main>
+                      </div>
+                    )}
+                  </div>
+                ))}
+              </div>
+            )}
+          </main>
 
                     {/* Sidebar Column */}
                     <aside className="space-y-4">
@@ -317,7 +522,7 @@ export default function BlogDetail() {
                                 <Leaf className="w-6 h-6 text-[#34A853] fill-[#34A853]" />
                             </div>
                             <div itemProp="name" className="font-bold text-[#1B4332] text-[14px] mb-1">
-                                {sidebarData.author.name}
+                                {displayAuthor}
                             </div>
                             <p itemProp="description" className="text-[12px] text-neutral-500 leading-relaxed px-2">
                                 {sidebarData.author.description}

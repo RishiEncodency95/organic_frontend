@@ -519,6 +519,8 @@ const HeroSection = () => {
                 alt={alt || `Bharat Organic Expo slide ${id + 1}`}
                 className="w-full h-full object-cover select-none"
                 style={{ willChange: "transform, filter" }}
+                fetchPriority={id === 0 ? "high" : "low"}
+                loading={id === 0 ? "eager" : "lazy"}
               />
             ) : (
               <Image
@@ -530,6 +532,10 @@ const HeroSection = () => {
                 className="w-full h-full object-cover select-none"
                 style={{ willChange: "transform, filter" }}
                 priority={id === 0}
+                fetchPriority={id === 0 ? "high" : "low"}
+                loading={id === 0 ? "eager" : "lazy"}
+                sizes="100vw"
+                quality={75}
               />
             )}
           </div>

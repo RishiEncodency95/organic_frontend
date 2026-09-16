@@ -8,6 +8,7 @@ import AwardsHealthCamp from "@/app/components/participate/why-visit/AwardsHealt
 import NeedHelpSupport from "@/app/components/participate/why-visit/NeedHelpSupport";
 import WhoShouldVisit from "@/app/components/participate/why-visit/WhoShouldVisit";
 import { settingsApi, seoApi, websiteApi } from "@/lib/api";
+import SchemaInjector from "@/app/components/SchemaInjector";
 
 export const dynamic = "force-dynamic";
 export const revalidate = 0;
@@ -17,17 +18,24 @@ export async function generateMetadata(): Promise<Metadata> {
   const defaultUrl = isLocal ? "http://localhost:3002" : "https://bharatorganicexpo.com";
   let seoData: any = null;
   try {
-    const res = await seoApi.getByPage("why-visit", isLocal ? "local" : "live");
-    seoData = res?.data || res;
-  } catch (err) {
+    const res1 = await seoApi.getByPage("participate/why-visit", isLocal ? "local" : "live");
+    const d1 = res1?.data || res1;
+    if (d1 && !Array.isArray(d1) && d1?.metaTitle) {
+      seoData = d1;
+    }
+  } catch {}
+  if (!seoData) {
     try {
-      const res = await seoApi.getByPage("participate/why-visit", isLocal ? "local" : "live");
-      seoData = res?.data || res;
+      const res2 = await seoApi.getByPage("why-visit", isLocal ? "local" : "live");
+      const d2 = res2?.data || res2;
+      if (d2 && !Array.isArray(d2) && d2?.metaTitle) {
+        seoData = d2;
+      }
     } catch {}
   }
 
   const rawCanonical = (seoData?.canonicalTag || seoData?.canonicalUrl || "").trim();
-  let canonicalUrl = `${defaultUrl}/why-visit`;
+  let canonicalUrl = `${defaultUrl}/participate/why-visit`;
   if (rawCanonical) {
     const match = rawCanonical.match(/href=["']([^"']+)["']/i);
     if (match && match[1]) {
@@ -85,20 +93,25 @@ export async function generateMetadata(): Promise<Metadata> {
 export default async function WhyVisitPage() {
   let settingsData: any = null;
   let seoData: any = null;
+  let d1: any = null;
+  let d2: any = null;
   let mattersApiData: any = null;
   let segmentsApiData: any = null;
   const isLocal = process.env.NODE_ENV !== "production";
   const defaultUrl = isLocal ? "http://localhost:3002" : "https://bharatorganicexpo.com";
 
   try {
-    const [settingsRes, seoRes, mattersRes, segmentsRes] = await Promise.allSettled([
+    const [settingsRes, seoRes1, seoRes2, mattersRes, segmentsRes] = await Promise.allSettled([
       settingsApi.get(),
+      seoApi.getByPage("participate/why-visit", isLocal ? "local" : "live"),
       seoApi.getByPage("why-visit", isLocal ? "local" : "live"),
       websiteApi.getWhyVisitMatters(),
       websiteApi.getWhyVisitSegments(),
     ]);
     if (settingsRes.status === "fulfilled") settingsData = settingsRes.value;
-    if (seoRes.status === "fulfilled") seoData = seoRes.value?.data || seoRes.value;
+    d1 = seoRes1.status === "fulfilled" ? (seoRes1.value?.data || seoRes1.value) : null;
+    d2 = seoRes2.status === "fulfilled" ? (seoRes2.value?.data || seoRes2.value) : null;
+    seoData = (d1 && !Array.isArray(d1) && d1?.metaTitle) ? d1 : (d2 && !Array.isArray(d2) && d2?.metaTitle ? d2 : (d1 || d2));
     if (mattersRes.status === "fulfilled") mattersApiData = mattersRes.value?.data || mattersRes.value;
     if (segmentsRes.status === "fulfilled") segmentsApiData = segmentsRes.value?.data || segmentsRes.value;
   } catch (e) {
@@ -106,7 +119,7 @@ export default async function WhyVisitPage() {
   }
 
   const rawCanonical = (seoData?.canonicalTag || seoData?.canonicalUrl || "").trim();
-  let canonicalUrl = `${defaultUrl}/why-visit`;
+  let canonicalUrl = `${defaultUrl}/participate/why-visit`;
   if (rawCanonical) {
     const match = rawCanonical.match(/href=["']([^"']+)["']/i);
     if (match && match[1]) {
@@ -119,7 +132,7 @@ export default async function WhyVisitPage() {
     }
   }
 
-  const schemaContent = seoData?.schemaMarkup || null;
+  const schemaContent = seoData?.schemaMarkup || d1?.schemaMarkup || d2?.schemaMarkup || null;
 
   const sections: any[] = settingsData?.whyVisitPage?.sections || [];
   const heroSec = sections.find((s) => s.key === "why-visit-hero" || s.name === "HeroSection");
@@ -194,15 +207,7 @@ export default async function WhyVisitPage() {
 
   return (
     <>
-      <link rel="canonical" href={canonicalUrl} />
-      {schemaContent && (
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{
-            __html: typeof schemaContent === "string" ? schemaContent : JSON.stringify(schemaContent),
-          }}
-        />
-      )}
+      <SchemaInjector schema={schemaContent} />
       <main className="min-h-screen bg-white font-inter">
         {heroSec?.enabled !== false && <HeroSection sectionData={heroSec} />}
         {mattersSec?.enabled !== false && <WhyVisitMatters sectionData={mattersSec} />}

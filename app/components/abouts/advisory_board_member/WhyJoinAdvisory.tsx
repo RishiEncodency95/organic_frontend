@@ -1,5 +1,5 @@
 import React from "react";
-import { Target, Globe2, Lightbulb, ShieldCheck, ArrowRight, Leaf } from "lucide-react";
+import { Target, Globe2, Lightbulb, ShieldCheck, ArrowRight, Leaf, Users, TrendingUp } from "lucide-react";
 import Link from "next/link";
 import nominateBg from "../../../assets/about/advisory_board_member/nominate1.png";
 
@@ -16,8 +16,7 @@ const whyJoinAdvisoryData = {
         description: "Help us bring the right leaders together to catalyze innovation, sustainability, and industry growth. By nominating experts to our Advisory Board, you contribute directly to shaping the future of organic wellness, driving impactful policies, and fostering a global network dedicated to a sustainable tomorrow.",
         features: [
             {
-                iconPath: "M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2 M9 7a4 4 0 1 0 0-8 4 4 0 0 0 0 8z M22 21v-2a4 4 0 0 0-3-3.87 M16 3.13a4 4 0 0 1 0 7.75",
-                isSvgRaw: true,
+                icon: Users,
                 titlePart1: "STRONGER",
                 titlePart2: "LEADERSHIP"
             },
@@ -32,8 +31,7 @@ const whyJoinAdvisoryData = {
                 titlePart2: "DRIVEN"
             },
             {
-                iconPath: "M22 7L13.5 15.5L8.5 10.5L2 17 M16 7H22V13",
-                isSvgRaw: true,
+                icon: TrendingUp,
                 titlePart1: "INDUSTRY",
                 titlePart2: "GROWTH"
             }
@@ -180,17 +178,7 @@ const WhyJoinAdvisory = () => {
                                 {whyJoinAdvisoryData.bottomSection.features.map((feature, i) => (
                                     <div key={i} className={`flex flex-col items-center justify-center gap-2 px-2 md:px-4 ${i === 0 ? 'first:pl-0' : ''} group cursor-default`}>
                                         <div className="w-10 h-10 rounded-full border border-[#3b8c2a]/30 bg-[#f8fcf6] group-hover:bg-[#3b8c2a] group-hover:border-[#3b8c2a] text-[#1f471b] group-hover:text-white transition-all duration-300 flex items-center justify-center">
-                                            {feature.isSvgRaw ? (
-                                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                                                    {feature.iconPath?.split(' M').map((path, index) => (
-                                                        index === 0 
-                                                        ? <path key={index} d={path} /> 
-                                                        : (path.includes('V') || path.includes('L') ? <polyline key={index} points={path} /> : <path key={index} d={`M${path}`} />)
-                                                    ))}
-                                                </svg>
-                                            ) : (
-                                                feature.icon && <feature.icon size={20} strokeWidth={2} />
-                                            )}
+                                            {feature.icon && <feature.icon size={20} strokeWidth={2} />}
                                         </div>
                                         <span className="text-center text-[#333] font-bold text-[9px] md:text-[10px] tracking-widest uppercase max-w-[80px]">
                                             {feature.titlePart1}<br />{feature.titlePart2}

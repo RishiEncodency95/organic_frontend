@@ -1,17 +1,78 @@
-import { Metadata } from "next";
+import type { Metadata } from "next";
 import ExhibitorsSection from "@/app/components/exhibitors/ExhibitorsSection";
 import { ApiExhibitor, fallbackExhibitors, BACKEND_URL } from "@/app/components/exhibitors/data";
+import { seoApi } from "@/lib/api";
+import SchemaInjector from "@/app/components/SchemaInjector";
 
 export const dynamic = "force-dynamic";
 export const revalidate = 0;
 
-export const metadata: Metadata = {
-    title: "Exhibitors | Bharat Organic Expo",
-    description: "Meet leading health, Ayurveda, fitness and wellness brands at Bharat Organic Expo. Browse our exhibitors across Ayurveda, Pharma, Fitness, Organic Nutrition, Medical Devices and more.",
-    alternates: {
-        canonical: "/exhibitors",
+export async function generateMetadata(): Promise<Metadata> {
+  const isLocal = process.env.NODE_ENV !== "production";
+  const defaultUrl = isLocal ? "http://localhost:3002" : "https://bharatorganicexpo.com";
+  let seoData: any = null;
+  try {
+    const res = await seoApi.getByPage("exhibitors", isLocal ? "local" : "live");
+    seoData = res?.data || res;
+  } catch (err) {
+    // fallback
+  }
+
+  const rawCanonical = (seoData?.canonicalTag || seoData?.canonicalUrl || "").trim();
+  let canonicalUrl = `${defaultUrl}/exhibitors`;
+  if (rawCanonical) {
+    const match = rawCanonical.match(/href=["']([^"']+)["']/i);
+    if (match && match[1]) {
+      canonicalUrl = match[1].trim();
+    } else {
+      const stripped = rawCanonical.replace(/<[^>]*>/g, "").trim();
+      if (stripped.startsWith("http://") || stripped.startsWith("https://") || stripped.startsWith("/")) {
+        canonicalUrl = stripped.startsWith("/") ? `${defaultUrl}${stripped}` : stripped;
+      }
+    }
+  }
+
+  const title = seoData?.metaTitle || "Exhibitors | Bharat Organic Expo 2027";
+  const description =
+    seoData?.metaDescription ||
+    "Meet leading health, Ayurveda, fitness and wellness brands at Bharat Organic Expo. Browse our exhibitors across Ayurveda, Pharma, Fitness, Organic Nutrition, Medical Devices and more.";
+  const ogImage =
+    seoData?.ogImage ||
+    "https://res.cloudinary.com/dr8mld4i0/image/upload/v1788165233/moksha-sewa/assets/km.jpg";
+
+  return {
+    metadataBase: new URL(defaultUrl),
+    title: {
+      absolute: title,
     },
-};
+    description,
+    keywords: seoData?.metaKeywords
+      ? seoData.metaKeywords.split(",").map((k: string) => k.trim()).filter(Boolean)
+      : ["organic expo", "exhibitors", "bharat organic expo"],
+    alternates: {
+      canonical: canonicalUrl,
+    },
+    openGraph: {
+      title: seoData?.ogTitle || title,
+      description: seoData?.ogDescription || description,
+      url: canonicalUrl,
+      siteName: "Bharat Organic Expo 2027",
+      images: [
+        {
+          url: ogImage,
+          width: 1200,
+          height: 630,
+          alt: title,
+        },
+      ],
+      type: "website",
+    },
+    robots: {
+      index: seoData?.robotsIndex !== false,
+      follow: seoData?.robotsFollow !== false,
+    },
+  };
+}
 
 const getExhibitors = async (): Promise<ApiExhibitor[]> => {
     try {
@@ -69,6 +130,17 @@ const getExhibitorsHeader = async (): Promise<{ title: string; subtitle: string 
 };
 
 const ExhibitorsPage = async () => {
+    const isLocal = process.env.NODE_ENV !== "production";
+    let seoData: any = null;
+    try {
+        const res = await seoApi.getByPage("exhibitors", isLocal ? "local" : "live");
+        seoData = res?.data || res;
+    } catch (err) {
+        // fallback
+    }
+
+    const schemaContent = seoData?.schemaMarkup || null;
+
     const [exhibitors, header] = await Promise.all([
         getExhibitors(),
         getExhibitorsHeader(),
@@ -76,6 +148,7 @@ const ExhibitorsPage = async () => {
 
     return (
         <div className="min-h-screen bg-white font-sans text-neutral-800 overflow-x-clip">
+            <SchemaInjector schema={schemaContent} />
             <ExhibitorsSection exhibitors={exhibitors} header={header} />
         </div>
     );

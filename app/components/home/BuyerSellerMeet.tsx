@@ -71,7 +71,7 @@ const sectionData = {
     titleHighlight: "MEET 2027",
     subtitle: (
       <>
-        Bridging the gap between <span className="text-[#3b8c2a] font-semibold">Organic Buyers</span> and <span className="text-[#3b8c2a] font-semibold">Sustainable Brands</span>
+        Bridging the gap between <span className="text-[#166534] font-semibold">Organic Buyers</span> and <span className="text-[#166534] font-semibold">Sustainable Brands</span>
       </>
     ),
     description: "Join India's most exclusive B2B networking platform for the organic sector. Our highly curated Buyer-Seller Meet brings together certified farmers, eco-friendly product manufacturers, and top-tier global buyers. Pre-schedule your 1-on-1 meetings to secure bulk orders and forge lasting partnerships in the booming sustainable market.",

@@ -358,11 +358,11 @@ const SponsorshipCategories = () => {
                     </a>
                   </div>
 
-                  <Link href={sectionData.promoBox.buttons.contactLink} target="_blank" rel="noopener noreferrer" className="flex items-center justify-center gap-1 px-2.5 py-1.5 bg-[#3b8c2a] hover:bg-[#2f7121] border border-[#3b8c2a] rounded-full text-white transition-colors shadow-lg flex-1 min-w-0">
+                  <Link href={sectionData.promoBox.buttons.contactLink} target="_blank" rel="noopener noreferrer" className="flex items-center justify-center gap-1 px-2.5 py-1.5 bg-[#166534] hover:bg-[#14532d] border border-[#166534] rounded-full text-white transition-colors shadow-lg flex-1 min-w-0">
                     <MessageCircle className="w-3 h-3 shrink-0" />
                     <span className="text-[8.5px] xl:text-[10px] font-bold uppercase tracking-wider whitespace-nowrap overflow-hidden text-ellipsis">{sectionData.promoBox.buttons.contactText}</span>
                   </Link>
-                  <a href={sectionData.promoBox.buttons.phoneLink} className="flex items-center justify-center gap-1 px-2.5 py-1.5 border border-[#3b8c2a]/80 hover:border-[#3b8c2a] rounded-full text-white hover:bg-[#3b8c2a]/10 transition-colors flex-1 min-w-0">
+                  <a href={sectionData.promoBox.buttons.phoneLink} className="flex items-center justify-center gap-1 px-2.5 py-1.5 border border-[#166534]/80 hover:border-[#166534] rounded-full text-white hover:bg-[#166534]/10 transition-colors flex-1 min-w-0">
                     <PhoneCall className="w-3 h-3 shrink-0" />
                     <span className="text-[8.5px] xl:text-[10px] font-bold uppercase tracking-wider whitespace-nowrap overflow-hidden text-ellipsis">{sectionData.promoBox.buttons.phoneText}</span>
                   </a>

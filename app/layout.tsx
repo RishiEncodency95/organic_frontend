@@ -53,38 +53,6 @@ export const metadata: Metadata = {
   },
 };
 
-const eventSchema = {
-  "@context": "https://schema.org",
-  "@type": "Event",
-  "name": "Bharat Organic Expo 2027",
-  "startDate": "2027-02-19",
-  "endDate": "2027-02-21",
-  "eventAttendanceMode": "https://schema.org/OfflineEventAttendanceMode",
-  "eventStatus": "https://schema.org/EventScheduled",
-  "location": {
-    "@type": "Place",
-    "name": "Pragati Maidan",
-    "address": {
-      "@type": "PostalAddress",
-      "addressLocality": "New Delhi",
-      "addressCountry": "IN"
-    }
-  },
-  "description": "Join Bharat Organic Expo 2027, the premier exhibition and conference for organic food, agriculture, and natural products in India.",
-  "organizer": {
-    "@type": "Organization",
-    "name": "Namo Gange Wellness Pvt. Ltd.",
-    "url": "https://bharatorganicexpo.com"
-  }
-};
-
-const orgSchema = {
-  "@context": "https://schema.org",
-  "@type": "Organization",
-  "name": "Bharat Organic Expo",
-  "url": "https://bharatorganicexpo.com",
-};
-
 import StoreProvider from "./store/StoreProvider";
 
 export default function RootLayout({
@@ -98,16 +66,7 @@ export default function RootLayout({
       suppressHydrationWarning
       className={`${poppins.variable} ${inter.variable} h-full antialiased overflow-x-hidden`}
     >
-      <head>
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(eventSchema) }}
-        />
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(orgSchema) }}
-        />
-      </head>
+      <head />
       <body suppressHydrationWarning className="min-h-full flex flex-col font-inter text-[16px] md:text-[18px] leading-[1.6] overflow-x-hidden w-full">
         <DynamicCanonical />
         <SmoothScroll>
