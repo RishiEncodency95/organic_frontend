@@ -30,6 +30,7 @@ const navLinks = [
             // { label: "Support & Services", path: "/support", icon: Briefcase, description: "Explore our global network of collaborators" },
             { label: "Advisory Board Members", path: "/about/advisory_board_member", icon: Users, description: "Meet the experts behind the exhibition" },
             { label: "Blogs", path: "/blog", icon: Layout, description: "Latest news and insights from the wellness industry" },
+            { label: "Careers", path: "/careers", icon: Briefcase, description: "Explore career opportunities with us" },
         ]
     },
     {
@@ -57,6 +58,7 @@ const navLinks = [
     { label: "Glimpses", path: "/gallery" },
     { label: "Conference", path: "https://arogya.namogange.org/", isExternal: true },
     { label: "Awards", path: "/awards" },
+    { label: "Careers", path: "/careers" },
     { label: "Contact", path: "/contact" },
 ];
 
@@ -64,6 +66,7 @@ const bottomTabs = [
     { label: "Home", path: "/", icon: Home },
     { label: "Conference", path: "https://arogya.namogange.org/", icon: Mic, isExternal: true },
     { label: "Award", path: "/awards", icon: Trophy },
+    { label: "Careers", path: "/careers", icon: Briefcase },
     { label: "Contact", path: "/contact", icon: Phone },
 ];
 
@@ -80,6 +83,7 @@ const quickPills = [
     { label: "Advisory Board", path: "/about/advisory_board_member" },
     { label: "Media / Gallery", path: "/gallery" },
     { label: "Blogs", path: "/blog" },
+    { label: "Careers", path: "/careers" },
     { label: "Exhibitor List", path: "/exhibitors" },
     { label: "Seller Reg.", path: "/seller-registration" },
 ];
@@ -97,6 +101,7 @@ const standaloneLinks = [
     { label: "Glimpses", path: "/gallery", icon: Camera },
     { label: "Conference", path: "https://arogya.namogange.org/", icon: Mic, isExternal: true },
     { label: "Awards", path: "/awards", icon: Star },
+    { label: "Careers", path: "/careers", icon: Briefcase },
     { label: "Contact", path: "/contact", icon: Phone },
 ];
 

@@ -7,7 +7,7 @@ import AboutStrip from "@/app/components/abouts/about/AboutStrip";
 import ChairmanMessage from "@/app/components/abouts/advisory_board_member/ChairmanMessage";
 import AdvisoryBoardGrid from "@/app/components/abouts/advisory_board_member/AdvisoryBoardGrid";
 import WhyJoinAdvisory from "@/app/components/abouts/advisory_board_member/WhyJoinAdvisory";
-import AdvisoryPartners from "@/app/components/abouts/advisory_board_member/AdvisoryPartners";
+// import AdvisoryPartners from "@/app/components/abouts/advisory_board_member/AdvisoryPartners";
 
 export const dynamic = "force-dynamic";
 export const revalidate = 0;
@@ -99,7 +99,7 @@ const AdvisoryBoardMemberPage = async () => {
       <ChairmanMessage />
       <AdvisoryBoardGrid />
       <WhyJoinAdvisory />
-      <AdvisoryPartners />
+      {/* <AdvisoryPartners /> */}
     </div>
   );
 };
