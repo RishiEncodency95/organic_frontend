@@ -1,5 +1,6 @@
 "use client";
 
+import { createContext, useContext, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import {
@@ -28,7 +29,15 @@ import {
    CHANGE ONLY SCORE
    ========================================================= */
 
-const matchScore = 58;
+const matchScore = 72;
+/*
+  QUICK PREVIEW:
+  72 = GREEN / ELIGIBLE
+  58 = ORANGE / PARTIAL MATCH
+  38 = RED / NOT ELIGIBLE
+
+  Bas yahi number change karo.
+*/
 
 const asset = (file: string) => `/separated-assets/${file}`;
 
@@ -38,6 +47,12 @@ const separatedAssets = {
   stickyNote: asset("ChatGPT Image Sep 16, 2026, 04_33_26 PM.png"),
   sidebarTop: asset("ChatGPT Image Sep 16, 2026, 04_29_31 PM.png"),
   sidebarFooter: asset("ChatGPT Image Sep 16, 2026, 04_34_38 PM.png"),
+  headerLeaf: "/separated-assets/bharat-organic-leaf.png",
+};
+
+const brandHeader = {
+  title: "Bharat Organic Expo",
+  tagline: "People • Ideas • Partnerships for a Greener Tomorrow",
 };
 
 /*
@@ -83,8 +98,56 @@ const job = {
 
 type MatchLevel = "high" | "moderate" | "low";
 
+/*
+  PREVIEW / RESULT RULE
+  ---------------------------------------------------------
+  Just change `matchScore` at the top:
+  72 => GREEN / HIGH
+  58 => ORANGE / MODERATE
+  38 => RED / LOW
+
+  No other layout change is needed.
+*/
 const matchLevel: MatchLevel =
   matchScore >= 70 ? "high" : matchScore >= 50 ? "moderate" : "low";
+
+const stateTheme = {
+  high: {
+    primary: "#07883f",
+    dark: "#076331",
+    heroBg: "linear-gradient(100deg,#edf8ef 0%,#e9f6eb 52%,#e2f5e6 100%)",
+    panelBg: "#f3fbf5",
+    panelBorder: "#d9ecdf",
+    score: "#149c3e",
+    step: "#07883f",
+    cta: "#08743e",
+    supportBg: "#f3fbf3",
+  },
+  moderate: {
+    primary: "#f08000",
+    dark: "#d85400",
+    heroBg: "linear-gradient(100deg,#fff8ec 0%,#fff3df 58%,#fff0d6 100%)",
+    panelBg: "#fffaf2",
+    panelBorder: "#f0e3d4",
+    score: "#f18700",
+    step: "#f08000",
+    cta: "#08743e",
+    supportBg: "#eff7ff",
+  },
+  low: {
+    primary: "#d30c18",
+    dark: "#9a1117",
+    heroBg: "linear-gradient(100deg,#fff5f5 0%,#ffeded 55%,#ffe8e8 100%)",
+    panelBg: "#fff7f7",
+    panelBorder: "#f0dddd",
+    score: "#d20c16",
+    step: "#d30c18",
+    cta: "#08743e",
+    supportBg: "#f3fbf3",
+  },
+} as const;
+
+const theme = stateTheme[matchLevel];
 
 /* =========================================================
    CONFIG
@@ -292,7 +355,32 @@ const matchConfig = {
   },
 } as const;
 
-const current = matchConfig[matchLevel];
+type MatchContextType = {
+  matchScore: number;
+  matchLevel: MatchLevel;
+  theme: (typeof stateTheme)["high" | "moderate" | "low"];
+  current: (typeof matchConfig)["high" | "moderate" | "low"];
+};
+
+const MatchContext = createContext<MatchContextType>({
+  matchScore: 72,
+  matchLevel: "high",
+  theme: stateTheme["high"],
+  current: matchConfig["high"],
+});
+
+export const useMatchData = () => useContext(MatchContext);
+
+export function getMatchData(score: number): MatchContextType {
+  const level: MatchLevel =
+    score >= 70 ? "high" : score >= 50 ? "moderate" : "low";
+  return {
+    matchScore: score,
+    matchLevel: level,
+    theme: stateTheme[level],
+    current: matchConfig[level],
+  };
+}
 
 /* =========================================================
    LINKEDIN
@@ -320,6 +408,7 @@ function LinkedInIcon({
    ========================================================= */
 
 function ProgressSteps() {
+  const { matchLevel, current, theme } = useMatchData();
   const steps = [
     "Upload CV",
     "AI Analysis",
@@ -341,7 +430,7 @@ function ProgressSteps() {
       {current.step === 3 && (
         <div
           className="absolute left-[50%] top-[16px] h-[2px] w-[25%]"
-          style={{ background: current.color }}
+          style={{ background: theme.primary }}
         />
       )}
 
@@ -399,17 +488,12 @@ function ProgressSteps() {
    ========================================================= */
 
 function ResultHero() {
-  const heroBg =
-    matchLevel === "high"
-      ? "linear-gradient(100deg,#edf8ef 0%,#e9f6eb 52%,#e2f5e6 100%)"
-      : matchLevel === "moderate"
-        ? "linear-gradient(100deg,#fff8ec 0%,#fff3df 58%,#fff0d6 100%)"
-        : "linear-gradient(100deg,#fff5f5 0%,#ffeded 55%,#ffe8e8 100%)";
+  const { matchLevel, current, theme } = useMatchData();
 
   return (
     <div
       className="relative h-full min-h-0 overflow-hidden rounded-[8px]"
-      style={{ background: heroBg }}
+      style={{ background: theme.heroBg }}
     >
       {/* LEFT PERSON COMPOSITION */}
       <div className="absolute inset-y-0 left-0 w-[40.2%] overflow-hidden">
@@ -436,29 +520,60 @@ function ResultHero() {
         }}
       />
 
+      {/*
+        HIDE THE STATUS ICON THAT IS BAKED INTO THE PERSON IMAGE.
+        Use a slightly wider rectangular patch so no orange/green/red crescent
+        from the image remains visible behind the real dynamic icon.
+      */}
+      <div
+        className="pointer-events-none absolute left-[32.25%] top-[7.2%] z-[18] h-[78px] w-[86px]"
+        style={{
+          background:
+            matchLevel === "high"
+              ? "#e9f6eb"
+              : matchLevel === "moderate"
+                ? "#fff3df"
+                : "#ffeded",
+        }}
+      />
+
+      {/* REAL DYNAMIC STATUS ICON: 72=CHECK, 58=!, 38=X */}
+      <div
+        className="absolute left-[35.05%] top-[10%] z-20 grid h-[52px] w-[52px] place-items-center rounded-full text-white shadow-sm"
+        style={{ background: theme.primary }}
+      >
+        {matchLevel === "high" ? (
+          <Check className="h-[30px] w-[30px]" strokeWidth={3.2} />
+        ) : matchLevel === "low" ? (
+          <X className="h-[30px] w-[30px]" strokeWidth={3.2} />
+        ) : (
+          <span className="text-[31px] font-black leading-none">!</span>
+        )}
+      </div>
+
       {/* TEXT BLOCK */}
       <div className="absolute bottom-[3%] left-[42.2%] top-[3%] z-10 w-[40.5%] overflow-hidden pr-1">
         <div className="flex h-full min-h-0 flex-col justify-center">
           <h2
-            className="max-w-full text-[clamp(17px,1.4vw,22px)] font-black leading-[1.08] tracking-[-0.035em]"
-            style={{ color: current.dark }}
+            className="max-w-full text-[clamp(21px,1.75vw,28px)] font-black leading-[1.08] tracking-[-0.035em]"
+            style={{ color: theme.dark }}
           >
             {current.title}
           </h2>
 
-          <h3 className="mt-[3px] text-[11.5px] font-black leading-[1.2] text-[#102747]">
+          <h3 className="mt-[3px] text-[14px] font-black leading-[1.2] text-[#102747]">
             {current.subtitle}
           </h3>
 
-          <p className="mt-[5px] max-w-[98%] text-[10px] leading-[1.32] text-[#173757]">
+          <p className="mt-[5px] max-w-[98%] text-[12.5px] leading-[1.32] text-[#173757]">
             {current.description}
           </p>
 
-          <p className="mt-[5px] max-w-[95%] text-[9.5px] italic leading-[1.28] text-[#173757]">
+          <p className="mt-[5px] max-w-[95%] text-[12px] italic leading-[1.28] text-[#173757]">
             “ {current.quote} ”
           </p>
 
-          <p className="mt-[4px] text-[9px] font-extrabold italic leading-[1.12] text-[#174733]">
+          <p className="mt-[4px] text-[11.5px] font-extrabold italic leading-[1.12] text-[#174733]">
             — Talent Acquisition Team
             <br />
             <span className="pl-[12px]">Bharat Organic Expo</span>
@@ -485,12 +600,8 @@ function ResultHero() {
    ========================================================= */
 
 function ScoreRing() {
-  const ringColor =
-    matchScore >= 70
-      ? "#149c3e"
-      : matchScore >= 50
-        ? "#f18700"
-        : "#d20c16";
+  const { matchScore, matchLevel, theme } = useMatchData();
+  const ringColor = theme.score;
 
   return (
     <div
@@ -548,6 +659,8 @@ function Legend({
    ========================================================= */
 
 function ScoreSummary() {
+  const { matchLevel, current, theme } = useMatchData();
+
   return (
     <div className="grid h-full min-h-0 grid-cols-[1.18fr_.82fr] gap-[10px]">
       <div className="flex min-h-0 items-center gap-[clamp(10px,1.35vw,20px)] overflow-hidden rounded-[7px] border border-[#e0e7e2] bg-white px-[clamp(10px,1.35vw,20px)]">
@@ -585,13 +698,16 @@ function ScoreSummary() {
       </div>
 
       <div
-        className="flex h-full min-h-0 flex-col overflow-y-auto rounded-[7px] border border-[#e7e3dc] px-[clamp(9px,1vw,15px)] py-[clamp(7px,.7vh,10px)]"
-        style={{ background: current.soft2 }}
+        className="flex h-full min-h-0 flex-col overflow-y-auto rounded-[7px] border px-[clamp(9px,1vw,15px)] py-[clamp(7px,.7vh,10px)]"
+        style={{
+          background: theme.panelBg,
+          borderColor: theme.panelBorder,
+        }}
       >
         <div className="flex items-center gap-[8px]">
           <div
             className="grid h-[29px] w-[29px] shrink-0 place-items-center rounded-full text-white"
-            style={{ background: current.color }}
+            style={{ background: theme.primary }}
           >
             {matchLevel === "moderate" ? (
               <Lightbulb className="h-[17px] w-[17px]" />
@@ -615,7 +731,7 @@ function ScoreSummary() {
             >
               <span
                 className="mt-[1px] grid h-[16px] w-[16px] shrink-0 place-items-center rounded-full text-[10px] font-black text-white"
-                style={{ background: current.color }}
+                style={{ background: theme.primary }}
               >
                 {matchLevel === "high" ? (
                   <Check className="h-[10px] w-[10px]" />
@@ -642,6 +758,8 @@ function ScoreSummary() {
    ========================================================= */
 
 function Breakdown() {
+  const { matchLevel, current } = useMatchData();
+
   if (matchLevel === "low") {
     return <LowNextSteps />;
   }
@@ -962,6 +1080,8 @@ function JobSummary() {
    ========================================================= */
 
 function SupportCard() {
+  const { matchLevel, theme } = useMatchData();
+
   if (matchLevel === "low") {
     return (
       <div className="flex h-full min-h-0 items-center gap-[8px] overflow-hidden rounded-[6px] border border-[#dcebdd] bg-[#f3fbf3] px-[10px]">
@@ -991,7 +1111,10 @@ function SupportCard() {
   }
 
   return (
-    <div className="flex h-full min-h-0 items-center gap-[9px] overflow-hidden rounded-[6px] bg-[#eff7ff] px-[10px]">
+    <div
+      className="flex h-full min-h-0 items-center gap-[9px] overflow-hidden rounded-[6px] px-[10px]"
+      style={{ background: theme.supportBg }}
+    >
       <Info className="h-[19px] w-[19px] shrink-0 fill-[#1670ce] text-white" />
 
       <div>
@@ -1032,6 +1155,8 @@ function SidebarFooter() {
    ========================================================= */
 
 function Sidebar() {
+  const { matchLevel, current } = useMatchData();
+
   return (
     <aside
       className="
@@ -1046,7 +1171,7 @@ function Sidebar() {
         pb-[7px]
         pt-[8px]
 
-        grid-rows-[8.4vh_17.3vh_13.8vh_20vh_5.1vh_4.8vh_6.8vh_minmax(0,1fr)]
+        grid-rows-[78px_160px_128px_184px_48px_44px_64px_1fr]
         gap-[8px]
       "
     >
@@ -1105,28 +1230,24 @@ function Sidebar() {
 }
 
 /* =========================================================
-   PAGE
+   PAGE / 800PX POPUP
    ========================================================= */
 
-export default function CareerEligibilityPage() {
+const DESIGN_WIDTH = 1500;
+const DESIGN_HEIGHT = 972;
+
+export function EligibilityPopupContent({ score = 58 }: { score?: number }) {
+  const matchData = getMatchData(score);
+
   return (
-    <main
-      className="w-full overflow-hidden bg-white text-[#10243f]"
-      style={{
-        height: "100dvh",
-        minHeight: 0,
-        maxHeight: "100dvh",
-      }}
-    >
+    <MatchContext.Provider value={matchData}>
       <div
-        className="
-          grid
-          h-full
-          min-h-0
-          w-full
-          overflow-hidden
-          grid-cols-[68.2%_31.8%]
-        "
+        className="grid overflow-hidden bg-white text-[#10243f]"
+        style={{
+          width: `${DESIGN_WIDTH}px`,
+          height: `${DESIGN_HEIGHT}px`,
+          gridTemplateColumns: "68.2% 31.8%",
+        }}
       >
         {/* LEFT */}
         <section
@@ -1134,34 +1255,53 @@ export default function CareerEligibilityPage() {
             grid
             h-full
             min-h-0
-            overflow-y-auto
-            px-[clamp(24px,2.5vw,48px)]
-            pb-[16px]
-            pt-[72px]
-
-            grid-rows-[auto_auto_minmax(210px,26vh)_minmax(160px,20vh)_auto]
-            gap-[12px]
+            overflow-hidden
+            px-[42px]
+            pb-[14px]
+            pt-[18px]
+            grid-rows-[54px_86px_68px_238px_188px_210px]
+            gap-[10px]
           "
         >
+          {/* BHARAT ORGANIC EXPO HEADER - EDITABLE CONTENT */}
+          <div className="flex min-h-0 items-center gap-[10px] overflow-hidden">
+            <Image
+              src={separatedAssets.headerLeaf}
+              alt=""
+              width={82}
+              height={92}
+              priority
+              className="h-[46px] w-[42px] shrink-0 object-contain"
+            />
+
+            <div className="min-w-0">
+              <div className="truncate text-[24px] font-black leading-[1] text-[#102b22]">
+                {brandHeader.title}
+              </div>
+
+              <div className="mt-[3px] truncate text-[12px] font-semibold leading-[1.05] text-[#123d73]">
+                {brandHeader.tagline}
+              </div>
+            </div>
+          </div>
+
           {/* JOB HEADING */}
           <div className="relative min-h-0 overflow-visible pr-[188px]">
             <Link
               href="/careers"
-              className="flex w-fit items-center gap-[7px] text-[clamp(11px,.9vw,15px)] font-extrabold text-[#103662]"
+              className="flex w-fit items-center gap-[7px] text-[15px] font-extrabold text-[#103662]"
             >
               <ArrowLeft className="h-[17px] w-[17px]" />
               Back
             </Link>
 
-            <h1 className="mt-[4px] truncate text-[clamp(18px,1.5vw,25px)] font-black leading-[1.05] tracking-[-0.025em] text-[#123d73]">
+            <h1 className="mt-[4px] truncate text-[25px] font-black leading-[1.05] tracking-[-0.025em] text-[#123d73]">
               {job.title}
             </h1>
 
             <div className="mt-[3px] flex items-center gap-[10px] text-[14px] font-bold text-[#163a67]">
               <span>{job.company}</span>
-
               <span className="h-[13px] w-px bg-[#cbd3db]" />
-
               <span>{job.brand}</span>
             </div>
 
@@ -1174,22 +1314,18 @@ export default function CareerEligibilityPage() {
             />
           </div>
 
-          {/* STEPS */}
           <div className="min-h-0 overflow-hidden">
             <ProgressSteps />
           </div>
 
-          {/* HERO */}
           <div className="min-h-0 overflow-hidden">
             <ResultHero />
           </div>
 
-          {/* SUMMARY */}
           <div className="min-h-0 overflow-hidden">
             <ScoreSummary />
           </div>
 
-          {/* BREAKDOWN */}
           <div className="min-h-0 overflow-hidden">
             <Breakdown />
           </div>
@@ -1198,6 +1334,90 @@ export default function CareerEligibilityPage() {
         {/* RIGHT */}
         <Sidebar />
       </div>
+    </MatchContext.Provider>
+  );
+}
+
+export function EligibilityModal({
+  isOpen,
+  score = 58,
+  onClose,
+}: {
+  isOpen: boolean;
+  score?: number;
+  onClose: () => void;
+}) {
+  if (!isOpen) return null;
+
+  return (
+    <div className="fixed inset-0 z-[9999] flex items-center justify-center bg-black/40 p-3">
+      <div
+        className="
+          relative
+          w-[85vw]
+          max-w-[1300px]
+          max-h-[95vh]
+          overflow-hidden
+          rounded-[18px]
+          bg-[#fbfcf9]
+          shadow-[0_30px_90px_rgba(0,0,0,.28)]
+        "
+        style={{
+          aspectRatio: `${DESIGN_WIDTH} / ${DESIGN_HEIGHT}`,
+        }}
+      >
+        <button
+          type="button"
+          aria-label="Close popup"
+          onClick={onClose}
+          className="absolute right-[8px] top-[8px] z-[100] grid h-8 w-8 place-items-center rounded-full bg-white/95 text-[#123d73] shadow-md"
+        >
+          <X className="h-4 w-4" />
+        </button>
+
+        {/* 
+          IMPORTANT:
+          Scale from the REAL popup width, not from a hard-coded 1300px.
+          This keeps the complete right sidebar, buttons and footer image visible
+          even when 85vw is smaller than 1300px.
+        */}
+        <div className="absolute inset-0 overflow-hidden">
+          <div
+            className="absolute left-0 top-0"
+            style={{
+              width: `${DESIGN_WIDTH}px`,
+              height: `${DESIGN_HEIGHT}px`,
+              transform:
+                "scale(calc(min(85vw, 1300px) / 1500px))",
+              transformOrigin: "top left",
+            }}
+          >
+            <EligibilityPopupContent score={score} />
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+export default function CareerEligibilityPage() {
+  const [open, setOpen] = useState(true);
+
+  return (
+    <main className="min-h-screen bg-white">
+      {!open && (
+        <div className="flex min-h-screen items-center justify-center">
+          <button
+            type="button"
+            onClick={() => setOpen(true)}
+            className="rounded-[8px] bg-[#08743e] px-6 py-3 text-sm font-bold text-white"
+          >
+            Open Eligibility Result
+          </button>
+        </div>
+      )}
+
+      <EligibilityModal isOpen={open} score={72} onClose={() => setOpen(false)} />
     </main>
   );
 }
