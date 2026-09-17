@@ -1,19 +1,60 @@
 "use client";
 
-import React, { useRef, useEffect } from "react";
+import React, { useRef, useEffect, useState } from "react";
+import * as LucideIcons from "lucide-react";
 import { Trophy, Award, Users, Globe2, Medal } from "lucide-react";
 import SectionContainer from "@/app/components/layout/SectionContainer";
 import gsap from "gsap";
 
-const items = [
-  { id: 1, icon: Trophy, title: "200+", subtitle: "CATEGORIES" },
-  { id: 2, icon: Award, title: "30+", subtitle: "GRAND AWARDS" },
-  { id: 3, icon: Users, title: "EXPERT", subtitle: "JURY PANEL" },
-  { id: 4, icon: Globe2, title: "NATIONWIDE &", subtitle: "GLOBAL RECOGNITION" },
-  { id: 5, icon: Medal, title: "CREDIBILITY", subtitle: "& TRANSPARENCY" },
+const DEFAULT_ITEMS = [
+  { id: 1, icon: "Trophy", title: "200+", subtitle: "CATEGORIES" },
+  { id: 2, icon: "Award", title: "30+", subtitle: "GRAND AWARDS" },
+  { id: 3, icon: "Users", title: "EXPERT", subtitle: "JURY PANEL" },
+  { id: 4, icon: "Globe2", title: "NATIONWIDE &", subtitle: "GLOBAL RECOGNITION" },
+  { id: 5, icon: "Medal", title: "CREDIBILITY", subtitle: "& TRANSPARENCY" },
 ];
 
-export default function AwardsStats() {
+const getIconComponent = (name?: string) => {
+  if (!name) return Trophy;
+  const cleaned = name.replace(/[^a-zA-Z0-9]/g, "");
+  return (LucideIcons as any)[cleaned] || (LucideIcons as any)[name] || Trophy;
+};
+
+interface AwardsStatsProps {
+  initialData?: any;
+}
+
+export default function AwardsStats({ initialData }: AwardsStatsProps) {
+  const [statsData, setStatsData] = useState<any>(initialData || {
+    enabled: true,
+    items: DEFAULT_ITEMS,
+  });
+
+  useEffect(() => {
+    const fetchLiveStats = async () => {
+      try {
+        const apiUrl = process.env.NEXT_PUBLIC_API_URL || "http://localhost:4001/api";
+        const serverUrl = process.env.NEXT_PUBLIC_SERVER_URL || "http://localhost:4001";
+        let res = await fetch(`${apiUrl}/website/awards/stats`, { cache: "no-store" }).catch(() => null);
+        if (!res || !res.ok) {
+          res = await fetch(`${serverUrl}/api/website/awards/stats`, { cache: "no-store" }).catch(() => null);
+        }
+        if (!res || !res.ok) {
+          res = await fetch(`/api/website/awards/stats`, { cache: "no-store" }).catch(() => null);
+        }
+        if (res && res.ok) {
+          const json = await res.json().catch(() => null);
+          if (json?.data) {
+            setStatsData(json.data);
+          }
+        }
+      } catch (err) {
+        console.error("Failed to load live awards stats:", err);
+      }
+    };
+    fetchLiveStats();
+  }, []);
+
   const bandRef = useRef<HTMLDivElement>(null);
   const shimmerRef = useRef<HTMLDivElement>(null);
   const itemRefs = useRef<(HTMLDivElement | null)[]>([]);
@@ -22,7 +63,12 @@ export default function AwardsStats() {
   itemRefs.current = [];
   dividerRefs.current = [];
 
+  const itemsList = Array.isArray(statsData?.items) && statsData.items.length > 0
+    ? statsData.items
+    : DEFAULT_ITEMS;
+
   useEffect(() => {
+    if (statsData?.enabled === false) return;
     const ctx = gsap.context(() => {
       const tl = gsap.timeline({
         delay: 0.8,
@@ -63,7 +109,9 @@ export default function AwardsStats() {
     });
 
     return () => ctx.revert();
-  }, []);
+  }, [itemsList, statsData?.enabled]);
+
+  if (statsData?.enabled === false) return null;
 
   return (
     <div className="relative z-20 -mt-6 md:-mt-8 font-inter">
@@ -81,10 +129,12 @@ export default function AwardsStats() {
           />
 
           <div className="grid grid-cols-2 sm:grid-cols-3 md:flex md:flex-nowrap items-center justify-center md:justify-between gap-y-3 gap-x-2 md:gap-0">
-            {items.map((item, i) => {
-              const IconComponent = item.icon;
+            {itemsList.map((item: any, i: number) => {
+              const IconComponent = typeof item.icon === "string" ? getIconComponent(item.icon) : (item.icon || Trophy);
+              const title = item.title;
+              const subtitle = item.subtitle || item.label;
               return (
-                <React.Fragment key={i}>
+                <React.Fragment key={item.id || item._id || i}>
                   <div
                     ref={(el) => { itemRefs.current[i] = el; }}
                     style={{ opacity: 0 }}
@@ -92,13 +142,13 @@ export default function AwardsStats() {
                   >
                     <IconComponent className="w-4 h-4 md:w-5 md:h-5 mb-1 text-white stroke-[1.75]" />
                     <h4 className="text-[11px] sm:text-[13px] md:text-sm font-semibold text-white leading-none font-inter mb-0.5">
-                      {item.title}
+                      {title}
                     </h4>
                     <p className="text-[8px] md:text-[9px] font-bold text-[#facc15] uppercase tracking-widest leading-tight mt-0.5 font-inter">
-                      {item.subtitle}
+                      {subtitle}
                     </p>
                   </div>
-                  {i < items.length - 1 && (
+                  {i < itemsList.length - 1 && (
                     <div
                       ref={(el) => { dividerRefs.current[i] = el; }}
                       className="hidden md:block w-px h-6 bg-white/20"

@@ -82,6 +82,10 @@ const defaultStats = [
   { icon: gal6, num: SITE_CONFIG.stats.sessionsCount, label: 'Sessions\nConducted' },
 ];
 
+const API_URL =
+  process.env.NEXT_PUBLIC_API_URL ||
+  "http://localhost:4001/api";
+
 interface CountersProps {
   dbCounters?: any[];
 }
@@ -96,14 +100,71 @@ const Counters: React.FC<CountersProps> = ({ dbCounters = EMPTY_COUNTERS }) => {
   useEffect(() => {
     if (dbCounters && dbCounters.length > 0) {
       setLoadedCounters(dbCounters);
-    } else {
-      setLoadedCounters(defaultStats.map((s, idx) => ({
-        _id: idx,
-        iconKey: `gal${idx + 1}`,
-        number: s.num.toString() + (idx === 1 ? '' : '+'),
-        label: s.label
-      })));
+      return;
     }
+
+    const fetchCounters = async () => {
+      try {
+        const res = await fetch(`${API_URL}/website/gallery/counters`, {
+          cache: "no-store",
+        });
+        if (res.ok) {
+          const json = await res.json();
+          const d = json?.data || json;
+          if (d && Array.isArray(d.items) && d.items.length > 0) {
+            setLoadedCounters(
+              d.items.map((it: any, idx: number) => ({
+                _id: it._id || idx,
+                iconKey: it.iconKey || `gal${(idx % 6) + 1}`,
+                image: it.image || "",
+                number: it.val || it.number || "",
+                label: it.label || it.title || "",
+              }))
+            );
+            return;
+          }
+        }
+      } catch {
+        // fallback
+      }
+
+      try {
+        const sRes = await fetch(`${API_URL}/settings`, { cache: "no-store" });
+        if (sRes.ok) {
+          const sJson = await sRes.json();
+          const gPage = sJson?.data?.galleryPage || sJson?.galleryPage;
+          const countersSec = gPage?.sections?.find(
+            (s: any) => s.key === "gallery-counters" || s.name === "Counters"
+          );
+          if (countersSec && Array.isArray(countersSec.items) && countersSec.items.length > 0) {
+            setLoadedCounters(
+              countersSec.items.map((it: any, idx: number) => ({
+                _id: idx,
+                iconKey: it.iconKey || `gal${(idx % 6) + 1}`,
+                image: it.image || "",
+                number: it.val || it.number || "",
+                label: it.label || it.title || "",
+              }))
+            );
+            return;
+          }
+        }
+      } catch {
+        // fallback
+      }
+
+      // Default fallback
+      setLoadedCounters(
+        defaultStats.map((s, idx) => ({
+          _id: idx,
+          iconKey: `gal${idx + 1}`,
+          number: s.num.toString() + (idx === 1 ? "" : "+"),
+          label: s.label,
+        }))
+      );
+    };
+
+    fetchCounters();
   }, [dbCounters]);
 
   useEffect(() => {

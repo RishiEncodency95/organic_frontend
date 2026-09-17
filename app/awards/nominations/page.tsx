@@ -84,12 +84,26 @@ export default async function AwardsNominationPage() {
     // fallback
   }
 
+  let heroData: any = null;
+  try {
+    const apiUrl = process.env.NEXT_PUBLIC_API_URL || "http://localhost:4001/api";
+    const res = await fetch(`${apiUrl}/website/awards/nomination-hero`, { cache: "no-store" }).catch(() => null);
+    if (res && res.ok) {
+      const json = await res.json().catch(() => null);
+      if (json?.data) {
+        heroData = json.data;
+      }
+    }
+  } catch (err) {
+    // fallback to client-side
+  }
+
   const schemaContent = seoData?.schemaMarkup || null;
 
   return (
     <>
       <SchemaInjector schema={schemaContent} />
-      <AwardsNominationClient />
+      <AwardsNominationClient initialHeroData={heroData} />
     </>
   );
 }

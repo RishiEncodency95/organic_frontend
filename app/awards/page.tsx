@@ -93,15 +93,99 @@ const AwardsPage = async () => {
 
   const schemaContent = seoData?.schemaMarkup || null;
 
+  let awardsHeroData: any = null;
+  try {
+    const apiUrl = process.env.NEXT_PUBLIC_API_URL || "http://localhost:4001/api";
+    const res = await fetch(`${apiUrl}/website/awards/hero`, { cache: "no-store" }).catch(() => null);
+    if (res && res.ok) {
+      const json = await res.json().catch(() => null);
+      if (json?.data) {
+        awardsHeroData = json.data;
+      }
+    }
+  } catch (err) {
+    // fallback to client-side or default data
+  }
+
+  let awardsStatsData: any = null;
+  try {
+    const apiUrl = process.env.NEXT_PUBLIC_API_URL || "http://localhost:4001/api";
+    const res = await fetch(`${apiUrl}/website/awards/stats`, { cache: "no-store" }).catch(() => null);
+    if (res && res.ok) {
+      const json = await res.json().catch(() => null);
+      if (json?.data) {
+        awardsStatsData = json.data;
+      }
+    }
+  } catch (err) {
+    // fallback to client-side or default data
+  }
+
+  let awardsAboutData: any = null;
+  try {
+    const apiUrl = process.env.NEXT_PUBLIC_API_URL || "http://localhost:4001/api";
+    const res = await fetch(`${apiUrl}/website/awards/about`, { cache: "no-store" }).catch(() => null);
+    if (res && res.ok) {
+      const json = await res.json().catch(() => null);
+      if (json?.data) {
+        awardsAboutData = json.data;
+      }
+    }
+  } catch (err) {
+    // fallback
+  }
+
+  let awardsCategoriesData: any = null;
+  try {
+    const apiUrl = process.env.NEXT_PUBLIC_API_URL || "http://localhost:4001/api";
+    const res = await fetch(`${apiUrl}/website/awards/categories`, { cache: "no-store" }).catch(() => null);
+    if (res && res.ok) {
+      const json = await res.json().catch(() => null);
+      if (json?.data) {
+        awardsCategoriesData = json.data;
+      }
+    }
+  } catch (err) {
+    // fallback
+  }
+
+  let awardsGrandAwardsData: any = null;
+  try {
+    const apiUrl = process.env.NEXT_PUBLIC_API_URL || "http://localhost:4001/api";
+    const res = await fetch(`${apiUrl}/website/awards/grand-awards`, { cache: "no-store" }).catch(() => null);
+    if (res && res.ok) {
+      const json = await res.json().catch(() => null);
+      if (json?.data) {
+        awardsGrandAwardsData = json.data;
+      }
+    }
+  } catch (err) {
+    // fallback
+  }
+
+  let awardsProcessData: any = null;
+  try {
+    const apiUrl = process.env.NEXT_PUBLIC_API_URL || "http://localhost:4001/api";
+    const res = await fetch(`${apiUrl}/website/awards/process`, { cache: "no-store" }).catch(() => null);
+    if (res && res.ok) {
+      const json = await res.json().catch(() => null);
+      if (json?.data) {
+        awardsProcessData = json.data;
+      }
+    }
+  } catch (err) {
+    // fallback
+  }
+
   return (
     <div className="overflow-x-hidden bg-white font-sans text-neutral-800">
       <SchemaInjector schema={schemaContent} />
-      <AwardsHero />
-      <AwardsStats />
-      <AwardsAbout />
-      <AwardsCategories />
-      <AwardsGrandAwards />
-      <AwardsProcess />
+      <AwardsHero initialData={awardsHeroData} />
+      <AwardsStats initialData={awardsStatsData} />
+      <AwardsAbout initialData={awardsAboutData} />
+      <AwardsCategories initialData={awardsCategoriesData} />
+      <AwardsGrandAwards initialData={awardsGrandAwardsData} />
+      <AwardsProcess initialData={awardsProcessData} />
       {/* <AwardsCelebratingLeaders /> */}
       <AwardsInfoColumns />
       <AwardsCta />

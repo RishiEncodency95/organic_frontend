@@ -1,9 +1,9 @@
 "use client";
 
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import Image from 'next/image';
 
-// Import logos from app/assets/logo
+// Import fallback logos from app/assets/logo
 import logoMain from "@/app/assets/logo/logo.png";
 import logo1 from "@/app/assets/logo/logo1.png";
 import logo1Jpg from "@/app/assets/logo/logo1.jpg";
@@ -19,7 +19,7 @@ import logo9Jpg from "@/app/assets/logo/logo9.jpg";
 import logo10 from "@/app/assets/logo/logo10.webp";
 import namogange from "@/app/assets/logo/namogange.png";
 
-// Import logos from app/assets/logos
+// Import fallback logos from app/assets/logos
 import namo from "@/app/assets/logos/namo.png";
 import namo1 from "@/app/assets/logos/namo1.png";
 import footerLogo from "@/app/assets/logos/footerlogo.png";
@@ -51,31 +51,147 @@ const Marquee = ({
   );
 };
 
+export interface PartnerItem {
+  id?: string;
+  name?: string;
+  image: any;
+  imageAlt?: string;
+  status?: string;
+}
+
+const renderLogo = (
+  item: any,
+  fallbackAlt: string,
+  className: string,
+  height: number,
+  width: number
+) => {
+  const src = item?.image || item;
+  const alt = item?.imageAlt || item?.name || fallbackAlt;
+
+  if (typeof src === "string") {
+    return (
+      // eslint-disable-next-line @next/next/no-img-element
+      <img
+        src={src}
+        alt={alt}
+        className={className}
+        loading="lazy"
+      />
+    );
+  }
+
+  return (
+    <Image
+      src={src}
+      alt={alt}
+      className={className}
+      height={height}
+      width={width}
+      unoptimized
+    />
+  );
+};
+
 const PartnersAndBrands = () => {
-  // Top marquee logos
-  const industryLeadersLogos = [
-    logo1, logo2, logo3, logo4, logo5, logo6, logo7, logo8, namogange, longLogo1, namo1
+  // Default fallback lists
+  const defaultIndustry = [
+    { image: logo1, imageAlt: "Industry Partner 1" },
+    { image: logo2, imageAlt: "Industry Partner 2" },
+    { image: logo3, imageAlt: "Industry Partner 3" },
+    { image: logo4, imageAlt: "Industry Partner 4" },
+    { image: logo5, imageAlt: "Industry Partner 5" },
+    { image: logo6, imageAlt: "Industry Partner 6" },
+    { image: logo7, imageAlt: "Industry Partner 7" },
+    { image: logo8, imageAlt: "Industry Partner 8" },
+    { image: namogange, imageAlt: "Namo Gange" },
+    { image: longLogo1, imageAlt: "Industry Partner 10" },
+    { image: namo1, imageAlt: "Industry Partner 11" },
   ];
 
-  // Column 1 logos
-  const knowledgeLogos = [
-    logo1, logo2, logo3, logoMain, logo10
+  const defaultKnowledge = [
+    { image: logo1, imageAlt: "Knowledge Partner 1" },
+    { image: logo2, imageAlt: "Knowledge Partner 2" },
+    { image: logo3, imageAlt: "Knowledge Partner 3" },
+    { image: logoMain, imageAlt: "Knowledge Partner 4" },
+    { image: logo10, imageAlt: "Knowledge Partner 5" },
   ];
 
-  // Column 2 logos
-  const wellnessLogos = [
-    logo4, logo5, logo6, namo, logo8, footerLogo
+  const defaultWellness = [
+    { image: logo4, imageAlt: "Wellness Partner 1" },
+    { image: logo5, imageAlt: "Wellness Partner 2" },
+    { image: logo6, imageAlt: "Wellness Partner 3" },
+    { image: namo, imageAlt: "Wellness Partner 4" },
+    { image: logo8, imageAlt: "Wellness Partner 5" },
+    { image: footerLogo, imageAlt: "Wellness Partner 6" },
   ];
 
-  // Column 3 logos
-  const supportingLogos = [
-    logo7, logo8, logo9Jpg, namogange, navbarLogo
+  const defaultSupporting = [
+    { image: logo7, imageAlt: "Supporting Assoc 1" },
+    { image: logo8, imageAlt: "Supporting Assoc 2" },
+    { image: logo9Jpg, imageAlt: "Supporting Assoc 3" },
+    { image: namogange, imageAlt: "Supporting Assoc 4" },
+    { image: navbarLogo, imageAlt: "Supporting Assoc 5" },
   ];
 
-  // Bottom marquee logos
-  const emergingBrandsLogos = [
-    logo5, logo6, logo7, logo8, logo10, logoMain, logo1Jpg, logo2Webp, logo3, logo4
+  const defaultEmerging = [
+    { image: logo5, imageAlt: "Emerging Brand 1" },
+    { image: logo6, imageAlt: "Emerging Brand 2" },
+    { image: logo7, imageAlt: "Emerging Brand 3" },
+    { image: logo8, imageAlt: "Emerging Brand 4" },
+    { image: logo10, imageAlt: "Emerging Brand 5" },
+    { image: logoMain, imageAlt: "Emerging Brand 6" },
+    { image: logo1Jpg, imageAlt: "Emerging Brand 7" },
+    { image: logo2Webp, imageAlt: "Emerging Brand 8" },
+    { image: logo3, imageAlt: "Emerging Brand 9" },
+    { image: logo4, imageAlt: "Emerging Brand 10" },
   ];
+
+  const [industryLeaders, setIndustryLeaders] = useState<any[]>(defaultIndustry);
+  const [knowledge, setKnowledge] = useState<any[]>(defaultKnowledge);
+  const [wellness, setWellness] = useState<any[]>(defaultWellness);
+  const [supporting, setSupporting] = useState<any[]>(defaultSupporting);
+  const [emergingBrands, setEmergingBrands] = useState<any[]>(defaultEmerging);
+
+  // Fetch live partners from backend
+  useEffect(() => {
+    const fetchLivePartners = async () => {
+      try {
+        const backendUrl = process.env.NEXT_PUBLIC_API_URL || "http://localhost:4001";
+        const res = await fetch(`${backendUrl}/api/v1/website/home/partners-brands`).catch(() => null);
+        if (res && res.ok) {
+          const json = await res.json().catch(() => null);
+          if (json?.data) {
+            const data = json.data;
+            if (Array.isArray(data.industryLeadersLogos) && data.industryLeadersLogos.length > 0) {
+              const active = data.industryLeadersLogos.filter((x: any) => x.status !== "Draft");
+              if (active.length > 0) setIndustryLeaders(active);
+            }
+            if (Array.isArray(data.knowledgeLogos) && data.knowledgeLogos.length > 0) {
+              const active = data.knowledgeLogos.filter((x: any) => x.status !== "Draft");
+              if (active.length > 0) setKnowledge(active);
+            }
+            if (Array.isArray(data.wellnessLogos) && data.wellnessLogos.length > 0) {
+              const active = data.wellnessLogos.filter((x: any) => x.status !== "Draft");
+              if (active.length > 0) setWellness(active);
+            }
+            if (Array.isArray(data.supportingLogos) && data.supportingLogos.length > 0) {
+              const active = data.supportingLogos.filter((x: any) => x.status !== "Draft");
+              if (active.length > 0) setSupporting(active);
+            }
+            if (Array.isArray(data.emergingBrandsLogos) && data.emergingBrandsLogos.length > 0) {
+              const active = data.emergingBrandsLogos.filter((x: any) => x.status !== "Draft");
+              if (active.length > 0) setEmergingBrands(active);
+            }
+          }
+        }
+      } catch (err) {
+        console.error("Live partners fetch error:", err);
+      }
+    };
+
+    fetchLivePartners();
+  }, []);
 
   return (
     <section className="bg-white pt-4 pb-6 md:pt-6 md:pb-12 relative z-10 font-inter">
@@ -116,16 +232,16 @@ const PartnersAndBrands = () => {
           <div className="overflow-hidden relative w-full mt-2 md:mt-4">
             <Marquee speed="60s">
               <div className="flex items-center">
-                {industryLeadersLogos.map((logoItem, idx) => (
+                {industryLeaders.map((logoItem, idx) => (
                   <React.Fragment key={`industry-${idx}`}>
                     <div className="flex items-center justify-center transition-all duration-300 hover:-translate-y-1 mx-3 md:mx-10 cursor-pointer h-10 md:h-16 px-1 md:px-2">
-                      <Image
-                        src={logoItem}
-                        alt={`Industry Partner ${idx + 1}`}
-                        className="max-h-8 md:max-h-12 max-w-[90px] md:max-w-[140px] w-auto h-auto object-contain"
-                        height={48}
-                        width={140}
-                      />
+                      {renderLogo(
+                        logoItem,
+                        `Industry Partner ${idx + 1}`,
+                        "max-h-8 md:max-h-12 max-w-[90px] md:max-w-[140px] w-auto h-auto object-contain",
+                        48,
+                        140
+                      )}
                     </div>
                     <div className="w-[1.5px] h-4 md:h-6 bg-slate-300" />
                   </React.Fragment>
@@ -149,15 +265,15 @@ const PartnersAndBrands = () => {
               <div className="w-full overflow-hidden">
                 <Marquee speed="45s">
                   <div className="flex items-center">
-                    {knowledgeLogos.map((logoItem, idx) => (
+                    {knowledge.map((logoItem, idx) => (
                       <div key={`knowledge-${idx}`} className="mx-3 md:mx-8 transition-transform duration-300 hover:-translate-y-1 flex flex-col items-center justify-center cursor-pointer h-10 md:h-16 px-1 md:px-2">
-                        <Image
-                          src={logoItem}
-                          alt={`Knowledge Partner ${idx + 1}`}
-                          className="max-h-8 md:max-h-10 max-w-[80px] md:max-w-[120px] w-auto h-auto object-contain"
-                          height={40}
-                          width={120}
-                        />
+                        {renderLogo(
+                          logoItem,
+                          `Knowledge Partner ${idx + 1}`,
+                          "max-h-8 md:max-h-10 max-w-[80px] md:max-w-[120px] w-auto h-auto object-contain",
+                          40,
+                          120
+                        )}
                       </div>
                     ))}
                   </div>
@@ -173,15 +289,15 @@ const PartnersAndBrands = () => {
               <div className="w-full overflow-hidden">
                 <Marquee speed="45s" reverse>
                   <div className="flex items-center">
-                    {wellnessLogos.map((logoItem, idx) => (
+                    {wellness.map((logoItem, idx) => (
                       <div key={`wellness-${idx}`} className="mx-3 md:mx-8 transition-transform duration-300 hover:-translate-y-1 flex flex-col items-center justify-center cursor-pointer h-10 md:h-16 px-1 md:px-2">
-                        <Image
-                          src={logoItem}
-                          alt={`Wellness Partner ${idx + 1}`}
-                          className="max-h-8 md:max-h-10 max-w-[80px] md:max-w-[120px] w-auto h-auto object-contain"
-                          height={40}
-                          width={120}
-                        />
+                        {renderLogo(
+                          logoItem,
+                          `Wellness Partner ${idx + 1}`,
+                          "max-h-8 md:max-h-10 max-w-[80px] md:max-w-[120px] w-auto h-auto object-contain",
+                          40,
+                          120
+                        )}
                       </div>
                     ))}
                   </div>
@@ -197,15 +313,15 @@ const PartnersAndBrands = () => {
               <div className="w-full overflow-hidden">
                 <Marquee speed="45s">
                   <div className="flex items-center">
-                    {supportingLogos.map((logoItem, idx) => (
+                    {supporting.map((logoItem, idx) => (
                       <div key={`supporting-${idx}`} className="mx-3 md:mx-8 transition-transform duration-300 hover:-translate-y-1 flex flex-col items-center justify-center cursor-pointer h-10 md:h-16 px-1 md:px-2">
-                        <Image
-                          src={logoItem}
-                          alt={`Supporting Assoc ${idx + 1}`}
-                          className="max-h-8 md:max-h-10 max-w-[80px] md:max-w-[120px] w-auto h-auto object-contain"
-                          height={40}
-                          width={120}
-                        />
+                        {renderLogo(
+                          logoItem,
+                          `Supporting Assoc ${idx + 1}`,
+                          "max-h-8 md:max-h-10 max-w-[80px] md:max-w-[120px] w-auto h-auto object-contain",
+                          40,
+                          120
+                        )}
                       </div>
                     ))}
                   </div>
@@ -231,16 +347,16 @@ const PartnersAndBrands = () => {
           <div className="overflow-hidden relative w-full mt-2 md:mt-4">
             <Marquee speed="55s">
               <div className="flex items-center">
-                {emergingBrandsLogos.map((logoItem, idx) => (
+                {emergingBrands.map((logoItem, idx) => (
                   <React.Fragment key={`emerging-${idx}`}>
                     <div className="flex items-center justify-center transition-all duration-300 hover:-translate-y-1 mx-3 md:mx-8 cursor-pointer h-10 md:h-14 px-1 md:px-2">
-                      <Image
-                        src={logoItem}
-                        alt={`Emerging Brand ${idx + 1}`}
-                        className="max-h-8 md:max-h-10 max-w-[80px] md:max-w-[120px] w-auto h-auto object-contain"
-                        height={40}
-                        width={120}
-                      />
+                      {renderLogo(
+                        logoItem,
+                        `Emerging Brand ${idx + 1}`,
+                        "max-h-8 md:max-h-10 max-w-[80px] md:max-w-[120px] w-auto h-auto object-contain",
+                        40,
+                        120
+                      )}
                     </div>
                     <div className="w-[1.5px] h-4 md:h-6 bg-slate-300" />
                   </React.Fragment>
@@ -256,7 +372,3 @@ const PartnersAndBrands = () => {
 };
 
 export default PartnersAndBrands;
-
-
-
-

@@ -1,4 +1,6 @@
-import React from "react";
+"use client";
+
+import React, { useState, useEffect } from "react";
 import { Leaf, ArrowUpRight, MapPin } from "lucide-react";
 import tomarImg from "../../../assets/about/advisory_board_member/tomar.png";
 import pradeepImg from "../../../assets/about/advisory_board_member/pradeep.png";
@@ -12,13 +14,16 @@ import rohitImg from "../../../assets/about/advisory_board_member/rohit.png";
 
 import SectionContainer from "@/app/components/layout/SectionContainer";
 
-const boardMembers = [
+const BACKEND_URL = process.env.NEXT_PUBLIC_BACKEND_URL || "http://localhost:4001";
+
+const initialBoardMembers = [
     {
         name: "Prof. Dr. G.S. Tomar",
         designation: "PRESIDENT",
         organization: "International President of Our Ayurveda Mission, National Vice-President Arogya Bharti.",
         location: "India",
         image: tomarImg.src,
+        websiteUrl: "",
     },
     {
         name: "Professor (Vd.) Pradeep Kumar Prajapati",
@@ -26,6 +31,7 @@ const boardMembers = [
         organization: "All India Institute of Ayurveda (AIIA)",
         location: "India",
         image: pradeepImg.src,
+        websiteUrl: "",
     },
     {
         name: "Dr. Naresh Kumar Chhavania",
@@ -33,6 +39,7 @@ const boardMembers = [
         organization: "IMA AYUS",
         location: "India",
         image: nareshImg.src,
+        websiteUrl: "",
     },
     {
         name: "Dr. Kamlesh Kumar Dwivedi",
@@ -40,6 +47,7 @@ const boardMembers = [
         organization: "National Commission for Indian System of Medicine (NCISM), Ministry of Ayush",
         location: "India",
         image: kamleshImg.src,
+        websiteUrl: "",
     },
     {
         name: "Prof. (Dr.) Atul Babu Varshney",
@@ -47,6 +55,7 @@ const boardMembers = [
         organization: "National Commission for Indian System of Medicine (NCISM), Ministry of Ayush",
         location: "India",
         image: atulImg.src,
+        websiteUrl: "",
     },
     {
         name: "Dr. Sandeep Marwah",
@@ -54,6 +63,7 @@ const boardMembers = [
         organization: "Marwah Studios",
         location: "India",
         image: sandeepImg.src,
+        websiteUrl: "",
     },
     {
         name: "ACHARYA SHRI JAGDISHJI MAHARAJ",
@@ -61,6 +71,7 @@ const boardMembers = [
         organization: "",
         location: "India",
         image: jagdishImg.src,
+        websiteUrl: "",
     },
     {
         name: "Dr. D.N. Sharma",
@@ -68,6 +79,7 @@ const boardMembers = [
         organization: "International Naturopathy Organisation (INO)",
         location: "India",
         image: dnsharmaImg.src,
+        websiteUrl: "",
     },
     {
         name: "Dr. Rohit Bhandari",
@@ -75,15 +87,86 @@ const boardMembers = [
         organization: "The Homeo Healers Homeopathy Worldwide",
         location: "India",
         image: rohitImg.src,
+        websiteUrl: "",
     }
 ];
 
-const advisoryBoardGridData = {
+const initialGridData = {
     tagline: "Our Ayurveda Mission",
     title: "Our Esteemed Advisory Board"
 };
 
 const AdvisoryBoardGrid = () => {
+    const [gridData, setGridData] = useState(initialGridData);
+    const [boardMembers, setBoardMembers] = useState(initialBoardMembers);
+
+    useEffect(() => {
+        let isMounted = true;
+
+        // Fetch Grid Header
+        const fetchHeader = async () => {
+            try {
+                let res = await fetch("/api/website/advisoryboardgrid", { cache: "no-store" }).catch(() => null);
+                if (!res || !res.ok) {
+                    res = await fetch(`${BACKEND_URL}/api/website/advisoryboardgrid`, { cache: "no-store" }).catch(() => null);
+                }
+                if (res && res.ok) {
+                    const json = await res.json();
+                    if (json.data && isMounted) {
+                        setGridData({
+                            tagline: json.data.tagline || initialGridData.tagline,
+                            title: json.data.title || initialGridData.title,
+                        });
+                    }
+                }
+            } catch (err) {
+                console.error("Failed to fetch advisory board grid header:", err);
+            }
+        };
+
+        // Fetch Members
+        const fetchMembers = async () => {
+            try {
+                let res = await fetch("/api/website/advisoryboardgridmember", { cache: "no-store" }).catch(() => null);
+                if (!res || !res.ok) {
+                    res = await fetch(`${BACKEND_URL}/api/website/advisoryboardgridmember`, { cache: "no-store" }).catch(() => null);
+                }
+                if (res && res.ok) {
+                    const json = await res.json();
+                    if (json.data && Array.isArray(json.data) && json.data.length > 0 && isMounted) {
+                        const publishedMembers = json.data
+                            .filter((item: any) => item.status !== "Draft")
+                            .map((item: any) => {
+                                let img = item.image || "/advisory-board/tomar.png";
+                                if (img.startsWith("/uploads") && !img.startsWith("http")) {
+                                    img = `${BACKEND_URL}${img}`;
+                                }
+                                return {
+                                    name: item.name,
+                                    designation: item.designation,
+                                    organization: item.organization,
+                                    location: item.location || "India",
+                                    image: img,
+                                    websiteUrl: item.websiteUrl || "",
+                                };
+                            });
+                        if (publishedMembers.length > 0) {
+                            setBoardMembers(publishedMembers);
+                        }
+                    }
+                }
+            } catch (err) {
+                console.error("Failed to fetch advisory board grid members:", err);
+            }
+        };
+
+        fetchHeader();
+        fetchMembers();
+
+        return () => {
+            isMounted = false;
+        };
+    }, []);
     return (
         <section className="w-full py-6 md:py-6 bg-[#FAF7EF] font-inter relative overflow-hidden">
             <style>{`
@@ -108,11 +191,11 @@ const AdvisoryBoardGrid = () => {
                 <div className="w-full flex flex-col items-center text-center ">
                     <span className="flex items-center gap-2 text-[#d26019] text-[15px] md:text-[17px] font-semibold tracking-[0.18em] uppercase mb-2 font-poppins">
                         <Leaf size={16} strokeWidth={2.2} className="text-[#3b8c2a] fill-[#3b8c2a]" />
-                        {advisoryBoardGridData.tagline}
+                        {gridData.tagline}
                         <Leaf size={16} strokeWidth={2.2} className="text-[#3b8c2a] fill-[#3b8c2a]" />
                     </span>
                     <h2 className="font-poppins font-semibold text-[#23471d] text-[22px] sm:text-[26px] lg:text-[30px] leading-[1.2]">
-                        {advisoryBoardGridData.title}
+                        {gridData.title}
                     </h2>
                     <div className="mt-2 h-px w-20 bg-gradient-to-r from-transparent via-[#d26019] to-transparent" />
                 </div>

@@ -9,7 +9,18 @@ import Counters from '@/app/components/gallery/Counters';
 import VideoHighlights from '@/app/components/gallery/VideoHighlights';
 import JoinUsBanner from '@/app/components/gallery/JoinUsBanner';
 
-const BACKEND_URL = process.env.NEXT_PUBLIC_BACKEND_URL || "http://localhost:4000";
+const BACKEND_URL =
+  process.env.NEXT_PUBLIC_API_URL?.replace("/api", "") ||
+  process.env.NEXT_PUBLIC_SERVER_URL ||
+  "http://localhost:4001";
+
+/** Ensure image src is always absolute */
+const resolveImageUrl = (src: string): string => {
+  if (!src) return src;
+  if (src.startsWith("http://") || src.startsWith("https://")) return src;
+  // Relative path like /uploads/... — prefix with backend origin
+  return `${BACKEND_URL}${src.startsWith("/") ? "" : "/"}${src}`;
+};
 
 export default function GalleryClient() {
   const [activeYear, setActiveYear] = useState('All Years');
@@ -41,7 +52,12 @@ export default function GalleryClient() {
         if (itemsRes && itemsRes.ok) {
           const itemsJson = await itemsRes.json();
           if (Array.isArray(itemsJson?.data) && itemsJson.data.length > 0) {
-            setDbGallery(itemsJson.data);
+            // Normalise image URLs so relative paths become absolute
+            const normalised = itemsJson.data.map((item: any) => ({
+              ...item,
+              image: resolveImageUrl(item.image),
+            }));
+            setDbGallery(normalised);
           }
         }
       } catch (err) {

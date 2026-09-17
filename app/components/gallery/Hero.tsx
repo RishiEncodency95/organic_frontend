@@ -1,9 +1,13 @@
 "use client";
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion, Variants } from 'framer-motion';
 import gallarybg from '@/app/assets/banner/gallog2.webp';
 import { Leaf } from 'lucide-react';
 import SectionContainer from '@/app/components/layout/SectionContainer';
+
+const API_URL =
+  process.env.NEXT_PUBLIC_API_URL ||
+  "http://localhost:4001/api";
 
 const customEase: [number, number, number, number] = [0.16, 1, 0.3, 1];
 
@@ -63,20 +67,71 @@ const charVariants: Variants = {
   }
 };
 
+const DEFAULT_SETTINGS = {
+  heading: 'GLIMPSES',
+  subheading: 'Moments of Knowledge, Collaboration & Wellness',
+  description:
+    'Relive the inspiring moments from past editions of Organic Expo \nwhere experts, researchers and industry leaders came together \nto shape the future of organic trade and sustainable living.',
+  rightImage: '',
+};
+
 const Hero = () => {
-  const [settings] = useState({
-    heading: 'GLIMPSES',
-    subheading: 'Moments of Knowledge, Collaboration & Wellness',
-    description: 'Relive the inspiring moments from past editions of Organic Expo \nwhere experts, researchers and industry leaders came together \nto shape the future of organic trade and sustainable living.',
-  });
+  const [settings, setSettings] = useState(DEFAULT_SETTINGS);
+
+  useEffect(() => {
+    const fetchHero = async () => {
+      try {
+        const res = await fetch(`${API_URL}/website/gallery/hero`, {
+          cache: 'no-store',
+        });
+        if (res.ok) {
+          const json = await res.json();
+          const d = json?.data || json;
+          if (d && (d.title || d.subtitle || d.rightImage || d.image)) {
+            setSettings({
+              heading: d.title || DEFAULT_SETTINGS.heading,
+              subheading: d.subtitle || DEFAULT_SETTINGS.subheading,
+              description: d.shortDescription || d.description || DEFAULT_SETTINGS.description,
+              rightImage: d.rightImage || d.image || '',
+            });
+            return;
+          }
+        }
+      } catch (err) {
+        console.error("Error fetching gallery hero from /website/gallery/hero:", err);
+      }
+
+      try {
+        const sRes = await fetch(`${API_URL}/settings`, { cache: 'no-store' });
+        if (sRes.ok) {
+          const sJson = await sRes.json();
+          const gPage = sJson?.data?.galleryPage || sJson?.galleryPage;
+          const hero = gPage?.sections?.find((s: any) => s.key === "gallery-hero" || s.name === "HeroSection");
+          if (hero) {
+            setSettings({
+              heading: hero.title || DEFAULT_SETTINGS.heading,
+              subheading: hero.subtitle || DEFAULT_SETTINGS.subheading,
+              description: hero.shortDescription || hero.description || DEFAULT_SETTINGS.description,
+              rightImage: hero.rightImage || hero.image || '',
+            });
+          }
+        }
+      } catch (err) {
+        // fallback to defaults already set
+      }
+    };
+    fetchHero();
+  }, []);
 
   const titleChars = (settings.heading || "GLIMPSES").split("");
-  const bgUrl = typeof gallarybg === 'string' ? gallarybg : gallarybg.src;
+  const staticBg = typeof gallarybg === 'string' ? gallarybg : gallarybg.src;
+  const bgUrl = settings.rightImage || staticBg;
 
   return (
     <section className="relative w-full py-8 md:py-12 lg:py-16 bg-[#f8faf8] overflow-hidden font-inter" style={{ perspective: 1200 }}>
-      {/* Background Image Setup */}
+      {/* Background Image */}
       <motion.div
+        key={bgUrl}
         className="absolute inset-0 z-0 pointer-events-none"
         style={{
           backgroundImage: `url(${bgUrl})`,
@@ -85,13 +140,12 @@ const Hero = () => {
           backgroundRepeat: 'no-repeat',
           transformOrigin: 'center'
         }}
-        initial={{ opacity: 0, scale: 1.08, filter: 'blur(10px)' }}
-        whileInView={{ opacity: 1, scale: 1, filter: 'blur(0px)' }}
-        viewport={{ once: true, amount: 0.2 }}
-        transition={{ duration: 1.8, ease: customEase }}
+        initial={{ opacity: 0, scale: 1.05 }}
+        animate={{ opacity: 1, scale: 1 }}
+        transition={{ duration: 1.0, ease: customEase }}
       />
 
-      {/* Mobile-only light overlay for text readability (desktop remains untouched) */}
+      {/* Mobile-only light overlay */}
       <div className="absolute inset-0 z-[1] bg-gradient-to-b from-white/95 via-white/85 to-white/40 md:hidden pointer-events-none" />
 
       <SectionContainer className="relative z-10">
@@ -99,16 +153,15 @@ const Hero = () => {
           className="max-w-3xl mx-auto text-center flex flex-col items-center relative left-0 md:-left-20 lg:-left-32 xl:-left-40 p-4 rounded-2xl bg-white/75 backdrop-blur-xs border border-white/50 shadow-sm md:bg-transparent md:p-0 md:backdrop-blur-none md:border-none md:shadow-none"
           variants={containerVariants}
           initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, margin: "-50px" }}
+          animate="visible"
           style={{ perspective: 1200 }}
         >
-          {/* Animated Title Character by Character */}
+          {/* Animated Title */}
           <motion.h1
+            key={settings.heading}
             variants={titleContainerVariants}
             initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true }}
+            animate="visible"
             className="text-3xl sm:text-4xl md:text-6xl lg:text-7xl font-bold text-[#1b5e20] mb-2 tracking-tight uppercase flex justify-center flex-wrap"
             style={{ textShadow: '2px 2px 4px rgba(255,255,255,0.7)' }}
           >
@@ -120,7 +173,10 @@ const Hero = () => {
           </motion.h1>
 
           <motion.h2
+            key={settings.subheading}
             variants={itemVariants}
+            initial="hidden"
+            animate="visible"
             className="text-base sm:text-[20px] md:text-[28px] text-[#4B1426] font-bold mb-1.5 italic text-center"
             style={{ fontFamily: "'Playfair Display', serif" }}
           >
@@ -130,13 +186,14 @@ const Hero = () => {
           {/* Decorative Divider */}
           <motion.div
             variants={itemVariants}
+            initial="hidden"
+            animate="visible"
             className="flex items-center justify-center gap-2 mb-2 w-full max-w-[240px]"
           >
             <motion.div 
               className="h-[1px] bg-[#1b5e20]/80 flex-1 relative"
               initial={{ scaleX: 0, transformOrigin: 'right' }}
-              whileInView={{ scaleX: 1 }}
-              viewport={{ once: true }}
+              animate={{ scaleX: 1 }}
               transition={{ duration: 1.2, delay: 0.8, ease: customEase }}
             >
               <div className="absolute right-1 top-1/2 -translate-y-1/2 w-1 h-1 rounded-full bg-[#1b5e20]" />
@@ -144,8 +201,7 @@ const Hero = () => {
             
             <motion.div
               initial={{ scale: 0, rotate: -180, filter: 'blur(4px)' }}
-              whileInView={{ scale: 1, rotate: 0, filter: 'blur(0px)' }}
-              viewport={{ once: true }}
+              animate={{ scale: 1, rotate: 0, filter: 'blur(0px)' }}
               transition={{ duration: 1.2, delay: 0.6 }}
             >
               <Leaf size={18} className="text-[#1b5e20]" fill="currentColor" />
@@ -154,8 +210,7 @@ const Hero = () => {
             <motion.div 
               className="h-[1px] bg-[#1b5e20]/80 flex-1 relative"
               initial={{ scaleX: 0, transformOrigin: 'left' }}
-              whileInView={{ scaleX: 1 }}
-              viewport={{ once: true }}
+              animate={{ scaleX: 1 }}
               transition={{ duration: 1.2, delay: 0.8, ease: customEase }}
             >
               <div className="absolute left-1 top-1/2 -translate-y-1/2 w-1 h-1 rounded-full bg-[#1b5e20]" />
@@ -163,7 +218,10 @@ const Hero = () => {
           </motion.div>
 
           <motion.p
+            key={settings.description}
             variants={itemVariants}
+            initial="hidden"
+            animate="visible"
             className="text-slate-900 text-xs sm:text-sm md:text-base max-w-3xl font-semibold leading-relaxed whitespace-pre-line font-inter text-center"
             style={{ fontFamily: "'Inter', sans-serif" }}
           >

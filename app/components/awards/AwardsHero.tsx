@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
-import { CalendarDays, MapPin, ArrowRight, Award, Medal, Calendar } from "lucide-react";
+import { MapPin, ArrowRight, Award, Medal, Calendar } from "lucide-react";
 import bannerImg from "../../assets/awards/banner2.webp";
 import SectionContainer from "@/app/components/layout/SectionContainer";
 
@@ -23,7 +23,7 @@ const Sparkle = ({ style, color = "#F2B40E", shadow }: { style?: React.CSSProper
   </span>
 );
 
-const data = {
+const DEFAULT_DATA = {
   enabled: true,
   tagline: "BHARAT ORGANIC",
   titlePrimary: "EXCELLENCE",
@@ -46,26 +46,156 @@ const data = {
       target: "_blank",
       rel: "noopener noreferrer",
       variant: "primary",
-      icon: Award,
+      icon: "Award",
     },
     {
       id: "categories",
       label: "VIEW CATEGORIES",
       href: "#categories",
       variant: "secondary",
-      icon: Medal,
+      icon: "Medal",
     },
   ],
 };
 
-const AwardsHero = () => {
+interface AwardsHeroProps {
+  initialData?: any;
+}
+
+const AwardsHero = ({ initialData }: AwardsHeroProps) => {
+  const [heroData, setHeroData] = useState<any>(initialData || DEFAULT_DATA);
   const [mounted, setMounted] = useState(false);
+
   useEffect(() => {
     const t = setTimeout(() => setMounted(true), 60);
     return () => clearTimeout(t);
   }, []);
 
-  if (!data.enabled) return null;
+  // Live fetch from backend API
+  useEffect(() => {
+    const fetchLiveHero = async () => {
+      try {
+        const apiUrl = process.env.NEXT_PUBLIC_API_URL || "http://localhost:4001/api";
+        const serverUrl = process.env.NEXT_PUBLIC_SERVER_URL || "http://localhost:4001";
+        let res = await fetch(`${apiUrl}/website/awards/hero`, { cache: "no-store" }).catch(() => null);
+        if (!res || !res.ok) {
+          res = await fetch(`${serverUrl}/api/website/awards/hero`, { cache: "no-store" }).catch(() => null);
+        }
+        if (!res || !res.ok) {
+          res = await fetch(`/api/website/awards/hero`, { cache: "no-store" }).catch(() => null);
+        }
+        if (res && res.ok) {
+          const json = await res.json().catch(() => null);
+          if (json?.data) {
+            setHeroData(json.data);
+          }
+        }
+      } catch (err) {
+        console.error("Failed to load live awards hero:", err);
+      }
+    };
+    fetchLiveHero();
+  }, []);
+
+  if (heroData.enabled === false) return null;
+
+  // Normalized values
+  const tagline = heroData.tagline || heroData.eyebrow || DEFAULT_DATA.tagline;
+
+  const rawTitle = heroData.title || `${heroData.titlePrimary || DEFAULT_DATA.titlePrimary} ${heroData.titleSecondary || DEFAULT_DATA.titleSecondary}`;
+  const titleWords = rawTitle.trim().split(/\s+/);
+  const titlePrimary = heroData.titlePrimary || titleWords[0] || DEFAULT_DATA.titlePrimary;
+  const titleSecondary = heroData.titleSecondary || titleWords.slice(1).join(" ") || DEFAULT_DATA.titleSecondary;
+
+  let highlights = DEFAULT_DATA.highlights;
+  if (Array.isArray(heroData.highlights) && heroData.highlights.length > 0) {
+    highlights = heroData.highlights;
+  } else if (heroData.subtitle) {
+    highlights = heroData.subtitle
+      .split("•")
+      .map((txt: string, idx: number) => ({
+        id: idx + 1,
+        text: txt.trim(),
+      }))
+      .filter((x: any) => x.text.length > 0);
+  }
+
+  const description = heroData.description || heroData.shortDescription || DEFAULT_DATA.description;
+
+  // Date parsing
+  let dateLine1 = heroData.dateLine1;
+  let dateLine2 = heroData.dateLine2;
+  if (heroData.date) {
+    const rawDate = String(heroData.date).trim();
+    if (rawDate.includes("\n")) {
+      const parts = rawDate.split("\n");
+      dateLine1 = parts[0].trim();
+      dateLine2 = parts.slice(1).join(" ").trim();
+    } else {
+      const match = rawDate.match(/^(\d+(?:\s*-\s*\d+)?)\s+(.*)$/);
+      if (match) {
+        dateLine1 = match[1].trim();
+        dateLine2 = match[2].trim();
+      } else {
+        dateLine1 = rawDate;
+        dateLine2 = "";
+      }
+    }
+  }
+  dateLine1 = dateLine1 || DEFAULT_DATA.dateLine1;
+  dateLine2 = dateLine2 || DEFAULT_DATA.dateLine2;
+
+  // Venue / Location parsing
+  let venueLine1 = heroData.venueLine1;
+  let venueLine2 = heroData.venueLine2;
+  if (heroData.location) {
+    const rawLoc = String(heroData.location).trim();
+    if (rawLoc.includes("\n")) {
+      const parts = rawLoc.split("\n");
+      venueLine1 = parts[0].trim();
+      venueLine2 = parts.slice(1).join(" ").trim();
+    } else if (rawLoc.toLowerCase().includes("bharat mandapam,")) {
+      const idx = rawLoc.toLowerCase().indexOf("bharat mandapam,") + "bharat mandapam,".length;
+      venueLine1 = rawLoc.slice(0, idx - 1).trim();
+      venueLine2 = rawLoc.slice(idx).trim();
+    } else {
+      const commaIdx = rawLoc.indexOf(",");
+      if (commaIdx !== -1) {
+        venueLine1 = rawLoc.slice(0, commaIdx).trim();
+        venueLine2 = rawLoc.slice(commaIdx + 1).trim();
+      } else {
+        venueLine1 = rawLoc;
+        venueLine2 = "";
+      }
+    }
+  }
+  venueLine1 = venueLine1 || DEFAULT_DATA.venueLine1;
+  venueLine2 = venueLine2 || DEFAULT_DATA.venueLine2;
+
+  // Buttons parsing
+  const buttons = (Array.isArray(heroData.buttons) && heroData.buttons.length > 0)
+    ? heroData.buttons.map((b: any, idx: number) => ({
+        ...b,
+        icon: idx === 0 ? Award : Medal,
+      }))
+    : [
+        {
+          id: "nominate",
+          label: heroData.buttonLabel || DEFAULT_DATA.buttons[0].label,
+          href: heroData.buttonHref || DEFAULT_DATA.buttons[0].href,
+          target: "_blank",
+          rel: "noopener noreferrer",
+          variant: "primary",
+          icon: Award,
+        },
+        {
+          id: "categories",
+          label: heroData.secondaryButtonLabel || DEFAULT_DATA.buttons[1].label,
+          href: heroData.secondaryButtonHref || DEFAULT_DATA.buttons[1].href,
+          variant: "secondary",
+          icon: Medal,
+        },
+      ];
 
   return (
     <>
@@ -107,7 +237,7 @@ const AwardsHero = () => {
         {/* Background Image */}
         <div className="absolute inset-0 z-0 overflow-hidden">
           <img
-            src={bannerImg.src}
+            src={heroData.image || bannerImg.src}
             alt="Bharat Organic Excellence Awards 2027 Banner"
             className="hero-bg-img w-full h-full object-left md:object-center object-cover"
           />
@@ -123,7 +253,7 @@ const AwardsHero = () => {
             <div className="flex items-center gap-2 mb-2">
               <span className="w-[3px] h-4.5 bg-[#0b3b18] inline-block rounded-xs" />
               <span className="text-[#0b3b18] text-base sm:text-md font-bold uppercase tracking-[0.18em]">
-                {data.tagline}
+                {tagline}
               </span>
             </div>
 
@@ -133,19 +263,19 @@ const AwardsHero = () => {
               style={{ textShadow: "1px 1px 2px rgba(0,0,0,0.2)" }}
             >
               <span className="block text-[#0b3b18] text-4xl sm:text-5xl md:text-[56px] lg:text-[66px] font-semibold tracking-tight uppercase mb-0.5">
-                {data.titlePrimary}
+                {titlePrimary}
               </span>
               <span className="block text-[#0b3b18] text-4xl sm:text-5xl md:text-[56px] lg:text-[66px] font-semibold tracking-tight uppercase">
-                {data.titleSecondary}
+                {titleSecondary}
               </span>
             </h1>
 
             {/* Subtitle / Key Highlights */}
             <p className="mb-2.5 flex flex-wrap items-center gap-x-2.5 gap-y-1 text-xs sm:text-[13.5px] font-bold uppercase tracking-wider text-[#0b3b18]">
-              {data.highlights.map((h, idx) => (
-                <React.Fragment key={h.id}>
+              {highlights.map((h: any, idx: number) => (
+                <React.Fragment key={h.id || idx}>
                   <span>{h.text}</span>
-                  {idx < data.highlights.length - 1 && (
+                  {idx < highlights.length - 1 && (
                     <span className="text-[#ea580c] text-sm">•</span>
                   )}
                 </React.Fragment>
@@ -154,31 +284,31 @@ const AwardsHero = () => {
 
             {/* Description */}
             <p className="text-[#131730] font-medium text-xs sm:text-[13.5px] md:text-sm leading-relaxed max-w-lg mb-2">
-              {data.description}
+              {description}
             </p>
 
             {/* Date & Venue */}
-             <div className="mt-5 flex flex-col items-start gap-3 text-xs font-bold text-[#4B1426] sm:flex-row sm:items-center sm:gap-4 sm:text-sm md:text-[14px]">
+            <div className="mt-5 flex flex-col items-start gap-3 text-xs font-bold text-[#4B1426] sm:flex-row sm:items-center sm:gap-4 sm:text-sm md:text-[14px]">
               <div className="flex items-center gap-3">
                 <Calendar className="h-[25px] w-[25px] shrink-0 text-emerald-900" />
                 <div>
-                  <p>{data.dateLine1}</p>
-                  <p className="uppercase">{data.dateLine2}</p>
+                  <p>{dateLine1}</p>
+                  <p className="uppercase">{dateLine2}</p>
                 </div>
               </div>
               <span className="hidden h-4 w-px bg-[#4B1426]/30 sm:block" />
               <div className="flex items-center gap-3">
                 <MapPin className="h-[25px] w-[25px] shrink-0 text-emerald-900" />
                 <div>
-                  <p>{data.venueLine1}</p>
-                  <p className="uppercase">{data.venueLine2}</p>
+                  <p>{venueLine1}</p>
+                  <p className="uppercase">{venueLine2}</p>
                 </div>
               </div>
             </div>
 
             {/* Buttons */}
             <div className="flex flex-wrap items-center justify-start gap-3 my-4">
-              {data.buttons.map((btn) => {
+              {buttons.map((btn: any) => {
                 const Icon = btn.icon;
                 if (btn.variant === "primary") {
                   return (

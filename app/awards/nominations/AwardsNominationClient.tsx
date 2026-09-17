@@ -289,45 +289,38 @@ function SidebarCheck({ text }: { text: string }) {
 }
 
 /* ---------------------------------------------------------
-   Process steps data
+   Icon map for process steps
 --------------------------------------------------------- */
-const processSteps = [
-  {
-    n: "01",
-    title: "Nomination",
-    desc: "Submit your nomination online in the relevant category.",
-    Icon: ClipboardList,
-  },
-  {
-    n: "02",
-    title: "Eligibility Check",
-    desc: "Our team verifies eligibility and supporting documents.",
-    Icon: ClipboardCheck,
-  },
-  {
-    n: "03",
-    title: "Evaluation",
-    desc: "Nominations are evaluated by our expert jury panel based on defined criteria.",
-    Icon: Users,
-  },
-  {
-    n: "04",
-    title: "Shortlisting",
-    desc: "Top nominees are shortlisted in each category.",
-    Icon: Award,
-  },
-  {
-    n: "05",
-    title: "Jury Assessment",
-    desc: "Final assessment by the jury to select the award winners.",
-    Icon: Star,
-  },
-  {
-    n: "06",
-    title: "Recognition",
-    desc: "Winners are honoured at the Bharat Organic Expo 2027.",
-    Icon: Trophy,
-  },
+const STEP_ICON_MAP: Record<string, React.ElementType> = {
+  ClipboardList,
+  ClipboardCheck,
+  Users,
+  Award,
+  Star,
+  Trophy,
+  Medal,
+  nomination: ClipboardList,
+  eligibility: ClipboardCheck,
+  evaluation: Users,
+  "evaluation-jury": Users,
+  shortlisting: Award,
+  jury: Star,
+  recognition: Trophy,
+};
+
+function getStepIcon(icon?: string, idx?: number): React.ElementType {
+  if (icon && STEP_ICON_MAP[icon]) return STEP_ICON_MAP[icon];
+  const defaults = [ClipboardList, ClipboardCheck, Users, Award, Star, Trophy];
+  return defaults[(idx ?? 0) % defaults.length];
+}
+
+const DEFAULT_PROCESS_STEPS = [
+  { n: "01", title: "Nomination", desc: "Submit your nomination online in the relevant category.", icon: "ClipboardList" },
+  { n: "02", title: "Eligibility Check", desc: "Our team verifies eligibility and supporting documents.", icon: "ClipboardCheck" },
+  { n: "03", title: "Evaluation", desc: "Nominations are evaluated by our expert jury panel based on defined criteria.", icon: "Users" },
+  { n: "04", title: "Shortlisting", desc: "Top nominees are shortlisted in each category.", icon: "Award" },
+  { n: "05", title: "Jury Assessment", desc: "Final assessment by the jury to select the award winners.", icon: "Star" },
+  { n: "06", title: "Recognition", desc: "Winners are honoured at the Bharat Organic Expo 2027.", icon: "Trophy" },
 ];
 
 const bannerStats = [
@@ -400,11 +393,66 @@ const AWARD_CATEGORIES = [
 /* ---------------------------------------------------------
    Main component
 --------------------------------------------------------- */
-export default function BharatOrganicAwards() {
+interface AwardsNominationClientProps {
+  initialHeroData?: any;
+}
+
+export default function BharatOrganicAwards({ initialHeroData }: AwardsNominationClientProps = {}) {
+  const [heroData, setHeroData] = useState<any>(initialHeroData || null);
+  const [stepsData, setStepsData] = useState<any>(null);
   const [form, setForm] = useState<FormState>(INITIAL_FORM);
   const [submitting, setSubmitting] = useState(false);
   const [submitted, setSubmitted] = useState(false);
   const [error, setError] = useState("");
+
+  // Live fetch from backend API
+  useEffect(() => {
+    const fetchLiveHero = async () => {
+      try {
+        const apiUrl = process.env.NEXT_PUBLIC_API_URL || "http://localhost:4001/api";
+        const serverUrl = process.env.NEXT_PUBLIC_SERVER_URL || "http://localhost:4001";
+        let res = await fetch(`${apiUrl}/website/awards/nomination-hero`, { cache: "no-store" }).catch(() => null);
+        if (!res || !res.ok) {
+          res = await fetch(`${serverUrl}/api/website/awards/nomination-hero`, { cache: "no-store" }).catch(() => null);
+        }
+        if (!res || !res.ok) {
+          res = await fetch(`/api/website/awards/nomination-hero`, { cache: "no-store" }).catch(() => null);
+        }
+        if (res && res.ok) {
+          const json = await res.json().catch(() => null);
+          if (json?.data) {
+            setHeroData(json.data);
+          }
+        }
+      } catch (err) {
+        console.error("Failed to load live awards nomination hero:", err);
+      }
+    };
+    fetchLiveHero();
+  }, []);
+
+  // Live fetch nomination steps from backend
+  useEffect(() => {
+    const fetchLiveSteps = async () => {
+      try {
+        const apiUrl = process.env.NEXT_PUBLIC_API_URL || "http://localhost:4001/api";
+        const serverUrl = process.env.NEXT_PUBLIC_SERVER_URL || "http://localhost:4001";
+        let res = await fetch(`${apiUrl}/website/awards/nomination-steps`, { cache: "no-store" }).catch(() => null);
+        if (!res || !res.ok) {
+          res = await fetch(`${serverUrl}/api/website/awards/nomination-steps`, { cache: "no-store" }).catch(() => null);
+        }
+        if (res && res.ok) {
+          const json = await res.json().catch(() => null);
+          if (json?.data) {
+            setStepsData(json.data);
+          }
+        }
+      } catch (err) {
+        console.error("Failed to load live nomination steps:", err);
+      }
+    };
+    fetchLiveSteps();
+  }, []);
 
   const update = (field: keyof FormState, value: string | boolean) => {
     setForm((prev) => ({ ...prev, [field]: value }));
@@ -467,92 +515,194 @@ export default function BharatOrganicAwards() {
     );
   }
 
+  // Dynamic Hero values
+  const heroEnabled = heroData?.enabled !== false;
+  const bgImgSrc = heroData?.bgImage || heroData?.image || nominationBg.src;
+  const eyebrow = heroData?.eyebrow || ""; // eyebrow hidden by default
+
+  let titlePrefix = heroData?.titlePrefix;
+  let titlePrimary = heroData?.titlePrimary;
+  let titleSecondary = heroData?.titleSecondary;
+
+  if (!titlePrefix && !titlePrimary && !titleSecondary) {
+    const rawTitle = heroData?.title || "Bharat Organic Excellence Awards 2027";
+    if (rawTitle.toLowerCase().includes("bharat organic")) {
+      titlePrefix = "Bharat Organic";
+      const rem = rawTitle.replace(/bharat\s+organic/i, "").trim().split(/\s+/);
+      titlePrimary = rem[0] || "Excellence";
+      titleSecondary = rem.slice(1).join(" ") || "Awards 2027";
+    } else {
+      const parts = rawTitle.trim().split(/\s+/);
+      if (parts.length >= 3) {
+        titlePrefix = parts.slice(0, parts.length - 2).join(" ");
+        titlePrimary = parts[parts.length - 2];
+        titleSecondary = parts[parts.length - 1];
+      } else if (parts.length === 2) {
+        titlePrefix = "";
+        titlePrimary = parts[0];
+        titleSecondary = parts[1];
+      } else {
+        titlePrefix = "";
+        titlePrimary = rawTitle;
+        titleSecondary = "";
+      }
+    }
+  }
+  titlePrefix = titlePrefix || "Bharat Organic";
+  titlePrimary = titlePrimary || "Excellence";
+  titleSecondary = titleSecondary || "Awards 2027";
+
+  const rawSubtitle = heroData?.subtitle || "Celebrating Excellence • Innovation • Sustainability";
+  const subtitleParts = rawSubtitle.includes("•")
+    ? rawSubtitle.split("•").map((s: string) => s.trim()).filter(Boolean)
+    : [rawSubtitle.trim()];
+
+  const heroDesc =
+    heroData?.description ||
+    heroData?.shortDescription ||
+    "Honouring the changemakers, organizations and innovations during india's organic, natural and sustainable future.";
+
+  const primaryBtnLabel = heroData?.buttonLabel || "Submit Nomination";
+  const primaryBtnHref = heroData?.buttonHref || "#nomination-form";
+  const secondaryBtnLabel = heroData?.secondaryButtonLabel || "View Categories";
+  const secondaryBtnHref = heroData?.secondaryButtonHref || "/awards";
+
+  let dateLine1 = heroData?.dateLine1;
+  let dateLine2 = heroData?.dateLine2;
+  if (!dateLine1 && heroData?.date) {
+    const m = heroData.date.trim().match(/^(\d{1,2}\s*-\s*\d{1,2})\s+(.+)$/i);
+    if (m) {
+      dateLine1 = m[1];
+      dateLine2 = m[2];
+    } else {
+      dateLine1 = heroData.date;
+      dateLine2 = "";
+    }
+  }
+  dateLine1 = dateLine1 || "19 - 21";
+  dateLine2 = dateLine2 !== undefined && dateLine2 !== "" ? dateLine2 : "February 2027";
+
+  let venueLine1 = heroData?.venueLine1;
+  let venueLine2 = heroData?.venueLine2;
+  if (!venueLine1 && heroData?.location) {
+    const rawLoc = heroData.location.trim();
+    if (rawLoc.includes(",")) {
+      const parts = rawLoc.split(",");
+      venueLine1 = parts[0].trim() + (parts[1] ? `, ${parts[1].trim()}` : "");
+      venueLine2 = parts.slice(2).join(",").trim() || (parts[1] ? parts[1].trim() : "");
+    } else {
+      venueLine1 = rawLoc;
+      venueLine2 = "";
+    }
+  }
+  venueLine1 = venueLine1 || "Hall 12, Bharat Mandapam";
+  venueLine2 = venueLine2 !== undefined && venueLine2 !== "" ? venueLine2 : "PRAGATI MAIDAN, NEW DELHI, INDIA";
+
   return (
     <div className="w-full overflow-x-hidden bg-[#f7f5ec] font-sans">
       {/* ================= HERO ================= */}
-      <section className="relative flex h-[68vh] min-h-[400px] w-full items-center overflow-hidden bg-[#f7f5ec] pt-3 font-inter md:h-[72vh] md:pt-5 lg:h-[78vh] border-b-4 border-[#ea580c] pb-4 md:pb-6">
-        {/* full-width background image */}
-        <div className="absolute inset-0 z-0">
-          <img
-            src={nominationBg.src}
-            alt="Bharat Organic Excellence Awards 2027 Nominations"
-            className="h-full w-full object-cover"
-          />
-        </div>
-        {/* floating leaf accents */}
-        <Leaf className="pointer-events-none absolute -left-4 top-6 h-16 w-16 -rotate-12 text-lime-700/20 animate-[bounce_6s_ease-in-out_infinite]" />
-        <Leaf className="pointer-events-none absolute right-10 bottom-4 hidden h-20 w-20 rotate-45 text-lime-300/10 sm:block" />
-
-        <div className="relative z-20 w-full px-4 py-1 md:px-14 md:py-2">
-          <div className="max-w-2xl text-left">
-            {/* <img
-              src={bharatOrganicLogo.src}
-              alt="Bharat Organic Logo"
-              className="mb-3 h-14 w-auto object-contain md:mb-4 md:h-16"
-            /> */}
-
-            <h1 className="mb-3 font-poppins text-4xl font-semibold uppercase leading-[1.02] tracking-tight text-[#0b3b18] sm:text-5xl md:text-[56px] lg:text-[66px]" style={{ textShadow: "1px 1px 2px rgba(0,0,0,0.2)" }}>
-              <span className="block text-[26px] font-semibold tracking-tight sm:text-[26px] md:text-[26px] lg:text-[36px]">Bharat Organic</span>
-              <span className="block font-semibold tracking-tight">Excellence</span>
-              <span className="block font-semibold tracking-tight text-[#ea580c]">Awards 2027</span>
-            </h1>
-
-            <p className="mb-2.5 flex flex-wrap items-center gap-x-2.5 gap-y-1 text-xs font-bold uppercase tracking-wider text-[#0b3b18] sm:text-[13.5px]">
-              <span>Celebrating Excellence</span>
-              <span className="text-sm text-[#ea580c]">•</span>
-              <span>Innovation</span>
-              <span className="text-sm text-[#ea580c]">•</span>
-              <span>Sustainability</span>
-            </p>
-            <p className="text-black max-w-xl font-semibold">
-              Honouring the changemakers, organizations and innovations during india's organic, natural and sustainable future.
-            </p>
-
-            <div className="mt-5 flex flex-wrap items-center gap-3">
-              <button
-                onClick={() => {
-                  const formSection = document.getElementById("nomination-form");
-                  if (formSection) formSection.scrollIntoView({ behavior: "smooth", block: "start" });
-                }}
-                className="group inline-flex items-center gap-2 rounded-full bg-[#0b3b18] px-4 py-2.5 text-[10px] font-semibold uppercase tracking-widest text-white shadow-lg ring-1 ring-white/20 transition-all duration-300 hover:-translate-y-0.5 hover:bg-[#123d1c] hover:shadow-xl"
-              >
-                <Award className="h-4 w-4 text-[#F2B40E]" />
-                Submit Nomination
-                <ArrowRight className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" />
-              </button>
-              <a
-                href="/awards"
-                className="group inline-flex items-center gap-2 rounded-full border border-[#0b3b18]/30 bg-white/90 px-4 py-2.5 text-[10px] font-semibold uppercase tracking-widest text-[#0b3b18] shadow-sm transition-all duration-300 hover:-translate-y-0.5 hover:bg-[#0b3b18] hover:text-white hover:shadow-lg"
-              >
-                <Medal className="h-4 w-4 text-[#0b2912]" />
-                View Categories
-                <ArrowRight className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" />
-              </a>
-            </div>
-
-            <div className="mt-5 flex flex-col items-start gap-3 text-xs font-bold text-[#4B1426] sm:flex-row sm:items-center sm:gap-4 sm:text-sm md:text-[14px]">
-              <div className="flex items-center gap-3">
-                <Calendar className="h-[25px] w-[25px] shrink-0 text-emerald-900" />
-                <div>
-                  
-                <p>19 - 21</p>
-                <p className="uppercase">February 2027</p>
-                </div>
-              </div>
-              <span className="hidden h-4 w-px bg-[#4B1426]/30 sm:block" />
-              <div className="flex items-center gap-3">
-                <MapPin className="h-[25px] w-[25px] shrink-0 text-emerald-900" />
-                <div>
-                  
-                <p>Hall 12, Bharat Mandapam</p>
-                <p className="uppercase">PRAGATI MAIDAN, NEW DELHI, INDIA</p>
-                </div>
-              </div>
-            </div>
-
+      {heroEnabled && (
+        <section className="relative flex h-[68vh] min-h-[400px] w-full items-center overflow-hidden bg-[#f7f5ec] pt-3 font-inter md:h-[72vh] md:pt-5 lg:h-[78vh] border-b-4 border-[#ea580c] pb-4 md:pb-6">
+          {/* full-width background image */}
+          <div className="absolute inset-0 z-0">
+            <img
+              src={bgImgSrc}
+              alt={`${titlePrefix} ${titlePrimary} ${titleSecondary}`}
+              className="h-full w-full object-cover"
+            />
           </div>
-        </div>
-      </section>
+          {/* floating leaf accents */}
+          <Leaf className="pointer-events-none absolute -left-4 top-6 h-16 w-16 -rotate-12 text-lime-700/20 animate-[bounce_6s_ease-in-out_infinite]" />
+          <Leaf className="pointer-events-none absolute right-10 bottom-4 hidden h-20 w-20 rotate-45 text-lime-300/10 sm:block" />
+
+          <div className="relative z-20 w-full px-4 py-1 md:px-14 md:py-2">
+            <div className="max-w-2xl text-left">
+              {eyebrow && (
+                <div className="mb-2.5 inline-flex items-center gap-1.5 rounded-full bg-[#0b3b18]/10 px-3 py-1 text-[11px] font-bold tracking-widest text-[#0b3b18] uppercase">
+                  <Award className="h-3.5 w-3.5 text-[#ea580c]" />
+                  <span>{eyebrow}</span>
+                </div>
+              )}
+
+              <h1 className="mb-3 font-poppins text-4xl font-semibold uppercase leading-[1.02] tracking-tight text-[#0b3b18] sm:text-5xl md:text-[56px] lg:text-[66px]" style={{ textShadow: "1px 1px 2px rgba(0,0,0,0.2)" }}>
+                {titlePrefix && (
+                  <span className="block text-[26px] font-semibold tracking-tight sm:text-[26px] md:text-[26px] lg:text-[36px]">
+                    {titlePrefix}
+                  </span>
+                )}
+                {titlePrimary && (
+                  <span className="block font-semibold tracking-tight">
+                    {titlePrimary}
+                  </span>
+                )}
+                {titleSecondary && (
+                  <span className="block font-semibold tracking-tight text-[#ea580c]">
+                    {titleSecondary}
+                  </span>
+                )}
+              </h1>
+
+              <p className="mb-2.5 flex flex-wrap items-center gap-x-2.5 gap-y-1 text-xs font-bold uppercase tracking-wider text-[#0b3b18] sm:text-[13.5px]">
+                {subtitleParts.map((item: string, idx: number) => (
+                  <React.Fragment key={idx}>
+                    {idx > 0 && <span className="text-sm text-[#ea580c]">•</span>}
+                    <span>{item}</span>
+                  </React.Fragment>
+                ))}
+              </p>
+              <p className="text-black max-w-xl font-semibold">
+                {heroDesc}
+              </p>
+
+              <div className="mt-5 flex flex-wrap items-center gap-3">
+                <a
+                  href={primaryBtnHref}
+                  onClick={(e) => {
+                    if (primaryBtnHref.startsWith("#")) {
+                      e.preventDefault();
+                      const targetId = primaryBtnHref.replace(/^#/, "");
+                      const formSection = document.getElementById(targetId) || document.getElementById("nomination-form");
+                      if (formSection) formSection.scrollIntoView({ behavior: "smooth", block: "start" });
+                    }
+                  }}
+                  className="group inline-flex items-center gap-2 rounded-full bg-[#0b3b18] px-4 py-2.5 text-[10px] font-semibold uppercase tracking-widest text-white shadow-lg ring-1 ring-white/20 transition-all duration-300 hover:-translate-y-0.5 hover:bg-[#123d1c] hover:shadow-xl cursor-pointer"
+                >
+                  <Award className="h-4 w-4 text-[#F2B40E]" />
+                  {primaryBtnLabel}
+                  <ArrowRight className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" />
+                </a>
+                <a
+                  href={secondaryBtnHref}
+                  className="group inline-flex items-center gap-2 rounded-full border border-[#0b3b18]/30 bg-white/90 px-4 py-2.5 text-[10px] font-semibold uppercase tracking-widest text-[#0b3b18] shadow-sm transition-all duration-300 hover:-translate-y-0.5 hover:bg-[#0b3b18] hover:text-white hover:shadow-lg"
+                >
+                  <Medal className="h-4 w-4 text-[#0b2912]" />
+                  {secondaryBtnLabel}
+                  <ArrowRight className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" />
+                </a>
+              </div>
+
+              <div className="mt-5 flex flex-col items-start gap-3 text-xs font-bold text-[#4B1426] sm:flex-row sm:items-center sm:gap-4 sm:text-sm md:text-[14px]">
+                <div className="flex items-center gap-3">
+                  <Calendar className="h-[25px] w-[25px] shrink-0 text-emerald-900" />
+                  <div>
+                    <p>{dateLine1}</p>
+                    {dateLine2 && <p className="uppercase">{dateLine2}</p>}
+                  </div>
+                </div>
+                <span className="hidden h-4 w-px bg-[#4B1426]/30 sm:block" />
+                <div className="flex items-center gap-3">
+                  <MapPin className="h-[25px] w-[25px] shrink-0 text-emerald-900" />
+                  <div>
+                    <p>{venueLine1}</p>
+                    {venueLine2 && <p className="uppercase">{venueLine2}</p>}
+                  </div>
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </section>
+      )}
 
       <div className="relative z-20 -mt-6 font-inter md:-mt-8">
         <SectionContainer>
@@ -580,41 +730,55 @@ export default function BharatOrganicAwards() {
       </div>
 
       {/* ================= PROCESS ================= */}
-      <section className="w-full px-4 py-2 md:px-14 md:py-4 my-4">
-        <Reveal>
-          <div className="mb-6 flex items-center justify-center gap-2 text-emerald-900">
-            <Sprout className="h-4 w-4 text-lime-600" />
-            <h2 className="text-base font-bold tracking-widest sm:text-lg">
-              THE AWARD PROCESS
-            </h2>
-            <Sprout className="h-4 w-4 -scale-x-100 text-lime-600" />
-          </div>
-        </Reveal>
-
-        <div className="grid grid-cols-2 sm:grid-cols-3 gap-x-2 gap-y-6 md:grid-cols-6 sm:gap-x-8">
-          {processSteps.map((s, i) => (
-            <Reveal key={s.n} delay={i * 100}>
-              <div className="group relative flex flex-col items-center text-center">
-                <div className="relative flex h-14 w-14 items-center justify-center rounded-full border-2 border-lime-600/40 bg-lime-50 transition-all duration-300 group-hover:border-lime-600 group-hover:bg-lime-100 group-hover:shadow-lg group-hover:shadow-lime-600/20 group-hover:-translate-y-1">
-                  <s.Icon className="h-6 w-6 text-emerald-800 transition-transform duration-300 group-hover:scale-110" />
-                </div>
-                {i < processSteps.length - 1 && (
-                  <ArrowRight className="absolute left-[calc(100%+1rem)] top-7 hidden h-5 w-5 -translate-y-1/2 text-emerald-800/50 sm:block" />
-                )}
-                <p className="mt-2 text-[11px] font-bold text-amber-600">
-                  {s.n}
-                </p>
-                <p className="text-xs font-bold uppercase leading-tight text-emerald-950 sm:text-sm">
-                  {s.title}
-                </p>
-                <p className="mt-1 text-xs font-medium leading-relaxed text-emerald-950/70 sm:text-[13px]">
-                  {s.desc}
-                </p>
+      {(() => {
+        const rawSteps = stepsData?.items || stepsData?.steps;
+        const activeSteps = Array.isArray(rawSteps) && rawSteps.length > 0
+          ? rawSteps.map((it: any, idx: number) => ({
+              n: it.num || String(idx + 1).padStart(2, "0"),
+              title: it.title || "",
+              desc: it.description || it.desc || it.shortDescription || "",
+              iconKey: it.icon || "",
+              idx,
+            }))
+          : DEFAULT_PROCESS_STEPS.map((s, idx) => ({ ...s, iconKey: s.icon, idx }));
+        const sectionTitle = stepsData?.title || "THE AWARD PROCESS";
+        const sectionEnabled = stepsData?.enabled !== false;
+        if (!sectionEnabled) return null;
+        return (
+          <section className="w-full px-4 py-2 md:px-14 md:py-4 my-4">
+            <Reveal>
+              <div className="mb-6 flex items-center justify-center gap-2 text-emerald-900">
+                <Sprout className="h-4 w-4 text-lime-600" />
+                <h2 className="text-base font-bold tracking-widest sm:text-lg">
+                  {sectionTitle}
+                </h2>
+                <Sprout className="h-4 w-4 -scale-x-100 text-lime-600" />
               </div>
             </Reveal>
-          ))}
-        </div>
-      </section>
+
+            <div className="grid grid-cols-2 sm:grid-cols-3 gap-x-2 gap-y-6 md:grid-cols-6 sm:gap-x-8">
+              {activeSteps.map((s, i) => {
+                const Icon = getStepIcon(s.iconKey, s.idx);
+                return (
+                  <Reveal key={s.n + i} delay={i * 100}>
+                    <div className="group relative flex flex-col items-center text-center">
+                      <div className="relative flex h-14 w-14 items-center justify-center rounded-full border-2 border-lime-600/40 bg-lime-50 transition-all duration-300 group-hover:border-lime-600 group-hover:bg-lime-100 group-hover:shadow-lg group-hover:shadow-lime-600/20 group-hover:-translate-y-1">
+                        <Icon className="h-6 w-6 text-emerald-800 transition-transform duration-300 group-hover:scale-110" />
+                      </div>
+                      {i < activeSteps.length - 1 && (
+                        <ArrowRight className="absolute left-[calc(100%+1rem)] top-7 hidden h-5 w-5 -translate-y-1/2 text-emerald-800/50 sm:block" />
+                      )}
+                      <p className="mt-2 text-[11px] font-bold text-amber-600">{s.n}</p>
+                      <p className="text-xs font-bold uppercase leading-tight text-emerald-950 sm:text-sm">{s.title}</p>
+                      <p className="mt-1 text-xs font-medium leading-relaxed text-emerald-950/70 sm:text-[13px]">{s.desc}</p>
+                    </div>
+                  </Reveal>
+                );
+              })}
+            </div>
+          </section>
+        );
+      })()}
 
       {/* ================= FORM + SIDEBAR ================= */}
       <section id="nomination-form" className="w-full px-4 py-2 md:px-14 md:py-4 grid grid-cols-1 gap-4 lg:gap-4 lg:grid-cols-[1fr_320px]">
