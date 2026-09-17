@@ -35,7 +35,7 @@ type JobOpening = {
   icon: LucideIcon;
 };
 
-const showOpenings = false;
+const showOpenings = true;
 
 const allJobOpenings: JobOpening[] = [
   {
