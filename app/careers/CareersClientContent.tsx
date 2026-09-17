@@ -19,6 +19,7 @@ import {
   type LucideIcon,
 } from "lucide-react";
 import { EligibilityModal } from "./submit-resume/page";
+import { ApplicationFormModal } from "./application-form/page";
 import ResumeUploadButton from "./ResumeUploadButton";
 import JobCardButtons from "./JobCardButtons";
 
@@ -205,6 +206,7 @@ function EmptyOpenings() {
 
 export default function CareersClientContent() {
   const [selectedScore, setSelectedScore] = useState<number | null>(null);
+  const [isNoneModalOpen, setIsNoneModalOpen] = useState(false);
   const openingCount = jobOpenings.length;
 
   return (
@@ -330,6 +332,13 @@ export default function CareersClientContent() {
                       >
                         38%
                       </button>
+                      <button
+                        type="button"
+                        onClick={() => setIsNoneModalOpen(true)}
+                        className="rounded-full bg-[#075f38] px-3.5 py-1 text-xs font-bold text-white transition hover:bg-[#054c2d]"
+                      >
+                        None
+                      </button>
                     </div>
                   </div>
                   <p className="mt-2 text-[clamp(13px,1vw,17px)] leading-snug text-[#314256]">
@@ -425,6 +434,11 @@ export default function CareersClientContent() {
         isOpen={selectedScore !== null}
         score={selectedScore ?? 58}
         onClose={() => setSelectedScore(null)}
+      />
+
+      <ApplicationFormModal
+        isOpen={isNoneModalOpen}
+        onClose={() => setIsNoneModalOpen(false)}
       />
     </main>
   );
