@@ -389,7 +389,7 @@ export default function OfficialRecognitionBanner() {
 
             {/* ---------------- Disclaimer ---------------- */}
             <div className="mt-10 flex items-center relative z-10">
-              <div className="flex items-center gap-3 rounded-xl bg-[#f8f7f1] p-4 shadow-[0_2px_10px_rgba(0,0,0,0.02)] border border-[#e5efdf] w-[60%]">
+              <div className="flex items-center gap-3 rounded-xl bg-[#f8f7f1] p-4 shadow-[0_2px_10px_rgba(0,0,0,0.02)] border border-[#e5efdf] w-full md:w-[60%]">
                 <div className="w-14 h-14 shrink-0 rounded-full bg-[#e8eddf] flex items-center justify-center">
                   <Image
                     src={secureImg}

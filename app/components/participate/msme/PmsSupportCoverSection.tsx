@@ -573,11 +573,16 @@ const PmsSupportCoverSection: FC = () => {
                 <div
                   className="
                     absolute
-                    left-1/2
+                    left-0
                     top-0
                     z-20
-                    -translate-x-1/2
+                    w-full
+                    flex
+                    justify-center
                     -translate-y-1/2
+                    md:left-1/2
+                    md:-translate-x-1/2
+                    md:w-auto
                   "
                 >
                   <div className="flex items-center gap-[8px]">
@@ -595,7 +600,12 @@ const PmsSupportCoverSection: FC = () => {
 
                 <h4
                   className="
+                    w-full
+                    text-center
+                    whitespace-normal
                     md:whitespace-nowrap
+                    md:w-auto
+                    md:text-left
                     rounded-[5px]
                     bg-[#07582c]
                     px-[14px]
@@ -852,7 +862,8 @@ const PmsSupportCoverSection: FC = () => {
                       px-[15px]
                       py-2
                       text-center
-                      text-[32px]
+                      text-[24px]
+                      md:text-[32px]
                       font-bold
                       leading-none
                       text-white
@@ -1044,7 +1055,7 @@ const PmsSupportCoverSection: FC = () => {
                         src={cta.icon.src}
                         alt=""
                         aria-hidden="true"
-                        className="h-[60px] w-[60px] shrink-0 object-contain"
+                        className={`${cta.variant === "secondary" ? "h-[45px] w-[45px] md:h-[60px] md:w-[60px]" : "h-[60px] w-[60px]"} shrink-0 object-contain`}
                       />
 
                       <span
@@ -1113,9 +1124,10 @@ const PmsSupportCoverSection: FC = () => {
                 <div
                   className="
                     grid
-                    grid-cols-2
+                    grid-cols-1
                     items-center
-                    sm:grid-cols-5
+                    sm:grid-cols-3
+                    lg:grid-cols-5
                   "
                 >
                   {data.badges.map((badge, index) => (
@@ -1125,10 +1137,24 @@ const PmsSupportCoverSection: FC = () => {
                         flex
                         min-h-[43px]
                         items-center
-                        justify-center
-                        gap-[7px]
-                        px-[8px]
-                        ${index !== data.badges.length - 1 ? "sm:border-r sm:border-[#d8ddd4]" : ""}
+                        justify-start
+                        gap-[8px]
+                        px-[10px]
+                        pt-[12px]
+                        pb-[8px]
+                        border-b
+                        border-[#d8ddd4]
+                        last:border-b-0
+                        sm:border-b-0
+                        sm:border-r
+                        sm:border-[#d8ddd4]
+                        sm:last:border-r-0
+                        sm:pt-0
+                        ${
+                          index !== data.badges.length - 1
+                            ? "lg:border-r lg:border-[#d8ddd4]"
+                            : "lg:border-r-0"
+                        }
                       `}
                     >
                       <img
@@ -1136,8 +1162,8 @@ const PmsSupportCoverSection: FC = () => {
                         alt=""
                         aria-hidden="true"
                         className="
-                          h-[27px]
-                          w-[27px]
+                          h-[22px]
+                          w-[22px]
                           shrink-0
                           object-contain
                         "
@@ -1145,9 +1171,9 @@ const PmsSupportCoverSection: FC = () => {
 
                       <span
                         className="
-                          text-[14px]
+                          text-[13px]
                           font-medium
-                          leading-[1.25]
+                          leading-[1.2]
                           text-[#191919]
                         "
                       >
