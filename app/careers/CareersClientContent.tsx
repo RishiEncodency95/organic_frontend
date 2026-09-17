@@ -20,6 +20,7 @@ import {
 } from "lucide-react";
 import { EligibilityModal } from "./submit-resume/page";
 import { ApplicationFormModal } from "./application-form/page";
+import { ReviewSubmitModal } from "./review-submit/page";
 import ResumeUploadButton from "./ResumeUploadButton";
 import JobCardButtons from "./JobCardButtons";
 
@@ -240,6 +241,7 @@ function EmptyOpenings() {
 export default function CareersClientContent() {
   const [selectedScore, setSelectedScore] = useState<number | null>(null);
   const [isNoneModalOpen, setIsNoneModalOpen] = useState(false);
+  const [isAmanModalOpen, setIsAmanModalOpen] = useState(false);
   const [showAllJobs, setShowAllJobs] = useState(false);
   const openingCount = jobOpenings.length;
 
@@ -375,6 +377,13 @@ export default function CareersClientContent() {
                       >
                         None
                       </button>
+                      <button
+                        type="button"
+                        onClick={() => setIsAmanModalOpen(true)}
+                        className="rounded-full bg-[#075f38] px-3.5 py-1 text-xs font-bold text-white transition hover:bg-[#054c2d]"
+                      >
+                        Aman
+                      </button>
                     </div>
                   </div>
                   <p className="mt-2 text-[clamp(13px,1vw,17px)] leading-snug text-[#314256]">
@@ -479,6 +488,11 @@ export default function CareersClientContent() {
       <ApplicationFormModal
         isOpen={isNoneModalOpen}
         onClose={() => setIsNoneModalOpen(false)}
+      />
+
+      <ReviewSubmitModal
+        isOpen={isAmanModalOpen}
+        onClose={() => setIsAmanModalOpen(false)}
       />
     </main>
   );

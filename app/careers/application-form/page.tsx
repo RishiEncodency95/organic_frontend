@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import sidebarFooterImage from "../../assets/carrer/grow-organic-grow-india.png";
@@ -35,7 +35,7 @@ import {
    ========================================================= */
 
 const DESIGN_WIDTH = 1500;
-const DESIGN_HEIGHT = 972;
+const DESIGN_HEIGHT = 1180;
 
 /* =========================================================
    ASSETS
@@ -813,7 +813,7 @@ function SidebarFooter() {
 
 function Sidebar({ onClose }: { onClose: () => void }) {
   return (
-    <aside className="relative flex h-full min-h-0 flex-col overflow-hidden border-l border-[#e4ebe5] bg-[linear-gradient(180deg,#f8fcf9,#eef8f1)] px-[16px] pb-[8px] pt-[8px]">
+    <aside className="relative flex h-full min-h-0 flex-col overflow-y-auto border-l border-[#e4ebe5] bg-[linear-gradient(180deg,#f8fcf9,#eef8f1)] px-[16px] pb-[20px] pt-[8px]">
       <SidebarFooter />
 
       <div className="relative z-10 flex h-[84px] shrink-0 items-start justify-between">
@@ -852,17 +852,16 @@ function Sidebar({ onClose }: { onClose: () => void }) {
 function ApplicationFormContent({ onClose }: { onClose: () => void }) {
   return (
     <div
-      className="grid overflow-hidden bg-white text-[#10243f]"
+      className="relative grid min-h-full w-full overflow-hidden bg-white text-[#10243f]"
       style={{
         width: `${DESIGN_WIDTH}px`,
-        height: `${DESIGN_HEIGHT}px`,
         gridTemplateColumns: "68.2% 31.8%",
       }}
     >
       {/* LEFT */}
-      <section className="grid h-full min-h-0 overflow-hidden px-[36px] pb-[14px] pt-[16px] grid-rows-[52px_86px_62px_1fr] gap-[9px]">
+      <section className="flex h-full min-h-0 flex-col overflow-y-auto px-[36px] pb-[24px] pt-[16px]">
         {/* HEADER */}
-        <div className="flex min-h-0 items-center gap-[10px] overflow-hidden">
+        <div className="flex shrink-0 items-center gap-[10px]">
           <Image
             src={assets.headerLeaf}
             alt=""
@@ -883,7 +882,7 @@ function ApplicationFormContent({ onClose }: { onClose: () => void }) {
         </div>
 
         {/* TITLE */}
-        <div>
+        <div className="mt-[10px] shrink-0">
           <Link
             href="/careers"
             className="flex w-fit items-center gap-[7px] text-[14px] font-extrabold text-[#0d5d3c]"
@@ -904,12 +903,12 @@ function ApplicationFormContent({ onClose }: { onClose: () => void }) {
         </div>
 
         {/* STEPS */}
-        <div className="min-h-0">
+        <div className="mt-[10px] shrink-0">
           <ProgressSteps />
         </div>
 
         {/* FORM */}
-        <div className="grid min-h-0 grid-rows-[236px_307px_154px] gap-[10px] overflow-hidden">
+        <div className="mt-[12px] flex shrink-0 flex-col gap-[12px]">
           <PersonalInformation />
           <ProfessionalDetails />
           <TellUsMore />
@@ -926,6 +925,8 @@ function ApplicationFormContent({ onClose }: { onClose: () => void }) {
    MODAL
    ========================================================= */
 
+const MODAL_WIDTH = "min(92vw, 1440px, calc(92vh * 1500 / 972))";
+
 export function ApplicationFormModal({
   isOpen,
   onClose,
@@ -933,23 +934,48 @@ export function ApplicationFormModal({
   isOpen: boolean;
   onClose: () => void;
 }) {
+  const scrollRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (isOpen) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "";
+    }
+    return () => {
+      document.body.style.overflow = "";
+    };
+  }, [isOpen]);
+
   if (!isOpen) return null;
 
+  const handleWheel = (e: React.WheelEvent<HTMLDivElement>) => {
+    if (scrollRef.current) {
+      scrollRef.current.scrollTop += e.deltaY;
+      e.stopPropagation();
+    }
+  };
+
   return (
-    <div className="fixed inset-0 z-[9999] flex items-center justify-center bg-black/40 p-3">
+    <div className="fixed inset-0 z-[99999] flex items-center justify-center p-3">
+      <div className="absolute inset-0 bg-slate-950/45 backdrop-blur-[5px]" onClick={onClose} />
+
       <div
-        className="relative w-[85vw] max-w-[1300px] max-h-[95vh] overflow-hidden rounded-[18px] bg-[#fbfcf9] shadow-[0_30px_90px_rgba(0,0,0,.28)]"
+        ref={scrollRef}
+        onWheel={handleWheel}
+        className="relative max-h-[92vh] overflow-y-auto overflow-x-hidden rounded-[18px] bg-[#fbfcf9] shadow-[0_30px_90px_rgba(0,0,0,0.28)]"
         style={{
-          aspectRatio: `${DESIGN_WIDTH} / ${DESIGN_HEIGHT}`,
+          width: MODAL_WIDTH,
+          touchAction: "pan-y",
         }}
       >
-        <div className="absolute inset-0 overflow-hidden">
+        <div className="relative w-full overflow-hidden">
           <div
-            className="absolute left-0 top-0"
+            className="left-0 top-0 overflow-hidden bg-[#fbfcf9]"
             style={{
               width: `${DESIGN_WIDTH}px`,
               height: `${DESIGN_HEIGHT}px`,
-              transform: "scale(calc(min(85vw, 1300px) / 1500px))",
+              transform: `scale(calc(${MODAL_WIDTH} / ${DESIGN_WIDTH}px))`,
               transformOrigin: "top left",
             }}
           >
