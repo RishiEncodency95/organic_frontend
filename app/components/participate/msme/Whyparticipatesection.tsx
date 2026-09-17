@@ -55,7 +55,7 @@ export default function WhyParticipateSection() {
   return (
     <section
       aria-labelledby="why-participate-heading"
-      className="relative w-full overflow-hidden bg-[#EFF7EE] pt-6 pb-20 sm:pb-10"
+      className="relative w-full overflow-hidden bg-[#EFF7EE] pt-10 pb-20 sm:pt-14 sm:pb-24 lg:pt-6 lg:pb-10"
     >
       {/* Background image */}
       <div className="absolute inset-0 z-0">
@@ -78,7 +78,7 @@ export default function WhyParticipateSection() {
         {/* Heading */}
         <h2
           id="why-participate-heading"
-          className="mt-2 text-balance text-center text-[24px] font-semibold leading-tight text-slate-900 md:text-[34px] lg:text-[50px]"
+          className="mt-4 text-balance text-center text-[24px] font-semibold leading-tight text-slate-900 sm:mt-6 md:text-[34px] lg:text-[50px]"
         >
           {data.heading.prefix}
           <span className="relative inline-block text-[#1b5e20]">
@@ -94,7 +94,7 @@ export default function WhyParticipateSection() {
         </h2>
 
         {/* Cards */}
-        <ul className="mt-14 grid w-full grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-4">
+        <ul className="mt-10 grid w-full grid-cols-1 gap-10 sm:mt-14 sm:gap-12 lg:grid-cols-4 lg:mt-14 lg:gap-5">
           {data.features.map((feature) => (
             <li
               key={feature.title}
@@ -127,7 +127,7 @@ export default function WhyParticipateSection() {
         {/* CTA */}
         <a
           href={data.cta.href}
-          className="mt-6 inline-flex w-full items-center justify-center gap-3 rounded-full bg-gradient-to-b from-[#3a8a3a] via-[#2a7a2a] to-[#1a5a1a] px-12 py-1.5 text-[20px] font-semibold tracking-wide text-white transition-transform duration-200 hover:from-[#4a9a4a] hover:via-[#3a8a3a] hover:to-[#2a7a2a] sm:w-auto"
+          className="mt-10 inline-flex w-full items-center justify-center gap-3 rounded-full bg-gradient-to-b from-[#3a8a3a] via-[#2a7a2a] to-[#1a5a1a] px-12 py-1.5 text-[20px] font-semibold tracking-wide text-white transition-transform duration-200 hover:from-[#4a9a4a] hover:via-[#3a8a3a] hover:to-[#2a7a2a] sm:mt-14 lg:mt-6 sm:w-auto"
           style={{ boxShadow: "0 4px 0 #0d3d0d, 0 6px 16px rgba(0,0,0,0.3)" }}
         >
           <Calendar className="h-12 w-12" aria-hidden="true" />

@@ -469,6 +469,8 @@ export default function MsmePmsScheme() {
                   w-auto
                   object-contain
                   object-right-bottom
+                  hidden
+                  md:block
                 "
               />
             </div>

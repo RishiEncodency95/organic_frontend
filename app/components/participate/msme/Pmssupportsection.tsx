@@ -104,8 +104,8 @@ export default function PmsSupportSection() {
               </div>
 
               {/* Highlight cards */}
-              <div className="w-full sm:w-[62%] 2xl:w-[56%] rounded-2xl border border-gray-200 bg-white p-4 shadow-[rgba(0,0,0,0.12)_0px_1px_3px,rgba(0,0,0,0.24)_0px_1px_2px]">
-                <ul className="flex flex-col sm:flex-row sm:items-stretch">
+              <div className="w-full md:w-full lg:w-[56%] rounded-2xl border border-gray-200 bg-white p-4 shadow-[rgba(0,0,0,0.12)_0px_1px_3px,rgba(0,0,0,0.24)_0px_1px_2px]">
+                <ul className="flex flex-col md:flex-col lg:flex-row sm:items-stretch">
                   {data.highlightCards.map(
                     ({ id, icon, title, description }, index) => (
                       <li
@@ -207,107 +207,109 @@ export default function PmsSupportSection() {
                   )
                 )}
               </ol>
-              <div className="flex">
-                <div className="grid grid-cols-1 gap-4 sm:gap-5 lg:grid-cols-[1fr_0.7fr_0.7fr] mt-4">
-                  {/* Expert support at every step */}
-                  <div className="relative rounded-2xl bg-[#0b2912] text-white">
-                    <img
-                      src={everySupportImg.src}
-                      alt="Bharat Organic Expo support specialist ready to help with PMS applications"
-                      className="absolute -top-4 left-0 h-[calc(100%+1rem)] w-[55%] object-cover object-top"
-                      loading="lazy"
-                    />
-                    <div className="relative ml-[42%] flex flex-col justify-center gap-2 p-4 sm:p-5">
-                      <div className="flex gap-2">
-                        <span className="flex h-20 w-20 shrink-0 items-center justify-center rounded-full border-2 border-white">
-                          <Headphones className="h-12 w-12" aria-hidden="true" />
-                        </span>
-                        <div>
-                          <h3 className="text-[14px] font-semibold uppercase leading-tight sm:text-[15px]">
-                            {data.expertSupportTitle}
-                          </h3>
-                          <p className="text-[13px] leading-relaxed text-white/70 sm:text-sm">
-                            {data.expertSupportDesc}
-                          </p>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
 
-                  {/* Have questions / contact */}
-                  <div className="flex flex-1 flex-col gap-3 rounded-2xl border border-gray-200 bg-[#eff1e4] p-5 shadow-sm sm:p-6">
-                    <div className="flex flex-row gap-4">
-                      <span className="flex h-16 w-16 min-h-20 min-w-20 items-center justify-center rounded-full bg-[#a5d6a7]">
-                        <Image src={haveQuestionsImg} alt="Have questions?" className="h-16 w-16 object-contain" />
+          <div className="flex">
+              <div className="grid grid-cols-1 gap-4 sm:gap-5 lg:grid-cols-[1fr_0.7fr_0.7fr] mt-4 w-full">
+                {/* Expert support at every step */}
+                <div className="relative rounded-2xl bg-[#0b2912] text-white">
+                  <img
+                    src={everySupportImg.src}
+                    alt="Bharat Organic Expo support specialist ready to help with PMS applications"
+                    className="absolute -top-4 left-0 h-[calc(100%+1rem)] w-full md:w-full lg:w-[55%] object-cover object-top"
+                    loading="lazy"
+                  />
+                  <div className="absolute inset-0 bg-[#0b2912]/60 sm:bg-transparent" />
+                  <div className="relative ml-[42%] flex flex-col justify-center gap-2 p-4 sm:p-5">
+                    <div className="flex gap-2">
+                      <span className="flex h-20 w-20 shrink-0 items-center justify-center rounded-full border-2 border-white">
+                        <Headphones className="h-12 w-12" aria-hidden="true" />
                       </span>
                       <div>
-                        <h3 className="text-[14px] font-semibold uppercase leading-tight text-[#1b5e20] sm:text-[15px]">
-                          {data.questionsTitle}
+                        <h3 className="text-[14px] font-semibold uppercase leading-tight sm:text-[15px]">
+                          {data.expertSupportTitle}
                         </h3>
-                        <p className="text-[13px] leading-relaxed sm:text-sm">
-                          {data.questionsDesc}
+                        <p className="text-[13px] leading-relaxed text-white/70 sm:text-sm">
+                          {data.expertSupportDesc}
                         </p>
                       </div>
                     </div>
-                    <address className="mt-1 flex flex-col gap-1.5 text-[13px] not-italic sm:text-sm border-t pt-3 border-[#e4e7d2]">
-                      <a
-                        href={`mailto:${data.email}`}
-                        className="flex items-center gap-2 hover:underline"
-                      >
-                        <Mail
-                          className="h-5 w-5 shrink-0 text-[#1b5e20]"
-                          aria-hidden="true"
-                        />
-                        {data.email}
-                      </a>
-                      <a
-                        href={`tel:${data.phone.replace(/[^0-9+]/g, '')}`}
-                        className="flex items-center gap-2 hover:underline"
-                      >
-                        <Phone
-                          className="h-5 w-5 shrink-0 text-[#1b5e20]"
-                          aria-hidden="true"
-                        />
-                        {data.phone}
-                      </a>
-                    </address>
                   </div>
+                </div>
 
-                  {/* Ready to apply / CTA */}
-                  <div className="flex items-center h-full">
-                    <div className="relative flex overflow-visible rounded-2xl bg-[#0b2912] text-white h-full">
-                      <div className="flex flex-1 flex-col justify-between gap-4 p-5 sm:p-6">
-                        <div className="flex items-start gap-4">
-                          <span className="flex h-20 w-20 shrink-0 items-center justify-center rounded-full border-2 border-white p-1">
-                            <span className="flex h-full w-full items-center justify-center rounded-full bg-white">
-                              <FileText className="h-12 w-12 text-[#0b2912]" aria-hidden="true" />
-                            </span>
+                {/* Have questions / contact */}
+                <div className="flex flex-1 flex-col gap-3 rounded-2xl border border-gray-200 bg-[#eff1e4] p-5 shadow-sm sm:p-6">
+                  <div className="flex flex-row gap-4">
+                    <span className="flex h-16 w-16 min-h-20 min-w-20 items-center justify-center rounded-full bg-[#a5d6a7]">
+                      <Image src={haveQuestionsImg} alt="Have questions?" className="h-16 w-16 object-contain" />
+                    </span>
+                    <div>
+                      <h3 className="text-[14px] font-semibold uppercase leading-tight text-[#1b5e20] sm:text-[15px]">
+                        {data.questionsTitle}
+                      </h3>
+                      <p className="text-[13px] leading-relaxed sm:text-sm">
+                        {data.questionsDesc}
+                      </p>
+                    </div>
+                  </div>
+                  <address className="mt-1 flex flex-col gap-1.5 text-[13px] not-italic sm:text-sm border-t pt-3 border-[#e4e7d2]">
+                    <a
+                      href={`mailto:${data.email}`}
+                      className="flex items-center gap-2 hover:underline"
+                    >
+                      <Mail
+                        className="h-5 w-5 shrink-0 text-[#1b5e20]"
+                        aria-hidden="true"
+                      />
+                      {data.email}
+                    </a>
+                    <a
+                      href={`tel:${data.phone.replace(/[^0-9+]/g, '')}`}
+                      className="flex items-center gap-2 hover:underline"
+                    >
+                      <Phone
+                        className="h-5 w-5 shrink-0 text-[#1b5e20]"
+                        aria-hidden="true"
+                      />
+                      {data.phone}
+                    </a>
+                  </address>
+                </div>
+
+                {/* Ready to apply / CTA */}
+                <div className="flex items-center h-full">
+                  <div className="relative flex overflow-visible rounded-2xl bg-[#0b2912] text-white h-full">
+                    <div className="flex flex-1 flex-col justify-between gap-4 p-5 sm:p-6">
+                      <div className="flex items-start gap-4">
+                        <span className="flex h-20 w-20 shrink-0 items-center justify-center rounded-full border-2 border-white p-1">
+                          <span className="flex h-full w-full items-center justify-center rounded-full bg-white">
+                            <FileText className="h-12 w-12 text-[#0b2912]" aria-hidden="true" />
                           </span>
-                          <div className="flex flex-col gap-2">
-                            <h3 className="text-[14px] font-semibold uppercase leading-tight sm:text-[15px]">
-                              {data.readyTitle}
-                            </h3>
-                            <p className="text-[13px] leading-relaxed text-white/70 sm:text-sm">
-                              {data.readyDesc}
-                            </p>
-                          </div>
+                        </span>
+                        <div className="flex flex-col gap-2">
+                          <h3 className="text-[14px] font-semibold uppercase leading-tight sm:text-[15px]">
+                            {data.readyTitle}
+                          </h3>
+                          <p className="text-[13px] leading-relaxed text-white/70 sm:text-sm">
+                            {data.readyDesc}
+                          </p>
                         </div>
-
-                        <a
-                          href={data.ctaHref}
-                          className="inline-flex w-fit items-center gap-1.5 rounded-lg bg-[#F2B40E] px-4 py-2.5 text-[13px] font-semibold uppercase tracking-wide text-[#0b2912] transition-colors hover:bg-[#d4a00c] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#F2B40E] sm:text-sm"
-                        >
-                          {data.ctaText}
-                          <ChevronRight className="h-4 w-4" aria-hidden="true" />
-                        </a>
                       </div>
+
+                      <a
+                        href={data.ctaHref}
+                        className="inline-flex w-fit items-center gap-1.5 rounded-lg bg-[#F2B40E] px-4 py-2.5 text-[13px] font-semibold uppercase tracking-wide text-[#0b2912] transition-colors hover:bg-[#d4a00c] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#F2B40E] sm:text-sm"
+                      >
+                        {data.ctaText}
+                        <ChevronRight className="h-4 w-4" aria-hidden="true" />
+                      </a>
+                    </div>
                     </div>
                   </div>
                 </div>
                 <img
                   src={leftImage.src}
                   alt="Ready to apply for PMS"
-                  className="h-[180px] w-[120px] object-contain self-end mb-5 -ml-1"
+                  className="hidden sm:block h-[180px] w-[120px] object-contain self-end mb-5 -ml-1"
                   loading="lazy"
                 />
               </div>
