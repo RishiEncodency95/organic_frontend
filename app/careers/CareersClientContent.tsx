@@ -92,12 +92,12 @@ const allJobOpenings: JobOpening[] = [
     icon: Users,
   },
   {
-    id: "graphic-designer",
-    title: "Graphic Designer",
-    department: "Design & Creative",
+    id: "sales-manager-domastic",
+    title: "Sales Manager - Domastic Exhibitor Sales & Sponsorsip",
+    department: "Sales",
     location: "New Delhi",
     type: "Full Time",
-    experience: "2–4 Years",
+    experience: "5–10 Years",
     description:
       "Design creative assets for digital and print media, including banners, brochures, social media posts and event branding.",
     icon: Palette,
