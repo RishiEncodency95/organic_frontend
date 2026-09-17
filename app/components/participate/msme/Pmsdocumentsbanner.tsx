@@ -1697,7 +1697,8 @@ export default function PMSDocumentsBanner() {
 
             <p
               className="
-                pr-[80px]
+                pr-0
+                md:pr-[80px]
                 text-[13px]
                 leading-[1.5]
                 text-[#202531]
