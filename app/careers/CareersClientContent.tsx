@@ -206,19 +206,19 @@ function JobCard({ job }: { job: JobOpening }) {
 
 function EmptyOpenings() {
   return (
-    <div className="mx-auto grid w-[96%] grid-cols-[80px_minmax(0,1fr)_1px_300px] items-center gap-[clamp(18px,2vw,32px)] rounded-[24px] bg-[#eef8e9]/90 px-[clamp(34px,4vw,62px)] py-[clamp(14px,1.2vw,20px)]">
+    <div className="w-full grid w-[96%] grid-cols-[80px_minmax(0,1fr)_1px_300px] items-center gap-[clamp(18px,2vw,32px)] rounded-[24px] bg-[#eef8e9]/90 px-4 py-2">
       <span className="grid h-[clamp(62px,5.2vw,82px)] w-[clamp(62px,5.2vw,82px)] place-items-center rounded-full bg-[#e4f2e5] text-[#08713f]">
         <BriefcaseBusiness
-          className="h-[clamp(34px,3vw,46px)] w-[clamp(34px,3vw,46px)]"
+          className="h-[40px] w-[40px]"
           strokeWidth={1.8}
         />
       </span>
 
       <div>
-        <h3 className="text-[clamp(16px,1.18vw,22px)] font-extrabold leading-tight text-[#0b5638]">
+        <h3 className="text-lg lg:text-2xl font-semibold leading-tight text-[#0b5638]">
           No open positions at the moment
         </h3>
-        <p className="mt-2 max-w-[720px] text-[clamp(11px,0.8vw,14px)] leading-relaxed text-[#33475b]">
+        <p className="mt-2 max-w-[720px] text-sm lg:text-[15px] leading-relaxed text-[#33475b]">
           We are not hiring for any specific roles right now. But we are always
           on the lookout for passionate individuals who want to make a
           difference.
@@ -229,7 +229,7 @@ function EmptyOpenings() {
 
       <div>
         <ResumeUploadButton variant="outline" />
-        <p className="mt-3 text-[clamp(11px,0.8vw,14px)] leading-relaxed text-[#43556c]">
+        <p className="mt-2 text-[15px] leading-relaxed text-[#43556c]">
           We will keep your profile on file and reach out when a suitable
           opportunity arises.
         </p>
