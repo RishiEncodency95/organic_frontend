@@ -95,12 +95,45 @@ const allJobOpenings: JobOpening[] = [
     icon: Users,
   },
   {
-    id: "sales-manager-domastic",
-    title: "Sales Manager - Domastic Exhibitor Sales & Sponsorsip",
+    id: "sales-manager-domestic",
+    title: "Sales Manager - Domestic Exhibitor Sales & Sponsorship",
     department: "Sales",
     location: "New Delhi",
     type: "Full Time",
     experience: "5–10 Years",
+    description:
+      "Drive revenue through exhibition space sales and sponsorship deals for the domestic market.",
+    icon: TrendingUp,
+  },
+  {
+    id: "pr-communications-specialist",
+    title: "PR & Communications Specialist",
+    department: "Marketing & Communications",
+    location: "New Delhi",
+    type: "Hybrid",
+    experience: "3–6 Years",
+    description:
+      "Manage public relations, press releases, media partnerships, and corporate communications.",
+    icon: Megaphone,
+  },
+  {
+    id: "sustainability-officer",
+    title: "Sustainability Officer",
+    department: "Operations",
+    location: "New Delhi",
+    type: "Full Time",
+    experience: "4–7 Years",
+    description:
+      "Ensure all event operations adhere to zero-waste, carbon-neutral, and sustainable guidelines.",
+    icon: Sprout,
+  },
+  {
+    id: "graphic-designer",
+    title: "Graphic Designer",
+    department: "Creative",
+    location: "New Delhi",
+    type: "Hybrid",
+    experience: "2–5 Years",
     description:
       "Design creative assets for digital and print media, including banners, brochures, social media posts and event branding.",
     icon: Palette,
@@ -127,7 +160,7 @@ function JobCard({ job }: { job: JobOpening }) {
   const Icon = job.icon;
 
   return (
-    <article className="flex min-h-full flex-col rounded-[10px] border border-[#dfe6df] bg-white/95 px-[clamp(16px,1.15vw,22px)] py-[clamp(14px,1.25vh,20px)] shadow-[0_2px_10px_rgba(10,66,44,0.03)]">
+    <article className="group flex min-h-full flex-col rounded-[10px] border border-[#dfe6df] bg-white/95 px-3 py-2 shadow-[0_2px_10px_rgba(10,66,44,0.03)] transition-all duration-300 hover:bg-[#f5fbf7] hover:shadow-[0_4px_15px_rgba(10,66,44,0.08)]">
       <div className="flex gap-3">
         <span className="grid h-[clamp(50px,5.1vh,62px)] w-[clamp(50px,5.1vh,62px)] shrink-0 place-items-center rounded-full bg-[#eff8ef] text-[#08753c]">
           <Icon
@@ -137,7 +170,7 @@ function JobCard({ job }: { job: JobOpening }) {
         </span>
 
         <div className="min-w-0 flex-1">
-          <h3 className="text-[clamp(15px,1.05vw,20px)] font-extrabold leading-tight text-[#0a1831]">
+          <h3 className="text-[15px] font-semibold leading-tight text-[#0a1831]">
             {job.title}
           </h3>
           <span className="mt-1.5 inline-flex max-w-full rounded-[4px] bg-[#eef2f3] px-2.5 py-1 text-[clamp(11px,0.74vw,14px)] leading-none text-[#34485b]">
@@ -207,13 +240,16 @@ function EmptyOpenings() {
 export default function CareersClientContent() {
   const [selectedScore, setSelectedScore] = useState<number | null>(null);
   const [isNoneModalOpen, setIsNoneModalOpen] = useState(false);
+  const [showAllJobs, setShowAllJobs] = useState(false);
   const openingCount = jobOpenings.length;
+
+  const displayedJobs = showAllJobs ? jobOpenings : jobOpenings.slice(0, 8);
 
   return (
     <main className="bg-[#f8fbf6] text-[#0a1831]">
-      <div className="mx-auto flex min-h-screen w-full max-w-[1480px] flex-col bg-white">
+      <div className="flex min-h-screen w-full flex-col bg-white">
         {/* HERO */}
-        <section className="relative isolate min-h-[330px] overflow-hidden md:aspect-[2110/745]">
+        <section className="relative isolate min-h-[330px] h-[460px] overflow-hidden md:aspect-[2110/745]">
           <Image
             src={heroImage}
             alt="Professionals networking at a sustainable organic expo"
@@ -224,26 +260,26 @@ export default function CareersClientContent() {
           />
           <div className="absolute inset-0 -z-10 bg-[linear-gradient(90deg,rgba(250,253,245,.96)_0%,rgba(250,253,245,.90)_34%,rgba(250,253,245,.25)_52%,rgba(0,0,0,0)_72%)]" />
 
-          <div className="flex h-full items-center px-[clamp(28px,5.2vw,84px)] py-[clamp(22px,2.2vh,36px)]">
-            <div className="w-[47%] max-w-[690px]">
-              <div className="translate-y-[clamp(10px,1.7vw,28px)]">
-                <div className="mb-[clamp(6px,0.8vh,12px)] text-[clamp(15px,1.15vw,20px)] font-extrabold uppercase tracking-[0.28em] text-[#0a5536]">
-                  Career
+          <div className="flex h-full w-full items-center px-4 lg:px-14">
+            <div className="w-[50%]">
+              <div className="">
+                <div className="text-[18px] mt-2 font-semibold uppercase tracking-[0.28em] text-[#0a5536]">
+                  <p>CAREER</p>
                 </div>
-                <div className="mb-[clamp(9px,1.1vh,15px)] h-[2.5px] w-14 bg-[#0a5536]" />
+                <div className="mb-6 h-[2.5px] w-20 bg-[#0a5536]" />
 
-                <h1 className="max-w-[750px] text-[clamp(48px,4.5vw,80px)] font-black leading-[0.98] tracking-[-0.04em] text-[#07553a]">
+                <h1 className="max-w-[750px] text-lg lg:text-6xl font-semibold leading-[0.98] tracking-[-0.04em] text-[#07553a]">
                   Be Part of
                   <br />
                   <span className="whitespace-nowrap">Something <span className="text-[#f5791b]">Bigger</span></span>
                 </h1>
 
-                <p className="mt-[clamp(12px,1.4vh,18px)] max-w-[650px] text-[clamp(16px,1.25vw,22px)] leading-[1.35] text-[#14253a]">
+                <p className="mt-4 max-w-[650px] text-lg leading-[1.35] text-[#14253a]">
                   Build your career with Bharat Organic Expo and contribute to a
                   sustainable, healthier and more conscious tomorrow.
                 </p>
 
-                <div className="mt-[clamp(18px,2.2vh,30px)] grid max-w-[640px] grid-cols-4 divide-x divide-[#d7e1d8]">
+                <div className="mt-4 grid max-w-[640px] grid-cols-4 divide-x divide-[#d7e1d8]">
                   {highlights.map(({ label, icon: Icon }) => (
                     <div key={label} className="px-3 text-center first:pl-0 last:pr-0">
                       <Icon
@@ -259,7 +295,7 @@ export default function CareersClientContent() {
               </div>
             </div>
 
-            <div className="absolute bottom-[6%] right-0 w-fit max-w-[440px] rounded-l-[4px] bg-[#00683e]/90 px-[clamp(16px,1.5vw,26px)] py-[clamp(10px,1.2vh,14px)] text-[clamp(13px,1.05vw,17px)] font-semibold leading-snug text-white backdrop-blur-[1px]">
+            <div className="absolute bottom-[6%] right-12 w-fit max-w-[440px] rounded-sm bg-[#00683e]/90 px-4 py-2 text-[14px] font-semibold leading-snug text-white backdrop-blur-[1px]">
               Join the people who connect
               <br />
               business, nature and a better tomorrow.
@@ -271,8 +307,8 @@ export default function CareersClientContent() {
         <section
           id="current-openings"
           className={`relative isolate overflow-hidden bg-white ${openingCount === 0
-            ? "aspect-[2172/405] px-[clamp(48px,4.8vw,82px)] py-[clamp(14px,1.2vw,22px)]"
-            : "px-[clamp(24px,3.4vw,52px)] py-[clamp(12px,1.4vh,20px)]"
+            ? "aspect-[2172/405] px-2 lg:px-14 py-4 lg:py-4"
+            : "px-2 lg:px-14 py-4 lg:py-4"
             }`}
         >
           {openingCount === 0 ? (
@@ -300,7 +336,7 @@ export default function CareersClientContent() {
 
                 <div>
                   <div className="flex flex-wrap items-center gap-3">
-                    <h2 className="text-[clamp(26px,2.2vw,38px)] font-black leading-[1.12] tracking-[-0.04em] text-[#0a1831]">
+                    <h2 className="text-sm lg:text-2xl font-semibold leading-[1.12] tracking-[-0.04em] text-[#0a1831]">
                       Current Openings{" "}
                       {openingCount > 0 ? (
                         <span className="align-baseline text-[0.78em] text-[#0c7b46]">
@@ -351,20 +387,24 @@ export default function CareersClientContent() {
                 </div>
               </div>
 
-              {openingCount > 0 ? (
-                <a
-                  href="#current-openings"
-                  className="mb-1 inline-flex items-center gap-2 border-b-2 border-[#0a7140] pb-1 text-[clamp(14px,1vw,17px)] font-extrabold text-[#0a643b] hover:text-[#074f2e] transition-colors"
+              {openingCount > 6 ? (
+                <button
+                  onClick={(e) => {
+                    e.preventDefault();
+                    setShowAllJobs(!showAllJobs);
+                  }}
+                  className="mb-1 inline-flex items-center gap-2 border-b-2 border-[#0a7140] pb-1 text-[14px] font-semibold text-[#0a643b] hover:text-[#074f2e] transition-colors"
                 >
-                  View All Positions <ArrowRight className="h-[20px] w-[20px]" />
-                </a>
+                  {showAllJobs ? "View Less Positions" : "View All Positions"}
+                  <ArrowRight className={`h-[20px] w-[20px] transition-transform duration-300 ${showAllJobs ? "-rotate-90" : ""}`} />
+                </button>
               ) : null}
             </div>
 
             <div className="flex-1">
               {openingCount > 0 ? (
-                <div className="grid grid-cols-1 gap-[clamp(10px,0.85vw,14px)] md:grid-cols-2 xl:grid-cols-3">
-                  {jobOpenings.slice(0, 6).map((job) => (
+                <div className="grid grid-cols-1 gap-[clamp(10px,0.85vw,14px)] md:grid-cols-2 xl:grid-cols-4">
+                  {displayedJobs.map((job) => (
                     <JobCard key={job.id} job={job} />
                   ))}
                 </div>
@@ -376,25 +416,25 @@ export default function CareersClientContent() {
         </section>
 
         {/* WHY WORK WITH US */}
-        <section className="grid shrink-0 gap-5 border-y border-[#e4ebe3] bg-[linear-gradient(90deg,#f6fbf2_0%,#fbfdf8_100%)] px-[clamp(24px,3.4vw,52px)] py-[clamp(14px,1.45vw,22px)] lg:grid-cols-[1.15fr_2fr] lg:items-center">
+        <section className="grid shrink-0 gap-5 border-y border-[#e4ebe3] bg-[linear-gradient(90deg,#f6fbf2_0%,#fbfdf8_100%)] px-4 lg:px-14 py-1 lg:py-2 lg:grid-cols-[1.15fr_2fr] lg:items-center">
           <div>
-            <h2 className="text-[clamp(28px,2.25vw,42px)] font-black leading-none tracking-[-0.035em] text-[#07553a]">
+            <h2 className="text-lg lg:text-2xl font-semibold leading-none tracking-[-0.035em] text-[#07553a]">
               Why Work With Us?
             </h2>
-            <p className="mt-2 max-w-[650px] text-[clamp(12px,0.9vw,16px)] leading-[1.35] text-[#1f3145]">
+            <p className="mt-2 max-w-[650px] text-sm lg:text-[15px] leading-[1.35] text-[#1f3145]">
               At Bharat Organic Expo, you’ll grow with a purpose-driven team and
               be part of a movement that creates lasting change.
             </p>
           </div>
 
-          <div className="grid grid-cols-4 divide-x divide-[#d6e0d8]">
+          <div className="flex flex-wrap justify-end divide-x divide-[#d6e0d8] lg:ml-auto">
             {workReasons.map(({ label, icon: Icon }) => (
-              <div key={label} className="px-4 text-center">
+              <div key={label} className="px-4 sm:px-6 lg:px-10 text-center first:pl-0">
                 <Icon
-                  className="mx-auto h-[clamp(34px,3.6vh,46px)] w-[clamp(34px,3.6vh,46px)] text-[#08723e]"
+                  className="mx-auto h-8 w-8 text-[#08723e]"
                   strokeWidth={2.1}
                 />
-                <span className="mt-2 block whitespace-pre-line text-[clamp(12px,0.9vw,16px)] font-semibold leading-tight text-[#0e2234]">
+                <span className="mt-2 block whitespace-pre-line text-sm lg:text-[12px] font-semibold leading-tight text-[#0e2234]">
                   {label}
                 </span>
               </div>
@@ -415,15 +455,15 @@ export default function CareersClientContent() {
           <div className="relative z-10 grid h-full grid-cols-[39%_1fr_260px] items-center gap-7 px-[clamp(24px,3.4vw,52px)]">
             <div />
             <div>
-              <h2 className="text-[clamp(32px,2.85vw,54px)] font-black leading-none tracking-[-0.035em] text-[#07553a]">
+              <h2 className="text-[22px] lg:text-[32px] font-semibold leading-none tracking-[-0.035em] text-[#07553a]">
                 Don’t See the Right Role?
               </h2>
-              <p className="mt-3 max-w-[720px] text-[clamp(15px,1.16vw,21px)] leading-[1.4] text-[#2a3c4e]">
+              <p className="mt-3 max-w-[720px] text-[15px] lg:text-[21px] leading-[1.4] text-[#2a3c4e]">
                 We are always looking for passionate individuals. Send us your
                 resume and we will reach out when a suitable opportunity arises.
               </p>
             </div>
-            <div className="self-start pt-[clamp(18px,2vw,34px)] text-right">
+            <div className="self-start pt-[18px] lg:pt-[34px] text-right">
               <ResumeUploadButton variant="solid" />
             </div>
           </div>
