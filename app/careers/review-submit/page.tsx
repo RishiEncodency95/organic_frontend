@@ -7,15 +7,20 @@ import sidebarFooterImage from "../../assets/carrer/grow-organic-grow-india.png"
 import {
   ArrowLeft,
   ArrowRight,
+  BarChart3,
   BriefcaseBusiness,
   Building2,
+  CalendarDays,
   Check,
   CheckCircle2,
   ChevronDown,
+  ClipboardList,
   Clock3,
   Edit3,
+  FileCheck,
   FileText,
   GraduationCap,
+  Globe,
   Home,
   Link as LinkIcon,
   Mail,
@@ -24,7 +29,10 @@ import {
   ShieldCheck,
   Target,
   TrendingUp,
+  Trophy,
   User,
+  UserCheck,
+  Users,
 } from "lucide-react";
 
 /* =========================================================
@@ -604,11 +612,12 @@ function LooksGoodCard() {
   );
 }
 
-function SubmitCard() {
+function SubmitCard({ onSubmit }: { onSubmit?: () => void }) {
   return (
     <div className="rounded-[8px] border border-[#dce8e0] bg-white p-[12px] shadow-sm">
       <button
         type="button"
+        onClick={onSubmit}
         className="flex w-full items-center justify-center gap-[8px] rounded-[6px] bg-[#08743e] px-[16px] py-[12px] text-[13px] font-black text-white shadow-sm hover:bg-[#076637] transition-colors"
       >
         Submit Application
@@ -626,7 +635,7 @@ function SubmitCard() {
   );
 }
 
-function RightSidebar({ onClose }: { onClose?: () => void }) {
+function RightSidebar({ onClose, onSubmit }: { onClose?: () => void; onSubmit?: () => void }) {
   return (
     <aside className="relative flex h-full min-h-0 flex-col overflow-hidden border-l border-[#e4ebe5] bg-[linear-gradient(180deg,#f8fcf9,#eef8f1)] px-[14px] pb-[8px] pt-[8px]">
       <SidebarFooter />
@@ -646,7 +655,7 @@ function RightSidebar({ onClose }: { onClose?: () => void }) {
         <AIMatchScoreCard />
         <JobSummaryCard />
         <LooksGoodCard />
-        <SubmitCard />
+        <SubmitCard onSubmit={onSubmit} />
       </div>
     </aside>
   );
@@ -656,7 +665,7 @@ function RightSidebar({ onClose }: { onClose?: () => void }) {
    MAIN CONTENT
    ========================================================= */
 
-function ReviewSubmitContent({ onClose }: { onClose?: () => void }) {
+function ReviewSubmitContent({ onClose, onSubmit }: { onClose?: () => void; onSubmit?: () => void }) {
   const scrollRef = useRef<HTMLDivElement>(null);
 
   const handleWheel = (e: React.WheelEvent<HTMLDivElement>) => {
@@ -774,11 +783,13 @@ function ReviewSubmitContent({ onClose }: { onClose?: () => void }) {
 
       {/* RIGHT */}
       <div className="w-[32%]">
-        <RightSidebar onClose={onClose} />
+        <RightSidebar onClose={onClose} onSubmit={onSubmit} />
       </div>
     </div>
   );
 }
+
+import ApplicationSuccessModal from "../ApplicationSuccessModal";
 
 /* =========================================================
    MODAL
@@ -791,8 +802,10 @@ export function ReviewSubmitModal({
   isOpen: boolean;
   onClose: () => void;
 }) {
+  const [showSuccessModal, setShowSuccessModal] = useState(false);
+
   useEffect(() => {
-    if (isOpen) {
+    if (isOpen || showSuccessModal) {
       document.body.style.overflow = "hidden";
     } else {
       document.body.style.overflow = "";
@@ -800,18 +813,22 @@ export function ReviewSubmitModal({
     return () => {
       document.body.style.overflow = "";
     };
-  }, [isOpen]);
+  }, [isOpen, showSuccessModal]);
 
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 z-[9999] flex items-center justify-center bg-black/40 p-3">
-      <div
-        className="relative flex h-[95vh] w-[95vw] max-w-[1400px] flex-col overflow-hidden rounded-[18px] bg-[#fbfcf9] shadow-[0_30px_90px_rgba(0,0,0,.28)]"
-      >
-        <ReviewSubmitContent onClose={onClose} />
+    <>
+      <div className="fixed inset-0 z-[9999] flex items-center justify-center bg-black/40 p-3">
+        <div
+          className="relative flex h-[95vh] w-[95vw] max-w-[1400px] flex-col overflow-hidden rounded-[18px] bg-[#fbfcf9] shadow-[0_30px_90px_rgba(0,0,0,.28)]"
+        >
+          <ReviewSubmitContent onClose={onClose} onSubmit={() => setShowSuccessModal(true)} />
+        </div>
       </div>
-    </div>
+
+      <ApplicationSuccessModal isOpen={showSuccessModal} onClose={() => { setShowSuccessModal(false); onClose(); }} />
+    </>
   );
 }
 

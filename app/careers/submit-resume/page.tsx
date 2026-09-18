@@ -319,7 +319,7 @@ const matchConfig = {
     soft: "#fff1f1",
     soft2: "#fff7f7",
 
-    personImage: separatedAssets.person,
+    personImage: "/career-submit-resume-assets/sadimage.png",
 
     step: 2,
 
@@ -496,14 +496,21 @@ function ResultHero() {
       style={{ background: theme.heroBg }}
     >
       {/* LEFT PERSON COMPOSITION */}
-      <div className="absolute inset-y-0 left-0 w-[40.2%] overflow-hidden">
+      <div
+        className="absolute inset-y-0 left-0 overflow-hidden"
+        style={{ width: matchLevel === "low" ? "45%" : "40.2%" }}
+      >
         <Image
           src={current.personImage}
           alt=""
           fill
           priority
           sizes="40vw"
-          className="object-cover object-left-bottom"
+          className="object-contain object-left-bottom"
+          style={{
+            transform: matchLevel === "low" ? "scale(1.12)" : undefined,
+            transformOrigin: "left bottom",
+          }}
         />
       </div>
 
@@ -1154,7 +1161,7 @@ function SidebarFooter() {
    SIDEBAR
    ========================================================= */
 
-function Sidebar() {
+function Sidebar({ onApply }: { onApply?: () => void }) {
   const { matchLevel, current } = useMatchData();
 
   return (
@@ -1195,7 +1202,11 @@ function Sidebar() {
       {/* CTA */}
       <div className="min-h-0">
         {matchLevel !== "low" ? (
-          <button className="flex h-full w-full items-center justify-center gap-[8px] rounded-[5px] bg-[#08743e] text-[clamp(10px,.82vw,13px)] font-black text-white">
+          <button
+            type="button"
+            onClick={onApply}
+            className="flex h-full w-full items-center justify-center gap-[8px] rounded-[5px] bg-[#08743e] text-[clamp(10px,.82vw,13px)] font-black text-white hover:bg-[#076637] transition-colors"
+          >
             {current.cta}
             <ArrowRight className="h-[14px] w-[14px]" />
           </button>
@@ -1236,7 +1247,13 @@ function Sidebar() {
 const DESIGN_WIDTH = 1500;
 const DESIGN_HEIGHT = 972;
 
-export function EligibilityPopupContent({ score = 58 }: { score?: number }) {
+export function EligibilityPopupContent({
+  score = 58,
+  onApply,
+}: {
+  score?: number;
+  onApply?: () => void;
+}) {
   const matchData = getMatchData(score);
 
   return (
@@ -1271,7 +1288,7 @@ export function EligibilityPopupContent({ score = 58 }: { score?: number }) {
               width={82}
               height={92}
               priority
-              className="h-[46px] w-[42px] shrink-0 object-contain"
+              className="h-[50px] w-[48px] shrink-0 object-contain"
             />
 
             <div className="min-w-0">
@@ -1332,7 +1349,7 @@ export function EligibilityPopupContent({ score = 58 }: { score?: number }) {
         </section>
 
         {/* RIGHT */}
-        <Sidebar />
+        <Sidebar onApply={onApply} />
       </div>
     </MatchContext.Provider>
   );
@@ -1342,10 +1359,12 @@ export function EligibilityModal({
   isOpen,
   score = 58,
   onClose,
+  onApply,
 }: {
   isOpen: boolean;
   score?: number;
   onClose: () => void;
+  onApply?: () => void;
 }) {
   if (!isOpen) return null;
 
@@ -1392,7 +1411,7 @@ export function EligibilityModal({
               transformOrigin: "top left",
             }}
           >
-            <EligibilityPopupContent score={score} />
+            <EligibilityPopupContent score={score} onApply={onApply} />
           </div>
         </div>
       </div>

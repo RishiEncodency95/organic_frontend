@@ -26,8 +26,8 @@ type Job = {
 };
 
 const DESIGN_WIDTH = 1500;
-const DESIGN_HEIGHT = 910;
-const MODAL_WIDTH = "min(92vw, 1440px, calc(92vh * 1500 / 910))";
+const DESIGN_HEIGHT = 900;
+const MODAL_WIDTH = "min(95vw, 1440px, calc(92vh * 1500 / 900))";
 
 const jobCopy = {
     title: "Sales Manager – Domestic Exhibition Sales & Sponsorships",
@@ -56,10 +56,12 @@ function MetaItem({
     icon: Icon,
     children,
     last = false,
+    size = 30,
 }: {
     icon: React.ElementType;
     children: React.ReactNode;
     last?: boolean;
+    size?: number;
 }) {
     return (
         <div
@@ -68,20 +70,56 @@ function MetaItem({
                 last ? "" : "border-r border-[#d8dfdf]",
             ].join(" ")}
         >
-            <Icon className="h-[24px] w-[24px] shrink-0 text-[#006b48]" strokeWidth={2} />
+            <Icon size={size} className="shrink-0 text-[#006b48]" strokeWidth={2} />
             <span className="text-[14px] font-bold leading-tight text-[#173047]">{children}</span>
         </div>
     );
 }
 
+function LeafIcon({ className = "h-[24px] w-[24px]" }: { className?: string }) {
+    return (
+        <svg
+            viewBox="0 0 32 32"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+            className={className}
+        >
+            <defs>
+                <linearGradient id="leafGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                    <stop offset="0%" stopColor="#9BD53B" />
+                    <stop offset="45%" stopColor="#6DBA24" />
+                    <stop offset="100%" stopColor="#4A8817" />
+                </linearGradient>
+            </defs>
+            {/* Stem */}
+            <path
+                d="M22 23 C24 25 26 27 28 29"
+                stroke="#4A8817"
+                strokeWidth="2.5"
+                strokeLinecap="round"
+            />
+            {/* Leaf Body */}
+            <path
+                d="M5 5 C 3 17, 13 26, 23 23 C 26 13, 17 3, 5 5 Z"
+                fill="url(#leafGrad)"
+            />
+            {/* Center Vein */}
+            <path
+                d="M6 6 C 11 13, 17 19, 23 23"
+                stroke="#E2F5B8"
+                strokeWidth="1.6"
+                strokeLinecap="round"
+                opacity="0.9"
+            />
+        </svg>
+    );
+}
+
 function LeafHeading({ title }: { title: string }) {
     return (
-        <div className="flex items-center gap-[16px]">
-            <span className="relative h-[27px] w-[27px] shrink-0">
-                <span className="absolute left-[2px] top-[3px] h-[22px] w-[13px] rotate-[-38deg] rounded-[100%_0_100%_0] bg-[#78b523]" />
-                <span className="absolute left-[14px] top-[15px] h-[11px] w-px rotate-[-42deg] bg-[#0c7547]" />
-            </span>
-            <h3 className="text-[22px] font-black leading-none text-[#00563f]">{title}</h3>
+        <div className="flex items-center gap-2.5">
+            <LeafIcon className="h-[30px] w-[30px] shrink-0" />
+            <h3 className="text-[22px] font-semibold leading-none text-[#00563f]">{title}</h3>
         </div>
     );
 }
@@ -96,7 +134,7 @@ function InfoSection({
     return (
         <section>
             <LeafHeading title={title} />
-            <div className="ml-[43px] mt-[9px] text-[15.8px] leading-[1.42] text-[#21354b]">
+            <div className="ml-[34px] mt-[9px] text-[15.8px] leading-[1.42] text-[#21354b]">
                 {children}
             </div>
         </section>
@@ -135,23 +173,23 @@ function UploadBox({ onFile }: { onFile: (file: File) => void }) {
             />
 
             <FileUp className="mx-auto h-[52px] w-[52px] text-[#007a50]" strokeWidth={2.3} />
-            <h3 className="mt-[10px] text-[20px] font-black leading-none text-[#152840]">
+            <h3 className="mt-[10px] text-[20px] font-medium leading-none text-[#152840]">
                 Upload Your CV
             </h3>
-            <p className="mt-[9px] text-[15px] leading-[1.25] text-[#42546b]">
+            <p className="mt-[9px] text-[16px] font-medium leading-[1.25] text-[#42546b]">
                 Drag & drop your file here or click to browse
                 <br />
                 PDF, DOC or DOCX (Max 5 MB)
             </p>
             {fileName && (
-                <p className="mx-auto mt-[9px] max-w-[310px] truncate text-[13px] font-bold text-[#007a50]">
+                <p className="mx-auto mt-[9px] max-w-[310px] truncate text-[13px] font-semibold text-[#007a50]">
                     {fileName}
                 </p>
             )}
             <button
                 type="button"
                 onClick={chooseFile}
-                className="mt-[13px] h-[48px] w-[260px] rounded-[7px] bg-[linear-gradient(180deg,#008d55,#007346)] text-[18px] font-black text-white shadow-[0_5px_10px_rgba(0,84,51,0.18)]"
+                className="mt-[13px] h-[48px] w-[260px] rounded-[7px] bg-[linear-gradient(180deg,#008d55,#007346)] text-[18px] font-semibold text-white shadow-[0_5px_10px_rgba(0,84,51,0.18)]"
             >
                 Choose File
             </button>
@@ -162,9 +200,11 @@ function UploadBox({ onFile }: { onFile: (file: File) => void }) {
 export default function UploadCvModal({
     job,
     onClose,
+    onAnalyze,
 }: {
     job?: Job;
     onClose: () => void;
+    onAnalyze?: (score: number) => void;
 }) {
     const [file, setFile] = useState<File | null>(null);
     const title = job?.title?.includes("Domastic")
@@ -186,11 +226,11 @@ export default function UploadCvModal({
             >
                 <div className="absolute inset-0 overflow-hidden">
                     <div
-                        className="absolute left-0 top-0 grid overflow-hidden bg-[#fbfcf9]"
+                        className="absolute left-0 top-0 grid gap-[12px] overflow-hidden bg-white"
                         style={{
                             width: `${DESIGN_WIDTH}px`,
                             height: `${DESIGN_HEIGHT}px`,
-                            gridTemplateColumns: "65% 35%",
+                            gridTemplateColumns: "calc(65% - 10px) calc(35% - 10px)",
                             transform: `scale(calc(${MODAL_WIDTH} / ${DESIGN_WIDTH}px))`,
                             transformOrigin: "top left",
                         }}
@@ -199,13 +239,13 @@ export default function UploadCvModal({
                             type="button"
                             aria-label="Close"
                             onClick={onClose}
-                            className="absolute right-[15px] top-[15px] z-40 grid h-[42px] w-[42px] place-items-center text-[#0d1e35] transition hover:text-[#006b48]"
+                            className="absolute right-[16px] top-[12px] z-40 grid h-[42px] w-[42px] place-items-center text-[#0d1e35] transition hover:text-red-600"
                         >
-                            <X className="h-[30px] w-[30px]" strokeWidth={2.5} />
+                            <X className="h-[32px] w-[32px]" strokeWidth={2.5} />
                         </button>
 
-                        <section className="relative overflow-hidden bg-white px-[45px] py-[42px]">
-                            <div className="pointer-events-none absolute bottom-0 right-0 top-0 w-[300px]">
+                        <section className="relative overflow-hidden rounded-[14px] bg-white pl-6 py-6 bg-[#FBFCF9]">
+                            <div className="pointer-events-none absolute bottom-0 right-0 top-0 w-[310px]">
                                 <Image
                                     src={businessPersonClean}
                                     alt=""
@@ -216,32 +256,32 @@ export default function UploadCvModal({
                                 />
                             </div>
 
-                            <div className="relative z-10 max-w-[635px]">
+                            <div className="relative z-10 max-w-[635px] bg-[#FBFCF9]">
                                 <div className="flex items-center gap-[13px]">
-                                    <span className="h-[3px] w-[55px] bg-[#0b734d]/70" />
-                                    <span className="text-[20px] font-black tracking-[0.36em] text-[#00563f]">
+                                    {/* <span className="h-[3px] w-[55px] bg-[#0b734d]/70" /> */}
+                                    <span className="text-[20px] font-semibold tracking-[0.12em] text-[#00563f]">
                                         JOIN OUR TEAM
                                     </span>
                                     <span className="h-[3px] w-[55px] bg-[#0b734d]/70" />
                                 </div>
 
-                                <h1 className="mt-[17px] max-w-[635px] text-[37px] font-black leading-[1.08] tracking-[-0.03em] text-[#043f3d]">
+                                <h1 className="mt-[17px] max-w-[635px] text-[20px] lg:text-[37px] font-semibold leading-[1.20] tracking-[-0.03em] text-[#083A34]">
                                     {title}
                                 </h1>
 
-                                <div className="mt-[15px] flex items-center gap-[18px] text-[17px] leading-none text-[#263b53]">
+                                <div className="mt-[15px] flex items-center gap-[18px] font-medium text-[20px] leading-none text-[#2C3341]">
                                     <span>{jobCopy.company}</span>
                                     <span className="h-[25px] w-px bg-[#d4dadd]" />
                                     <span>{jobCopy.brand}</span>
                                 </div>
 
                                 <div className="mt-[26px] flex items-center gap-[15px] border-b border-[#dce2e3] pb-[25px]">
-                                    <MetaItem icon={MapPin}>{job.location || "Delhi NCR"}</MetaItem>
-                                    <MetaItem icon={BriefcaseBusiness}>{job.type || "Full Time"}</MetaItem>
-                                    <MetaItem icon={ChartNoAxesColumnIncreasing}>
-                                        {job.experience || "3 – 6 Years"}
+                                    <MetaItem icon={MapPin} size={28}><span className="text-[15px] font-medium">{job.location || "Delhi NCR"}</span></MetaItem>
+                                    <MetaItem icon={BriefcaseBusiness} size={28}><span className="text-[15px] font-medium">{job.type || "Full Time"}</span></MetaItem>
+                                    <MetaItem icon={ChartNoAxesColumnIncreasing} size={28}>
+                                        <span className="text-[15px] font-medium">{job.experience || "3 – 6 Years"}</span>
                                     </MetaItem>
-                                    <MetaItem icon={GraduationCap} last>
+                                    <MetaItem icon={GraduationCap} last size={28}>
                                         <span>
                                             Graduate
                                             <br />
@@ -250,15 +290,15 @@ export default function UploadCvModal({
                                     </MetaItem>
                                 </div>
 
-                                <div className="mt-[22px] space-y-[27px]">
+                                <div className="mt-[18px] space-y-[18px]">
                                     <InfoSection title="The Opportunity">
-                                        <p>{jobCopy.opportunity}</p>
+                                        <p className="text-[17px] text-[#4D4D4D] font-normal">{jobCopy.opportunity}</p>
                                     </InfoSection>
 
                                     <InfoSection title="Key Responsibilities">
                                         <ul className="list-disc space-y-[7px] pl-[21px] marker:text-[#006b48]">
                                             {responsibilities.map((item) => (
-                                                <li key={item}>{item}</li>
+                                                <li key={item} className="text-[#4D4D4D] font-normal text-[17px]">{item}</li>
                                             ))}
                                         </ul>
                                     </InfoSection>
@@ -266,7 +306,7 @@ export default function UploadCvModal({
                                     <InfoSection title="Who Can Apply">
                                         <ul className="list-disc space-y-[7px] pl-[21px] marker:text-[#006b48]">
                                             {applyCriteria.map((item) => (
-                                                <li key={item}>{item}</li>
+                                                <li key={item} className="text-[#4D4D4D] font-normal text-[17px]">{item}</li>
                                             ))}
                                         </ul>
                                     </InfoSection>
@@ -274,7 +314,7 @@ export default function UploadCvModal({
 
                                 <button
                                     type="button"
-                                    className="mt-[25px] inline-flex items-center gap-[13px] border-b-2 border-[#007a50] pb-[5px] text-[17px] font-black text-[#006342]"
+                                    className="mt-[20px] inline-flex items-center gap-[13px] border-b-2 border-[#007a50] pb-[5px] text-[20px] font-semibold text-[#006342]"
                                 >
                                     View Full Job Details
                                     <ArrowRight className="h-[24px] w-[24px]" />
@@ -282,7 +322,7 @@ export default function UploadCvModal({
                             </div>
                         </section>
 
-                        <aside className="relative overflow-hidden bg-[#f2f9f3] px-[43px] py-[40px]">
+                        <aside className="relative overflow-hidden rounded-[14px] bg-[#f2f9f3] px-4 py-6">
                             <div className="pointer-events-none absolute bottom-0 right-0 h-[160px] w-[220px]">
                                 <Image
                                     src="/separated-assets/bottom.png"
@@ -294,15 +334,15 @@ export default function UploadCvModal({
                             </div>
 
                             <div className="relative z-10">
-                                <div className="text-[17px] font-black tracking-[0.34em] text-[#00563f]">
+                                <div className="text-[20px] font-semibold tracking-[1.2] text-[#00563f]">
                                     LET AI HELP YOU
                                 </div>
-                                <h2 className="mt-[12px] text-[32px] font-black leading-[1.03] tracking-[-0.04em] text-[#10243f]">
+                                <h2 className="mt-[8px] text-[32px] font-medium leading-[1.2] tracking-[-0.04em] text-[#10243f]">
                                     Check Your Eligibility
                                     <br />
                                     <span className="text-[#007a50]">with AI</span>
                                 </h2>
-                                <p className="mt-[12px] text-[17px] leading-[1.25] text-[#354b63]">
+                                <p className="mt-[12px] text-[18px] leading-[1.2] text-[#354b63]">
                                     Upload your CV and get an instant analysis
                                     <br />
                                     of how well your profile matches this position.
@@ -313,8 +353,8 @@ export default function UploadCvModal({
                                 </div>
 
                                 <div className="mt-[15px]">
-                                    <h3 className="text-[18px] font-black text-[#00563f]">AI will check:</h3>
-                                    <ul className="mt-[9px] space-y-[7px] text-[15.5px] leading-none text-[#253950]">
+                                    <h3 className="text-[20px] font-semibold text-[#00563f]">AI will check:</h3>
+                                    <ul className="mt-[9px] space-y-[7px] text-[18px] leading-none text-[#253950]">
                                         {[
                                             "Relevant experience",
                                             "Exhibition / Trade show sales experience",
@@ -329,24 +369,24 @@ export default function UploadCvModal({
                                     </ul>
                                 </div>
 
-                                <div className="mt-[15px] flex items-center gap-[22px] rounded-[8px] bg-[#e1f4e6] px-[16px] py-[10px]">
+                                <div className="mt-[15px] flex items-center gap-[22px] rounded-[8px] bg-[#e1f4e6] px-4 py-4">
                                     <div
-                                        className="relative grid h-[90px] w-[90px] shrink-0 place-items-center rounded-full"
+                                        className="relative grid h-[100px] w-[100px] shrink-0 place-items-center rounded-full"
                                         style={{
                                             background:
                                                 "conic-gradient(#2fb734 0deg 144deg,#cbd0d4 144deg 360deg)",
                                         }}
                                     >
                                         <div className="absolute inset-[12px] rounded-full bg-white" />
-                                        <span className="relative text-[27px] font-black text-[#12334a]">40%</span>
+                                        <span className="relative text-[27px] font-semibold text-[#12334a]">40%</span>
                                     </div>
 
                                     <div>
-                                        <p className="text-[21px] font-black leading-[1.15] text-[#007a50]">
+                                        <p className="text-[21px] font-semibold leading-[1.15] text-[#007a50]">
                                             40% or above
                                             <br />= Eligible to Apply
                                         </p>
-                                        <p className="mt-[9px] text-[14.5px] leading-[1.3] text-[#42566c]">
+                                        <p className="mt-[9px] text-[16px] leading-[1.3] text-[#42566c]">
                                             Even if your score is lower, you may
                                             <br />
                                             still reach out to us for future opportunities.
@@ -357,16 +397,33 @@ export default function UploadCvModal({
                                 <button
                                     type="button"
                                     onClick={() => {
-                                        if (!file) document.querySelector<HTMLInputElement>('input[type="file"]')?.click();
+                                        if (onAnalyze) {
+                                            if (file) {
+                                                const name = file.name.toLowerCase();
+                                                let computedScore = 72;
+                                                if (name.includes("low") || name.includes("junior") || name.includes("fresher") || name.includes("38")) {
+                                                    computedScore = 38;
+                                                } else if (name.includes("medium") || name.includes("sales") || name.includes("partial") || name.includes("58")) {
+                                                    computedScore = 58;
+                                                } else {
+                                                    computedScore = 72;
+                                                }
+                                                onAnalyze(computedScore);
+                                            } else {
+                                                onAnalyze(undefined as unknown as number);
+                                            }
+                                        } else if (!file) {
+                                            document.querySelector<HTMLInputElement>('input[type="file"]')?.click();
+                                        }
                                     }}
-                                    className="mt-[12px] flex h-[55px] w-full items-center justify-center gap-[18px] rounded-[7px] bg-[linear-gradient(180deg,#008d55,#007346)] text-[21px] font-black text-white shadow-[0_7px_13px_rgba(0,84,51,0.22)]"
+                                    className="mt-[12px] flex h-[45px] w-full items-center justify-center gap-[18px] rounded-[7px] bg-[linear-gradient(180deg,#008d55,#007346)] text-[20px] font-medium text-white shadow-[0_7px_13px_rgba(0,84,51,0.22)]"
                                 >
                                     Analyze My CV
                                     <ArrowRight className="h-[29px] w-[29px]" />
                                 </button>
 
-                                <div className="relative z-10 mt-[13px] flex items-center gap-[10px] text-[12px] text-[#526174]">
-                                    <LockKeyhole className="h-[20px] w-[20px] shrink-0 fill-[#007a50] text-white" />
+                                <div className="relative z-10 mt-[13px] flex items-center gap-[10px] text-[14px] text-[#526174]">
+                                    <LockKeyhole className="h-[26px] w-[26px] shrink-0 fill-[#007a50] text-white" />
                                     Your data is secure and will only be used for recruitment purposes.
                                 </div>
                             </div>
