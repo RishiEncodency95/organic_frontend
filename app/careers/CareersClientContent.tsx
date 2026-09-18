@@ -452,29 +452,17 @@ export default function CareersClientContent() {
         </section>
 
         {/* BOTTOM CTA */}
-        <section className="relative h-[160px] lg:h-[160px] w-full shrink-0 overflow-hidden bg-white">
+        <section className="relative h-[160px] lg:h-[160px] mt-2 w-full shrink-0 overflow-hidden bg-white">
           <Image
-            src="/assets/careers/aman.png"
+            src="/assets/careers/aman6.png"
             alt="Careers footer banner"
             fill
             sizes="100vw"
             className="object-cover object-center"
           />
 
-          <div className="relative z-10 grid h-full grid-cols-[39%_1fr_260px] items-center gap-7 px-[clamp(24px,3.4vw,52px)]">
-            <div />
-            <div>
-              <h2 className="text-[20px] lg:text-[28px] font-semibold leading-none tracking-[-0.035em] text-[#07553a]">
-                Don’t See the Right Role?
-              </h2>
-              <p className="mt-2 max-w-[720px] text-[14px] lg:text-[17px] leading-[1.4] text-[#2a3c4e]">
-                We are always looking for passionate individuals. Send us your
-                resume and we will reach out when a suitable opportunity arises.
-              </p>
-            </div>
-            <div className="self-center text-right">
-              <ResumeUploadButton variant="solid" />
-            </div>
+          <div className="absolute inset-y-0 -top-25 right-[5%] flex items-center z-10">
+            <ResumeUploadButton variant="solid" />
           </div>
         </section>
       </div>
