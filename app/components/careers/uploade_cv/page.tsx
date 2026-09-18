@@ -359,7 +359,7 @@ export default function UploadCvModal({
                                     onClick={() => {
                                         if (!file) document.querySelector<HTMLInputElement>('input[type="file"]')?.click();
                                     }}
-                                    className="mt-[12px] flex h-[55px] w-full items-center justify-center gap-[18px] rounded-[7px] bg-[linear-gradient(180deg,#008d55,#007346)] text-[21px] font-black text-white shadow-[0_7px_13px_rgba(0,84,51,0.22)]"
+                                    className="mt-[12px] flex h-[55px] w-full items-center justify-center gap-[18px] rounded-[7px] bg-[linear-gradient(180deg,#008d55,#007346)] text-[21px] font-semibold text-white shadow-[0_7px_13px_rgba(0,84,51,0.22)]"
                                 >
                                     Analyze My CV
                                     <ArrowRight className="h-[29px] w-[29px]" />
