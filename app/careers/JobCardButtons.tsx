@@ -4,13 +4,20 @@ import { useState, useEffect } from "react";
 import { createPortal } from "react-dom";
 import { ArrowRight } from "lucide-react";
 import UploadCvModal from "@/app/components/careers/uploade_cv/page";
+import { EligibilityModal } from "./submit-resume/page";
+import { ApplicationFormModal } from "./application-form/page";
+import { ReviewSubmitModal } from "./review-submit/page";
 
 export default function JobCardButtons({ job }: { job: any }) {
   const [isOpen, setIsOpen] = useState(false);
+  const [isEligibilityOpen, setIsEligibilityOpen] = useState(false);
+  const [isAppFormOpen, setIsAppFormOpen] = useState(false);
+  const [isReviewOpen, setIsReviewOpen] = useState(false);
+  const [currentScore, setCurrentScore] = useState(38);
 
   // Prevent scrolling when modal is open
   useEffect(() => {
-    if (isOpen) {
+    if (isOpen || isEligibilityOpen || isAppFormOpen || isReviewOpen) {
       document.body.style.overflow = "hidden";
     } else {
       document.body.style.overflow = "unset";
@@ -18,7 +25,7 @@ export default function JobCardButtons({ job }: { job: any }) {
     return () => {
       document.body.style.overflow = "unset";
     };
-  }, [isOpen]);
+  }, [isOpen, isEligibilityOpen, isAppFormOpen, isReviewOpen]);
 
   return (
     <>
@@ -39,7 +46,56 @@ export default function JobCardButtons({ job }: { job: any }) {
 
       {isOpen && typeof document !== "undefined"
         ? createPortal(
-          <UploadCvModal job={job} onClose={() => setIsOpen(false)} />,
+          <UploadCvModal
+            job={job}
+            onClose={() => setIsOpen(false)}
+            onAnalyze={(score) => {
+              if (score !== undefined) {
+                setCurrentScore(score);
+              }
+              setIsOpen(false);
+              setIsEligibilityOpen(true);
+            }}
+          />,
+          document.body
+        )
+        : null}
+
+      {isEligibilityOpen && typeof document !== "undefined"
+        ? createPortal(
+          <EligibilityModal
+            isOpen={isEligibilityOpen}
+            score={currentScore}
+            onClose={() => setIsEligibilityOpen(false)}
+            onApply={() => {
+              setIsEligibilityOpen(false);
+              setIsAppFormOpen(true);
+            }}
+          />,
+          document.body
+        )
+        : null}
+
+      {isAppFormOpen && typeof document !== "undefined"
+        ? createPortal(
+          <ApplicationFormModal
+            isOpen={isAppFormOpen}
+            onClose={() => setIsAppFormOpen(false)}
+            onNext={() => {
+              setIsAppFormOpen(false);
+              setIsReviewOpen(true);
+            }}
+          />,
+          document.body
+        )
+        : null}
+
+      {isReviewOpen && typeof document !== "undefined"
+        ? createPortal(
+          <ReviewSubmitModal
+            isOpen={isReviewOpen}
+            onClose={() => setIsReviewOpen(false)}
+          />,
           document.body
         )
         : null}

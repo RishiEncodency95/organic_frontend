@@ -602,7 +602,7 @@ function ProfessionalDetails() {
    TELL US MORE
    ========================================================= */
 
-function TellUsMore() {
+function TellUsMore({ onNext }: { onNext?: () => void }) {
   const [interest, setInterest] = useState(
     "I am passionate about the exhibition and event industry and would love to contribute to Bharat Organic Expo's mission of promoting a healthier and more sustainable India."
   );
@@ -644,8 +644,8 @@ function TellUsMore() {
             type="button"
             disabled={!confirmed}
             onClick={() => {
-              if (confirmed) {
-                alert("Form reviewed successfully.");
+              if (confirmed && onNext) {
+                onNext();
               }
             }}
             className={[
@@ -849,7 +849,7 @@ function Sidebar({ onClose }: { onClose: () => void }) {
    POPUP CONTENT
    ========================================================= */
 
-function ApplicationFormContent({ onClose }: { onClose: () => void }) {
+function ApplicationFormContent({ onClose, onNext }: { onClose: () => void; onNext?: () => void }) {
   return (
     <div
       className="relative grid min-h-full w-full overflow-hidden bg-white text-[#10243f]"
@@ -911,7 +911,7 @@ function ApplicationFormContent({ onClose }: { onClose: () => void }) {
         <div className="mt-[12px] flex shrink-0 flex-col gap-[12px]">
           <PersonalInformation />
           <ProfessionalDetails />
-          <TellUsMore />
+          <TellUsMore onNext={onNext} />
         </div>
       </section>
 
@@ -930,9 +930,11 @@ const MODAL_WIDTH = "min(92vw, 1440px, calc(92vh * 1500 / 972))";
 export function ApplicationFormModal({
   isOpen,
   onClose,
+  onNext,
 }: {
   isOpen: boolean;
   onClose: () => void;
+  onNext?: () => void;
 }) {
   const scrollRef = useRef<HTMLDivElement>(null);
 
@@ -979,7 +981,7 @@ export function ApplicationFormModal({
               transformOrigin: "top left",
             }}
           >
-            <ApplicationFormContent onClose={onClose} />
+            <ApplicationFormContent onClose={onClose} onNext={onNext} />
           </div>
         </div>
       </div>

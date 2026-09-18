@@ -162,9 +162,11 @@ function UploadBox({ onFile }: { onFile: (file: File) => void }) {
 export default function UploadCvModal({
     job,
     onClose,
+    onAnalyze,
 }: {
     job?: Job;
     onClose: () => void;
+    onAnalyze?: (score: number) => void;
 }) {
     const [file, setFile] = useState<File | null>(null);
     const title = job?.title?.includes("Domastic")
@@ -357,7 +359,24 @@ export default function UploadCvModal({
                                 <button
                                     type="button"
                                     onClick={() => {
-                                        if (!file) document.querySelector<HTMLInputElement>('input[type="file"]')?.click();
+                                        if (onAnalyze) {
+                                            if (file) {
+                                                const name = file.name.toLowerCase();
+                                                let computedScore = 72;
+                                                if (name.includes("low") || name.includes("junior") || name.includes("fresher") || name.includes("38")) {
+                                                    computedScore = 38;
+                                                } else if (name.includes("medium") || name.includes("sales") || name.includes("partial") || name.includes("58")) {
+                                                    computedScore = 58;
+                                                } else {
+                                                    computedScore = 72;
+                                                }
+                                                onAnalyze(computedScore);
+                                            } else {
+                                                onAnalyze(undefined as unknown as number);
+                                            }
+                                        } else if (!file) {
+                                            document.querySelector<HTMLInputElement>('input[type="file"]')?.click();
+                                        }
                                     }}
                                     className="mt-[12px] flex h-[55px] w-full items-center justify-center gap-[18px] rounded-[7px] bg-[linear-gradient(180deg,#008d55,#007346)] text-[21px] font-semibold text-white shadow-[0_7px_13px_rgba(0,84,51,0.22)]"
                                 >

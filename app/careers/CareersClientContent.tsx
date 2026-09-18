@@ -483,6 +483,10 @@ export default function CareersClientContent() {
         isOpen={selectedScore !== null}
         score={selectedScore ?? 58}
         onClose={() => setSelectedScore(null)}
+        onApply={() => {
+          setSelectedScore(null);
+          setIsNoneModalOpen(true);
+        }}
       />
 
       <ApplicationFormModal
