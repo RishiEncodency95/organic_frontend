@@ -44,7 +44,9 @@ const matchScore = 72;
 const asset = (file: string) => `/separated-assets/${file}`;
 
 const separatedAssets = {
-  person: asset("ChatGPT Image Sep 16, 2026, 04_31_37 PM.png"),
+  personHigh: asset("ChatGPT Image Sep 16, 2026, 04_30_14 PM.png"),
+  personModerate: asset("ChatGPT Image Sep 16, 2026, 04_31_37 PM.png"),
+  personLow: asset("ChatGPT Image Sep 16, 2026, 04_34_00 PM.png"),
   rightPeople: asset("ChatGPT Image Sep 16, 2026, 04_29_29 PM.png"),
   stickyNote: asset("ChatGPT Image Sep 16, 2026, 04_33_26 PM.png"),
   sidebarTop: asset("ChatGPT Image Sep 16, 2026, 04_29_31 PM.png"),
@@ -162,7 +164,8 @@ const matchConfig = {
     soft: "#eef9ef",
     soft2: "#f5fbf6",
 
-    personImage: separatedAssets.person,
+    personImage: separatedAssets.personHigh,
+    rightImage: separatedAssets.rightPeople,
 
     step: 3,
 
@@ -173,8 +176,7 @@ const matchConfig = {
     description:
       "Your profile meets the minimum requirements and shows a good alignment with what we are looking for. We encourage you to complete your application and join us in our mission for a healthier and more sustainable India.",
 
-    quote:
-      "Your CV aligns well with the key requirements for this position.",
+    quote: "",
 
     rightText: "Right\nPeople\nBrighter\nTomorrows",
 
@@ -242,7 +244,8 @@ const matchConfig = {
     soft: "#fff5e7",
     soft2: "#fffaf2",
 
-    personImage: separatedAssets.person,
+    personImage: separatedAssets.personModerate,
+    rightImage: separatedAssets.stickyNote,
 
     step: 3,
 
@@ -321,7 +324,8 @@ const matchConfig = {
     soft: "#fff1f1",
     soft2: "#fff7f7",
 
-    personImage: "/career-submit-resume-assets/sadimage.png",
+    personImage: separatedAssets.personLow,
+    rightImage: separatedAssets.stickyNote,
 
     step: 2,
 
@@ -593,7 +597,7 @@ function ResultHero() {
       {/* RIGHT STICKY ARTWORK */}
       <div className="pointer-events-none absolute bottom-0 right-[2.4%] top-[4%] z-20 w-[17.2%] overflow-visible">
         <Image
-          src={separatedAssets.stickyNote}
+          src={current.rightImage ?? separatedAssets.stickyNote}
           alt=""
           fill
           sizes="18vw"
