@@ -526,11 +526,15 @@ function ResultHero() {
 
       {/*
         HIDE THE STATUS ICON THAT IS BAKED INTO THE PERSON IMAGE.
-        Use a slightly wider rectangular patch so no orange/green/red crescent
+        Use a wider patch for moderate match (58%) so no red/orange crescent
         from the image remains visible behind the real dynamic icon.
       */}
       <div
-        className="pointer-events-none absolute left-[32.25%] top-[7.2%] z-[18] h-[78px] w-[86px]"
+        className={`pointer-events-none absolute z-[18] ${
+          matchLevel === "moderate"
+            ? "left-[29.5%] top-0 h-full w-[110px]"
+            : "left-[32.25%] top-[7.2%] h-[78px] w-[86px]"
+        }`}
         style={{
           background:
             matchLevel === "high"
