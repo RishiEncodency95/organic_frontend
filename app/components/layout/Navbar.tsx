@@ -176,7 +176,7 @@ const Navbar = () => {
                                             target={link.isExternal ? "_blank" : undefined}
                                             rel={link.isExternal ? "noopener noreferrer" : undefined}
                                             style={{ fontFamily: "'Poppins', sans-serif" }}
-                                            className={`px-1.5 2xl:px-2.5 py-2 text-[13px] lg:text-[12.5px] font-medium tracking-wide uppercase transition-all duration-300 flex items-center gap-1 relative group whitespace-nowrap ${pathname === link.path ? "text-[#166534]" : "text-slate-800 hover:text-[#166534]"
+                                            className={`px-1.5 2xl:px-2.5 py-2 text-[13px] lg:text-[12.5px] font-semibold tracking-wide uppercase transition-all duration-300 flex items-center gap-1 relative group whitespace-nowrap ${pathname === link.path ? "text-[#14532d]" : "text-slate-700 hover:text-[#14532d]"
                                                 }`}
                                         >
                                             {link.label}

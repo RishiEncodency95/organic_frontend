@@ -14,7 +14,7 @@ const sectionData = {
     calloutText: "Position your brand at the forefront of the organic industry",
     description: (
       <>
-        Partner with <strong className="text-[#3b8c2a]">Bharat Organic Expo 2027</strong> and unlock premium visibility, strategic connections, and unmatched business opportunities with global industry leaders, key decision-makers, and prominent eco-conscious buyers. Elevate your brand presence in Asia's most rapidly expanding organic and natural products market.
+        Partner with <strong className="text-[#15803d]">Bharat Organic Expo 2027</strong> and unlock premium visibility, strategic connections, and unmatched business opportunities with global industry leaders, key decision-makers, and prominent eco-conscious buyers. Elevate your brand presence in Asia's most rapidly expanding organic and natural products market.
       </>
     ),
   },
@@ -61,7 +61,7 @@ const BecomeSponsor = () => {
                 <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#F2B40E] opacity-75"></span>
                 <span className="relative inline-flex rounded-full h-2 md:h-2.5 w-2 md:w-2.5 bg-[#F2B40E]"></span>
               </span>
-              <span className="text-[10px] md:text-[13px] font-bold text-[#3b8c2a] tracking-widest uppercase">{sectionData.leftSection.tag}</span>
+              <span className="text-[10px] md:text-[13px] font-bold text-[#14532d] tracking-widest uppercase">{sectionData.leftSection.tag}</span>
             </div>
 
             <h2 className="text-[18px] md:text-[28px] lg:text-[32px] font-semibold text-[#0b2912] leading-[1.1] mb-2 md:mb-4 tracking-tight uppercase font-poppins">

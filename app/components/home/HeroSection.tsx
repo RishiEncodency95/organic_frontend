@@ -451,15 +451,17 @@ const HeroSection = () => {
           80%  { opacity:0.5; transform:scale(0.9) translateY(-6px); }
           100% { opacity:0; transform:scale(0.5) translateY(-8px); }
         }
-        @keyframes shimmerHero { 0% { left:-75%; } 100% { left:150%; } }
-        @keyframes dotPulseHero {
-          0%,100% { box-shadow:0 0 0 0px rgba(43,88,37,0.35); }
-          50%      { box-shadow:0 0 0 4px rgba(43,88,37,0.12); }
+        @keyframes shimmerHero { 0% { transform:translateX(-150%) skewX(-20deg); } 100% { transform:translateX(350%) skewX(-20deg); } }
+        /* composited dot pulse — uses opacity+scale on a ring instead of box-shadow */
+        @keyframes dotRingPulse {
+          0%   { opacity: 0.5; transform: scale(1); }
+          50%  { opacity: 0;   transform: scale(1.8); }
+          100% { opacity: 0;   transform: scale(1.8); }
         }
 
         .hero-btn { position:relative; overflow:hidden; border:2px solid white !important; }
         .hero-btn::before {
-          content:''; position:absolute; top:-50%; left:-75%; width:50%; height:200%;
+          content:''; position:absolute; top:-50%; left:-75%; width:40%; height:200%;
           background:linear-gradient(to right,transparent,rgba(255,255,255,0.45),transparent);
           transform:skewX(-20deg); animation:shimmerHero 2.4s infinite;
         }
@@ -471,11 +473,20 @@ const HeroSection = () => {
         .hero-btn-outline:hover { background:#f3f7ef; }
         .hero-btn-outline::before { background:linear-gradient(to right,transparent,rgba(43,88,37,0.1),transparent); }
 
-        .dot-active-hero { animation: dotPulseHero 1.8s ease-in-out infinite; }
+        /* active dot ring indicator (composited) */
+        .dot-active-hero { position: relative; }
+        .dot-active-hero::after {
+          content: '';
+          position: absolute;
+          inset: -3px;
+          border-radius: 9999px;
+          border: 2px solid rgba(43,88,37,0.5);
+          animation: dotRingPulse 1.8s ease-out infinite;
+          pointer-events: none;
+        }
 
         .blue-btn-hero {
-          background: linear-gradient(135deg, #1b5e20 0%, #2e7d32 30%, #0e3b1c 60%, #1b5e20 100%);
-          background-size: 200% 200%;
+          background: linear-gradient(135deg, #1b5e20 0%, #2e7d32 50%, #0e3b1c 100%);
           position: relative;
           overflow: hidden;
         }
@@ -484,7 +495,7 @@ const HeroSection = () => {
           position: absolute;
           top: -50%;
           left: -75%;
-          width: 50%;
+          width: 40%;
           height: 200%;
           background: linear-gradient(to right, transparent, rgba(255,255,255,0.3), transparent);
           transform: skewX(-20deg);
@@ -532,8 +543,6 @@ const HeroSection = () => {
                 className="w-full h-full object-cover select-none"
                 style={{ willChange: "transform, filter" }}
                 priority={id === 0}
-                fetchPriority={id === 0 ? "high" : "low"}
-                loading={id === 0 ? "eager" : "lazy"}
                 sizes="100vw"
                 quality={75}
               />

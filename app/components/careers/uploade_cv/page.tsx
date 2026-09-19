@@ -203,7 +203,7 @@ export default function UploadCvModal({
     onAnalyze,
 }: {
     job?: Job;
-    onClose: () => void;
+    onClose?: () => void;
     onAnalyze?: (score: number) => void;
 }) {
     const [file, setFile] = useState<File | null>(null);
@@ -215,7 +215,7 @@ export default function UploadCvModal({
 
     return (
         <div className="fixed inset-0 z-[99999] flex items-center justify-center p-3">
-            <div className="absolute inset-0 bg-slate-950/45 backdrop-blur-[5px]" onClick={onClose} />
+            <div className="absolute inset-0 bg-slate-950/45 backdrop-blur-[5px]" onClick={() => onClose?.()} />
 
             <div
                 className="relative overflow-hidden rounded-[18px] bg-[#fbfcf9] shadow-[0_30px_90px_rgba(0,0,0,0.28)]"
@@ -238,7 +238,7 @@ export default function UploadCvModal({
                         <button
                             type="button"
                             aria-label="Close"
-                            onClick={onClose}
+                            onClick={() => onClose?.()}
                             className="absolute right-[16px] top-[12px] z-40 grid h-[42px] w-[42px] place-items-center text-[#0d1e35] transition hover:text-red-600"
                         >
                             <X className="h-[32px] w-[32px]" strokeWidth={2.5} />

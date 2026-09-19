@@ -39,14 +39,19 @@ const nextConfig: NextConfig = {
     ];
   },
   async rewrites() {
+    const backendUrl = process.env.NEXT_PUBLIC_SERVER_URL || process.env.BACKEND_URL || "http://localhost:4001";
     return [
       {
         source: "/api/:path*",
-        destination: "http://localhost:4001/api/:path*",
+        destination: `${backendUrl}/api/:path*`,
       },
       {
         source: "/uploads/:path*",
-        destination: "http://localhost:4001/uploads/:path*",
+        destination: `${backendUrl}/uploads/:path*`,
+      },
+      {
+        source: "/seo-files/:path*",
+        destination: `${backendUrl}/seo-files/:path*`,
       },
       {
         source: "/participate/why-exhibit",

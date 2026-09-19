@@ -172,7 +172,7 @@ const GlobalPlatform = () => {
           {/* Clean Badge */}
           <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-[#f8f9fa] border border-[#e2eee4] mb-5 shadow-sm hover:shadow-md transition-shadow">
             <span className="w-1.5 h-1.5 rounded-full bg-[#f58634] animate-pulse"></span>
-            <span className="text-[11px] md:text-[12px] font-bold tracking-[0.2em] uppercase text-[#166534]">
+            <span className="text-[11px] md:text-[12px] font-bold tracking-[0.2em] uppercase text-[#14532d]">
               {data.eyebrow || data.badge}
             </span>
           </div>

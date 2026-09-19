@@ -238,7 +238,7 @@ const IntroductionSection = () => {
                 <div className="absolute top-0 right-0 w-32 h-32 bg-[#F2B40E] opacity-10 blur-2xl rounded-full"></div>
                 <div className="absolute bottom-0 left-0 w-32 h-32 bg-[#3b8c2a] opacity-10 blur-2xl rounded-full"></div>
 
-                <div className="text-[#3b8c2a] text-[10px] md:text-[14px] font-semibold tracking-[0.2em] md:tracking-[0.25em] uppercase mb-1.5 flex items-center justify-center gap-1.5 w-full relative z-10 drop-shadow-sm">
+                <div className="text-[#14532d] text-[10px] md:text-[14px] font-semibold tracking-[0.2em] md:tracking-[0.25em] uppercase mb-1.5 flex items-center justify-center gap-1.5 w-full relative z-10 drop-shadow-sm">
                   <span className="w-1.5 h-1.5 rounded-full bg-[#F2B40E] animate-pulse"></span>
                   {data.timerTitle || "EVENT BEGINS IN"}
                   <span className="w-1.5 h-1.5 rounded-full bg-[#F2B40E] animate-pulse"></span>

@@ -6,8 +6,7 @@ import Image from 'next/image';
 import { motion } from 'framer-motion';
 import { CheckCircle2, FileDown, ArrowRight, Leaf, Store, Info } from 'lucide-react';
 import SectionContainer from '../layout/SectionContainer';
-import { websiteApi } from '@/lib/api';
-
+import { websiteApi, SERVER_URL } from '@/lib/api';
 import meetingImg from "../../assets/home/bs_meet.webp";
 
 // ── Sparkle Component (same as Footer) ──
@@ -138,10 +137,10 @@ const WhyParticipate = () => {
     <section className="bg-[#F9FCF9] py-2 md:pt-4 md:pb-6 overflow-hidden font-inter">
       {/* ── Inject same keyframe animations as Footer ── */}
       <style jsx global>{`
-        @keyframes goldShift {
-          0%   { background-position: 0% 50%; }
-          50%  { background-position: 100% 50%; }
-          100% { background-position: 0% 50%; }
+        /* composited shimmer — uses transform instead of background-position */
+        @keyframes shimmerSlide {
+          0%   { transform: translateX(-150%) skewX(-20deg); }
+          100% { transform: translateX(350%) skewX(-20deg); }
         }
         @keyframes shimmer {
           0% { transform: translateX(-150%) skewX(-20deg); }
@@ -154,9 +153,7 @@ const WhyParticipate = () => {
           100% { opacity: 0; transform: scale(0.5) translateY(-8px); }
         }
         .golden-btn-wp {
-          background: linear-gradient(135deg, #f5c842 0%, #ffdd00 30%, #ffa500 60%, #f5c842 100%);
-          background-size: 200% 200%;
-          animation: goldShift 2.5s ease infinite;
+          background: linear-gradient(135deg, #f5c842 0%, #ffdd00 40%, #ffa500 70%, #f5c842 100%);
           box-shadow: 0 0 16px 4px rgba(255,200,0,0.3), 0 4px 15px rgba(255,165,0,0.25);
           position: relative;
           overflow: hidden;
@@ -166,15 +163,13 @@ const WhyParticipate = () => {
           position: absolute;
           top: -50%;
           left: 0;
-          width: 50%;
+          width: 40%;
           height: 200%;
-          background: linear-gradient(to right, transparent, rgba(255,255,255,0.4), transparent);
-          animation: shimmer 2s infinite;
+          background: linear-gradient(to right, transparent, rgba(255,255,255,0.5), transparent);
+          animation: shimmerSlide 2s infinite;
         }
         .blue-btn-wp {
-          background: linear-gradient(135deg, #28396C 0%, #3d528f 30%, #1e2a50 60%, #28396C 100%);
-          background-size: 200% 200%;
-          animation: goldShift 2.5s ease infinite;
+          background: linear-gradient(135deg, #28396C 0%, #3d528f 40%, #1e2a50 70%, #28396C 100%);
           box-shadow: 0 0 16px 4px rgba(40,57,108,0.3), 0 4px 15px rgba(40,57,108,0.25);
           position: relative;
           overflow: hidden;
@@ -184,10 +179,10 @@ const WhyParticipate = () => {
           position: absolute;
           top: -50%;
           left: 0;
-          width: 50%;
+          width: 40%;
           height: 200%;
-          background: linear-gradient(to right, transparent, rgba(255,255,255,0.3), transparent);
-          animation: shimmer 2s infinite;
+          background: linear-gradient(to right, transparent, rgba(255,255,255,0.35), transparent);
+          animation: shimmerSlide 2s 0.4s infinite;
         }
       `}</style>
 
@@ -263,7 +258,7 @@ const WhyParticipate = () => {
               <a
                 href={
                   data.buttons.brochure.link?.startsWith("/uploads")
-                    ? `http://localhost:4000${data.buttons.brochure.link}`
+                    ? `${SERVER_URL}${data.buttons.brochure.link}`
                     : data.buttons.brochure.link || "#"
                 }
                 target="_blank"
