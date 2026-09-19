@@ -705,7 +705,7 @@ function ReviewSubmitContent({ onClose, onSubmit }: { onClose?: () => void; onSu
             <button
               type="button"
               onClick={onClose}
-              className="flex w-fit items-center gap-[6px] text-[12px] font-extrabold text-[#0d5d3c]"
+              className="flex w-fit items-center gap-[6px] text-[12px] font-extrabold text-[#0d5d3c] transition-colors hover:text-red-600"
             >
               <ArrowLeft className="h-[14px] w-[14px]" />
               Back
@@ -713,7 +713,7 @@ function ReviewSubmitContent({ onClose, onSubmit }: { onClose?: () => void; onSu
           ) : (
             <Link
               href="/careers"
-              className="flex w-fit items-center gap-[6px] text-[12px] font-extrabold text-[#0d5d3c]"
+              className="flex w-fit items-center gap-[6px] text-[12px] font-extrabold text-[#0d5d3c] transition-colors hover:text-red-600"
             >
               <ArrowLeft className="h-[14px] w-[14px]" />
               Back
