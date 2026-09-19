@@ -10,7 +10,6 @@ export async function POST(req: NextRequest) {
     const apiKey = process.env.GEMINI_API_KEY;
 
     if (!apiKey) {
-      // Fallback calculation if key missing
       let fallbackScore = 72;
       if (file?.name) {
         const name = file.name.toLowerCase();
@@ -22,7 +21,6 @@ export async function POST(req: NextRequest) {
 
     let fileName = file?.name || "Uploaded_CV.pdf";
 
-    // Call Gemini API to evaluate candidate match score
     const prompt = `You are an AI Candidate Evaluator for "Bharat Organic Expo".
 Evaluate the candidate's CV file named "${fileName}" for the job role: "${jobTitle}" requiring "${jobExperience}" of experience.
 
@@ -33,32 +31,33 @@ Return a JSON object with:
 Return ONLY raw valid JSON like:
 {"score": 78, "summary": "Strong alignment with sales target background and expo experience."}`;
 
-    let geminiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`;
-    let response = await fetch(geminiUrl, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        contents: [{ role: "user", parts: [{ text: prompt }] }],
-        generationConfig: { temperature: 0.2, maxOutputTokens: 250 },
-      }),
-    });
+    const candidateModels = ["gemini-2.5-flash", "gemini-flash-latest", "gemini-2.5-pro"];
+    let responseText = "";
 
-    if (!response.ok) {
-      geminiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${apiKey}`;
-      response = await fetch(geminiUrl, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          contents: [{ role: "user", parts: [{ text: prompt }] }],
-          generationConfig: { temperature: 0.2, maxOutputTokens: 250 },
-        }),
-      });
+    for (const model of candidateModels) {
+      try {
+        const geminiUrl = `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${apiKey}`;
+        const res = await fetch(geminiUrl, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            contents: [{ role: "user", parts: [{ text: prompt }] }],
+            generationConfig: { temperature: 0.2, maxOutputTokens: 250 },
+          }),
+        });
+
+        if (res.ok) {
+          const data = await res.json();
+          responseText = data.candidates?.[0]?.content?.parts?.[0]?.text || "";
+          if (responseText) break;
+        }
+      } catch (err) {
+        console.warn(`Error trying model ${model}:`, err);
+      }
     }
 
-    if (response.ok) {
-      const data = await response.json();
-      const text = data.candidates?.[0]?.content?.parts?.[0]?.text || "";
-      const jsonMatch = text.match(/\{[\s\S]*\}/);
+    if (responseText) {
+      const jsonMatch = responseText.match(/\{[\s\S]*\}/);
       if (jsonMatch) {
         const parsed = JSON.parse(jsonMatch[0]);
         return NextResponse.json({
