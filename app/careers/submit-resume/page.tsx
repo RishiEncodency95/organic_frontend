@@ -329,7 +329,7 @@ const matchConfig = {
 
     step: 2,
 
-    title: `Sorry, ${profile.name.split(" ")[0]}!`,
+    title: `Sorry, ${profile.name.split(" ")[0]}!` as string,
 
     subtitle: "This position may not be the right fit for you at this time.",
 
@@ -356,15 +356,65 @@ const matchConfig = {
 
     cta: "View All Open Positions",
 
-    breakdown: [],
+    breakdown: [] as Array<{ title: string; description: string; score: number; icon: any }>,
   },
-} as const;
+};
+
+export type CandidateProfileData = {
+  candidateName: string;
+  firstName: string;
+  email: string;
+  phone: string;
+  linkedin?: string | null;
+  cvFile?: File | null;
+  cvName: string;
+  cvSize: string;
+  cvUrl?: string | null;
+  score: number;
+  summary?: string;
+  requirementsMet?: string[];
+  breakdown?: {
+    relevantExperience: number;
+    educationalQualification: number;
+    keySkills: number;
+    roleFit: number;
+    industryExperience: number;
+    locationPreference: number;
+  };
+};
+
+export const defaultCandidateData: CandidateProfileData = {
+  candidateName: "Vijay Sharma",
+  firstName: "Vijay",
+  email: "vijay.sharma@gmail.com",
+  phone: "+91 98765 43210",
+  linkedin: "linkedin.com/in/vijay-sharma",
+  cvName: "Vijay_Sharma_CV.pdf",
+  cvSize: "842 KB",
+  score: 72,
+  requirementsMet: [
+    "Relevant experience in exhibition / trade show sales",
+    "Exposure to client acquisition & sponsorships",
+    "Good communication and negotiation skills",
+    "Relevant industry experience",
+    "Willing to work from Delhi NCR",
+  ],
+  breakdown: {
+    relevantExperience: 78,
+    educationalQualification: 100,
+    keySkills: 75,
+    roleFit: 65,
+    industryExperience: 70,
+    locationPreference: 100,
+  },
+};
 
 type MatchContextType = {
   matchScore: number;
   matchLevel: MatchLevel;
   theme: (typeof stateTheme)["high" | "moderate" | "low"];
   current: (typeof matchConfig)["high" | "moderate" | "low"];
+  candidate: CandidateProfileData;
 };
 
 const MatchContext = createContext<MatchContextType>({
@@ -372,18 +422,40 @@ const MatchContext = createContext<MatchContextType>({
   matchLevel: "high",
   theme: stateTheme["high"],
   current: matchConfig["high"],
+  candidate: defaultCandidateData,
 });
 
 export const useMatchData = () => useContext(MatchContext);
 
-export function getMatchData(score: number): MatchContextType {
+export function getMatchData(
+  candidate: CandidateProfileData = defaultCandidateData,
+  overrideScore?: number
+): MatchContextType {
+  const score = typeof overrideScore === "number" ? overrideScore : candidate.score;
   const level: MatchLevel =
     score >= 70 ? "high" : score >= 50 ? "moderate" : "low";
+
+  const config = { ...matchConfig[level] };
+  const firstName = candidate.firstName || candidate.candidateName?.split(" ")[0] || "Candidate";
+
+  if (level === "high") {
+    config.title = `Great News, ${firstName}!`;
+  } else if (level === "moderate") {
+    config.title = `Good Start, ${firstName}!`;
+  } else {
+    config.title = `Thank You, ${firstName}!`;
+  }
+
+  if (candidate.requirementsMet && candidate.requirementsMet.length > 0) {
+    config.requirements = candidate.requirementsMet as any;
+  }
+
   return {
     matchScore: score,
     matchLevel: level,
     theme: stateTheme[level],
-    current: matchConfig[level],
+    current: config,
+    candidate,
   };
 }
 
@@ -783,7 +855,7 @@ function ScoreSummary() {
    ========================================================= */
 
 function Breakdown() {
-  const { matchLevel, current } = useMatchData();
+  const { matchLevel, current, candidate } = useMatchData();
 
   if (matchLevel === "low") {
     return <LowNextSteps />;
@@ -798,6 +870,19 @@ function Breakdown() {
     "Location Preference": asset("location.png"),
   };
 
+  const breakdownItems = current.breakdown.map((item) => {
+    let score = item.score;
+    if (candidate.breakdown) {
+      if (item.title === "Relevant Experience") score = candidate.breakdown.relevantExperience;
+      else if (item.title === "Educational Qualification") score = candidate.breakdown.educationalQualification;
+      else if (item.title === "Key Skills") score = candidate.breakdown.keySkills;
+      else if (item.title === "Role Fit") score = candidate.breakdown.roleFit;
+      else if (item.title === "Industry Experience") score = candidate.breakdown.industryExperience;
+      else if (item.title === "Location Preference") score = candidate.breakdown.locationPreference;
+    }
+    return { ...item, score };
+  });
+
   return (
     <div className="flex h-full min-h-0 flex-col overflow-hidden">
       <h3 className="shrink-0 text-[14px] font-semibold leading-none text-[#10345f]">
@@ -811,7 +896,7 @@ function Breakdown() {
       </p>
 
       <div className="mt-[8px] grid min-h-0 flex-1 grid-cols-2 grid-rows-3 gap-x-[12px] gap-y-[8px]">
-        {current.breakdown.map((item) => {
+        {breakdownItems.map((item) => {
           const scoreColor =
             item.score >= 70
               ? "#159d3d"
@@ -959,6 +1044,8 @@ function LowNextSteps() {
    ========================================================= */
 
 function ProfileCard() {
+  const { candidate } = useMatchData();
+
   return (
     <div className="flex h-full min-h-0 flex-col overflow-hidden rounded-[8px] border border-[#eaefeb] bg-white p-[12px] shadow-[0_2px_8px_rgba(0,0,0,0.03)]">
       <div className="flex shrink-0 items-center justify-between">
@@ -975,7 +1062,7 @@ function ProfileCard() {
       <div className="mt-[8px] flex min-h-0 flex-1 items-center gap-[12px]">
         <Image
           src={profile.image}
-          alt={profile.name}
+          alt={candidate.candidateName}
           width={160}
           height={160}
           className="h-[76px] w-[76px] shrink-0 rounded-[8px] object-cover object-center"
@@ -983,24 +1070,26 @@ function ProfileCard() {
 
         <div className="min-w-0 flex-1">
           <h4 className="truncate text-[15px] font-bold text-[#0c3363]">
-            {profile.name}
+            {candidate.candidateName}
           </h4>
 
           <div className="mt-[4px] space-y-[4px] text-[13px] font-medium text-[#2d4766]">
             <p className="flex items-center gap-[7px]">
               <Mail className="h-[13px] w-[13px] shrink-0 text-[#0c3363] stroke-[2.5]" />
-              <span className="truncate">{profile.email}</span>
+              <span className="truncate">{candidate.email}</span>
             </p>
 
             <p className="flex items-center gap-[7px]">
               <Phone className="h-[13px] w-[13px] shrink-0 text-[#0c3363] stroke-[2.5]" />
-              <span className="truncate">{profile.phone}</span>
+              <span className="truncate">{candidate.phone}</span>
             </p>
 
-            <p className="flex items-center gap-[7px]">
-              <LinkedInIcon className="h-[13px] w-[13px] shrink-0 text-[#0977df]" />
-              <span className="truncate">{profile.linkedin}</span>
-            </p>
+            {Boolean(candidate.linkedin) && (
+              <p className="flex items-center gap-[7px]">
+                <LinkedInIcon className="h-[13px] w-[13px] shrink-0 text-[#0977df]" />
+                <span className="truncate">{candidate.linkedin}</span>
+              </p>
+            )}
           </div>
         </div>
       </div>
@@ -1013,6 +1102,16 @@ function ProfileCard() {
    ========================================================= */
 
 function CVCard({ onClose }: { onClose?: () => void }) {
+  const { candidate } = useMatchData();
+
+  const handleViewFile = () => {
+    if (candidate.cvUrl) {
+      window.open(candidate.cvUrl, "_blank");
+    } else {
+      alert(`CV File: ${candidate.cvName} (${candidate.cvSize})`);
+    }
+  };
+
   return (
     <div className="flex h-full min-h-0 flex-col overflow-hidden rounded-[8px] border border-[#eaefeb] bg-white p-[12px] shadow-[0_2px_8px_rgba(0,0,0,0.03)]">
       <h3 className="shrink-0 text-[15px] font-bold text-[#0c3363]">
@@ -1030,15 +1129,19 @@ function CVCard({ onClose }: { onClose?: () => void }) {
 
         <div className="min-w-0 flex-1 pl-[4px]">
           <h4 className="truncate text-[14px] font-bold text-[#0c3363]">
-            {profile.cvName}
+            {candidate.cvName}
           </h4>
 
           <p className="mt-[2px] text-[13px] font-medium text-[#2d4766]">
-            {profile.cvSize}
+            {candidate.cvSize}
           </p>
 
           <div className="mt-[6px] flex flex-wrap gap-x-[12px] gap-y-[3px] text-[13px] font-bold text-[#0977df]">
-            <button type="button" className="flex items-center gap-[5px] hover:opacity-80 transition-opacity">
+            <button
+              type="button"
+              onClick={handleViewFile}
+              className="flex items-center gap-[5px] hover:opacity-80 transition-opacity cursor-pointer"
+            >
               <Eye className="h-[13px] w-[13px] stroke-[2.5]" />
               View File
             </button>
@@ -1046,7 +1149,7 @@ function CVCard({ onClose }: { onClose?: () => void }) {
             <button
               type="button"
               onClick={onClose}
-              className="flex items-center gap-[5px] hover:opacity-80 transition-opacity"
+              className="flex items-center gap-[5px] hover:opacity-80 transition-opacity cursor-pointer"
             >
               <RefreshCw className="h-[13px] w-[13px] stroke-[2.5]" />
               Upload Different CV
@@ -1293,15 +1396,17 @@ const DESIGN_HEIGHT = 900;
 const MODAL_WIDTH = "min(95vw, 1440px, calc(92vh * 1500 / 900))";
 
 export function EligibilityPopupContent({
-  score = 58,
+  candidate = defaultCandidateData,
+  score,
   onClose,
   onApply,
 }: {
+  candidate?: CandidateProfileData;
   score?: number;
   onClose?: () => void;
   onApply?: () => void;
 }) {
-  const matchData = getMatchData(score);
+  const matchData = getMatchData(candidate, score);
 
   return (
     <MatchContext.Provider value={matchData}>
@@ -1390,11 +1495,13 @@ export function EligibilityPopupContent({
 
 export function EligibilityModal({
   isOpen,
-  score = 58,
+  candidate = defaultCandidateData,
+  score,
   onClose,
   onApply,
 }: {
   isOpen: boolean;
+  candidate?: CandidateProfileData;
   score?: number;
   onClose: () => void;
   onApply?: () => void;
@@ -1429,7 +1536,7 @@ export function EligibilityModal({
               transformOrigin: "top left",
             }}
           >
-            <EligibilityPopupContent score={score} onClose={onClose} onApply={onApply} />
+            <EligibilityPopupContent candidate={candidate} score={score} onClose={onClose} onApply={onApply} />
           </div>
         </div>
       </div>
@@ -1442,7 +1549,7 @@ import UploadCvModal from "@/app/components/careers/uploade_cv/page";
 export default function CareerEligibilityPage() {
   const [eligibilityOpen, setEligibilityOpen] = useState(true);
   const [uploadCvOpen, setUploadCvOpen] = useState(false);
-  const [currentScore, setCurrentScore] = useState(72);
+  const [candidateData, setCandidateData] = useState<CandidateProfileData>(defaultCandidateData);
 
   return (
     <main className="min-h-screen bg-white">
@@ -1469,9 +1576,9 @@ export default function CareerEligibilityPage() {
             experience: "3 – 6 Years",
           }}
           onClose={() => setUploadCvOpen(false)}
-          onAnalyze={(score) => {
-            if (typeof score === "number") {
-              setCurrentScore(score);
+          onAnalyze={(data) => {
+            if (data) {
+              setCandidateData(data);
             }
             setUploadCvOpen(false);
             setEligibilityOpen(true);
@@ -1481,7 +1588,8 @@ export default function CareerEligibilityPage() {
 
       <EligibilityModal
         isOpen={eligibilityOpen}
-        score={currentScore}
+        candidate={candidateData}
+        score={candidateData.score}
         onClose={() => {
           setEligibilityOpen(false);
           setUploadCvOpen(true);

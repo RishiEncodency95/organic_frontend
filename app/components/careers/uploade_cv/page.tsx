@@ -199,6 +199,29 @@ function UploadBox({ onFile }: { onFile: (file: File) => void }) {
     );
 }
 
+export type CandidateAnalysisData = {
+    candidateName: string;
+    firstName: string;
+    email: string;
+    phone: string;
+    linkedin?: string | null;
+    cvFile?: File | null;
+    cvName: string;
+    cvSize: string;
+    cvUrl?: string | null;
+    score: number;
+    summary?: string;
+    requirementsMet?: string[];
+    breakdown?: {
+        relevantExperience: number;
+        educationalQualification: number;
+        keySkills: number;
+        roleFit: number;
+        industryExperience: number;
+        locationPreference: number;
+    };
+};
+
 export default function UploadCvModal({
     job,
     onClose,
@@ -206,7 +229,7 @@ export default function UploadCvModal({
 }: {
     job?: Job;
     onClose: () => void;
-    onAnalyze?: (score: number) => void;
+    onAnalyze?: (data: CandidateAnalysisData) => void;
 }) {
     const [file, setFile] = useState<File | null>(null);
     const [isAnalyzing, setIsAnalyzing] = useState(false);
@@ -223,6 +246,13 @@ export default function UploadCvModal({
         }
 
         setIsAnalyzing(true);
+
+        const fileSizeStr = file.size > 1024 * 1024
+            ? `${(file.size / (1024 * 1024)).toFixed(1)} MB`
+            : `${Math.round(file.size / 1024)} KB`;
+
+        const objectUrl = URL.createObjectURL(file);
+
         try {
             const formData = new FormData();
             formData.append("file", file);
@@ -235,8 +265,23 @@ export default function UploadCvModal({
             });
 
             const data = await res.json();
-            const finalScore = typeof data.score === "number" ? data.score : 72;
-            if (onAnalyze) onAnalyze(finalScore);
+            const candidateData: CandidateAnalysisData = {
+                candidateName: data.candidateName || "Vijay Sharma",
+                firstName: data.firstName || "Vijay",
+                email: data.email || "vijay.sharma@gmail.com",
+                phone: data.phone || "+91 98765 43210",
+                linkedin: data.linkedin !== undefined ? data.linkedin : "linkedin.com/in/vijay-sharma",
+                cvFile: file,
+                cvName: file.name,
+                cvSize: fileSizeStr,
+                cvUrl: objectUrl,
+                score: typeof data.score === "number" ? data.score : 72,
+                summary: data.summary,
+                requirementsMet: data.requirementsMet,
+                breakdown: data.breakdown,
+            };
+
+            if (onAnalyze) onAnalyze(candidateData);
         } catch (e) {
             console.error(e);
             let computedScore = 72;
@@ -246,7 +291,29 @@ export default function UploadCvModal({
             } else if (name.includes("medium") || name.includes("sales") || name.includes("partial") || name.includes("58")) {
                 computedScore = 58;
             }
-            if (onAnalyze) onAnalyze(computedScore);
+
+            const fallbackName = file.name
+                .replace(/\.[^/.]+$/, "")
+                .replace(/[-_]/g, " ")
+                .replace(/\b(cv|resume|doc|pdf)\b/gi, "")
+                .trim();
+            const formattedName = fallbackName ? fallbackName.replace(/\b\w/g, (c) => c.toUpperCase()) : "Vijay Sharma";
+            const firstName = formattedName.split(" ")[0];
+
+            const candidateData: CandidateAnalysisData = {
+                candidateName: formattedName,
+                firstName: firstName,
+                email: `${firstName.toLowerCase()}@gmail.com`,
+                phone: "+91 98765 43210",
+                linkedin: `linkedin.com/in/${firstName.toLowerCase()}`,
+                cvFile: file,
+                cvName: file.name,
+                cvSize: fileSizeStr,
+                cvUrl: objectUrl,
+                score: computedScore,
+            };
+
+            if (onAnalyze) onAnalyze(candidateData);
         } finally {
             setIsAnalyzing(false);
         }

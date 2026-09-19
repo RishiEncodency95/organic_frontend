@@ -3,8 +3,8 @@
 import { useState, useEffect } from "react";
 import { createPortal } from "react-dom";
 import { ArrowRight } from "lucide-react";
-import UploadCvModal from "@/app/components/careers/uploade_cv/page";
-import { EligibilityModal } from "./submit-resume/page";
+import UploadCvModal, { CandidateAnalysisData } from "@/app/components/careers/uploade_cv/page";
+import { EligibilityModal, CandidateProfileData, defaultCandidateData } from "./submit-resume/page";
 import { ApplicationFormModal } from "./application-form/page";
 import { ReviewSubmitModal } from "./review-submit/page";
 
@@ -13,7 +13,7 @@ export default function JobCardButtons({ job }: { job: any }) {
   const [isEligibilityOpen, setIsEligibilityOpen] = useState(false);
   const [isAppFormOpen, setIsAppFormOpen] = useState(false);
   const [isReviewOpen, setIsReviewOpen] = useState(false);
-  const [currentScore, setCurrentScore] = useState(38);
+  const [candidateData, setCandidateData] = useState<CandidateProfileData>(defaultCandidateData);
 
   // Prevent scrolling when modal is open
   useEffect(() => {
@@ -49,9 +49,9 @@ export default function JobCardButtons({ job }: { job: any }) {
           <UploadCvModal
             job={job}
             onClose={() => setIsOpen(false)}
-            onAnalyze={(score) => {
-              if (score !== undefined) {
-                setCurrentScore(score);
+            onAnalyze={(data) => {
+              if (data) {
+                setCandidateData(data);
               }
               setIsOpen(false);
               setIsEligibilityOpen(true);
@@ -65,7 +65,8 @@ export default function JobCardButtons({ job }: { job: any }) {
         ? createPortal(
           <EligibilityModal
             isOpen={isEligibilityOpen}
-            score={currentScore}
+            candidate={candidateData}
+            score={candidateData.score}
             onClose={() => {
               setIsEligibilityOpen(false);
               setIsOpen(true);
