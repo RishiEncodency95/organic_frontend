@@ -1442,6 +1442,7 @@ import UploadCvModal from "@/app/components/careers/uploade_cv/page";
 export default function CareerEligibilityPage() {
   const [eligibilityOpen, setEligibilityOpen] = useState(true);
   const [uploadCvOpen, setUploadCvOpen] = useState(false);
+  const [currentScore, setCurrentScore] = useState(72);
 
   return (
     <main className="min-h-screen bg-white">
@@ -1468,7 +1469,10 @@ export default function CareerEligibilityPage() {
             experience: "3 – 6 Years",
           }}
           onClose={() => setUploadCvOpen(false)}
-          onAnalyze={() => {
+          onAnalyze={(score) => {
+            if (typeof score === "number") {
+              setCurrentScore(score);
+            }
             setUploadCvOpen(false);
             setEligibilityOpen(true);
           }}
@@ -1477,7 +1481,7 @@ export default function CareerEligibilityPage() {
 
       <EligibilityModal
         isOpen={eligibilityOpen}
-        score={72}
+        score={currentScore}
         onClose={() => {
           setEligibilityOpen(false);
           setUploadCvOpen(true);
