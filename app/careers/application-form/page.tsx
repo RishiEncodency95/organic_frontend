@@ -300,6 +300,7 @@ function PersonalInformation() {
   const [phone, setPhone] = useState(profile.phone);
   const [location, setLocation] = useState("Delhi, NCR");
   const [relocate, setRelocate] = useState("Yes");
+  const [photoSrc, setPhotoSrc] = useState<string | null>(profile.image);
 
   return (
     <div className="overflow-hidden rounded-[8px] border border-[#dce8e0] bg-white">
@@ -308,15 +309,23 @@ function PersonalInformation() {
       <div className="grid grid-cols-[290px_1fr] gap-[14px] px-[12px] py-[8px]">
         {/* PHOTO + NOTE */}
         <div className="grid grid-cols-[96px_1fr] gap-[10px]">
-          <div className="relative h-[110px] overflow-hidden rounded-[6px] border border-[#d8e3dc] bg-[#eef4f0]">
-            <Image
-              src={profile.image}
-              alt={profile.name}
-              fill
-              className="object-cover"
-            />
+          <div className="relative h-[110px] overflow-hidden rounded-[6px] border border-[#d8e3dc] bg-[#8d97a5]">
+            {photoSrc ? (
+              <Image
+                src={photoSrc}
+                alt={fullName}
+                fill
+                className="object-cover scale-[1.38] object-center"
+                onError={() => setPhotoSrc(null)}
+              />
+            ) : (
+              <div className="flex h-full w-full flex-col items-center justify-center bg-[#e4efe8] text-[#076d49]">
+                <User className="h-[44px] w-[44px] text-[#087447]" />
+                <span className="mt-[2px] text-[9.5px] font-semibold text-[#18395d]">Upload Photo</span>
+              </div>
+            )}
 
-            <span className="absolute bottom-[4px] right-[4px] grid h-[22px] w-[22px] place-items-center rounded-full bg-[#088049] text-white">
+            <span className="absolute bottom-[4px] right-[4px] z-10 grid h-[22px] w-[22px] place-items-center rounded-full bg-[#088049] text-white shadow-sm cursor-pointer hover:bg-[#06683b] transition-colors">
               <Pencil className="h-[11px] w-[11px]" />
             </span>
           </div>
@@ -880,7 +889,7 @@ function ApplicationFormContent({ onClose, onNext }: { onClose: () => void; onNe
         <div className="mt-[6px] shrink-0">
           <Link
             href="/careers"
-            className="flex w-fit items-center gap-[5px] text-[12.5px] font-semibold text-[#0d5d3c]"
+            className="flex w-fit items-center gap-[5px] text-[12.5px] font-semibold text-[#0d5d3c] hover:text-[#d92027] transition-colors"
           >
             <ArrowLeft className="h-[14px] w-[14px]" />
             Back

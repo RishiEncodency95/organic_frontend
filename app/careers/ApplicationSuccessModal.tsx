@@ -107,14 +107,14 @@ function SuccessSidebar({ onClose }: { onClose: () => void }) {
           type="button"
           aria-label="Close"
           onClick={onClose}
-          className="grid h-[28px] w-[28px] place-items-center rounded-full bg-white/80 text-[#153b66] shadow-sm hover:bg-white transition-colors"
+          className="grid h-[28px] w-[28px] place-items-center rounded-full bg-white/80 text-[#153b66] shadow-sm hover:bg-[#d92027] hover:text-white transition-colors"
         >
           <X className="h-[17px] w-[17px]" />
         </button>
 
         <Link
           href="/careers"
-          className="flex items-center gap-[5px] text-[12.5px] font-semibold text-[#153b66] hover:text-[#087447] transition-colors mr-[50px]"
+          className="flex items-center gap-[5px] text-[12.5px] font-semibold text-[#153b66] hover:text-[#d92027] transition-colors mr-[50px]"
         >
           Back to Careers
           <ArrowRight className="h-[14px] w-[14px]" />
@@ -366,7 +366,7 @@ export default function ApplicationSuccessModal({ isOpen, onClose }: SuccessModa
           <div className="mt-[12px] flex shrink-0 items-center justify-between">
             <Link
               href="/careers"
-              className="flex items-center gap-[6px] text-[14px] font-semibold text-[#0d5d3c] hover:underline"
+              className="flex items-center gap-[6px] text-[14px] font-semibold text-[#0d5d3c] hover:text-[#d92027] hover:underline transition-colors"
             >
               <ArrowLeft className="h-[15px] w-[15px]" />
               Back to Careers

@@ -518,7 +518,7 @@ function AmanApplicationContent({ onClose }: { onClose: () => void }) {
           <button
             type="button"
             onClick={onClose}
-            className="flex items-center gap-[5px] text-[13px] font-semibold text-[#0c5e3f]"
+            className="flex items-center gap-[5px] text-[13px] font-semibold text-[#0c5e3f] hover:text-[#d92027] transition-colors"
           >
             <ArrowLeft className="h-[14px] w-[14px]" />
             Back

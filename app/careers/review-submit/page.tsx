@@ -244,18 +244,28 @@ function SectionTitle({
    ========================================================= */
 
 function CandidateProfile() {
+  const [photoSrc, setPhotoSrc] = useState<string | null>(candidateProfile.image);
+
   return (
     <div className="rounded-[8px] border border-[#dce8e0] bg-white flex flex-col justify-between">
       <SectionTitle icon={User} title="Candidate Profile" onEdit={() => { }} />
 
       <div className="grid grid-cols-[105px_1fr] gap-[12px] px-[14px] py-[8px]">
-        <div className="relative h-[122px] overflow-hidden rounded-[6px] border border-[#d8e3dc] bg-[#eef4f0]">
-          <Image
-            src={candidateProfile.image}
-            alt={candidateProfile.name}
-            fill
-            className="object-cover"
-          />
+        <div className="relative h-[122px] overflow-hidden rounded-[6px] border border-[#d8e3dc] bg-[#8d97a5]">
+          {photoSrc ? (
+            <Image
+              src={photoSrc}
+              alt={candidateProfile.name}
+              fill
+              className="object-cover scale-[1.38] object-center"
+              onError={() => setPhotoSrc(null)}
+            />
+          ) : (
+            <div className="flex h-full w-full flex-col items-center justify-center bg-[#e4efe8] text-[#076d49]">
+              <User className="h-[48px] w-[48px] text-[#087447]" />
+              <span className="mt-[2px] text-[10px] font-semibold text-[#18395d]">No Photo</span>
+            </div>
+          )}
         </div>
 
         <div>
@@ -689,7 +699,7 @@ function ReviewSubmitContent({ onClose, onSubmit }: { onClose?: () => void; onSu
           ) : (
             <Link
               href="/careers"
-              className="flex w-fit items-center gap-[5px] text-[13px] font-semibold text-[#0d5d3c]"
+              className="flex w-fit items-center gap-[5px] text-[13px] font-semibold text-[#0d5d3c] hover:text-[#d92027] transition-colors"
             >
               <ArrowLeft className="h-[14px] w-[14px]" />
               Back
