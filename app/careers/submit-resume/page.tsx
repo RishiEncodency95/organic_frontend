@@ -20,6 +20,7 @@ import {
   Pencil,
   Phone,
   RefreshCw,
+  Search,
   Target,
   Users,
   X,
@@ -328,10 +329,9 @@ const matchConfig = {
     subtitle: "This position may not be the right fit for you at this time.",
 
     description:
-      "Based on our screening, your profile does not meet the minimum requirements for this role. Therefore, you are not eligible to apply for this position. We appreciate your interest in Bharat Organic Expo and encourage you to explore other opportunities.",
+      "Based on our screening, your profile does not meet the minimum requirements for this role. Therefore, you are not eligible to apply for this position.\n\nWe truly appreciate your interest in Bharat Organic Expo and encourage you to explore other opportunities that may be a better match for your skills and experience.",
 
-    quote:
-      "Keep building your experience and skills. The right opportunity may be closer than you think.",
+    quote: "",
 
     rightText: "Keep\nGrowing\nKeep\nExploring",
 
@@ -343,10 +343,10 @@ const matchConfig = {
     suggestionTitle: "Minimum Requirements for This Role",
 
     requirements: [
-      "Minimum 3+ years of experience in exhibition / trade show sales.",
-      "Proven track record in client acquisition & sponsorships.",
-      "Relevant industry experience preferred.",
-      "Strong negotiation and relationship management skills.",
+      "Minimum 3+ years of experience in exhibition / trade show sales (Your experience: 0–1 year)",
+      "Proven track record in client acquisition & sponsorships",
+      "Relevant industry experience (Exhibitions / Events / Wellness / Healthcare preferred)",
+      "Strong negotiation and relationship management skills",
     ],
 
     cta: "View All Open Positions",
@@ -429,13 +429,9 @@ function ProgressSteps() {
 
       {current.step === 3 && (
         <div
-          className="absolute left-[50%] top-[16px] h-[2px] w-[25%]"
+          className="absolute left-[50%] top-[16px] h-[2px] w-[12.5%]"
           style={{ background: theme.primary }}
         />
-      )}
-
-      {matchLevel === "low" && (
-        <div className="absolute left-[50%] top-[16px] h-[2px] w-[25%] bg-[#d30c18]" />
       )}
 
       <div className="relative grid h-full grid-cols-4">
@@ -451,7 +447,7 @@ function ProgressSteps() {
               className="flex min-h-0 flex-col items-center"
             >
               <div
-                className="grid h-[34px] w-[34px] shrink-0 place-items-center rounded-full text-[14px] font-black"
+                className="grid h-[34px] w-[34px] shrink-0 place-items-center rounded-full text-[14px] font-semibold"
                 style={{
                   background: completed
                     ? "#087f46"
@@ -498,19 +494,15 @@ function ResultHero() {
       {/* LEFT PERSON COMPOSITION */}
       <div
         className="absolute inset-y-0 left-0 overflow-hidden"
-        style={{ width: matchLevel === "low" ? "45%" : "40.2%" }}
+        style={{ width: matchLevel === "low" ? "40%" : "40.2%" }}
       >
         <Image
           src={current.personImage}
           alt=""
           fill
           priority
-          sizes="40vw"
+          sizes="30vw"
           className="object-contain object-left-bottom"
-          style={{
-            transform: matchLevel === "low" ? "scale(1.12)" : undefined,
-            transformOrigin: "left bottom",
-          }}
         />
       </div>
 
@@ -544,47 +536,56 @@ function ResultHero() {
         }}
       />
 
-      {/* REAL DYNAMIC STATUS ICON: 72=CHECK, 58=!, 38=X */}
-      <div
-        className="absolute left-[35.05%] top-[10%] z-20 grid h-[52px] w-[52px] place-items-center rounded-full text-white shadow-sm"
-        style={{ background: theme.primary }}
-      >
-        {matchLevel === "high" ? (
-          <Check className="h-[30px] w-[30px]" strokeWidth={3.2} />
-        ) : matchLevel === "low" ? (
-          <X className="h-[30px] w-[30px]" strokeWidth={3.2} />
-        ) : (
-          <span className="text-[31px] font-black leading-none">!</span>
-        )}
-      </div>
+      {/* TEXT BLOCK WITH ICON */}
+      <div className="absolute bottom-[3%] left-[32%] top-[3%] z-20 w-[50%] overflow-visible pr-1">
+        <div className="flex h-full min-h-0 items-center">
+          <div className="flex items-start gap-[15px]">
+            {/* DYNAMIC STATUS ICON */}
+            <div
+              className="mt-[3px] grid h-[52px] w-[52px] shrink-0 place-items-center rounded-full text-white shadow-sm"
+              style={{ background: theme.primary }}
+            >
+              {matchLevel === "high" ? (
+                <Check className="h-[32px] w-[32px]" strokeWidth={3.5} />
+              ) : matchLevel === "low" ? (
+                <X className="h-[32px] w-[32px]" strokeWidth={3.5} />
+              ) : (
+                <span className="text-[32px] font-semibold leading-none">!</span>
+              )}
+            </div>
 
-      {/* TEXT BLOCK */}
-      <div className="absolute bottom-[3%] left-[42.2%] top-[3%] z-10 w-[40.5%] overflow-hidden pr-1">
-        <div className="flex h-full min-h-0 flex-col justify-center">
-          <h2
-            className="max-w-full text-[clamp(21px,1.75vw,28px)] font-black leading-[1.08] tracking-[-0.035em]"
-            style={{ color: theme.dark }}
-          >
-            {current.title}
-          </h2>
+            <div className="flex min-w-0 flex-col">
+              <h2
+                className="max-w-full text-[clamp(21px,1.75vw,28px)] font-semibold leading-[1.08] tracking-[-0.035em]"
+                style={{ color: theme.dark }}
+              >
+                {current.title}
+              </h2>
 
-          <h3 className="mt-[3px] text-[14px] font-black leading-[1.2] text-[#102747]">
-            {current.subtitle}
-          </h3>
+              <h3
+                className="mt-[4px] whitespace-nowrap text-[15px] font-semibold leading-[1.2]"
+                style={{ color: theme.dark }}
+              >
+                {current.subtitle}
+              </h3>
 
-          <p className="mt-[5px] max-w-[98%] text-[12.5px] leading-[1.32] text-[#173757]">
-            {current.description}
-          </p>
+              <p className="mt-[8px] max-w-[98%] whitespace-pre-wrap text-[13px] leading-[1.4] text-[#123d73]">
+                {current.description}
+              </p>
 
-          <p className="mt-[5px] max-w-[95%] text-[12px] italic leading-[1.28] text-[#173757]">
-            “ {current.quote} ”
-          </p>
+              {current.quote && (
+                <p className="mt-[5px] max-w-[95%] text-[12px] italic leading-[1.28] text-[#123d73]">
+                  “ {current.quote} ”
+                </p>
+              )}
 
-          <p className="mt-[4px] text-[11.5px] font-extrabold italic leading-[1.12] text-[#174733]">
-            — Talent Acquisition Team
-            <br />
-            <span className="pl-[12px]">Bharat Organic Expo</span>
-          </p>
+              <p className="mt-[10px] text-[13px] italic leading-[1.12] text-[#164232]">
+                — Talent Acquisition Team
+                <br />
+                <span className="pl-[16px] font-medium">Bharat Organic Expo</span>
+              </p>
+            </div>
+          </div>
         </div>
       </div>
 
@@ -624,7 +625,7 @@ function ScoreRing() {
 
       <div className="relative z-10 text-center">
         <div
-          className="text-[clamp(30px,2.8vw,46px)] font-black leading-none"
+          className="text-[clamp(30px,2.8vw,46px)] font-semibold leading-none"
           style={{
             color: matchLevel === "high" ? "#123761" : ringColor,
           }}
@@ -650,9 +651,9 @@ function Legend({
   label: string;
 }) {
   return (
-    <div className="grid grid-cols-[12px_72px_1fr] items-center gap-2 text-[clamp(9px,.74vw,11.5px)] text-[#17395d]">
+    <div className="grid grid-cols-[12px_72px_1fr] items-center gap-[12px] text-[13.5px] text-[#254b73]">
       <span
-        className="h-[10px] w-[10px] rounded-full"
+        className="h-[12px] w-[12px] rounded-full"
         style={{ background: color }}
       />
       <span className="font-semibold">{range}</span>
@@ -673,12 +674,12 @@ function ScoreSummary() {
       <div className="flex min-h-0 items-center gap-[clamp(10px,1.35vw,20px)] overflow-hidden rounded-[7px] border border-[#e0e7e2] bg-white px-[clamp(10px,1.35vw,20px)]">
         <ScoreRing />
 
-        <div className="min-w-0">
-          <h3 className="text-[12px] font-black text-[#102b4b]">
+        <div className="min-w-0 pl-[4px]">
+          <h3 className="text-[18px] font-bold tracking-tight text-[#113a72]">
             {current.summaryTitle}
           </h3>
 
-          <p className="mt-[5px] max-w-[400px] text-[12px] leading-[1.33] text-[#173858]">
+          <p className="mt-[4px] max-w-[400px] text-[14.5px] font-medium leading-[1.3] text-[#254b73]">
             {current.summaryText}
           </p>
 
@@ -711,49 +712,61 @@ function ScoreSummary() {
           borderColor: theme.panelBorder,
         }}
       >
-        <div className="flex items-center gap-[8px]">
+        <div className="flex items-center gap-[10px]">
           <div
-            className="grid h-[29px] w-[29px] shrink-0 place-items-center rounded-full text-white"
+            className="grid h-[24px] w-[24px] shrink-0 place-items-center rounded-full text-white"
             style={{ background: theme.primary }}
           >
             {matchLevel === "moderate" ? (
-              <Lightbulb className="h-[17px] w-[17px]" />
+              <Lightbulb className="h-[14px] w-[14px]" />
             ) : matchLevel === "low" ? (
-              <X className="h-[17px] w-[17px]" />
+              <span className="text-[15px] font-bold leading-none">!</span>
             ) : (
-              <Target className="h-[17px] w-[17px]" />
+              <Target className="h-[14px] w-[14px]" />
             )}
           </div>
 
-          <h3 className="text-[12px] font-black leading-tight text-[#102945]">
+          <h3
+            className="text-[17px] font-bold leading-tight"
+            style={{ color: theme.dark }}
+          >
             {current.suggestionTitle}
           </h3>
         </div>
 
-        <div className="mt-[7px] space-y-[5px]">
-          {current.requirements.map((item, index) => (
-            <div
-              key={item}
-              className="flex items-start gap-[7px]"
-            >
-              <span
-                className="mt-[1px] grid h-[16px] w-[16px] shrink-0 place-items-center rounded-full text-[10px] font-black text-white"
-                style={{ background: theme.primary }}
-              >
-                {matchLevel === "high" ? (
-                  <Check className="h-[10px] w-[10px]" />
-                ) : matchLevel === "low" ? (
-                  <X className="h-[10px] w-[10px]" />
-                ) : (
-                  index + 1
-                )}
-              </span>
+        <div className="mt-[10px] space-y-[6px]">
+          {current.requirements.map((item, index) => {
+            const hasParen = item.includes("(");
+            const mainText = hasParen ? item.split("(")[0] : item;
+            const parenText = hasParen ? "(" + item.split("(")[1] : "";
 
-              <p className="text-[12px] leading-[1.25] text-[#173654]">
-                {item}
-              </p>
-            </div>
-          ))}
+            return (
+              <div
+                key={item}
+                className="flex items-start gap-[8px]"
+              >
+                <span
+                  className="mt-[3.5px] grid h-[15px] w-[15px] shrink-0 place-items-center rounded-full text-[9px] font-bold text-white"
+                  style={{ background: theme.primary }}
+                >
+                  {matchLevel === "high" ? (
+                    <Check className="h-[10px] w-[10px]" strokeWidth={3.5} />
+                  ) : matchLevel === "low" ? (
+                    <X className="h-[10px] w-[10px]" strokeWidth={3.5} />
+                  ) : (
+                    index + 1
+                  )}
+                </span>
+
+                <p className="text-[13px] font-medium leading-[1.35] text-[#123d73]">
+                  {mainText}
+                  {parenText && (
+                    <span className="font-normal text-[#5a718c]">{parenText}</span>
+                  )}
+                </p>
+              </div>
+            );
+          })}
         </div>
       </div>
     </div>
@@ -782,7 +795,7 @@ function Breakdown() {
 
   return (
     <div className="flex h-full min-h-0 flex-col overflow-hidden">
-      <h3 className="shrink-0 text-[12px] font-black leading-none text-[#10345f]">
+      <h3 className="shrink-0 text-[12px] font-semibold leading-none text-[#10345f]">
         {matchLevel === "moderate"
           ? "Detailed Match Breakdown"
           : "Match Breakdown"}
@@ -877,55 +890,58 @@ function LowNextSteps() {
     {
       title: "Explore Other Opportunities",
       text:
-        "Check other open positions that better match your profile.",
-      icon: Target,
+        "Check out other open positions that match your current profile.",
+      icon: Search,
     },
   ];
 
   return (
-    <div className="flex h-full min-h-0 flex-col overflow-hidden rounded-[7px] border border-[#e2ebe4] bg-[#f4faf5] px-[14px] py-[9px]">
-      <div className="flex shrink-0 items-center gap-[8px]">
-        <Lightbulb className="h-[24px] w-[24px] text-[#6ba918]" />
+    <div className="flex h-full min-h-0 flex-col overflow-hidden rounded-[8px] bg-[#f3fbf6] px-[20px] py-2">
+      <div className="flex shrink-0 items-start gap-[12px]">
+        <Lightbulb className="h-[28px] w-[28px] text-[#368615]" fill="#368615" />
 
-        <div>
-          <h3 className="text-[12px] font-black leading-tight text-[#10345f]">
+        <div className="space-y-1">
+          <h3 className="text-[17.5px] font-semibold leading-tight text-[#113a72]">
             What You Can Do Next?
           </h3>
 
-          <p className="text-[12px] text-[#173858]">
-            Continue building your skills and explore other suitable opportunities.
+          <p className=" text-[13.5px] font-medium text-[#466580]">
+            We encourage you to continue building your skills and explore other suitable opportunities with us.
           </p>
         </div>
       </div>
 
-      <div className="mt-[7px] grid min-h-0 flex-1 grid-cols-3 divide-x divide-[#dde5df] rounded-[5px] bg-white px-[10px] py-[8px]">
-        {data.map(({ title, text, icon: Icon }) => (
-          <div
-            key={title}
-            className="flex min-h-0 gap-[8px] px-[10px] first:pl-0 last:pr-0"
-          >
-            <Icon className="h-[24px] w-[24px] shrink-0 text-[#087447]" />
+      <div className="mt-2 flex flex-1 flex-col items-center justify-center rounded-[8px] bg-white px-[20px] py-2 shadow-[0_2px_8px_rgba(0,0,0,0.03)]">
+        <div className="grid w-full grid-cols-3 divide-x divide-[#f0f4f1]">
+          {data.map(({ title, text, icon: Icon }) => (
+            <div
+              key={title}
+              className="flex gap-[12px] px-[16px] first:pl-0 last:pr-0"
+            >
+              <Icon
+                className="mt-[2px] h-[28px] w-[28px] shrink-0 text-[#075333]"
+                strokeWidth={2.5}
+              />
 
-            <div>
-              <h4 className="text-[12px] font-black leading-tight text-[#102e50]">
-                {title}
-              </h4>
+              <div>
+                <h4 className="text-[15px] font-semibold leading-tight text-[#113a72]">
+                  {title}
+                </h4>
 
-              <p className="mt-[3px] text-[12px] leading-[1.25] text-[#34475c]">
-                {text}
-              </p>
+                <p className="mt-[6px] text-[13.5px] font-medium leading-[1.35] text-[#3e536c]">
+                  {text}
+                </p>
+              </div>
             </div>
-          </div>
-        ))}
-      </div>
+          ))}
+        </div>
 
-      <div className="mt-[6px] shrink-0 text-center">
         <Link
           href="/careers"
-          className="inline-flex h-[30px] min-w-[250px] items-center justify-center gap-[7px] rounded-[4px] border border-[#087447] bg-white px-[20px] text-[12px] font-extrabold text-[#075d38]"
+          className="mt-[20px] flex h-[36px] items-center gap-[8px] rounded-[5px] border border-[#075333] px-[24px] text-[13.5px] font-bold text-[#075333] transition-colors hover:bg-[#075333] hover:text-white"
         >
           View Other Job Opportunities
-          <ArrowRight className="h-[13px] w-[13px]" />
+          <ArrowRight className="h-[14px] w-[14px]" strokeWidth={2.5} />
         </Link>
       </div>
     </div>
@@ -940,11 +956,11 @@ function ProfileCard() {
   return (
     <div className="flex h-full min-h-0 flex-col overflow-hidden rounded-[7px] border border-[#e3ebe5] bg-white p-[clamp(8px,.8vw,12px)] shadow-sm">
       <div className="flex shrink-0 items-center justify-between">
-        <h3 className="text-[12px] font-black text-[#0c3363]">
+        <h3 className="text-[12px] font-semibold text-[#0c3363]">
           Your Profile
         </h3>
 
-        <button className="flex items-center gap-[4px] text-[12px] font-bold text-[#0977df]">
+        <button className="flex items-center gap-[4px] text-[12px] font-semibold text-[#0977df]">
           <Pencil className="h-[12px] w-[12px]" />
           Edit
         </button>
@@ -960,7 +976,7 @@ function ProfileCard() {
         />
 
         <div className="min-w-0">
-          <h4 className="truncate text-[12px] font-black text-[#103561]">
+          <h4 className="truncate text-[12px] font-semibold text-[#103561]">
             {profile.name}
           </h4>
 
@@ -993,7 +1009,7 @@ function ProfileCard() {
 function CVCard() {
   return (
     <div className="flex h-full min-h-0 flex-col overflow-hidden rounded-[7px] border border-[#e3ebe5] bg-white p-[clamp(8px,.8vw,12px)] shadow-sm">
-      <h3 className="shrink-0 text-[12px] font-black text-[#0c3363]">
+      <h3 className="shrink-0 text-[12px] font-semibold text-[#0c3363]">
         Your CV
       </h3>
 
@@ -1007,7 +1023,7 @@ function CVCard() {
         </div>
 
         <div className="min-w-0 flex-1">
-          <h4 className="truncate text-[12px] font-black text-[#12335e]">
+          <h4 className="truncate text-[12px] font-semibold text-[#12335e]">
             {profile.cvName}
           </h4>
 
@@ -1048,11 +1064,11 @@ function JobSummary() {
   return (
     <div className="flex h-full min-h-0 flex-col overflow-hidden rounded-[7px] border border-[#e3ebe5] bg-white p-[clamp(8px,.8vw,12px)] shadow-sm">
       <div className="flex shrink-0 items-center justify-between">
-        <h3 className="text-[12px] font-black text-[#0c3363]">
+        <h3 className="text-[12px] font-semibold text-[#0c3363]">
           Job Summary
         </h3>
 
-        <button className="flex items-center gap-[4px] text-[12px] font-bold text-[#0977df]">
+        <button className="flex items-center gap-[4px] text-[12px] font-semibold text-[#0977df]">
           <Pencil className="h-[12px] w-[12px]" />
           Edit
         </button>
@@ -1095,7 +1111,7 @@ function SupportCard() {
         <span className="h-[28px] w-[18px] shrink-0 rotate-[25deg] rounded-[100%_0_100%_0] bg-[#23943d]" />
 
         <div>
-          <h4 className="text-[12px] font-black text-[#125c37]">
+          <h4 className="text-[12px] font-semibold text-[#125c37]">
             Looking for a Better Fit?
           </h4>
 
@@ -1125,7 +1141,7 @@ function SupportCard() {
       <Info className="h-[19px] w-[19px] shrink-0 fill-[#1670ce] text-white" />
 
       <div>
-        <h4 className="text-[12px] font-black text-[#17365d]">
+        <h4 className="text-[12px] font-semibold text-[#17365d]">
           Still have questions?
         </h4>
 
@@ -1205,7 +1221,7 @@ function Sidebar({ onApply }: { onApply?: () => void }) {
           <button
             type="button"
             onClick={onApply}
-            className="flex h-full w-full items-center justify-center gap-[8px] rounded-[5px] bg-[#08743e] text-[clamp(10px,.82vw,13px)] font-black text-white hover:bg-[#076637] transition-colors"
+            className="flex h-full w-full items-center justify-center gap-[8px] rounded-[5px] bg-[#08743e] text-[clamp(10px,.82vw,13px)] font-semibold text-white hover:bg-[#076637] transition-colors"
           >
             {current.cta}
             <ArrowRight className="h-[14px] w-[14px]" />
@@ -1213,7 +1229,7 @@ function Sidebar({ onApply }: { onApply?: () => void }) {
         ) : (
           <Link
             href="/careers"
-            className="flex h-full items-center justify-center gap-[8px] rounded-[5px] bg-[#08743e] text-[clamp(9.5px,.77vw,12px)] font-black text-white"
+            className="flex h-full items-center justify-center gap-[8px] rounded-[5px] bg-[#08743e] text-[clamp(9.5px,.77vw,12px)] font-semibold text-white"
           >
             View All Open Positions
             <ArrowRight className="h-[14px] w-[14px]" />
@@ -1268,16 +1284,8 @@ export function EligibilityPopupContent({
       >
         {/* LEFT */}
         <section
-          className="
-            grid
-            h-full
-            min-h-0
-            overflow-hidden
-            px-[42px]
-            pb-[14px]
-            pt-[18px]
-            grid-rows-[54px_86px_68px_238px_188px_210px]
-            gap-[10px]
+          className="grid h-full min-h-0 overflow-hidden px-6 py-4
+            grid-rows-[54px_86px_68px_250px_188px_1fr] gap-[10px]
           "
         >
           {/* BHARAT ORGANIC EXPO HEADER - EDITABLE CONTENT */}
@@ -1291,12 +1299,12 @@ export function EligibilityPopupContent({
               className="h-[50px] w-[48px] shrink-0 object-contain"
             />
 
-            <div className="min-w-0">
-              <div className="truncate text-[24px] font-black leading-[1] text-[#102b22]">
+            <div className="min-w-0 gap-2">
+              <div className="truncate text-[24px] font-semibold leading-[1] text-[#115437]">
                 {brandHeader.title}
               </div>
 
-              <div className="mt-[3px] truncate text-[12px] font-semibold leading-[1.05] text-[#123d73]">
+              <div className=" truncate text-[15px] font-medium leading-[1.05] text-[#1c7486]">
                 {brandHeader.tagline}
               </div>
             </div>
@@ -1306,29 +1314,23 @@ export function EligibilityPopupContent({
           <div className="relative min-h-0 overflow-visible pr-[188px]">
             <Link
               href="/careers"
-              className="flex w-fit items-center gap-[7px] text-[15px] font-extrabold text-[#103662]"
+              className="flex w-fit items-center gap-[8px] text-[17px] font-semibold text-[#113a72] hover:opacity-80 transition-opacity"
             >
-              <ArrowLeft className="h-[17px] w-[17px]" />
+              <ArrowLeft className="h-[22px] w-[22px] stroke-[2.5]" />
               Back
             </Link>
 
-            <h1 className="mt-[4px] truncate text-[25px] font-black leading-[1.05] tracking-[-0.025em] text-[#123d73]">
+            <h1 className="mt-[4px] truncate text-[27px] font-semibold leading-[1.05] tracking-[-0.025em] text-[#113a72]">
               {job.title}
             </h1>
 
-            <div className="mt-[3px] flex items-center gap-[10px] text-[14px] font-bold text-[#163a67]">
+            <div className="mt-[3px] flex items-center gap-[8px] text-[17px] font-medium text-[#3b587b]">
               <span>{job.company}</span>
-              <span className="h-[13px] w-px bg-[#cbd3db]" />
+              <span className="text-[#a4b5c7]">|</span>
               <span>{job.brand}</span>
             </div>
 
-            <Image
-              src={separatedAssets.rightPeople}
-              alt="Right People Brighter Tomorrow"
-              width={1322}
-              height={1190}
-              className="pointer-events-none absolute right-[2px] top-[2px] h-[142px] w-[174px] object-contain object-right-top"
-            />
+
           </div>
 
           <div className="min-h-0 overflow-hidden">
@@ -1369,12 +1371,15 @@ export function EligibilityModal({
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 z-[9999] flex items-center justify-center bg-black/40 p-3">
+    <div className="fixed inset-0 z-[99999] flex items-center justify-center p-3">
+      <div className="absolute inset-0 bg-slate-950/45 backdrop-blur-[5px]" onClick={onClose} />
+
       <div
         className="
           relative
-          w-[85vw]
-          max-w-[1300px]
+          z-10
+          w-[80vw]
+          max-w-[1100px]
           max-h-[95vh]
           overflow-hidden
           rounded-[18px]
@@ -1387,18 +1392,19 @@ export function EligibilityModal({
       >
         <button
           type="button"
-          aria-label="Close popup"
+          aria-label="Back to Careers"
           onClick={onClose}
-          className="absolute right-[8px] top-[8px] z-[100] grid h-8 w-8 place-items-center rounded-full bg-white/95 text-[#123d73] shadow-md"
+          className="absolute right-[20px] top-[20px] z-[100] flex items-center gap-[8px] text-[17px] font-semibold text-[#006342] hover:opacity-80 transition-opacity"
         >
-          <X className="h-4 w-4" />
+          <ArrowLeft className="h-[22px] w-[22px] stroke-[2.5]" />
+          Back to Careers
         </button>
 
         {/* 
           IMPORTANT:
           Scale from the REAL popup width, not from a hard-coded 1300px.
           This keeps the complete right sidebar, buttons and footer image visible
-          even when 85vw is smaller than 1300px.
+          even when 80vw is smaller than 1100px.
         */}
         <div className="absolute inset-0 overflow-hidden">
           <div
@@ -1407,7 +1413,7 @@ export function EligibilityModal({
               width: `${DESIGN_WIDTH}px`,
               height: `${DESIGN_HEIGHT}px`,
               transform:
-                "scale(calc(min(85vw, 1300px) / 1500px))",
+                "scale(calc(min(80vw, 1100px) / 1500px))",
               transformOrigin: "top left",
             }}
           >
@@ -1429,7 +1435,7 @@ export default function CareerEligibilityPage() {
           <button
             type="button"
             onClick={() => setOpen(true)}
-            className="rounded-[8px] bg-[#08743e] px-6 py-3 text-sm font-bold text-white"
+            className="rounded-[8px] bg-[#08743e] px-6 py-3 text-sm font-semibold text-white"
           >
             Open Eligibility Result
           </button>
