@@ -885,7 +885,7 @@ function ApplicationFormContent({ onClose, onNext }: { onClose: () => void; onNe
         <div className="mt-[10px] shrink-0">
           <Link
             href="/careers"
-            className="flex w-fit items-center gap-[7px] text-[14px] font-extrabold text-[#0d5d3c]"
+            className="flex w-fit items-center gap-[7px] text-[14px] font-extrabold text-[#0d5d3c] transition-colors hover:text-red-600"
           >
             <ArrowLeft className="h-[16px] w-[16px]" />
             Back
@@ -925,7 +925,7 @@ function ApplicationFormContent({ onClose, onNext }: { onClose: () => void; onNe
    MODAL
    ========================================================= */
 
-const MODAL_WIDTH = "min(92vw, 1440px, calc(92vh * 1500 / 972))";
+const MODAL_WIDTH = "min(95vw, 1440px, calc(92vh * 1500 / 900))";
 
 export function ApplicationFormModal({
   isOpen,

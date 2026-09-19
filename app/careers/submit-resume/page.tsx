@@ -6,6 +6,7 @@ import Link from "next/link";
 import {
   ArrowLeft,
   ArrowRight,
+  Bookmark,
   BookOpen,
   BriefcaseBusiness,
   Check,
@@ -20,6 +21,7 @@ import {
   Pencil,
   Phone,
   RefreshCw,
+  Search,
   Target,
   Users,
   X,
@@ -42,7 +44,9 @@ const matchScore = 72;
 const asset = (file: string) => `/separated-assets/${file}`;
 
 const separatedAssets = {
-  person: asset("ChatGPT Image Sep 16, 2026, 04_31_37 PM.png"),
+  personHigh: asset("ChatGPT Image Sep 16, 2026, 04_30_14 PM.png"),
+  personModerate: asset("ChatGPT Image Sep 16, 2026, 04_31_37 PM.png"),
+  personLow: asset("ChatGPT Image Sep 16, 2026, 04_34_00 PM.png"),
   rightPeople: asset("ChatGPT Image Sep 16, 2026, 04_29_29 PM.png"),
   stickyNote: asset("ChatGPT Image Sep 16, 2026, 04_33_26 PM.png"),
   sidebarTop: asset("ChatGPT Image Sep 16, 2026, 04_29_31 PM.png"),
@@ -160,7 +164,8 @@ const matchConfig = {
     soft: "#eef9ef",
     soft2: "#f5fbf6",
 
-    personImage: separatedAssets.person,
+    personImage: separatedAssets.personHigh,
+    rightImage: separatedAssets.rightPeople,
 
     step: 3,
 
@@ -171,8 +176,7 @@ const matchConfig = {
     description:
       "Your profile meets the minimum requirements and shows a good alignment with what we are looking for. We encourage you to complete your application and join us in our mission for a healthier and more sustainable India.",
 
-    quote:
-      "Your CV aligns well with the key requirements for this position.",
+    quote: "",
 
     rightText: "Right\nPeople\nBrighter\nTomorrows",
 
@@ -240,7 +244,8 @@ const matchConfig = {
     soft: "#fff5e7",
     soft2: "#fffaf2",
 
-    personImage: separatedAssets.person,
+    personImage: separatedAssets.personModerate,
+    rightImage: separatedAssets.stickyNote,
 
     step: 3,
 
@@ -319,7 +324,8 @@ const matchConfig = {
     soft: "#fff1f1",
     soft2: "#fff7f7",
 
-    personImage: "/career-submit-resume-assets/sadimage.png",
+    personImage: separatedAssets.personLow,
+    rightImage: separatedAssets.stickyNote,
 
     step: 2,
 
@@ -328,10 +334,9 @@ const matchConfig = {
     subtitle: "This position may not be the right fit for you at this time.",
 
     description:
-      "Based on our screening, your profile does not meet the minimum requirements for this role. Therefore, you are not eligible to apply for this position. We appreciate your interest in Bharat Organic Expo and encourage you to explore other opportunities.",
+      "Based on our screening, your profile does not meet the minimum requirements for this role. Therefore, you are not eligible to apply for this position.\n\nWe truly appreciate your interest in Bharat Organic Expo and encourage you to explore other opportunities that may be a better match for your skills and experience.",
 
-    quote:
-      "Keep building your experience and skills. The right opportunity may be closer than you think.",
+    quote: "",
 
     rightText: "Keep\nGrowing\nKeep\nExploring",
 
@@ -343,10 +348,10 @@ const matchConfig = {
     suggestionTitle: "Minimum Requirements for This Role",
 
     requirements: [
-      "Minimum 3+ years of experience in exhibition / trade show sales.",
-      "Proven track record in client acquisition & sponsorships.",
-      "Relevant industry experience preferred.",
-      "Strong negotiation and relationship management skills.",
+      "Minimum 3+ years of experience in exhibition / trade show sales (Your experience: 0–1 year)",
+      "Proven track record in client acquisition & sponsorships",
+      "Relevant industry experience (Exhibitions / Events / Wellness / Healthcare preferred)",
+      "Strong negotiation and relationship management skills",
     ],
 
     cta: "View All Open Positions",
@@ -429,13 +434,9 @@ function ProgressSteps() {
 
       {current.step === 3 && (
         <div
-          className="absolute left-[50%] top-[16px] h-[2px] w-[25%]"
+          className="absolute left-[50%] top-[16px] h-[2px] w-[12.5%]"
           style={{ background: theme.primary }}
         />
-      )}
-
-      {matchLevel === "low" && (
-        <div className="absolute left-[50%] top-[16px] h-[2px] w-[25%] bg-[#d30c18]" />
       )}
 
       <div className="relative grid h-full grid-cols-4">
@@ -451,7 +452,7 @@ function ProgressSteps() {
               className="flex min-h-0 flex-col items-center"
             >
               <div
-                className="grid h-[34px] w-[34px] shrink-0 place-items-center rounded-full text-[14px] font-black"
+                className="grid h-[34px] w-[34px] shrink-0 place-items-center rounded-full text-[14px] font-semibold"
                 style={{
                   background: completed
                     ? "#087f46"
@@ -498,19 +499,15 @@ function ResultHero() {
       {/* LEFT PERSON COMPOSITION */}
       <div
         className="absolute inset-y-0 left-0 overflow-hidden"
-        style={{ width: matchLevel === "low" ? "45%" : "40.2%" }}
+        style={{ width: matchLevel === "low" ? "40%" : "40.2%" }}
       >
         <Image
           src={current.personImage}
           alt=""
           fill
           priority
-          sizes="40vw"
+          sizes="30vw"
           className="object-contain object-left-bottom"
-          style={{
-            transform: matchLevel === "low" ? "scale(1.12)" : undefined,
-            transformOrigin: "left bottom",
-          }}
         />
       </div>
 
@@ -544,54 +541,63 @@ function ResultHero() {
         }}
       />
 
-      {/* REAL DYNAMIC STATUS ICON: 72=CHECK, 58=!, 38=X */}
-      <div
-        className="absolute left-[35.05%] top-[10%] z-20 grid h-[52px] w-[52px] place-items-center rounded-full text-white shadow-sm"
-        style={{ background: theme.primary }}
-      >
-        {matchLevel === "high" ? (
-          <Check className="h-[30px] w-[30px]" strokeWidth={3.2} />
-        ) : matchLevel === "low" ? (
-          <X className="h-[30px] w-[30px]" strokeWidth={3.2} />
-        ) : (
-          <span className="text-[31px] font-black leading-none">!</span>
-        )}
-      </div>
+      {/* TEXT BLOCK WITH ICON */}
+      <div className="absolute bottom-[3%] left-[32%] top-[3%] z-20 w-[50%] overflow-visible pr-1">
+        <div className="flex h-full min-h-0 items-center">
+          <div className="flex items-start gap-[15px]">
+            {/* DYNAMIC STATUS ICON */}
+            <div
+              className="mt-[3px] grid h-[52px] w-[52px] shrink-0 place-items-center rounded-full text-white shadow-sm"
+              style={{ background: theme.primary }}
+            >
+              {matchLevel === "high" ? (
+                <Check className="h-[32px] w-[32px]" strokeWidth={3.5} />
+              ) : matchLevel === "low" ? (
+                <X className="h-[32px] w-[32px]" strokeWidth={3.5} />
+              ) : (
+                <span className="text-[32px] font-semibold leading-none">!</span>
+              )}
+            </div>
 
-      {/* TEXT BLOCK */}
-      <div className="absolute bottom-[3%] left-[42.2%] top-[3%] z-10 w-[40.5%] overflow-hidden pr-1">
-        <div className="flex h-full min-h-0 flex-col justify-center">
-          <h2
-            className="max-w-full text-[clamp(21px,1.75vw,28px)] font-black leading-[1.08] tracking-[-0.035em]"
-            style={{ color: theme.dark }}
-          >
-            {current.title}
-          </h2>
+            <div className="flex min-w-0 flex-col">
+              <h2
+                className="max-w-full text-[clamp(21px,1.75vw,28px)] font-semibold leading-[1.08] tracking-[-0.035em]"
+                style={{ color: theme.dark }}
+              >
+                {current.title}
+              </h2>
 
-          <h3 className="mt-[3px] text-[14px] font-black leading-[1.2] text-[#102747]">
-            {current.subtitle}
-          </h3>
+              <h3
+                className="mt-[4px] whitespace-nowrap text-[15px] font-semibold leading-[1.2]"
+                style={{ color: theme.dark }}
+              >
+                {current.subtitle}
+              </h3>
 
-          <p className="mt-[5px] max-w-[98%] text-[12.5px] leading-[1.32] text-[#173757]">
-            {current.description}
-          </p>
+              <p className="mt-[8px] max-w-[98%] whitespace-pre-wrap text-[13px] leading-[1.4] text-[#123d73]">
+                {current.description}
+              </p>
 
-          <p className="mt-[5px] max-w-[95%] text-[12px] italic leading-[1.28] text-[#173757]">
-            “ {current.quote} ”
-          </p>
+              {current.quote && (
+                <p className="mt-[5px] max-w-[95%] text-[12px] italic leading-[1.28] text-[#123d73]">
+                  “ {current.quote} ”
+                </p>
+              )}
 
-          <p className="mt-[4px] text-[11.5px] font-extrabold italic leading-[1.12] text-[#174733]">
-            — Talent Acquisition Team
-            <br />
-            <span className="pl-[12px]">Bharat Organic Expo</span>
-          </p>
+              <p className="mt-[10px] text-[13px] italic leading-[1.12] text-[#164232]">
+                — Talent Acquisition Team
+                <br />
+                <span className="pl-[16px] font-medium">Bharat Organic Expo</span>
+              </p>
+            </div>
+          </div>
         </div>
       </div>
 
       {/* RIGHT STICKY ARTWORK */}
       <div className="pointer-events-none absolute bottom-0 right-[2.4%] top-[4%] z-20 w-[17.2%] overflow-visible">
         <Image
-          src={separatedAssets.stickyNote}
+          src={current.rightImage ?? separatedAssets.stickyNote}
           alt=""
           fill
           sizes="18vw"
@@ -624,7 +630,7 @@ function ScoreRing() {
 
       <div className="relative z-10 text-center">
         <div
-          className="text-[clamp(30px,2.8vw,46px)] font-black leading-none"
+          className="text-[clamp(30px,2.8vw,46px)] font-semibold leading-none"
           style={{
             color: matchLevel === "high" ? "#123761" : ringColor,
           }}
@@ -650,9 +656,9 @@ function Legend({
   label: string;
 }) {
   return (
-    <div className="grid grid-cols-[12px_72px_1fr] items-center gap-2 text-[clamp(9px,.74vw,11.5px)] text-[#17395d]">
+    <div className="grid grid-cols-[12px_72px_1fr] items-center gap-[12px] text-[13.5px] text-[#254b73]">
       <span
-        className="h-[10px] w-[10px] rounded-full"
+        className="h-[12px] w-[12px] rounded-full"
         style={{ background: color }}
       />
       <span className="font-semibold">{range}</span>
@@ -673,12 +679,12 @@ function ScoreSummary() {
       <div className="flex min-h-0 items-center gap-[clamp(10px,1.35vw,20px)] overflow-hidden rounded-[7px] border border-[#e0e7e2] bg-white px-[clamp(10px,1.35vw,20px)]">
         <ScoreRing />
 
-        <div className="min-w-0">
-          <h3 className="text-[12px] font-black text-[#102b4b]">
+        <div className="min-w-0 pl-[4px]">
+          <h3 className="text-[18px] font-bold tracking-tight text-[#113a72]">
             {current.summaryTitle}
           </h3>
 
-          <p className="mt-[5px] max-w-[400px] text-[12px] leading-[1.33] text-[#173858]">
+          <p className="mt-[4px] max-w-[400px] text-[14.5px] font-medium leading-[1.3] text-[#254b73]">
             {current.summaryText}
           </p>
 
@@ -705,55 +711,67 @@ function ScoreSummary() {
       </div>
 
       <div
-        className="flex h-full min-h-0 flex-col overflow-y-auto rounded-[7px] border px-[clamp(9px,1vw,15px)] py-[clamp(7px,.7vh,10px)]"
+        className="flex h-full min-h-0 flex-col overflow-y-auto rounded-[7px] border px-[14px] py-[10px]"
         style={{
           background: theme.panelBg,
           borderColor: theme.panelBorder,
         }}
       >
-        <div className="flex items-center gap-[8px]">
+        <div className="flex shrink-0 items-center gap-[10px]">
           <div
-            className="grid h-[29px] w-[29px] shrink-0 place-items-center rounded-full text-white"
+            className="grid h-[24px] w-[24px] shrink-0 place-items-center rounded-full text-white"
             style={{ background: theme.primary }}
           >
             {matchLevel === "moderate" ? (
-              <Lightbulb className="h-[17px] w-[17px]" />
+              <Lightbulb className="h-[14px] w-[14px]" />
             ) : matchLevel === "low" ? (
-              <X className="h-[17px] w-[17px]" />
+              <span className="text-[15px] font-bold leading-none">!</span>
             ) : (
-              <Target className="h-[17px] w-[17px]" />
+              <Target className="h-[14px] w-[14px]" />
             )}
           </div>
 
-          <h3 className="text-[12px] font-black leading-tight text-[#102945]">
+          <h3
+            className="text-[16.5px] font-bold leading-tight"
+            style={{ color: theme.dark }}
+          >
             {current.suggestionTitle}
           </h3>
         </div>
 
-        <div className="mt-[7px] space-y-[5px]">
-          {current.requirements.map((item, index) => (
-            <div
-              key={item}
-              className="flex items-start gap-[7px]"
-            >
-              <span
-                className="mt-[1px] grid h-[16px] w-[16px] shrink-0 place-items-center rounded-full text-[10px] font-black text-white"
-                style={{ background: theme.primary }}
-              >
-                {matchLevel === "high" ? (
-                  <Check className="h-[10px] w-[10px]" />
-                ) : matchLevel === "low" ? (
-                  <X className="h-[10px] w-[10px]" />
-                ) : (
-                  index + 1
-                )}
-              </span>
+        <div className="mt-[8px] flex flex-col gap-[6px]">
+          {current.requirements.map((item, index) => {
+            const hasParen = item.includes("(");
+            const mainText = hasParen ? item.split("(")[0] : item;
+            const parenText = hasParen ? "(" + item.split("(")[1] : "";
 
-              <p className="text-[12px] leading-[1.25] text-[#173654]">
-                {item}
-              </p>
-            </div>
-          ))}
+            return (
+              <div
+                key={item}
+                className="flex items-start gap-[8px]"
+              >
+                <span
+                  className="mt-[3px] grid h-[15px] w-[15px] shrink-0 place-items-center rounded-full text-[9px] font-bold text-white"
+                  style={{ background: theme.primary }}
+                >
+                  {matchLevel === "high" ? (
+                    <Check className="h-[10px] w-[10px]" strokeWidth={3.5} />
+                  ) : matchLevel === "low" ? (
+                    <X className="h-[10px] w-[10px]" strokeWidth={3.5} />
+                  ) : (
+                    index + 1
+                  )}
+                </span>
+
+                <p className="text-[12.5px] font-medium leading-[1.3] text-[#123d73]">
+                  {mainText}
+                  {parenText && (
+                    <span className="font-normal text-[#214368]">{parenText}</span>
+                  )}
+                </p>
+              </div>
+            );
+          })}
         </div>
       </div>
     </div>
@@ -782,17 +800,17 @@ function Breakdown() {
 
   return (
     <div className="flex h-full min-h-0 flex-col overflow-hidden">
-      <h3 className="shrink-0 text-[12px] font-black leading-none text-[#10345f]">
+      <h3 className="shrink-0 text-[14px] font-semibold leading-none text-[#10345f]">
         {matchLevel === "moderate"
           ? "Detailed Match Breakdown"
           : "Match Breakdown"}
       </h3>
 
-      <p className="mt-[3px] shrink-0 text-[12px] text-[#183858]">
+      <p className="mt-[2px] shrink-0 text-[13px] font-medium text-[#183858]">
         Here&apos;s how your profile matches with our key requirements:
       </p>
 
-      <div className="mt-[7px] grid min-h-0 flex-1 grid-cols-2 grid-rows-3 gap-x-[clamp(18px,2.5vw,38px)] gap-y-[5px]">
+      <div className="mt-[8px] grid min-h-0 flex-1 grid-cols-2 grid-rows-3 gap-x-[12px] gap-y-[8px]">
         {current.breakdown.map((item) => {
           const scoreColor =
             item.score >= 70
@@ -804,22 +822,22 @@ function Breakdown() {
           return (
             <div
               key={item.title}
-              className="grid min-h-0 grid-cols-[40px_minmax(0,1fr)_48px] items-center gap-[8px]"
+              className="grid min-h-0 grid-cols-[34px_minmax(0,1fr)_44px] items-center gap-[8px] rounded-[10px] border border-[#e2ece5] bg-white px-[12px] py-[6px] shadow-[0_1px_2px_rgba(0,0,0,0.03)]"
             >
               <Image
                 src={iconAssets[item.title] ?? asset("briefcase-large.png")}
                 alt=""
                 width={64}
                 height={64}
-                className="h-[31px] w-[31px] object-contain"
+                className="h-[30px] w-[30px] object-contain"
               />
 
               <div className="min-w-0">
-                <h4 className="truncate text-[12px] font-extrabold leading-tight text-[#102e50]">
+                <h4 className="truncate text-[13.5px] font-semibold leading-tight text-[#102e50]">
                   {item.title}
                 </h4>
 
-                <p className="mt-[1px] truncate text-[12px] text-[#34475c]">
+                <p className="mt-[1px] truncate text-[12px] font-medium text-[#34475c]">
                   {item.description}
                 </p>
 
@@ -834,22 +852,22 @@ function Breakdown() {
                 </div>
               </div>
 
-              <strong
-                className="text-right text-[12px]"
+              <span
+                className="text-right text-[14px] font-semibold"
                 style={{ color: scoreColor }}
               >
                 {item.score}%
-              </strong>
+              </span>
             </div>
           );
         })}
       </div>
 
-      <div className="mt-[5px] flex h-[29px] shrink-0 items-center gap-[8px] rounded-[5px] bg-[#eff9f2] px-[12px] text-[12px] text-[#173e34]">
+      <div className="mt-[8px] flex h-[32px] shrink-0 items-center gap-[8px] rounded-[8px] border border-[#d8eae0] bg-[#eff9f2] px-[12px] text-[12.5px] text-[#173e34]">
         <BookOpen className="h-[14px] w-[14px] shrink-0 text-[#087447]" />
 
         <span className="truncate">
-          <strong>Tip:</strong> Update your CV with more relevant experience and skills to increase your match score and improve your chances.
+          <span className="font-semibold">Tip:</span> Update your CV with more relevant experience and skills to increase your match score and improve your chances.
         </span>
       </div>
     </div>
@@ -877,60 +895,64 @@ function LowNextSteps() {
     {
       title: "Explore Other Opportunities",
       text:
-        "Check other open positions that better match your profile.",
-      icon: Target,
+        "Check out other open positions that match your current profile.",
+      icon: Search,
     },
   ];
 
   return (
-    <div className="flex h-full min-h-0 flex-col overflow-hidden rounded-[7px] border border-[#e2ebe4] bg-[#f4faf5] px-[14px] py-[9px]">
-      <div className="flex shrink-0 items-center gap-[8px]">
-        <Lightbulb className="h-[24px] w-[24px] text-[#6ba918]" />
+    <div className="flex h-full min-h-0 flex-col overflow-hidden rounded-[8px] bg-[#f3fbf6] px-[16px] py-[10px]">
+      <div className="flex shrink-0 items-center gap-[10px]">
+        <Lightbulb className="h-[24px] w-[24px] text-[#368615] shrink-0" fill="#368615" />
 
-        <div>
-          <h3 className="text-[12px] font-black leading-tight text-[#10345f]">
+        <div className="space-y-[2px]">
+          <h3 className="text-[17px] font-semibold leading-tight text-[#113a72]">
             What You Can Do Next?
           </h3>
 
-          <p className="text-[12px] text-[#173858]">
-            Continue building your skills and explore other suitable opportunities.
+          <p className="text-[13px] font-medium text-[#466580]">
+            We encourage you to continue building your skills and explore other suitable opportunities with us.
           </p>
         </div>
       </div>
 
-      <div className="mt-[7px] grid min-h-0 flex-1 grid-cols-3 divide-x divide-[#dde5df] rounded-[5px] bg-white px-[10px] py-[8px]">
-        {data.map(({ title, text, icon: Icon }) => (
-          <div
-            key={title}
-            className="flex min-h-0 gap-[8px] px-[10px] first:pl-0 last:pr-0"
-          >
-            <Icon className="h-[24px] w-[24px] shrink-0 text-[#087447]" />
+      <div className="mt-[8px] flex min-h-0 flex-1 flex-col items-center justify-between rounded-[8px] bg-white px-[16px] py-[10px] shadow-[0_2px_8px_rgba(0,0,0,0.03)]">
+        <div className="grid w-full grid-cols-3 divide-x divide-[#f0f4f1]">
+          {data.map(({ title, text, icon: Icon }) => (
+            <div
+              key={title}
+              className="flex gap-[10px] px-[12px] first:pl-0 last:pr-0"
+            >
+              <Icon
+                className="mt-[2px] h-[24px] w-[24px] shrink-0 text-[#075333]"
+                strokeWidth={2.5}
+              />
 
-            <div>
-              <h4 className="text-[12px] font-black leading-tight text-[#102e50]">
-                {title}
-              </h4>
+              <div>
+                <h4 className="text-[14.5px] font-semibold leading-tight text-[#113a72]">
+                  {title}
+                </h4>
 
-              <p className="mt-[3px] text-[12px] leading-[1.25] text-[#34475c]">
-                {text}
-              </p>
+                <p className="mt-[4px] text-[12.5px] font-medium leading-[1.3] text-[#3e536c]">
+                  {text}
+                </p>
+              </div>
             </div>
-          </div>
-        ))}
-      </div>
+          ))}
+        </div>
 
-      <div className="mt-[6px] shrink-0 text-center">
         <Link
           href="/careers"
-          className="inline-flex h-[30px] min-w-[250px] items-center justify-center gap-[7px] rounded-[4px] border border-[#087447] bg-white px-[20px] text-[12px] font-extrabold text-[#075d38]"
+          className="mt-[10px] flex h-[34px] items-center gap-[8px] rounded-[5px] border border-[#075333] px-[20px] text-[13px] font-bold text-[#075333] transition-colors hover:bg-[#075333] hover:text-white"
         >
           View Other Job Opportunities
-          <ArrowRight className="h-[13px] w-[13px]" />
+          <ArrowRight className="h-[14px] w-[14px]" strokeWidth={2.5} />
         </Link>
       </div>
     </div>
   );
 }
+
 
 /* =========================================================
    PROFILE
@@ -938,45 +960,45 @@ function LowNextSteps() {
 
 function ProfileCard() {
   return (
-    <div className="flex h-full min-h-0 flex-col overflow-hidden rounded-[7px] border border-[#e3ebe5] bg-white p-[clamp(8px,.8vw,12px)] shadow-sm">
+    <div className="flex h-full min-h-0 flex-col overflow-hidden rounded-[8px] border border-[#eaefeb] bg-white p-[12px] shadow-[0_2px_8px_rgba(0,0,0,0.03)]">
       <div className="flex shrink-0 items-center justify-between">
-        <h3 className="text-[12px] font-black text-[#0c3363]">
+        <h3 className="text-[15px] font-bold text-[#0c3363]">
           Your Profile
         </h3>
 
-        <button className="flex items-center gap-[4px] text-[12px] font-bold text-[#0977df]">
-          <Pencil className="h-[12px] w-[12px]" />
+        <button className="flex items-center gap-[4px] text-[13px] font-bold text-[#0977df] transition-opacity hover:opacity-80">
+          <Pencil className="h-[13px] w-[13px] stroke-[2.5]" />
           Edit
         </button>
       </div>
 
-      <div className="mt-[6px] flex min-h-0 flex-1 items-center gap-[10px]">
+      <div className="mt-[8px] flex min-h-0 flex-1 items-center gap-[12px]">
         <Image
           src={profile.image}
           alt={profile.name}
           width={160}
           height={160}
-          className="h-[88%] max-h-[122px] w-[29%] max-w-[108px] shrink-0 rounded-[6px] object-cover object-center"
+          className="h-[76px] w-[76px] shrink-0 rounded-[8px] object-cover object-center"
         />
 
-        <div className="min-w-0">
-          <h4 className="truncate text-[12px] font-black text-[#103561]">
+        <div className="min-w-0 flex-1">
+          <h4 className="truncate text-[15px] font-bold text-[#0c3363]">
             {profile.name}
           </h4>
 
-          <div className="mt-[5px] space-y-[4px] text-[12px] text-[#173858]">
+          <div className="mt-[4px] space-y-[4px] text-[13px] font-medium text-[#2d4766]">
             <p className="flex items-center gap-[7px]">
-              <Mail className="h-[12px] w-[12px] shrink-0" />
+              <Mail className="h-[13px] w-[13px] shrink-0 text-[#0c3363] stroke-[2.5]" />
               <span className="truncate">{profile.email}</span>
             </p>
 
             <p className="flex items-center gap-[7px]">
-              <Phone className="h-[12px] w-[12px] shrink-0" />
+              <Phone className="h-[13px] w-[13px] shrink-0 text-[#0c3363] stroke-[2.5]" />
               <span className="truncate">{profile.phone}</span>
             </p>
 
             <p className="flex items-center gap-[7px]">
-              <LinkedInIcon className="h-[12px] w-[12px] shrink-0 text-[#0878c9]" />
+              <LinkedInIcon className="h-[13px] w-[13px] shrink-0 text-[#0977df]" />
               <span className="truncate">{profile.linkedin}</span>
             </p>
           </div>
@@ -990,39 +1012,43 @@ function ProfileCard() {
    CV
    ========================================================= */
 
-function CVCard() {
+function CVCard({ onClose }: { onClose?: () => void }) {
   return (
-    <div className="flex h-full min-h-0 flex-col overflow-hidden rounded-[7px] border border-[#e3ebe5] bg-white p-[clamp(8px,.8vw,12px)] shadow-sm">
-      <h3 className="shrink-0 text-[12px] font-black text-[#0c3363]">
+    <div className="flex h-full min-h-0 flex-col overflow-hidden rounded-[8px] border border-[#eaefeb] bg-white p-[12px] shadow-[0_2px_8px_rgba(0,0,0,0.03)]">
+      <h3 className="shrink-0 text-[15px] font-bold text-[#0c3363]">
         Your CV
       </h3>
 
-      <div className="mt-[6px] flex min-h-0 flex-1 items-center gap-[10px] rounded-[5px] bg-[#f4f8fb] px-[10px]">
-        <div className="relative grid h-[62px] w-[54px] shrink-0 place-items-center rounded-[5px] border-[3px] border-[#087447] text-[#087447]">
-          <FileText className="h-[31px] w-[31px]" />
+      <div className="mt-[8px] flex min-h-0 flex-1 items-center gap-[12px] rounded-[8px] bg-[#f2f8fc] px-[12px] py-[10px]">
+        <div className="relative grid h-[58px] w-[48px] shrink-0 place-items-center rounded-[6px] border-[2.5px] border-[#075333] text-[#075333]">
+          <FileText className="h-[28px] w-[28px] stroke-[2]" />
 
-          <span className="absolute -bottom-[7px] -right-[7px] grid h-[18px] w-[18px] place-items-center rounded-full bg-[#087447] text-white">
-            <Check className="h-[10px] w-[10px]" />
+          <span className="absolute -bottom-[6px] -right-[6px] grid h-[20px] w-[20px] place-items-center rounded-full bg-[#075333] text-white">
+            <Check className="h-[12px] w-[12px] stroke-[3]" />
           </span>
         </div>
 
-        <div className="min-w-0 flex-1">
-          <h4 className="truncate text-[12px] font-black text-[#12335e]">
+        <div className="min-w-0 flex-1 pl-[4px]">
+          <h4 className="truncate text-[14px] font-bold text-[#0c3363]">
             {profile.cvName}
           </h4>
 
-          <p className="mt-[2px] text-[12px] text-[#173858]">
+          <p className="mt-[2px] text-[13px] font-medium text-[#2d4766]">
             {profile.cvSize}
           </p>
 
-          <div className="mt-[4px] flex flex-wrap gap-x-[13px] gap-y-[3px] text-[12px] font-semibold text-[#0874ce]">
-            <button className="flex items-center gap-[4px]">
-              <Eye className="h-[11px] w-[11px]" />
+          <div className="mt-[6px] flex flex-wrap gap-x-[12px] gap-y-[3px] text-[13px] font-bold text-[#0977df]">
+            <button type="button" className="flex items-center gap-[5px] hover:opacity-80 transition-opacity">
+              <Eye className="h-[13px] w-[13px] stroke-[2.5]" />
               View File
             </button>
 
-            <button className="flex items-center gap-[4px]">
-              <RefreshCw className="h-[11px] w-[11px]" />
+            <button
+              type="button"
+              onClick={onClose}
+              className="flex items-center gap-[5px] hover:opacity-80 transition-opacity"
+            >
+              <RefreshCw className="h-[13px] w-[13px] stroke-[2.5]" />
               Upload Different CV
             </button>
           </div>
@@ -1046,33 +1072,26 @@ function JobSummary() {
   ];
 
   return (
-    <div className="flex h-full min-h-0 flex-col overflow-hidden rounded-[7px] border border-[#e3ebe5] bg-white p-[clamp(8px,.8vw,12px)] shadow-sm">
-      <div className="flex shrink-0 items-center justify-between">
-        <h3 className="text-[12px] font-black text-[#0c3363]">
-          Job Summary
-        </h3>
+    <div className="flex h-full min-h-0 flex-col overflow-hidden rounded-[8px] border border-[#eaefeb] bg-white p-[12px] shadow-[0_2px_8px_rgba(0,0,0,0.03)]">
+      <h3 className="shrink-0 text-[15px] font-bold text-[#0c3363]">
+        Job Summary
+      </h3>
 
-        <button className="flex items-center gap-[4px] text-[12px] font-bold text-[#0977df]">
-          <Pencil className="h-[12px] w-[12px]" />
-          Edit
-        </button>
-      </div>
-
-      <div className="mt-[5px] grid min-h-0 flex-1 grid-rows-5">
+      <div className="mt-[8px] flex flex-col gap-[6px]">
         {rows.map(({ image, text }) => (
           <div
             key={text}
-            className="flex min-h-0 items-center gap-[9px]"
+            className="flex items-center gap-[10px]"
           >
             <Image
               src={image}
               alt=""
-              width={48}
-              height={48}
-              className="h-[28px] w-[28px] shrink-0 object-contain"
+              width={40}
+              height={40}
+              className="h-[20px] w-[20px] shrink-0 object-contain"
             />
 
-            <span className="truncate text-[12px] text-[#183858]">
+            <span className="truncate text-[13px] font-medium text-[#2d4766]">
               {text}
             </span>
           </div>
@@ -1095,7 +1114,7 @@ function SupportCard() {
         <span className="h-[28px] w-[18px] shrink-0 rotate-[25deg] rounded-[100%_0_100%_0] bg-[#23943d]" />
 
         <div>
-          <h4 className="text-[12px] font-black text-[#125c37]">
+          <h4 className="text-[12px] font-semibold text-[#125c37]">
             Looking for a Better Fit?
           </h4>
 
@@ -1119,20 +1138,20 @@ function SupportCard() {
 
   return (
     <div
-      className="flex h-full min-h-0 items-center gap-[9px] overflow-hidden rounded-[6px] px-[10px]"
+      className="flex h-full min-h-0 items-center gap-[10px] overflow-hidden rounded-[8px] px-[12px] py-[8px]"
       style={{ background: theme.supportBg }}
     >
-      <Info className="h-[19px] w-[19px] shrink-0 fill-[#1670ce] text-white" />
+      <Info className="h-[22px] w-[22px] shrink-0 fill-[#1565c0] text-white" />
 
-      <div>
-        <h4 className="text-[12px] font-black text-[#17365d]">
+      <div className="min-w-0">
+        <h4 className="text-[13px] font-semibold text-[#102d58] leading-tight">
           Still have questions?
         </h4>
 
-        <p className="text-[12px] leading-tight text-[#29425e]">
+        <p className="mt-[2px] text-[12px] leading-tight text-[#214368]">
           Feel free to reach out to our HR team at
           <br />
-          <strong>careers@bharatorganicexpo.com</strong>
+          <strong className="font-semibold text-[#102d58]">careers@bharatorganicexpo.com</strong>
         </p>
       </div>
     </div>
@@ -1145,13 +1164,13 @@ function SupportCard() {
 
 function SidebarFooter() {
   return (
-    <div className="relative h-full min-h-0 overflow-hidden">
+    <div className="relative flex h-full w-full min-h-0 items-end justify-center overflow-hidden">
       <Image
         src={separatedAssets.sidebarFooter}
         alt=""
-        fill
-        sizes="32vw"
-        className="object-contain object-bottom"
+        width={2040}
+        height={660}
+        className="h-full w-full object-contain object-bottom"
       />
     </div>
   );
@@ -1161,7 +1180,7 @@ function SidebarFooter() {
    SIDEBAR
    ========================================================= */
 
-function Sidebar({ onApply }: { onApply?: () => void }) {
+function Sidebar({ onClose, onApply }: { onClose?: () => void; onApply?: () => void }) {
   const { matchLevel, current } = useMatchData();
 
   return (
@@ -1175,65 +1194,90 @@ function Sidebar({ onApply }: { onApply?: () => void }) {
         border-[#e4ebe5]
         bg-[linear-gradient(180deg,#f8fcf9,#eff8f1)]
         px-[clamp(10px,1.1vw,16px)]
-        pb-[7px]
+        pb-0
         pt-[8px]
 
-        grid-rows-[78px_160px_128px_184px_48px_44px_64px_1fr]
-        gap-[8px]
+        grid-rows-[54px_145px_135px_195px_44px_44px_58px_1fr]
+        gap-[7px]
       "
     >
       {/* TOP ARTWORK - same placement as reference */}
-      <div className="min-h-0 overflow-hidden">
+      <div className="flex min-h-0 items-center justify-between overflow-hidden">
         <Image
           src={separatedAssets.sidebarTop}
           alt="Together for a Healthier Tomorrow"
           width={2040}
           height={771}
-          className="h-full w-[86%] object-contain object-left-top"
+          className="h-full w-[62%] object-contain object-left-top"
         />
+        <button
+          type="button"
+          onClick={onClose}
+          className="flex items-center gap-[6px] text-[16px] font-semibold text-[#075333] transition-colors hover:text-red-600 pr-1"
+        >
+          <ArrowLeft className="h-[16px] w-[16px] stroke-[2.5]" />
+          Back to Careers
+        </button>
       </div>
 
       <ProfileCard />
 
-      <CVCard />
+      <CVCard onClose={onClose} />
 
       <JobSummary />
 
-      {/* CTA */}
-      <div className="min-h-0">
-        {matchLevel !== "low" ? (
-          <button
-            type="button"
-            onClick={onApply}
-            className="flex h-full w-full items-center justify-center gap-[8px] rounded-[5px] bg-[#08743e] text-[clamp(10px,.82vw,13px)] font-black text-white hover:bg-[#076637] transition-colors"
-          >
-            {current.cta}
-            <ArrowRight className="h-[14px] w-[14px]" />
-          </button>
-        ) : (
+      {matchLevel !== "low" ? (
+        <>
+          {/* CTA */}
+          <div className="min-h-0">
+            <button
+              type="button"
+              onClick={onApply}
+              className="flex h-full w-full items-center justify-center gap-[8px] rounded-[8px] bg-[#07623a] text-[14.5px] font-semibold text-white hover:bg-[#05502f] transition-colors shadow-sm"
+            >
+              {current.cta}
+              <ArrowRight className="h-[16px] w-[16px] stroke-[2.2]" />
+            </button>
+          </div>
+
+          {/* SECOND */}
+          <div className="min-h-0">
+            <button className="flex h-full w-full items-center justify-center gap-[8px] rounded-[8px] border border-[#07623a] bg-white text-[14.5px] font-semibold text-[#07623a] hover:bg-[#f2faf4] transition-colors shadow-sm">
+              <Bookmark className="h-[18px] w-[18px] stroke-[2.2] text-[#07623a]" />
+              Save for Later
+            </button>
+          </div>
+
+          <SupportCard />
+        </>
+      ) : (
+        <div className="row-span-3 flex min-h-0 flex-col justify-between rounded-[8px] border border-[#dcebdd] bg-[#f5faf6] p-[12px] shadow-sm">
+          <div className="flex gap-[10px] items-start">
+            <Image
+              src={separatedAssets.headerLeaf}
+              alt=""
+              width={82}
+              height={92}
+              className="h-[22px] w-[20px] shrink-0 object-contain mt-[2px]"
+            />
+            <div className="flex-1">
+              <h4 className="text-[13.5px] font-bold text-[#095232]">
+                Looking for a Better Fit?
+              </h4>
+              <p className="mt-[3px] text-[11.5px] font-medium leading-[1.28] text-[#1c6448]">
+                Browse other career opportunities at<br />Bharat Organic Expo and find the right role for you.
+              </p>
+            </div>
+          </div>
           <Link
             href="/careers"
-            className="flex h-full items-center justify-center gap-[8px] rounded-[5px] bg-[#08743e] text-[clamp(9.5px,.77vw,12px)] font-black text-white"
+            className="mt-[10px] flex h-[38px] shrink-0 items-center justify-center gap-[8px] rounded-[6px] bg-[#075333] text-[13px] font-bold text-white hover:bg-[#064228] transition-colors"
           >
             View All Open Positions
-            <ArrowRight className="h-[14px] w-[14px]" />
+            <ArrowRight className="h-[15px] w-[15px] stroke-[2.5]" />
           </Link>
-        )}
-      </div>
-
-      {/* SECOND */}
-      <div className="min-h-0">
-        {matchLevel !== "low" ? (
-          <button className="flex h-full w-full items-center justify-center gap-[7px] rounded-[5px] border border-[#08743e] bg-white text-[clamp(9px,.72vw,12px)] font-extrabold text-[#07623a]">
-            <BookOpen className="h-[13px] w-[13px]" />
-            Save for Later
-          </button>
-        ) : (
-          <div />
-        )}
-      </div>
-
-      <SupportCard />
+        </div>
+      )}
 
       <SidebarFooter />
     </aside>
@@ -1245,13 +1289,16 @@ function Sidebar({ onApply }: { onApply?: () => void }) {
    ========================================================= */
 
 const DESIGN_WIDTH = 1500;
-const DESIGN_HEIGHT = 972;
+const DESIGN_HEIGHT = 900;
+const MODAL_WIDTH = "min(95vw, 1440px, calc(92vh * 1500 / 900))";
 
 export function EligibilityPopupContent({
   score = 58,
+  onClose,
   onApply,
 }: {
   score?: number;
+  onClose?: () => void;
   onApply?: () => void;
 }) {
   const matchData = getMatchData(score);
@@ -1268,16 +1315,8 @@ export function EligibilityPopupContent({
       >
         {/* LEFT */}
         <section
-          className="
-            grid
-            h-full
-            min-h-0
-            overflow-hidden
-            px-[42px]
-            pb-[14px]
-            pt-[18px]
-            grid-rows-[54px_86px_68px_238px_188px_210px]
-            gap-[10px]
+          className="grid h-full min-h-0 overflow-hidden px-6 py-4
+            grid-rows-[50px_76px_60px_235px_175px_1fr] gap-[8px]
           "
         >
           {/* BHARAT ORGANIC EXPO HEADER - EDITABLE CONTENT */}
@@ -1291,12 +1330,12 @@ export function EligibilityPopupContent({
               className="h-[50px] w-[48px] shrink-0 object-contain"
             />
 
-            <div className="min-w-0">
-              <div className="truncate text-[24px] font-black leading-[1] text-[#102b22]">
+            <div className="min-w-0 gap-2">
+              <div className="truncate text-[24px] font-semibold leading-[1] text-[#115437]">
                 {brandHeader.title}
               </div>
 
-              <div className="mt-[3px] truncate text-[12px] font-semibold leading-[1.05] text-[#123d73]">
+              <div className=" truncate text-[15px] font-medium leading-[1.05] text-[#1c7486]">
                 {brandHeader.tagline}
               </div>
             </div>
@@ -1306,29 +1345,23 @@ export function EligibilityPopupContent({
           <div className="relative min-h-0 overflow-visible pr-[188px]">
             <Link
               href="/careers"
-              className="flex w-fit items-center gap-[7px] text-[15px] font-extrabold text-[#103662]"
+              className="flex w-fit items-center gap-[8px] text-[17px] font-semibold text-[#113a72] transition-colors hover:text-red-600"
             >
-              <ArrowLeft className="h-[17px] w-[17px]" />
+              <ArrowLeft className="h-[22px] w-[22px] stroke-[2.5]" />
               Back
             </Link>
 
-            <h1 className="mt-[4px] truncate text-[25px] font-black leading-[1.05] tracking-[-0.025em] text-[#123d73]">
+            <h1 className="mt-[4px] truncate text-[27px] font-semibold leading-[1.05] tracking-[-0.025em] text-[#113a72]">
               {job.title}
             </h1>
 
-            <div className="mt-[3px] flex items-center gap-[10px] text-[14px] font-bold text-[#163a67]">
+            <div className="mt-[3px] flex items-center gap-[8px] text-[17px] font-medium text-[#3b587b]">
               <span>{job.company}</span>
-              <span className="h-[13px] w-px bg-[#cbd3db]" />
+              <span className="text-[#a4b5c7]">|</span>
               <span>{job.brand}</span>
             </div>
 
-            <Image
-              src={separatedAssets.rightPeople}
-              alt="Right People Brighter Tomorrow"
-              width={1322}
-              height={1190}
-              className="pointer-events-none absolute right-[2px] top-[2px] h-[142px] w-[174px] object-contain object-right-top"
-            />
+
           </div>
 
           <div className="min-h-0 overflow-hidden">
@@ -1349,7 +1382,7 @@ export function EligibilityPopupContent({
         </section>
 
         {/* RIGHT */}
-        <Sidebar onApply={onApply} />
+        <Sidebar onClose={onClose} onApply={onApply} />
       </div>
     </MatchContext.Provider>
   );
@@ -1369,49 +1402,34 @@ export function EligibilityModal({
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 z-[9999] flex items-center justify-center bg-black/40 p-3">
+    <div className="fixed inset-0 z-[99999] flex items-center justify-center p-3">
+      <div className="absolute inset-0 bg-slate-950/45 backdrop-blur-[5px]" onClick={onClose} />
+
       <div
         className="
           relative
-          w-[85vw]
-          max-w-[1300px]
-          max-h-[95vh]
+          z-10
           overflow-hidden
           rounded-[18px]
           bg-[#fbfcf9]
           shadow-[0_30px_90px_rgba(0,0,0,.28)]
         "
         style={{
+          width: MODAL_WIDTH,
           aspectRatio: `${DESIGN_WIDTH} / ${DESIGN_HEIGHT}`,
         }}
       >
-        <button
-          type="button"
-          aria-label="Close popup"
-          onClick={onClose}
-          className="absolute right-[8px] top-[8px] z-[100] grid h-8 w-8 place-items-center rounded-full bg-white/95 text-[#123d73] shadow-md"
-        >
-          <X className="h-4 w-4" />
-        </button>
-
-        {/* 
-          IMPORTANT:
-          Scale from the REAL popup width, not from a hard-coded 1300px.
-          This keeps the complete right sidebar, buttons and footer image visible
-          even when 85vw is smaller than 1300px.
-        */}
         <div className="absolute inset-0 overflow-hidden">
           <div
             className="absolute left-0 top-0"
             style={{
               width: `${DESIGN_WIDTH}px`,
               height: `${DESIGN_HEIGHT}px`,
-              transform:
-                "scale(calc(min(85vw, 1300px) / 1500px))",
+              transform: `scale(calc(${MODAL_WIDTH} / ${DESIGN_WIDTH}px))`,
               transformOrigin: "top left",
             }}
           >
-            <EligibilityPopupContent score={score} onApply={onApply} />
+            <EligibilityPopupContent score={score} onClose={onClose} onApply={onApply} />
           </div>
         </div>
       </div>
@@ -1419,24 +1437,52 @@ export function EligibilityModal({
   );
 }
 
+import UploadCvModal from "@/app/components/careers/uploade_cv/page";
+
 export default function CareerEligibilityPage() {
-  const [open, setOpen] = useState(true);
+  const [eligibilityOpen, setEligibilityOpen] = useState(true);
+  const [uploadCvOpen, setUploadCvOpen] = useState(false);
 
   return (
     <main className="min-h-screen bg-white">
-      {!open && (
+      {!eligibilityOpen && !uploadCvOpen && (
         <div className="flex min-h-screen items-center justify-center">
           <button
             type="button"
-            onClick={() => setOpen(true)}
-            className="rounded-[8px] bg-[#08743e] px-6 py-3 text-sm font-bold text-white"
+            onClick={() => setUploadCvOpen(true)}
+            className="rounded-[8px] bg-[#08743e] px-6 py-3 text-sm font-semibold text-white"
           >
-            Open Eligibility Result
+            Upload CV & Check Eligibility
           </button>
         </div>
       )}
 
-      <EligibilityModal isOpen={open} score={72} onClose={() => setOpen(false)} />
+      {uploadCvOpen && (
+        <UploadCvModal
+          job={{
+            title: "Sales Manager – Domestic Exhibition Sales & Sponsorships",
+            company: "Namo Gange Wellness Pvt. Ltd.",
+            brand: "Bharat Organic Expo",
+            location: "Delhi NCR",
+            type: "Full Time",
+            experience: "3 – 6 Years",
+          }}
+          onClose={() => setUploadCvOpen(false)}
+          onAnalyze={() => {
+            setUploadCvOpen(false);
+            setEligibilityOpen(true);
+          }}
+        />
+      )}
+
+      <EligibilityModal
+        isOpen={eligibilityOpen}
+        score={72}
+        onClose={() => {
+          setEligibilityOpen(false);
+          setUploadCvOpen(true);
+        }}
+      />
     </main>
   );
 }
