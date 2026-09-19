@@ -6,6 +6,7 @@ import Link from "next/link";
 import {
   ArrowLeft,
   ArrowRight,
+  Bookmark,
   BookOpen,
   BriefcaseBusiness,
   Check,
@@ -795,17 +796,17 @@ function Breakdown() {
 
   return (
     <div className="flex h-full min-h-0 flex-col overflow-hidden">
-      <h3 className="shrink-0 text-[12px] font-semibold leading-none text-[#10345f]">
+      <h3 className="shrink-0 text-[14px] font-semibold leading-none text-[#10345f]">
         {matchLevel === "moderate"
           ? "Detailed Match Breakdown"
           : "Match Breakdown"}
       </h3>
 
-      <p className="mt-[3px] shrink-0 text-[12px] text-[#183858]">
+      <p className="mt-[2px] shrink-0 text-[13px] font-medium text-[#183858]">
         Here&apos;s how your profile matches with our key requirements:
       </p>
 
-      <div className="mt-[7px] grid min-h-0 flex-1 grid-cols-2 grid-rows-3 gap-x-[clamp(18px,2.5vw,38px)] gap-y-[5px]">
+      <div className="mt-[8px] grid min-h-0 flex-1 grid-cols-2 grid-rows-3 gap-x-[12px] gap-y-[8px]">
         {current.breakdown.map((item) => {
           const scoreColor =
             item.score >= 70
@@ -817,22 +818,22 @@ function Breakdown() {
           return (
             <div
               key={item.title}
-              className="grid min-h-0 grid-cols-[40px_minmax(0,1fr)_48px] items-center gap-[8px]"
+              className="grid min-h-0 grid-cols-[34px_minmax(0,1fr)_44px] items-center gap-[8px] rounded-[10px] border border-[#e2ece5] bg-white px-[12px] py-[6px] shadow-[0_1px_2px_rgba(0,0,0,0.03)]"
             >
               <Image
                 src={iconAssets[item.title] ?? asset("briefcase-large.png")}
                 alt=""
                 width={64}
                 height={64}
-                className="h-[31px] w-[31px] object-contain"
+                className="h-[30px] w-[30px] object-contain"
               />
 
               <div className="min-w-0">
-                <h4 className="truncate text-[12px] font-extrabold leading-tight text-[#102e50]">
+                <h4 className="truncate text-[13.5px] font-semibold leading-tight text-[#102e50]">
                   {item.title}
                 </h4>
 
-                <p className="mt-[1px] truncate text-[12px] text-[#34475c]">
+                <p className="mt-[1px] truncate text-[12px] font-medium text-[#34475c]">
                   {item.description}
                 </p>
 
@@ -847,22 +848,22 @@ function Breakdown() {
                 </div>
               </div>
 
-              <strong
-                className="text-right text-[12px]"
+              <span
+                className="text-right text-[14px] font-semibold"
                 style={{ color: scoreColor }}
               >
                 {item.score}%
-              </strong>
+              </span>
             </div>
           );
         })}
       </div>
 
-      <div className="mt-[5px] flex h-[29px] shrink-0 items-center gap-[8px] rounded-[5px] bg-[#eff9f2] px-[12px] text-[12px] text-[#173e34]">
+      <div className="mt-[8px] flex h-[32px] shrink-0 items-center gap-[8px] rounded-[8px] border border-[#d8eae0] bg-[#eff9f2] px-[12px] text-[12.5px] text-[#173e34]">
         <BookOpen className="h-[14px] w-[14px] shrink-0 text-[#087447]" />
 
         <span className="truncate">
-          <strong>Tip:</strong> Update your CV with more relevant experience and skills to increase your match score and improve your chances.
+          <span className="font-semibold">Tip:</span> Update your CV with more relevant experience and skills to increase your match score and improve your chances.
         </span>
       </div>
     </div>
@@ -901,11 +902,11 @@ function LowNextSteps() {
         <Lightbulb className="h-[24px] w-[24px] text-[#368615] shrink-0" fill="#368615" />
 
         <div className="space-y-[2px]">
-          <h3 className="text-[16.5px] font-semibold leading-tight text-[#113a72]">
+          <h3 className="text-[17px] font-semibold leading-tight text-[#113a72]">
             What You Can Do Next?
           </h3>
 
-          <p className="text-[12.5px] font-medium text-[#466580]">
+          <p className="text-[13px] font-medium text-[#466580]">
             We encourage you to continue building your skills and explore other suitable opportunities with us.
           </p>
         </div>
@@ -924,11 +925,11 @@ function LowNextSteps() {
               />
 
               <div>
-                <h4 className="text-[14px] font-semibold leading-tight text-[#113a72]">
+                <h4 className="text-[14.5px] font-semibold leading-tight text-[#113a72]">
                   {title}
                 </h4>
 
-                <p className="mt-[4px] text-[12px] font-medium leading-[1.3] text-[#3e536c]">
+                <p className="mt-[4px] text-[12.5px] font-medium leading-[1.3] text-[#3e536c]">
                   {text}
                 </p>
               </div>
@@ -1007,7 +1008,7 @@ function ProfileCard() {
    CV
    ========================================================= */
 
-function CVCard() {
+function CVCard({ onClose }: { onClose?: () => void }) {
   return (
     <div className="flex h-full min-h-0 flex-col overflow-hidden rounded-[8px] border border-[#eaefeb] bg-white p-[12px] shadow-[0_2px_8px_rgba(0,0,0,0.03)]">
       <h3 className="shrink-0 text-[15px] font-bold text-[#0c3363]">
@@ -1033,12 +1034,16 @@ function CVCard() {
           </p>
 
           <div className="mt-[6px] flex flex-wrap gap-x-[12px] gap-y-[3px] text-[13px] font-bold text-[#0977df]">
-            <button className="flex items-center gap-[5px] hover:opacity-80 transition-opacity">
+            <button type="button" className="flex items-center gap-[5px] hover:opacity-80 transition-opacity">
               <Eye className="h-[13px] w-[13px] stroke-[2.5]" />
               View File
             </button>
 
-            <button className="flex items-center gap-[5px] hover:opacity-80 transition-opacity">
+            <button
+              type="button"
+              onClick={onClose}
+              className="flex items-center gap-[5px] hover:opacity-80 transition-opacity"
+            >
               <RefreshCw className="h-[13px] w-[13px] stroke-[2.5]" />
               Upload Different CV
             </button>
@@ -1064,16 +1069,9 @@ function JobSummary() {
 
   return (
     <div className="flex h-full min-h-0 flex-col overflow-hidden rounded-[8px] border border-[#eaefeb] bg-white p-[12px] shadow-[0_2px_8px_rgba(0,0,0,0.03)]">
-      <div className="flex shrink-0 items-center justify-between">
-        <h3 className="text-[15px] font-bold text-[#0c3363]">
-          Job Summary
-        </h3>
-
-        <button className="flex items-center gap-[4px] text-[13px] font-bold text-[#0977df] hover:opacity-80 transition-opacity">
-          <Pencil className="h-[13px] w-[13px] stroke-[2.5]" />
-          Edit
-        </button>
-      </div>
+      <h3 className="shrink-0 text-[15px] font-bold text-[#0c3363]">
+        Job Summary
+      </h3>
 
       <div className="mt-[8px] flex flex-col gap-[6px]">
         {rows.map(({ image, text }) => (
@@ -1136,20 +1134,20 @@ function SupportCard() {
 
   return (
     <div
-      className="flex h-full min-h-0 items-center gap-[9px] overflow-hidden rounded-[6px] px-[10px]"
+      className="flex h-full min-h-0 items-center gap-[10px] overflow-hidden rounded-[8px] px-[12px] py-[8px]"
       style={{ background: theme.supportBg }}
     >
-      <Info className="h-[19px] w-[19px] shrink-0 fill-[#1670ce] text-white" />
+      <Info className="h-[22px] w-[22px] shrink-0 fill-[#1565c0] text-white" />
 
-      <div>
-        <h4 className="text-[12px] font-semibold text-[#17365d]">
+      <div className="min-w-0">
+        <h4 className="text-[13px] font-semibold text-[#102d58] leading-tight">
           Still have questions?
         </h4>
 
-        <p className="text-[12px] leading-tight text-[#29425e]">
+        <p className="mt-[2px] text-[12px] leading-tight text-[#214368]">
           Feel free to reach out to our HR team at
           <br />
-          <strong>careers@bharatorganicexpo.com</strong>
+          <strong className="font-semibold text-[#102d58]">careers@bharatorganicexpo.com</strong>
         </p>
       </div>
     </div>
@@ -1195,7 +1193,7 @@ function Sidebar({ onClose, onApply }: { onClose?: () => void; onApply?: () => v
         pb-0
         pt-[8px]
 
-        grid-rows-[54px_145px_135px_195px_44px_40px_56px_1fr]
+        grid-rows-[54px_145px_135px_195px_44px_44px_58px_1fr]
         gap-[7px]
       "
     >
@@ -1220,7 +1218,7 @@ function Sidebar({ onClose, onApply }: { onClose?: () => void; onApply?: () => v
 
       <ProfileCard />
 
-      <CVCard />
+      <CVCard onClose={onClose} />
 
       <JobSummary />
 
@@ -1231,17 +1229,17 @@ function Sidebar({ onClose, onApply }: { onClose?: () => void; onApply?: () => v
             <button
               type="button"
               onClick={onApply}
-              className="flex h-full w-full items-center justify-center gap-[8px] rounded-[5px] bg-[#08743e] text-[clamp(10px,.82vw,13px)] font-semibold text-white hover:bg-[#076637] transition-colors"
+              className="flex h-full w-full items-center justify-center gap-[8px] rounded-[8px] bg-[#07623a] text-[14.5px] font-semibold text-white hover:bg-[#05502f] transition-colors shadow-sm"
             >
               {current.cta}
-              <ArrowRight className="h-[14px] w-[14px]" />
+              <ArrowRight className="h-[16px] w-[16px] stroke-[2.2]" />
             </button>
           </div>
 
           {/* SECOND */}
           <div className="min-h-0">
-            <button className="flex h-full w-full items-center justify-center gap-[7px] rounded-[5px] border border-[#08743e] bg-white text-[clamp(9px,.72vw,12px)] font-extrabold text-[#07623a]">
-              <BookOpen className="h-[13px] w-[13px]" />
+            <button className="flex h-full w-full items-center justify-center gap-[8px] rounded-[8px] border border-[#07623a] bg-white text-[14.5px] font-semibold text-[#07623a] hover:bg-[#f2faf4] transition-colors shadow-sm">
+              <Bookmark className="h-[18px] w-[18px] stroke-[2.2] text-[#07623a]" />
               Save for Later
             </button>
           </div>
@@ -1435,24 +1433,52 @@ export function EligibilityModal({
   );
 }
 
+import UploadCvModal from "@/app/components/careers/uploade_cv/page";
+
 export default function CareerEligibilityPage() {
-  const [open, setOpen] = useState(true);
+  const [eligibilityOpen, setEligibilityOpen] = useState(true);
+  const [uploadCvOpen, setUploadCvOpen] = useState(false);
 
   return (
     <main className="min-h-screen bg-white">
-      {!open && (
+      {!eligibilityOpen && !uploadCvOpen && (
         <div className="flex min-h-screen items-center justify-center">
           <button
             type="button"
-            onClick={() => setOpen(true)}
+            onClick={() => setUploadCvOpen(true)}
             className="rounded-[8px] bg-[#08743e] px-6 py-3 text-sm font-semibold text-white"
           >
-            Open Eligibility Result
+            Upload CV & Check Eligibility
           </button>
         </div>
       )}
 
-      <EligibilityModal isOpen={open} score={72} onClose={() => setOpen(false)} />
+      {uploadCvOpen && (
+        <UploadCvModal
+          job={{
+            title: "Sales Manager – Domestic Exhibition Sales & Sponsorships",
+            company: "Namo Gange Wellness Pvt. Ltd.",
+            brand: "Bharat Organic Expo",
+            location: "Delhi NCR",
+            type: "Full Time",
+            experience: "3 – 6 Years",
+          }}
+          onClose={() => setUploadCvOpen(false)}
+          onAnalyze={() => {
+            setUploadCvOpen(false);
+            setEligibilityOpen(true);
+          }}
+        />
+      )}
+
+      <EligibilityModal
+        isOpen={eligibilityOpen}
+        score={72}
+        onClose={() => {
+          setEligibilityOpen(false);
+          setUploadCvOpen(true);
+        }}
+      />
     </main>
   );
 }

@@ -23,6 +23,8 @@ type Job = {
     location?: string;
     type?: string;
     experience?: string;
+    company?: string;
+    brand?: string;
 };
 
 const DESIGN_WIDTH = 1500;
