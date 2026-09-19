@@ -221,7 +221,7 @@ const BuyerSellerMeet = () => {
                       <stat.icon className="w-3 h-3 md:w-4 md:h-4" strokeWidth={1.5} />
                     </div>
                     <div className="flex flex-col">
-                      <span className="text-[12px] md:text-[20px] font-semibold text-[#3b8c2a] leading-none mb-0.5 md:mb-1 font-poppins">
+                      <span className="text-[12px] md:text-[20px] font-semibold text-[#15803d] leading-none mb-0.5 md:mb-1 font-poppins">
                         {/^[\d,]+/.test(stat.val) ? <StatCounter value={stat.val} /> : stat.val}
                       </span>
                       <span className="font-semibold text-gray-600 uppercase tracking-widest text-[8px] md:text-[12px] leading-none mt-0.5 md:mt-1 font-poppins">

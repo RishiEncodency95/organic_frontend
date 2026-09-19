@@ -232,7 +232,7 @@ export default function Footer() {
             <h4 className="font-poppins font-semibold text-[#F3B71B] uppercase text-[13px] tracking-wider mb-1 ml-1 sm:ml-3">
               QUICK LINKS
             </h4>
-            <Image src={uuogImg} alt="divider" width={101} height={14} loading="lazy" className="h-3.5 w-auto -mt-1.5 mb-2.5 object-contain" />
+            <Image src={uuogImg} alt="divider" width={101} height={14} loading="lazy" sizes="101px" className="h-3.5 w-auto -mt-1.5 mb-2.5 object-contain" />
 
             <ul className="grid grid-cols-2 sm:grid-cols-1 lg:grid-cols-1 gap-x-3 gap-y-2 text-[13px] sm:text-[14px] text-gray-200 font-medium">
               {quickLinks.map((link: any, i: number) => (
@@ -256,13 +256,13 @@ export default function Footer() {
             <h4 className="font-poppins font-semibold text-[#F3B71B] uppercase text-[13px] tracking-wider mb-1">
               CONFERENCE HIGHLIGHTS
             </h4>
-            <Image src={uuogImg} alt="divider" width={101} height={14} loading="lazy" className="h-3.5 w-auto -mt-1.5 mb-2.5 object-contain" />
+            <Image src={uuogImg} alt="divider" width={101} height={14} loading="lazy" sizes="101px" className="h-3.5 w-auto -mt-1.5 mb-2.5 object-contain" />
 
             <div className="flex flex-col gap-3">
               {highlights.map((item, i) => (
                 <div key={i} className="flex gap-3 items-center">
                   <div className="w-9 h-9 rounded-full border border-[#F3B71B]/60 flex items-center justify-center shrink-0 bg-[#F3B71B]/10 shadow-[0_0_10px_rgba(243,183,27,0.2)]">
-                    <Image src={item.icon} alt={item.title} width={20} height={20} loading="lazy" className="w-5 h-5 object-contain" />
+                    <Image src={item.icon} alt={item.title} width={20} height={20} loading="lazy" sizes="20px" className="w-5 h-5 object-contain" />
                   </div>
                   <div className="pt-0.5">
                     <h5 className="text-[12px] font-semibold text-white leading-none mb-1 font-poppins">{item.title}</h5>
@@ -278,7 +278,7 @@ export default function Footer() {
             <h4 className="font-poppins font-semibold text-[#F3B71B] uppercase text-[13px] tracking-wider mb-1 ml-1 sm:ml-3">
               GET IN TOUCH
             </h4>
-            <Image src={uuogImg} alt="divider" width={101} height={14} loading="lazy" className="h-3.5 w-auto -mt-1.5 mb-2.5 object-contain" />
+            <Image src={uuogImg} alt="divider" width={101} height={14} loading="lazy" sizes="101px" className="h-3.5 w-auto -mt-1.5 mb-2.5 object-contain" />
 
             <div className="text-[12px] text-gray-200 font-medium space-y-1.5 mb-4 break-all md:whitespace-nowrap">
               <p>
