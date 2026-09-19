@@ -46,7 +46,7 @@ const asset = (file: string) => `/separated-assets/${file}`;
 const separatedAssets = {
   personHigh: asset("ChatGPT Image Sep 16, 2026, 04_30_14 PM.png"),
   personModerate: asset("ChatGPT Image Sep 16, 2026, 04_31_37 PM.png"),
-  personLow: asset("ChatGPT Image Sep 16, 2026, 04_34_00 PM.png"),
+  personLow: "/career-submit-resume-assets/sadimage.png",
   rightPeople: asset("ChatGPT Image Sep 16, 2026, 04_29_29 PM.png"),
   stickyNote: asset("ChatGPT Image Sep 16, 2026, 04_33_26 PM.png"),
   sidebarTop: asset("ChatGPT Image Sep 16, 2026, 04_29_31 PM.png"),
@@ -499,7 +499,7 @@ function ResultHero() {
       {/* LEFT PERSON COMPOSITION */}
       <div
         className="absolute inset-y-0 left-0 overflow-hidden"
-        style={{ width: matchLevel === "low" ? "40%" : "40.2%" }}
+        style={{ width: "40.2%" }}
       >
         <Image
           src={current.personImage}
@@ -526,11 +526,15 @@ function ResultHero() {
 
       {/*
         HIDE THE STATUS ICON THAT IS BAKED INTO THE PERSON IMAGE.
-        Use a slightly wider rectangular patch so no orange/green/red crescent
+        Use a wider patch for moderate match (58%) so no red/orange crescent
         from the image remains visible behind the real dynamic icon.
       */}
       <div
-        className="pointer-events-none absolute left-[32.25%] top-[7.2%] z-[18] h-[78px] w-[86px]"
+        className={`pointer-events-none absolute z-[18] ${
+          matchLevel === "moderate"
+            ? "left-[29.5%] top-0 h-full w-[110px]"
+            : "left-[32.25%] top-[7.2%] h-[78px] w-[86px]"
+        }`}
         style={{
           background:
             matchLevel === "high"
