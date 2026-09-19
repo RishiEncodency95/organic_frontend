@@ -165,7 +165,7 @@ const ExpoCategories = () => {
           {/* Elegant Badge */}
           <div className="inline-flex items-center justify-center gap-2 px-4 py-1.5 mb-2 rounded-full bg-white border border-[#3b8c2a]/20 shadow-[0_2px_10px_rgba(59,140,42,0.05)]">
             <span className="w-1.5 h-1.5 rounded-full bg-[#f58634] animate-pulse"></span>
-            <span className="text-[#166534] text-[11px] md:text-[12px] font-bold tracking-[0.2em] uppercase">
+            <span className="text-[#14532d] text-[11px] md:text-[12px] font-bold tracking-[0.2em] uppercase">
               {data.sectionTag}
             </span>
           </div>
@@ -225,7 +225,7 @@ const ExpoCategories = () => {
                 {/* Bottom Half: Content */}
                 <div className="px-2 py-2.5 md:px-4 md:py-4 relative z-10 flex flex-col flex-grow items-start text-left bg-white rounded-b-2xl w-full">
                   {/* Title */}
-                  <h3 className="text-[12px] sm:text-[13.5px] md:text-[16px] font-semibold text-[#166534] leading-[1.2] mb-1.5 md:mb-2.5 line-clamp-2 w-full">
+                  <h3 className="text-[12px] sm:text-[13.5px] md:text-[16px] font-semibold text-[#14532d] leading-[1.2] mb-1.5 md:mb-2.5 line-clamp-2 w-full">
                     {item.title}
                   </h3>
 
@@ -236,10 +236,10 @@ const ExpoCategories = () => {
 
                   {/* View More Link */}
                   <div className="mt-auto w-full flex justify-between items-center pt-2 md:pt-2.5 border-t border-slate-100">
-                    <span className="text-[#c2410c] group-hover:text-[#9a3412] text-[9.5px] md:text-[11px] font-bold uppercase tracking-widest transition-colors duration-300">
+                    <span className="text-[#9a3412] group-hover:text-[#7c2d12] text-[9.5px] md:text-[11px] font-bold uppercase tracking-widest transition-colors duration-300">
                       {item.exploreText || data.exploreText || "Explore"}
                     </span>
-                    <ArrowRight className="text-[#f58220] group-hover:text-[#d35400] group-hover:translate-x-1 transition-all duration-300 w-3 h-3 md:w-[14px] md:h-[14px]" strokeWidth={2.5} />
+                    <ArrowRight className="text-[#9a3412] group-hover:text-[#7c2d12] group-hover:translate-x-1 transition-all duration-300 w-3 h-3 md:w-[14px] md:h-[14px]" strokeWidth={2.5} />
                   </div>
                 </div>
 

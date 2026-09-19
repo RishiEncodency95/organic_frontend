@@ -74,19 +74,19 @@ const IndustryLeaders = () => {
         >
           {/* Top Badge */}
           <div className="inline-flex items-center gap-2 bg-[#fdf5ed] border border-[#f58220]/20 rounded-md px-4 py-2 mb-4 shadow-sm w-max">
-            <Leaf className="w-4 h-4 text-[#f58220]" />
-            <span className="text-[12px] md:text-[13px] lg:text-[14px] font-bold text-[#f58220] tracking-[0.2em] uppercase">Industry Testimonials</span>
+            <Leaf className="w-4 h-4 text-[#c2410c]" />
+            <span className="text-[12px] md:text-[13px] lg:text-[14px] font-bold text-[#c2410c] tracking-[0.2em] uppercase">Industry Testimonials</span>
           </div>
 
           <h2 className="text-[28px] md:text-[34px] lg:text-[40px] font-bold text-[#00643b] leading-[1.2] mb-4 tracking-tight">
             What Global Experts Say About <br className="hidden md:block" />
-            <span className="text-[#3b8c2a]">Bharat Organic Expo</span>
+            <span className="text-[#15803d]">Bharat Organic Expo</span>
           </h2>
 
           <div className="w-24 h-1 bg-[#3b8c2a] mb-4"></div>
 
           <p className="text-[16px] md:text-[18px] text-gray-600 leading-[1.6] mb-8 max-w-[700px] font-normal">
-            Trusted by leaders across the natural & organic sectors. Bharat Organic Expo serves as the premier platform bridging the gap between innovative sustainable brands, farmers, and global buyers. We are deeply committed to fostering long-lasting B2B connections, driving eco-friendly practices, and showcasing the very best of nature. Discover how we are transforming the <span className="font-bold text-[#3b8c2a]">organic business landscape</span> globally and shaping a healthier, greener tomorrow.
+            Trusted by leaders across the natural & organic sectors. Bharat Organic Expo serves as the premier platform bridging the gap between innovative sustainable brands, farmers, and global buyers. We are deeply committed to fostering long-lasting B2B connections, driving eco-friendly practices, and showcasing the very best of nature. Discover how we are transforming the <span className="font-bold text-[#15803d]">organic business landscape</span> globally and shaping a healthier, greener tomorrow.
           </p>
 
           {/* 4 Cards Grid */}

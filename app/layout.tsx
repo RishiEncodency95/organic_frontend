@@ -7,6 +7,8 @@ import Footer from "./components/layout/Footer";
 import SocialSidebar from "./components/layout/SocialSidebar";
 import WhatsAppFloat from "./components/layout/WhatsAppFloat";
 import SmoothScroll from "./components/SmoothScroll";
+// Preload the LCP hero image so it is discoverable from HTML immediately
+import heroImg from "./assets/home/home11.webp";
 
 const poppins = Poppins({
   subsets: ["latin"],
@@ -22,6 +24,31 @@ const inter = Inter({
 });
 
 import DynamicCanonical from "./components/DynamicCanonical";
+import {
+  HeadScripts,
+  FooterScripts,
+  ClientScriptTracker,
+} from "./components/seo/CustomScripts";
+
+const SERVER_URL =
+  process.env.NEXT_PUBLIC_SERVER_URL || "http://localhost:4001";
+const API_URL =
+  process.env.NEXT_PUBLIC_API_URL || `${SERVER_URL}/api`;
+
+async function getAdvancedSeoSettings() {
+  try {
+    const res = await fetch(`${API_URL}/seo-settings/advanced`, {
+      next: { revalidate: 60 },
+    });
+    if (res.ok) {
+      const json = await res.json();
+      return json?.data || null;
+    }
+  } catch (err) {
+    console.warn("[layout] Could not fetch advanced SEO settings:", err);
+  }
+  return null;
+}
 
 const defaultSiteUrl =
   process.env.NEXT_PUBLIC_SITE_URL ||
@@ -55,18 +82,32 @@ export const metadata: Metadata = {
 
 import StoreProvider from "./store/StoreProvider";
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const seoData = await getAdvancedSeoSettings();
+  const headerScripts = seoData?.headerScripts || "";
+  const footerScripts = seoData?.footerScripts || "";
+
   return (
     <html
       lang="en"
       suppressHydrationWarning
       className={`${poppins.variable} ${inter.variable} h-full antialiased overflow-x-hidden`}
     >
-      <head />
+      <head>
+        {/* LCP image preload — makes the first hero image discoverable from HTML, not JS */}
+        <link
+          rel="preload"
+          as="image"
+          href={heroImg.src}
+          fetchPriority="high"
+        />
+        {/* Dynamic Header Scripts from Admin (Google Tag Manager, GA, Meta Pixel) */}
+        <HeadScripts html={headerScripts} />
+      </head>
       <body suppressHydrationWarning className="min-h-full flex flex-col font-inter text-[16px] md:text-[18px] leading-[1.6] overflow-x-hidden w-full">
         <DynamicCanonical />
         <SmoothScroll>
@@ -79,6 +120,9 @@ export default function RootLayout({
           <SocialSidebar />
           <WhatsAppFloat />
         </SmoothScroll>
+        {/* Dynamic Footer Scripts from Admin (GTM noscript, Chat, Conversion pixels) */}
+        <FooterScripts html={footerScripts} />
+        <ClientScriptTracker headerHtml={headerScripts} />
       </body>
     </html>
   );

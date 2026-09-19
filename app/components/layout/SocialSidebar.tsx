@@ -40,21 +40,50 @@ const LinkedinIcon = ({ size = 16, color = "#0A66C2" }: { size?: number; color?:
 
 const SocialSidebar = () => {
   const [isVisible, setIsVisible] = useState(false);
-
-  // Trigger animations after mount
-  useEffect(() => {
-    const timer = setTimeout(() => setIsVisible(true), 100);
-    return () => clearTimeout(timer);
-  }, []);
-
   const config = SITE_CONFIG as any;
-  const socialLinks = {
+
+  const [socialLinks, setSocialLinks] = useState({
     facebook: config.socialLinks?.facebook || "https://www.facebook.com/bharatorganicexpo",
     instagram: config.socialLinks?.instagram || "https://www.instagram.com/bharatorganicexpo",
     twitter: config.socialLinks?.twitter || "https://x.com/organicexpoin",
     youtube: config.socialLinks?.youtube || "https://www.youtube.com/@bharatorganicexpo",
     linkedin: config.socialLinks?.linkedin || "https://www.linkedin.com/company/bharatorganicexpo/",
-  };
+  });
+
+  // Trigger animations after mount & fetch dynamic links from backend
+  useEffect(() => {
+    const timer = setTimeout(() => setIsVisible(true), 100);
+
+    let isMounted = true;
+    const fetchSocial = async () => {
+      try {
+        const apiUrl = process.env.NEXT_PUBLIC_API_URL || "http://localhost:4001/api";
+        const res = await fetch(`${apiUrl}/seo-settings/advanced`);
+        if (res.ok) {
+          const json = await res.json();
+          const social = json?.data?.socialLinks;
+          if (social && isMounted) {
+            setSocialLinks({
+              facebook: social.facebook || config.socialLinks?.facebook || "",
+              instagram: social.instagram || config.socialLinks?.instagram || "",
+              twitter: social.twitter || config.socialLinks?.twitter || "",
+              youtube: social.youtube || config.socialLinks?.youtube || "",
+              linkedin: social.linkedin || config.socialLinks?.linkedin || "",
+            });
+          }
+        }
+      } catch {
+        // Fallback to initial config
+      }
+    };
+
+    fetchSocial();
+
+    return () => {
+      clearTimeout(timer);
+      isMounted = false;
+    };
+  }, []);
 
   // Static social media icons with dynamic links
   const socialData = [
@@ -133,8 +162,8 @@ const SocialSidebar = () => {
         }
 
         @keyframes shine {
-          0% { left: -100%; }
-          100% { left: 200%; }
+          0% { transform: translateX(-100%) rotate(45deg); }
+          100% { transform: translateX(300%) rotate(45deg); }
         }
 
         @keyframes tooltipBounce {
@@ -231,11 +260,11 @@ const SocialSidebar = () => {
         .shine-effect {
           position: absolute;
           top: 0;
-          left: -100%;
+          left: 0;
           width: 50%;
           height: 100%;
           background: linear-gradient(to right, transparent, rgba(255, 255, 255, 0.4), transparent);
-          transform: rotate(45deg);
+          transform: translateX(-100%) rotate(45deg);
           opacity: 0;
         }
 

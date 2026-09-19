@@ -66,7 +66,10 @@ export default function JobCardButtons({ job }: { job: any }) {
           <EligibilityModal
             isOpen={isEligibilityOpen}
             score={currentScore}
-            onClose={() => setIsEligibilityOpen(false)}
+            onClose={() => {
+              setIsEligibilityOpen(false);
+              setIsOpen(true);
+            }}
             onApply={() => {
               setIsEligibilityOpen(false);
               setIsAppFormOpen(true);

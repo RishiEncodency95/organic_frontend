@@ -67,7 +67,10 @@ export default function ResumeUploadButton({ variant = "solid" }: Props) {
             <EligibilityModal
               isOpen={isEligibilityOpen}
               score={currentScore}
-              onClose={() => setIsEligibilityOpen(false)}
+              onClose={() => {
+                setIsEligibilityOpen(false);
+                setIsOpen(true);
+              }}
               onApply={() => {
                 setIsEligibilityOpen(false);
                 setIsAppFormOpen(true);
