@@ -46,7 +46,7 @@ const asset = (file: string) => `/separated-assets/${file}`;
 const separatedAssets = {
   personHigh: asset("ChatGPT Image Sep 16, 2026, 04_30_14 PM.png"),
   personModerate: asset("ChatGPT Image Sep 16, 2026, 04_31_37 PM.png"),
-  personLow: asset("ChatGPT Image Sep 16, 2026, 04_34_00 PM.png"),
+  personLow: "/career-submit-resume-assets/sadimage.png",
   rightPeople: asset("ChatGPT Image Sep 16, 2026, 04_29_29 PM.png"),
   stickyNote: asset("ChatGPT Image Sep 16, 2026, 04_33_26 PM.png"),
   sidebarTop: asset("ChatGPT Image Sep 16, 2026, 04_29_31 PM.png"),
@@ -499,7 +499,7 @@ function ResultHero() {
       {/* LEFT PERSON COMPOSITION */}
       <div
         className="absolute inset-y-0 left-0 overflow-hidden"
-        style={{ width: matchLevel === "low" ? "40%" : "40.2%" }}
+        style={{ width: "40.2%" }}
       >
         <Image
           src={current.personImage}
