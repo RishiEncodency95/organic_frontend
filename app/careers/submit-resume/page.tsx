@@ -954,45 +954,45 @@ function LowNextSteps() {
 
 function ProfileCard() {
   return (
-    <div className="flex h-full min-h-0 flex-col overflow-hidden rounded-[7px] border border-[#e3ebe5] bg-white p-[clamp(8px,.8vw,12px)] shadow-sm">
+    <div className="flex h-full min-h-0 flex-col overflow-hidden rounded-[8px] border border-[#eaefeb] bg-white p-[16px] shadow-[0_2px_8px_rgba(0,0,0,0.03)]">
       <div className="flex shrink-0 items-center justify-between">
-        <h3 className="text-[12px] font-semibold text-[#0c3363]">
+        <h3 className="text-[16px] font-bold text-[#0c3363]">
           Your Profile
         </h3>
 
-        <button className="flex items-center gap-[4px] text-[12px] font-semibold text-[#0977df]">
-          <Pencil className="h-[12px] w-[12px]" />
+        <button className="flex items-center gap-[4px] text-[14px] font-bold text-[#0977df] transition-opacity hover:opacity-80">
+          <Pencil className="h-[14px] w-[14px] stroke-[2.5]" />
           Edit
         </button>
       </div>
 
-      <div className="mt-[6px] flex min-h-0 flex-1 items-center gap-[10px]">
+      <div className="mt-[12px] flex min-h-0 flex-1 items-center gap-[14px]">
         <Image
           src={profile.image}
           alt={profile.name}
           width={160}
           height={160}
-          className="h-[88%] max-h-[122px] w-[29%] max-w-[108px] shrink-0 rounded-[6px] object-cover object-center"
+          className="h-[84px] w-[84px] shrink-0 rounded-[8px] object-cover object-center"
         />
 
-        <div className="min-w-0">
-          <h4 className="truncate text-[12px] font-semibold text-[#103561]">
+        <div className="min-w-0 flex-1">
+          <h4 className="truncate text-[16px] font-bold text-[#0c3363]">
             {profile.name}
           </h4>
 
-          <div className="mt-[5px] space-y-[4px] text-[12px] text-[#173858]">
-            <p className="flex items-center gap-[7px]">
-              <Mail className="h-[12px] w-[12px] shrink-0" />
+          <div className="mt-[6px] space-y-[6px] text-[14px] font-medium text-[#2d4766]">
+            <p className="flex items-center gap-[8px]">
+              <Mail className="h-[14px] w-[14px] shrink-0 text-[#0c3363] stroke-[2.5]" />
               <span className="truncate">{profile.email}</span>
             </p>
 
-            <p className="flex items-center gap-[7px]">
-              <Phone className="h-[12px] w-[12px] shrink-0" />
+            <p className="flex items-center gap-[8px]">
+              <Phone className="h-[14px] w-[14px] shrink-0 text-[#0c3363] stroke-[2.5]" />
               <span className="truncate">{profile.phone}</span>
             </p>
 
-            <p className="flex items-center gap-[7px]">
-              <LinkedInIcon className="h-[12px] w-[12px] shrink-0 text-[#0878c9]" />
+            <p className="flex items-center gap-[8px]">
+              <LinkedInIcon className="h-[14px] w-[14px] shrink-0 text-[#0977df]" />
               <span className="truncate">{profile.linkedin}</span>
             </p>
           </div>
@@ -1008,37 +1008,37 @@ function ProfileCard() {
 
 function CVCard() {
   return (
-    <div className="flex h-full min-h-0 flex-col overflow-hidden rounded-[7px] border border-[#e3ebe5] bg-white p-[clamp(8px,.8vw,12px)] shadow-sm">
-      <h3 className="shrink-0 text-[12px] font-semibold text-[#0c3363]">
+    <div className="flex h-full min-h-0 flex-col overflow-hidden rounded-[8px] border border-[#eaefeb] bg-white p-[16px] shadow-[0_2px_8px_rgba(0,0,0,0.03)]">
+      <h3 className="shrink-0 text-[16px] font-bold text-[#0c3363]">
         Your CV
       </h3>
 
-      <div className="mt-[6px] flex min-h-0 flex-1 items-center gap-[10px] rounded-[5px] bg-[#f4f8fb] px-[10px]">
-        <div className="relative grid h-[62px] w-[54px] shrink-0 place-items-center rounded-[5px] border-[3px] border-[#087447] text-[#087447]">
-          <FileText className="h-[31px] w-[31px]" />
+      <div className="mt-[12px] flex min-h-0 flex-1 items-center gap-[14px] rounded-[8px] bg-[#f2f8fc] px-[16px] py-[12px]">
+        <div className="relative grid h-[68px] w-[56px] shrink-0 place-items-center rounded-[6px] border-[3px] border-[#075333] text-[#075333]">
+          <FileText className="h-[34px] w-[34px] stroke-[2]" />
 
-          <span className="absolute -bottom-[7px] -right-[7px] grid h-[18px] w-[18px] place-items-center rounded-full bg-[#087447] text-white">
-            <Check className="h-[10px] w-[10px]" />
+          <span className="absolute -bottom-[8px] -right-[8px] grid h-[24px] w-[24px] place-items-center rounded-full bg-[#075333] text-white">
+            <Check className="h-[14px] w-[14px] stroke-[3]" />
           </span>
         </div>
 
-        <div className="min-w-0 flex-1">
-          <h4 className="truncate text-[12px] font-semibold text-[#12335e]">
+        <div className="min-w-0 flex-1 pl-[6px]">
+          <h4 className="truncate text-[15px] font-bold text-[#0c3363]">
             {profile.cvName}
           </h4>
 
-          <p className="mt-[2px] text-[12px] text-[#173858]">
+          <p className="mt-[4px] text-[14px] font-medium text-[#2d4766]">
             {profile.cvSize}
           </p>
 
-          <div className="mt-[4px] flex flex-wrap gap-x-[13px] gap-y-[3px] text-[12px] font-semibold text-[#0874ce]">
-            <button className="flex items-center gap-[4px]">
-              <Eye className="h-[11px] w-[11px]" />
+          <div className="mt-[8px] flex flex-wrap gap-x-[16px] gap-y-[4px] text-[14px] font-bold text-[#0977df]">
+            <button className="flex items-center gap-[6px] hover:opacity-80 transition-opacity">
+              <Eye className="h-[14px] w-[14px] stroke-[2.5]" />
               View File
             </button>
 
-            <button className="flex items-center gap-[4px]">
-              <RefreshCw className="h-[11px] w-[11px]" />
+            <button className="flex items-center gap-[6px] hover:opacity-80 transition-opacity">
+              <RefreshCw className="h-[14px] w-[14px] stroke-[2.5]" />
               Upload Different CV
             </button>
           </div>
@@ -1062,33 +1062,33 @@ function JobSummary() {
   ];
 
   return (
-    <div className="flex h-full min-h-0 flex-col overflow-hidden rounded-[7px] border border-[#e3ebe5] bg-white p-[clamp(8px,.8vw,12px)] shadow-sm">
+    <div className="flex h-full min-h-0 flex-col overflow-hidden rounded-[8px] border border-[#eaefeb] bg-white p-[16px] shadow-[0_2px_8px_rgba(0,0,0,0.03)]">
       <div className="flex shrink-0 items-center justify-between">
-        <h3 className="text-[12px] font-semibold text-[#0c3363]">
+        <h3 className="text-[16px] font-bold text-[#0c3363]">
           Job Summary
         </h3>
 
-        <button className="flex items-center gap-[4px] text-[12px] font-semibold text-[#0977df]">
-          <Pencil className="h-[12px] w-[12px]" />
+        <button className="flex items-center gap-[4px] text-[14px] font-bold text-[#0977df] hover:opacity-80 transition-opacity">
+          <Pencil className="h-[14px] w-[14px] stroke-[2.5]" />
           Edit
         </button>
       </div>
 
-      <div className="mt-[5px] grid min-h-0 flex-1 grid-rows-5">
+      <div className="mt-[12px] flex flex-col gap-[10px] overflow-y-auto">
         {rows.map(({ image, text }) => (
           <div
             key={text}
-            className="flex min-h-0 items-center gap-[9px]"
+            className="flex items-center gap-[14px]"
           >
             <Image
               src={image}
               alt=""
               width={48}
               height={48}
-              className="h-[28px] w-[28px] shrink-0 object-contain"
+              className="h-[24px] w-[24px] shrink-0 object-contain"
             />
 
-            <span className="truncate text-[12px] text-[#183858]">
+            <span className="truncate text-[14px] font-medium text-[#2d4766]">
               {text}
             </span>
           </div>
@@ -1194,7 +1194,7 @@ function Sidebar({ onApply }: { onApply?: () => void }) {
         pb-[7px]
         pt-[8px]
 
-        grid-rows-[78px_160px_128px_184px_48px_44px_64px_1fr]
+        grid-rows-[78px_160px_160px_230px_48px_44px_64px_1fr]
         gap-[8px]
       "
     >
@@ -1215,41 +1215,58 @@ function Sidebar({ onApply }: { onApply?: () => void }) {
 
       <JobSummary />
 
-      {/* CTA */}
-      <div className="min-h-0">
-        {matchLevel !== "low" ? (
-          <button
-            type="button"
-            onClick={onApply}
-            className="flex h-full w-full items-center justify-center gap-[8px] rounded-[5px] bg-[#08743e] text-[clamp(10px,.82vw,13px)] font-semibold text-white hover:bg-[#076637] transition-colors"
-          >
-            {current.cta}
-            <ArrowRight className="h-[14px] w-[14px]" />
-          </button>
-        ) : (
+      {matchLevel !== "low" ? (
+        <>
+          {/* CTA */}
+          <div className="min-h-0">
+            <button
+              type="button"
+              onClick={onApply}
+              className="flex h-full w-full items-center justify-center gap-[8px] rounded-[5px] bg-[#08743e] text-[clamp(10px,.82vw,13px)] font-semibold text-white hover:bg-[#076637] transition-colors"
+            >
+              {current.cta}
+              <ArrowRight className="h-[14px] w-[14px]" />
+            </button>
+          </div>
+
+          {/* SECOND */}
+          <div className="min-h-0">
+            <button className="flex h-full w-full items-center justify-center gap-[7px] rounded-[5px] border border-[#08743e] bg-white text-[clamp(9px,.72vw,12px)] font-extrabold text-[#07623a]">
+              <BookOpen className="h-[13px] w-[13px]" />
+              Save for Later
+            </button>
+          </div>
+
+          <SupportCard />
+        </>
+      ) : (
+        <div className="row-span-3 flex min-h-0 flex-col justify-center rounded-[8px] bg-[#f5faf6] p-[16px] shadow-sm">
+          <div className="flex gap-[12px] items-start">
+            <Image
+              src={separatedAssets.headerLeaf}
+              alt=""
+              width={82}
+              height={92}
+              className="h-[22px] w-[20px] shrink-0 object-contain mt-[2px]"
+            />
+            <div className="flex-1">
+              <h4 className="text-[15px] font-bold text-[#095232]">
+                Looking for a Better Fit?
+              </h4>
+              <p className="mt-[4px] text-[13px] font-medium leading-[1.3] text-[#1c6448]">
+                Browse other career opportunities at<br />Bharat Organic Expo and find the right role for you.
+              </p>
+            </div>
+          </div>
           <Link
             href="/careers"
-            className="flex h-full items-center justify-center gap-[8px] rounded-[5px] bg-[#08743e] text-[clamp(9.5px,.77vw,12px)] font-semibold text-white"
+            className="mt-[16px] flex h-[44px] shrink-0 items-center justify-center gap-[8px] rounded-[6px] bg-[#075333] text-[14px] font-bold text-white hover:bg-[#064228] transition-colors"
           >
             View All Open Positions
-            <ArrowRight className="h-[14px] w-[14px]" />
+            <ArrowRight className="h-[16px] w-[16px] stroke-[2.5]" />
           </Link>
-        )}
-      </div>
-
-      {/* SECOND */}
-      <div className="min-h-0">
-        {matchLevel !== "low" ? (
-          <button className="flex h-full w-full items-center justify-center gap-[7px] rounded-[5px] border border-[#08743e] bg-white text-[clamp(9px,.72vw,12px)] font-extrabold text-[#07623a]">
-            <BookOpen className="h-[13px] w-[13px]" />
-            Save for Later
-          </button>
-        ) : (
-          <div />
-        )}
-      </div>
-
-      <SupportCard />
+        </div>
+      )}
 
       <SidebarFooter />
     </aside>
@@ -1394,9 +1411,9 @@ export function EligibilityModal({
           type="button"
           aria-label="Back to Careers"
           onClick={onClose}
-          className="absolute right-[20px] top-[20px] z-[100] flex items-center gap-[8px] text-[17px] font-semibold text-[#006342] hover:opacity-80 transition-opacity"
+          className="absolute right-[24px] top-[24px] z-[100] flex items-center gap-[6px] text-[16px] font-semibold text-[#006342] hover:opacity-80 transition-opacity"
         >
-          <ArrowLeft className="h-[22px] w-[22px] stroke-[2.5]" />
+          <ArrowLeft className="h-[20px] w-[20px] stroke-[2.5]" />
           Back to Careers
         </button>
 
