@@ -539,7 +539,7 @@ const Navbar = () => {
                                         Delegates Login
                                     </Link>
                                     <a
-                                        href="https://admin.organicexpo.in/login"
+                                        href="https://admin.bharatorganicexpo.com"
                                         target="_blank"
                                         rel="noopener noreferrer"
                                         onClick={() => setMobileOpen(false)}
