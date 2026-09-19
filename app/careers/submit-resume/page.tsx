@@ -363,8 +363,8 @@ const matchConfig = {
 export type CandidateProfileData = {
   candidateName: string;
   firstName: string;
-  email: string;
-  phone: string;
+  email?: string | null;
+  phone?: string | null;
   linkedin?: string | null;
   cvFile?: File | null;
   cvName: string;
@@ -1074,20 +1074,30 @@ function ProfileCard() {
           </h4>
 
           <div className="mt-[4px] space-y-[4px] text-[13px] font-medium text-[#2d4766]">
-            <p className="flex items-center gap-[7px]">
-              <Mail className="h-[13px] w-[13px] shrink-0 text-[#0c3363] stroke-[2.5]" />
-              <span className="truncate">{candidate.email}</span>
-            </p>
+            {Boolean(candidate.email) && (
+              <p className="flex items-center gap-[7px]">
+                <Mail className="h-[13px] w-[13px] shrink-0 text-[#0c3363] stroke-[2.5]" />
+                <span className="truncate">{candidate.email}</span>
+              </p>
+            )}
 
-            <p className="flex items-center gap-[7px]">
-              <Phone className="h-[13px] w-[13px] shrink-0 text-[#0c3363] stroke-[2.5]" />
-              <span className="truncate">{candidate.phone}</span>
-            </p>
+            {Boolean(candidate.phone) && (
+              <p className="flex items-center gap-[7px]">
+                <Phone className="h-[13px] w-[13px] shrink-0 text-[#0c3363] stroke-[2.5]" />
+                <span className="truncate">{candidate.phone}</span>
+              </p>
+            )}
 
             {Boolean(candidate.linkedin) && (
               <p className="flex items-center gap-[7px]">
                 <LinkedInIcon className="h-[13px] w-[13px] shrink-0 text-[#0977df]" />
                 <span className="truncate">{candidate.linkedin}</span>
+              </p>
+            )}
+
+            {!Boolean(candidate.email) && !Boolean(candidate.phone) && !Boolean(candidate.linkedin) && (
+              <p className="text-[12px] italic text-[#64748b]">
+                Contact details available in CV
               </p>
             )}
           </div>

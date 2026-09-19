@@ -202,8 +202,8 @@ function UploadBox({ onFile }: { onFile: (file: File) => void }) {
 export type CandidateAnalysisData = {
     candidateName: string;
     firstName: string;
-    email: string;
-    phone: string;
+    email?: string | null;
+    phone?: string | null;
     linkedin?: string | null;
     cvFile?: File | null;
     cvName: string;
@@ -268,9 +268,9 @@ export default function UploadCvModal({
             const candidateData: CandidateAnalysisData = {
                 candidateName: data.candidateName || "Vijay Sharma",
                 firstName: data.firstName || "Vijay",
-                email: data.email || "vijay.sharma@gmail.com",
-                phone: data.phone || "+91 98765 43210",
-                linkedin: data.linkedin !== undefined ? data.linkedin : "linkedin.com/in/vijay-sharma",
+                email: data.email || null,
+                phone: data.phone || null,
+                linkedin: data.linkedin || null,
                 cvFile: file,
                 cvName: file.name,
                 cvSize: fileSizeStr,
@@ -303,9 +303,9 @@ export default function UploadCvModal({
             const candidateData: CandidateAnalysisData = {
                 candidateName: formattedName,
                 firstName: firstName,
-                email: `${firstName.toLowerCase()}@gmail.com`,
-                phone: "+91 98765 43210",
-                linkedin: `linkedin.com/in/${firstName.toLowerCase()}`,
+                email: null,
+                phone: null,
+                linkedin: null,
                 cvFile: file,
                 cvName: file.name,
                 cvSize: fileSizeStr,
