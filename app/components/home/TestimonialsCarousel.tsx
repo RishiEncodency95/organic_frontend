@@ -519,7 +519,7 @@ const TestimonialsCarousel = () => {
           <Image
             src={testImg}
             fill
-            priority
+            loading="lazy"
             quality={75}
             sizes="100vw"
             className="w-full h-full object-cover opacity-60 md:opacity-100"

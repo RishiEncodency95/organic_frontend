@@ -1,5 +1,10 @@
-export const SERVER_URL = process.env.NEXT_PUBLIC_SERVER_URL || 'http://localhost:4001';
-export const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:4001/api';
+export const SERVER_URL =
+  process.env.NEXT_PUBLIC_SERVER_URL ||
+  (typeof window !== 'undefined' ? window.location.origin : 'http://localhost:4001');
+
+export const API_URL =
+  process.env.NEXT_PUBLIC_API_URL ||
+  (typeof window !== 'undefined' ? '/api' : 'http://localhost:4001/api');
 
 const apiCall = async (endpoint: string, options: RequestInit = {}) => {
     try {

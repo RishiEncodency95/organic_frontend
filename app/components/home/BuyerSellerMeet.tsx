@@ -177,7 +177,7 @@ const BuyerSellerMeet = () => {
                   href={sectionData.leftSection.buttons.primary.link}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="bg-[#3b8c2a] hover:bg-[#2d7a2d] text-white px-3 py-1.5 md:px-6 md:py-2 rounded-md font-semibold text-[10px] md:text-[12px] lg:text-[14px] tracking-widest uppercase transition-colors flex items-center gap-1.5 md:gap-2 shadow-lg shadow-green-600/20 min-h-[36px] md:min-h-[44px] font-poppins"
+                  className="bg-[#246b1d] hover:bg-[#1b5e20] text-white px-3 py-1.5 md:px-6 md:py-2 rounded-md font-semibold text-[10px] md:text-[12px] lg:text-[14px] tracking-widest uppercase transition-colors flex items-center gap-1.5 md:gap-2 shadow-lg shadow-green-600/20 min-h-[36px] md:min-h-[44px] font-poppins"
                 >
                   <CalendarCheck className="w-3.5 h-3.5 md:w-5 md:h-5" />
                   {sectionData.leftSection.buttons.primary.text}
@@ -201,7 +201,7 @@ const BuyerSellerMeet = () => {
                   src={sectionData.rightSection.image}
                   alt={sectionData.rightSection.imageAlt}
                   fill
-                  priority
+                  loading="lazy"
                   quality={80}
                   sizes="(max-width: 1024px) 100vw, 50vw"
                   className="w-full h-full object-cover object-center block"
@@ -256,12 +256,12 @@ const BuyerSellerMeet = () => {
           {sectionData.premiumBand.items.map((item, idx, arr) => (
             <React.Fragment key={idx}>
               <div className="flex items-center gap-1.5 md:gap-3 group">
-                <div className="w-7 h-7 md:w-10 md:h-10 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-[#facc15] shadow-sm group-hover:bg-[#facc15] group-hover:text-[#0b2912] transition-colors duration-300 shrink-0">
+                <div className="w-7 h-7 md:w-10 md:h-10 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-[#fef08a] shadow-sm group-hover:bg-[#fef08a] group-hover:text-[#0b2912] transition-colors duration-300 shrink-0">
                   <item.icon className="w-3.5 h-3.5 md:w-5 md:h-5" strokeWidth={2} />
                 </div>
                 <div className="flex flex-col text-left font-inter min-w-0">
                   <span className="text-[10px] md:text-[14px] lg:text-[16px] font-semibold text-white leading-none mb-0.5 md:mb-1 uppercase truncate">{item.title}</span>
-                  <span className="text-[7.5px] md:text-[11px] lg:text-[12px] font-semibold text-[#facc15] uppercase tracking-widest leading-none truncate">{item.subtitle}</span>
+                  <span className="text-[7.5px] md:text-[11px] lg:text-[12px] font-semibold text-[#fef08a] uppercase tracking-widest leading-none truncate">{item.subtitle}</span>
                 </div>
               </div>
 

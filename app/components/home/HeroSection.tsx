@@ -199,10 +199,15 @@ const ProgressBar = ({ cur, duration }: { cur: number; duration: number }) => {
 ───────────────────────────────────────── */
 const HeroSection = () => {
   const [slides, setSlides] = useState<SlideData[]>(DEFAULT_SLIDES);
+  const [mounted, setMounted] = useState(false);
   const [cur, setCur] = useState(0);
   const curRef = useRef(0);
   const busyRef = useRef(false);
   const timerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   /* layer refs */
   const sectionRef = useRef<HTMLElement>(null);
@@ -403,6 +408,8 @@ const HeroSection = () => {
 
   /* ── INIT ── */
   useEffect(() => {
+    if (!mounted) return;
+
     bgLayers.current.forEach((el, i) => {
       if (!el) return;
       gsap.set(el, { zIndex: i === 0 ? 2 : 1, clipPath: "inset(0 0% 0 0)", opacity: 1, x: 0 });
@@ -440,7 +447,9 @@ const HeroSection = () => {
       if (timerRef.current) clearTimeout(timerRef.current);
       if (kenTimeline.current) kenTimeline.current.kill();
     };
-  }, [slides, playKenBurns, startTimer]);
+  }, [mounted, slides, playKenBurns, startTimer]);
+
+  const visibleSlides = mounted ? slides : slides.slice(0, 1);
 
   return (
     <>
@@ -511,7 +520,7 @@ const HeroSection = () => {
         className="relative w-full overflow-hidden bg-[#fcfcf0] min-h-[460px] md:min-h-[400px] h-auto py-2 md:py-0 md:h-[72vh] lg:h-[78vh] flex items-center font-inter"
       >
         {/* ── BACKGROUND LAYERS ── */}
-        {slides.map(({ id, img, alt }) => (
+        {visibleSlides.map(({ id, img, alt }) => (
           <div
             key={id}
             ref={(el) => {
@@ -590,7 +599,7 @@ const HeroSection = () => {
           className="relative z-20 h-full grid items-start pt-4 pb-6 md:py-0 md:items-center justify-items-start"
           style={{ zIndex: 20 }}
         >
-          {slides.map((slide) => (
+          {visibleSlides.map((slide) => (
             <div
               key={slide.id}
               ref={(el) => {

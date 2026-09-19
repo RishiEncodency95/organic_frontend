@@ -3,8 +3,8 @@
 import React, { useState, useEffect } from "react";
 import Image from "next/image";
 import { motion } from "framer-motion";
-import introImg from "../../assets/home/homeIntro.png";
-import leafog from "@/app/assets/icons/leafs.png";
+import introImg from "../../assets/home/homeIntro.webp";
+import leafog from "@/app/assets/icons/leafs.webp";
 import { websiteApi } from "@/lib/api";
 
 const DEFAULT_INTRO = {
@@ -116,10 +116,15 @@ const IntroductionSection = () => {
   return (
     <section className="py-2 md:py-6 overflow-hidden relative font-inter bg-white">
       {/* Decorative Background Elements */}
-      <img
-        src={leafog.src}
-        alt="Leaf Decoration"
-        className="absolute -left-16 md:-left-32 top-1/2 -translate-y-1/2 w-32 md:w-64 object-contain pointer-events-none z-0 opacity-30 md:opacity-50"
+      <Image
+        src={leafog}
+        alt=""
+        aria-hidden="true"
+        width={256}
+        height={566}
+        loading="lazy"
+        sizes="(max-width: 768px) 128px, 256px"
+        className="absolute -left-16 md:-left-32 top-1/2 -translate-y-1/2 w-32 md:w-64 h-auto object-contain pointer-events-none z-0 opacity-30 md:opacity-50"
       />
       <div className="absolute top-0 right-0 w-[600px] h-[600px] bg-[#3b8c2a]/5 rounded-full blur-[100px] -z-10 translate-x-1/3 -translate-y-1/4"></div>
       <div className="absolute bottom-0 left-0 w-[400px] h-[400px] bg-[#3b6fd4]/5 rounded-full blur-[80px] -z-10 -translate-x-1/4 translate-y-1/4"></div>

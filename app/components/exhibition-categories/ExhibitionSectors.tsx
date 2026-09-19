@@ -4,16 +4,16 @@ import React from "react";
 import Image from "next/image";
 import { ArrowRight, Apple, Leaf, Sprout, Sparkles, Recycle, ShieldCheck, Flower2, Pill, PackageCheck, Store, Plane, Package, Milk, Droplet, Box, Tractor, Globe } from "lucide-react";
 
-import sectors1 from "@/app/assets/home/sectors1.png";
-import sectors2 from "@/app/assets/home/sectors2.png";
-import sectors3 from "@/app/assets/home/sectors3.png";
-import sectors4 from "@/app/assets/home/sectors4.png";
-import sectors5 from "@/app/assets/home/sectors5.png";
-import sectors6 from "@/app/assets/home/sectors6.png";
-import sectors7 from "@/app/assets/home/sectors7.png";
-import sectors8 from "@/app/assets/home/sectors8.png";
-import sectors9 from "@/app/assets/home/sectors9.png";
-import sectors10 from "@/app/assets/home/sectors10.png";
+import sectors1 from "@/app/assets/home/sectors1.webp";
+import sectors2 from "@/app/assets/home/sectors2.webp";
+import sectors3 from "@/app/assets/home/sectors3.webp";
+import sectors4 from "@/app/assets/home/sectors4.webp";
+import sectors5 from "@/app/assets/home/sectors5.webp";
+import sectors6 from "@/app/assets/home/sectors6.webp";
+import sectors7 from "@/app/assets/home/sectors7.webp";
+import sectors8 from "@/app/assets/home/sectors8.webp";
+import sectors9 from "@/app/assets/home/sectors9.webp";
+import sectors10 from "@/app/assets/home/sectors10.webp";
 
 // ── Dynamic Data Configuration ──
 const sectionData = {

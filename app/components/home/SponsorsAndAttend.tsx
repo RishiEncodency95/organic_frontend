@@ -400,7 +400,7 @@ const SponsorsAndAttend = () => {
             </div>
             <div className="flex flex-col text-left font-inter">
               <span className="text-[14px] lg:text-[16px] font-semibold text-white leading-none mb-1">19 &ndash; 21</span>
-              <span className="text-[11px] lg:text-[12px] font-semibold text-[#facc15] uppercase tracking-widest leading-none">FEBRUARY 2027</span>
+              <span className="text-[11px] lg:text-[12px] font-semibold text-[#fef08a] uppercase tracking-widest leading-none">FEBRUARY 2027</span>
             </div>
           </div>
 
@@ -408,12 +408,12 @@ const SponsorsAndAttend = () => {
 
           {/* Item 2: Location */}
           <div className="flex items-center gap-3 group">
-            <div className="w-10 h-10 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-[#facc15] shadow-sm group-hover:bg-[#facc15] group-hover:text-[#0b2912] transition-colors duration-300 shrink-0">
+            <div className="w-10 h-10 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-[#fef08a] shadow-sm group-hover:bg-[#fef08a] group-hover:text-[#0b2912] transition-colors duration-300 shrink-0">
               <MapPin className="w-5 h-5" strokeWidth={2} />
             </div>
             <div className="flex flex-col text-left font-inter">
               <span className="text-[14px] lg:text-[16px] font-semibold text-white leading-none mb-1 uppercase">PRAGATI MAIDAN</span>
-              <span className="text-[11px] lg:text-[12px] font-semibold text-[#facc15] uppercase tracking-widest leading-none">NEW DELHI, INDIA</span>
+              <span className="text-[11px] lg:text-[12px] font-semibold text-[#fef08a] uppercase tracking-widest leading-none">NEW DELHI, INDIA</span>
             </div>
           </div>
 
@@ -421,12 +421,12 @@ const SponsorsAndAttend = () => {
 
           {/* Item 3: Global Edition */}
           <div className="flex items-center gap-3 group">
-            <div className="w-10 h-10 rounded-full bg-[#facc15]/10 border border-[#facc15]/30 flex items-center justify-center text-[#facc15] shadow-sm group-hover:bg-[#facc15] group-hover:text-[#0b2912] transition-colors duration-300 shrink-0">
+            <div className="w-10 h-10 rounded-full bg-[#fef08a]/10 border border-[#fef08a]/30 flex items-center justify-center text-[#fef08a] shadow-sm group-hover:bg-[#fef08a] group-hover:text-[#0b2912] transition-colors duration-300 shrink-0">
               <Globe className="w-5 h-5" strokeWidth={2} />
             </div>
             <div className="flex flex-col text-left font-inter">
               <span className="text-[14px] lg:text-[16px] font-semibold text-white leading-none mb-1 uppercase">GLOBAL EDITION</span>
-              <span className="text-[10px] lg:text-[11px] font-semibold text-[#facc15] uppercase tracking-wider leading-none">CONNECTING THE WORLD<br />OF ORGANIC & NATURAL</span>
+              <span className="text-[10px] lg:text-[11px] font-semibold text-[#fef08a] uppercase tracking-wider leading-none">CONNECTING THE WORLD<br />OF ORGANIC & NATURAL</span>
             </div>
           </div>
 
@@ -434,12 +434,12 @@ const SponsorsAndAttend = () => {
 
           {/* Trophy Info */}
           <div className="flex items-center gap-3 group">
-            <div className="w-10 h-10 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-[#facc15] shadow-sm group-hover:bg-[#facc15] group-hover:text-[#0b2912] transition-colors duration-300 shrink-0">
+            <div className="w-10 h-10 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-[#fef08a] shadow-sm group-hover:bg-[#fef08a] group-hover:text-[#0b2912] transition-colors duration-300 shrink-0">
               <Trophy className="w-5 h-5" strokeWidth={2} />
             </div>
             <div className="flex flex-col text-left font-inter">
               <span className="text-[12px] lg:text-[13px] font-semibold text-white/90 leading-none mb-1 uppercase tracking-wide">BE PART OF INDIA'S BIGGEST</span>
-              <span className="text-[13px] lg:text-[15px] font-semibold text-[#facc15] uppercase leading-none">ORGANIC & NATURAL SHOW!</span>
+              <span className="text-[13px] lg:text-[15px] font-semibold text-[#fef08a] uppercase leading-none">ORGANIC & NATURAL SHOW!</span>
             </div>
           </div>
 

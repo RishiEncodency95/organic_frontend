@@ -168,23 +168,32 @@ const Navbar = () => {
                                         onMouseEnter={() => link.dropdown && setActiveDropdown(link.label)}
                                         onMouseLeave={() => link.dropdown && setActiveDropdown(null)}
                                     >
-                                        <Link
-                                            href={link.path && !link.dropdown ? link.path : "#"}
-                                            onClick={(e) => {
-                                                if (link.dropdown) e.preventDefault();
-                                            }}
-                                            target={link.isExternal ? "_blank" : undefined}
-                                            rel={link.isExternal ? "noopener noreferrer" : undefined}
-                                            style={{ fontFamily: "'Poppins', sans-serif" }}
-                                            className={`px-1.5 2xl:px-2.5 py-2 text-[13px] lg:text-[12.5px] font-semibold tracking-wide uppercase transition-all duration-300 flex items-center gap-1 relative group whitespace-nowrap ${pathname === link.path ? "text-[#14532d]" : "text-slate-700 hover:text-[#14532d]"
-                                                }`}
-                                        >
-                                            {link.label}
-                                            {link.dropdown && (
+                                        {link.dropdown ? (
+                                            <button
+                                                type="button"
+                                                aria-haspopup="true"
+                                                aria-expanded={activeDropdown === link.label}
+                                                onClick={() => setActiveDropdown(activeDropdown === link.label ? null : link.label)}
+                                                style={{ fontFamily: "'Poppins', sans-serif" }}
+                                                className="px-1.5 2xl:px-2.5 py-2 text-[13px] lg:text-[12.5px] font-semibold tracking-wide uppercase transition-all duration-300 flex items-center gap-1 relative group whitespace-nowrap text-slate-700 hover:text-[#14532d]"
+                                            >
+                                                {link.label}
                                                 <ChevronDown className={`w-3 h-3 transition-transform duration-300 ${activeDropdown === link.label ? "rotate-180" : ""}`} />
-                                            )}
-                                            <span className={`absolute bottom-0 left-1.5 right-1.5 h-[2px] bg-[#ea580c] transition-transform duration-300 origin-left ${pathname === link.path ? "scale-x-100" : "scale-x-0 group-hover:scale-x-100"}`} />
-                                        </Link>
+                                                <span className="absolute bottom-0 left-1.5 right-1.5 h-[2px] bg-[#ea580c] transition-transform duration-300 origin-left scale-x-0 group-hover:scale-x-100" />
+                                            </button>
+                                        ) : (
+                                            <Link
+                                                href={link.path || "/"}
+                                                target={link.isExternal ? "_blank" : undefined}
+                                                rel={link.isExternal ? "noopener noreferrer" : undefined}
+                                                style={{ fontFamily: "'Poppins', sans-serif" }}
+                                                className={`px-1.5 2xl:px-2.5 py-2 text-[13px] lg:text-[12.5px] font-semibold tracking-wide uppercase transition-all duration-300 flex items-center gap-1 relative group whitespace-nowrap ${pathname === link.path ? "text-[#14532d]" : "text-slate-700 hover:text-[#14532d]"
+                                                    }`}
+                                            >
+                                                {link.label}
+                                                <span className={`absolute bottom-0 left-1.5 right-1.5 h-[2px] bg-[#ea580c] transition-transform duration-300 origin-left ${pathname === link.path ? "scale-x-100" : "scale-x-0 group-hover:scale-x-100"}`} />
+                                            </Link>
+                                        )}
 
                                         {link.dropdown && (
                                             <AnimatePresence>

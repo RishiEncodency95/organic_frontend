@@ -7,16 +7,16 @@ import Image from "next/image";
 import Link from "next/link";
 import { websiteApi } from "@/lib/api";
 
-import sectors1 from "../../assets/home/sectors1.png";
-import sectors2 from "../../assets/home/sectors2.png";
-import sectors3 from "../../assets/home/sectors3.png";
-import sectors4 from "../../assets/home/sectors4.png";
-import sectors5 from "../../assets/home/sectors5.png";
-import sectors6 from "../../assets/home/sectors6.png";
-import sectors7 from "../../assets/home/sectors7.png";
-import sectors8 from "../../assets/home/sectors8.png";
-import sectors9 from "../../assets/home/sectors9.png";
-import sectors10 from "../../assets/home/sectors10.png";
+import sectors1 from "../../assets/home/sectors1.webp";
+import sectors2 from "../../assets/home/sectors2.webp";
+import sectors3 from "../../assets/home/sectors3.webp";
+import sectors4 from "../../assets/home/sectors4.webp";
+import sectors5 from "../../assets/home/sectors5.webp";
+import sectors6 from "../../assets/home/sectors6.webp";
+import sectors7 from "../../assets/home/sectors7.webp";
+import sectors8 from "../../assets/home/sectors8.webp";
+import sectors9 from "../../assets/home/sectors9.webp";
+import sectors10 from "../../assets/home/sectors10.webp";
 
 const DEFAULT_SECTOR_IMAGES = [
   sectors1,
@@ -216,7 +216,9 @@ const ExpoCategories = () => {
                       src={item.image}
                       alt={item.imageAlt}
                       fill
-                      sizes="(max-width: 640px) 50vw, (max-width: 1024px) 25vw, 20vw"
+                      loading="lazy"
+                      quality={75}
+                      sizes="(max-width: 640px) 50vw, (max-width: 1024px) 25vw, 260px"
                       className="object-cover group-hover:scale-110 transition-transform duration-700"
                     />
                   )}
@@ -250,7 +252,7 @@ const ExpoCategories = () => {
 
         {/* Button */}
         <div className="flex justify-center px-4 mb-2 ">
-          <Link href={data.buttonHref || "/exhibition-categories"} target="_blank" className="group flex items-center justify-center gap-3 px-6 py-2 rounded-full border-2 border-[#F2B40E] bg-[#3b8c2a] text-white text-[12px] md:text-[14px] font-bold uppercase tracking-wider hover:bg-[#F2B40E] hover:text-[#0b2912] hover:shadow-lg transition-all duration-300 min-h-[44px]">
+          <Link href={data.buttonHref || "/exhibition-categories"} target="_blank" className="group flex items-center justify-center gap-3 px-6 py-2 rounded-full border-2 border-[#F2B40E] bg-[#246b1d] hover:bg-[#1b5e20] text-white text-[12px] md:text-[14px] font-bold uppercase tracking-wider hover:shadow-lg transition-all duration-300 min-h-[44px]">
             {data.buttonText}
             <ArrowRight size={16} strokeWidth={2.5} className="group-hover:translate-x-1 transition-transform" />
           </Link>

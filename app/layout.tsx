@@ -7,8 +7,6 @@ import Footer from "./components/layout/Footer";
 import SocialSidebar from "./components/layout/SocialSidebar";
 import WhatsAppFloat from "./components/layout/WhatsAppFloat";
 import SmoothScroll from "./components/SmoothScroll";
-// Preload the LCP hero image so it is discoverable from HTML immediately
-import heroImg from "./assets/home/home11.webp";
 
 const poppins = Poppins({
   subsets: ["latin"],
@@ -98,13 +96,6 @@ export default async function RootLayout({
       className={`${poppins.variable} ${inter.variable} h-full antialiased overflow-x-hidden`}
     >
       <head>
-        {/* LCP image preload — makes the first hero image discoverable from HTML, not JS */}
-        <link
-          rel="preload"
-          as="image"
-          href={heroImg.src}
-          fetchPriority="high"
-        />
         {/* Dynamic Header Scripts from Admin (Google Tag Manager, GA, Meta Pixel) */}
         <HeadScripts html={headerScripts} />
       </head>

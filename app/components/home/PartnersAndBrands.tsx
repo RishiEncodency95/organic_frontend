@@ -157,7 +157,7 @@ const PartnersAndBrands = () => {
   useEffect(() => {
     const fetchLivePartners = async () => {
       try {
-        const backendUrl = process.env.NEXT_PUBLIC_API_URL || "http://localhost:4001";
+        const backendUrl = process.env.NEXT_PUBLIC_SERVER_URL || "";
         const res = await fetch(`${backendUrl}/api/v1/website/home/partners-brands`).catch(() => null);
         if (res && res.ok) {
           const json = await res.json().catch(() => null);

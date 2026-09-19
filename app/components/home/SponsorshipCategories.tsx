@@ -490,7 +490,15 @@ const SponsorshipCategories = () => {
                 className="w-full text-[13px] md:text-[14px] px-3 py-2.5 rounded-md border border-gray-300 focus:outline-none focus:border-[#3b8c2a] focus:ring-1 focus:ring-[#3b8c2a]/30 resize-none text-black placeholder:text-black"
               ></textarea>
 
-              <button type="submit" disabled={loading} className={`w-full py-3 text-white transition-colors text-[12px] md:text-[13px] font-black uppercase rounded-md tracking-wider flex items-center justify-center gap-2 ${otpVerified.email && otpVerified.phone ? 'bg-[#3b8c2a] hover:bg-[#2f7121]' : 'bg-[#cbd5e1] cursor-not-allowed'}`}>
+              <button
+                type="submit"
+                disabled={loading || !(otpVerified.email && otpVerified.phone)}
+                className={`w-full py-3 transition-colors text-[12px] md:text-[13px] font-black uppercase rounded-md tracking-wider flex items-center justify-center gap-2 ${
+                  otpVerified.email && otpVerified.phone
+                    ? 'bg-[#246b1d] hover:bg-[#1b5e20] text-white shadow-md'
+                    : 'bg-slate-200 text-slate-700 border border-slate-300 cursor-not-allowed'
+                }`}
+              >
                 {loading && <Loader2 className="w-4 h-4 animate-spin" />}
                 {otpVerified.email && otpVerified.phone ? 'SUBMIT ENQUIRY' : 'VERIFY EMAIL & WHATSAPP TO SUBMIT'}
               </button>

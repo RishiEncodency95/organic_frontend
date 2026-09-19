@@ -57,7 +57,7 @@ const SocialSidebar = () => {
     let isMounted = true;
     const fetchSocial = async () => {
       try {
-        const apiUrl = process.env.NEXT_PUBLIC_API_URL || "http://localhost:4001/api";
+        const apiUrl = process.env.NEXT_PUBLIC_API_URL || "/api";
         const res = await fetch(`${apiUrl}/seo-settings/advanced`);
         if (res.ok) {
           const json = await res.json();

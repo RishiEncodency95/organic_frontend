@@ -38,9 +38,11 @@ export default function DynamicCanonical() {
 
     // Check backend API for any manual canonical tag override saved by admin
     const pageKey = !pathname || pathname === "/" ? "home" : pathname.replace(/^\/+|\/+$/g, "");
-    const apiUrl = isLocal ? "http://localhost:4000" : (process.env.NEXT_PUBLIC_API_URL || "https://bharatorganicexpo.com/api");
+    const cleanApiBase = isLocal
+      ? "http://localhost:4000/api"
+      : (process.env.NEXT_PUBLIC_API_URL?.replace(/\/+$/, "") || "/api");
 
-    fetch(`${apiUrl}/api/seo/${pageKey}?envType=${isLocal ? "local" : "live"}`)
+    fetch(`${cleanApiBase}/seo/${pageKey}?envType=${isLocal ? "local" : "live"}`)
       .then((res) => {
         if (!res.ok) return null;
         return res.json();

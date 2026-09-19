@@ -229,9 +229,9 @@ export default function Footer() {
 
           {/* Quick Links */}
           <div className="lg:border-r lg:border-white/10 lg:pr-8">
-            <h4 className="font-poppins font-semibold text-[#F3B71B] uppercase text-[13px] tracking-wider mb-1 ml-1 sm:ml-3">
+            <h3 className="font-poppins font-semibold text-[#F3B71B] uppercase text-[13px] tracking-wider mb-1 ml-1 sm:ml-3">
               QUICK LINKS
-            </h4>
+            </h3>
             <Image src={uuogImg} alt="divider" width={101} height={14} loading="lazy" sizes="101px" className="h-3.5 w-auto -mt-1.5 mb-2.5 object-contain" />
 
             <ul className="grid grid-cols-2 sm:grid-cols-1 lg:grid-cols-1 gap-x-3 gap-y-2 text-[13px] sm:text-[14px] text-gray-200 font-medium">
@@ -253,9 +253,9 @@ export default function Footer() {
 
           {/* Conference Highlights */}
           <div className="lg:border-r lg:border-white/10 lg:pr-4">
-            <h4 className="font-poppins font-semibold text-[#F3B71B] uppercase text-[13px] tracking-wider mb-1">
+            <h3 className="font-poppins font-semibold text-[#F3B71B] uppercase text-[13px] tracking-wider mb-1">
               CONFERENCE HIGHLIGHTS
-            </h4>
+            </h3>
             <Image src={uuogImg} alt="divider" width={101} height={14} loading="lazy" sizes="101px" className="h-3.5 w-auto -mt-1.5 mb-2.5 object-contain" />
 
             <div className="flex flex-col gap-3">
@@ -275,9 +275,9 @@ export default function Footer() {
 
           {/* Get In Touch */}
           <div className="lg:border-r lg:border-white/10 lg:pr-4">
-            <h4 className="font-poppins font-semibold text-[#F3B71B] uppercase text-[13px] tracking-wider mb-1 ml-1 sm:ml-3">
+            <h3 className="font-poppins font-semibold text-[#F3B71B] uppercase text-[13px] tracking-wider mb-1 ml-1 sm:ml-3">
               GET IN TOUCH
-            </h4>
+            </h3>
             <Image src={uuogImg} alt="divider" width={101} height={14} loading="lazy" sizes="101px" className="h-3.5 w-auto -mt-1.5 mb-2.5 object-contain" />
 
             <div className="text-[12px] text-gray-200 font-medium space-y-1.5 mb-4 break-all md:whitespace-nowrap">
@@ -333,9 +333,9 @@ export default function Footer() {
 
           {/* Organised By & Connect */}
           <div className="flex flex-col items-center sm:items-start text-center sm:text-left">
-            <h4 className="font-poppins font-semibold text-[#F3B71B] uppercase text-[13px] tracking-wider mb-1">
+            <h3 className="font-poppins font-semibold text-[#F3B71B] uppercase text-[13px] tracking-wider mb-1">
               Organised by:
-            </h4>
+            </h3>
 
             {/* Namo Logo with Sparkles */}
             <div className="relative inline-block w-56 my-2 bg-white rounded-md p-2 shadow-sm">

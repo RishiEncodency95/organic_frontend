@@ -3,7 +3,7 @@
 import React, { useState, useEffect } from "react";
 import Image from "next/image";
 import { Leaf } from "lucide-react";
-import fromIndiaBg from "../../assets/home/fromIndiaBg.png";
+import fromIndiaBg from "../../assets/home/fromIndiaBg.webp";
 
 import form1 from "../../assets/home/form1.png";
 import form2 from "../../assets/home/form2.png";
@@ -161,8 +161,8 @@ const GlobalPlatform = () => {
           src={fromIndiaBg}
           alt="Background map pattern"
           fill
+          loading="lazy"
           className="w-full h-full object-fill opacity-20 mix-blend-multiply"
-          priority
         />
       </div>
 
