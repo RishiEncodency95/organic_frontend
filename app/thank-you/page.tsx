@@ -33,7 +33,7 @@ const LEAF_RIGHT = "/assets/ChatGPT Image Sep 21, 2026, 02_06_33 PM.png";
 
 /* Participation card assets (TEXT-FREE background + real HTML text format) */
 const CARD_BG = "/assets/participation-card-bg.png"; // leaves + hands/soil artwork, NO text
-const EXPO_LOGO = "/assets/boe-logo.png";
+const EXPO_LOGO = "/separated-assets/bharat-organic-leaf.png";
 const PARTICIPANT_AVATAR = ""; // e.g. "/assets/users/rahul.png" — empty => default avatar glyph
 
 /* Reusable participant data — card ka content yahi se change hoga */
@@ -554,19 +554,123 @@ export default function ThankYouPage() {
           </div>
 
           {/* Participation Card Section */}
-          <section className="relative mt-[19px] flex flex-col items-center gap-6 overflow-hidden rounded-xl border border-[#e3e9e5] bg-white p-5 md:flex-row md:gap-10 md:p-6 md:pl-8">
-            <ParticipationCard
-              name={PARTICIPANT.name}
-              designation={PARTICIPANT.designation}
-              company={PARTICIPANT.company}
-              avatar={PARTICIPANT.avatar}
-            />
+          <section className="relative mt-[19px] flex flex-col items-center gap-6 overflow-hidden rounded-2xl border border-[#e3e9e5] bg-white p-5 md:flex-row md:gap-10 md:p-6 md:pl-7 md:pr-10">
+            {/* Participation Card - Exact Match */}
+            <div className="relative w-full shrink-0 rounded-[22px] border border-[#dce8dd] bg-[#f4f9f4] shadow-[0_12px_32px_rgba(0,0,0,0.08)] md:w-[460px]" style={{ aspectRatio: "905/540", overflow: "hidden" }}>
+              {/* Card Background - Soft Mint/Green Tinted Gradient */}
+              <div className="absolute inset-0 bg-gradient-to-br from-[#f8fbf8] via-[#edf6ee] to-[#e4f2e6]" />
+              <div className="absolute right-0 top-0 bottom-0 w-[60%] bg-gradient-to-l from-[#e2f1e5]/80 via-[#edf6ef]/50 to-transparent pointer-events-none z-0" />
 
+              {/* RIGHT TOP Image - Together for a Greener Tomorrow */}
+              <div className="pointer-events-none absolute right-[3%] top-[4%] w-[32%] h-[40%] z-[2]">
+                <Image
+                  src="/assets/ChatGPT Image Sep 21, 2026, 04_34_45 PM.png"
+                  alt="Together for a Greener Tomorrow"
+                  fill
+                  sizes="180px"
+                  className="object-contain object-right-top"
+                />
+              </div>
+
+              {/* RIGHT BOTTOM Image - Hands with Plant */}
+              <div className="pointer-events-none absolute right-[0%] bottom-[0%] w-[38%] h-[52%] z-[1]">
+                <Image
+                  src="/assets/ChatGPT Image Sep 21, 2026, 04_36_08 PM.png"
+                  alt="Plant in hands"
+                  fill
+                  sizes="220px"
+                  className="object-contain object-right-bottom"
+                />
+              </div>
+
+              {/* LEFT BOTTOM - Leaf branch (Overlapping white container) */}
+              <div className="pointer-events-none absolute left-[-2%] bottom-[-2%] w-[28%] h-[75%] z-[10]">
+                <Image
+                  src={LEAF_LEFT}
+                  alt="Leaves"
+                  fill
+                  sizes="170px"
+                  className="object-contain object-left-bottom"
+                />
+              </div>
+
+              {/* Card Content - Matching Real Design with proper spacing & gaps */}
+              <div className="relative z-10 flex h-full flex-col justify-between p-4 md:p-5 pl-[6%] pr-[4%] pt-[4%] pb-[4%]">
+                {/* Logo Section - Top Left (Leaf Icon + HTML Text Format) */}
+                <div className="flex items-center gap-2.5 pl-6 pt-1">
+                  <div className="relative h-[34px] w-[34px] shrink-0">
+                    <Image
+                      src={EXPO_LOGO}
+                      alt="Bharat Organic Expo"
+                      fill
+                      sizes="34px"
+                      className="object-contain"
+                    />
+                  </div>
+                  <div>
+                    <p className="text-[14.5px] font-bold leading-tight text-[#084d2e]">
+                      Bharat Organic Expo
+                    </p>
+                    <p className="text-[7.5px] font-extrabold uppercase tracking-wide leading-tight text-[#d97706]">
+                      Organic Today for a Healthy Tomorrow
+                    </p>
+                  </div>
+                </div>
+
+                {/* Participant Info - Avatar & Details */}
+                <div className="flex items-center gap-3.5 pl-6 my-auto z-[2]">
+                  <div className="relative h-[50px] w-[50px] shrink-0 overflow-hidden rounded-full bg-[#d9d9d9]">
+                    {PARTICIPANT.avatar ? (
+                      <Image
+                        src={PARTICIPANT.avatar}
+                        alt={PARTICIPANT.name}
+                        fill
+                        sizes="50px"
+                        className="object-cover"
+                      />
+                    ) : (
+                      <AvatarGlyph />
+                    )}
+                  </div>
+
+                  <div className="min-w-0">
+                    <p className="text-[15.5px] font-bold leading-[19px] text-[#111827]">
+                      {PARTICIPANT.name}
+                    </p>
+                    <p className="text-[12px] font-medium leading-[15px] text-[#4b5563]">
+                      {PARTICIPANT.designation}
+                    </p>
+                    <p className="text-[12px] font-medium leading-[15px] text-[#4b5563]">
+                      {PARTICIPANT.company}
+                    </p>
+                  </div>
+                </div>
+
+                {/* Green Pill Badge - Compact width */}
+                <div className="mx-auto w-fit rounded-full bg-[#084d2e] px-5 py-1.5 shadow-[0_4px_14px_rgba(8,77,46,0.3)] text-center -mt-4 mb-3 z-[3]">
+                  <p className="whitespace-pre-line text-[11.5px] font-semibold leading-[15px] text-white">
+                    {EVENT.tagline}
+                  </p>
+                </div>
+
+                {/* Date + Venue */}
+                <div className="text-center pt-1 z-[2]">
+                  <p className="text-[12px] font-bold leading-[16px] text-[#111827]">
+                    {EVENT.dates}
+                  </p>
+                  <p className="text-[10.5px] font-medium leading-[14px] text-[#4b5563]">
+                    {EVENT.venue}
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            {/* Right Side Content & Button */}
             <div className="relative z-10 flex-1 px-2 pb-2 md:px-0 md:pb-0">
-              <h2 className="text-[24px] md:text-[28px] font-bold leading-tight tracking-[-0.01em] text-[#07553a]">
+              <h2 className="text-[26px] md:text-[28px] font-bold leading-tight tracking-[-0.015em] text-[#054d2e]">
                 Get Your Participation Card
               </h2>
-              <p className="mt-3 whitespace-pre-line text-[16px] leading-[26px] text-[#374151]">
+              <p className="mt-3 whitespace-pre-line text-[15px] md:text-[16px] leading-[25px] text-[#334155]">
                 {
                   "Download your personalised participation card\nand share it with your network."
                 }
@@ -574,18 +678,18 @@ export default function ThankYouPage() {
               <a
                 href={PARTICIPATION_CARD_DOWNLOAD}
                 download
-                className="mt-6 inline-flex h-[52px] w-full items-center justify-center gap-3 rounded-lg bg-[#07553a] px-6 text-[16px] font-semibold text-white transition-all hover:bg-[#05442e] shadow-sm md:w-auto"
+                className="mt-6 inline-flex h-[50px] w-full items-center justify-center gap-2.5 rounded-lg bg-[#054d2e] px-6 text-[15px] font-semibold text-white transition-all hover:bg-[#033a22] shadow-sm md:w-auto"
               >
-                <Download className="h-5 w-5" strokeWidth={2} />
+                <Download className="h-4.5 w-4.5" strokeWidth={2.2} />
                 <span>Download Card</span>
-                <ArrowRight className="h-4 w-4" strokeWidth={2} />
+                <ArrowRight className="h-4 w-4" strokeWidth={2.2} />
               </a>
             </div>
 
-            {/* Right side background leaf graphic */}
-            <div className="pointer-events-none absolute right-0 top-0 bottom-0 h-full w-[160px] md:w-[220px] z-0 opacity-90 hidden sm:block">
+            {/* Right side background leaves */}
+            <div className="pointer-events-none absolute right-0 top-0 bottom-0 h-full w-[160px] md:w-[220px] z-0 select-none overflow-hidden hidden sm:block opacity-40">
               <Image
-                src={LEAF_REAL}
+                src={LEAF_RIGHT}
                 alt=""
                 fill
                 className="object-contain object-right"
