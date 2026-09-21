@@ -229,7 +229,7 @@ export default function UploadCvModal({
 }: {
     job?: Job;
     onClose?: () => void;
-    onAnalyze?: (score: number) => void;
+    onAnalyze?: (data: CandidateAnalysisData) => void;
 }) {
     const [file, setFile] = useState<File | null>(null);
     const [isAnalyzing, setIsAnalyzing] = useState(false);
