@@ -349,6 +349,7 @@ export default function CareersClientContent() {
 
                     {/* Temporary buttons */}
                     <div className="inline-flex items-center gap-2">
+                      {/* 
                       <button
                         type="button"
                         onClick={() => setSelectedScore(58)}
@@ -384,6 +385,13 @@ export default function CareersClientContent() {
                       >
                         Aman
                       </button>
+                      */}
+                      <Link
+                        href="/feedback"
+                        className="rounded-full bg-[#075f38] px-3.5 py-1 text-xs font-bold text-white transition hover:bg-[#054c2d]"
+                      >
+                        Feedback
+                      </Link>
                     </div>
                   </div>
                   <p className="mt-2 text-[clamp(13px,1vw,17px)] leading-snug text-[#314256]">
