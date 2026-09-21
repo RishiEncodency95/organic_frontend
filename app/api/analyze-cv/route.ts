@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
+const pdfParse = require("pdf-parse");
 
 export async function POST(req: NextRequest) {
   try {
@@ -24,12 +25,56 @@ export async function POST(req: NextRequest) {
     const fallbackFirstName = fallbackName.split(" ")[0] || "Candidate";
 
     let base64Data = "";
-    let mimeType = file?.type || "application/pdf";
+    let mimeType = "application/pdf";
+    let textSnippet = "";
+    let extractedEmailFromBuffer: string | null = null;
+    let extractedPhoneFromBuffer: string | null = null;
+    let extractedLinkedinFromBuffer: string | null = null;
 
     if (file) {
       const bytes = await file.arrayBuffer();
       const buffer = Buffer.from(bytes);
       base64Data = buffer.toString("base64");
+      
+      let extractedPdfText = "";
+      if (fileName.toLowerCase().endsWith(".pdf")) {
+        try {
+          const pdfData = await pdfParse(buffer);
+          extractedPdfText = pdfData.text || "";
+        } catch (pdfErr) {
+          console.warn("pdf-parse error:", pdfErr);
+        }
+      }
+
+      const rawText = (extractedPdfText + "\n" + buffer.toString("utf-8")).trim();
+      
+      // Extract details directly from raw file bytes & PDF text via regex
+      const emailMatches = rawText.match(/[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}/gi);
+      if (emailMatches && emailMatches.length > 0) {
+        const valid = emailMatches.find(e => !e.toLowerCase().includes("example") && !e.toLowerCase().includes("schema") && !e.toLowerCase().includes("domain"));
+        if (valid) extractedEmailFromBuffer = valid;
+      }
+
+      const phoneMatches = rawText.match(/(?:\+?\d{1,3}[\s-]?)?\(?\d{2,5}\)?[\s-]?\d{3,5}[\s-]?\d{3,5}/g);
+      if (phoneMatches && phoneMatches.length > 0) {
+        const validPhone = phoneMatches.find(p => p.replace(/\D/g, "").length >= 10 && p.replace(/\D/g, "").length <= 13);
+        if (validPhone) extractedPhoneFromBuffer = validPhone.trim();
+      }
+
+      const linkedinMatches = rawText.match(/(?:https?:\/\/)?(?:www\.)?linkedin\.com\/in\/[a-zA-Z0-9_-]+/gi);
+      if (linkedinMatches && linkedinMatches.length > 0) {
+        extractedLinkedinFromBuffer = linkedinMatches[0].trim();
+      }
+
+      // Extract clean text snippet to send to Gemini prompt as plain text context
+      textSnippet = rawText.replace(/[^\x20-\x7E\n\r\t]/g, " ").replace(/\s+/g, " ").trim().slice(0, 4000);
+
+      const lowerName = fileName.toLowerCase();
+      if (lowerName.endsWith(".pdf")) mimeType = "application/pdf";
+      else if (lowerName.endsWith(".png")) mimeType = "image/png";
+      else if (lowerName.endsWith(".jpg") || lowerName.endsWith(".jpeg")) mimeType = "image/jpeg";
+      else if (lowerName.endsWith(".webp")) mimeType = "image/webp";
+      else mimeType = "text/plain";
     }
 
     const apiKey = process.env.GEMINI_API_KEY;
@@ -40,13 +85,18 @@ export async function POST(req: NextRequest) {
         text: `You are an AI Candidate Evaluator for "Bharat Organic Expo".
 Analyze the attached CV/Resume file named "${fileName}" for the job role: "${jobTitle}" requiring "${jobExperience}" of experience.
 
+RAW DOCUMENT TEXT EXTRACTED FROM CV FILE:
+"""
+${textSnippet || "No raw text snippet available. Use attached document."}
+"""
+
 CRITICAL EXTRACTION & SCORING RULES:
-1. "candidateName": Extract the real full name written inside the CV. If no full name is found, use "${fallbackName}".
+1. "candidateName": Read the CV content carefully and extract the candidate's actual full name. If no full name is inside the CV, use "${fallbackName}".
 2. "firstName": Candidate's first name.
-3. "email": Extract the real email address written inside the CV. **Return NULL if NO email address is found in the CV.** DO NOT invent a fake email!
-4. "phone": Extract the real phone number written inside the CV. **Return NULL if NO phone number is found in the CV.** DO NOT invent a fake phone number!
-5. "linkedin": Extract the real LinkedIn profile URL written inside the CV. **Return NULL if NO LinkedIn URL is found in the CV.** DO NOT invent a fake LinkedIn URL!
-6. "score": Calculate a real match percentage score (0 to 100) based on candidate's experience vs job requirements.
+3. "email": Extract the candidate's actual email address (e.g. "vansh.full@gmail.com"). Only return null if NO email address exists in the document text.
+4. "phone": Extract the candidate's actual phone number (e.g. "+91 98765 43210"). Only return null if NO phone number exists in the document text.
+5. "linkedin": Extract the candidate's LinkedIn profile URL. Only return null if NO LinkedIn link exists in the document text.
+6. "score": Calculate a realistic match percentage score (0 to 100) based on candidate's experience vs job requirements.
 7. "summary": A brief 2-sentence feedback explaining why this score was awarded.
 8. "requirementsMet": Array of 4-5 key requirements met by candidate based on their actual CV content.
 9. "breakdown": Object with percentage scores (0-100) for:
@@ -57,15 +107,15 @@ CRITICAL EXTRACTION & SCORING RULES:
    - "industryExperience": number (0-100)
    - "locationPreference": number (0-100)
 
-Return ONLY raw valid JSON format like:
+IMPORTANT: Return ONLY raw valid JSON matching this exact structure:
 {
-  "candidateName": "${fallbackName}",
-  "firstName": "${fallbackFirstName}",
-  "email": null,
-  "phone": null,
-  "linkedin": null,
+  "candidateName": "Extracted Candidate Full Name",
+  "firstName": "First Name",
+  "email": "extracted_email_or_null",
+  "phone": "extracted_phone_or_null",
+  "linkedin": "extracted_linkedin_or_null",
   "score": 78,
-  "summary": "Strong alignment with sales target background and expo experience.",
+  "summary": "Candidate shows strong sales and management experience.",
   "requirementsMet": [
     "Relevant experience in exhibition / trade show sales",
     "Exposure to client acquisition & sponsorships",
@@ -85,16 +135,16 @@ Return ONLY raw valid JSON format like:
       }
     ];
 
-    if (base64Data) {
+    if (base64Data && (mimeType === "application/pdf" || mimeType.startsWith("image/"))) {
       userParts.push({
         inline_data: {
-          mime_type: mimeType.startsWith("image/") || mimeType === "application/pdf" ? mimeType : "application/pdf",
+          mime_type: mimeType,
           data: base64Data
         }
       });
     }
 
-    const candidateModels = ["gemini-2.5-flash", "gemini-flash-latest", "gemini-2.5-pro"];
+    const candidateModels = ["gemini-2.5-flash", "gemini-2.0-flash", "gemini-flash-latest", "gemini-2.5-pro"];
     let responseText = "";
 
     if (apiKey) {
@@ -106,7 +156,7 @@ Return ONLY raw valid JSON format like:
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({
               contents: [{ role: "user", parts: userParts }],
-              generationConfig: { temperature: 0.2, maxOutputTokens: 600 },
+              generationConfig: { temperature: 0.1, maxOutputTokens: 2048 },
             }),
           });
 
@@ -125,13 +175,25 @@ Return ONLY raw valid JSON format like:
       const jsonMatch = responseText.match(/\{[\s\S]*\}/);
       if (jsonMatch) {
         const parsed = JSON.parse(jsonMatch[0]);
+        const finalEmail = (parsed.email && parsed.email !== "null" && !parsed.email.includes("extracted_email")) 
+          ? parsed.email 
+          : extractedEmailFromBuffer;
+        
+        const finalPhone = (parsed.phone && parsed.phone !== "null" && !parsed.phone.includes("extracted_phone")) 
+          ? parsed.phone 
+          : extractedPhoneFromBuffer;
+        
+        const finalLinkedin = (parsed.linkedin && parsed.linkedin !== "null" && !parsed.linkedin.includes("extracted_linkedin")) 
+          ? parsed.linkedin 
+          : extractedLinkedinFromBuffer;
+
         return NextResponse.json({
           success: true,
-          candidateName: parsed.candidateName || fallbackName,
+          candidateName: parsed.candidateName && !parsed.candidateName.includes("Extracted Candidate") ? parsed.candidateName : fallbackName,
           firstName: parsed.firstName || (parsed.candidateName ? parsed.candidateName.split(" ")[0] : fallbackFirstName),
-          email: parsed.email || null,
-          phone: parsed.phone || null,
-          linkedin: parsed.linkedin || null,
+          email: finalEmail || null,
+          phone: finalPhone || null,
+          linkedin: finalLinkedin || null,
           score: typeof parsed.score === "number" ? parsed.score : 72,
           summary: parsed.summary || "Evaluation complete.",
           requirementsMet: Array.isArray(parsed.requirementsMet) ? parsed.requirementsMet : [
@@ -161,9 +223,9 @@ Return ONLY raw valid JSON format like:
       success: true,
       candidateName: fallbackName,
       firstName: fallbackFirstName,
-      email: null,
-      phone: null,
-      linkedin: null,
+      email: extractedEmailFromBuffer || null,
+      phone: extractedPhoneFromBuffer || null,
+      linkedin: extractedLinkedinFromBuffer || null,
       score: fallbackScore,
       summary: "Evaluated candidate profile successfully.",
       requirementsMet: [

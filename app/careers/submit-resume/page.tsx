@@ -1094,12 +1094,6 @@ function ProfileCard() {
                 <span className="truncate">{candidate.linkedin}</span>
               </p>
             )}
-
-            {!Boolean(candidate.email) && !Boolean(candidate.phone) && !Boolean(candidate.linkedin) && (
-              <p className="text-[12px] italic text-[#64748b]">
-                Contact details available in CV
-              </p>
-            )}
           </div>
         </div>
       </div>
@@ -1557,8 +1551,8 @@ export function EligibilityModal({
 import UploadCvModal from "@/app/components/careers/uploade_cv/page";
 
 export default function CareerEligibilityPage() {
-  const [eligibilityOpen, setEligibilityOpen] = useState(true);
-  const [uploadCvOpen, setUploadCvOpen] = useState(false);
+  const [eligibilityOpen, setEligibilityOpen] = useState(false);
+  const [uploadCvOpen, setUploadCvOpen] = useState(true);
   const [candidateData, setCandidateData] = useState<CandidateProfileData>(defaultCandidateData);
 
   return (
