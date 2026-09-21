@@ -34,7 +34,7 @@ const script = Kaushan_Script({
 /* ------------------------------------------------------------------ */
 /*  Images — change these paths if your assets live somewhere else     */
 /* ------------------------------------------------------------------ */
-const HERO_IMAGE = "/assets/careers/image.png"; // crowd / expo photo (right side of hero)
+const HERO_IMAGE = "/assets/banner.png";
 
 /* ------------------------------------------------------------------ */
 /*  Shared classes                                                     */
@@ -270,67 +270,35 @@ export default function FeedbackPage() {
       className={`${inter.className} relative min-h-screen overflow-hidden bg-[#f6faf5] text-[#0f172a] antialiased`}
     >
       {/* ============================ HERO ============================ */}
-      <header className="relative h-[256px] overflow-hidden bg-gradient-to-r from-[#f1f6ec] via-[#f6faf3] to-white">
-        {/* Right photo with curved left edge */}
-        <div
-          className="absolute inset-y-0 right-0 hidden w-[56%] md:block"
-          style={{ clipPath: "ellipse(85% 130% at 100% 100%)" }}
-        >
-          <Image
-            src={HERO_IMAGE}
-            alt="Bharat Organic Expo visitors"
-            fill
-            priority
-            sizes="(min-width: 768px) 56vw, 0px"
-            className="object-cover"
-          />
-          <div className="absolute inset-0 bg-gradient-to-r from-white/70 via-white/10 to-transparent" />
-        </div>
+      <header className="relative h-[340px] md:h-[380px] w-full overflow-hidden bg-[#f1f6ec]">
+        {/* Full background banner image */}
+        <Image
+          src={HERO_IMAGE}
+          alt="Bharat Organic Expo banner"
+          fill
+          priority
+          sizes="100vw"
+          className="object-cover object-center pointer-events-none select-none z-0"
+        />
 
-        {/* Big leaf, top right - removed */}
-
-        {/* Tagline */}
-        <div
-          className={`${script.className} pointer-events-none absolute right-[31%] top-[64px] hidden -rotate-[11deg] text-[30px] leading-[1.18] text-[#0f6b3a] md:block`}
-        >
-          Together
-          <br />
-          for a Greener
-          <br />
-          Tomorrow
-          <svg
-            viewBox="0 0 200 40"
-            className="mt-1 h-8 w-[190px]"
-            fill="none"
-            aria-hidden
-          >
-            <path
-              d="M0 30C50 32 130 24 198 4"
-              stroke="#0f6b3a"
-              strokeWidth="2.2"
-              strokeLinecap="round"
-            />
-          </svg>
-        </div>
-
-        {/* Text block */}
-        <div className="relative z-10 mx-auto flex h-full max-w-[1140px] flex-col justify-center px-5 md:pl-[22px]">
-          <span className="text-[13px] font-medium uppercase leading-4 tracking-[0.06em] text-[#1f2a24]">
+        {/* Text block aligned with navbar */}
+        <div className="relative z-10 mx-auto flex h-full w-full max-w-[1280px] flex-col justify-start pt-10 md:pt-19 px-4 md:px-14">
+          <span className="text-[14px] md:text-[15px] font-semibold uppercase leading-4 tracking-[0.08em] text-[#1f2a24]">
             Share Your Experience
           </span>
-          <h1 className="mt-3.5 text-[32px] font-semibold leading-10 tracking-[-0.01em] text-[#0a4f35]">
+          <h1 className="mt-2.5 text-[36px] md:text-[42px] font-bold leading-[1.2] tracking-[-0.015em] text-[#0a4f35]">
             Your Experience Helps Us Grow
           </h1>
-          <p className="mt-2 max-w-[520px] text-[16px] leading-[26px] text-[#1f2937]">
+          <p className="mt-2.5 max-w-[560px] text-[17px] md:text-[18px] leading-[28px] font-medium text-[#1f2937]">
             Help us create better experiences and greater opportunities for the
             organic industry.
           </p>
-          <div className="mt-5 flex items-center gap-2 text-[13px] leading-5 text-[#4b5563]">
+          <div className="mt-4 flex items-center gap-2 text-[14px] leading-5 text-[#4b5563] font-medium">
             <Link href="/" className="transition-colors hover:text-[#0a4f35]">
               Home
             </Link>
-            <ChevronRight className="h-3.5 w-3.5" strokeWidth={1.75} />
-            <span className="font-medium text-[#1f3d2f]">
+            <ChevronRight className="h-4 w-4" strokeWidth={2} />
+            <span className="font-semibold text-[#1f3d2f]">
               Share Your Experience
             </span>
           </div>
@@ -340,7 +308,7 @@ export default function FeedbackPage() {
       {/* ======================= SIDE LEAVES (decor) ======================= */}
       <Leaf
         gid="leafLeft"
-        className="pointer-events-none absolute -left-6 top-[268px] hidden h-[170px] w-[85px] rotate-[-18deg] opacity-25 blur-[1px] xl:block"
+        className="pointer-events-none absolute -left-6 top-[300px] hidden h-[170px] w-[85px] rotate-[-18deg] opacity-25 blur-[1px] xl:block"
       />
       <Leaf
         gid="leafRight"
@@ -348,8 +316,8 @@ export default function FeedbackPage() {
       />
 
       {/* ============================ FORM CARD ============================ */}
-      <main className="relative z-10 mx-auto -mt-3 w-full max-w-[1140px] px-4 pb-14">
-        <div className="rounded-xl border border-[#e4ece6] bg-white px-5 pb-7 pt-6 shadow-[0_2px_14px_rgba(16,60,40,0.05)] md:px-8">
+      <main className="relative z-10 mx-auto -mt-10 w-full max-w-[1600px] px-4 md:px-11 pb-14">
+        <div className="w-full rounded-xl border border-[#e4ece6] bg-white px-6 pb-8 pt-7 shadow-[0_2px_14px_rgba(16,60,40,0.05)] md:px-10">
           {/* Form header */}
           <h2 className="text-[26px] font-semibold leading-8 tracking-[-0.01em] text-[#111d17]">
             Share Your Feedback
