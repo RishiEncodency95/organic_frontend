@@ -1,5 +1,4 @@
 import { NextRequest, NextResponse } from "next/server";
-const pdfParse = require("pdf-parse");
 
 export async function POST(req: NextRequest) {
   try {
@@ -39,6 +38,7 @@ export async function POST(req: NextRequest) {
       let extractedPdfText = "";
       if (fileName.toLowerCase().endsWith(".pdf")) {
         try {
+          const pdfParse = require("pdf-parse");
           const pdfData = await pdfParse(buffer);
           extractedPdfText = pdfData.text || "";
         } catch (pdfErr) {

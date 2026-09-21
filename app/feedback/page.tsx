@@ -1,197 +1,629 @@
+"use client";
+
+import React, { useState } from "react";
+import Image from "next/image";
+import Link from "next/link";
+import { Inter, Kaushan_Script } from "next/font/google";
+import {
+  Handshake,
+  UsersRound,
+  Mic,
+  Camera,
+  Star,
+  Lock,
+  ArrowRight,
+  ChevronDown,
+  ChevronRight,
+  ImageIcon,
+} from "lucide-react";
+
+/* ------------------------------------------------------------------ */
+/*  Fonts (smooth, no heavy bold)                                      */
+/* ------------------------------------------------------------------ */
+const inter = Inter({
+  subsets: ["latin"],
+  weight: ["400", "500", "600"],
+  display: "swap",
+});
+const script = Kaushan_Script({
+  subsets: ["latin"],
+  weight: "400",
+  display: "swap",
+});
+
+/* ------------------------------------------------------------------ */
+/*  Images — change these paths if your assets live somewhere else     */
+/* ------------------------------------------------------------------ */
+const HERO_IMAGE = "/assets/careers/image.png"; // crowd / expo photo (right side of hero)
+
+/* ------------------------------------------------------------------ */
+/*  Shared classes                                                     */
+/* ------------------------------------------------------------------ */
+const inputCls =
+  "h-10 w-full rounded-md border border-[#d8dfdb] bg-white px-3.5 text-[13px] text-[#1f2937] placeholder:text-[#9ca3af] outline-none transition-colors focus:border-[#0b6b3d] focus:ring-1 focus:ring-[#0b6b3d]";
+const labelCls = "mb-1.5 block text-[14px] leading-5 text-[#1f2937]";
+const Req = () => <span className="text-[#ef4444]"> *</span>;
+
+/* ------------------------------------------------------------------ */
+/*  Small SVG helpers                                                  */
+/* ------------------------------------------------------------------ */
+type IconProps = { className?: string; strokeWidth?: number };
+
+const BoothIcon = ({ className, strokeWidth = 1.5 }: IconProps) => (
+  <svg
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth={strokeWidth}
+    strokeLinecap="round"
+    strokeLinejoin="round"
+    className={className}
+    aria-hidden
+  >
+    <rect x="3" y="3" width="18" height="10" rx="1" />
+    <rect x="8" y="6" width="8" height="4" rx="0.5" />
+    <path d="M6 13v8M18 13v8M4 21h4M16 21h4" />
+  </svg>
+);
+
+const GroupIcon = ({ className, strokeWidth = 1.5 }: IconProps) => (
+  <svg
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth={strokeWidth}
+    strokeLinecap="round"
+    strokeLinejoin="round"
+    className={className}
+    aria-hidden
+  >
+    <circle cx="12" cy="5" r="2.5" />
+    <circle cx="6" cy="11.5" r="2.5" />
+    <circle cx="18" cy="11.5" r="2.5" />
+    <path d="M2 21a4 4 0 0 1 8 0" />
+    <path d="M14 21a4 4 0 0 1 8 0" />
+    <path d="M9.5 9.5a3 3 0 0 1 5 0" />
+  </svg>
+);
+
+const IndiaFlag = () => (
+  <svg viewBox="0 0 24 16" className="h-4 w-6 rounded-[2px]" aria-hidden>
+    <rect width="24" height="5.34" y="0" fill="#ff9933" />
+    <rect width="24" height="5.34" y="5.33" fill="#ffffff" />
+    <rect width="24" height="5.34" y="10.66" fill="#138808" />
+    <circle cx="12" cy="8" r="2.1" fill="none" stroke="#000080" strokeWidth="0.7" />
+  </svg>
+);
+
+const Leaf = ({
+  gid,
+  className,
+  style,
+}: {
+  gid: string;
+  className?: string;
+  style?: React.CSSProperties;
+}) => (
+  <svg viewBox="0 0 120 240" className={className} style={style} aria-hidden>
+    <defs>
+      <linearGradient id={gid} x1="0" y1="1" x2="1" y2="0">
+        <stop offset="0" stopColor="#14602a" />
+        <stop offset="1" stopColor="#62b648" />
+      </linearGradient>
+    </defs>
+    <path
+      d="M12 236C-4 150 22 58 104 4c16 88-6 190-92 232Z"
+      fill={`url(#${gid})`}
+    />
+    <path
+      d="M12 236C46 150 76 78 104 4"
+      stroke="#e3f6d8"
+      strokeOpacity=".55"
+      strokeWidth="1.5"
+      fill="none"
+    />
+    <path
+      d="M38 192l34 8M52 152l40 8M68 112l34 4M82 72l22-8"
+      stroke="#e3f6d8"
+      strokeOpacity=".35"
+      strokeWidth="1"
+      fill="none"
+    />
+  </svg>
+);
+
+/* ------------------------------------------------------------------ */
+/*  Reusable pieces                                                    */
+/* ------------------------------------------------------------------ */
+const StepHeading = ({
+  n,
+  children,
+  className = "mb-3",
+}: {
+  n: number;
+  children: React.ReactNode;
+  className?: string;
+}) => (
+  <div className={`flex items-center gap-[22px] ${className}`}>
+    <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-[#0b5d3b] text-[14px] font-medium text-white">
+      {n}
+    </span>
+    <h3 className="text-[17px] font-medium leading-6 text-[#111d17]">
+      {children}
+    </h3>
+  </div>
+);
+
+const StarRating = ({
+  value,
+  onChange,
+}: {
+  value: number;
+  onChange: (val: number) => void;
+}) => (
+  <div className="flex items-center gap-3">
+    {[1, 2, 3, 4, 5].map((star) => (
+      <button
+        key={star}
+        type="button"
+        aria-label={`${star} star`}
+        onClick={() => onChange(star)}
+        className="group focus:outline-none"
+      >
+        <Star
+          className={`h-6 w-6 transition-colors ${star <= value
+            ? "fill-[#f59e0b] text-[#f59e0b]"
+            : "fill-transparent text-[#4b5563] group-hover:text-[#f59e0b]"
+            }`}
+          strokeWidth={1.4}
+        />
+      </button>
+    ))}
+  </div>
+);
+
+const Radio = ({
+  checked,
+  onChange,
+  value,
+  children,
+}: {
+  checked: boolean;
+  onChange: (v: string) => void;
+  value: string;
+  children: React.ReactNode;
+}) => (
+  <label className="flex cursor-pointer items-center gap-[14px] text-[14px] text-[#1f2937]">
+    <input
+      type="radio"
+      name="consent"
+      value={value}
+      checked={checked}
+      onChange={() => onChange(value)}
+      className="sr-only"
+    />
+    <span
+      className={`flex h-[22px] w-[22px] shrink-0 items-center justify-center rounded-full border transition-colors ${checked ? "border-[#0b6b3d] bg-[#0b6b3d]" : "border-[#b8c2bd] bg-white"
+        }`}
+    >
+      {checked && (
+        <span className="flex h-[14px] w-[14px] items-center justify-center rounded-full bg-white">
+          <span className="h-[8px] w-[8px] rounded-full bg-[#0b6b3d]" />
+        </span>
+      )}
+    </span>
+    {children}
+  </label>
+);
+
+const UploadBox = ({ label, name }: { label: string; name: string }) => {
+  const [fileName, setFileName] = useState("");
+  return (
+    <div>
+      <span className={labelCls}>{label}</span>
+      <label className="flex h-[79px] cursor-pointer items-center justify-center gap-[38px] rounded-md border border-[#dde3e0] bg-white transition-colors hover:bg-[#fafcfb]">
+        <input
+          type="file"
+          name={name}
+          accept="image/png,image/jpeg"
+          className="sr-only"
+          onChange={(e) => setFileName(e.target.files?.[0]?.name ?? "")}
+        />
+        <ImageIcon
+          className="h-[30px] w-[30px] shrink-0 text-[#374151]"
+          strokeWidth={1.25}
+        />
+        <span className="text-[13px] leading-5 text-[#6b7280]">
+          <span className="font-medium text-[#111827]">Click to upload</span> or
+          drag and drop
+          <span className="block max-w-[220px] truncate text-[12px] text-[#9ca3af]">
+            {fileName || "JPG, PNG (Max 5MB)"}
+          </span>
+        </span>
+      </label>
+    </div>
+  );
+};
+
+/* ------------------------------------------------------------------ */
+/*  Page                                                               */
+/* ------------------------------------------------------------------ */
+const roles: { label: string; icon: React.ElementType }[] = [
+  { label: "Exhibitor", icon: BoothIcon },
+  { label: "Buyer", icon: Handshake },
+  { label: "Visitor", icon: UsersRound },
+  { label: "Speaker", icon: Mic },
+  { label: "Partner /\nAssociation", icon: GroupIcon },
+  { label: "Media", icon: Camera },
+];
+
 export default function FeedbackPage() {
-  const A = "/assets/";
-
-  const Icon = ({ children, size = 24, stroke = 2 }) => (
-    <svg width={size} height={size} viewBox="0 0 24 24" fill="none"
-      stroke="currentColor" strokeWidth={stroke} strokeLinecap="round" strokeLinejoin="round"
-      aria-hidden="true">{children}</svg>
-  );
-
-  const Star = () => (
-    <Icon size={27} stroke={1.5}>
-      <path d="m12 3 2.78 5.63 6.22.9-4.5 4.38 1.06 6.19L12 17.18 6.44 20.1 7.5 13.91 3 9.53l6.22-.9L12 3Z" />
-    </Icon>
-  );
-
-  const Arrow = () => (
-    <Icon size={17}>
-      <path d="M5 12h13M13 6l6 6-6 6" />
-    </Icon>
-  );
-
-  const Step = ({ n, children }) => (
-    <div className="step-title"><span>{n}</span><strong>{children}</strong></div>
-  );
-
-  const Role = ({ icon, label, active }) => (
-    <button type="button" className={`role-card ${active ? "active" : ""}`}>
-      <div className="role-icon">{icon}</div>
-      <div>{label}</div>
-    </button>
-  );
+  const [role, setRole] = useState("Exhibitor");
+  const [overallRating, setOverallRating] = useState(0);
+  const [networkingRating, setNetworkingRating] = useState(0);
+  const [qualityRating, setQualityRating] = useState(0);
+  const [managementRating, setManagementRating] = useState(0);
+  const [consent, setConsent] = useState("yes");
 
   return (
-    <div className="feedback-page">
-      <style>{`
-        *{box-sizing:border-box}
-        .feedback-page{min-height:100vh;background:#f7fbf6;color:#102b3b;font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}
-        .topbar{height:36px;background:#005331;color:#fff;display:flex;align-items:center;justify-content:space-between;padding:0 4.1%;font-size:11px}
-        .top-left,.top-right{display:flex;align-items:center;gap:22px}
-        .top-item{display:flex;align-items:center;gap:7px;white-space:nowrap}
-        .navbar{height:58px;background:#fff;display:flex;align-items:center;justify-content:space-between;padding:0 4.1%;border-bottom:1px solid #e8eee8}
-        .brand{display:flex;align-items:center}.brand img{width:235px;height:auto;display:block}
-        .navlinks{display:flex;gap:24px;align-items:center;font-size:12px;font-weight:500}
-        .navlinks a{color:#162c37;text-decoration:none}.book{background:#00663e;color:#fff;border-radius:5px;padding:10px 17px;text-decoration:none;font-weight:700}
-        .hero{position:relative;min-height:205px;overflow:hidden;background:linear-gradient(90deg,#f4f8ef 0%,#eef5eb 45%,#fff 100%)}
-        .hero-scene{position:absolute;right:0;top:0;height:100%;width:54%;object-fit:cover;object-position:center;opacity:.96}
-        .hero:after{content:"";position:absolute;right:0;top:0;width:58%;height:100%;background:linear-gradient(90deg,#f4f8ef 0%,rgba(244,248,239,.18) 36%,transparent 70%);pointer-events:none}
-        .hero-content{position:relative;z-index:2;width:min(875px,90%);margin:auto;padding:30px 0 22px}
-        .eyebrow{font-size:12px;letter-spacing:1px;font-weight:800;color:#153c35;margin-bottom:10px}
-        .hero h1{font-size:29px;line-height:1.15;margin:0 0 9px;color:#064b37;letter-spacing:-.7px}
-        .hero p{font-size:15px;line-height:1.45;max-width:470px;margin:0;color:#243b49}
-        .crumb{display:flex;gap:9px;margin-top:17px;font-size:11px;color:#4a5862}.crumb b{color:#164633}
-        .main-card{position:relative;z-index:4;width:min(910px,90%);margin:-1px auto 0;background:rgba(255,255,255,.96);border:1px solid #e0e8e0;border-radius:9px;padding:22px 25px 23px;box-shadow:0 1px 8px rgba(20,50,35,.03)}
-        .decor-left{position:absolute;left:-58px;top:20px;width:70px;opacity:.48;pointer-events:none}.decor-right{position:absolute;right:-58px;top:400px;width:72px;opacity:.45;pointer-events:none}
-        .main-card h2{font-size:22px;margin:0 0 5px;color:#142b3b}.subtitle{margin:0 0 16px;color:#46525d;font-size:13px}
-        .step-title{display:flex;align-items:center;gap:16px;margin:14px 0 10px;font-size:15px;color:#172938}
-        .step-title span{width:28px;height:28px;border-radius:50%;display:grid;place-items:center;background:#087143;color:#fff;font-weight:800;font-size:13px}
-        .step-title strong{font-size:15px}
-        .required{color:#df2b20}
-        .roles{display:grid;grid-template-columns:repeat(6,1fr);gap:9px}
-        .role-card{min-height:91px;border:1px solid #d8dedf;background:#fff;border-radius:4px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:9px;color:#132736;font-weight:700;font-size:12px;cursor:pointer}
-        .role-card.active{background:#eef8f0;border-color:#4e9877;box-shadow:inset 0 0 0 1px rgba(0,103,63,.1)}
-        .role-icon{height:30px;display:grid;place-items:center;color:#102734}
-        .fields{display:grid;grid-template-columns:repeat(3,1fr);gap:14px 21px}
-        label{display:block;font-size:12px;color:#172630}.field-label{display:block;margin-bottom:6px}
-        input,select,textarea{width:100%;border:1px solid #d4dadd;border-radius:4px;background:#fff;color:#263b48;font:inherit;font-size:12px;outline:none}
-        input,select{height:35px;padding:0 10px}textarea{height:73px;padding:10px;resize:vertical}
-        input:focus,select:focus,textarea:focus{border-color:#087143;box-shadow:0 0 0 2px rgba(8,113,67,.08)}
-        .phone{display:grid;grid-template-columns:78px 1fr}.phone select{border-radius:4px 0 0 4px;border-right:0}.phone input{border-radius:0 4px 4px 0}
-        .ratings{display:grid;grid-template-columns:repeat(4,1fr);gap:20px;margin-top:4px}
-        .rating label{margin-bottom:6px}.stars{display:flex;gap:5px;color:#8a9094}
-        .textareas{display:grid;grid-template-columns:1fr 1fr;gap:28px}
-        .consent{margin-top:16px}.radios{display:flex;gap:70px;margin-top:11px;font-size:12px}
-        .radio{display:flex;align-items:center;gap:8px}.radio input{width:19px;height:19px;accent-color:#087143}
-        .uploads{display:grid;grid-template-columns:1fr 1fr;gap:28px;margin-top:20px}
-        .upload{height:64px;border:1px dashed #cbd3d6;border-radius:4px;display:flex;align-items:center;justify-content:center;gap:18px;color:#26343d;font-size:12px;text-align:center}
-        .upload b{font-weight:700}.upload small{display:block;color:#737c82;margin-top:2px}
-        .checkline{display:flex;align-items:center;gap:10px;margin-top:13px;font-size:12px}.checkline input{width:18px;height:18px;accent-color:#087143}
-        .form-bottom{display:flex;align-items:center;justify-content:space-between;gap:20px;margin-top:18px}
-        .submit{border:0;background:#087143;color:#fff;border-radius:4px;height:44px;padding:0 58px;font-size:13px;font-weight:700;cursor:pointer;display:flex;align-items:center;gap:8px}
-        .secure{display:flex;align-items:center;gap:8px;color:#89918e;font-size:11px}
-        .footer{margin-top:28px;background:#fff;border-top:1px solid #e2e8e2}.footer-inner{width:min(940px,92%);margin:auto;padding:25px 0 20px;display:grid;grid-template-columns:1.45fr 1fr 1.25fr 1.1fr;gap:38px}
-        .footer-logo{width:240px;max-width:100%;margin-bottom:13px}.footer p{font-size:11px;color:#647078;line-height:1.5;margin:0 0 14px}.footer h3{font-size:12px;margin:0 0 9px;color:#17363a}.footer a{display:block;text-decoration:none;color:#66717a;font-size:11px;line-height:1.8}
-        .footer-info{display:flex;flex-direction:column;gap:11px;font-size:11px;color:#223b3e}.footer-info span{display:flex;align-items:center;gap:9px}.organizer{width:190px;max-width:100%}
-        .copyright{height:52px;background:#005331;color:#fff;display:flex;align-items:center;justify-content:space-between;padding:0 4.1%;font-size:10px}.policy{display:flex;gap:15px}.social{display:flex;gap:15px}
-        @media(max-width:900px){.navlinks{display:none}.topbar{font-size:9px}.roles{grid-template-columns:repeat(3,1fr)}.fields,.ratings{grid-template-columns:1fr 1fr}.footer-inner{grid-template-columns:1fr 1fr}.hero-scene{width:60%;opacity:.45}}
-        @media(max-width:620px){.topbar{display:none}.navbar{height:62px}.brand img{width:190px}.hero-content{padding:25px 0}.hero h1{font-size:25px}.main-card{width:94%;padding:18px 14px}.roles,.fields,.ratings,.textareas,.uploads{grid-template-columns:1fr}.radios{flex-direction:column;gap:10px}.form-bottom{align-items:flex-start;flex-direction:column}.footer-inner{grid-template-columns:1fr}.copyright{height:auto;padding:14px 5%;gap:10px;flex-direction:column;align-items:flex-start}}
-      `}</style>
-
-      <header>
-        <div className="topbar">
-          <div className="top-left">
-            <span className="top-item"><Icon size={14}><rect x="3" y="4" width="18" height="17" rx="2" /><path d="M16 2v4M8 2v4M3 10h18" /></Icon>19 – 21 February 2027</span>
-            <span className="top-item"><Icon size={14}><path d="M20 10c0 5-8 11-8 11S4 15 4 10a8 8 0 1 1 16 0Z" /><circle cx="12" cy="10" r="2.5" /></Icon>Bharat Mandapam, New Delhi</span>
-          </div>
-          <div className="top-right"><span>Exhibitor Login</span><span>Visitor Registration</span><span>Media</span><span>Brochure</span><span>in</span><span>f</span><span>◎</span><span>▶</span></div>
+    <div
+      className={`${inter.className} relative min-h-screen overflow-hidden bg-[#f6faf5] text-[#0f172a] antialiased`}
+    >
+      {/* ============================ HERO ============================ */}
+      <header className="relative h-[256px] overflow-hidden bg-gradient-to-r from-[#f1f6ec] via-[#f6faf3] to-white">
+        {/* Right photo with curved left edge */}
+        <div
+          className="absolute inset-y-0 right-0 hidden w-[56%] md:block"
+          style={{ clipPath: "ellipse(85% 130% at 100% 100%)" }}
+        >
+          <Image
+            src={HERO_IMAGE}
+            alt="Bharat Organic Expo visitors"
+            fill
+            priority
+            sizes="(min-width: 768px) 56vw, 0px"
+            className="object-cover"
+          />
+          <div className="absolute inset-0 bg-gradient-to-r from-white/70 via-white/10 to-transparent" />
         </div>
-        <nav className="navbar">
-          <div className="brand"><img src={A + "expo-logo.png"} alt="Bharat Organic Expo" /></div>
-          <div className="navlinks">
-            <a href="/">Home</a><a href="/about">About</a><a href="/exhibit">Exhibit</a><a href="/visit">Visit</a><a href="/conference">Conference</a><a href="/partners">Partners</a><a href="/media">Media</a><a href="/gallery">Gallery</a><a href="/contact">Contact</a>
-            <a className="book" href="/exhibit">Book Your Stall&nbsp; →</a>
+
+        {/* Big leaf, top right - removed */}
+
+        {/* Tagline */}
+        <div
+          className={`${script.className} pointer-events-none absolute right-[31%] top-[64px] hidden -rotate-[11deg] text-[30px] leading-[1.18] text-[#0f6b3a] md:block`}
+        >
+          Together
+          <br />
+          for a Greener
+          <br />
+          Tomorrow
+          <svg
+            viewBox="0 0 200 40"
+            className="mt-1 h-8 w-[190px]"
+            fill="none"
+            aria-hidden
+          >
+            <path
+              d="M0 30C50 32 130 24 198 4"
+              stroke="#0f6b3a"
+              strokeWidth="2.2"
+              strokeLinecap="round"
+            />
+          </svg>
+        </div>
+
+        {/* Text block */}
+        <div className="relative z-10 mx-auto flex h-full max-w-[1140px] flex-col justify-center px-5 md:pl-[22px]">
+          <span className="text-[13px] font-medium uppercase leading-4 tracking-[0.06em] text-[#1f2a24]">
+            Share Your Experience
+          </span>
+          <h1 className="mt-3.5 text-[32px] font-semibold leading-10 tracking-[-0.01em] text-[#0a4f35]">
+            Your Experience Helps Us Grow
+          </h1>
+          <p className="mt-2 max-w-[520px] text-[16px] leading-[26px] text-[#1f2937]">
+            Help us create better experiences and greater opportunities for the
+            organic industry.
+          </p>
+          <div className="mt-5 flex items-center gap-2 text-[13px] leading-5 text-[#4b5563]">
+            <Link href="/" className="transition-colors hover:text-[#0a4f35]">
+              Home
+            </Link>
+            <ChevronRight className="h-3.5 w-3.5" strokeWidth={1.75} />
+            <span className="font-medium text-[#1f3d2f]">
+              Share Your Experience
+            </span>
           </div>
-        </nav>
+        </div>
       </header>
 
-      <section className="hero">
-        <img className="hero-scene" src={A + "hero-scene.png"} alt="" />
-        <div className="hero-content">
-          <div className="eyebrow">SHARE YOUR EXPERIENCE</div>
-          <h1>Your Experience Helps Us Grow</h1>
-          <p>Help us create better experiences and greater opportunities for the organic industry.</p>
-          <div className="crumb"><span>Home</span><span>›</span><b>Share Your Experience</b></div>
-        </div>
-      </section>
+      {/* ======================= SIDE LEAVES (decor) ======================= */}
+      <Leaf
+        gid="leafLeft"
+        className="pointer-events-none absolute -left-6 top-[268px] hidden h-[170px] w-[85px] rotate-[-18deg] opacity-25 blur-[1px] xl:block"
+      />
+      <Leaf
+        gid="leafRight"
+        className="pointer-events-none absolute -right-8 top-[770px] hidden h-[170px] w-[85px] rotate-[24deg] opacity-25 blur-[1px] xl:block"
+      />
 
-      <main className="main-card">
-        <img className="decor-left" src={A + "leaf-left.png"} alt="" />
-        <img className="decor-right" src={A + "leaf-right.png"} alt="" />
+      {/* ============================ FORM CARD ============================ */}
+      <main className="relative z-10 mx-auto -mt-3 w-full max-w-[1140px] px-4 pb-14">
+        <div className="rounded-xl border border-[#e4ece6] bg-white px-5 pb-7 pt-6 shadow-[0_2px_14px_rgba(16,60,40,0.05)] md:px-8">
+          {/* Form header */}
+          <h2 className="text-[26px] font-semibold leading-8 tracking-[-0.01em] text-[#111d17]">
+            Share Your Feedback
+          </h2>
+          <p className="mt-0.5 text-[15px] leading-6 text-[#4b5563]">
+            Your insights are valuable and help us make Bharat Organic Expo
+            better, stronger and more impactful.
+          </p>
 
-        <h2>Share Your Feedback</h2>
-        <p className="subtitle">Your insights are valuable and help us make Bharat Organic Expo better, stronger and more impactful.</p>
+          <form onSubmit={(e) => e.preventDefault()}>
+            {/* ---------- 1. I participated as ---------- */}
+            <section className="mt-5">
+              <StepHeading n={1}>
+                I participated as <span className="text-[#ef4444]">*</span>
+              </StepHeading>
 
-        <Step n="1">I participated as <span className="required">*</span></Step>
-        <div className="roles">
-          <Role active icon={<Icon><path d="M4 20V9h16v11M2 9l2-4h16l2 4M8 20v-5h8v5M7 12h.01M12 12h.01M17 12h.01" /></Icon>} label="Exhibitor" />
-          <Role icon={<Icon><path d="M7 11 5 9a2.8 2.8 0 0 1 4-4l3 3 3-3a2.8 2.8 0 1 1 4 4l-2 2M8 10l3 3a2.8 2.8 0 0 0 4 0l4-4M4 12l4 7M20 12l-4 7" /></Icon>} label="Buyer" />
-          <Role icon={<Icon><circle cx="9" cy="8" r="3" /><circle cx="17" cy="9" r="2.5" /><path d="M3 20c0-3.5 2.5-6 6-6s6 2.5 6 6M15 15c3 0 5 2 5 5" /></Icon>} label="Visitor" />
-          <Role icon={<Icon><rect x="9" y="3" width="6" height="12" rx="3" /><path d="M5 11a7 7 0 0 0 14 0M12 18v3M9 21h6" /></Icon>} label="Speaker" />
-          <Role icon={<Icon><circle cx="8" cy="8" r="3" /><circle cx="16" cy="8" r="3" /><path d="M2 20c0-3 2.5-5 6-5s6 2 6 5M12 20c0-3 2-5 6-5 2.5 0 4 2 4 5" /></Icon>} label={<>Partner /<br />Association</>} />
-          <Role icon={<Icon><rect x="3" y="7" width="18" height="12" rx="2" /><path d="M8 7l2-3h4l2 3M12 11a3 3 0 1 0 0 6 3 3 0 0 0 0-6Z" /></Icon>} label="Media" />
-        </div>
+              <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 md:grid-cols-6">
+                {roles.map((r) => {
+                  const Icon = r.icon;
+                  const active = role === r.label;
+                  return (
+                    <button
+                      key={r.label}
+                      type="button"
+                      onClick={() => setRole(r.label)}
+                      className={`flex h-[113px] flex-col items-center justify-center rounded-lg border px-3 text-center transition-colors ${active
+                        ? "border-[#7cc39a] bg-[#e9f5ee]"
+                        : "border-[#dfe5e2] bg-white hover:border-[#c5cfca]"
+                        }`}
+                    >
+                      <Icon
+                        className={`mb-3 h-[34px] w-[34px] ${active ? "text-[#1f3d2f]" : "text-[#374151]"
+                          }`}
+                        strokeWidth={1.5}
+                      />
+                      <span className="whitespace-pre-line text-[13px] font-medium leading-[18px] text-[#1f2937]">
+                        {r.label}
+                      </span>
+                    </button>
+                  );
+                })}
+              </div>
+            </section>
 
-        <Step n="2">About You</Step>
-        <div className="fields">
-          <label><span className="field-label">Name <span className="required">*</span></span><input placeholder="Enter your full name" /></label>
-          <label><span className="field-label">Company / Organisation <span className="required">*</span></span><input placeholder="Enter company name" /></label>
-          <label><span className="field-label">Designation</span><input placeholder="Enter designation" /></label>
-          <label><span className="field-label">Mobile Number <span className="required">*</span></span><span className="phone"><select defaultValue="+91"><option>🇮🇳 +91</option></select><input placeholder="Enter mobile number" /></span></label>
-          <label><span className="field-label">Email</span><input type="email" placeholder="Enter your email" /></label>
-          <label><span className="field-label">Which edition did you attend? <span className="required">*</span></span><select defaultValue="2027"><option value="2027">Bharat Organic Expo 2027</option></select></label>
-        </div>
+            {/* ---------- 2. About You ---------- */}
+            <section className="mt-5">
+              <StepHeading n={2}>About You</StepHeading>
 
-        <Step n="3">Rate Your Experience</Step>
-        <div className="ratings">
-          {["Overall Experience", "Business Networking", "Quality of Participants", "Event Management"].map(x => (
-            <div className="rating" key={x}><label>{x} <span className="required">*</span></label><div className="stars">{[1, 2, 3, 4, 5].map(i => <button type="button" key={i} aria-label={`${x} ${i} stars`} style={{ background: "none", border: 0, padding: 0, cursor: "pointer" }}><Star /></button>)}</div></div>
-          ))}
-        </div>
+              <div className="grid grid-cols-1 gap-x-7 gap-y-5 md:grid-cols-3">
+                <div>
+                  <label className={labelCls}>
+                    Name
+                    <Req />
+                  </label>
+                  <input
+                    type="text"
+                    placeholder="Enter your full name"
+                    className={inputCls}
+                  />
+                </div>
 
-        <Step n="4">Tell Us About Your Experience</Step>
-        <div className="textareas">
-          <label><span className="field-label">What was the most valuable part of your experience? <span className="required">*</span></span><textarea placeholder="Share what you liked the most..." /></label>
-          <label><span className="field-label">What can we do better next time?</span><textarea placeholder="Your suggestions help us improve..." /></label>
-        </div>
+                <div>
+                  <label className={labelCls}>
+                    Company / Organisation
+                    <Req />
+                  </label>
+                  <input
+                    type="text"
+                    placeholder="Enter company name"
+                    className={inputCls}
+                  />
+                </div>
 
-        <div className="consent">
-          <Step n="5">Testimonial &amp; Media Consent</Step>
-          <div style={{ fontSize: "12px", color: "#1d303a" }}>May we feature your experience on Bharat Organic Expo’s website and promotional channels?</div>
-          <div className="radios">
-            <label className="radio"><input type="radio" name="consent" defaultChecked />Yes, you may feature my experience</label>
-            <label className="radio"><input type="radio" name="consent" />No, keep my feedback private</label>
-          </div>
-        </div>
+                <div>
+                  <label className={labelCls}>Designation</label>
+                  <input
+                    type="text"
+                    placeholder="Enter designation"
+                    className={inputCls}
+                  />
+                </div>
 
-        <div className="uploads">
-          <label><span className="field-label">Upload Your Photo (optional)</span><div className="upload"><Icon size={24}><rect x="4" y="4" width="16" height="16" rx="2" /><circle cx="9" cy="9" r="1.5" /><path d="m5 17 4-4 3 3 2-2 5 5" /></Icon><span><b>Click to upload</b> or drag and drop<small>JPG, PNG (Max 5MB)</small></span></div></label>
-          <label><span className="field-label">Company Logo (optional)</span><div className="upload"><Icon size={24}><rect x="4" y="4" width="16" height="16" rx="2" /><circle cx="9" cy="9" r="1.5" /><path d="m5 17 4-4 3 3 2-2 5 5" /></Icon><span><b>Click to upload</b> or drag and drop<small>JPG, PNG (Max 5MB)</small></span></div></label>
-        </div>
+                <div>
+                  <label className={labelCls}>
+                    Mobile Number
+                    <Req />
+                  </label>
+                  <div className="flex h-10 overflow-hidden rounded-md border border-[#d8dfdb] bg-white transition-colors focus-within:border-[#0b6b3d] focus-within:ring-1 focus-within:ring-[#0b6b3d]">
+                    <div className="flex items-center gap-1.5 border-r border-[#d8dfdb] px-3">
+                      <IndiaFlag />
+                      <span className="text-[13px] font-medium text-[#1f2937]">
+                        +91
+                      </span>
+                      <ChevronDown
+                        className="h-3.5 w-3.5 text-[#374151]"
+                        strokeWidth={2}
+                      />
+                    </div>
+                    <input
+                      type="tel"
+                      placeholder="Enter mobile number"
+                      className="w-full min-w-0 px-3.5 text-[13px] text-[#1f2937] outline-none placeholder:text-[#9ca3af]"
+                    />
+                  </div>
+                </div>
 
-        <label className="checkline"><input type="checkbox" />I would like the Bharat Organic Expo team to contact me.</label>
+                <div>
+                  <label className={labelCls}>Email</label>
+                  <input
+                    type="email"
+                    placeholder="Enter your email"
+                    className={inputCls}
+                  />
+                </div>
 
-        <div className="form-bottom">
-          <button className="submit" type="button">Submit Feedback <Arrow /></button>
-          <div className="secure"><Icon size={19}><rect x="5" y="10" width="14" height="10" rx="2" /><path d="M8 10V7a4 4 0 0 1 8 0v3" /></Icon>Your information is secure and will never be shared without your permission.</div>
+                <div>
+                  <label className={labelCls}>
+                    Which edition did you attend?
+                    <Req />
+                  </label>
+                  <div className="relative">
+                    <select
+                      defaultValue="2027"
+                      className={`${inputCls} appearance-none pr-10 text-[14px]`}
+                    >
+                      <option value="2027">Bharat Organic Expo 2027</option>
+                    </select>
+                    <ChevronDown
+                      className="pointer-events-none absolute right-3.5 top-1/2 h-4 w-4 -translate-y-1/2 text-[#374151]"
+                      strokeWidth={1.75}
+                    />
+                  </div>
+                </div>
+              </div>
+            </section>
+
+            {/* ---------- 3. Rate Your Experience ---------- */}
+            <section className="mt-5">
+              <StepHeading n={3} className="mb-4">
+                Rate Your Experience
+              </StepHeading>
+
+              <div className="grid grid-cols-1 gap-x-12 gap-y-6 sm:grid-cols-2 md:grid-cols-4">
+                <div>
+                  <span className={`${labelCls} !mb-3`}>
+                    Overall Experience
+                    <Req />
+                  </span>
+                  <StarRating
+                    value={overallRating}
+                    onChange={setOverallRating}
+                  />
+                </div>
+                <div>
+                  <span className={`${labelCls} !mb-3`}>
+                    Business Networking
+                  </span>
+                  <StarRating
+                    value={networkingRating}
+                    onChange={setNetworkingRating}
+                  />
+                </div>
+                <div>
+                  <span className={`${labelCls} !mb-3`}>
+                    Quality of Participants
+                  </span>
+                  <StarRating
+                    value={qualityRating}
+                    onChange={setQualityRating}
+                  />
+                </div>
+                <div>
+                  <span className={`${labelCls} !mb-3`}>Event Management</span>
+                  <StarRating
+                    value={managementRating}
+                    onChange={setManagementRating}
+                  />
+                </div>
+              </div>
+            </section>
+
+            {/* ---------- 4. Tell Us About Your Experience ---------- */}
+            <section className="mt-10">
+              <StepHeading n={4}>Tell Us About Your Experience</StepHeading>
+
+              <div className="grid grid-cols-1 gap-x-9 gap-y-5 md:grid-cols-2">
+                <div>
+                  <label className={labelCls}>
+                    What was the most valuable part of your experience?
+                    <Req />
+                  </label>
+                  <textarea
+                    placeholder="Share what you liked the most..."
+                    className="h-[92px] w-full resize-none rounded-md border border-[#d8dfdb] bg-white px-3.5 py-3 text-[13px] text-[#1f2937] outline-none transition-colors placeholder:text-[#9ca3af] focus:border-[#0b6b3d] focus:ring-1 focus:ring-[#0b6b3d]"
+                  />
+                </div>
+                <div>
+                  <label className={labelCls}>
+                    What can we do better next time?
+                  </label>
+                  <textarea
+                    placeholder="Your suggestions help us improve..."
+                    className="h-[92px] w-full resize-none rounded-md border border-[#d8dfdb] bg-white px-3.5 py-3 text-[13px] text-[#1f2937] outline-none transition-colors placeholder:text-[#9ca3af] focus:border-[#0b6b3d] focus:ring-1 focus:ring-[#0b6b3d]"
+                  />
+                </div>
+              </div>
+            </section>
+
+            {/* ---------- 5. Testimonial & Media Consent ---------- */}
+            <section className="mt-5">
+              <StepHeading n={5}>Testimonial &amp; Media Consent</StepHeading>
+
+              <p className="text-[15px] leading-6 text-[#374151]">
+                May we feature your experience on Bharat Organic Expo’s website
+                and promotional channels?
+              </p>
+
+              <div className="mt-5 flex flex-wrap items-center gap-x-[90px] gap-y-3">
+                <Radio
+                  value="yes"
+                  checked={consent === "yes"}
+                  onChange={setConsent}
+                >
+                  Yes, you may feature my experience
+                </Radio>
+                <Radio
+                  value="no"
+                  checked={consent === "no"}
+                  onChange={setConsent}
+                >
+                  No, keep my feedback private
+                </Radio>
+              </div>
+
+              <div className="mt-6 grid grid-cols-1 gap-x-9 gap-y-5 md:grid-cols-2">
+                <UploadBox label="Upload Your Photo (optional)" name="photo" />
+                <UploadBox label="Company Logo (optional)" name="logo" />
+              </div>
+
+              <label className="mt-5 flex cursor-pointer items-center gap-3 text-[14px] text-[#1f2937]">
+                <input
+                  type="checkbox"
+                  className="h-5 w-5 cursor-pointer rounded accent-[#0b6b3d]"
+                />
+                <span>
+                  I would like the Bharat Organic Expo team to contact me.
+                </span>
+              </label>
+            </section>
+
+            {/* ---------- Submit bar ---------- */}
+            <div className="mt-6 flex flex-col items-start justify-between gap-4 sm:flex-row sm:items-center">
+              <button
+                type="submit"
+                className="flex h-[54px] w-full items-center justify-center gap-2.5 rounded-md bg-[#0b5d3b] px-8 text-[15px] font-medium text-white transition-colors hover:bg-[#094d31] sm:w-[325px]"
+              >
+                Submit Feedback
+                <ArrowRight className="h-4 w-4" strokeWidth={1.75} />
+              </button>
+
+              <div className="flex items-center gap-2 text-[13px] text-[#6b7280]">
+                <Lock
+                  className="h-[22px] w-[22px] shrink-0 text-[#1a7f4b]"
+                  strokeWidth={1.5}
+                />
+                <span>
+                  Your information is secure and will never be shared without
+                  your permission.
+                </span>
+              </div>
+            </div>
+          </form>
         </div>
       </main>
-
-      <footer className="footer">
-        <div className="footer-inner">
-          <div>
-            <img className="footer-logo" src={A + "expo-logo.png"} alt="Bharat Organic Expo" />
-            <p>A leading platform for organic, natural and sustainable products, connecting industry, farmers, innovators and global buyers.</p>
-            <div className="footer-info">
-              <span><Icon size={17}><rect x="3" y="4" width="18" height="17" rx="2" /><path d="M16 2v4M8 2v4M3 10h18" /></Icon>19 – 21 February 2027</span>
-              <span><Icon size={17}><path d="M20 10c0 5-8 11-8 11S4 15 4 10a8 8 0 1 1 16 0Z" /><circle cx="12" cy="10" r="2.5" /></Icon>Bharat Mandapam, New Delhi</span>
-            </div>
-          </div>
-          <div><h3>Quick Links</h3>{["Home", "About", "Exhibit", "Visit", "Conference", "Partners", "Media", "Gallery", "Contact"].map(x => <a key={x} href="#">{x}</a>)}</div>
-          <div><h3>Our Initiatives</h3>{["Namo Gange Trust", "Namo Gange Wellness", "International Health & Wellness Expo", "The Yogshala Clinic", "Moksha Sewa"].map(x => <a key={x} href="#">{x}</a>)}</div>
-          <div><h3>Organised by</h3><img className="organizer" src={A + "organizer-logo.png"} alt="Namo Gange Wellness and Namo Gange Trust" /></div>
-        </div>
-        <div className="copyright"><span>© 2026 Bharat Organic Expo. All Rights Reserved.</span><span className="policy">Privacy Policy <b>|</b> Terms &amp; Conditions <b>|</b> Sitemap</span><span className="social">in&nbsp;&nbsp; f&nbsp;&nbsp; ◎&nbsp;&nbsp; ▶</span></div>
-      </footer>
     </div>
   );
 }
