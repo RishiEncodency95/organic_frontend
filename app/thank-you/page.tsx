@@ -303,7 +303,7 @@ const InfoCard = ({
   footer: React.ReactNode;
   footerClass?: string;
 }) => (
-  <div className="flex min-h-[316px] flex-col items-center rounded-[10px] border border-[#e3e9e5] bg-white px-5 pb-[22px] pt-5 text-center">
+  <div className="flex min-h-[316px] flex-col items-center rounded-[12px] border border-[#d4e4d8] bg-gradient-to-br from-[#f2f8f4] via-[#f7fbf8] to-[#ebf5ed] px-5 pb-[22px] pt-5 text-center shadow-[0_2px_10px_rgba(16,60,40,0.04)]">
     <div className="flex h-[54px] w-full items-center justify-center">
       {icon}
     </div>
@@ -373,7 +373,7 @@ export default function ThankYouPage() {
           className="object-cover object-center pointer-events-none select-none z-0"
         />
 
-        <div className="relative z-10 mx-auto flex h-full w-full max-w-[1280px] flex-col justify-start pt-10 md:pt-12 px-4 md:px-14">
+        <div className="relative z-10 mx-auto flex h-full w-full max-w-[1280px] flex-col justify-start pt-14 md:pt-16 px-8 md:px-24">
           <nav
             aria-label="Breadcrumb"
             className="flex items-center gap-2 text-[14px] leading-5 text-[#4b5563] font-medium"
@@ -409,9 +409,9 @@ export default function ThankYouPage() {
 
       <main className="relative z-10 mx-auto -mt-8 w-full max-w-[1600px] px-4 md:px-11 pb-6">
         {/* Success Card */}
-        <div className="w-full rounded-2xl bg-white p-6 md:p-8 pb-[11px] shadow-[0_2px_14px_rgba(16,60,40,0.06)]">
+        <div className="w-full rounded-2xl border border-[#d4e4d8] bg-gradient-to-br from-[#f2f8f4] via-[#f7fbf8] to-[#ebf5ed] p-6 md:p-8 pb-[11px] shadow-[0_4px_20px_rgba(16,60,40,0.06)]">
           <div className="relative min-h-[192px] rounded-[10px] bg-gradient-to-r from-[#e6f3e8] via-[#eaf5ec] to-[#e4f1e6] px-4 pt-[68px] text-center">
-            <div className="absolute left-1/2 top-0 h-[54px] w-[90px] -translate-x-1/2 rounded-b-[45px] bg-white" />
+            <div className="absolute left-1/2 top-0 h-[54px] w-[90px] -translate-x-1/2 rounded-b-[45px] bg-[#f4f9f5]" />
             <div className="absolute left-1/2 top-[-3px] flex h-[60px] w-[60px] -translate-x-1/2 items-center justify-center rounded-full bg-[#0e5a34] shadow-[0_4px_10px_rgba(14,90,52,0.25)]">
               <Check className="h-8 w-8 text-white" strokeWidth={2.5} />
             </div>
@@ -554,7 +554,7 @@ export default function ThankYouPage() {
           </div>
 
           {/* Participation Card Section */}
-          <section className="relative mt-[19px] flex flex-col items-center gap-6 overflow-hidden rounded-2xl border border-[#e3e9e5] bg-white p-5 md:flex-row md:gap-10 md:p-6 md:pl-7 md:pr-10">
+          <section className="relative mt-[19px] flex flex-col items-center gap-6 overflow-hidden rounded-2xl border border-[#d4e4d8] bg-gradient-to-br from-[#f2f8f4] via-[#f7fbf8] to-[#ebf5ed] p-5 md:flex-row md:gap-10 md:p-6 md:pl-7 md:pr-10 shadow-[0_2px_12px_rgba(16,60,40,0.04)]">
             {/* Participation Card - Exact Match */}
             <div className="relative w-full shrink-0 rounded-[22px] border border-[#dce8dd] bg-[#f4f9f4] shadow-[0_12px_32px_rgba(0,0,0,0.08)] md:w-[460px]" style={{ aspectRatio: "905/540", overflow: "hidden" }}>
               {/* Card Background - Soft Mint/Green Tinted Gradient */}
@@ -596,22 +596,22 @@ export default function ThankYouPage() {
 
               {/* Card Content - Matching Real Design with proper spacing & gaps */}
               <div className="relative z-10 flex h-full flex-col justify-between p-4 md:p-5 pl-[6%] pr-[4%] pt-[4%] pb-[4%]">
-                {/* Logo Section - Top Left (Leaf Icon + HTML Text Format) */}
-                <div className="flex items-center gap-2.5 pl-6 pt-1">
-                  <div className="relative h-[34px] w-[34px] shrink-0">
+                {/* Logo Section - Shifted further left */}
+                <div className="flex items-center gap-2.5 -ml-1.5 pt-0 -mt-0.5">
+                  <div className="relative h-[36px] w-[36px] shrink-0">
                     <Image
                       src={EXPO_LOGO}
                       alt="Bharat Organic Expo"
                       fill
-                      sizes="34px"
+                      sizes="36px"
                       className="object-contain"
                     />
                   </div>
                   <div>
-                    <p className="text-[14.5px] font-bold leading-tight text-[#084d2e]">
+                    <p className="text-[15.5px] font-bold leading-tight text-[#084d2e]">
                       Bharat Organic Expo
                     </p>
-                    <p className="text-[7.5px] font-extrabold uppercase tracking-wide leading-tight text-[#d97706]">
+                    <p className="text-[8.5px] font-extrabold uppercase tracking-wide leading-tight text-[#d97706]">
                       Organic Today for a Healthy Tomorrow
                     </p>
                   </div>

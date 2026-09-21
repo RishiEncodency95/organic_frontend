@@ -317,7 +317,7 @@ export default function FeedbackPage() {
 
       {/* ============================ FORM CARD ============================ */}
       <main className="relative z-10 mx-auto -mt-10 w-full max-w-[1600px] px-4 md:px-11 pb-14">
-        <div className="w-full rounded-xl border border-[#e4ece6] bg-white px-6 pb-8 pt-7 shadow-[0_2px_14px_rgba(16,60,40,0.05)] md:px-10">
+        <div className="w-full rounded-xl border border-[#d4e4d8] bg-gradient-to-br from-[#f2f8f4] via-[#f7fbf8] to-[#ebf5ed] px-6 pb-8 pt-7 shadow-[0_4px_20px_rgba(16,60,40,0.06)] md:px-10">
           {/* Form header */}
           <h2 className="text-[26px] font-semibold leading-8 tracking-[-0.01em] text-[#111d17]">
             Share Your Feedback
