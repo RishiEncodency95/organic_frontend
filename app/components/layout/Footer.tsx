@@ -265,7 +265,7 @@ export default function Footer() {
                     <Image src={item.icon} alt={item.title} width={20} height={20} loading="lazy" sizes="20px" className="w-5 h-5 object-contain" />
                   </div>
                   <div className="pt-0.5">
-                    <h5 className="text-[12px] font-semibold text-white leading-none mb-1 font-poppins">{item.title}</h5>
+                    <h4 className="text-[12px] font-semibold text-white leading-none mb-1 font-poppins">{item.title}</h4>
                     <p className="text-[10px] text-gray-300 font-medium leading-tight pr-2">{item.desc}</p>
                   </div>
                 </div>
@@ -306,7 +306,7 @@ export default function Footer() {
               </p>
             </div>
 
-            <h5 className="font-poppins font-semibold text-gray-400 uppercase mb-1 text-[11px] tracking-widest">ADDRESS:</h5>
+            <h4 className="font-poppins font-semibold text-gray-400 uppercase mb-1 text-[11px] tracking-widest">ADDRESS:</h4>
             <p className="text-[12px] text-gray-200 font-medium mb-3 leading-relaxed whitespace-pre-line">
               {contactAddress}
             </p>
@@ -319,7 +319,7 @@ export default function Footer() {
               VIEW ON GOOGLE MAPS
             </a>
 
-            <h5 className="font-poppins font-semibold text-gray-400 uppercase mb-1.5 text-[11px] tracking-widest">CONFERENCE HELPLINE</h5>
+            <h4 className="font-poppins font-semibold text-gray-400 uppercase mb-1.5 text-[11px] tracking-widest">CONFERENCE HELPLINE</h4>
             <a
               href={`tel:${conferenceHelpline.replace(/\s+/g, "")}`}
               className="flex items-center gap-2 text-white font-semibold text-[14px] font-poppins hover:opacity-90 transition-opacity"
@@ -391,7 +391,7 @@ export default function Footer() {
               )}
             </div>
 
-            <h5 className="font-poppins font-semibold text-[#F3B71B] uppercase mb-2 text-[12px] tracking-wider">CONNECT WITH US</h5>
+            <h4 className="font-poppins font-semibold text-[#F3B71B] uppercase mb-2 text-[12px] tracking-wider">CONNECT WITH US</h4>
             <div className="flex items-center justify-center sm:justify-start gap-2.5 mt-1">
               {socialList.map(({ Icon, label, url }, idx) => (
                 <a
