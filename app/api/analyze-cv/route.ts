@@ -1,4 +1,26 @@
-import { NextRequest, NextResponse } from "next/server";
+export const dynamic = "force-dynamic";
+
+function formatNameWithSpaces(nameStr?: string | null): { fullName: string; firstName: string } {
+  if (!nameStr || typeof nameStr !== "string") {
+    return { fullName: "Candidate Profile", firstName: "Candidate" };
+  }
+  let cleaned = nameStr
+    .replace(/([a-z])([A-Z])/g, "$1 $2")
+    .replace(/([A-Z]+)([A-Z][a-z])/g, "$1 $2")
+    .replace(/[-_]/g, " ")
+    .replace(/\b(cv|resume|doc|pdf)\b/gi, "")
+    .replace(/\s+/g, " ")
+    .trim();
+
+  if (!cleaned || cleaned.length < 2) {
+    return { fullName: "Candidate Profile", firstName: "Candidate" };
+  }
+
+  const words = cleaned.split(" ").map((w) => w.charAt(0).toUpperCase() + w.slice(1));
+  const fullName = words.join(" ");
+  const firstName = words[0] || "Candidate";
+  return { fullName, firstName };
+}
 
 export async function POST(req: NextRequest) {
   try {
@@ -10,18 +32,9 @@ export async function POST(req: NextRequest) {
     let fileName = file?.name || "Uploaded_CV.pdf";
 
     // Extract clean fallback name from file name
-    let fallbackName = "Candidate Profile";
-    if (file?.name) {
-      const cleanName = file.name
-        .replace(/\.[^/.]+$/, "")
-        .replace(/[-_]/g, " ")
-        .replace(/\b(cv|resume|doc|pdf)\b/gi, "")
-        .trim();
-      if (cleanName.length > 2 && !cleanName.toLowerCase().startsWith("low") && !cleanName.toLowerCase().startsWith("medium")) {
-        fallbackName = cleanName.replace(/\b\w/g, (c) => c.toUpperCase());
-      }
-    }
-    const fallbackFirstName = fallbackName.split(" ")[0] || "Candidate";
+    const { fullName: fallbackName, firstName: fallbackFirstName } = formatNameWithSpaces(
+      file?.name ? file.name.replace(/\.[^/.]+$/, "") : "Candidate Profile"
+    );
 
     let base64Data = "";
     let mimeType = "application/pdf";
@@ -30,23 +43,53 @@ export async function POST(req: NextRequest) {
     let extractedPhoneFromBuffer: string | null = null;
     let extractedLinkedinFromBuffer: string | null = null;
 
+    let savedCvUrl: string | null = null;
+
     if (file) {
       const bytes = await file.arrayBuffer();
       const buffer = Buffer.from(bytes);
       base64Data = buffer.toString("base64");
+
+      try {
+        const fsModule = require("fs");
+        const pathModule = require("path");
+        const feUploadDir = pathModule.join(process.cwd(), "public", "uploads", "cvs");
+        if (!fsModule.existsSync(feUploadDir)) {
+          fsModule.mkdirSync(feUploadDir, { recursive: true });
+        }
+        const cleanPublicId = `cv_${Date.now()}_${fileName.replace(/[^a-zA-Z0-9]/g, "_")}`;
+        const safeFileName = `${cleanPublicId}_${fileName.replace(/[^a-zA-Z0-9.]/g, "_")}`;
+        fsModule.writeFileSync(pathModule.join(feUploadDir, safeFileName), buffer);
+        savedCvUrl = `/uploads/cvs/${safeFileName}`;
+      } catch (saveErr) {
+        console.warn("Local FE CV save warning:", saveErr);
+      }
       
-      let extractedPdfText = "";
-      if (fileName.toLowerCase().endsWith(".pdf")) {
+      let extractedDocText = "";
+      const lowerName = fileName.toLowerCase();
+
+      if (lowerName.endsWith(".pdf")) {
         try {
-          const pdfParse = require("pdf-parse");
-          const pdfData = await pdfParse(buffer);
-          extractedPdfText = pdfData.text || "";
+          const pdfParseModule = require("pdf-parse");
+          const parseFn = typeof pdfParseModule === "function" ? pdfParseModule : pdfParseModule.default || pdfParseModule.PdfParse;
+          if (typeof parseFn === "function") {
+            const pdfData = await parseFn(buffer);
+            extractedDocText = pdfData.text || "";
+          }
         } catch (pdfErr) {
           console.warn("pdf-parse error:", pdfErr);
         }
+      } else if (lowerName.endsWith(".docx") || lowerName.endsWith(".doc")) {
+        try {
+          const mammoth = require("mammoth");
+          const result = await mammoth.extractRawText({ buffer });
+          extractedDocText = result.value || "";
+        } catch (docErr) {
+          console.warn("mammoth error:", docErr);
+        }
       }
 
-      const rawText = (extractedPdfText + "\n" + buffer.toString("utf-8")).trim();
+      const rawText = (extractedDocText + "\n" + buffer.toString("utf-8")).trim();
       
       // Extract details directly from raw file bytes & PDF text via regex
       const emailMatches = rawText.match(/[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}/gi);
@@ -69,7 +112,6 @@ export async function POST(req: NextRequest) {
       // Extract clean text snippet to send to Gemini prompt as plain text context
       textSnippet = rawText.replace(/[^\x20-\x7E\n\r\t]/g, " ").replace(/\s+/g, " ").trim().slice(0, 4000);
 
-      const lowerName = fileName.toLowerCase();
       if (lowerName.endsWith(".pdf")) mimeType = "application/pdf";
       else if (lowerName.endsWith(".png")) mimeType = "image/png";
       else if (lowerName.endsWith(".jpg") || lowerName.endsWith(".jpeg")) mimeType = "image/jpeg";
@@ -187,13 +229,17 @@ IMPORTANT: Return ONLY raw valid JSON matching this exact structure:
           ? parsed.linkedin 
           : extractedLinkedinFromBuffer;
 
+        const rawCandidateName = (parsed.candidateName && !parsed.candidateName.includes("Extracted Candidate")) ? parsed.candidateName : fallbackName;
+        const formatted = formatNameWithSpaces(rawCandidateName);
+
         return NextResponse.json({
           success: true,
-          candidateName: parsed.candidateName && !parsed.candidateName.includes("Extracted Candidate") ? parsed.candidateName : fallbackName,
-          firstName: parsed.firstName || (parsed.candidateName ? parsed.candidateName.split(" ")[0] : fallbackFirstName),
+          candidateName: formatted.fullName,
+          firstName: formatted.firstName,
           email: finalEmail || null,
           phone: finalPhone || null,
           linkedin: finalLinkedin || null,
+          cvUrl: savedCvUrl,
           score: typeof parsed.score === "number" ? parsed.score : 72,
           summary: parsed.summary || "Evaluation complete.",
           requirementsMet: Array.isArray(parsed.requirementsMet) ? parsed.requirementsMet : [
@@ -226,6 +272,7 @@ IMPORTANT: Return ONLY raw valid JSON matching this exact structure:
       email: extractedEmailFromBuffer || null,
       phone: extractedPhoneFromBuffer || null,
       linkedin: extractedLinkedinFromBuffer || null,
+      cvUrl: savedCvUrl,
       score: fallbackScore,
       summary: "Evaluated candidate profile successfully.",
       requirementsMet: [

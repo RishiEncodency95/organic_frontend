@@ -9,10 +9,15 @@ import {
     CheckCircle2,
     FileUp,
     GraduationCap,
+    KeyRound,
+    Loader2,
     LockKeyhole,
     MapPin,
+    Phone,
+    ShieldCheck,
     X,
 } from "lucide-react";
+import { verifyApi } from "@/lib/api";
 import businessPersonClean from "@/app/assets/carrer/business-person-clean.png";
 import leafDecoration from "@/app/assets/carrer/leaf-decoration.jpg";
 
@@ -205,6 +210,7 @@ export type CandidateAnalysisData = {
     email?: string | null;
     phone?: string | null;
     linkedin?: string | null;
+    image?: string | null;
     cvFile?: File | null;
     cvName: string;
     cvSize: string;
@@ -212,6 +218,15 @@ export type CandidateAnalysisData = {
     score: number;
     summary?: string;
     requirementsMet?: string[];
+    jobDetails?: {
+        title?: string;
+        company?: string;
+        brand?: string;
+        location?: string;
+        type?: string;
+        experience?: string;
+        education?: string;
+    };
     breakdown?: {
         relevantExperience: number;
         educationalQualification: number;
@@ -233,17 +248,93 @@ export default function UploadCvModal({
 }) {
     const [file, setFile] = useState<File | null>(null);
     const [isAnalyzing, setIsAnalyzing] = useState(false);
+
+    // WhatsApp OTP State
+    const [isOtpModalOpen, setIsOtpModalOpen] = useState(false);
+    const [otpStep, setOtpStep] = useState<"PHONE" | "OTP">("PHONE");
+    const [mobileNumber, setMobileNumber] = useState("");
+    const [otpCode, setOtpCode] = useState("");
+    const [isSendingOtp, setIsSendingOtp] = useState(false);
+    const [isVerifyingOtp, setIsVerifyingOtp] = useState(false);
+    const [otpError, setOtpError] = useState("");
+    const [otpMessage, setOtpMessage] = useState("");
+
     const title = job?.title?.includes("Domastic")
         ? jobCopy.title
         : job?.title || jobCopy.title;
 
     if (!job) return null;
 
-    const handleAnalyzeClick = async () => {
-        if (!file) {
-            document.querySelector<HTMLInputElement>('input[type="file"]')?.click();
+    const handleAnalyzeButtonClick = () => {
+        if (!file) return;
+        setOtpError("");
+        setOtpMessage("");
+        setOtpStep("PHONE");
+        setIsOtpModalOpen(true);
+    };
+
+    const handleSendWhatsAppOtp = async (e?: React.FormEvent) => {
+        if (e) e.preventDefault();
+        const cleanedPhone = mobileNumber.replace(/\D/g, "");
+        if (cleanedPhone.length < 10) {
+            setOtpError("Please enter a valid 10-digit mobile number.");
             return;
         }
+
+        setIsSendingOtp(true);
+        setOtpError("");
+        setOtpMessage("");
+
+        try {
+            const result = await verifyApi.sendPhoneOtp(
+                cleanedPhone,
+                "CAREER_CANDIDATE",
+                "Candidate",
+                "BOE2027"
+            );
+
+            if (result && (result.success || result.msg)) {
+                setOtpStep("OTP");
+                setOtpMessage("OTP sent successfully to your WhatsApp number!");
+            } else {
+                setOtpError(result?.message || result?.msg || "Failed to send WhatsApp OTP. Please try again.");
+            }
+        } catch (err: any) {
+            setOtpError(err?.message || "Failed to send WhatsApp OTP.");
+        } finally {
+            setIsSendingOtp(false);
+        }
+    };
+
+    const handleVerifyWhatsAppOtp = async (e?: React.FormEvent) => {
+        if (e) e.preventDefault();
+        if (!otpCode || otpCode.trim().length < 4) {
+            setOtpError("Please enter the OTP received on WhatsApp.");
+            return;
+        }
+
+        const cleanedPhone = mobileNumber.replace(/\D/g, "");
+        setIsVerifyingOtp(true);
+        setOtpError("");
+
+        try {
+            const result = await verifyApi.verifyPhoneOtp(cleanedPhone, otpCode.trim());
+
+            if (result && (result.success || result.statusCode === 200)) {
+                setIsOtpModalOpen(false);
+                runAnalysisPipeline(cleanedPhone);
+            } else {
+                setOtpError(result?.message || result?.msg || "Invalid OTP code. Please enter the correct OTP.");
+            }
+        } catch (err: any) {
+            setOtpError(err?.message || "OTP verification failed. Please try again.");
+        } finally {
+            setIsVerifyingOtp(false);
+        }
+    };
+
+    const runAnalysisPipeline = async (verifiedPhone: string) => {
+        if (!file) return;
 
         setIsAnalyzing(true);
 
@@ -252,38 +343,147 @@ export default function UploadCvModal({
             : `${Math.round(file.size / 1024)} KB`;
 
         const objectUrl = URL.createObjectURL(file);
+        const apiBase = process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000/api/v1";
 
         try {
+            // 1. Upload CV to Backend & Cloudinary
             const formData = new FormData();
-            formData.append("file", file);
-            formData.append("jobTitle", title);
-            formData.append("jobExperience", job.experience || "3 - 6 Years");
+            formData.append("cv", file);
 
-            const res = await fetch("/api/analyze-cv", {
+            const uploadRes = await fetch(`${apiBase}/careers/cv/upload`, {
                 method: "POST",
                 body: formData,
             });
 
-            const data = await res.json();
-            const candidateData: CandidateAnalysisData = {
-                candidateName: data.candidateName || "Vijay Sharma",
-                firstName: data.firstName || "Vijay",
-                email: data.email || null,
-                phone: data.phone || null,
-                linkedin: data.linkedin || null,
+            const uploadJson = await uploadRes.json();
+            if (!uploadRes.ok || !uploadJson.success) {
+                throw new Error(uploadJson.message || "Failed to upload CV");
+            }
+
+            const candidateId = uploadJson.data.candidateId;
+            const targetJobId = (job as any)?._id || (job as any)?.id || "sales-manager-domestic-exhibition-sales-sponsorships";
+
+            // 2. Trigger AI CV Analysis & Deterministic Score Calculation
+            const analyzeRes = await fetch(`${apiBase}/careers/cv/analyze`, {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                    candidateId,
+                    jobId: targetJobId,
+                }),
+            });
+
+            const analyzeJson = await analyzeRes.json();
+            if (!analyzeRes.ok || !analyzeJson.success) {
+                throw new Error(analyzeJson.message || "Failed to analyze CV");
+            }
+
+            const analysisData = analyzeJson.data;
+            const profileData = analysisData.candidateProfile || {};
+            const fullName = profileData.name || file.name.replace(/\.[^/.]+$/, "").replace(/[-_]/g, " ").trim();
+            const firstName = fullName.split(" ")[0] || "Candidate";
+
+            const candidateData: CandidateAnalysisData & {
+                candidateId?: string;
+                jobId?: string;
+                analysisId?: string;
+                fullProfile?: any;
+            } = {
+                candidateName: fullName,
+                firstName: firstName,
+                email: profileData.email || null,
+                phone: verifiedPhone || profileData.phone || null,
+                linkedin: profileData.linkedin || null,
                 cvFile: file,
                 cvName: file.name,
                 cvSize: fileSizeStr,
-                cvUrl: objectUrl,
-                score: typeof data.score === "number" ? data.score : 72,
-                summary: data.summary,
-                requirementsMet: data.requirementsMet,
-                breakdown: data.breakdown,
+                cvUrl: profileData.cv?.cloudinaryUrl || objectUrl,
+                score: analysisData.matchScore ?? 72,
+                summary: analysisData.explanation,
+                requirementsMet: analysisData.matchedRequirements?.length > 0
+                    ? analysisData.matchedRequirements
+                    : analysisData.strengths,
+                jobDetails: {
+                    title: job?.title || jobCopy.title,
+                    company: job?.company || jobCopy.company,
+                    brand: job?.brand || jobCopy.brand,
+                    location: job?.location || "Delhi NCR",
+                    type: job?.type || "Full Time",
+                    experience: job?.experience || "3 – 6 Years",
+                    education: "Graduate (MBA/PGDM Preferred)",
+                },
+                breakdown: {
+                    relevantExperience: analysisData.breakdown?.relevantExperience?.score ?? (analysisData.matchScore ?? 0),
+                    educationalQualification: analysisData.breakdown?.education?.score ?? (analysisData.matchScore ?? 0),
+                    keySkills: analysisData.breakdown?.skills?.score ?? (analysisData.matchScore ?? 0),
+                    roleFit: analysisData.breakdown?.roleFit?.score ?? (analysisData.matchScore ?? 0),
+                    industryExperience: analysisData.breakdown?.industryExperience?.score ?? (analysisData.matchScore ?? 0),
+                    locationPreference: analysisData.breakdown?.location?.score ?? 100,
+                },
+                candidateId: analysisData.candidateId,
+                jobId: analysisData.jobId,
+                analysisId: analysisData.analysisId,
+                fullProfile: profileData,
             };
 
             if (onAnalyze) onAnalyze(candidateData);
         } catch (e) {
-            console.error(e);
+            console.warn("Express Backend CV Analysis failed, attempting Next.js /api/analyze-cv fallback:", e);
+
+            try {
+                const nextFormData = new FormData();
+                nextFormData.append("file", file);
+                nextFormData.append("jobTitle", job?.title || jobCopy.title);
+                nextFormData.append("jobExperience", job?.experience || "3 - 6 Years");
+
+                const nextRes = await fetch("/api/analyze-cv", {
+                    method: "POST",
+                    body: nextFormData,
+                });
+
+                if (nextRes.ok) {
+                    const nextJson = await nextRes.json();
+                    if (nextJson.success) {
+                        const candidateData: CandidateAnalysisData = {
+                            candidateName: nextJson.candidateName || file.name.replace(/\.[^/.]+$/, "").replace(/[-_]/g, " ").trim(),
+                            firstName: nextJson.firstName || "Candidate",
+                            email: nextJson.email || null,
+                            phone: verifiedPhone || nextJson.phone || null,
+                            linkedin: nextJson.linkedin || null,
+                            cvFile: file,
+                            cvName: file.name,
+                            cvSize: fileSizeStr,
+                            cvUrl: objectUrl,
+                            score: nextJson.score ?? 72,
+                            summary: nextJson.summary,
+                            requirementsMet: nextJson.requirementsMet,
+                            jobDetails: {
+                                title: job?.title || jobCopy.title,
+                                company: job?.company || jobCopy.company,
+                                brand: job?.brand || jobCopy.brand,
+                                location: job?.location || "Delhi NCR",
+                                type: job?.type || "Full Time",
+                                experience: job?.experience || "3 – 6 Years",
+                                education: "Graduate (MBA/PGDM Preferred)",
+                            },
+                            breakdown: {
+                                relevantExperience: nextJson.breakdown?.relevantExperience ?? nextJson.score,
+                                educationalQualification: nextJson.breakdown?.educationalQualification ?? 90,
+                                keySkills: nextJson.breakdown?.keySkills ?? nextJson.score,
+                                roleFit: nextJson.breakdown?.roleFit ?? nextJson.score,
+                                industryExperience: nextJson.breakdown?.industryExperience ?? nextJson.score,
+                                locationPreference: nextJson.breakdown?.locationPreference ?? 100,
+                            },
+                        };
+
+                        if (onAnalyze) onAnalyze(candidateData);
+                        return;
+                    }
+                }
+            } catch (nextErr) {
+                console.error("Next.js /api/analyze-cv fallback error:", nextErr);
+            }
+
             let computedScore = 72;
             const name = file.name.toLowerCase();
             if (name.includes("low") || name.includes("junior") || name.includes("fresher") || name.includes("38")) {
@@ -297,20 +497,37 @@ export default function UploadCvModal({
                 .replace(/[-_]/g, " ")
                 .replace(/\b(cv|resume|doc|pdf)\b/gi, "")
                 .trim();
-            const formattedName = fallbackName ? fallbackName.replace(/\b\w/g, (c) => c.toUpperCase()) : "Vijay Sharma";
+            const formattedName = fallbackName ? fallbackName.replace(/\b\w/g, (c) => c.toUpperCase()) : "Candidate";
             const firstName = formattedName.split(" ")[0];
 
             const candidateData: CandidateAnalysisData = {
                 candidateName: formattedName,
                 firstName: firstName,
                 email: null,
-                phone: null,
+                phone: verifiedPhone || null,
                 linkedin: null,
                 cvFile: file,
                 cvName: file.name,
                 cvSize: fileSizeStr,
                 cvUrl: objectUrl,
                 score: computedScore,
+                jobDetails: {
+                    title: job?.title || jobCopy.title,
+                    company: job?.company || jobCopy.company,
+                    brand: job?.brand || jobCopy.brand,
+                    location: job?.location || "Delhi NCR",
+                    type: job?.type || "Full Time",
+                    experience: job?.experience || "3 – 6 Years",
+                    education: "Graduate (MBA/PGDM Preferred)",
+                },
+                breakdown: {
+                    relevantExperience: computedScore < 50 ? 0 : computedScore,
+                    educationalQualification: computedScore < 50 ? 30 : computedScore,
+                    keySkills: computedScore < 50 ? 10 : computedScore,
+                    roleFit: computedScore < 50 ? 20 : computedScore,
+                    industryExperience: computedScore < 50 ? 0 : computedScore,
+                    locationPreference: 100,
+                },
             };
 
             if (onAnalyze) onAnalyze(candidateData);
@@ -502,9 +719,13 @@ export default function UploadCvModal({
 
                                 <button
                                     type="button"
-                                    disabled={isAnalyzing}
-                                    onClick={handleAnalyzeClick}
-                                    className="mt-[12px] flex h-[45px] w-full items-center justify-center gap-[18px] rounded-[7px] bg-[linear-gradient(180deg,#008d55,#007346)] text-[20px] font-medium text-white shadow-[0_7px_13px_rgba(0,84,51,0.22)] hover:brightness-110 disabled:opacity-60 cursor-pointer"
+                                    disabled={!file || isAnalyzing}
+                                    onClick={handleAnalyzeButtonClick}
+                                    className={`mt-[12px] flex h-[45px] w-full items-center justify-center gap-[18px] rounded-[7px] text-[20px] font-medium text-white transition-all ${
+                                        !file || isAnalyzing
+                                            ? "bg-gray-400 cursor-not-allowed opacity-60 shadow-none"
+                                            : "bg-[linear-gradient(180deg,#008d55,#007346)] shadow-[0_7px_13px_rgba(0,84,51,0.22)] hover:brightness-110 cursor-pointer"
+                                    }`}
                                 >
                                     {isAnalyzing ? "Analyzing CV with Gemini AI..." : "Analyze My CV"}
                                     <ArrowRight className="h-[29px] w-[29px]" />
@@ -519,6 +740,163 @@ export default function UploadCvModal({
                     </div>
                 </div>
             </div>
+
+            {/* WHATSAPP OTP VERIFICATION MODAL POPUP OVERLAY */}
+            {isOtpModalOpen && (
+                <div className="fixed inset-0 z-[100000] flex items-center justify-center bg-black/60 backdrop-blur-sm p-4">
+                    <div className="relative w-full max-w-[450px] rounded-[18px] bg-white p-6 shadow-2xl border border-[#d6e8dc]">
+                        <button
+                            type="button"
+                            onClick={() => setIsOtpModalOpen(false)}
+                            className="absolute right-4 top-4 grid h-8 w-8 place-items-center rounded-full bg-gray-100 text-gray-500 hover:bg-gray-200 hover:text-gray-800"
+                        >
+                            <X className="h-5 w-5" />
+                        </button>
+
+                        <div className="flex items-center gap-3 text-[#25D366]">
+                            <div className="grid h-11 w-11 place-items-center rounded-full bg-[#E8FADF]">
+                                <ShieldCheck className="h-6 w-6 text-[#075e54]" />
+                            </div>
+                            <div>
+                                <h3 className="text-lg font-bold text-[#0d3429]">WhatsApp Verification</h3>
+                                <p className="text-xs text-[#526a61]">Bharat Organic Expo 2027</p>
+                            </div>
+                        </div>
+
+                        {otpStep === "PHONE" ? (
+                            <form onSubmit={handleSendWhatsAppOtp} className="mt-5 space-y-4">
+                                <p className="text-sm font-medium text-[#2f4b40] leading-snug">
+                                    Please enter your mobile number to receive a verification OTP on WhatsApp before proceeding with AI CV Analysis.
+                                </p>
+
+                                <div>
+                                    <label className="block text-xs font-semibold text-[#18392b] mb-1.5">
+                                        Mobile Number (WhatsApp) <span className="text-red-500">*</span>
+                                    </label>
+                                    <div className="relative flex items-center rounded-lg border border-[#c3d8cb] bg-[#f9fcfa] px-3 py-2.5 focus-within:border-[#008d55] focus-within:ring-2 focus-within:ring-[#008d55]/20">
+                                        <Phone className="mr-2.5 h-5 w-5 text-[#008d55]" />
+                                        <span className="mr-2 text-sm font-semibold text-gray-600">+91</span>
+                                        <input
+                                            type="tel"
+                                            maxLength={10}
+                                            required
+                                            placeholder="9876543210"
+                                            value={mobileNumber}
+                                            onChange={(e) => setMobileNumber(e.target.value.replace(/\D/g, ""))}
+                                            className="w-full bg-transparent text-sm font-semibold text-gray-800 outline-none placeholder:text-gray-400"
+                                        />
+                                    </div>
+                                </div>
+
+                                {otpError && (
+                                    <div className="rounded-md bg-red-50 p-2.5 text-xs font-medium text-red-600 border border-red-200">
+                                        {otpError}
+                                    </div>
+                                )}
+
+                                <button
+                                    type="submit"
+                                    disabled={isSendingOtp}
+                                    className="flex h-11 w-full items-center justify-center gap-2 rounded-lg bg-[#25D366] text-sm font-bold text-white shadow-md hover:bg-[#1eb957] disabled:opacity-60 transition-all cursor-pointer"
+                                >
+                                    {isSendingOtp ? (
+                                        <>
+                                            <Loader2 className="h-4 w-4 animate-spin" />
+                                            Sending WhatsApp OTP...
+                                        </>
+                                    ) : (
+                                        <>
+                                            Send OTP on WhatsApp
+                                            <ArrowRight className="h-4 w-4" />
+                                        </>
+                                    )}
+                                </button>
+
+                                <div className="flex items-center justify-center gap-1.5 text-[11px] text-gray-500">
+                                    <LockKeyhole className="h-3.5 w-3.5 text-[#008d55]" />
+                                    Your mobile number is 100% secure.
+                                </div>
+                            </form>
+                        ) : (
+                            <form onSubmit={handleVerifyWhatsAppOtp} className="mt-5 space-y-4">
+                                <div className="rounded-lg bg-[#eef9f2] p-3 border border-[#c6e9d2]">
+                                    <p className="text-xs font-semibold text-[#075e54]">
+                                        ✅ {otpMessage || `OTP sent to WhatsApp (+91 ${mobileNumber})`}
+                                    </p>
+                                </div>
+
+                                <div>
+                                    <div className="flex items-center justify-between mb-1.5">
+                                        <label className="block text-xs font-semibold text-[#18392b]">
+                                            Enter 6-Digit WhatsApp OTP <span className="text-red-500">*</span>
+                                        </label>
+                                        <button
+                                            type="button"
+                                            onClick={() => {
+                                                setOtpStep("PHONE");
+                                                setOtpError("");
+                                            }}
+                                            className="text-[11px] font-semibold text-[#008d55] underline hover:text-[#006342]"
+                                        >
+                                            Change Number
+                                        </button>
+                                    </div>
+
+                                    <div className="relative flex items-center rounded-lg border border-[#c3d8cb] bg-[#f9fcfa] px-3 py-2.5 focus-within:border-[#008d55] focus-within:ring-2 focus-within:ring-[#008d55]/20">
+                                        <KeyRound className="mr-2.5 h-5 w-5 text-[#008d55]" />
+                                        <input
+                                            type="text"
+                                            maxLength={6}
+                                            required
+                                            autoFocus
+                                            placeholder="123456"
+                                            value={otpCode}
+                                            onChange={(e) => setOtpCode(e.target.value.replace(/\D/g, ""))}
+                                            className="w-full bg-transparent text-base font-bold tracking-widest text-gray-800 outline-none placeholder:text-gray-400 placeholder:font-normal placeholder:tracking-normal"
+                                        />
+                                    </div>
+                                </div>
+
+                                {otpError && (
+                                    <div className="rounded-md bg-red-50 p-2.5 text-xs font-medium text-red-600 border border-red-200">
+                                        {otpError}
+                                    </div>
+                                )}
+
+                                <button
+                                    type="submit"
+                                    disabled={isVerifyingOtp}
+                                    className="flex h-11 w-full items-center justify-center gap-2 rounded-lg bg-[linear-gradient(180deg,#008d55,#007346)] text-sm font-bold text-white shadow-md hover:brightness-110 disabled:opacity-60 transition-all cursor-pointer"
+                                >
+                                    {isVerifyingOtp ? (
+                                        <>
+                                            <Loader2 className="h-4 w-4 animate-spin" />
+                                            Verifying OTP...
+                                        </>
+                                    ) : (
+                                        <>
+                                            Verify OTP & Start AI Analysis
+                                            <ArrowRight className="h-4 w-4" />
+                                        </>
+                                    )}
+                                </button>
+
+                                <div className="flex items-center justify-between pt-1 text-xs">
+                                    <span className="text-gray-500">Didn&apos;t receive code?</span>
+                                    <button
+                                        type="button"
+                                        disabled={isSendingOtp}
+                                        onClick={() => handleSendWhatsAppOtp()}
+                                        className="font-semibold text-[#008d55] underline hover:text-[#006342] disabled:opacity-50"
+                                    >
+                                        Resend WhatsApp OTP
+                                    </button>
+                                </div>
+                            </form>
+                        )}
+                    </div>
+                </div>
+            )}
         </div>
     );
 }

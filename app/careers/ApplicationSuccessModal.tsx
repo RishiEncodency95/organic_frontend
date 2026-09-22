@@ -150,11 +150,20 @@ function SuccessSidebar({ onClose }: { onClose: () => void }) {
 interface SuccessModalProps {
   isOpen: boolean;
   onClose: () => void;
+  applicationData?: {
+    id: string;
+    candidateName: string;
+    position: string;
+    submittedOn: string;
+    aiMatchScore: number;
+  };
 }
 
-export default function ApplicationSuccessModal({ isOpen, onClose }: SuccessModalProps) {
+export default function ApplicationSuccessModal({ isOpen, onClose, applicationData: propAppDetails }: SuccessModalProps) {
+  const currentAppDetails = propAppDetails || applicationData;
+  const matchScoreVal = currentAppDetails.aiMatchScore ?? 72;
   const circumference = 2 * Math.PI * 38;
-  const offset = circumference - (applicationData.aiMatchScore / 100) * circumference;
+  const offset = circumference - (matchScoreVal / 100) * circumference;
 
   useEffect(() => {
     if (isOpen) {
@@ -253,19 +262,19 @@ export default function ApplicationSuccessModal({ isOpen, onClose }: SuccessModa
             <div className="space-y-[4px]">
               <div className="grid grid-cols-[160px_1fr] gap-[8px]">
                 <span className="text-[13px] font-semibold text-[#58708c]">Application ID</span>
-                <span className="text-[14px] font-semibold text-[#123963]">{applicationData.id}</span>
+                <span className="text-[14px] font-semibold text-[#123963]">{currentAppDetails.id}</span>
               </div>
               <div className="grid grid-cols-[160px_1fr] gap-[8px]">
                 <span className="text-[13px] font-semibold text-[#58708c]">Candidate Name</span>
-                <span className="text-[14px] font-semibold text-[#123963]">{applicationData.candidateName}</span>
+                <span className="text-[14px] font-semibold text-[#123963]">{currentAppDetails.candidateName}</span>
               </div>
               <div className="grid grid-cols-[160px_1fr] gap-[8px]">
                 <span className="text-[13px] font-semibold text-[#58708c]">Position Applied</span>
-                <span className="text-[14px] font-semibold text-[#123963]">{applicationData.position}</span>
+                <span className="text-[14px] font-semibold text-[#123963]">{currentAppDetails.position}</span>
               </div>
               <div className="grid grid-cols-[160px_1fr] gap-[8px]">
                 <span className="text-[13px] font-semibold text-[#58708c]">Submitted On</span>
-                <span className="text-[14px] font-semibold text-[#123963]">{applicationData.submittedOn}</span>
+                <span className="text-[14px] font-semibold text-[#123963]">{currentAppDetails.submittedOn}</span>
               </div>
               <div className="grid grid-cols-[160px_1fr] gap-[8px] items-center">
                 <span className="text-[13px] font-semibold text-[#58708c]">AI Match Score</span>
@@ -281,10 +290,12 @@ export default function ApplicationSuccessModal({ isOpen, onClose }: SuccessModa
                       />
                     </svg>
                     <div className="absolute inset-0 flex items-center justify-center">
-                      <span className="text-[12px] font-semibold text-[#123963]">{applicationData.aiMatchScore}%</span>
+                      <span className="text-[12px] font-semibold text-[#123963]">{matchScoreVal}%</span>
                     </div>
                   </div>
-                  <span className="text-[14px] font-semibold text-[#11813e]">Good Match!</span>
+                  <span className="text-[14px] font-semibold text-[#11813e]">
+                    {matchScoreVal >= 70 ? "Strong Match!" : matchScoreVal >= 50 ? "Moderate Match!" : "Application Under Review"}
+                  </span>
                 </div>
               </div>
             </div>

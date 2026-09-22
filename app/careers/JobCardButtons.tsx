@@ -84,6 +84,7 @@ export default function JobCardButtons({ job }: { job: any }) {
         ? createPortal(
           <ApplicationFormModal
             isOpen={isAppFormOpen}
+            candidateData={candidateData}
             onClose={() => setIsAppFormOpen(false)}
             onNext={() => {
               setIsAppFormOpen(false);
@@ -98,6 +99,7 @@ export default function JobCardButtons({ job }: { job: any }) {
         ? createPortal(
           <ReviewSubmitModal
             isOpen={isReviewOpen}
+            candidateData={candidateData}
             onClose={() => setIsReviewOpen(false)}
           />,
           document.body

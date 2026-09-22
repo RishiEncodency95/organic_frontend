@@ -188,10 +188,10 @@ const matchConfig = {
     suggestionTitle: "You Meet the Key Requirements",
 
     requirements: [
-      "Relevant experience in exhibition / trade show sales",
-      "Exposure to client acquisition & sponsorships",
-      "Good communication and negotiation skills",
-      "Relevant industry experience",
+      "Experience in exhibition / trade show sales & sponsorships",
+      "Exposure to client acquisition & B2B deal negotiation",
+      "Good communication and relationship management skills",
+      "Relevant industry experience in Expo / Wellness sector",
       "Willing to work from Delhi NCR",
     ],
 
@@ -201,7 +201,7 @@ const matchConfig = {
       {
         title: "Relevant Experience",
         description: "Exhibition / Trade Show / B2B Sales",
-        score: 78,
+        score: 90,
         icon: BriefcaseBusiness,
       },
       {
@@ -214,19 +214,19 @@ const matchConfig = {
         title: "Key Skills",
         description:
           "Client Acquisition, Negotiation, Relationship Mgmt.",
-        score: 75,
+        score: 95,
         icon: Target,
       },
       {
         title: "Role Fit",
         description: "Leadership, Communication, Travel Readiness",
-        score: 65,
+        score: 90,
         icon: Target,
       },
       {
         title: "Industry Experience",
         description: "Healthcare / Wellness / Exhibition Industry",
-        score: 70,
+        score: 85,
         icon: Users,
       },
       {
@@ -334,7 +334,7 @@ const matchConfig = {
     subtitle: "This position may not be the right fit for you at this time.",
 
     description:
-      "Based on our screening, your profile does not meet the minimum requirements for this role. Therefore, you are not eligible to apply for this position.\n\nWe truly appreciate your interest in Bharat Organic Expo and encourage you to explore other opportunities that may be a better match for your skills and experience.",
+      "Based on our screening, your profile does not meet the minimum requirements for this role. Therefore, you are not eligible to apply for this position. We truly appreciate your interest in Bharat Organic Expo and encourage you to explore other opportunities that may be a better match for your skills and experience.",
 
     quote: "",
 
@@ -366,6 +366,7 @@ export type CandidateProfileData = {
   email?: string | null;
   phone?: string | null;
   linkedin?: string | null;
+  image?: string | null;
   cvFile?: File | null;
   cvName: string;
   cvSize: string;
@@ -373,6 +374,15 @@ export type CandidateProfileData = {
   score: number;
   summary?: string;
   requirementsMet?: string[];
+  jobDetails?: {
+    title?: string;
+    company?: string;
+    brand?: string;
+    location?: string;
+    type?: string;
+    experience?: string;
+    education?: string;
+  };
   breakdown?: {
     relevantExperience: number;
     educationalQualification: number;
@@ -384,27 +394,27 @@ export type CandidateProfileData = {
 };
 
 export const defaultCandidateData: CandidateProfileData = {
-  candidateName: "Vijay Sharma",
-  firstName: "Vijay",
-  email: "vijay.sharma@gmail.com",
-  phone: "+91 98765 43210",
-  linkedin: "linkedin.com/in/vijay-sharma",
-  cvName: "Vijay_Sharma_CV.pdf",
-  cvSize: "842 KB",
-  score: 72,
+  candidateName: "Rohit Kumar",
+  firstName: "Rohit",
+  email: "kumarrohitji89@gmail.com",
+  phone: "+91 9568816858",
+  linkedin: "linkedin.com/in/rohit-kumar",
+  cvName: "Rohit_Encodency.pdf",
+  cvSize: "424 KB",
+  score: 93,
   requirementsMet: [
-    "Relevant experience in exhibition / trade show sales",
-    "Exposure to client acquisition & sponsorships",
-    "Good communication and negotiation skills",
-    "Relevant industry experience",
+    "Experience in exhibition / trade show sales & sponsorships",
+    "Exposure to client acquisition & B2B deal negotiation",
+    "Good communication and relationship management skills",
+    "Relevant industry experience in Expo / Wellness sector",
     "Willing to work from Delhi NCR",
   ],
   breakdown: {
-    relevantExperience: 78,
+    relevantExperience: 90,
     educationalQualification: 100,
-    keySkills: 75,
-    roleFit: 65,
-    industryExperience: 70,
+    keySkills: 95,
+    roleFit: 90,
+    industryExperience: 85,
     locationPreference: 100,
   },
 };
@@ -436,7 +446,17 @@ export function getMatchData(
     score >= 70 ? "high" : score >= 50 ? "moderate" : "low";
 
   const config = { ...matchConfig[level] };
-  const firstName = candidate.firstName || candidate.candidateName?.split(" ")[0] || "Candidate";
+  const rawName = candidate.candidateName || candidate.firstName || "Candidate";
+  const cleanFullName = rawName
+    .replace(/([a-z])([A-Z])/g, "$1 $2")
+    .replace(/([A-Z]+)([A-Z][a-z])/g, "$1 $2")
+    .replace(/[-_]/g, " ")
+    .replace(/\s+/g, " ")
+    .trim();
+  const firstName = (candidate.firstName && candidate.firstName !== "Candidate")
+    ? candidate.firstName.replace(/([a-z])([A-Z])/g, "$1 $2").trim().split(" ")[0]
+    : (cleanFullName.split(" ")[0] || "Candidate");
+  const jobTitle = candidate.jobDetails?.title || "this position";
 
   if (level === "high") {
     config.title = `Great News, ${firstName}!`;
@@ -444,10 +464,22 @@ export function getMatchData(
     config.title = `Good Start, ${firstName}!`;
   } else {
     config.title = `Thank You, ${firstName}!`;
+    config.subtitle = `This position may not be the right fit for you at this time.`;
+  }
+
+  if (candidate.summary) {
+    config.summaryText = candidate.summary;
   }
 
   if (candidate.requirementsMet && candidate.requirementsMet.length > 0) {
     config.requirements = candidate.requirementsMet as any;
+  } else if (level === "low") {
+    config.requirements = [
+      `Minimum experience required for ${jobTitle}`,
+      `Key technical skills matching ${jobTitle} description`,
+      `Relevant industry experience`,
+      `Communication and role readiness`,
+    ];
   }
 
   return {
@@ -644,23 +676,23 @@ function ResultHero() {
               </h2>
 
               <h3
-                className="mt-[4px] whitespace-nowrap text-[15px] font-semibold leading-[1.2]"
+                className="mt-[2px] text-[15px] font-semibold leading-[1.2]"
                 style={{ color: theme.dark }}
               >
                 {current.subtitle}
               </h3>
 
-              <p className="mt-[8px] max-w-[98%] whitespace-pre-wrap text-[13px] leading-[1.4] text-[#123d73]">
+              <p className="mt-[4px] max-w-[98%] whitespace-pre-wrap text-[13px] leading-[1.35] text-[#123d73]">
                 {current.description}
               </p>
 
               {current.quote && (
-                <p className="mt-[5px] max-w-[95%] text-[12px] italic leading-[1.28] text-[#123d73]">
+                <p className="mt-[4px] max-w-[95%] text-[12px] italic leading-[1.25] text-[#123d73]">
                   “ {current.quote} ”
                 </p>
               )}
 
-              <p className="mt-[10px] text-[13px] italic leading-[1.12] text-[#164232]">
+              <p className="mt-[6px] text-[13px] italic leading-[1.12] text-[#164232]">
                 — Talent Acquisition Team
                 <br />
                 <span className="pl-[16px] font-medium">Bharat Organic Expo</span>
@@ -732,9 +764,9 @@ function Legend({
   label: string;
 }) {
   return (
-    <div className="grid grid-cols-[12px_72px_1fr] items-center gap-[12px] text-[13.5px] text-[#254b73]">
+    <div className="grid grid-cols-[10px_65px_1fr] items-center gap-[8px] text-[12px] text-[#254b73]">
       <span
-        className="h-[12px] w-[12px] rounded-full"
+        className="h-[10px] w-[10px] rounded-full"
         style={{ background: color }}
       />
       <span className="font-semibold">{range}</span>
@@ -752,19 +784,19 @@ function ScoreSummary() {
 
   return (
     <div className="grid h-full min-h-0 grid-cols-[1.18fr_.82fr] gap-[10px]">
-      <div className="flex min-h-0 items-center gap-[clamp(10px,1.35vw,20px)] overflow-hidden rounded-[7px] border border-[#e0e7e2] bg-white px-[clamp(10px,1.35vw,20px)]">
+      <div className="flex min-h-0 items-center gap-[clamp(10px,1.2vw,16px)] overflow-hidden rounded-[7px] border border-[#e0e7e2] bg-white px-[clamp(10px,1.2vw,16px)] py-[8px]">
         <ScoreRing />
 
-        <div className="min-w-0 pl-[4px]">
-          <h3 className="text-[18px] font-bold tracking-tight text-[#113a72]">
+        <div className="flex min-w-0 flex-col justify-center pl-[2px]">
+          <h3 className="text-[16px] font-bold tracking-tight text-[#113a72] leading-tight">
             {current.summaryTitle}
           </h3>
 
-          <p className="mt-[4px] max-w-[400px] text-[14.5px] font-medium leading-[1.3] text-[#254b73]">
+          <p className="mt-[3px] max-w-[400px] text-[12.5px] font-medium leading-[1.25] text-[#254b73] line-clamp-2">
             {current.summaryText}
           </p>
 
-          <div className="mt-[7px] space-y-[4px]">
+          <div className="mt-[5px] space-y-[3px]">
             <Legend
               color="#13a13f"
               range="70 – 100%"
@@ -1049,6 +1081,13 @@ function LowNextSteps() {
 
 function ProfileCard() {
   const { candidate } = useMatchData();
+  const initials = (candidate.candidateName || "Candidate")
+    .split(" ")
+    .map((n) => n[0])
+    .filter(Boolean)
+    .slice(0, 2)
+    .join("")
+    .toUpperCase();
 
   return (
     <div className="flex h-full min-h-0 flex-col overflow-hidden rounded-[8px] border border-[#eaefeb] bg-white p-[12px] shadow-[0_2px_8px_rgba(0,0,0,0.03)]">
@@ -1064,13 +1103,19 @@ function ProfileCard() {
       </div>
 
       <div className="mt-[8px] flex min-h-0 flex-1 items-center gap-[12px]">
-        <Image
-          src={profile.image}
-          alt={candidate.candidateName}
-          width={160}
-          height={160}
-          className="h-[76px] w-[76px] shrink-0 rounded-[8px] object-cover object-center"
-        />
+        {candidate.image ? (
+          <Image
+            src={candidate.image}
+            alt={candidate.candidateName}
+            width={160}
+            height={160}
+            className="h-[76px] w-[76px] shrink-0 rounded-[8px] object-cover object-center"
+          />
+        ) : (
+          <div className="flex h-[76px] w-[76px] shrink-0 items-center justify-center rounded-[8px] bg-[#e4efe8] text-[#075333] font-bold text-[22px]">
+            {initials || "CV"}
+          </div>
+        )}
 
         <div className="min-w-0 flex-1">
           <h4 className="truncate text-[15px] font-bold text-[#0c3363]">
@@ -1174,12 +1219,14 @@ function CVCard({ onClose }: { onClose?: () => void }) {
    ========================================================= */
 
 function JobSummary() {
+  const { candidate } = useMatchData();
+  const j = candidate.jobDetails;
   const rows = [
-    { image: asset("building.png"), text: job.company },
-    { image: asset("location.png"), text: job.location },
-    { image: asset("briefcase.png"), text: job.type },
-    { image: asset("bar-chart.png"), text: job.experience },
-    { image: asset("graduation-cap.png"), text: job.education },
+    { image: asset("building.png"), text: j?.company || job.company },
+    { image: asset("location.png"), text: j?.location || job.location },
+    { image: asset("briefcase.png"), text: j?.type || job.type },
+    { image: asset("bar-chart.png"), text: j?.experience || job.experience },
+    { image: asset("graduation-cap.png"), text: j?.education || job.education },
   ];
 
   return (
@@ -1460,21 +1507,19 @@ export function EligibilityPopupContent({
               href="/careers"
               className="flex w-fit items-center gap-[8px] text-[17px] font-semibold text-[#113a72] transition-colors hover:text-red-600"
             >
-              <ArrowLeft className="h-[22px] w-[22px] stroke-[2.5]" />
+              <ArrowLeft className="h-[22px] w-[22px]" strokeWidth={2.5} />
               Back
             </Link>
 
             <h1 className="mt-[4px] truncate text-[27px] font-semibold leading-[1.05] tracking-[-0.025em] text-[#113a72]">
-              {job.title}
+              {candidate.jobDetails?.title || job.title}
             </h1>
 
             <div className="mt-[3px] flex items-center gap-[8px] text-[17px] font-medium text-[#3b587b]">
-              <span>{job.company}</span>
+              <span>{candidate.jobDetails?.company || job.company}</span>
               <span className="text-[#a4b5c7]">|</span>
-              <span>{job.brand}</span>
+              <span>{candidate.jobDetails?.brand || job.brand}</span>
             </div>
-
-
           </div>
 
           <div className="min-h-0 overflow-hidden">

@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import {
@@ -129,6 +129,17 @@ const allJobOpenings: JobOpening[] = [
     icon: Sprout,
   },
   {
+    id: "software-developer-full-stack",
+    title: "Software Developer – Full Stack (React, Next.js, Node.js)",
+    department: "IT & Software Engineering",
+    location: "Delhi NCR / Remote",
+    type: "Full Time",
+    experience: "1–5 Years",
+    description:
+      "Develop, maintain, and scale web applications using MERN stack (React, Next.js, Node.js, Express, MongoDB).",
+    icon: Lightbulb,
+  },
+  {
     id: "graphic-designer",
     title: "Graphic Designer",
     department: "Creative",
@@ -243,9 +254,37 @@ export default function CareersClientContent() {
   const [isNoneModalOpen, setIsNoneModalOpen] = useState(false);
   const [isAmanModalOpen, setIsAmanModalOpen] = useState(false);
   const [showAllJobs, setShowAllJobs] = useState(false);
-  const openingCount = jobOpenings.length;
+  const [fetchedJobs, setFetchedJobs] = useState<JobOpening[]>([]);
 
-  const displayedJobs = showAllJobs ? jobOpenings : jobOpenings.slice(0, 8);
+  useEffect(() => {
+    fetch("/api/careers/jobs")
+      .then((res) => res.json())
+      .then((data) => {
+        if (data && data.success && Array.isArray(data.data) && data.data.length > 0) {
+          const mappedJobs: JobOpening[] = data.data.map((j: any) => ({
+            _id: j._id,
+            id: j._id,
+            slug: j.slug,
+            title: j.title,
+            department: j.department,
+            location: j.location,
+            type: j.employmentType || "Full Time",
+            experience: `${j.experienceMin} - ${j.experienceMax} Years`,
+            description: j.responsibilities?.[0] || j.requirements?.[0] || j.title,
+            icon: Users,
+          }));
+          setFetchedJobs(mappedJobs);
+        }
+      })
+      .catch((err) => {
+        console.error("Failed to load jobs dynamically:", err);
+      });
+  }, []);
+
+  const activeJobOpenings = fetchedJobs.length > 0 ? fetchedJobs : jobOpenings;
+  const openingCount = activeJobOpenings.length;
+
+  const displayedJobs = showAllJobs ? activeJobOpenings : activeJobOpenings.slice(0, 8);
 
   return (
     <main className="bg-[#f8fbf6] text-[#0a1831]">
@@ -453,6 +492,7 @@ export default function CareersClientContent() {
           <div className="flex flex-wrap justify-end divide-x divide-[#d6e0d8] lg:ml-auto">
             {workReasons.map(({ label, icon: Icon }) => (
               <div key={label} className="px-4 sm:px-6 lg:px-10 text-center first:pl-0">
+
                 <Icon
                   className="mx-auto h-8 w-8 text-[#08723e]"
                   strokeWidth={2.1}
