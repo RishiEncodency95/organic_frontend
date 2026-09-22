@@ -431,6 +431,12 @@ export default function CareersClientContent() {
                       >
                         Feedback
                       </Link>
+                      <Link
+                        href="/thank-you"
+                        className="rounded-full bg-[#075f38] px-3.5 py-1 text-xs font-bold text-white transition hover:bg-[#054c2d]"
+                      >
+                        Thank You
+                      </Link>
                     </div>
                   </div>
                   <p className="mt-2 text-[clamp(13px,1vw,17px)] leading-snug text-[#314256]">

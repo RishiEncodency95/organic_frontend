@@ -1,5 +1,3 @@
-import { NextRequest, NextResponse } from "next/server";
-
 export const dynamic = "force-dynamic";
 
 function formatNameWithSpaces(nameStr?: string | null): { fullName: string; firstName: string } {
