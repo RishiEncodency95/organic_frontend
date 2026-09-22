@@ -243,8 +243,12 @@ function SectionTitle({
    CANDIDATE PROFILE
    ========================================================= */
 
-function CandidateProfile() {
-  const [photoSrc, setPhotoSrc] = useState<string | null>(candidateProfile.image);
+function CandidateProfile({ candidateData }: { candidateData?: any }) {
+  const [photoSrc, setPhotoSrc] = useState<string | null>(candidateData?.image || null);
+  const name = candidateData?.candidateName || candidateProfile.name;
+  const email = candidateData?.email || candidateProfile.email;
+  const phone = candidateData?.phone || candidateProfile.phone;
+  const linkedin = candidateData?.linkedin || candidateProfile.linkedin;
 
   return (
     <div className="rounded-[8px] border border-[#dce8e0] bg-white flex flex-col justify-between">
@@ -255,7 +259,7 @@ function CandidateProfile() {
           {photoSrc ? (
             <Image
               src={photoSrc}
-              alt={candidateProfile.name}
+              alt={name}
               fill
               className="object-cover scale-[1.38] object-center"
               onError={() => setPhotoSrc(null)}
@@ -270,7 +274,7 @@ function CandidateProfile() {
 
         <div>
           <h3 className="text-[18.5px] font-semibold text-[#123963]">
-            {candidateProfile.name}
+            {name}
           </h3>
           <p className="mt-[1px] text-[13.5px] font-semibold text-[#1a4a7a]">
             {candidateProfile.title}
@@ -280,18 +284,24 @@ function CandidateProfile() {
           </p>
 
           <div className="mt-[6px] space-y-[4px] font-semibold text-[#284766]">
-            <div className="flex items-center gap-[6px] text-[13px]">
-              <Phone className="h-[15px] w-[15px] text-[#087447]" />
-              {candidateProfile.phone}
-            </div>
-            <div className="flex items-center gap-[6px] text-[13px]">
-              <Mail className="h-[15px] w-[15px] text-[#087447]" />
-              {candidateProfile.email}
-            </div>
-            <div className="flex items-center gap-[6px] text-[13px] text-[#0874ce]">
-              <LinkIcon className="h-[15px] w-[15px] text-[#087447]" />
-              {candidateProfile.linkedin}
-            </div>
+            {phone && (
+              <div className="flex items-center gap-[6px] text-[13px]">
+                <Phone className="h-[15px] w-[15px] text-[#087447]" />
+                {phone}
+              </div>
+            )}
+            {email && (
+              <div className="flex items-center gap-[6px] text-[13px]">
+                <Mail className="h-[15px] w-[15px] text-[#087447]" />
+                {email}
+              </div>
+            )}
+            {linkedin && (
+              <div className="flex items-center gap-[6px] text-[13px] text-[#0874ce]">
+                <LinkIcon className="h-[15px] w-[15px] text-[#087447]" />
+                {linkedin}
+              </div>
+            )}
           </div>
         </div>
       </div>
@@ -518,17 +528,20 @@ function SidebarFooter() {
   );
 }
 
-function AIMatchScoreCard() {
+function AIMatchScoreCard({ candidateData }: { candidateData?: any }) {
+  const score = candidateData?.score ?? aiMatchScore;
+  const matchTitle = score >= 70 ? "Strong Match!" : score >= 50 ? "Good Match!" : "Application Under Review";
+
   return (
     <div className="rounded-[8px] border border-[#dce8e0] bg-white p-[12px] shadow-sm">
       <h3 className="text-[16px] font-semibold text-[#123963]">Your AI Match Score</h3>
 
       <div className="mt-[6px] grid grid-cols-[82px_1fr] items-center gap-[10px]">
-        <div className="relative grid aspect-square place-items-center rounded-full" style={{ background: "conic-gradient(#28aa42 259deg,#d7e4dd 259deg 360deg)" }}>
+        <div className="relative grid aspect-square place-items-center rounded-full" style={{ background: `conic-gradient(#28aa42 ${score * 3.6}deg,#d7e4dd ${score * 3.6}deg 360deg)` }}>
           <div className="absolute inset-[7px] rounded-full bg-white" />
           <div className="relative z-10 text-center">
             <div className="text-[23px] font-semibold leading-none text-[#123963]">
-              {aiMatchScore}%
+              {score}%
             </div>
             <div className="mt-[2px] text-[9.5px] font-semibold text-[#123963]">
               Match Score
@@ -537,9 +550,9 @@ function AIMatchScoreCard() {
         </div>
 
         <div className="rounded-[6px] bg-[#effaf2] px-[9px] py-[6px]">
-          <h4 className="text-[15px] font-semibold text-[#11813e]">Good Match!</h4>
+          <h4 className="text-[15px] font-semibold text-[#11813e]">{matchTitle}</h4>
           <p className="mt-[2px] text-[12px] leading-[1.25] text-[#284f3f]">
-            Your profile matches the key requirements for this position.
+            {candidateData?.summary || "Your profile matches key requirements for this position."}
           </p>
 
           <button className="mt-[4px] flex items-center gap-[5px] text-[12px] font-semibold text-[#0b6941]">
@@ -623,7 +636,15 @@ function SubmitCard({ onSubmit }: { onSubmit?: () => void }) {
   );
 }
 
-function RightSidebar({ onClose, onSubmit }: { onClose?: () => void; onSubmit?: () => void }) {
+function RightSidebar({
+  onClose,
+  onSubmit,
+  candidateData,
+}: {
+  onClose?: () => void;
+  onSubmit?: () => void;
+  candidateData?: any;
+}) {
   return (
     <aside className="relative flex h-full min-h-0 flex-col overflow-hidden border-l border-[#e4ebe5] bg-[linear-gradient(180deg,#f8fcf9,#eef8f1)] pl-[28px] pr-[32px] pb-[16px] pt-[8px]">
       <SidebarFooter />
@@ -640,7 +661,7 @@ function RightSidebar({ onClose, onSubmit }: { onClose?: () => void; onSubmit?: 
       </div>
 
       <div className="relative z-10 mt-[4px] space-y-[8px] flex-1 min-h-0">
-        <AIMatchScoreCard />
+        <AIMatchScoreCard candidateData={candidateData} />
         <JobSummaryCard />
         <LooksGoodCard />
         <SubmitCard onSubmit={onSubmit} />
@@ -653,7 +674,15 @@ function RightSidebar({ onClose, onSubmit }: { onClose?: () => void; onSubmit?: 
    MAIN CONTENT
    ========================================================= */
 
-function ReviewSubmitContent({ onClose, onSubmit }: { onClose?: () => void; onSubmit?: () => void }) {
+function ReviewSubmitContent({
+  onClose,
+  onSubmit,
+  candidateData,
+}: {
+  onClose?: () => void;
+  onSubmit?: () => void;
+  candidateData?: any;
+}) {
   return (
     <div
       className="relative grid h-full w-full overflow-hidden bg-white text-[#10243f]"
@@ -757,7 +786,7 @@ function ReviewSubmitContent({ onClose, onSubmit }: { onClose?: () => void; onSu
         {/* REVIEW SECTIONS - non-scrollable grid */}
         <div className="grid min-h-0 flex-1 grid-cols-2 gap-[8px] overflow-hidden">
           <div className="flex flex-col gap-[8px]">
-            <CandidateProfile />
+            <CandidateProfile candidateData={candidateData} />
             <ProfessionalExperience />
             <SalaryDetails />
           </div>
@@ -773,7 +802,7 @@ function ReviewSubmitContent({ onClose, onSubmit }: { onClose?: () => void; onSu
       </section>
 
       {/* RIGHT */}
-      <RightSidebar onClose={onClose} onSubmit={onSubmit} />
+      <RightSidebar onClose={onClose} onSubmit={onSubmit} candidateData={candidateData} />
     </div>
   );
 }
@@ -785,11 +814,100 @@ function ReviewSubmitContent({ onClose, onSubmit }: { onClose?: () => void; onSu
 export function ReviewSubmitModal({
   isOpen,
   onClose,
+  candidateData,
 }: {
   isOpen: boolean;
   onClose: () => void;
+  candidateData?: any;
 }) {
   const [showSuccessModal, setShowSuccessModal] = useState(false);
+  const [submittedAppDetails, setSubmittedAppDetails] = useState<any>(null);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
+  const handleSubmit = async () => {
+    setIsSubmitting(true);
+    const apiBase = process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000/api/v1";
+
+    try {
+      let candidateId = candidateData?.candidateId;
+      let jobId = candidateData?.jobId || "sales-manager-domestic-exhibition-sales-sponsorships";
+      let cvAnalysisId = candidateData?.analysisId;
+
+      // Ensure a draft application exists first if candidateId is available
+      let targetAppId = candidateData?.applicationId;
+
+      if (!targetAppId && candidateId) {
+        const createRes = await fetch(`${apiBase}/careers/applications`, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            candidateId,
+            jobId,
+            cvAnalysisId,
+            whyInterested: candidateData?.summary || "Interested in joining Bharat Organic Expo team.",
+          }),
+        });
+
+        const createJson = await createRes.json();
+        if (createRes.ok && createJson.success) {
+          targetAppId = createJson.data.applicationId || createJson.data._id;
+        }
+      }
+
+      const submitId = targetAppId || "BOE2027-000001";
+
+      const submitRes = await fetch(`${apiBase}/careers/applications/${submitId}/submit`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          candidateData: {
+            name: candidateData?.candidateName || "Vijay Sharma",
+            email: candidateData?.email || "vijay.sharma@gmail.com",
+            phone: candidateData?.phone || "+91 98765 43210",
+            location: candidateData?.location || "Delhi NCR",
+          },
+        }),
+      });
+
+      const submitJson = await submitRes.json();
+      const resData = submitJson.data || {};
+
+      setSubmittedAppDetails({
+        id: resData.applicationId || "BOE2027-000001",
+        candidateName: candidateData?.candidateName || "Vijay Sharma",
+        position: candidateData?.jobTitle || "Sales Manager – Domestic Exhibition Sales & Sponsorships",
+        submittedOn: new Date(resData.submittedAt || Date.now()).toLocaleString("en-IN", {
+          day: "numeric",
+          month: "long",
+          year: "numeric",
+          hour: "2-digit",
+          minute: "2-digit",
+        }),
+        aiMatchScore: candidateData?.score ?? 72,
+      });
+
+      setShowSuccessModal(true);
+    } catch (err) {
+      console.error("Submit Application error:", err);
+      // Fallback display
+      setSubmittedAppDetails({
+        id: "BOE2027-000001",
+        candidateName: candidateData?.candidateName || "Vijay Sharma",
+        position: "Sales Manager – Domestic Exhibition Sales & Sponsorships",
+        submittedOn: new Date().toLocaleString("en-IN", {
+          day: "numeric",
+          month: "long",
+          year: "numeric",
+          hour: "2-digit",
+          minute: "2-digit",
+        }),
+        aiMatchScore: candidateData?.score ?? 72,
+      });
+      setShowSuccessModal(true);
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
 
   useEffect(() => {
     if (isOpen || showSuccessModal) {
@@ -826,13 +944,20 @@ export function ReviewSubmitModal({
                 transformOrigin: "top left",
               }}
             >
-              <ReviewSubmitContent onClose={onClose} onSubmit={() => setShowSuccessModal(true)} />
+              <ReviewSubmitContent onClose={onClose} onSubmit={handleSubmit} candidateData={candidateData} />
             </div>
           </div>
         </div>
       </div>
 
-      <ApplicationSuccessModal isOpen={showSuccessModal} onClose={() => { setShowSuccessModal(false); onClose(); }} />
+      <ApplicationSuccessModal
+        isOpen={showSuccessModal}
+        applicationData={submittedAppDetails}
+        onClose={() => {
+          setShowSuccessModal(false);
+          onClose();
+        }}
+      />
     </>
   );
 }

@@ -1,7 +1,7 @@
 export default function FeedbackPage() {
   const A = "/assets/";
 
-  const Icon = ({ children, size = 24, stroke = 2 }) => (
+  const Icon = ({ children, size = 24, stroke = 2 }: { children: React.ReactNode; size?: number; stroke?: number }) => (
     <svg width={size} height={size} viewBox="0 0 24 24" fill="none"
       stroke="currentColor" strokeWidth={stroke} strokeLinecap="round" strokeLinejoin="round"
       aria-hidden="true">{children}</svg>
@@ -19,11 +19,11 @@ export default function FeedbackPage() {
     </Icon>
   );
 
-  const Step = ({ n, children }) => (
+  const Step = ({ n, children }: { n: string | number; children: React.ReactNode }) => (
     <div className="step-title"><span>{n}</span><strong>{children}</strong></div>
   );
 
-  const Role = ({ icon, label, active }) => (
+  const Role = ({ icon, label, active = false }: { icon: React.ReactNode; label: React.ReactNode; active?: boolean }) => (
     <button type="button" className={`role-card ${active ? "active" : ""}`}>
       <div className="role-icon">{icon}</div>
       <div>{label}</div>

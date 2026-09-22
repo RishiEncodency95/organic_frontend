@@ -123,6 +123,7 @@ function Field({
   onChange,
   rightIcon,
   type = "text",
+  disabled = false,
 }: {
   label: string;
   required?: boolean;
@@ -131,15 +132,16 @@ function Field({
   onChange: (value: string) => void;
   rightIcon?: React.ReactNode;
   type?: string;
+  disabled?: boolean;
 }) {
-  return (
+  return (  
     <label className="block min-w-0">
       <div className="mb-[4px] text-[13px] font-semibold text-[#163a67]">
         {label}
         {required && <span className="ml-[3px] text-[#d92027]">*</span>}
       </div>
 
-      <div className="flex h-[36px] items-center rounded-[5px] border border-[#cbd8e4] bg-white px-[9px] shadow-[inset_0_1px_2px_rgba(0,0,0,.02)] focus-within:border-[#4e91c9] focus-within:ring-1 focus-within:ring-[#4e91c9]/20">
+      <div className={`flex h-[36px] items-center rounded-[5px] border border-[#cbd8e4] px-[9px] shadow-[inset_0_1px_2px_rgba(0,0,0,.02)] ${disabled ? 'bg-[#f4f7f5] opacity-75' : 'bg-white focus-within:border-[#4e91c9] focus-within:ring-1 focus-within:ring-[#4e91c9]/20'}`}>
         {Icon && (
           <Icon className="mr-[8px] h-[16px] w-[16px] shrink-0 text-[#58749a]" />
         )}
@@ -147,8 +149,9 @@ function Field({
         <input
           type={type}
           value={value}
+          disabled={disabled}
           onChange={(e) => onChange(e.target.value)}
-          className="min-w-0 flex-1 bg-transparent text-[13px] text-[#29445f] outline-none"
+          className="min-w-0 flex-1 bg-transparent text-[13px] text-[#29445f] outline-none disabled:cursor-not-allowed"
         />
 
         {rightIcon}
@@ -164,6 +167,7 @@ function SelectField({
   value,
   onChange,
   options,
+  disabled = false,
 }: {
   label: string;
   required?: boolean;
@@ -171,6 +175,7 @@ function SelectField({
   value: string;
   onChange: (value: string) => void;
   options: string[];
+  disabled?: boolean;
 }) {
   return (
     <label className="block min-w-0">
@@ -179,15 +184,16 @@ function SelectField({
         {required && <span className="ml-[3px] text-[#d92027]">*</span>}
       </div>
 
-      <div className="relative flex h-[36px] items-center rounded-[5px] border border-[#cbd8e4] bg-white px-[9px] focus-within:border-[#4e91c9] focus-within:ring-1 focus-within:ring-[#4e91c9]/20">
+      <div className={`relative flex h-[36px] items-center rounded-[5px] border border-[#cbd8e4] px-[9px] ${disabled ? 'bg-[#f4f7f5] opacity-75' : 'bg-white focus-within:border-[#4e91c9] focus-within:ring-1 focus-within:ring-[#4e91c9]/20'}`}>
         {Icon && (
           <Icon className="mr-[8px] h-[16px] w-[16px] shrink-0 text-[#58749a]" />
         )}
 
         <select
           value={value}
+          disabled={disabled}
           onChange={(e) => onChange(e.target.value)}
-          className="min-w-0 flex-1 appearance-none bg-transparent pr-[22px] text-[13px] text-[#29445f] outline-none"
+          className="min-w-0 flex-1 appearance-none bg-transparent pr-[22px] text-[13px] text-[#29445f] outline-none disabled:cursor-not-allowed"
         >
           {options.map((item) => (
             <option key={item} value={item}>
@@ -294,13 +300,13 @@ function ProgressSteps() {
    PERSONAL INFORMATION
    ========================================================= */
 
-function PersonalInformation() {
-  const [fullName, setFullName] = useState(profile.name);
-  const [email, setEmail] = useState(profile.email);
-  const [phone, setPhone] = useState(profile.phone);
-  const [location, setLocation] = useState("Delhi, NCR");
+function PersonalInformation({ candidateData }: { candidateData?: any }) {
+  const [fullName, setFullName] = useState(candidateData?.candidateName || profile.name);
+  const [email, setEmail] = useState(candidateData?.email || profile.email);
+  const [phone, setPhone] = useState(candidateData?.phone || profile.phone);
+  const [location, setLocation] = useState(candidateData?.location || "Delhi, NCR");
   const [relocate, setRelocate] = useState("Yes");
-  const [photoSrc, setPhotoSrc] = useState<string | null>(profile.image);
+  const [photoSrc, setPhotoSrc] = useState<string | null>(candidateData?.image || null);
 
   return (
     <div className="overflow-hidden rounded-[8px] border border-[#dce8e0] bg-white">
@@ -442,6 +448,10 @@ function ProfessionalDetails() {
   const [expectedCTC, setExpectedCTC] = useState("As per industry standards");
   const [ctcFlexible, setCtcFlexible] = useState("Yes");
 
+  const isFresher = employmentStatus === "Fresher";
+  const isNotEmployed = employmentStatus === "Not Currently Employed";
+  const isCurrentlyEmployed = employmentStatus === "Currently Employed";
+
   return (
     <div className="overflow-hidden rounded-[8px] border border-[#dce8e0] bg-white">
       <SectionTitle icon={BriefcaseBusiness} title="Professional Details" />
@@ -457,8 +467,11 @@ function ProfessionalDetails() {
             <RadioRow
               name="employment"
               value="Currently Employed"
-              checked={employmentStatus === "Currently Employed"}
-              onChange={setEmploymentStatus}
+              checked={isCurrentlyEmployed}
+              onChange={(val) => {
+                setEmploymentStatus(val);
+                if (experience === "Fresher") setExperience("1 Year");
+              }}
             >
               Currently Employed
             </RadioRow>
@@ -467,8 +480,12 @@ function ProfessionalDetails() {
               <RadioRow
                 name="employment"
                 value="Not Currently Employed"
-                checked={employmentStatus === "Not Currently Employed"}
-                onChange={setEmploymentStatus}
+                checked={isNotEmployed}
+                onChange={(val) => {
+                  setEmploymentStatus(val);
+                  setNoticePeriod("Immediate");
+                  if (experience === "Fresher") setExperience("1 Year");
+                }}
               >
                 Not Currently Employed
               </RadioRow>
@@ -481,8 +498,14 @@ function ProfessionalDetails() {
               <RadioRow
                 name="employment"
                 value="Fresher"
-                checked={employmentStatus === "Fresher"}
-                onChange={setEmploymentStatus}
+                checked={isFresher}
+                onChange={(val) => {
+                  setEmploymentStatus(val);
+                  setCompany("");
+                  setDesignation("");
+                  setExperience("Fresher");
+                  setNoticePeriod("Immediate");
+                }}
               >
                 Fresher
               </RadioRow>
@@ -496,7 +519,11 @@ function ProfessionalDetails() {
             <div className="flex items-start gap-[5px]">
               <Info className="mt-[1px] h-[13px] w-[13px] shrink-0 text-[#1f6fae]" />
               <span>
-                Since you are currently employed, please share accurate details.
+                {isFresher
+                  ? "As a Fresher, please share your expected CTC and availability to join."
+                  : isNotEmployed
+                  ? "Please share details of your previous organization and availability to join."
+                  : "Since you are currently employed, please share accurate details."}
               </span>
             </div>
           </div>
@@ -504,42 +531,68 @@ function ProfessionalDetails() {
 
         {/* DETAILS GRID */}
         <div className="grid grid-cols-2 gap-x-[14px] gap-y-[8px]">
-          <div>
+          {/* COMPANY FIELD (Hidden for Freshers) */}
+          {!isFresher ? (
+            <div>
+              <Field
+                label={isNotEmployed ? "Previous / Last Company" : "Current Company"}
+                required={isCurrentlyEmployed}
+                icon={Building2}
+                value={company}
+                onChange={setCompany}
+                rightIcon={<CheckCircle2 className="h-[15px] w-[15px] fill-[#11a050] text-white" />}
+              />
+
+              <label className="mt-[4px] flex cursor-pointer items-center gap-[6px] text-[11.5px] font-semibold text-[#365b78]">
+                <input
+                  type="checkbox"
+                  checked={openRoles}
+                  onChange={(e) => setOpenRoles(e.target.checked)}
+                  className="h-[15px] w-[15px] cursor-pointer accent-[#0a8148]"
+                />
+                I am open to similar or other roles
+              </label>
+            </div>
+          ) : (
+            <div>
+              <Field
+                label="Current / Previous Company"
+                icon={Building2}
+                value="N/A (Fresher)"
+                onChange={() => {}}
+                disabled
+              />
+            </div>
+          )}
+
+          {/* DESIGNATION FIELD (Hidden for Freshers) */}
+          {!isFresher ? (
             <Field
-              label="Current Company"
-              required
-              icon={Building2}
-              value={company}
-              onChange={setCompany}
+              label={isNotEmployed ? "Previous / Last Designation" : "Current Designation"}
+              required={isCurrentlyEmployed}
+              icon={User}
+              value={designation}
+              onChange={setDesignation}
               rightIcon={<CheckCircle2 className="h-[15px] w-[15px] fill-[#11a050] text-white" />}
             />
+          ) : (
+            <Field
+              label="Current / Previous Designation"
+              icon={User}
+              value="N/A (Fresher)"
+              onChange={() => {}}
+              disabled
+            />
+          )}
 
-            <label className="mt-[4px] flex cursor-pointer items-center gap-[6px] text-[11.5px] font-semibold text-[#365b78]">
-              <input
-                type="checkbox"
-                checked={openRoles}
-                onChange={(e) => setOpenRoles(e.target.checked)}
-                className="h-[15px] w-[15px] cursor-pointer accent-[#0a8148]"
-              />
-              I am open to similar or other roles
-            </label>
-          </div>
-
-          <Field
-            label="Current Designation"
-            required
-            icon={User}
-            value={designation}
-            onChange={setDesignation}
-            rightIcon={<CheckCircle2 className="h-[15px] w-[15px] fill-[#11a050] text-white" />}
-          />
-
+          {/* TOTAL EXPERIENCE FIELD */}
           <SelectField
             label="Total Experience"
             required
             icon={Target}
-            value={experience}
+            value={isFresher ? "Fresher" : experience}
             onChange={setExperience}
+            disabled={isFresher}
             options={[
               "Fresher",
               "1 Year",
@@ -551,6 +604,7 @@ function ProfessionalDetails() {
             ]}
           />
 
+          {/* NOTICE PERIOD FIELD */}
           <SelectField
             label="Notice Period"
             required
@@ -560,6 +614,7 @@ function ProfessionalDetails() {
             options={["Immediate", "15 Days", "30 Days", "45 Days", "60 Days", "90 Days"]}
           />
 
+          {/* EXPECTED CTC */}
           <SelectField
             label="Expected CTC (Annual)"
             required
@@ -575,6 +630,7 @@ function ProfessionalDetails() {
             ]}
           />
 
+          {/* EXPECTED CTC FLEXIBLE */}
           <div>
             <div className="mb-[4px] text-[13px] font-semibold text-[#163a67]">
               Expected CTC is Flexible?
@@ -676,7 +732,11 @@ function TellUsMore({ onNext }: { onNext?: () => void }) {
    SIDEBAR
    ========================================================= */
 
-function CVCard() {
+function CVCard({ candidateData }: { candidateData?: any }) {
+  const cvName = candidateData?.cvName || profile.cvName;
+  const cvSize = candidateData?.cvSize || profile.cvSize;
+  const cvUrl = candidateData?.cvUrl;
+
   return (
     <div className="rounded-[8px] border border-[#dce8e0] bg-white p-[12px] shadow-sm">
       <h3 className="text-[16px] font-semibold text-[#123963]">Your CV</h3>
@@ -691,14 +751,21 @@ function CVCard() {
         </div>
 
         <div className="min-w-0 flex-1">
-          <h4 className="truncate text-[13px] font-semibold text-[#14385f]">{profile.cvName}</h4>
-          <p className="mt-[1px] text-[12px] text-[#58708c]">{profile.cvSize}</p>
+          <h4 className="truncate text-[13px] font-semibold text-[#14385f]">{cvName}</h4>
+          <p className="mt-[1px] text-[12px] text-[#58708c]">{cvSize}</p>
 
           <div className="mt-[5px] flex gap-[14px] text-[11.5px] font-semibold text-[#0874ce]">
-            <button className="flex items-center gap-[4px]">
-              <Eye className="h-[13px] w-[13px]" />
-              View File
-            </button>
+            {cvUrl ? (
+              <a href={cvUrl} target="_blank" rel="noopener noreferrer" className="flex items-center gap-[4px]">
+                <Eye className="h-[13px] w-[13px]" />
+                View File
+              </a>
+            ) : (
+              <button className="flex items-center gap-[4px]">
+                <Eye className="h-[13px] w-[13px]" />
+                View File
+              </button>
+            )}
 
             <button className="flex items-center gap-[4px]">
               <RefreshCw className="h-[13px] w-[13px]" />
@@ -718,7 +785,10 @@ function CVCard() {
   );
 }
 
-function AISummaryCard() {
+function AISummaryCard({ candidateData }: { candidateData?: any }) {
+  const score = candidateData?.score ?? aiSummary.score;
+  const title = score >= 70 ? "Strong Match!" : score >= 50 ? "Good Match!" : "Needs Review";
+
   return (
     <div className="rounded-[8px] border border-[#dce8e0] bg-white p-[10px] shadow-sm">
       <h3 className="text-[15px] font-semibold text-[#123963]">AI Analysis Summary</h3>
@@ -727,22 +797,24 @@ function AISummaryCard() {
         <div
           className="relative grid aspect-square place-items-center rounded-full"
           style={{
-            background: `conic-gradient(#28aa42 ${aiSummary.score * 3.6}deg,#d7e4dd ${aiSummary.score * 3.6}deg)`,
+            background: `conic-gradient(#28aa42 ${score * 3.6}deg,#d7e4dd ${score * 3.6}deg)`,
           }}
         >
           <div className="absolute inset-[7px] rounded-full bg-white" />
 
           <div className="relative z-10 text-center">
             <div className="text-[22px] font-semibold leading-none text-[#123963]">
-              {aiSummary.score}%
+              {score}%
             </div>
             <div className="mt-[2px] text-[9px] font-semibold text-[#123963]">Match Score</div>
           </div>
         </div>
 
         <div className="flex flex-col justify-center rounded-[6px] bg-[#effaf2] px-[9px] py-[6px]">
-          <h4 className="text-[14px] font-semibold text-[#11813e]">{aiSummary.title}</h4>
-          <p className="mt-[2px] text-[11px] leading-[1.2] text-[#284f3f]">{aiSummary.text}</p>
+          <h4 className="text-[14px] font-semibold text-[#11813e]">{title}</h4>
+          <p className="mt-[2px] text-[11px] leading-[1.2] text-[#284f3f]">
+            {candidateData?.summary || aiSummary.text}
+          </p>
 
           <button className="mt-[4px] flex items-center gap-[5px] text-[11px] font-semibold text-[#0b6941]">
             View Detailed Analysis
@@ -815,7 +887,7 @@ function SidebarFooter() {
   );
 }
 
-function Sidebar({ onClose }: { onClose: () => void }) {
+function Sidebar({ onClose, candidateData }: { onClose: () => void; candidateData?: any }) {
   return (
     <aside className="relative flex h-full min-h-0 flex-col overflow-hidden border-l border-[#e4ebe5] bg-[linear-gradient(180deg,#f8fcf9,#eef8f1)] pl-[28px] pr-[32px] pb-[16px] pt-[8px]">
       <SidebarFooter />
@@ -840,10 +912,10 @@ function Sidebar({ onClose }: { onClose: () => void }) {
       </div>
 
       <div className="relative z-10 mt-[4px] space-y-[8px]">
-        <CVCard />
-        <AISummaryCard />
+        <CVCard candidateData={candidateData} />
+        <AISummaryCard candidateData={candidateData} />
         <CVDetailsCard />
-        <UpdateCVCard />
+        {/* <UpdateCVCard /> */}
       </div>
     </aside>
   );
@@ -853,7 +925,15 @@ function Sidebar({ onClose }: { onClose: () => void }) {
    POPUP CONTENT
    ========================================================= */
 
-function ApplicationFormContent({ onClose, onNext }: { onClose: () => void; onNext?: () => void }) {
+function ApplicationFormContent({
+  onClose,
+  onNext,
+  candidateData,
+}: {
+  onClose: () => void;
+  onNext?: () => void;
+  candidateData?: any;
+}) {
   return (
     <div
       className="relative grid min-h-full w-full overflow-hidden bg-white text-[#10243f]"
@@ -913,14 +993,14 @@ function ApplicationFormContent({ onClose, onNext }: { onClose: () => void; onNe
 
         {/* FORM */}
         <div className="mt-[8px] flex shrink-0 flex-col gap-[8px]">
-          <PersonalInformation />
+          <PersonalInformation candidateData={candidateData} />
           <ProfessionalDetails />
           <TellUsMore onNext={onNext} />
         </div>
       </section>
 
       {/* RIGHT */}
-      <Sidebar onClose={onClose} />
+      <Sidebar onClose={onClose} candidateData={candidateData} />
     </div>
   );
 }
@@ -935,10 +1015,12 @@ export function ApplicationFormModal({
   isOpen,
   onClose,
   onNext,
+  candidateData,
 }: {
   isOpen: boolean;
   onClose: () => void;
   onNext?: () => void;
+  candidateData?: any;
 }) {
   const scrollRef = useRef<HTMLDivElement>(null);
 
@@ -977,7 +1059,7 @@ export function ApplicationFormModal({
               transformOrigin: "top left",
             }}
           >
-            <ApplicationFormContent onClose={onClose} onNext={onNext} />
+            <ApplicationFormContent onClose={onClose} onNext={onNext} candidateData={candidateData} />
           </div>
         </div>
       </div>
