@@ -1,3 +1,5 @@
+import { NextRequest, NextResponse } from "next/server";
+
 export const dynamic = "force-dynamic";
 
 function formatNameWithSpaces(nameStr?: string | null): { fullName: string; firstName: string } {
@@ -22,12 +24,34 @@ function formatNameWithSpaces(nameStr?: string | null): { fullName: string; firs
   return { fullName, firstName };
 }
 
+// Mirrors the upload rules enforced in the careers UI. Client-side `accept` is only a
+// picker hint, so the request is re-checked here before anything is parsed or stored.
+const ALLOWED_CV_EXTENSIONS = ["pdf", "doc", "docx"];
+const MAX_CV_BYTES = 5 * 1024 * 1024;
+
+function rejectCvFile(file: File): string | null {
+  const extension = file.name.includes(".") ? file.name.split(".").pop()!.toLowerCase() : "";
+  if (!ALLOWED_CV_EXTENSIONS.includes(extension)) {
+    return "Invalid file type. Only PDF, DOC and DOCX files are allowed.";
+  }
+  if (file.size === 0) return "The uploaded file is empty.";
+  if (file.size > MAX_CV_BYTES) return "File is too large. Maximum allowed size is 5 MB.";
+  return null;
+}
+
 export async function POST(req: NextRequest) {
   try {
     const formData = await req.formData();
     const file = formData.get("file") as File | null;
     const jobTitle = (formData.get("jobTitle") as string) || "Sales Manager – Exhibition Sales & Sponsorships";
     const jobExperience = (formData.get("jobExperience") as string) || "3 - 6 Years";
+
+    if (file) {
+      const problem = rejectCvFile(file);
+      if (problem) {
+        return NextResponse.json({ success: false, message: problem }, { status: 400 });
+      }
+    }
 
     let fileName = file?.name || "Uploaded_CV.pdf";
 
