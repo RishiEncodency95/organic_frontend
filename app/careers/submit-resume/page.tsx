@@ -1,6 +1,6 @@
 "use client";
 
-import { createContext, useContext, useState } from "react";
+import { createContext, useContext, useRef, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import {
@@ -19,6 +19,7 @@ import {
   Mail,
   MapPin,
   Pencil,
+  ShieldCheck,
   Phone,
   RefreshCw,
   Search,
@@ -365,6 +366,8 @@ export type CandidateProfileData = {
   firstName: string;
   email?: string | null;
   phone?: string | null;
+  /** Number the WhatsApp OTP was verified against; used to badge the profile. */
+  verifiedPhone?: string | null;
   linkedin?: string | null;
   image?: string | null;
   cvFile?: File | null;
@@ -398,6 +401,7 @@ export const defaultCandidateData: CandidateProfileData = {
   firstName: "Rohit",
   email: "kumarrohitji89@gmail.com",
   phone: "+91 9568816858",
+  verifiedPhone: "+91 9568816858",
   linkedin: "linkedin.com/in/rohit-kumar",
   cvName: "Rohit_Encodency.pdf",
   cvSize: "424 KB",
@@ -425,6 +429,8 @@ type MatchContextType = {
   theme: (typeof stateTheme)["high" | "moderate" | "low"];
   current: (typeof matchConfig)["high" | "moderate" | "low"];
   candidate: CandidateProfileData;
+  /** Applies an inline edit from the profile card; absent outside the popup. */
+  updateCandidate?: (patch: Partial<CandidateProfileData>) => void;
 };
 
 const MatchContext = createContext<MatchContextType>({
@@ -1091,8 +1097,127 @@ function LowNextSteps() {
    PROFILE
    ========================================================= */
 
+const digitsOnly = (value?: string | null) => (value || "").replace(/\D/g, "");
+
+/** Last 10 digits, so "+91 98765 43210" and "9876543210" compare equal. */
+const phoneKey = (value?: string | null) => digitsOnly(value).slice(-10);
+
+const isValidEmail = (value?: string | null) =>
+  /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test((value || "").trim());
+
+const isValidPhone = (value?: string | null) => digitsOnly(value).length >= 10;
+
+/**
+ * Details the application form needs before it can be started. LinkedIn and the
+ * photo stay optional — the form itself never asks for them.
+ */
+function profileIssues(candidate: CandidateProfileData): string[] {
+  const issues: string[] = [];
+  if (!(candidate.candidateName || "").trim()) issues.push("full name");
+  if (!isValidEmail(candidate.email)) issues.push("a valid email address");
+  if (!isValidPhone(candidate.phone)) issues.push("a valid mobile number");
+  return issues;
+}
+
+const MIN_PHOTO_PIXELS = 200;
+const MAX_PHOTO_BYTES = 5 * 1024 * 1024;
+/** Laplacian variance under this reads as out of focus. Deliberately lenient. */
+const MIN_PHOTO_SHARPNESS = 60;
+
+/**
+ * Rejects photos that would look bad in the card: wrong type, oversized, too few
+ * pixels, or visibly out of focus. Sharpness is the variance of a Laplacian over a
+ * grayscale downscale — the standard cheap blur test.
+ */
+async function inspectPhoto(file: File): Promise<{ url: string } | { error: string }> {
+  if (!file.type.startsWith("image/")) {
+    return { error: "That file is not an image. Use a JPG or PNG photo." };
+  }
+  if (file.size > MAX_PHOTO_BYTES) {
+    return { error: "Photo is larger than 5 MB. Please choose a smaller one." };
+  }
+
+  const url = URL.createObjectURL(file);
+
+  const image = await new Promise<HTMLImageElement | null>((resolve) => {
+    const img = new window.Image();
+    img.onload = () => resolve(img);
+    img.onerror = () => resolve(null);
+    img.src = url;
+  });
+
+  if (!image) {
+    URL.revokeObjectURL(url);
+    return { error: "That image could not be read. Try a different photo." };
+  }
+
+  if (image.naturalWidth < MIN_PHOTO_PIXELS || image.naturalHeight < MIN_PHOTO_PIXELS) {
+    URL.revokeObjectURL(url);
+    return {
+      error: `Photo is only ${image.naturalWidth}x${image.naturalHeight}px. Use at least ${MIN_PHOTO_PIXELS}x${MIN_PHOTO_PIXELS}px.`,
+    };
+  }
+
+  const side = 160;
+  const canvas = document.createElement("canvas");
+  canvas.width = side;
+  canvas.height = side;
+  const ctx = canvas.getContext("2d", { willReadFrequently: true });
+
+  // Without a canvas context the sharpness test is skipped rather than failing the upload.
+  if (!ctx) return { url };
+
+  ctx.drawImage(image, 0, 0, side, side);
+  const { data } = ctx.getImageData(0, 0, side, side);
+
+  const gray = new Float32Array(side * side);
+  for (let i = 0; i < gray.length; i += 1) {
+    const p = i * 4;
+    gray[i] = 0.299 * data[p] + 0.587 * data[p + 1] + 0.114 * data[p + 2];
+  }
+
+  let sum = 0;
+  let sumSq = 0;
+  let count = 0;
+  for (let y = 1; y < side - 1; y += 1) {
+    for (let x = 1; x < side - 1; x += 1) {
+      const i = y * side + x;
+      const lap =
+        4 * gray[i] - gray[i - 1] - gray[i + 1] - gray[i - side] - gray[i + side];
+      sum += lap;
+      sumSq += lap * lap;
+      count += 1;
+    }
+  }
+
+  const mean = sum / count;
+  const variance = sumSq / count - mean * mean;
+
+  if (variance < MIN_PHOTO_SHARPNESS) {
+    URL.revokeObjectURL(url);
+    return { error: "That photo looks blurry. Please upload a clearer one." };
+  }
+
+  return { url };
+}
+
+
 function ProfileCard() {
-  const { candidate } = useMatchData();
+  const { candidate, updateCandidate } = useMatchData();
+  const [isEditing, setIsEditing] = useState(false);
+  const [photoError, setPhotoError] = useState("");
+  const [isCheckingPhoto, setIsCheckingPhoto] = useState(false);
+  const photoInputRef = useRef<HTMLInputElement>(null);
+  const verifiedKey = phoneKey(candidate.verifiedPhone);
+
+  const [draft, setDraft] = useState({
+    candidateName: candidate.candidateName || "",
+    email: candidate.email || "",
+    phone: candidate.phone || "",
+    linkedin: candidate.linkedin || "",
+    image: candidate.image || "",
+  });
+
   const initials = (candidate.candidateName || "Candidate")
     .split(" ")
     .map((n) => n[0])
@@ -1101,64 +1226,277 @@ function ProfileCard() {
     .join("")
     .toUpperCase();
 
+  const openEditor = () => {
+    setPhotoError("");
+    setDraft({
+      candidateName: candidate.candidateName || "",
+      email: candidate.email || "",
+      phone: candidate.phone || "",
+      linkedin: candidate.linkedin || "",
+      image: candidate.image || "",
+    });
+    setIsEditing(true);
+  };
+
+  const pickPhoto = async (file?: File | null) => {
+    if (!file) return;
+    setPhotoError("");
+    setIsCheckingPhoto(true);
+    const result = await inspectPhoto(file);
+    setIsCheckingPhoto(false);
+    if ("error" in result) {
+      setPhotoError(result.error);
+      return;
+    }
+    setDraft((d) => ({ ...d, image: result.url }));
+  };
+
+  const draftIssues = profileIssues({
+    ...candidate,
+    candidateName: draft.candidateName,
+    email: draft.email,
+    phone: draft.phone,
+  });
+
+  const save = () => {
+    if (draftIssues.length > 0) return;
+    updateCandidate?.({
+      candidateName: draft.candidateName.trim() || candidate.candidateName,
+      firstName: (draft.candidateName.trim().split(" ")[0] || candidate.firstName) as string,
+      email: draft.email.trim() || null,
+      phone: draft.phone.trim() || null,
+      linkedin: draft.linkedin.trim() || null,
+      image: draft.image || null,
+    });
+    setIsEditing(false);
+  };
+
+  const fieldClass = (invalid: boolean) =>
+    [
+      "w-full rounded-[6px] border bg-white px-[9px] py-[5px] text-[14px] font-semibold text-[#0c3363] outline-none transition",
+      "focus:border-[#07623a] focus:ring-2 focus:ring-[#07623a]/15 placeholder:font-normal placeholder:text-[#9aa8b4]",
+      invalid ? "border-[#e0a49c]" : "border-[#d7e2da]",
+    ].join(" ");
+
   return (
     <div className="flex h-full min-h-0 flex-col overflow-hidden rounded-[8px] border border-[#eaefeb] bg-white p-[12px] shadow-[0_2px_8px_rgba(0,0,0,0.03)]">
       <div className="flex shrink-0 items-center justify-between">
-        <h3 className="text-[17px] font-bold text-[#0c3363]">
-          Your Profile
-        </h3>
+        <h3 className="text-[17px] font-bold text-[#0c3363]">Your Profile</h3>
 
-        <button className="flex items-center gap-[4px] text-[15px] font-bold text-[#0977df] transition-opacity hover:opacity-80">
-          <Pencil className="h-[15px] w-[15px] stroke-[2.5]" />
-          Edit
-        </button>
+        {isEditing ? (
+          <div className="flex items-center gap-[10px]">
+            <button
+              type="button"
+              onClick={() => setIsEditing(false)}
+              className="text-[14px] font-bold text-[#6b7a87] transition-opacity hover:opacity-80"
+            >
+              Cancel
+            </button>
+            <button
+              type="button"
+              onClick={save}
+              disabled={draftIssues.length > 0}
+              title={draftIssues.length > 0 ? `Still needed: ${draftIssues.join(", ")}` : undefined}
+              className="rounded-[5px] bg-[#07623a] px-[10px] py-[3px] text-[14px] font-bold text-white transition-colors hover:bg-[#05502f] disabled:cursor-not-allowed disabled:bg-[#b6c4bc]"
+            >
+              Save
+            </button>
+          </div>
+        ) : (
+          <button
+            type="button"
+            onClick={openEditor}
+            className="flex items-center gap-[4px] text-[15px] font-bold text-[#0977df] transition-opacity hover:opacity-80"
+          >
+            <Pencil className="h-[15px] w-[15px] stroke-[2.5]" />
+            Edit
+          </button>
+        )}
       </div>
 
-      <div className="mt-[8px] flex min-h-0 flex-1 items-center gap-[12px]">
-        {candidate.image ? (
-          <Image
-            src={candidate.image}
-            alt={candidate.candidateName}
-            width={160}
-            height={160}
-            className="h-[76px] w-[76px] shrink-0 rounded-[8px] object-cover object-center"
-          />
-        ) : (
-          <div className="flex h-[76px] w-[76px] shrink-0 items-center justify-center rounded-[8px] bg-[#e4efe8] text-[#075333] font-bold text-[24px]">
-            {initials || "CV"}
+      {isEditing ? (
+        <div className="boe-modal-scroll mt-[8px] flex min-h-0 flex-1 gap-[12px] overflow-y-auto pr-[4px]">
+          {/* Photo column — wide enough to judge the picture before saving. */}
+          <div className="w-[132px] shrink-0">
+            <input
+              ref={photoInputRef}
+              type="file"
+              accept="image/*"
+              className="hidden"
+              onChange={(e) => {
+                void pickPhoto(e.target.files?.[0]);
+                e.target.value = "";
+              }}
+            />
+            <button
+              type="button"
+              onClick={() => photoInputRef.current?.click()}
+              disabled={isCheckingPhoto}
+              className="group relative grid h-[132px] w-[132px] place-items-center overflow-hidden rounded-[10px] border border-dashed border-[#a9c9b6] bg-[#f2f9f4] disabled:cursor-wait"
+            >
+              {draft.image ? (
+                // Object-URL previews are not routable through next/image.
+                // eslint-disable-next-line @next/next/no-img-element
+                <img src={draft.image} alt="" className="h-full w-full object-cover object-center" />
+              ) : (
+                <span className="text-[30px] font-bold text-[#07623a]">{initials || "CV"}</span>
+              )}
+              <span className="absolute inset-x-0 bottom-0 bg-[#07623a]/85 py-[3px] text-[11px] font-bold text-white">
+                {isCheckingPhoto ? "Checking…" : draft.image ? "Change photo" : "Add photo"}
+              </span>
+            </button>
+
+            {photoError ? (
+              <p className="mt-[5px] text-[11.5px] font-semibold leading-snug text-[#b23b2e]">{photoError}</p>
+            ) : (
+              <p className="mt-[5px] text-[11px] leading-snug text-[#6b7a87]">
+                Clear, front-facing photo. Min 200x200px.
+              </p>
+            )}
           </div>
-        )}
 
-        <div className="min-w-0 flex-1">
-          <h4 className="truncate text-[17px] font-bold text-[#0c3363]">
-            {candidate.candidateName}
-          </h4>
+          <div className="min-w-0 flex-1 space-y-[6px]">
+            <div>
+              <input
+                className={fieldClass(!draft.candidateName.trim())}
+                placeholder="Full name *"
+                value={draft.candidateName}
+                onChange={(e) => setDraft((d) => ({ ...d, candidateName: e.target.value }))}
+              />
+            </div>
 
-          <div className="mt-[4px] space-y-[4px] text-[15px] font-semibold text-[#2d4766]">
-            {Boolean(candidate.email) && (
-              <p className="flex items-center gap-[7px]">
-                <Mail className="h-[15px] w-[15px] shrink-0 text-[#0c3363] stroke-[2.5]" />
-                <span className="truncate">{candidate.email}</span>
-              </p>
-            )}
+            <input
+              className={fieldClass(!isValidEmail(draft.email))}
+              type="email"
+              placeholder="Email address *"
+              value={draft.email}
+              onChange={(e) => setDraft((d) => ({ ...d, email: e.target.value }))}
+            />
 
-            {Boolean(candidate.phone) && (
-              <p className="flex items-center gap-[7px]">
-                <Phone className="h-[15px] w-[15px] shrink-0 text-[#0c3363] stroke-[2.5]" />
-                <span className="truncate">{candidate.phone}</span>
-              </p>
-            )}
+            <div>
+              <input
+                className={fieldClass(!isValidPhone(draft.phone))}
+                type="tel"
+                placeholder="Mobile number *"
+                value={draft.phone}
+                onChange={(e) => setDraft((d) => ({ ...d, phone: e.target.value }))}
+              />
+              {/* The OTP proved one specific number; say so, and flag any change. */}
+              {verifiedKey && (
+                phoneKey(draft.phone) === verifiedKey ? (
+                  <p className="mt-[3px] flex items-center gap-[4px] text-[11px] font-bold text-[#07623a]">
+                    <ShieldCheck className="h-[12px] w-[12px] stroke-[2.6]" />
+                    Verified on WhatsApp
+                  </p>
+                ) : (
+                  <p className="mt-[3px] text-[11px] font-semibold leading-snug text-[#b26a2e]">
+                    Not the verified number. OTP was confirmed on{" "}
+                    {candidate.verifiedPhone}.
+                  </p>
+                )
+              )}
+            </div>
 
-            {Boolean(candidate.linkedin) && (
-              <p className="flex items-center gap-[7px]">
-                <LinkedInIcon className="h-[15px] w-[15px] shrink-0 text-[#0977df]" />
-                <span className="truncate">{candidate.linkedin}</span>
-              </p>
-            )}
+            <input
+              className={fieldClass(false)}
+              placeholder="LinkedIn profile (optional)"
+              value={draft.linkedin}
+              onChange={(e) => setDraft((d) => ({ ...d, linkedin: e.target.value }))}
+            />
           </div>
         </div>
-      </div>
+      ) : (
+        <div className="mt-[8px] flex min-h-0 flex-1 items-center gap-[12px]">
+          {candidate.image ? (
+            // May be a blob: preview from the editor above, which next/image cannot take.
+            // eslint-disable-next-line @next/next/no-img-element
+            <img
+              src={candidate.image}
+              alt={candidate.candidateName}
+              className="h-[116px] w-[116px] shrink-0 rounded-[8px] object-cover object-center"
+            />
+          ) : (
+            <button
+              type="button"
+              onClick={openEditor}
+              className="flex h-[116px] w-[116px] shrink-0 flex-col items-center justify-center gap-[2px] rounded-[8px] border border-dashed border-[#a9c9b6] bg-[#e4efe8] text-[#075333] transition-colors hover:bg-[#d8e9df]"
+            >
+              <span className="text-[32px] font-bold leading-none">{initials || "CV"}</span>
+              <span className="text-[9.5px] font-bold uppercase tracking-[0.04em] text-[#07623a]">
+                Add photo
+              </span>
+            </button>
+          )}
+
+          <div className="min-w-0 flex-1">
+            <h4 className="truncate text-[17px] font-bold text-[#0c3363]">
+              {candidate.candidateName}
+            </h4>
+
+            <div className="mt-[4px] space-y-[4px] text-[15px] font-semibold text-[#2d4766]">
+              {candidate.email ? (
+                <p className="flex items-center gap-[7px]">
+                  <Mail className="h-[15px] w-[15px] shrink-0 text-[#0c3363] stroke-[2.5]" />
+                  <span className="truncate">{candidate.email}</span>
+                </p>
+              ) : (
+                <MissingDetail label="Add email" onClick={openEditor} icon={Mail} />
+              )}
+
+              {candidate.phone ? (
+                <p className="flex items-center gap-[7px]">
+                  <Phone className="h-[15px] w-[15px] shrink-0 text-[#0c3363] stroke-[2.5]" />
+                  <span className="truncate">{candidate.phone}</span>
+                  {verifiedKey &&
+                    (phoneKey(candidate.phone) === verifiedKey ? (
+                      <ShieldCheck
+                        className="h-[15px] w-[15px] shrink-0 text-[#07623a] stroke-[2.6]"
+                        aria-label="Verified on WhatsApp"
+                      />
+                    ) : (
+                      <span className="shrink-0 rounded-[4px] bg-[#fdf3e8] px-[5px] py-[1px] text-[10px] font-bold text-[#b26a2e]">
+                        UNVERIFIED
+                      </span>
+                    ))}
+                </p>
+              ) : (
+                <MissingDetail label="Add mobile number" onClick={openEditor} icon={Phone} />
+              )}
+
+              {/* LinkedIn sits under the phone, and only when the CV actually had one. */}
+              {Boolean(candidate.linkedin) && (
+                <p className="flex items-center gap-[7px]">
+                  <LinkedInIcon className="h-[15px] w-[15px] shrink-0 text-[#0977df]" />
+                  <span className="truncate">{candidate.linkedin}</span>
+                </p>
+              )}
+            </div>
+          </div>
+        </div>
+      )}
     </div>
+  );
+}
+
+/** Prompt shown in place of a detail the CV did not yield. */
+function MissingDetail({
+  label,
+  onClick,
+  icon: Icon,
+}: {
+  label: string;
+  onClick: () => void;
+  icon: React.ElementType;
+}) {
+  return (
+    <button
+      type="button"
+      onClick={onClick}
+      className="flex items-center gap-[7px] text-[14px] font-semibold text-[#0977df] transition-opacity hover:opacity-80"
+    >
+      <Icon className="h-[15px] w-[15px] shrink-0 stroke-[2.5]" />
+      <span className="truncate underline underline-offset-2">{label}</span>
+    </button>
   );
 }
 
@@ -1351,7 +1689,9 @@ function SidebarFooter() {
    ========================================================= */
 
 function Sidebar({ onClose, onApply }: { onClose?: () => void; onApply?: () => void }) {
-  const { matchLevel, current } = useMatchData();
+  const { matchLevel, current, candidate } = useMatchData();
+  // The application form needs these, so the step cannot start without them.
+  const missing = profileIssues(candidate);
 
   return (
     <aside
@@ -1367,7 +1707,7 @@ function Sidebar({ onClose, onApply }: { onClose?: () => void; onApply?: () => v
         pb-0
         pt-[8px]
 
-        grid-rows-[54px_155px_145px_210px_48px_48px_58px_1fr]
+        grid-rows-[54px_246px_130px_210px_48px_48px_58px_1fr]
         gap-[7px]
       "
     >
@@ -1396,7 +1736,9 @@ function Sidebar({ onClose, onApply }: { onClose?: () => void; onApply?: () => v
             <button
               type="button"
               onClick={onApply}
-              className="flex h-full w-full items-center justify-center gap-[8px] rounded-[8px] bg-[#07623a] text-[16px] font-bold text-white hover:bg-[#05502f] transition-colors shadow-sm"
+              disabled={missing.length > 0}
+              title={missing.length > 0 ? `Add ${missing.join(", ")} in Your Profile first.` : undefined}
+              className="flex h-full w-full items-center justify-center gap-[8px] rounded-[8px] bg-[#07623a] text-[16px] font-bold text-white transition-colors shadow-sm hover:bg-[#05502f] disabled:cursor-not-allowed disabled:bg-[#b6c4bc] disabled:shadow-none"
             >
               {current.cta}
               <ArrowRight className="h-[18px] w-[18px] stroke-[2.2]" />
@@ -1459,14 +1801,29 @@ export function EligibilityPopupContent({
   candidate = defaultCandidateData,
   score,
   onClose,
+  onBack,
   onApply,
+  onCandidateChange,
 }: {
   candidate?: CandidateProfileData;
   score?: number;
   onClose?: () => void;
+  /** Returns to the previous step; falls back to closing when not supplied. */
+  onBack?: () => void;
   onApply?: () => void;
+  onCandidateChange?: (candidate: CandidateProfileData) => void;
 }) {
-  const matchData = getMatchData(candidate, score);
+  // Edits are held locally so the card updates instantly, and mirrored upward so the
+  // application form on the next step receives the corrected details.
+  const [edited, setEdited] = useState<Partial<CandidateProfileData> | null>(null);
+  const merged = edited ? { ...candidate, ...edited } : candidate;
+
+  const updateCandidate = (patch: Partial<CandidateProfileData>) => {
+    setEdited((current) => ({ ...current, ...patch }));
+    onCandidateChange?.({ ...merged, ...patch });
+  };
+
+  const matchData = { ...getMatchData(merged, score), updateCandidate };
 
   return (
     <MatchContext.Provider value={matchData}>
@@ -1487,13 +1844,24 @@ export function EligibilityPopupContent({
 
           {/* JOB HEADING */}
           <div className="relative min-h-0 overflow-visible pr-[188px] pb-[6px]">
-            <Link
-              href="/careers"
-              className="flex w-fit items-center gap-[8px] text-[17px] font-semibold text-[#113a72] transition-colors hover:text-red-600"
-            >
-              <ArrowLeft className="h-[22px] w-[22px]" strokeWidth={2.5} />
-              Back
-            </Link>
+            {onBack || onClose ? (
+              <button
+                type="button"
+                onClick={onBack ?? onClose}
+                className="flex w-fit items-center gap-[8px] text-[17px] font-semibold text-[#113a72] transition-colors hover:text-red-600"
+              >
+                <ArrowLeft className="h-[22px] w-[22px]" strokeWidth={2.5} />
+                Back
+              </button>
+            ) : (
+              <Link
+                href="/careers"
+                className="flex w-fit items-center gap-[8px] text-[17px] font-semibold text-[#113a72] transition-colors hover:text-red-600"
+              >
+                <ArrowLeft className="h-[22px] w-[22px]" strokeWidth={2.5} />
+                Back
+              </Link>
+            )}
 
             <h1 className="mt-[2px] truncate text-[26px] font-semibold leading-[1.05] tracking-[-0.025em] text-[#113a72]">
               {candidate.jobDetails?.title || job.title}
@@ -1535,13 +1903,17 @@ export function EligibilityModal({
   candidate = defaultCandidateData,
   score,
   onClose,
+  onBack,
   onApply,
+  onCandidateChange,
 }: {
   isOpen: boolean;
   candidate?: CandidateProfileData;
   score?: number;
   onClose: () => void;
+  onBack?: () => void;
   onApply?: () => void;
+  onCandidateChange?: (candidate: CandidateProfileData) => void;
 }) {
   if (!isOpen) return null;
 
@@ -1573,7 +1945,7 @@ export function EligibilityModal({
               transformOrigin: "top left",
             }}
           >
-            <EligibilityPopupContent candidate={candidate} score={score} onClose={onClose} onApply={onApply} />
+            <EligibilityPopupContent candidate={candidate} score={score} onClose={onClose} onBack={onBack} onApply={onApply} onCandidateChange={onCandidateChange} />
           </div>
         </div>
       </div>

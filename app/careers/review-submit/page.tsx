@@ -676,10 +676,12 @@ function RightSidebar({
 
 function ReviewSubmitContent({
   onClose,
+  onBack,
   onSubmit,
   candidateData,
 }: {
   onClose?: () => void;
+  onBack?: () => void;
   onSubmit?: () => void;
   candidateData?: any;
 }) {
@@ -716,10 +718,10 @@ function ReviewSubmitContent({
 
         {/* TITLE */}
         <div className="mt-[4px] shrink-0">
-          {onClose ? (
+          {onBack || onClose ? (
             <button
               type="button"
-              onClick={onClose}
+              onClick={onBack ?? onClose}
               className="flex w-fit items-center gap-[5px] text-[13px] font-semibold text-[#0d5d3c]"
             >
               <ArrowLeft className="h-[14px] w-[14px]" />
@@ -814,10 +816,13 @@ function ReviewSubmitContent({
 export function ReviewSubmitModal({
   isOpen,
   onClose,
+  onBack,
   candidateData,
 }: {
   isOpen: boolean;
   onClose: () => void;
+  /** Returns to the application form; falls back to closing when not supplied. */
+  onBack?: () => void;
   candidateData?: any;
 }) {
   const [showSuccessModal, setShowSuccessModal] = useState(false);
@@ -944,7 +949,7 @@ export function ReviewSubmitModal({
                 transformOrigin: "top left",
               }}
             >
-              <ReviewSubmitContent onClose={onClose} onSubmit={handleSubmit} candidateData={candidateData} />
+              <ReviewSubmitContent onClose={onClose} onBack={onBack} onSubmit={handleSubmit} candidateData={candidateData} />
             </div>
           </div>
         </div>

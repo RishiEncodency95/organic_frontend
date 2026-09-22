@@ -64,6 +64,26 @@ const ALLOWED_CV_ACCEPT = [
 ].join(",");
 const MAX_CV_BYTES = 5 * 1024 * 1024;
 
+/**
+ * CVs often carry the name in block capitals ("ROHIT KUMAR"), which reads as shouting
+ * in the UI. Split camelCase / separators, then title-case only when the whole string
+ * is uppercase so names like "McDonald" survive untouched.
+ */
+const prettifyName = (raw?: string | null): string => {
+    if (!raw) return "";
+    const spaced = raw
+        .replace(/([a-z])([A-Z])/g, "$1 $2")
+        .replace(/([A-Z]+)([A-Z][a-z])/g, "$1 $2")
+        .replace(/[._-]+/g, " ")
+        .replace(/\s+/g, " ")
+        .trim();
+    if (!spaced || spaced !== spaced.toUpperCase()) return spaced;
+    return spaced
+        .split(" ")
+        .map((word) => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
+        .join(" ");
+};
+
 const formatBytes = (bytes: number) =>
     bytes < 1024 * 1024
         ? `${Math.max(1, Math.round(bytes / 1024))} KB`
@@ -255,13 +275,12 @@ function UploadBox({ onFile }: { onFile: (file: File | null) => void }) {
                 setIsDragging(false);
                 acceptFiles(event.dataTransfer.files);
             }}
-            className={`rounded-[12px] border border-dashed px-[22px] py-[12px] text-center transition-colors ${
-                error
+            className={`rounded-[12px] border border-dashed px-[18px] py-[10px] text-center transition-colors ${error
                     ? "border-[#e0a49c] bg-[#fdf5f4]"
                     : isDragging
                         ? "border-[#007a50] bg-[#e8f6ed]"
                         : "border-[#9bc7b1] bg-white/45"
-            }`}
+                }`}
         >
             <input
                 ref={inputRef}
@@ -276,10 +295,10 @@ function UploadBox({ onFile }: { onFile: (file: File | null) => void }) {
             />
 
             <FileUp
-                className={`mx-auto h-[50px] w-[50px] ${error ? "text-[#c0705f]" : "text-[#007a50]"}`}
+                className={`mx-auto h-[44px] w-[44px] ${error ? "text-[#c0705f]" : "text-[#007a50]"}`}
                 strokeWidth={2.3}
             />
-            <h3 className="mt-[7px] text-[20px] font-medium leading-none text-[#152840]">
+            <h3 className="mt-[5px] text-[20px] font-medium leading-none text-[#152840]">
                 Upload Your CV
             </h3>
 
@@ -304,7 +323,7 @@ function UploadBox({ onFile }: { onFile: (file: File | null) => void }) {
             <button
                 type="button"
                 onClick={chooseFile}
-                className="mt-[10px] h-[48px] w-[255px] rounded-[7px] bg-[linear-gradient(180deg,#008d55,#007346)] text-[18px] font-semibold text-white shadow-[0_5px_10px_rgba(0,84,51,0.18)]"
+                className="mt-[8px] h-[44px] w-[240px] rounded-[7px] bg-[linear-gradient(180deg,#008d55,#007346)] text-[18px] font-semibold text-white shadow-[0_5px_10px_rgba(0,84,51,0.18)]"
             >
                 {fileName ? "Change File" : "Choose File"}
             </button>
@@ -317,6 +336,8 @@ export type CandidateAnalysisData = {
     firstName: string;
     email?: string | null;
     phone?: string | null;
+    /** The number the WhatsApp OTP was actually verified against. */
+    verifiedPhone?: string | null;
     linkedin?: string | null;
     image?: string | null;
     cvFile?: File | null;
@@ -612,7 +633,7 @@ export default function UploadCvModal({
 
             const analysisData = analyzeJson.data;
             const profileData = analysisData.candidateProfile || {};
-            const fullName = profileData.name || file.name.replace(/\.[^/.]+$/, "").replace(/[-_]/g, " ").trim();
+            const fullName = prettifyName(profileData.name) || prettifyName(file.name.replace(/\.[^/.]+$/, ""));
             const firstName = fullName.split(" ")[0] || "Candidate";
 
             const candidateData: CandidateAnalysisData & {
@@ -624,7 +645,8 @@ export default function UploadCvModal({
                 candidateName: fullName,
                 firstName: firstName,
                 email: profileData.email || null,
-                phone: verifiedPhone || profileData.phone || null,
+                phone: profileData.phone || verifiedPhone || null,
+                verifiedPhone: verifiedPhone || null,
                 linkedin: profileData.linkedin || null,
                 cvFile: file,
                 cvName: file.name,
@@ -677,10 +699,11 @@ export default function UploadCvModal({
                     const nextJson = await nextRes.json();
                     if (nextJson.success) {
                         const candidateData: CandidateAnalysisData = {
-                            candidateName: nextJson.candidateName || file.name.replace(/\.[^/.]+$/, "").replace(/[-_]/g, " ").trim(),
+                            candidateName: prettifyName(nextJson.candidateName) || prettifyName(file.name.replace(/\.[^/.]+$/, "")),
                             firstName: nextJson.firstName || "Candidate",
                             email: nextJson.email || null,
-                            phone: verifiedPhone || nextJson.phone || null,
+                            phone: nextJson.phone || verifiedPhone || null,
+                            verifiedPhone: verifiedPhone || null,
                             linkedin: nextJson.linkedin || null,
                             cvFile: file,
                             cvName: file.name,
@@ -729,7 +752,7 @@ export default function UploadCvModal({
                 .replace(/[-_]/g, " ")
                 .replace(/\b(cv|resume|doc|pdf)\b/gi, "")
                 .trim();
-            const formattedName = fallbackName ? fallbackName.replace(/\b\w/g, (c) => c.toUpperCase()) : "Candidate";
+            const formattedName = prettifyName(fallbackName) || "Candidate";
             const firstName = formattedName.split(" ")[0];
 
             const candidateData: CandidateAnalysisData = {
@@ -737,6 +760,7 @@ export default function UploadCvModal({
                 firstName: firstName,
                 email: null,
                 phone: verifiedPhone || null,
+                verifiedPhone: verifiedPhone || null,
                 linkedin: null,
                 cvFile: file,
                 cvName: file.name,
@@ -786,7 +810,7 @@ export default function UploadCvModal({
                         style={{
                             width: `${DESIGN_WIDTH}px`,
                             height: `${DESIGN_HEIGHT}px`,
-                            gridTemplateColumns: "calc(65% - 8px) calc(35% - 8px)",
+                            gridTemplateColumns: "calc(68% - 8px) calc(32% - 8px)",
                             // Without an explicit row the single implicit row is sized to
                             // its content, leaving blank canvas under both panels.
                             gridTemplateRows: "minmax(0, 1fr)",
@@ -822,7 +846,7 @@ export default function UploadCvModal({
                                 />
                             </div>
 
-                            <div className="boe-modal-scroll relative z-10 h-full max-w-[560px] overflow-y-auto pr-[14px] bg-[#FBFCF9]">
+                            <div className="boe-modal-scroll relative z-10 h-full max-w-[600px] overflow-y-auto pr-[14px] bg-[#FBFCF9]">
                                 <div className="flex items-center gap-[13px]">
                                     {/* <span className="h-[3px] w-[55px] bg-[#0b734d]/70" /> */}
                                     <span className="text-[20px] font-semibold tracking-[0.12em] text-[#00563f]">
@@ -831,7 +855,7 @@ export default function UploadCvModal({
                                     <span className="h-[3px] w-[55px] bg-[#0b734d]/70" />
                                 </div>
 
-                                <h1 className="mt-[10px] max-w-[560px] text-[22px] lg:text-[37px] font-semibold leading-[1.18] tracking-[-0.03em] text-[#083A34]">
+                                <h1 className="mt-[10px] max-w-[600px] text-[22px] lg:text-[37px] font-semibold leading-[1.18] tracking-[-0.03em] text-[#083A34]">
                                     {job.title || title}
                                 </h1>
 
@@ -924,19 +948,19 @@ export default function UploadCvModal({
 
                                 <div className="mt-[9px]">
                                     <h3 className="text-[20px] font-semibold text-[#00563f]">AI will check:</h3>
-                                    <ul className="mt-[7px] space-y-[5px] text-[16.5px] leading-[1.25] text-[#253950]">
+                                    <ul className="mt-[7px] space-y-[4px] text-[15.5px] leading-[1.25] text-[#253950]">
                                         {aiChecklist.map((item) => (
-                                            <li key={item} className="flex items-center gap-[11px]">
+                                            <li key={item} className="flex items-center gap-[10px]">
                                                 <CheckCircle2 className="h-[20px] w-[20px] shrink-0 fill-[#007a50] text-white" />
-                                                {item}
+                                                <span className="text-[16px] leading-[1.3] text-[#42566c]">{item}</span>
                                             </li>
                                         ))}
                                     </ul>
                                 </div>
 
-                                <div className="mt-[9px] flex items-center gap-[17px] rounded-[8px] bg-[#e1f4e6] px-4 py-3">
+                                <div className="mt-[9px] flex items-center gap-[17px] rounded-[8px] bg-[#e1f4e6] px-3 py-2.5">
                                     <div
-                                        className="relative grid h-[98px] w-[98px] shrink-0 place-items-center rounded-full"
+                                        className="relative grid h-[90px] w-[90px] shrink-0 place-items-center rounded-full"
                                         style={{
                                             background: `conic-gradient(#2fb734 0deg ${threshold * 3.6}deg,#cbd0d4 ${threshold * 3.6}deg 360deg)`,
                                         }}
@@ -950,7 +974,7 @@ export default function UploadCvModal({
                                             {threshold}% or above
                                             <br />= Eligible to Apply
                                         </p>
-                                        <p className="mt-[8px] text-[15.5px] leading-[1.3] text-[#42566c]">
+                                        <p className="mt-[8px] text-[14px] leading-[1.3] text-[#42566c]">
                                             Even if your score is lower, you may
                                             <br />
                                             still reach out to us for future opportunities.
@@ -962,7 +986,7 @@ export default function UploadCvModal({
                                     type="button"
                                     disabled={!file || isAnalyzing}
                                     onClick={handleAnalyzeButtonClick}
-                                    className={`mt-[9px] flex h-[52px] w-full items-center justify-center gap-[15px] rounded-[7px] text-[20px] font-medium text-white transition-all ${!file || isAnalyzing
+                                    className={`mt-[8px] flex h-[48px] w-full items-center justify-center gap-[15px] rounded-[7px] text-[20px] font-medium text-white transition-all ${!file || isAnalyzing
                                         ? "bg-gray-400 cursor-not-allowed opacity-60 shadow-none"
                                         : "bg-[linear-gradient(180deg,#008d55,#007346)] shadow-[0_7px_13px_rgba(0,84,51,0.22)] hover:brightness-110 cursor-pointer"
                                         }`}
@@ -971,7 +995,7 @@ export default function UploadCvModal({
                                     <ArrowRight className="h-[27px] w-[27px]" />
                                 </button>
 
-                                <div className="relative z-10 mt-[9px] flex items-center gap-[10px] text-[15px] leading-[1.3] text-[#526174]">
+                                <div className="relative z-10 mt-[7px] flex items-center gap-[10px] text-[15px] leading-[1.3] text-[#526174]">
                                     <LockKeyhole className="h-[24px] w-[24px] shrink-0 fill-[#007a50] text-white" />
                                     Your data is secure and will only be used for recruitment purposes.
                                 </div>
@@ -1011,11 +1035,10 @@ export default function UploadCvModal({
                                     {ANALYSIS_STEPS.map((label, index) => (
                                         <span
                                             key={label}
-                                            className={`h-[6px] rounded-full transition-all duration-300 ${
-                                                index === analysisStep
+                                            className={`h-[6px] rounded-full transition-all duration-300 ${index === analysisStep
                                                     ? "w-[20px] bg-[#007a50]"
                                                     : "w-[6px] bg-[#bfd8c8]"
-                                            }`}
+                                                }`}
                                         />
                                     ))}
                                 </div>
@@ -1173,13 +1196,12 @@ export default function UploadCvModal({
                                                     onChange={(e) => handleOtpBoxChange(index, e.target.value)}
                                                     onKeyDown={(e) => handleOtpBoxKeyDown(index, e)}
                                                     onFocus={(e) => e.currentTarget.select()}
-                                                    className={`h-[52px] w-[46px] rounded-[10px] border bg-white text-center text-[21px] font-semibold text-[#12334a] outline-none transition ${
-                                                        otpError
+                                                    className={`h-[52px] w-[46px] rounded-[10px] border bg-white text-center text-[21px] font-semibold text-[#12334a] outline-none transition ${otpError
                                                             ? "border-[#e0a49c]"
                                                             : otpCode[index]
                                                                 ? "border-[#008d55]"
                                                                 : "border-[#c3d8cb]"
-                                                    } focus:border-[#008d55] focus:ring-[3px] focus:ring-[#008d55]/15`}
+                                                        } focus:border-[#008d55] focus:ring-[3px] focus:ring-[#008d55]/15`}
                                                 />
                                             ))}
                                         </div>
