@@ -44,7 +44,7 @@ const matchScore = 72;
 const asset = (file: string) => `/separated-assets/${file}`;
 
 const separatedAssets = {
-  personHigh: asset("ChatGPT Image Sep 16, 2026, 04_30_14 PM.png"),
+  personHigh: "/career-submit-resume-assets/newimagegreat.png",
   personModerate: asset("ChatGPT Image Sep 16, 2026, 04_31_37 PM.png"),
   personLow: "/career-submit-resume-assets/sadimage.png",
   rightPeople: asset("ChatGPT Image Sep 16, 2026, 04_29_29 PM.png"),
@@ -682,33 +682,45 @@ function ResultHero() {
                 {current.subtitle}
               </h3>
 
-              <p className="mt-[4px] max-w-[98%] whitespace-pre-wrap text-[13px] leading-[1.35] text-[#123d73]">
+              <p className="mt-[6px] max-w-[98%] whitespace-pre-wrap text-[15px] font-medium leading-[1.38] text-[#123d73]">
                 {current.description}
               </p>
 
               {current.quote && (
-                <p className="mt-[4px] max-w-[95%] text-[12px] italic leading-[1.25] text-[#123d73]">
+                <p className="mt-[4px] max-w-[95%] text-[14px] italic leading-[1.25] text-[#123d73]">
                   “ {current.quote} ”
                 </p>
               )}
 
-              <p className="mt-[6px] text-[13px] italic leading-[1.12] text-[#164232]">
+              <p className="mt-[8px] text-[15px] italic leading-[1.18] text-[#164232]">
                 — Talent Acquisition Team
                 <br />
-                <span className="pl-[16px] font-medium">Bharat Organic Expo</span>
+                <span className="pl-[16px] font-semibold">Bharat Organic Expo</span>
               </p>
             </div>
           </div>
         </div>
       </div>
 
-      {/* RIGHT STICKY ARTWORK */}
-      <div className="pointer-events-none absolute bottom-0 right-[2.4%] top-[4%] z-20 w-[17.2%] overflow-visible">
+      {/* RIGHT SIDE ARTWORKS */}
+      {/* 1. Original Artwork ("Right People Brighter Tomorrows") - Shifted slightly higher */}
+      <div className="pointer-events-none absolute right-[2%] top-[2%] bottom-[12%] z-10 w-[18%] overflow-visible">
         <Image
-          src={current.rightImage ?? separatedAssets.stickyNote}
+          src={separatedAssets.rightPeople}
           alt=""
           fill
           sizes="18vw"
+          className="object-contain object-right-top"
+        />
+      </div>
+
+      {/* 2. Leaf Image - Smaller size at bottom right corner without clipping */}
+      <div className="pointer-events-none absolute bottom-0 right-0 z-20 h-[35%] w-[11%] overflow-visible">
+        <Image
+          src="/assets/final-card-exact.png"
+          alt=""
+          fill
+          sizes="11vw"
           className="object-contain object-right-bottom"
         />
       </div>
@@ -764,13 +776,13 @@ function Legend({
   label: string;
 }) {
   return (
-    <div className="grid grid-cols-[10px_65px_1fr] items-center gap-[8px] text-[12px] text-[#254b73]">
+    <div className="grid grid-cols-[12px_80px_1fr] items-center gap-[8px] text-[13.5px] text-[#254b73]">
       <span
-        className="h-[10px] w-[10px] rounded-full"
+        className="h-[11px] w-[11px] rounded-full"
         style={{ background: color }}
       />
-      <span className="font-semibold">{range}</span>
-      <span className="font-medium">{label}</span>
+      <span className="font-bold">{range}</span>
+      <span className="font-semibold">{label}</span>
     </div>
   );
 }
@@ -783,20 +795,20 @@ function ScoreSummary() {
   const { matchLevel, current, theme } = useMatchData();
 
   return (
-    <div className="grid h-full min-h-0 grid-cols-[1.18fr_.82fr] gap-[10px]">
+    <div className="grid h-full min-h-0 grid-cols-[1fr_1.1fr] gap-[10px]">
       <div className="flex min-h-0 items-center gap-[clamp(10px,1.2vw,16px)] overflow-hidden rounded-[7px] border border-[#e0e7e2] bg-white px-[clamp(10px,1.2vw,16px)] py-[8px]">
         <ScoreRing />
 
         <div className="flex min-w-0 flex-col justify-center pl-[2px]">
-          <h3 className="text-[16px] font-bold tracking-tight text-[#113a72] leading-tight">
+          <h3 className="text-[17px] font-bold tracking-tight text-[#113a72] leading-tight">
             {current.summaryTitle}
           </h3>
 
-          <p className="mt-[3px] max-w-[400px] text-[12.5px] font-medium leading-[1.25] text-[#254b73] line-clamp-2">
+          <p className="mt-[3px] max-w-[400px] text-[13.5px] font-semibold leading-[1.25] text-[#254b73] line-clamp-2">
             {current.summaryText}
           </p>
 
-          <div className="mt-[5px] space-y-[3px]">
+          <div className="mt-[6px] space-y-[4px]">
             <Legend
               color="#13a13f"
               range="70 – 100%"
@@ -827,27 +839,27 @@ function ScoreSummary() {
       >
         <div className="flex shrink-0 items-center gap-[10px]">
           <div
-            className="grid h-[24px] w-[24px] shrink-0 place-items-center rounded-full text-white"
+            className="grid h-[26px] w-[26px] shrink-0 place-items-center rounded-full text-white"
             style={{ background: theme.primary }}
           >
             {matchLevel === "moderate" ? (
-              <Lightbulb className="h-[14px] w-[14px]" />
+              <Lightbulb className="h-[15px] w-[15px]" />
             ) : matchLevel === "low" ? (
-              <span className="text-[15px] font-bold leading-none">!</span>
+              <span className="text-[16px] font-bold leading-none">!</span>
             ) : (
-              <Target className="h-[14px] w-[14px]" />
+              <Target className="h-[15px] w-[15px]" />
             )}
           </div>
 
           <h3
-            className="text-[16.5px] font-bold leading-tight"
+            className="text-[17.5px] font-bold leading-tight"
             style={{ color: theme.dark }}
           >
             {current.suggestionTitle}
           </h3>
         </div>
 
-        <div className="mt-[8px] flex flex-col gap-[6px]">
+        <div className="mt-[8px] flex flex-col gap-[7px]">
           {current.requirements.map((item, index) => {
             const hasParen = item.includes("(");
             const mainText = hasParen ? item.split("(")[0] : item;
@@ -856,25 +868,25 @@ function ScoreSummary() {
             return (
               <div
                 key={item}
-                className="flex items-start gap-[8px]"
+                className="flex items-center gap-[8px]"
               >
                 <span
-                  className="mt-[3px] grid h-[15px] w-[15px] shrink-0 place-items-center rounded-full text-[9px] font-bold text-white"
+                  className="grid h-[17px] w-[17px] shrink-0 place-items-center rounded-full text-[10px] font-bold text-white"
                   style={{ background: theme.primary }}
                 >
                   {matchLevel === "high" ? (
-                    <Check className="h-[10px] w-[10px]" strokeWidth={3.5} />
+                    <Check className="h-[11px] w-[11px]" strokeWidth={3.5} />
                   ) : matchLevel === "low" ? (
-                    <X className="h-[10px] w-[10px]" strokeWidth={3.5} />
+                    <X className="h-[11px] w-[11px]" strokeWidth={3.5} />
                   ) : (
                     index + 1
                   )}
                 </span>
 
-                <p className="text-[12.5px] font-medium leading-[1.3] text-[#123d73]">
+                <p className="whitespace-nowrap text-[13.5px] font-semibold leading-tight text-[#123d73]">
                   {mainText}
                   {parenText && (
-                    <span className="font-normal text-[#214368]">{parenText}</span>
+                    <span className="font-medium text-[#214368]">{parenText}</span>
                   )}
                 </p>
               </div>
@@ -943,28 +955,28 @@ function Breakdown() {
           return (
             <div
               key={item.title}
-              className="grid min-h-0 grid-cols-[34px_minmax(0,1fr)_44px] items-center gap-[8px] rounded-[10px] border border-[#e2ece5] bg-white px-[12px] py-[6px] shadow-[0_1px_2px_rgba(0,0,0,0.03)]"
+              className="grid min-h-0 grid-cols-[40px_minmax(0,1fr)_48px] items-center gap-[10px] rounded-[10px] border border-[#e2ece5] bg-white px-[12px] py-[8px] shadow-[0_1px_2px_rgba(0,0,0,0.03)]"
             >
               <Image
                 src={iconAssets[item.title] ?? asset("briefcase-large.png")}
                 alt=""
                 width={64}
                 height={64}
-                className="h-[30px] w-[30px] object-contain"
+                className="h-[36px] w-[36px] object-contain"
               />
 
               <div className="min-w-0">
-                <h4 className="truncate text-[13.5px] font-semibold leading-tight text-[#102e50]">
+                <h4 className="truncate text-[14px] font-bold leading-tight text-[#102e50]">
                   {item.title}
                 </h4>
 
-                <p className="mt-[1px] truncate text-[12px] font-medium text-[#34475c]">
+                <p className="mt-[1px] truncate text-[12.5px] font-semibold text-[#34475c]">
                   {item.description}
                 </p>
 
-                <div className="mt-[4px] h-[5px] overflow-hidden rounded-full bg-[#e0e5e8]">
+                <div className="mt-[5px] h-[8px] overflow-hidden rounded-full bg-[#e0e5e8]">
                   <div
-                    className="h-full rounded-full"
+                    className="h-full rounded-full transition-all duration-300"
                     style={{
                       width: `${item.score}%`,
                       background: scoreColor,
@@ -974,7 +986,7 @@ function Breakdown() {
               </div>
 
               <span
-                className="text-right text-[14px] font-semibold"
+                className="text-right text-[15px] font-bold"
                 style={{ color: scoreColor }}
               >
                 {item.score}%
@@ -984,11 +996,11 @@ function Breakdown() {
         })}
       </div>
 
-      <div className="mt-[8px] flex h-[32px] shrink-0 items-center gap-[8px] rounded-[8px] border border-[#d8eae0] bg-[#eff9f2] px-[12px] text-[12.5px] text-[#173e34]">
-        <BookOpen className="h-[14px] w-[14px] shrink-0 text-[#087447]" />
+      <div className="mt-[22px] flex h-[36px] shrink-0 items-center gap-[8px] rounded-[8px] border border-[#d8eae0] bg-[#eff9f2] px-[12px] text-[13px] text-[#173e34]">
+        <BookOpen className="h-[16px] w-[16px] shrink-0 text-[#087447]" />
 
         <span className="truncate">
-          <span className="font-semibold">Tip:</span> Update your CV with more relevant experience and skills to increase your match score and improve your chances.
+          <span className="font-bold">Tip:</span> Update your CV with more relevant experience and skills to increase your match score and improve your chances.
         </span>
       </div>
     </div>
@@ -1092,12 +1104,12 @@ function ProfileCard() {
   return (
     <div className="flex h-full min-h-0 flex-col overflow-hidden rounded-[8px] border border-[#eaefeb] bg-white p-[12px] shadow-[0_2px_8px_rgba(0,0,0,0.03)]">
       <div className="flex shrink-0 items-center justify-between">
-        <h3 className="text-[15px] font-bold text-[#0c3363]">
+        <h3 className="text-[17px] font-bold text-[#0c3363]">
           Your Profile
         </h3>
 
-        <button className="flex items-center gap-[4px] text-[13px] font-bold text-[#0977df] transition-opacity hover:opacity-80">
-          <Pencil className="h-[13px] w-[13px] stroke-[2.5]" />
+        <button className="flex items-center gap-[4px] text-[15px] font-bold text-[#0977df] transition-opacity hover:opacity-80">
+          <Pencil className="h-[15px] w-[15px] stroke-[2.5]" />
           Edit
         </button>
       </div>
@@ -1112,34 +1124,34 @@ function ProfileCard() {
             className="h-[76px] w-[76px] shrink-0 rounded-[8px] object-cover object-center"
           />
         ) : (
-          <div className="flex h-[76px] w-[76px] shrink-0 items-center justify-center rounded-[8px] bg-[#e4efe8] text-[#075333] font-bold text-[22px]">
+          <div className="flex h-[76px] w-[76px] shrink-0 items-center justify-center rounded-[8px] bg-[#e4efe8] text-[#075333] font-bold text-[24px]">
             {initials || "CV"}
           </div>
         )}
 
         <div className="min-w-0 flex-1">
-          <h4 className="truncate text-[15px] font-bold text-[#0c3363]">
+          <h4 className="truncate text-[17px] font-bold text-[#0c3363]">
             {candidate.candidateName}
           </h4>
 
-          <div className="mt-[4px] space-y-[4px] text-[13px] font-medium text-[#2d4766]">
+          <div className="mt-[4px] space-y-[4px] text-[15px] font-semibold text-[#2d4766]">
             {Boolean(candidate.email) && (
               <p className="flex items-center gap-[7px]">
-                <Mail className="h-[13px] w-[13px] shrink-0 text-[#0c3363] stroke-[2.5]" />
+                <Mail className="h-[15px] w-[15px] shrink-0 text-[#0c3363] stroke-[2.5]" />
                 <span className="truncate">{candidate.email}</span>
               </p>
             )}
 
             {Boolean(candidate.phone) && (
               <p className="flex items-center gap-[7px]">
-                <Phone className="h-[13px] w-[13px] shrink-0 text-[#0c3363] stroke-[2.5]" />
+                <Phone className="h-[15px] w-[15px] shrink-0 text-[#0c3363] stroke-[2.5]" />
                 <span className="truncate">{candidate.phone}</span>
               </p>
             )}
 
             {Boolean(candidate.linkedin) && (
               <p className="flex items-center gap-[7px]">
-                <LinkedInIcon className="h-[13px] w-[13px] shrink-0 text-[#0977df]" />
+                <LinkedInIcon className="h-[15px] w-[15px] shrink-0 text-[#0977df]" />
                 <span className="truncate">{candidate.linkedin}</span>
               </p>
             )}
@@ -1167,7 +1179,7 @@ function CVCard({ onClose }: { onClose?: () => void }) {
 
   return (
     <div className="flex h-full min-h-0 flex-col overflow-hidden rounded-[8px] border border-[#eaefeb] bg-white p-[12px] shadow-[0_2px_8px_rgba(0,0,0,0.03)]">
-      <h3 className="shrink-0 text-[15px] font-bold text-[#0c3363]">
+      <h3 className="shrink-0 text-[17px] font-bold text-[#0c3363]">
         Your CV
       </h3>
 
@@ -1181,21 +1193,21 @@ function CVCard({ onClose }: { onClose?: () => void }) {
         </div>
 
         <div className="min-w-0 flex-1 pl-[4px]">
-          <h4 className="truncate text-[14px] font-bold text-[#0c3363]">
+          <h4 className="truncate text-[16px] font-bold text-[#0c3363]">
             {candidate.cvName}
           </h4>
 
-          <p className="mt-[2px] text-[13px] font-medium text-[#2d4766]">
+          <p className="mt-[2px] text-[14px] font-semibold text-[#2d4766]">
             {candidate.cvSize}
           </p>
 
-          <div className="mt-[6px] flex flex-wrap gap-x-[12px] gap-y-[3px] text-[13px] font-bold text-[#0977df]">
+          <div className="mt-[6px] flex flex-wrap gap-x-[12px] gap-y-[3px] text-[14px] font-bold text-[#0977df]">
             <button
               type="button"
               onClick={handleViewFile}
               className="flex items-center gap-[5px] hover:opacity-80 transition-opacity cursor-pointer"
             >
-              <Eye className="h-[13px] w-[13px] stroke-[2.5]" />
+              <Eye className="h-[15px] w-[15px] stroke-[2.5]" />
               View File
             </button>
 
@@ -1204,7 +1216,7 @@ function CVCard({ onClose }: { onClose?: () => void }) {
               onClick={onClose}
               className="flex items-center gap-[5px] hover:opacity-80 transition-opacity cursor-pointer"
             >
-              <RefreshCw className="h-[13px] w-[13px] stroke-[2.5]" />
+              <RefreshCw className="h-[15px] w-[15px] stroke-[2.5]" />
               Upload Different CV
             </button>
           </div>
@@ -1231,7 +1243,7 @@ function JobSummary() {
 
   return (
     <div className="flex h-full min-h-0 flex-col overflow-hidden rounded-[8px] border border-[#eaefeb] bg-white p-[12px] shadow-[0_2px_8px_rgba(0,0,0,0.03)]">
-      <h3 className="shrink-0 text-[15px] font-bold text-[#0c3363]">
+      <h3 className="shrink-0 text-[17px] font-bold text-[#0c3363]">
         Job Summary
       </h3>
 
@@ -1244,12 +1256,12 @@ function JobSummary() {
             <Image
               src={image}
               alt=""
-              width={40}
-              height={40}
-              className="h-[20px] w-[20px] shrink-0 object-contain"
+              width={48}
+              height={48}
+              className="h-[26px] w-[26px] shrink-0 object-contain"
             />
 
-            <span className="truncate text-[13px] font-medium text-[#2d4766]">
+            <span className="truncate text-[15px] font-semibold text-[#2d4766]">
               {text}
             </span>
           </div>
@@ -1272,11 +1284,11 @@ function SupportCard() {
         <span className="h-[28px] w-[18px] shrink-0 rotate-[25deg] rounded-[100%_0_100%_0] bg-[#23943d]" />
 
         <div>
-          <h4 className="text-[12px] font-semibold text-[#125c37]">
+          <h4 className="text-[14px] font-bold text-[#125c37]">
             Looking for a Better Fit?
           </h4>
 
-          <p className="mt-[2px] text-[12px] leading-tight text-[#28425d]">
+          <p className="mt-[2px] text-[13px] font-medium leading-tight text-[#28425d]">
             Explore other career opportunities at Bharat Organic Expo.
           </p>
         </div>
@@ -1286,8 +1298,8 @@ function SupportCard() {
 
   if (matchLevel === "high") {
     return (
-      <div className="flex h-full min-h-0 items-center gap-[8px] overflow-hidden px-[9px] text-[12px] text-[#25405c]">
-        <LockKeyhole className="h-[14px] w-[14px] shrink-0 text-[#087447]" />
+      <div className="flex h-full min-h-0 items-center gap-[8px] overflow-hidden px-[9px] text-[13.5px] font-semibold text-[#25405c]">
+        <LockKeyhole className="h-[16px] w-[16px] shrink-0 text-[#087447]" />
 
         Your data is secure and will only be used for recruitment purposes.
       </div>
@@ -1299,14 +1311,14 @@ function SupportCard() {
       className="flex h-full min-h-0 items-center gap-[10px] overflow-hidden rounded-[8px] px-[12px] py-[8px]"
       style={{ background: theme.supportBg }}
     >
-      <Info className="h-[22px] w-[22px] shrink-0 fill-[#1565c0] text-white" />
+      <Info className="h-[24px] w-[24px] shrink-0 fill-[#1565c0] text-white" />
 
       <div className="min-w-0">
-        <h4 className="text-[13px] font-semibold text-[#102d58] leading-tight">
+        <h4 className="text-[14px] font-bold text-[#102d58] leading-tight">
           Still have questions?
         </h4>
 
-        <p className="mt-[2px] text-[12px] leading-tight text-[#214368]">
+        <p className="mt-[2px] text-[13px] font-medium leading-tight text-[#214368]">
           Feel free to reach out to our HR team at
           <br />
           <strong className="font-semibold text-[#102d58]">careers@bharatorganicexpo.com</strong>
@@ -1355,25 +1367,18 @@ function Sidebar({ onClose, onApply }: { onClose?: () => void; onApply?: () => v
         pb-0
         pt-[8px]
 
-        grid-rows-[54px_145px_135px_195px_44px_44px_58px_1fr]
+        grid-rows-[54px_155px_145px_210px_48px_48px_58px_1fr]
         gap-[7px]
       "
     >
-      {/* TOP ARTWORK - same placement as reference */}
-      <div className="flex min-h-0 items-center justify-between overflow-hidden">
-        <Image
-          src={separatedAssets.sidebarTop}
-          alt="Together for a Healthier Tomorrow"
-          width={2040}
-          height={771}
-          className="h-full w-[62%] object-contain object-left-top"
-        />
+      {/* TOP BAR */}
+      <div className="flex min-h-0 items-center justify-end overflow-hidden">
         <button
           type="button"
           onClick={onClose}
-          className="flex items-center gap-[6px] text-[16px] font-semibold text-[#075333] transition-colors hover:text-red-600 pr-1"
+          className="flex items-center gap-[6px] text-[17px] font-bold text-[#075333] transition-colors hover:text-red-600 pr-1"
         >
-          <ArrowLeft className="h-[16px] w-[16px] stroke-[2.5]" />
+          <ArrowLeft className="h-[18px] w-[18px] stroke-[2.5]" />
           Back to Careers
         </button>
       </div>
@@ -1391,17 +1396,17 @@ function Sidebar({ onClose, onApply }: { onClose?: () => void; onApply?: () => v
             <button
               type="button"
               onClick={onApply}
-              className="flex h-full w-full items-center justify-center gap-[8px] rounded-[8px] bg-[#07623a] text-[14.5px] font-semibold text-white hover:bg-[#05502f] transition-colors shadow-sm"
+              className="flex h-full w-full items-center justify-center gap-[8px] rounded-[8px] bg-[#07623a] text-[16px] font-bold text-white hover:bg-[#05502f] transition-colors shadow-sm"
             >
               {current.cta}
-              <ArrowRight className="h-[16px] w-[16px] stroke-[2.2]" />
+              <ArrowRight className="h-[18px] w-[18px] stroke-[2.2]" />
             </button>
           </div>
 
           {/* SECOND */}
           <div className="min-h-0">
-            <button className="flex h-full w-full items-center justify-center gap-[8px] rounded-[8px] border border-[#07623a] bg-white text-[14.5px] font-semibold text-[#07623a] hover:bg-[#f2faf4] transition-colors shadow-sm">
-              <Bookmark className="h-[18px] w-[18px] stroke-[2.2] text-[#07623a]" />
+            <button className="flex h-full w-full items-center justify-center gap-[8px] rounded-[8px] border border-[#07623a] bg-white text-[16px] font-bold text-[#07623a] hover:bg-[#f2faf4] transition-colors shadow-sm">
+              <Bookmark className="h-[20px] w-[20px] stroke-[2.2] text-[#07623a]" />
               Save for Later
             </button>
           </div>
@@ -1476,33 +1481,12 @@ export function EligibilityPopupContent({
         {/* LEFT */}
         <section
           className="grid h-full min-h-0 overflow-hidden px-6 py-4
-            grid-rows-[50px_76px_60px_235px_175px_1fr] gap-[8px]
+            grid-rows-[82px_68px_240px_175px_1fr] gap-[10px]
           "
         >
-          {/* BHARAT ORGANIC EXPO HEADER - EDITABLE CONTENT */}
-          <div className="flex min-h-0 items-center gap-[10px] overflow-hidden">
-            <Image
-              src={separatedAssets.headerLeaf}
-              alt=""
-              width={82}
-              height={92}
-              priority
-              className="h-[50px] w-[48px] shrink-0 object-contain"
-            />
-
-            <div className="min-w-0 gap-2">
-              <div className="truncate text-[24px] font-semibold leading-[1] text-[#115437]">
-                {brandHeader.title}
-              </div>
-
-              <div className=" truncate text-[15px] font-medium leading-[1.05] text-[#1c7486]">
-                {brandHeader.tagline}
-              </div>
-            </div>
-          </div>
 
           {/* JOB HEADING */}
-          <div className="relative min-h-0 overflow-visible pr-[188px]">
+          <div className="relative min-h-0 overflow-visible pr-[188px] pb-[6px]">
             <Link
               href="/careers"
               className="flex w-fit items-center gap-[8px] text-[17px] font-semibold text-[#113a72] transition-colors hover:text-red-600"
@@ -1511,18 +1495,18 @@ export function EligibilityPopupContent({
               Back
             </Link>
 
-            <h1 className="mt-[4px] truncate text-[27px] font-semibold leading-[1.05] tracking-[-0.025em] text-[#113a72]">
+            <h1 className="mt-[2px] truncate text-[26px] font-semibold leading-[1.05] tracking-[-0.025em] text-[#113a72]">
               {candidate.jobDetails?.title || job.title}
             </h1>
 
-            <div className="mt-[3px] flex items-center gap-[8px] text-[17px] font-medium text-[#3b587b]">
+            <div className="mt-[2px] flex items-center gap-[8px] text-[16px] font-medium text-[#3b587b]">
               <span>{candidate.jobDetails?.company || job.company}</span>
               <span className="text-[#a4b5c7]">|</span>
               <span>{candidate.jobDetails?.brand || job.brand}</span>
             </div>
           </div>
 
-          <div className="min-h-0 overflow-hidden">
+          <div className="min-h-0 overflow-hidden pt-[10px]">
             <ProgressSteps />
           </div>
 
