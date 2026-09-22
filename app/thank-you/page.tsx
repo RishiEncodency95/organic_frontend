@@ -27,9 +27,9 @@ const script = Kaushan_Script({
 
 const HERO_IMAGE = "/assets/banner.png";
 const NEXT_EDITION_BANNER = "/assets/next-edition-banner.png";
-const LEAF_REAL = "/assets/ChatGPT Image Sep 21, 2026, 02_06_33 PM.png";
-const LEAF_LEFT = "/assets/ChatGPT Image Sep 21, 2026, 02_07_12 PM.png";
-const LEAF_RIGHT = "/assets/ChatGPT Image Sep 21, 2026, 02_06_33 PM.png";
+const LEAF_REAL = "/assets/leaf-branch.png";
+const LEAF_LEFT = "/assets/leaf-left-decor.png";
+const LEAF_RIGHT = "/assets/leaf-branch.png";
 
 /* Participation card assets (TEXT-FREE background + real HTML text format) */
 const CARD_BG = "/assets/participation-card-bg.png"; // leaves + hands/soil artwork, NO text
@@ -353,7 +353,7 @@ export default function ThankYouPage() {
       className={`${inter.className} relative min-h-screen overflow-hidden bg-[#e4efe5] text-[#0f172a] antialiased`}
     >
       {/* ============================ HERO BANNER ============================ */}
-      <header className="relative h-[360px] md:h-[420px] w-full overflow-hidden bg-[#f1f6ec]">
+      <header className="relative h-[360px] md:h-[420px] w-full overflow-hidden bg-[#e4efe5]">
         <Image
           src={HERO_IMAGE}
           alt="Bharat Organic Expo banner"
@@ -362,6 +362,9 @@ export default function ThankYouPage() {
           sizes="100vw"
           className="object-cover object-center pointer-events-none select-none z-0"
         />
+
+        {/* Bottom smooth gradient fade to blend hero image seamlessly into page background */}
+        <div className="absolute inset-x-0 bottom-0 h-32 bg-gradient-to-t from-[#e4efe5] via-[#e4efe5]/70 to-transparent z-0 pointer-events-none" />
 
         <div className="relative z-10 mx-auto flex h-full w-full max-w-5xl -translate-x-6 md:-translate-x-12 lg:-translate-x-16 flex-col justify-start pt-16 md:pt-20 px-4 md:px-6">
           <nav
@@ -399,7 +402,7 @@ export default function ThankYouPage() {
 
       <main className="relative z-10 mx-auto -mt-10 w-full max-w-5xl px-4 md:px-6 pb-12">
         {/* Success Card */}
-        <div className="w-full rounded-xl border border-[#b5dbbc] bg-gradient-to-br from-[#dcf0e0] via-[#e8f5ec] to-[#d6ebd9] p-5 md:p-6 pb-5 shadow-[0_4px_20px_rgba(16,60,40,0.08)]">
+        <div className="w-full rounded-xl border border-[#d4e4d8] bg-white p-5 md:p-6 pb-5 shadow-[0_4px_20px_rgba(16,60,40,0.06)]">
           <div className="relative min-h-[160px] rounded-md border border-[#e2ece4] bg-white px-4 pt-[52px] text-center shadow-sm">
             <div className="absolute left-1/2 top-0 h-[42px] w-[70px] -translate-x-1/2 rounded-b-[35px] bg-[#f4f9f5]" />
             <div className="absolute left-1/2 top-[-3px] flex h-[48px] w-[48px] -translate-x-1/2 items-center justify-center rounded-full bg-[#0e5a34] shadow-[0_3px_8px_rgba(14,90,52,0.25)]">
@@ -554,7 +557,7 @@ export default function ThankYouPage() {
               {/* RIGHT TOP Image - Together for a Greener Tomorrow */}
               <div className="pointer-events-none absolute right-[3%] top-[12%] w-[30%] h-[35%] z-[2]">
                 <Image
-                  src="/assets/ChatGPT Image Sep 21, 2026, 04_34_45 PM.png"
+                  src="/assets/greener-tomorrow-text.png"
                   alt="Together for a Greener Tomorrow"
                   fill
                   sizes="160px"
@@ -565,7 +568,7 @@ export default function ThankYouPage() {
               {/* RIGHT BOTTOM Image - Hands with Plant */}
               <div className="pointer-events-none absolute right-[0%] top-[62%] w-[36%] h-[38%] z-[1]">
                 <Image
-                  src="/assets/ChatGPT Image Sep 21, 2026, 04_36_08 PM.png"
+                  src="/assets/plant-in-hands.png"
                   alt="Plant in hands"
                   fill
                   sizes="180px"

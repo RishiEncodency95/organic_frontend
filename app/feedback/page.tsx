@@ -270,7 +270,7 @@ export default function FeedbackPage() {
       className={`${inter.className} relative min-h-screen overflow-hidden bg-[#e4efe5] text-[#0f172a] antialiased`}
     >
       {/* ============================ HERO ============================ */}
-      <header className="relative h-[360px] md:h-[420px] w-full overflow-hidden bg-[#f1f6ec]">
+      <header className="relative h-[360px] md:h-[420px] w-full overflow-hidden bg-[#e4efe5]">
         {/* Full background banner image */}
         <Image
           src={HERO_IMAGE}
@@ -280,6 +280,9 @@ export default function FeedbackPage() {
           sizes="100vw"
           className="object-cover object-center pointer-events-none select-none z-0"
         />
+
+        {/* Bottom smooth gradient fade to blend hero image seamlessly into page background */}
+        <div className="absolute inset-x-0 bottom-0 h-32 bg-gradient-to-t from-[#e4efe5] via-[#e4efe5]/70 to-transparent z-0 pointer-events-none" />
 
         {/* Text block aligned with navbar */}
         <div className="relative z-10 mx-auto flex h-full w-full max-w-5xl -translate-x-6 md:-translate-x-12 lg:-translate-x-16 flex-col justify-start pt-16 md:pt-20 px-4 md:px-6">
@@ -317,7 +320,7 @@ export default function FeedbackPage() {
 
       {/* ============================ FORM CARD ============================ */}
       <main className="relative z-10 mx-auto -mt-4 w-full max-w-5xl px-4 md:px-6 pb-12">
-        <div className="w-full rounded-lg border border-[#d4e4d8] bg-gradient-to-br from-[#f2f8f4] via-[#f7fbf8] to-[#ebf5ed] px-5 pb-6 pt-5 shadow-[0_4px_16px_rgba(16,60,40,0.05)] md:px-7">
+        <div className="w-full rounded-lg border border-[#d4e4d8] bg-white px-5 pb-6 pt-5 shadow-[0_4px_16px_rgba(16,60,40,0.05)] md:px-7">
           {/* Form header */}
           <h2 className="text-[20px] font-semibold leading-7 tracking-[-0.01em] text-[#111d17]">
             Share Your Feedback
