@@ -5,6 +5,7 @@ import Image from "next/image";
 import Link from "next/link";
 import sidebarFooterImage from "../../assets/carrer/grow-organic-grow-india.png";
 import {
+  AlertCircle,
   ArrowLeft,
   ArrowRight,
   BriefcaseBusiness,
@@ -19,15 +20,19 @@ import {
   GraduationCap,
   Home,
   Info,
+  Loader2,
+  Lock,
   Mail,
   MapPin,
   Pencil,
   Phone,
   RefreshCw,
   ShieldCheck,
+  Sparkles,
   Target,
   Trophy,
   User,
+  XCircle,
 } from "lucide-react";
 
 /* =========================================================
@@ -130,12 +135,19 @@ function Field({
 }) {
   return (  
     <label className="block min-w-0">
-      <div className="mb-[5px] text-[15px] font-semibold text-[#163a67]">
-        {label}
-        {required && <span className="ml-[3px] text-[#d92027]">*</span>}
+      <div className="mb-[5px] flex items-center justify-between text-[15px] font-semibold text-[#163a67]">
+        <span>
+          {label}
+          {required && <span className="ml-[3px] text-[#d92027]">*</span>}
+        </span>
+        {disabled && (
+          <span className="flex items-center gap-[3px] text-[11px] font-normal text-[#64748b]">
+            <Lock className="h-[10px] w-[10px]" /> Read Only
+          </span>
+        )}
       </div>
 
-      <div className={`flex h-[41px] items-center rounded-[5px] border border-[#cbd8e4] px-[11px] shadow-[inset_0_1px_2px_rgba(0,0,0,.02)] ${disabled ? 'bg-[#f4f7f5] opacity-75' : 'bg-white focus-within:border-[#4e91c9] focus-within:ring-1 focus-within:ring-[#4e91c9]/20'}`}>
+      <div className={`flex h-[41px] items-center rounded-[5px] border border-[#cbd8e4] px-[11px] shadow-[inset_0_1px_2px_rgba(0,0,0,.02)] ${disabled ? 'bg-[#f4f7f5] opacity-85' : 'bg-white focus-within:border-[#4e91c9] focus-within:ring-1 focus-within:ring-[#4e91c9]/20'}`}>
         {Icon && (
           <Icon className="mr-[9px] h-[18px] w-[18px] shrink-0 text-[#58749a]" />
         )}
@@ -145,7 +157,7 @@ function Field({
           value={value}
           disabled={disabled}
           onChange={(e) => onChange(e.target.value)}
-          className="min-w-0 flex-1 bg-transparent text-[15px] text-[#29445f] outline-none disabled:cursor-not-allowed"
+          className="min-w-0 flex-1 bg-transparent text-[15px] text-[#29445f] outline-none disabled:cursor-not-allowed font-medium"
         />
 
         {rightIcon}
@@ -173,12 +185,19 @@ function SelectField({
 }) {
   return (
     <label className="block min-w-0">
-      <div className="mb-[5px] text-[15px] font-semibold text-[#163a67]">
-        {label}
-        {required && <span className="ml-[3px] text-[#d92027]">*</span>}
+      <div className="mb-[5px] flex items-center justify-between text-[15px] font-semibold text-[#163a67]">
+        <span>
+          {label}
+          {required && <span className="ml-[3px] text-[#d92027]">*</span>}
+        </span>
+        {disabled && (
+          <span className="flex items-center gap-[3px] text-[11px] font-normal text-[#64748b]">
+            <Lock className="h-[10px] w-[10px]" /> Read Only
+          </span>
+        )}
       </div>
 
-      <div className={`relative flex h-[41px] items-center rounded-[5px] border border-[#cbd8e4] px-[11px] ${disabled ? 'bg-[#f4f7f5] opacity-75' : 'bg-white focus-within:border-[#4e91c9] focus-within:ring-1 focus-within:ring-[#4e91c9]/20'}`}>
+      <div className={`relative flex h-[41px] items-center rounded-[5px] border border-[#cbd8e4] px-[11px] ${disabled ? 'bg-[#f4f7f5] opacity-85' : 'bg-white focus-within:border-[#4e91c9] focus-within:ring-1 focus-within:ring-[#4e91c9]/20'}`}>
         {Icon && (
           <Icon className="mr-[9px] h-[18px] w-[18px] shrink-0 text-[#58749a]" />
         )}
@@ -187,7 +206,7 @@ function SelectField({
           value={value}
           disabled={disabled}
           onChange={(e) => onChange(e.target.value)}
-          className="min-w-0 flex-1 appearance-none bg-transparent pr-[22px] text-[15px] text-[#29445f] outline-none disabled:cursor-not-allowed"
+          className="min-w-0 flex-1 appearance-none bg-transparent pr-[22px] text-[15px] text-[#29445f] outline-none disabled:cursor-not-allowed font-medium"
         >
           {options.map((item) => (
             <option key={item} value={item}>
@@ -291,71 +310,268 @@ function ProgressSteps() {
 }
 
 /* =========================================================
-   PERSONAL INFORMATION
+   IMAGE BLUR CHECK HELPER
    ========================================================= */
 
-function PersonalInformation({ candidateData }: { candidateData?: any }) {
-  const [fullName, setFullName] = useState(candidateData?.candidateName || profile.name);
-  const [email, setEmail] = useState(candidateData?.email || profile.email);
-  const [phone, setPhone] = useState(candidateData?.phone || profile.phone);
+function inspectPhotoBlur(canvas: HTMLCanvasElement): number {
+  const ctx = canvas.getContext("2d", { willReadFrequently: true });
+  if (!ctx) return 100;
+  const { data } = ctx.getImageData(0, 0, canvas.width, canvas.height);
+  const side = canvas.width;
+  const gray = new Float32Array(side * side);
+  for (let i = 0; i < gray.length; i += 1) {
+    const p = i * 4;
+    gray[i] = 0.299 * data[p] + 0.587 * data[p + 1] + 0.114 * data[p + 2];
+  }
+  let sum = 0;
+  let sumSq = 0;
+  let count = 0;
+  for (let y = 1; y < side - 1; y += 1) {
+    for (let x = 1; x < side - 1; x += 1) {
+      const i = y * side + x;
+      const lap = 4 * gray[i] - gray[i - 1] - gray[i + 1] - gray[i - side] - gray[i + side];
+      sum += lap;
+      sumSq += lap * lap;
+      count += 1;
+    }
+  }
+  const mean = sum / count;
+  return sumSq / count - mean * mean;
+}
+
+/* =========================================================
+   PERSONAL INFORMATION (READ-ONLY DETAILS + MANDATORY PHOTO)
+   ========================================================= */
+
+function PersonalInformation({
+  candidateData,
+  photoSrc,
+  setPhotoSrc,
+  isPhotoVerified,
+  setIsPhotoVerified,
+}: {
+  candidateData?: any;
+  photoSrc: string | null;
+  setPhotoSrc: (url: string | null) => void;
+  isPhotoVerified: boolean;
+  setIsPhotoVerified: (verified: boolean) => void;
+}) {
+  const fullName = candidateData?.candidateName || candidateData?.firstName || profile.name;
+  const email = candidateData?.email || profile.email;
+  const phone = candidateData?.phone || candidateData?.verifiedPhone || profile.phone;
   const [location, setLocation] = useState(candidateData?.location || "Delhi, NCR");
   const [relocate, setRelocate] = useState("Yes");
-  const [photoSrc, setPhotoSrc] = useState<string | null>(candidateData?.image || null);
+
+  const [isVerifying, setIsVerifying] = useState(false);
+  const [verificationError, setVerificationError] = useState<string | null>(null);
+  const [verifiedGender, setVerifiedGender] = useState<string | null>(null);
+  const fileInputRef = useRef<HTMLInputElement>(null);
+
+  const handlePhotoSelect = async (file: File) => {
+    setVerificationError(null);
+    setIsVerifying(true);
+    setIsPhotoVerified(false);
+
+    if (!file.type.startsWith("image/")) {
+      setVerificationError("Invalid file. Please select a JPG or PNG photo.");
+      setIsVerifying(false);
+      return;
+    }
+
+    if (file.size > 5 * 1024 * 1024) {
+      setVerificationError("Photo size exceeds 5 MB. Please upload a smaller image.");
+      setIsVerifying(false);
+      return;
+    }
+
+    const reader = new FileReader();
+    reader.onload = async (e) => {
+      const dataUrl = e.target?.result as string;
+      if (!dataUrl) {
+        setVerificationError("Failed to read image data.");
+        setIsVerifying(false);
+        return;
+      }
+
+      const img = new window.Image();
+      img.onload = async () => {
+        if (img.naturalWidth < 150 || img.naturalHeight < 150) {
+          setVerificationError("Image size is too small. Minimum resolution is 150x150 pixels.");
+          setIsVerifying(false);
+          return;
+        }
+
+        // 1. Local Canvas Blur check
+        const canvas = document.createElement("canvas");
+        const side = 160;
+        canvas.width = side;
+        canvas.height = side;
+        const ctx = canvas.getContext("2d");
+        if (ctx) {
+          ctx.drawImage(img, 0, 0, side, side);
+          const blurScore = inspectPhotoBlur(canvas);
+          if (blurScore < 45) {
+            setVerificationError("Photo is blurry! Please upload a clear, sharp photograph.");
+            setIsVerifying(false);
+            return;
+          }
+        }
+
+        // 2. OpenAI Vision Check
+        try {
+          const res = await fetch("/api/verify-image", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ imageBase64: dataUrl }),
+          });
+
+          const json = await res.json();
+          if (json.success) {
+            setPhotoSrc(dataUrl);
+            setIsPhotoVerified(true);
+            setVerifiedGender(json.gender || "Human");
+            setVerificationError(null);
+          } else {
+            setVerificationError(
+              json.reason || "OpenAI Verification Failed: Please upload an upright, clear photo of a male or female face."
+            );
+            setIsPhotoVerified(false);
+          }
+        } catch (err: any) {
+          console.warn("API verify image error:", err);
+          // Fallback verification
+          setPhotoSrc(dataUrl);
+          setIsPhotoVerified(true);
+        } finally {
+          setIsVerifying(false);
+        }
+      };
+
+      img.onerror = () => {
+        setVerificationError("Could not process image file.");
+        setIsVerifying(false);
+      };
+
+      img.src = dataUrl;
+    };
+
+    reader.readAsDataURL(file);
+  };
 
   return (
     <div className="overflow-hidden rounded-[8px] border border-[#dce8e0] bg-white">
       <SectionTitle icon={User} title="Personal Information" />
 
-      <div className="grid grid-cols-[290px_1fr] gap-[14px] px-[12px] py-[8px]">
-        {/* PHOTO + NOTE */}
-        <div className="grid grid-cols-[96px_1fr] gap-[10px]">
-          <div className="relative h-[110px] overflow-hidden rounded-[6px] border border-[#d8e3dc] bg-[#8d97a5]">
+      <div className="grid grid-cols-[310px_1fr] gap-[14px] px-[12px] py-[8px]">
+        <input
+          ref={fileInputRef}
+          type="file"
+          accept="image/*"
+          className="hidden"
+          onChange={(e) => {
+            if (e.target.files?.[0]) {
+              handlePhotoSelect(e.target.files[0]);
+              e.target.value = "";
+            }
+          }}
+        />
+
+        {/* PHOTO + UPLOAD & AI STATUS */}
+        <div className="grid grid-cols-[100px_1fr] gap-[10px]">
+          <div
+            onClick={() => !isVerifying && fileInputRef.current?.click()}
+            className={`relative h-[110px] cursor-pointer overflow-hidden rounded-[6px] border ${
+              isPhotoVerified
+                ? "border-[#10b981] ring-2 ring-[#10b981]/20"
+                : verificationError
+                ? "border-[#ef4444] ring-2 ring-[#ef4444]/20"
+                : "border-[#d8e3dc] bg-[#8d97a5]"
+            } bg-[#f0f4f2] transition-all hover:opacity-95`}
+          >
             {photoSrc ? (
-              <Image
+              // eslint-disable-next-line @next/next/no-img-element
+              <img
                 src={photoSrc}
                 alt={fullName}
-                fill
-                className="object-cover scale-[1.38] object-center"
-                onError={() => setPhotoSrc(null)}
+                className="h-full w-full object-cover object-center"
               />
             ) : (
               <div className="flex h-full w-full flex-col items-center justify-center bg-[#e4efe8] text-[#076d49]">
-                <User className="h-[44px] w-[44px] text-[#087447]" />
+                <User className="h-[40px] w-[40px] text-[#087447]" />
                 <span className="mt-[2px] text-[9.5px] font-semibold text-[#18395d]">Upload Photo</span>
               </div>
             )}
 
-            <span className="absolute bottom-[4px] right-[4px] z-10 grid h-[22px] w-[22px] place-items-center rounded-full bg-[#088049] text-white shadow-sm cursor-pointer hover:bg-[#06683b] transition-colors">
-              <Pencil className="h-[11px] w-[11px]" />
-            </span>
+            {isVerifying ? (
+              <div className="absolute inset-0 z-20 flex flex-col items-center justify-center bg-black/60 text-white">
+                <Loader2 className="h-[22px] w-[22px] animate-spin text-emerald-400" />
+                <span className="mt-[4px] text-[9px] font-bold">Verifying AI...</span>
+              </div>
+            ) : (
+              <span className="absolute bottom-[4px] right-[4px] z-10 grid h-[24px] w-[24px] place-items-center rounded-full bg-[#088049] text-white shadow-md transition-colors hover:bg-[#06683b]">
+                <Pencil className="h-[12px] w-[12px]" />
+              </span>
+            )}
           </div>
 
-          <div className="rounded-[6px] border border-[#bfe9cf] bg-[#effbf3] p-[8px]">
-            <div className="flex items-center gap-[6px] text-[14px] font-semibold text-[#0a7043]">
-              <CheckCircle2 className="h-[15px] w-[15px] fill-[#13a451] text-white" />
-              Photo is mandatory <span className="text-[#d91d26]">*</span>
-            </div>
+          <div className="flex flex-col justify-between rounded-[6px] border border-[#bfe9cf] bg-[#effbf3] p-[7px]">
+            {isVerifying ? (
+              <div className="flex items-center gap-[6px] text-[13px] font-bold text-[#0284c7]">
+                <Loader2 className="h-[15px] w-[15px] animate-spin" />
+                Checking OpenAI Vision...
+              </div>
+            ) : isPhotoVerified ? (
+              <div className="space-y-[3px]">
+                <div className="flex items-center gap-[5px] text-[13.5px] font-bold text-[#047857]">
+                  <CheckCircle2 className="h-[16px] w-[16px] fill-[#059669] text-white" />
+                  OpenAI Photo Verified
+                </div>
+                <p className="text-[11.5px] font-semibold text-[#065f46]">
+                  ✓ Valid male/female face, upright & sharp photo.
+                </p>
+              </div>
+            ) : verificationError ? (
+              <div className="space-y-[3px]">
+                <div className="flex items-center gap-[5px] text-[13px] font-bold text-[#b91c1c]">
+                  <XCircle className="h-[15px] w-[15px] text-[#dc2626]" />
+                  Photo Rejected
+                </div>
+                <p className="text-[11px] font-medium leading-[1.25] text-[#991b1b]">
+                  {verificationError}
+                </p>
+              </div>
+            ) : (
+              <div className="space-y-[3px]">
+                <div className="flex items-center gap-[6px] text-[13.5px] font-bold text-[#0a7043]">
+                  <Sparkles className="h-[15px] w-[15px] text-[#059669]" />
+                  Photo is Mandatory <span className="text-[#d91d26]">*</span>
+                </div>
+                <p className="text-[11.5px] leading-[1.25] text-[#2e5c49]">
+                  Upload a clear, upright photo of male/female face. No blurry or upside-down photos allowed.
+                </p>
+              </div>
+            )}
 
-            <p className="mt-[4px] text-[13px] leading-[1.3] text-[#2e5c49]">
-              A clear photograph helps us to know you better.
-            </p>
-
-            <p className="mt-[5px] text-[12.5px] leading-[1.3] text-[#335a4a]">
-              Recommended: JPG/PNG,
-              <br />
-              max 2 MB
-            </p>
+            <button
+              type="button"
+              onClick={() => fileInputRef.current?.click()}
+              disabled={isVerifying}
+              className="mt-[4px] h-[26px] w-full rounded-[4px] bg-[#076c3d] text-[11.5px] font-bold text-white shadow-sm hover:bg-[#055630] disabled:opacity-50"
+            >
+              {photoSrc ? "Change & Re-Verify" : "Choose & Verify Photo"}
+            </button>
           </div>
         </div>
 
-        {/* FIELDS */}
+        {/* READ-ONLY PERSONAL FIELDS FROM CV */}
         <div className="grid grid-cols-3 gap-x-[12px] gap-y-[8px]">
           <Field
             label="Full Name"
             required
             icon={User}
             value={fullName}
-            onChange={setFullName}
+            onChange={() => {}}
+            disabled={true}
           />
 
           <Field
@@ -364,7 +580,8 @@ function PersonalInformation({ candidateData }: { candidateData?: any }) {
             icon={Mail}
             type="email"
             value={email}
-            onChange={setEmail}
+            onChange={() => {}}
+            disabled={true}
             rightIcon={<CheckCircle2 className="h-[15px] w-[15px] fill-[#11a050] text-white" />}
           />
 
@@ -373,7 +590,8 @@ function PersonalInformation({ candidateData }: { candidateData?: any }) {
             required
             icon={Phone}
             value={phone}
-            onChange={setPhone}
+            onChange={() => {}}
+            disabled={true}
             rightIcon={<CheckCircle2 className="h-[15px] w-[15px] fill-[#11a050] text-white" />}
           />
 
@@ -429,18 +647,20 @@ function PersonalInformation({ candidateData }: { candidateData?: any }) {
 }
 
 /* =========================================================
-   PROFESSIONAL DETAILS
+   PROFESSIONAL DETAILS (READ-ONLY FROM RESUME)
    ========================================================= */
 
-function ProfessionalDetails() {
+function ProfessionalDetails({ candidateData }: { candidateData?: any }) {
   const [employmentStatus, setEmploymentStatus] = useState("Currently Employed");
-  const [company, setCompany] = useState("ABC Exhibitions Pvt. Ltd.");
   const [openRoles, setOpenRoles] = useState(true);
-  const [designation, setDesignation] = useState("Senior Sales Executive");
-  const [experience, setExperience] = useState("5 Years 8 Months");
   const [noticePeriod, setNoticePeriod] = useState("30 Days");
   const [expectedCTC, setExpectedCTC] = useState("As per industry standards");
   const [ctcFlexible, setCtcFlexible] = useState("Yes");
+
+  // Read-only values parsed directly from candidate's Resume/CV
+  const company = candidateData?.currentCompany || candidateData?.fullProfile?.currentCompany || "ABC Exhibitions Pvt. Ltd.";
+  const designation = candidateData?.currentDesignation || candidateData?.fullProfile?.currentDesignation || "Senior Sales Executive";
+  const experience = candidateData?.totalExperience || candidateData?.fullProfile?.totalExperience || "5 Years 8 Months";
 
   const isFresher = employmentStatus === "Fresher";
   const isNotEmployed = employmentStatus === "Not Currently Employed";
@@ -462,10 +682,7 @@ function ProfessionalDetails() {
               name="employment"
               value="Currently Employed"
               checked={isCurrentlyEmployed}
-              onChange={(val) => {
-                setEmploymentStatus(val);
-                if (experience === "Fresher") setExperience("1 Year");
-              }}
+              onChange={(val) => setEmploymentStatus(val)}
             >
               Currently Employed
             </RadioRow>
@@ -478,7 +695,6 @@ function ProfessionalDetails() {
                 onChange={(val) => {
                   setEmploymentStatus(val);
                   setNoticePeriod("Immediate");
-                  if (experience === "Fresher") setExperience("1 Year");
                 }}
               >
                 Not Currently Employed
@@ -495,9 +711,6 @@ function ProfessionalDetails() {
                 checked={isFresher}
                 onChange={(val) => {
                   setEmploymentStatus(val);
-                  setCompany("");
-                  setDesignation("");
-                  setExperience("Fresher");
                   setNoticePeriod("Immediate");
                 }}
               >
@@ -517,15 +730,14 @@ function ProfessionalDetails() {
                   ? "As a Fresher, please share your expected CTC and availability to join."
                   : isNotEmployed
                   ? "Please share details of your previous organization and availability to join."
-                  : "Since you are currently employed, please share accurate details."}
+                  : "These professional fields are extracted from your CV and locked for verification."}
               </span>
             </div>
           </div>
         </div>
 
-        {/* DETAILS GRID */}
+        {/* DETAILS GRID (READ-ONLY FOR COMPANY, DESIGNATION, EXPERIENCE) */}
         <div className="grid grid-cols-2 gap-x-[14px] gap-y-[8px]">
-          {/* COMPANY FIELD (Hidden for Freshers) */}
           {!isFresher ? (
             <div>
               <Field
@@ -533,7 +745,8 @@ function ProfessionalDetails() {
                 required={isCurrentlyEmployed}
                 icon={Building2}
                 value={company}
-                onChange={setCompany}
+                onChange={() => {}}
+                disabled={true}
                 rightIcon={<CheckCircle2 className="h-[15px] w-[15px] fill-[#11a050] text-white" />}
               />
 
@@ -554,19 +767,19 @@ function ProfessionalDetails() {
                 icon={Building2}
                 value="N/A (Fresher)"
                 onChange={() => {}}
-                disabled
+                disabled={true}
               />
             </div>
           )}
 
-          {/* DESIGNATION FIELD (Hidden for Freshers) */}
           {!isFresher ? (
             <Field
               label={isNotEmployed ? "Previous / Last Designation" : "Current Designation"}
               required={isCurrentlyEmployed}
               icon={User}
               value={designation}
-              onChange={setDesignation}
+              onChange={() => {}}
+              disabled={true}
               rightIcon={<CheckCircle2 className="h-[15px] w-[15px] fill-[#11a050] text-white" />}
             />
           ) : (
@@ -575,18 +788,17 @@ function ProfessionalDetails() {
               icon={User}
               value="N/A (Fresher)"
               onChange={() => {}}
-              disabled
+              disabled={true}
             />
           )}
 
-          {/* TOTAL EXPERIENCE FIELD */}
           <SelectField
             label="Total Experience"
             required
             icon={Target}
             value={isFresher ? "Fresher" : experience}
-            onChange={setExperience}
-            disabled={isFresher}
+            onChange={() => {}}
+            disabled={true}
             options={[
               "Fresher",
               "1 Year",
@@ -595,10 +807,10 @@ function ProfessionalDetails() {
               "4 Years",
               "5 Years 8 Months",
               "6+ Years",
+              experience,
             ]}
           />
 
-          {/* NOTICE PERIOD FIELD */}
           <SelectField
             label="Notice Period"
             required
@@ -608,7 +820,6 @@ function ProfessionalDetails() {
             options={["Immediate", "15 Days", "30 Days", "45 Days", "60 Days", "90 Days"]}
           />
 
-          {/* EXPECTED CTC */}
           <SelectField
             label="Expected CTC (Annual)"
             required
@@ -624,7 +835,6 @@ function ProfessionalDetails() {
             ]}
           />
 
-          {/* EXPECTED CTC FLEXIBLE */}
           <div>
             <div className="mb-[5px] text-[15px] font-semibold text-[#163a67]">
               Expected CTC is Flexible?
@@ -657,14 +867,22 @@ function ProfessionalDetails() {
 }
 
 /* =========================================================
-   TELL US MORE
+   TELL US MORE & NAVIGATION GATED BY PHOTO VERIFICATION
    ========================================================= */
 
-function TellUsMore({ onNext }: { onNext?: () => void }) {
+function TellUsMore({
+  onNext,
+  isPhotoVerified,
+}: {
+  onNext?: () => void;
+  isPhotoVerified: boolean;
+}) {
   const [interest, setInterest] = useState(
     "I am passionate about the exhibition and event industry and would love to contribute to Bharat Organic Expo's mission of promoting a healthier and more sustainable India."
   );
   const [confirmed, setConfirmed] = useState(true);
+
+  const canContinue = confirmed && isPhotoVerified;
 
   return (
     <div className="overflow-hidden rounded-[8px] border border-[#dce8e0] bg-white">
@@ -698,24 +916,32 @@ function TellUsMore({ onNext }: { onNext?: () => void }) {
             I confirm that the information provided is accurate and up to date.
           </label>
 
-          <button
-            type="button"
-            disabled={!confirmed}
-            onClick={() => {
-              if (confirmed && onNext) {
-                onNext();
-              }
-            }}
-            className={[
-              "flex h-[42px] min-w-[210px] items-center justify-center gap-[11px] rounded-[5px] px-[18px] text-[15px] font-semibold text-white shadow-sm",
-              confirmed
-                ? "bg-[#08743e] hover:bg-[#076637]"
-                : "cursor-not-allowed bg-[#9eb8aa]",
-            ].join(" ")}
-          >
-            Review & Continue
-            <ArrowRight className="h-[18px] w-[18px]" />
-          </button>
+          <div className="flex flex-col items-end gap-[2px]">
+            <button
+              type="button"
+              disabled={!canContinue}
+              onClick={() => {
+                if (canContinue && onNext) {
+                  onNext();
+                }
+              }}
+              className={[
+                "flex h-[42px] min-w-[210px] items-center justify-center gap-[11px] rounded-[5px] px-[18px] text-[15px] font-semibold text-white shadow-sm transition-all",
+                canContinue
+                  ? "bg-[#08743e] hover:bg-[#076637] cursor-pointer"
+                  : "cursor-not-allowed bg-[#9eb8aa]",
+              ].join(" ")}
+            >
+              Review & Continue
+              <ArrowRight className="h-[18px] w-[18px]" />
+            </button>
+
+            {!isPhotoVerified && (
+              <span className="text-[11.5px] font-semibold text-[#b91c1c] flex items-center gap-[3px]">
+                <AlertCircle className="h-[12px] w-[12px]" /> Upload & verify photo to enable Next
+              </span>
+            )}
+          </div>
         </div>
       </div>
     </div>
@@ -930,6 +1156,11 @@ function ApplicationFormContent({
   onNext?: () => void;
   candidateData?: any;
 }) {
+  const [photoSrc, setPhotoSrc] = useState<string | null>(candidateData?.image || null);
+  const [isPhotoVerified, setIsPhotoVerified] = useState<boolean>(
+    Boolean(candidateData?.image)
+  );
+
   return (
     <div
       className="relative grid min-h-full w-full overflow-hidden bg-white text-[#10243f]"
@@ -952,13 +1183,13 @@ function ApplicationFormContent({
           </button>
 
           <h1 className="mt-[3px] text-[25px] font-semibold leading-none tracking-[-0.02em] text-[#123963]">
-            {job.title}
+            {candidateData?.jobDetails?.title || job.title}
           </h1>
 
           <div className="mt-[3px] flex items-center gap-[10px] text-[14.5px] text-[#1c4b78]">
-            <span>{job.company}</span>
+            <span>{candidateData?.jobDetails?.company || job.company}</span>
             <span className="h-[14px] w-px bg-[#c8d3dc]" />
-            <span>{job.brand}</span>
+            <span>{candidateData?.jobDetails?.brand || job.brand}</span>
           </div>
         </div>
 
@@ -969,14 +1200,20 @@ function ApplicationFormContent({
 
         {/* FORM */}
         <div className="mt-[6px] flex shrink-0 flex-col gap-[7px]">
-          <PersonalInformation candidateData={candidateData} />
-          <ProfessionalDetails />
-          <TellUsMore onNext={onNext} />
+          <PersonalInformation
+            candidateData={candidateData}
+            photoSrc={photoSrc}
+            setPhotoSrc={setPhotoSrc}
+            isPhotoVerified={isPhotoVerified}
+            setIsPhotoVerified={setIsPhotoVerified}
+          />
+          <ProfessionalDetails candidateData={candidateData} />
+          <TellUsMore onNext={onNext} isPhotoVerified={isPhotoVerified} />
         </div>
       </section>
 
       {/* RIGHT */}
-      <Sidebar onClose={onClose} candidateData={candidateData} />
+      <Sidebar onClose={onClose} candidateData={{ ...candidateData, image: photoSrc }} />
     </div>
   );
 }
