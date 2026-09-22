@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import {
@@ -35,6 +35,15 @@ type JobOpening = {
   experience: string;
   description: string;
   icon: LucideIcon;
+  // Present on jobs loaded from the API; the static sample list below omits them
+  // and the apply modal falls back to its own copy.
+  company?: string;
+  responsibilities?: string[];
+  requirements?: string[];
+  preferredQualifications?: string[];
+  skills?: string[];
+  education?: string;
+  eligibilityThreshold?: number;
 };
 
 const showOpenings = true;
@@ -129,6 +138,17 @@ const allJobOpenings: JobOpening[] = [
     icon: Sprout,
   },
   {
+    id: "software-developer-full-stack",
+    title: "Software Developer – Full Stack (React, Next.js, Node.js)",
+    department: "IT & Software Engineering",
+    location: "Delhi NCR",
+    type: "Full Time",
+    experience: "1–5 Years",
+    description:
+      "Develop, maintain, and scale web applications using MERN stack (React, Next.js, Node.js, Express, MongoDB).",
+    icon: Lightbulb,
+  },
+  {
     id: "graphic-designer",
     title: "Graphic Designer",
     department: "Creative",
@@ -171,10 +191,10 @@ function JobCard({ job }: { job: JobOpening }) {
         </span>
 
         <div className="min-w-0 flex-1">
-          <h3 className="text-[15px] font-semibold leading-tight text-[#0a1831]">
+          <h3 className="text-[14px] font-medium leading-tight text-[#0a1831]">
             {job.title}
           </h3>
-          <span className="mt-1.5 inline-flex max-w-full rounded-[4px] bg-[#eef2f3] px-2.5 py-1 text-[clamp(11px,0.74vw,14px)] leading-none text-[#34485b]">
+          <span className="mt-1.5 inline-flex max-w-full rounded-[4px] bg-[#eef2f3] px-2.5 py-0.5 text-[12px] leading-none text-[#34485b]">
             {job.department}
           </span>
         </div>
@@ -243,9 +263,44 @@ export default function CareersClientContent() {
   const [isNoneModalOpen, setIsNoneModalOpen] = useState(false);
   const [isAmanModalOpen, setIsAmanModalOpen] = useState(false);
   const [showAllJobs, setShowAllJobs] = useState(false);
-  const openingCount = jobOpenings.length;
+  const [fetchedJobs, setFetchedJobs] = useState<JobOpening[]>([]);
 
-  const displayedJobs = showAllJobs ? jobOpenings : jobOpenings.slice(0, 8);
+  useEffect(() => {
+    fetch("/api/careers/jobs")
+      .then((res) => res.json())
+      .then((data) => {
+        if (data && data.success && Array.isArray(data.data) && data.data.length > 0) {
+          const mappedJobs: JobOpening[] = data.data.map((j: any) => ({
+            _id: j._id,
+            id: j._id,
+            slug: j.slug,
+            title: j.title,
+            department: j.department,
+            location: j.location,
+            type: j.employmentType || "Full Time",
+            experience: `${j.experienceMin} - ${j.experienceMax} Years`,
+            description: j.responsibilities?.[0] || j.requirements?.[0] || j.title,
+            company: j.company,
+            responsibilities: j.responsibilities,
+            requirements: j.requirements,
+            preferredQualifications: j.preferredQualifications,
+            skills: j.skills,
+            education: j.educationRequirements,
+            eligibilityThreshold: j.eligibilityThreshold,
+            icon: Users,
+          }));
+          setFetchedJobs(mappedJobs);
+        }
+      })
+      .catch((err) => {
+        console.error("Failed to load jobs dynamically:", err);
+      });
+  }, []);
+
+  const activeJobOpenings = fetchedJobs.length > 0 ? fetchedJobs : jobOpenings;
+  const openingCount = activeJobOpenings.length;
+
+  const displayedJobs = showAllJobs ? activeJobOpenings : activeJobOpenings.slice(0, 8);
 
   return (
     <main className="bg-[#f8fbf6] text-[#0a1831]">
@@ -426,7 +481,7 @@ export default function CareersClientContent() {
 
             <div className="flex-1">
               {openingCount > 0 ? (
-                <div className="grid grid-cols-1 gap-[clamp(10px,0.85vw,14px)] md:grid-cols-2 xl:grid-cols-4">
+                <div className="grid grid-cols-1 gap-[clamp(10px,0.85vw,14px)] md:grid-cols-2 lg:grid-cols-4  ">
                   {displayedJobs.map((job) => (
                     <JobCard key={job.id} job={job} />
                   ))}
@@ -453,6 +508,7 @@ export default function CareersClientContent() {
           <div className="flex flex-wrap justify-end divide-x divide-[#d6e0d8] lg:ml-auto">
             {workReasons.map(({ label, icon: Icon }) => (
               <div key={label} className="px-4 sm:px-6 lg:px-10 text-center first:pl-0">
+
                 <Icon
                   className="mx-auto h-8 w-8 text-[#08723e]"
                   strokeWidth={2.1}
@@ -474,10 +530,6 @@ export default function CareersClientContent() {
             sizes="100vw"
             className="object-cover object-center"
           />
-
-          <div className="absolute inset-y-0 -top-25 right-[5%] flex items-center z-10">
-            <ResumeUploadButton variant="solid" />
-          </div>
         </section>
       </div>
 

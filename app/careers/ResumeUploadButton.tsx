@@ -85,6 +85,7 @@ export default function ResumeUploadButton({ variant = "solid" }: Props) {
         ? createPortal(
             <ApplicationFormModal
               isOpen={isAppFormOpen}
+              candidateData={candidateData}
               onClose={() => setIsAppFormOpen(false)}
               onNext={() => {
                 setIsAppFormOpen(false);
@@ -99,6 +100,7 @@ export default function ResumeUploadButton({ variant = "solid" }: Props) {
         ? createPortal(
             <ReviewSubmitModal
               isOpen={isReviewOpen}
+              candidateData={candidateData}
               onClose={() => setIsReviewOpen(false)}
             />,
             document.body
