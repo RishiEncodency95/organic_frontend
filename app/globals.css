@@ -226,3 +226,69 @@ h1, h2, h3, h4, h5, h6 {
   margin-top: 4px;
 }
 
+
+/* Slim scrollbar for the CV upload modal columns. The modal body is a fixed-size
+   scaled canvas, so a job with a long responsibilities list scrolls in place
+   rather than being clipped. */
+.boe-modal-scroll {
+  scrollbar-width: thin;
+  scrollbar-color: #b7d5c4 transparent;
+  overscroll-behavior: contain;
+}
+
+.boe-modal-scroll::-webkit-scrollbar {
+  width: 8px;
+}
+
+.boe-modal-scroll::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.boe-modal-scroll::-webkit-scrollbar-thumb {
+  background-color: #b7d5c4;
+  border-radius: 999px;
+}
+
+.boe-modal-scroll::-webkit-scrollbar-thumb:hover {
+  background-color: #8dbda4;
+}
+
+/* ── CV analysis overlay ──────────────────────────────────────────────────
+   Shown over the blurred apply modal while the AI scores a CV. */
+@keyframes boe-analyze-spin {
+  to { transform: rotate(360deg); }
+}
+
+@keyframes boe-analyze-pulse {
+  0%, 100% { transform: scale(1); opacity: 1; }
+  50%      { transform: scale(0.9); opacity: 0.65; }
+}
+
+@keyframes boe-analyze-sweep {
+  0%   { transform: translateX(-110%); }
+  100% { transform: translateX(320%); }
+}
+
+@keyframes boe-analyze-step-in {
+  from { opacity: 0; transform: translateY(6px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.boe-analyze-ring {
+  background: conic-gradient(from 0deg, rgba(0, 141, 85, 0) 0deg, #4fc27f 140deg, #008d55 260deg, rgba(0, 141, 85, 0) 360deg);
+  animation: boe-analyze-spin 1.1s linear infinite;
+}
+
+.boe-analyze-icon { animation: boe-analyze-pulse 1.6s ease-in-out infinite; }
+.boe-analyze-sweep { animation: boe-analyze-sweep 1.5s ease-in-out infinite; }
+.boe-analyze-step { animation: boe-analyze-step-in 0.35s ease-out both; }
+
+@media (prefers-reduced-motion: reduce) {
+  .boe-analyze-ring,
+  .boe-analyze-icon,
+  .boe-analyze-sweep,
+  .boe-analyze-step {
+    animation-duration: 0.01ms;
+    animation-iteration-count: 1;
+  }
+}

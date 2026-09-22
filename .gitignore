@@ -39,3 +39,7 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# Candidate CVs uploaded through the careers flow — personal data, never commit.
+# Other public/uploads/* folders hold CMS assets and stay tracked.
+public/uploads/cvs/
