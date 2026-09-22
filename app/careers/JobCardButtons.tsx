@@ -67,10 +67,12 @@ export default function JobCardButtons({ job }: { job: any }) {
             isOpen={isEligibilityOpen}
             candidate={candidateData}
             score={candidateData.score}
-            onClose={() => {
+            onCandidateChange={setCandidateData}
+            onBack={() => {
               setIsEligibilityOpen(false);
               setIsOpen(true);
             }}
+            onClose={() => setIsEligibilityOpen(false)}
             onApply={() => {
               setIsEligibilityOpen(false);
               setIsAppFormOpen(true);
@@ -85,6 +87,10 @@ export default function JobCardButtons({ job }: { job: any }) {
           <ApplicationFormModal
             isOpen={isAppFormOpen}
             candidateData={candidateData}
+            onBack={() => {
+              setIsAppFormOpen(false);
+              setIsEligibilityOpen(true);
+            }}
             onClose={() => setIsAppFormOpen(false)}
             onNext={() => {
               setIsAppFormOpen(false);
@@ -100,6 +106,10 @@ export default function JobCardButtons({ job }: { job: any }) {
           <ReviewSubmitModal
             isOpen={isReviewOpen}
             candidateData={candidateData}
+            onBack={() => {
+              setIsReviewOpen(false);
+              setIsAppFormOpen(true);
+            }}
             onClose={() => setIsReviewOpen(false)}
           />,
           document.body
