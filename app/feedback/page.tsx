@@ -40,8 +40,8 @@ const HERO_IMAGE = "/assets/banner.png";
 /*  Shared classes                                                     */
 /* ------------------------------------------------------------------ */
 const inputCls =
-  "h-10 w-full rounded-md border border-[#d8dfdb] bg-white px-3.5 text-[13px] text-[#1f2937] placeholder:text-[#9ca3af] outline-none transition-colors focus:border-[#0b6b3d] focus:ring-1 focus:ring-[#0b6b3d]";
-const labelCls = "mb-1.5 block text-[14px] leading-5 text-[#1f2937]";
+  "h-9 w-full rounded-md border border-[#d8dfdb] bg-white px-3 text-[13px] text-[#1f2937] placeholder:text-[#9ca3af] outline-none transition-colors focus:border-[#0b6b3d] focus:ring-1 focus:ring-[#0b6b3d]";
+const labelCls = "mb-1 block text-[13px] font-medium leading-4 text-[#1f2937]";
 const Req = () => <span className="text-[#ef4444]"> *</span>;
 
 /* ------------------------------------------------------------------ */
@@ -87,7 +87,7 @@ const GroupIcon = ({ className, strokeWidth = 1.5 }: IconProps) => (
 );
 
 const IndiaFlag = () => (
-  <svg viewBox="0 0 24 16" className="h-4 w-6 rounded-[2px]" aria-hidden>
+  <svg viewBox="0 0 24 16" className="h-3.5 w-5 rounded-[2px]" aria-hidden>
     <rect width="24" height="5.34" y="0" fill="#ff9933" />
     <rect width="24" height="5.34" y="5.33" fill="#ffffff" />
     <rect width="24" height="5.34" y="10.66" fill="#138808" />
@@ -138,17 +138,17 @@ const Leaf = ({
 const StepHeading = ({
   n,
   children,
-  className = "mb-3",
+  className = "mb-2.5",
 }: {
   n: number;
   children: React.ReactNode;
   className?: string;
 }) => (
-  <div className={`flex items-center gap-[22px] ${className}`}>
-    <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-[#0b5d3b] text-[14px] font-medium text-white">
+  <div className={`flex items-center gap-2.5 ${className}`}>
+    <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-[#0b5d3b] text-[12px] font-semibold text-white">
       {n}
     </span>
-    <h3 className="text-[17px] font-medium leading-6 text-[#111d17]">
+    <h3 className="text-[15px] font-semibold leading-5 text-[#111d17]">
       {children}
     </h3>
   </div>
@@ -161,7 +161,7 @@ const StarRating = ({
   value: number;
   onChange: (val: number) => void;
 }) => (
-  <div className="flex items-center gap-3">
+  <div className="flex items-center gap-1.5">
     {[1, 2, 3, 4, 5].map((star) => (
       <button
         key={star}
@@ -171,9 +171,9 @@ const StarRating = ({
         className="group focus:outline-none"
       >
         <Star
-          className={`h-6 w-6 transition-colors ${star <= value
+          className={`h-4.5 w-4.5 transition-colors ${star <= value
             ? "fill-[#f59e0b] text-[#f59e0b]"
-            : "fill-transparent text-[#4b5563] group-hover:text-[#f59e0b]"
+            : "fill-transparent text-[#9ca3af] group-hover:text-[#f59e0b]"
             }`}
           strokeWidth={1.4}
         />
@@ -193,7 +193,7 @@ const Radio = ({
   value: string;
   children: React.ReactNode;
 }) => (
-  <label className="flex cursor-pointer items-center gap-[14px] text-[14px] text-[#1f2937]">
+  <label className="flex cursor-pointer items-center gap-2 text-[13px] text-[#1f2937]">
     <input
       type="radio"
       name="consent"
@@ -203,12 +203,12 @@ const Radio = ({
       className="sr-only"
     />
     <span
-      className={`flex h-[22px] w-[22px] shrink-0 items-center justify-center rounded-full border transition-colors ${checked ? "border-[#0b6b3d] bg-[#0b6b3d]" : "border-[#b8c2bd] bg-white"
+      className={`flex h-4 w-4 shrink-0 items-center justify-center rounded-full border transition-colors ${checked ? "border-[#0b6b3d] bg-[#0b6b3d]" : "border-[#b8c2bd] bg-white"
         }`}
     >
       {checked && (
-        <span className="flex h-[14px] w-[14px] items-center justify-center rounded-full bg-white">
-          <span className="h-[8px] w-[8px] rounded-full bg-[#0b6b3d]" />
+        <span className="flex h-2 w-2 items-center justify-center rounded-full bg-white">
+          <span className="h-1 w-1 rounded-full bg-[#0b6b3d]" />
         </span>
       )}
     </span>
@@ -221,7 +221,7 @@ const UploadBox = ({ label, name }: { label: string; name: string }) => {
   return (
     <div>
       <span className={labelCls}>{label}</span>
-      <label className="flex h-[79px] cursor-pointer items-center justify-center gap-[38px] rounded-md border border-[#dde3e0] bg-white transition-colors hover:bg-[#fafcfb]">
+      <label className="flex h-14 cursor-pointer items-center justify-center gap-3 rounded-md border border-[#dde3e0] bg-white px-3 transition-colors hover:bg-[#fafcfb]">
         <input
           type="file"
           name={name}
@@ -230,13 +230,13 @@ const UploadBox = ({ label, name }: { label: string; name: string }) => {
           onChange={(e) => setFileName(e.target.files?.[0]?.name ?? "")}
         />
         <ImageIcon
-          className="h-[30px] w-[30px] shrink-0 text-[#374151]"
+          className="h-5 w-5 shrink-0 text-[#4b5563]"
           strokeWidth={1.25}
         />
-        <span className="text-[13px] leading-5 text-[#6b7280]">
+        <span className="text-[12px] leading-4 text-[#6b7280]">
           <span className="font-medium text-[#111827]">Click to upload</span> or
           drag and drop
-          <span className="block max-w-[220px] truncate text-[12px] text-[#9ca3af]">
+          <span className="block max-w-[200px] truncate text-[11px] text-[#9ca3af]">
             {fileName || "JPG, PNG (Max 5MB)"}
           </span>
         </span>
@@ -267,10 +267,10 @@ export default function FeedbackPage() {
 
   return (
     <div
-      className={`${inter.className} relative min-h-screen overflow-hidden bg-[#f6faf5] text-[#0f172a] antialiased`}
+      className={`${inter.className} relative min-h-screen overflow-hidden bg-[#e4efe5] text-[#0f172a] antialiased`}
     >
       {/* ============================ HERO ============================ */}
-      <header className="relative h-[340px] md:h-[380px] w-full overflow-hidden bg-[#f1f6ec]">
+      <header className="relative h-[360px] md:h-[420px] w-full overflow-hidden bg-[#f1f6ec]">
         {/* Full background banner image */}
         <Image
           src={HERO_IMAGE}
@@ -282,18 +282,18 @@ export default function FeedbackPage() {
         />
 
         {/* Text block aligned with navbar */}
-        <div className="relative z-10 mx-auto flex h-full w-full max-w-[1280px] flex-col justify-start pt-10 md:pt-19 px-4 md:px-14">
-          <span className="text-[14px] md:text-[15px] font-semibold uppercase leading-4 tracking-[0.08em] text-[#1f2a24]">
+        <div className="relative z-10 mx-auto flex h-full w-full max-w-5xl -translate-x-6 md:-translate-x-12 lg:-translate-x-16 flex-col justify-start pt-16 md:pt-20 px-4 md:px-6">
+          <span className="text-[15px] md:text-[17px] font-semibold uppercase leading-5 tracking-[0.08em] text-[#1f2a24]">
             Share Your Experience
           </span>
-          <h1 className="mt-2.5 text-[36px] md:text-[42px] font-bold leading-[1.2] tracking-[-0.015em] text-[#0a4f35]">
+          <h1 className="mt-2.5 text-[38px] md:text-[40px] font-bold leading-[1.15] tracking-[-0.015em] text-[#0a4f35]">
             Your Experience Helps Us Grow
           </h1>
-          <p className="mt-2.5 max-w-[560px] text-[17px] md:text-[18px] leading-[28px] font-medium text-[#1f2937]">
+          <p className="mt-2.5 max-w-[620px] text-[18px] md:text-[20px] leading-[28px] font-medium text-[#1f2937]">
             Help us create better experiences and greater opportunities for the
             organic industry.
           </p>
-          <div className="mt-4 flex items-center gap-2 text-[14px] leading-5 text-[#4b5563] font-medium">
+          <div className="mt-3.5 flex items-center gap-2 text-[14px] md:text-[15px] leading-5 text-[#4b5563] font-medium">
             <Link href="/" className="transition-colors hover:text-[#0a4f35]">
               Home
             </Link>
@@ -308,33 +308,33 @@ export default function FeedbackPage() {
       {/* ======================= SIDE LEAVES (decor) ======================= */}
       <Leaf
         gid="leafLeft"
-        className="pointer-events-none absolute -left-6 top-[300px] hidden h-[170px] w-[85px] rotate-[-18deg] opacity-25 blur-[1px] xl:block"
+        className="pointer-events-none absolute -left-6 top-[250px] hidden h-[140px] w-[70px] rotate-[-18deg] opacity-25 blur-[1px] xl:block"
       />
       <Leaf
         gid="leafRight"
-        className="pointer-events-none absolute -right-8 top-[770px] hidden h-[170px] w-[85px] rotate-[24deg] opacity-25 blur-[1px] xl:block"
+        className="pointer-events-none absolute -right-8 top-[650px] hidden h-[140px] w-[70px] rotate-[24deg] opacity-25 blur-[1px] xl:block"
       />
 
       {/* ============================ FORM CARD ============================ */}
-      <main className="relative z-10 mx-auto -mt-10 w-full max-w-[1600px] px-4 md:px-11 pb-14">
-        <div className="w-full rounded-xl border border-[#d4e4d8] bg-gradient-to-br from-[#f2f8f4] via-[#f7fbf8] to-[#ebf5ed] px-6 pb-8 pt-7 shadow-[0_4px_20px_rgba(16,60,40,0.06)] md:px-10">
+      <main className="relative z-10 mx-auto -mt-4 w-full max-w-5xl px-4 md:px-6 pb-12">
+        <div className="w-full rounded-lg border border-[#d4e4d8] bg-gradient-to-br from-[#f2f8f4] via-[#f7fbf8] to-[#ebf5ed] px-5 pb-6 pt-5 shadow-[0_4px_16px_rgba(16,60,40,0.05)] md:px-7">
           {/* Form header */}
-          <h2 className="text-[26px] font-semibold leading-8 tracking-[-0.01em] text-[#111d17]">
+          <h2 className="text-[20px] font-semibold leading-7 tracking-[-0.01em] text-[#111d17]">
             Share Your Feedback
           </h2>
-          <p className="mt-0.5 text-[15px] leading-6 text-[#4b5563]">
+          <p className="mt-0.5 text-[13px] leading-5 text-[#4b5563]">
             Your insights are valuable and help us make Bharat Organic Expo
             better, stronger and more impactful.
           </p>
 
           <form onSubmit={(e) => e.preventDefault()}>
             {/* ---------- 1. I participated as ---------- */}
-            <section className="mt-5">
+            <section className="mt-4">
               <StepHeading n={1}>
                 I participated as <span className="text-[#ef4444]">*</span>
               </StepHeading>
 
-              <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 md:grid-cols-6">
+              <div className="grid grid-cols-2 gap-2 sm:grid-cols-3 md:grid-cols-6">
                 {roles.map((r) => {
                   const Icon = r.icon;
                   const active = role === r.label;
@@ -343,17 +343,17 @@ export default function FeedbackPage() {
                       key={r.label}
                       type="button"
                       onClick={() => setRole(r.label)}
-                      className={`flex h-[113px] flex-col items-center justify-center rounded-lg border px-3 text-center transition-colors ${active
+                      className={`flex h-[76px] flex-col items-center justify-center rounded-md border px-2 text-center transition-colors ${active
                         ? "border-[#7cc39a] bg-[#e9f5ee]"
                         : "border-[#dfe5e2] bg-white hover:border-[#c5cfca]"
                         }`}
                     >
                       <Icon
-                        className={`mb-3 h-[34px] w-[34px] ${active ? "text-[#1f3d2f]" : "text-[#374151]"
+                        className={`mb-1.5 h-6 w-6 ${active ? "text-[#1f3d2f]" : "text-[#374151]"
                           }`}
                         strokeWidth={1.5}
                       />
-                      <span className="whitespace-pre-line text-[13px] font-medium leading-[18px] text-[#1f2937]">
+                      <span className="whitespace-pre-line text-[11px] font-medium leading-[14px] text-[#1f2937]">
                         {r.label}
                       </span>
                     </button>
@@ -363,10 +363,10 @@ export default function FeedbackPage() {
             </section>
 
             {/* ---------- 2. About You ---------- */}
-            <section className="mt-5">
+            <section className="mt-4">
               <StepHeading n={2}>About You</StepHeading>
 
-              <div className="grid grid-cols-1 gap-x-7 gap-y-5 md:grid-cols-3">
+              <div className="grid grid-cols-1 gap-x-4 gap-y-3 md:grid-cols-3">
                 <div>
                   <label className={labelCls}>
                     Name
@@ -405,21 +405,21 @@ export default function FeedbackPage() {
                     Mobile Number
                     <Req />
                   </label>
-                  <div className="flex h-10 overflow-hidden rounded-md border border-[#d8dfdb] bg-white transition-colors focus-within:border-[#0b6b3d] focus-within:ring-1 focus-within:ring-[#0b6b3d]">
-                    <div className="flex items-center gap-1.5 border-r border-[#d8dfdb] px-3">
+                  <div className="flex h-9 overflow-hidden rounded-md border border-[#d8dfdb] bg-white transition-colors focus-within:border-[#0b6b3d] focus-within:ring-1 focus-within:ring-[#0b6b3d]">
+                    <div className="flex items-center gap-1 border-r border-[#d8dfdb] px-2.5">
                       <IndiaFlag />
-                      <span className="text-[13px] font-medium text-[#1f2937]">
+                      <span className="text-[12px] font-medium text-[#1f2937]">
                         +91
                       </span>
                       <ChevronDown
-                        className="h-3.5 w-3.5 text-[#374151]"
+                        className="h-3 w-3 text-[#374151]"
                         strokeWidth={2}
                       />
                     </div>
                     <input
                       type="tel"
                       placeholder="Enter mobile number"
-                      className="w-full min-w-0 px-3.5 text-[13px] text-[#1f2937] outline-none placeholder:text-[#9ca3af]"
+                      className="w-full min-w-0 px-2.5 text-[12px] text-[#1f2937] outline-none placeholder:text-[#9ca3af]"
                     />
                   </div>
                 </div>
@@ -441,12 +441,12 @@ export default function FeedbackPage() {
                   <div className="relative">
                     <select
                       defaultValue="2027"
-                      className={`${inputCls} appearance-none pr-10 text-[14px]`}
+                      className={`${inputCls} appearance-none pr-8 text-[13px]`}
                     >
                       <option value="2027">Bharat Organic Expo 2027</option>
                     </select>
                     <ChevronDown
-                      className="pointer-events-none absolute right-3.5 top-1/2 h-4 w-4 -translate-y-1/2 text-[#374151]"
+                      className="pointer-events-none absolute right-2.5 top-1/2 h-3.5 w-3.5 -translate-y-1/2 text-[#374151]"
                       strokeWidth={1.75}
                     />
                   </div>
@@ -455,14 +455,14 @@ export default function FeedbackPage() {
             </section>
 
             {/* ---------- 3. Rate Your Experience ---------- */}
-            <section className="mt-5">
-              <StepHeading n={3} className="mb-4">
+            <section className="mt-4">
+              <StepHeading n={3} className="mb-2">
                 Rate Your Experience
               </StepHeading>
 
-              <div className="grid grid-cols-1 gap-x-12 gap-y-6 sm:grid-cols-2 md:grid-cols-4">
+              <div className="grid grid-cols-1 gap-x-6 gap-y-3 sm:grid-cols-2 md:grid-cols-4">
                 <div>
-                  <span className={`${labelCls} !mb-3`}>
+                  <span className={`${labelCls} !mb-1.5`}>
                     Overall Experience
                     <Req />
                   </span>
@@ -472,7 +472,7 @@ export default function FeedbackPage() {
                   />
                 </div>
                 <div>
-                  <span className={`${labelCls} !mb-3`}>
+                  <span className={`${labelCls} !mb-1.5`}>
                     Business Networking
                   </span>
                   <StarRating
@@ -481,7 +481,7 @@ export default function FeedbackPage() {
                   />
                 </div>
                 <div>
-                  <span className={`${labelCls} !mb-3`}>
+                  <span className={`${labelCls} !mb-1.5`}>
                     Quality of Participants
                   </span>
                   <StarRating
@@ -490,7 +490,7 @@ export default function FeedbackPage() {
                   />
                 </div>
                 <div>
-                  <span className={`${labelCls} !mb-3`}>Event Management</span>
+                  <span className={`${labelCls} !mb-1.5`}>Event Management</span>
                   <StarRating
                     value={managementRating}
                     onChange={setManagementRating}
@@ -500,10 +500,10 @@ export default function FeedbackPage() {
             </section>
 
             {/* ---------- 4. Tell Us About Your Experience ---------- */}
-            <section className="mt-10">
+            <section className="mt-4">
               <StepHeading n={4}>Tell Us About Your Experience</StepHeading>
 
-              <div className="grid grid-cols-1 gap-x-9 gap-y-5 md:grid-cols-2">
+              <div className="grid grid-cols-1 gap-x-5 gap-y-3 md:grid-cols-2">
                 <div>
                   <label className={labelCls}>
                     What was the most valuable part of your experience?
@@ -511,7 +511,7 @@ export default function FeedbackPage() {
                   </label>
                   <textarea
                     placeholder="Share what you liked the most..."
-                    className="h-[92px] w-full resize-none rounded-md border border-[#d8dfdb] bg-white px-3.5 py-3 text-[13px] text-[#1f2937] outline-none transition-colors placeholder:text-[#9ca3af] focus:border-[#0b6b3d] focus:ring-1 focus:ring-[#0b6b3d]"
+                    className="h-[72px] w-full resize-none rounded-md border border-[#d8dfdb] bg-white px-3 py-2 text-[12px] text-[#1f2937] outline-none transition-colors placeholder:text-[#9ca3af] focus:border-[#0b6b3d] focus:ring-1 focus:ring-[#0b6b3d]"
                   />
                 </div>
                 <div>
@@ -520,22 +520,22 @@ export default function FeedbackPage() {
                   </label>
                   <textarea
                     placeholder="Your suggestions help us improve..."
-                    className="h-[92px] w-full resize-none rounded-md border border-[#d8dfdb] bg-white px-3.5 py-3 text-[13px] text-[#1f2937] outline-none transition-colors placeholder:text-[#9ca3af] focus:border-[#0b6b3d] focus:ring-1 focus:ring-[#0b6b3d]"
+                    className="h-[72px] w-full resize-none rounded-md border border-[#d8dfdb] bg-white px-3 py-2 text-[12px] text-[#1f2937] outline-none transition-colors placeholder:text-[#9ca3af] focus:border-[#0b6b3d] focus:ring-1 focus:ring-[#0b6b3d]"
                   />
                 </div>
               </div>
             </section>
 
             {/* ---------- 5. Testimonial & Media Consent ---------- */}
-            <section className="mt-5">
+            <section className="mt-4">
               <StepHeading n={5}>Testimonial &amp; Media Consent</StepHeading>
 
-              <p className="text-[15px] leading-6 text-[#374151]">
+              <p className="text-[13px] leading-5 text-[#374151]">
                 May we feature your experience on Bharat Organic Expo’s website
                 and promotional channels?
               </p>
 
-              <div className="mt-5 flex flex-wrap items-center gap-x-[90px] gap-y-3">
+              <div className="mt-2.5 flex flex-wrap items-center gap-x-10 gap-y-2">
                 <Radio
                   value="yes"
                   checked={consent === "yes"}
@@ -552,15 +552,15 @@ export default function FeedbackPage() {
                 </Radio>
               </div>
 
-              <div className="mt-6 grid grid-cols-1 gap-x-9 gap-y-5 md:grid-cols-2">
+              <div className="mt-3.5 grid grid-cols-1 gap-x-5 gap-y-3 md:grid-cols-2">
                 <UploadBox label="Upload Your Photo (optional)" name="photo" />
                 <UploadBox label="Company Logo (optional)" name="logo" />
               </div>
 
-              <label className="mt-5 flex cursor-pointer items-center gap-3 text-[14px] text-[#1f2937]">
+              <label className="mt-3 flex cursor-pointer items-center gap-2 text-[12px] text-[#1f2937]">
                 <input
                   type="checkbox"
-                  className="h-5 w-5 cursor-pointer rounded accent-[#0b6b3d]"
+                  className="h-4 w-4 cursor-pointer rounded accent-[#0b6b3d]"
                 />
                 <span>
                   I would like the Bharat Organic Expo team to contact me.
@@ -569,18 +569,18 @@ export default function FeedbackPage() {
             </section>
 
             {/* ---------- Submit bar ---------- */}
-            <div className="mt-6 flex flex-col items-start justify-between gap-4 sm:flex-row sm:items-center">
+            <div className="mt-5 flex flex-col items-start justify-between gap-3 sm:flex-row sm:items-center">
               <button
                 type="submit"
-                className="flex h-[54px] w-full items-center justify-center gap-2.5 rounded-md bg-[#0b5d3b] px-8 text-[15px] font-medium text-white transition-colors hover:bg-[#094d31] sm:w-[325px]"
+                className="flex h-10 w-full items-center justify-center gap-2 rounded-md bg-[#0b5d3b] px-6 text-[13px] font-medium text-white transition-colors hover:bg-[#094d31] sm:w-[220px]"
               >
                 Submit Feedback
-                <ArrowRight className="h-4 w-4" strokeWidth={1.75} />
+                <ArrowRight className="h-3.5 w-3.5" strokeWidth={1.75} />
               </button>
 
-              <div className="flex items-center gap-2 text-[13px] text-[#6b7280]">
+              <div className="flex items-center gap-1.5 text-[12px] text-[#6b7280]">
                 <Lock
-                  className="h-[22px] w-[22px] shrink-0 text-[#1a7f4b]"
+                  className="h-4 w-4 shrink-0 text-[#1a7f4b]"
                   strokeWidth={1.5}
                 />
                 <span>

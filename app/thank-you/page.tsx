@@ -61,7 +61,7 @@ const shareText = encodeURIComponent(
 const shareUrl = encodeURIComponent(SHARE_PAGE_URL);
 
 const btnCls =
-  "flex h-[47px] w-full items-center justify-center gap-2 rounded-md bg-[#0d5a37] text-[15px] font-medium text-white transition-colors hover:bg-[#0a4a2d]";
+  "flex h-8 w-full items-center justify-center gap-1.5 rounded-md bg-[#0d5a37] text-[12px] font-medium text-white transition-colors hover:bg-[#0a4a2d]";
 
 const GoogleG = ({ className }: { className?: string }) => (
   <svg viewBox="0 0 48 48" className={className} aria-hidden>
@@ -103,7 +103,7 @@ const ShareGlyph = ({ className }: { className?: string }) => (
 );
 
 const LinkedInGlyph = () => (
-  <svg viewBox="0 0 24 24" className="h-[26px] w-[26px]" fill="#fff" aria-hidden>
+  <svg viewBox="0 0 24 24" className="h-4 w-4" fill="#fff" aria-hidden>
     <circle cx="5" cy="4.8" r="2.1" />
     <rect x="3" y="9" width="4" height="12" />
     <path d="M9.5 9h3.8v1.7c.6-1 1.9-2 3.9-2 3.5 0 4.3 2.3 4.3 5.3v7h-4v-6.2c0-1.5-.3-2.6-1.9-2.6s-2.1 1.2-2.1 2.7V21h-4V9z" />
@@ -111,7 +111,7 @@ const LinkedInGlyph = () => (
 );
 
 const FacebookGlyph = () => (
-  <svg viewBox="0 0 24 24" className="h-[26px] w-[26px]" fill="#fff" aria-hidden>
+  <svg viewBox="0 0 24 24" className="h-4 w-4" fill="#fff" aria-hidden>
     <path d="M13.5 22v-9h3l.5-3.5h-3.5V7.3c0-1 .3-1.8 1.8-1.8H17V2.4c-.3-.1-1.3-.2-2.4-.2-2.3 0-4.1 1.4-4.1 4.1v3.2h-3V13h3v9h3z" />
   </svg>
 );
@@ -119,7 +119,7 @@ const FacebookGlyph = () => (
 const InstagramGlyph = () => (
   <svg
     viewBox="0 0 24 24"
-    className="h-[26px] w-[26px]"
+    className="h-4 w-4"
     fill="none"
     stroke="#fff"
     strokeWidth="1.8"
@@ -134,7 +134,7 @@ const InstagramGlyph = () => (
 const WhatsAppGlyph = () => (
   <svg
     viewBox="0 0 24 24"
-    className="h-[26px] w-[26px]"
+    className="h-4 w-4"
     fill="none"
     stroke="#fff"
     strokeWidth="1.8"
@@ -148,7 +148,7 @@ const WhatsAppGlyph = () => (
 );
 
 const RatingStars = () => (
-  <svg width="92" height="18" viewBox="0 0 92 18" aria-label="4.5 out of 5">
+  <svg width="76" height="15" viewBox="0 0 92 18" aria-label="4.5 out of 5">
     <defs>
       <linearGradient id="halfStar">
         <stop offset="50%" stopColor="#f5a623" />
@@ -190,64 +190,51 @@ const ParticipationCard = ({
   company: string;
   avatar?: string;
 }) => (
-  <div className="relative aspect-[375/218] w-full shrink-0 overflow-hidden rounded-2xl border border-[#ececec] bg-[#fbfdf9] shadow-[0_8px_20px_rgba(0,0,0,0.10)] md:w-[440px]">
+  <div className="relative aspect-[375/218] w-full shrink-0 overflow-hidden rounded-xl border border-[#ececec] bg-[#fbfdf9] shadow-[0_4px_14px_rgba(0,0,0,0.08)] md:w-[380px]">
     {/* Text-free background artwork (leaves + soil) */}
     <Image
       src={CARD_BG}
       alt=""
       fill
-      sizes="(min-width: 768px) 440px, 100vw"
+      sizes="(min-width: 768px) 380px, 100vw"
       className="pointer-events-none select-none object-cover object-center"
       priority
     />
 
     {/* Card content — real text overlay */}
-    <div className="relative z-10 flex h-full flex-col p-4">
+    <div className="relative z-10 flex h-full flex-col p-3.5">
       {/* Top Logo + Script Tagline */}
       <div className="flex items-start justify-between">
-        <div className="relative h-[32px] w-[170px] shrink-0">
+        <div className="relative h-[28px] w-[140px] shrink-0">
           <Image
             src={EXPO_LOGO}
             alt="Bharat Organic Expo"
             fill
-            sizes="170px"
+            sizes="140px"
             className="object-contain object-left"
           />
         </div>
 
         <div
-          className={`${script.className} -mt-1 -rotate-[8deg] pr-1 text-right text-[13px] leading-[15px] text-[#0f6b3a]`}
+          className={`${script.className} -mt-1 -rotate-[8deg] pr-1 text-right text-[11px] leading-[13px] text-[#0f6b3a]`}
         >
           Together
           <br />
           for a Greener
           <br />
           Tomorrow
-          <svg
-            viewBox="0 0 120 14"
-            className="ml-auto mt-[2px] h-[7px] w-[92px]"
-            fill="none"
-            aria-hidden
-          >
-            <path
-              d="M1 11C30 12 78 8 119 2"
-              stroke="#0f6b3a"
-              strokeWidth="1.6"
-              strokeLinecap="round"
-            />
-          </svg>
         </div>
       </div>
 
       {/* Participant details */}
-      <div className="mt-2 flex items-center gap-3">
-        <div className="relative h-[54px] w-[54px] shrink-0 overflow-hidden rounded-full bg-[#d9d9d9] shadow-sm">
+      <div className="mt-1.5 flex items-center gap-2.5">
+        <div className="relative h-[44px] w-[44px] shrink-0 overflow-hidden rounded-full bg-[#d9d9d9] shadow-sm">
           {avatar ? (
             <Image
               src={avatar}
               alt={name}
               fill
-              sizes="54px"
+              sizes="44px"
               className="object-cover"
             />
           ) : (
@@ -256,31 +243,31 @@ const ParticipationCard = ({
         </div>
 
         <div className="min-w-0">
-          <p className="truncate text-[15px] font-bold leading-[20px] text-[#111827]">
+          <p className="truncate text-[13.5px] font-bold leading-[17px] text-[#111827]">
             {name}
           </p>
-          <p className="truncate text-[12px] font-medium leading-[17px] text-[#4b5563]">
+          <p className="truncate text-[11px] font-medium leading-[14px] text-[#4b5563]">
             {designation}
           </p>
-          <p className="truncate text-[12px] font-medium leading-[17px] text-[#4b5563]">
+          <p className="truncate text-[11px] font-medium leading-[14px] text-[#4b5563]">
             {company}
           </p>
         </div>
       </div>
 
       {/* Green pill badge */}
-      <div className="mt-2.5 w-fit max-w-[78%] rounded-full bg-[#0d5a37] px-4 py-1.5 shadow-[0_2px_6px_rgba(13,77,48,0.25)]">
-        <p className="whitespace-pre-line text-[12px] md:text-[13px] font-semibold leading-[16px] text-white">
+      <div className="mt-2 w-fit max-w-[80%] rounded-full bg-[#0d5a37] px-3 py-1 shadow-[0_2px_5px_rgba(13,77,48,0.25)]">
+        <p className="whitespace-pre-line text-[11px] font-semibold leading-[14px] text-white">
           {EVENT.tagline}
         </p>
       </div>
 
       {/* Date + venue */}
-      <div className="mt-auto pt-2">
-        <p className="text-[11px] font-bold leading-[15px] text-[#111827]">
+      <div className="mt-auto pt-1">
+        <p className="text-[10px] font-bold leading-[13px] text-[#111827]">
           {EVENT.dates}
         </p>
-        <p className="text-[11px] font-medium leading-[15px] text-[#4b5563]">
+        <p className="text-[10px] font-medium leading-[13px] text-[#4b5563]">
           {EVENT.venue}
         </p>
       </div>
@@ -294,7 +281,7 @@ const InfoCard = ({
   description,
   action,
   footer,
-  footerClass = "mt-2",
+  footerClass = "mt-2.5",
 }: {
   icon: React.ReactNode;
   title: string;
@@ -303,19 +290,23 @@ const InfoCard = ({
   footer: React.ReactNode;
   footerClass?: string;
 }) => (
-  <div className="flex min-h-[316px] flex-col items-center rounded-[12px] border border-[#d4e4d8] bg-gradient-to-br from-[#f2f8f4] via-[#f7fbf8] to-[#ebf5ed] px-5 pb-[22px] pt-5 text-center shadow-[0_2px_10px_rgba(16,60,40,0.04)]">
-    <div className="flex h-[54px] w-full items-center justify-center">
-      {icon}
+  <div className="flex min-h-[205px] flex-col items-center justify-between rounded-lg border border-[#e2ece4] bg-white px-3.5 py-4 text-center shadow-sm">
+    <div className="flex flex-col items-center">
+      <div className="flex h-[34px] w-full items-center justify-center">
+        {icon}
+      </div>
+      <h3 className="mt-1 text-[14px] font-semibold leading-[18px] text-[#101828]">
+        {title}
+      </h3>
+      <p className="mt-0.5 whitespace-pre-line text-[11.5px] leading-[15px] text-[#374151]">
+        {description}
+      </p>
     </div>
-    <h3 className="mt-[14px] text-[18px] font-semibold leading-[26px] text-[#101828]">
-      {title}
-    </h3>
-    <p className="mt-[7px] whitespace-pre-line text-[15px] leading-[25px] text-[#374151]">
-      {description}
-    </p>
-    <div className="mt-[6px] flex h-[64px] w-full items-center">{action}</div>
-    <div className={`flex items-center justify-center ${footerClass}`}>
-      {footer}
+    <div className="flex w-full flex-col items-center pt-2">
+      <div className="flex w-full items-center">{action}</div>
+      <div className={`flex items-center justify-center ${footerClass}`}>
+        {footer}
+      </div>
     </div>
   </div>
 );
@@ -336,10 +327,10 @@ const SocialTile = ({
     target="_blank"
     rel="noopener noreferrer"
     aria-label={`Share on ${label}`}
-    className={`flex h-[68px] w-[68px] flex-col items-center justify-center gap-1 rounded-lg text-white transition-transform hover:-translate-y-0.5 ${className}`}
+    className={`flex h-[42px] flex-1 min-w-[48px] max-w-[58px] flex-col items-center justify-center gap-[2px] rounded-md text-white transition-transform hover:-translate-y-0.5 ${className}`}
   >
     {children}
-    <span className="text-[11px] leading-none">{label}</span>
+    <span className="text-[8.5px] font-medium leading-none whitespace-nowrap">{label}</span>
   </a>
 );
 
@@ -359,11 +350,10 @@ export default function ThankYouPage() {
 
   return (
     <div
-      className={`${inter.className} relative min-h-screen overflow-hidden bg-[#f3f8f2] text-[#0f172a] antialiased`}
+      className={`${inter.className} relative min-h-screen overflow-hidden bg-[#e4efe5] text-[#0f172a] antialiased`}
     >
-      {/* Header Banner */}
-      <header className="relative h-[340px] md:h-[380px] w-full overflow-hidden bg-[#eef5ea]">
-        {/* Full background banner image */}
+      {/* ============================ HERO BANNER ============================ */}
+      <header className="relative h-[360px] md:h-[420px] w-full overflow-hidden bg-[#f1f6ec]">
         <Image
           src={HERO_IMAGE}
           alt="Bharat Organic Expo banner"
@@ -373,10 +363,10 @@ export default function ThankYouPage() {
           className="object-cover object-center pointer-events-none select-none z-0"
         />
 
-        <div className="relative z-10 mx-auto flex h-full w-full max-w-[1280px] flex-col justify-start pt-14 md:pt-16 px-8 md:px-24">
+        <div className="relative z-10 mx-auto flex h-full w-full max-w-5xl -translate-x-6 md:-translate-x-12 lg:-translate-x-16 flex-col justify-start pt-16 md:pt-20 px-4 md:px-6">
           <nav
             aria-label="Breadcrumb"
-            className="flex items-center gap-2 text-[14px] leading-5 text-[#4b5563] font-medium"
+            className="flex items-center gap-2 text-[14px] md:text-[15px] leading-5 text-[#4b5563] font-medium"
           >
             <Link href="/" className="transition-colors hover:text-[#0a4f35]">
               Home
@@ -392,13 +382,13 @@ export default function ThankYouPage() {
             <span className="font-semibold text-[#0d4d33]">Thank You</span>
           </nav>
 
-          <h1 className="mt-3 text-[48px] md:text-[54px] font-bold leading-[1.15] tracking-[-0.015em] text-[#0b4a2f]">
+          <h1 className="mt-2.5 text-[38px] md:text-[48px] font-bold leading-[1.15] tracking-[-0.015em] text-[#0b4a2f]">
             Thank You!
           </h1>
-          <p className="mt-1.5 max-w-[460px] text-[22px] md:text-[25px] font-semibold leading-[31px] text-[#0d5034]">
+          <p className="mt-2 max-w-[560px] text-[18px] md:text-[20px] font-semibold leading-[28px] text-[#0d5034]">
             Your Experience Helps the Organic Community Grow.
           </p>
-          <p className="mt-2 text-[15px] md:text-[16px] leading-[26px] text-[#1f2937] max-w-[500px]">
+          <p className="mt-2 text-[16px] md:text-[17.5px] leading-[26px] text-[#1f2937] max-w-[580px]">
             We truly appreciate you taking the time to share your feedback.
             <br className="hidden md:block" />{" "}
             Your insights inspire us to create better opportunities for the
@@ -407,54 +397,54 @@ export default function ThankYouPage() {
         </div>
       </header>
 
-      <main className="relative z-10 mx-auto -mt-8 w-full max-w-[1600px] px-4 md:px-11 pb-6">
+      <main className="relative z-10 mx-auto -mt-10 w-full max-w-5xl px-4 md:px-6 pb-12">
         {/* Success Card */}
-        <div className="w-full rounded-2xl border border-[#d4e4d8] bg-gradient-to-br from-[#f2f8f4] via-[#f7fbf8] to-[#ebf5ed] p-6 md:p-8 pb-[11px] shadow-[0_4px_20px_rgba(16,60,40,0.06)]">
-          <div className="relative min-h-[192px] rounded-[10px] bg-gradient-to-r from-[#e6f3e8] via-[#eaf5ec] to-[#e4f1e6] px-4 pt-[68px] text-center">
-            <div className="absolute left-1/2 top-0 h-[54px] w-[90px] -translate-x-1/2 rounded-b-[45px] bg-[#f4f9f5]" />
-            <div className="absolute left-1/2 top-[-3px] flex h-[60px] w-[60px] -translate-x-1/2 items-center justify-center rounded-full bg-[#0e5a34] shadow-[0_4px_10px_rgba(14,90,52,0.25)]">
-              <Check className="h-8 w-8 text-white" strokeWidth={2.5} />
+        <div className="w-full rounded-xl border border-[#b5dbbc] bg-gradient-to-br from-[#dcf0e0] via-[#e8f5ec] to-[#d6ebd9] p-5 md:p-6 pb-5 shadow-[0_4px_20px_rgba(16,60,40,0.08)]">
+          <div className="relative min-h-[160px] rounded-md border border-[#e2ece4] bg-white px-4 pt-[52px] text-center shadow-sm">
+            <div className="absolute left-1/2 top-0 h-[42px] w-[70px] -translate-x-1/2 rounded-b-[35px] bg-[#f4f9f5]" />
+            <div className="absolute left-1/2 top-[-3px] flex h-[48px] w-[48px] -translate-x-1/2 items-center justify-center rounded-full bg-[#0e5a34] shadow-[0_3px_8px_rgba(14,90,52,0.25)]">
+              <Check className="h-6 w-6 text-white" strokeWidth={2.5} />
             </div>
 
-            <h2 className="text-[27px] font-semibold leading-9 tracking-[-0.01em] text-[#0d5a34]">
+            <h2 className="text-[20px] font-semibold leading-7 tracking-[-0.01em] text-[#0d5a34]">
               Your Feedback Has Been Submitted!
             </h2>
-            <p className="mt-[9px] text-[16px] leading-[26px] text-[#1f2937]">
+            <p className="mt-1 text-[13px] leading-[20px] text-[#1f2937]">
               Thank you for being a valuable part of Bharat Organic Expo.
               <br className="hidden sm:block" />{" "}
               Together, we can build a stronger, healthier and more sustainable
               tomorrow.
             </p>
 
-            <span className="absolute bottom-[17px] left-1/2 h-[2px] w-[92px] -translate-x-1/2 rounded-full bg-gradient-to-r from-transparent via-[#2f8f5b] to-transparent" />
+            <span className="absolute bottom-3 left-1/2 h-[2px] w-[80px] -translate-x-1/2 rounded-full bg-gradient-to-r from-transparent via-[#2f8f5b] to-transparent" />
           </div>
 
           {/* What's Next */}
-          <div className="mt-[21px] text-center">
-            <h2 className="text-[27px] font-semibold leading-[34px] tracking-[-0.01em] text-[#101828]">
+          <div className="mt-4 text-center">
+            <h2 className="text-[20px] font-semibold leading-7 tracking-[-0.01em] text-[#101828]">
               What&apos;s Next? Keep the Momentum Going!
             </h2>
-            <p className="mt-0.5 text-[16px] leading-[26px] text-[#1f2937]">
+            <p className="mt-0.5 text-[13px] leading-[20px] text-[#1f2937]">
               Help others discover, connect and be part of the growing organic
               movement.
             </p>
           </div>
 
-          <div className="mt-[21px] grid grid-cols-1 gap-[18px] md:grid-cols-3">
+          <div className="mt-4 grid grid-cols-1 gap-3.5 md:grid-cols-3">
             {/* Google Review Card */}
             <InfoCard
-              icon={<GoogleG className="h-[54px] w-[54px]" />}
+              icon={<GoogleG className="h-9 w-9" />}
               title="Write a Google Review"
               description={
                 "Help others discover\nBharat Organic Expo.\nIt takes less than a minute."
               }
               action={
-                <div className="w-full px-2.5">
+                <div className="w-full px-4">
                   <a
                     href={GOOGLE_REVIEW_URL}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className={btnCls}
+                    className={`${btnCls} max-w-[80%] mx-auto`}
                   >
                     Write a Google Review
                     <ArrowRight className="h-4 w-4" strokeWidth={1.75} />
@@ -462,9 +452,9 @@ export default function ThankYouPage() {
                 </div>
               }
               footer={
-                <div className="flex items-center gap-3">
+                <div className="flex items-center justify-center gap-1.5 whitespace-nowrap">
                   <RatingStars />
-                  <span className="text-[13px] text-[#4b5563]">
+                  <span className="text-[10.5px] text-[#4b5563]">
                     Your review makes a difference!
                   </span>
                 </div>
@@ -473,14 +463,14 @@ export default function ThankYouPage() {
 
             {/* Video Card */}
             <InfoCard
-              icon={<YouTubeLogo className="h-[50px] w-[73px]" />}
+              icon={<YouTubeLogo className="h-8 w-[48px]" />}
               title="Tell Your Story (Optional)"
               description={
                 "Record or upload a short\n30–60 second video about\nyour experience."
               }
               action={
-                <div className="w-full px-2.5">
-                  <label className={`${btnCls} cursor-pointer`}>
+                <div className="w-full px-4">
+                  <label className={`${btnCls} cursor-pointer max-w-[80%] mx-auto`}>
                     <input
                       type="file"
                       accept="video/mp4,video/quicktime"
@@ -493,9 +483,9 @@ export default function ThankYouPage() {
                 </div>
               }
               footer={
-                <div className="flex items-center gap-2 text-[12px] text-[#4b5563]">
+                <div className="flex items-center justify-center gap-1.5 text-[10.5px] text-[#4b5563] whitespace-nowrap">
                   <Camera
-                    className="h-5 w-5 text-[#1f2937]"
+                    className="h-3.5 w-3.5 shrink-0 text-[#1f2937]"
                     strokeWidth={1.5}
                   />
                   <span>
@@ -507,13 +497,13 @@ export default function ThankYouPage() {
 
             {/* Share Card */}
             <InfoCard
-              icon={<ShareGlyph className="h-[52px] w-[52px]" />}
+              icon={<ShareGlyph className="h-9 w-9" />}
               title="Share Your Participation"
               description={
                 "Proud to be part of\nBharat Organic Expo?\nShare with your network."
               }
               action={
-                <div className="flex w-full items-center justify-between">
+                <div className="flex w-full items-center justify-center gap-2">
                   <SocialTile
                     label="LinkedIn"
                     href={`https://www.linkedin.com/sharing/share-offsite/?url=${shareUrl}`}
@@ -544,9 +534,9 @@ export default function ThankYouPage() {
                   </SocialTile>
                 </div>
               }
-              footerClass="mt-3"
+              footerClass="mt-2"
               footer={
-                <span className="text-[12px] leading-[18px] text-[#374151]">
+                <span className="text-[10.5px] text-[#374151] whitespace-nowrap">
                   Let&apos;s spread the word for a greener, healthier tomorrow!
                 </span>
               }
@@ -554,31 +544,31 @@ export default function ThankYouPage() {
           </div>
 
           {/* Participation Card Section */}
-          <section className="relative mt-[19px] flex flex-col items-center gap-6 overflow-hidden rounded-2xl border border-[#d4e4d8] bg-gradient-to-br from-[#f2f8f4] via-[#f7fbf8] to-[#ebf5ed] p-5 md:flex-row md:gap-10 md:p-6 md:pl-7 md:pr-10 shadow-[0_2px_12px_rgba(16,60,40,0.04)]">
+          <section className="relative mt-[19px] flex flex-col items-center gap-6 overflow-hidden rounded-2xl border border-[#e2ece4] bg-white p-5 md:flex-row md:gap-10 md:p-6 md:pl-7 md:pr-10 shadow-sm">
             {/* Participation Card - Exact Match */}
-            <div className="relative w-full shrink-0 rounded-[22px] border border-[#dce8dd] bg-[#f4f9f4] shadow-[0_12px_32px_rgba(0,0,0,0.08)] md:w-[460px]" style={{ aspectRatio: "905/540", overflow: "hidden" }}>
+            <div className="relative w-full shrink-0 rounded-[18px] border border-[#dce8dd] bg-[#f4f9f4] shadow-[0_10px_28px_rgba(0,0,0,0.07)] md:w-[390px]" style={{ aspectRatio: "905/540", overflow: "hidden" }}>
               {/* Card Background - Soft Mint/Green Tinted Gradient */}
               <div className="absolute inset-0 bg-gradient-to-br from-[#f8fbf8] via-[#edf6ee] to-[#e4f2e6]" />
               <div className="absolute right-0 top-0 bottom-0 w-[60%] bg-gradient-to-l from-[#e2f1e5]/80 via-[#edf6ef]/50 to-transparent pointer-events-none z-0" />
 
               {/* RIGHT TOP Image - Together for a Greener Tomorrow */}
-              <div className="pointer-events-none absolute right-[3%] top-[4%] w-[32%] h-[40%] z-[2]">
+              <div className="pointer-events-none absolute right-[3%] top-[12%] w-[30%] h-[35%] z-[2]">
                 <Image
                   src="/assets/ChatGPT Image Sep 21, 2026, 04_34_45 PM.png"
                   alt="Together for a Greener Tomorrow"
                   fill
-                  sizes="180px"
+                  sizes="160px"
                   className="object-contain object-right-top"
                 />
               </div>
 
               {/* RIGHT BOTTOM Image - Hands with Plant */}
-              <div className="pointer-events-none absolute right-[0%] bottom-[0%] w-[38%] h-[52%] z-[1]">
+              <div className="pointer-events-none absolute right-[0%] top-[62%] w-[36%] h-[38%] z-[1]">
                 <Image
                   src="/assets/ChatGPT Image Sep 21, 2026, 04_36_08 PM.png"
                   alt="Plant in hands"
                   fill
-                  sizes="220px"
+                  sizes="180px"
                   className="object-contain object-right-bottom"
                 />
               </div>
@@ -589,43 +579,43 @@ export default function ThankYouPage() {
                   src={LEAF_LEFT}
                   alt="Leaves"
                   fill
-                  sizes="170px"
+                  sizes="150px"
                   className="object-contain object-left-bottom"
                 />
               </div>
 
               {/* Card Content - Matching Real Design with proper spacing & gaps */}
-              <div className="relative z-10 flex h-full flex-col justify-between p-4 md:p-5 pl-[6%] pr-[4%] pt-[4%] pb-[4%]">
+              <div className="relative z-10 flex h-full flex-col justify-between p-4 md:p-5 pl-[6%] pr-[4%] pt-[4%] pb-[3%]">
                 {/* Logo Section - Shifted further left */}
-                <div className="flex items-center gap-2.5 -ml-1.5 pt-0 -mt-0.5">
-                  <div className="relative h-[36px] w-[36px] shrink-0">
+                <div className="flex items-center gap-2 -ml-1 pt-0 -mt-0.5">
+                  <div className="relative h-[28px] w-[28px] shrink-0">
                     <Image
                       src={EXPO_LOGO}
                       alt="Bharat Organic Expo"
                       fill
-                      sizes="36px"
+                      sizes="28px"
                       className="object-contain"
                     />
                   </div>
                   <div>
-                    <p className="text-[15.5px] font-bold leading-tight text-[#084d2e]">
+                    <p className="text-[13px] font-bold leading-tight text-[#084d2e]">
                       Bharat Organic Expo
                     </p>
-                    <p className="text-[8.5px] font-extrabold uppercase tracking-wide leading-tight text-[#d97706]">
+                    <p className="text-[7.5px] font-extrabold uppercase tracking-wide leading-tight text-[#d97706]">
                       Organic Today for a Healthy Tomorrow
                     </p>
                   </div>
                 </div>
 
                 {/* Participant Info - Avatar & Details */}
-                <div className="flex items-center gap-3.5 pl-6 my-auto z-[2]">
-                  <div className="relative h-[50px] w-[50px] shrink-0 overflow-hidden rounded-full bg-[#d9d9d9]">
+                <div className="flex items-center gap-2.5 pl-4 my-auto z-[2]">
+                  <div className="relative h-[40px] w-[40px] shrink-0 overflow-hidden rounded-full bg-[#d9d9d9]">
                     {PARTICIPANT.avatar ? (
                       <Image
                         src={PARTICIPANT.avatar}
                         alt={PARTICIPANT.name}
                         fill
-                        sizes="50px"
+                        sizes="40px"
                         className="object-cover"
                       />
                     ) : (
@@ -634,31 +624,31 @@ export default function ThankYouPage() {
                   </div>
 
                   <div className="min-w-0">
-                    <p className="text-[15.5px] font-bold leading-[19px] text-[#111827]">
+                    <p className="text-[13px] font-bold leading-[16px] text-[#111827]">
                       {PARTICIPANT.name}
                     </p>
-                    <p className="text-[12px] font-medium leading-[15px] text-[#4b5563]">
+                    <p className="text-[10px] font-medium leading-[13px] text-[#4b5563]">
                       {PARTICIPANT.designation}
                     </p>
-                    <p className="text-[12px] font-medium leading-[15px] text-[#4b5563]">
+                    <p className="text-[10px] font-medium leading-[13px] text-[#4b5563]">
                       {PARTICIPANT.company}
                     </p>
                   </div>
                 </div>
 
                 {/* Green Pill Badge - Compact width */}
-                <div className="mx-auto w-fit rounded-full bg-[#084d2e] px-5 py-1.5 shadow-[0_4px_14px_rgba(8,77,46,0.3)] text-center -mt-4 mb-3 z-[3]">
-                  <p className="whitespace-pre-line text-[11.5px] font-semibold leading-[15px] text-white">
+                <div className="mx-auto w-fit rounded-full bg-[#084d2e] px-3.5 py-1 shadow-[0_2px_8px_rgba(8,77,46,0.25)] text-center -mt-2 mb-0.5 z-[3]">
+                  <p className="whitespace-pre-line text-[9.5px] font-semibold leading-[13px] text-white">
                     {EVENT.tagline}
                   </p>
                 </div>
 
                 {/* Date + Venue */}
-                <div className="text-center pt-1 z-[2]">
-                  <p className="text-[12px] font-bold leading-[16px] text-[#111827]">
+                <div className="text-center mt-auto pt-1 pb-0.5 z-[2]">
+                  <p className="text-[10px] font-bold leading-[14px] text-[#111827]">
                     {EVENT.dates}
                   </p>
-                  <p className="text-[10.5px] font-medium leading-[14px] text-[#4b5563]">
+                  <p className="text-[9px] font-medium leading-[12px] text-[#4b5563]">
                     {EVENT.venue}
                   </p>
                 </div>
@@ -667,10 +657,10 @@ export default function ThankYouPage() {
 
             {/* Right Side Content & Button */}
             <div className="relative z-10 flex-1 px-2 pb-2 md:px-0 md:pb-0">
-              <h2 className="text-[26px] md:text-[28px] font-bold leading-tight tracking-[-0.015em] text-[#054d2e]">
+              <h2 className="text-[20px] md:text-[22px] font-bold leading-tight tracking-[-0.015em] text-[#054d2e]">
                 Get Your Participation Card
               </h2>
-              <p className="mt-3 whitespace-pre-line text-[15px] md:text-[16px] leading-[25px] text-[#334155]">
+              <p className="mt-1.5 whitespace-pre-line text-[13.5px] md:text-[14px] leading-[21px] text-[#334155]">
                 {
                   "Download your personalised participation card\nand share it with your network."
                 }
@@ -678,71 +668,71 @@ export default function ThankYouPage() {
               <a
                 href={PARTICIPATION_CARD_DOWNLOAD}
                 download
-                className="mt-6 inline-flex h-[50px] w-full items-center justify-center gap-2.5 rounded-lg bg-[#054d2e] px-6 text-[15px] font-semibold text-white transition-all hover:bg-[#033a22] shadow-sm md:w-auto"
+                className="mt-3.5 inline-flex h-9 w-full items-center justify-center gap-2 rounded-md bg-[#054d2e] px-5 text-[13px] font-semibold text-white transition-all hover:bg-[#033a22] shadow-sm md:w-auto"
               >
-                <Download className="h-4.5 w-4.5" strokeWidth={2.2} />
+                <Download className="h-4 w-4" strokeWidth={2} />
                 <span>Download Card</span>
-                <ArrowRight className="h-4 w-4" strokeWidth={2.2} />
+                <ArrowRight className="h-3.5 w-3.5" strokeWidth={2} />
               </a>
             </div>
 
             {/* Right side background leaves */}
-            <div className="pointer-events-none absolute right-0 top-0 bottom-0 h-full w-[160px] md:w-[220px] z-0 select-none overflow-hidden hidden sm:block opacity-40">
+            <div className="pointer-events-none absolute right-0 top-[20%] bottom-0 h-[80%] w-[150px] md:w-[190px] z-0 select-none overflow-hidden hidden sm:block opacity-40">
               <Image
                 src={LEAF_RIGHT}
                 alt=""
                 fill
-                className="object-contain object-right"
+                className="object-contain object-right-bottom"
               />
             </div>
           </section>
-        </div>
 
-        {/* Footer Banner - See You at Bharat Organic Expo 2027 */}
-        <section className="relative mt-[10px] min-h-[170px] overflow-hidden rounded-[10px]">
-          <Image
-            src="/assets/next-edition-banner.png"
-            alt="Bharat Organic Expo Next Edition"
-            fill
-            sizes="(min-width: 1170px) 1170px, 100vw"
-            className="object-cover object-center"
-          />
+          {/* Footer Banner - See You at Bharat Organic Expo 2027 */}
+          <section className="relative mt-4 min-h-[140px] overflow-hidden rounded-lg">
+            <Image
+              src="/assets/next-edition-banner.png"
+              alt="Bharat Organic Expo Next Edition"
+              fill
+              sizes="(min-width: 1170px) 1170px, 100vw"
+              className="object-cover object-center"
+            />
 
-          <div className="relative z-10 flex flex-col items-start text-left justify-center px-6 py-8 w-full max-w-[720px] mx-auto">
-            <p className="text-[18px] font-medium leading-tight text-[#12281d]">
-              See You at
-            </p>
-            <p className="mt-1 text-[26px] md:text-[28px] font-bold leading-tight tracking-[-0.01em] text-[#07553a]">
-              Bharat Organic Expo 2027
-            </p>
+            <div className="relative z-10 flex flex-col items-start justify-center text-left pl-[22%] md:pl-[25%] pr-4 py-4 w-full max-w-[750px] mr-auto">
+              <p className="text-[14px] font-medium leading-tight text-[#12281d] text-left">
+                See You at
+              </p>
+              <p className="mt-0.5 text-[20px] md:text-[22px] font-bold leading-tight tracking-[-0.01em] text-[#07553a] text-left">
+                Bharat Organic Expo 2027
+              </p>
 
-            <div className="mt-3 flex flex-wrap items-center justify-start gap-x-6 gap-y-1.5 text-[14px] leading-snug text-[#1f2937] font-semibold">
-              <span className="flex items-center gap-2">
-                <CalendarDays
-                  className="h-5 w-5 text-[#08743e]"
-                  strokeWidth={1.75}
-                />
-                19 – 21 February 2027
-              </span>
-              <span className="flex items-center gap-2">
-                <MapPin className="h-5 w-5 text-[#08743e]" strokeWidth={1.75} />
-                Bharat Mandapam, New Delhi
-              </span>
+              <div className="mt-2 flex flex-wrap items-center justify-start gap-x-4 gap-y-1 text-[12px] leading-snug text-[#1f2937] font-semibold text-left">
+                <span className="flex items-center gap-1.5">
+                  <CalendarDays
+                    className="h-4 w-4 text-[#08743e]"
+                    strokeWidth={1.75}
+                  />
+                  19 – 21 February 2027
+                </span>
+                <span className="flex items-center gap-1.5">
+                  <MapPin className="h-4 w-4 text-[#08743e]" strokeWidth={1.75} />
+                  Bharat Mandapam, New Delhi
+                </span>
+              </div>
+
+              <p className="mt-1.5 text-[12px] font-bold text-[#08743e] text-left">
+                Bigger Opportunities. A Greener Future.
+              </p>
             </div>
 
-            <p className="mt-3 text-[14px] font-bold text-[#08743e]">
-              Bigger Opportunities. A Greener Future.
-            </p>
-          </div>
-
-          <Link
-            href="/"
-            className="absolute bottom-6 right-6 z-10 flex h-[42px] items-center justify-center gap-2 rounded-lg bg-[#08743e] px-5 text-[14px] font-bold text-white shadow-sm transition-colors hover:bg-[#065e32]"
-          >
-            Explore the Next Edition
-            <ArrowRight className="h-4 w-4" strokeWidth={2} />
-          </Link>
-        </section>
+            <Link
+              href="/"
+              className="absolute bottom-4 right-4 z-10 flex h-9 items-center justify-center gap-1.5 rounded-md bg-[#08743e] px-4 text-[12px] font-bold text-white shadow-sm transition-colors hover:bg-[#065e32]"
+            >
+              Explore the Next Edition
+              <ArrowRight className="h-3.5 w-3.5" strokeWidth={2} />
+            </Link>
+          </section>
+        </div>
       </main>
     </div>
   );
