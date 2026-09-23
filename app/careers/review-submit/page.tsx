@@ -867,11 +867,22 @@ export function ReviewSubmitModal({
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           candidateData: {
-            name: candidateData?.candidateName || "Vijay Sharma",
+            name: candidateData?.candidateName || candidateData?.name || "Vijay Sharma",
             email: candidateData?.email || "vijay.sharma@gmail.com",
             phone: candidateData?.phone || "+91 98765 43210",
+            verifiedPhone: candidateData?.verifiedPhone,
+            currentCompany: candidateData?.currentCompany || candidateData?.fullProfile?.currentCompany,
+            currentDesignation: candidateData?.currentDesignation || candidateData?.fullProfile?.currentDesignation,
+            totalExperience: candidateData?.totalExperience || candidateData?.fullProfile?.totalExperience,
+            noticePeriod: candidateData?.noticePeriod,
+            expectedCTC: candidateData?.expectedCTC,
+            willingToRelocate: candidateData?.willingToRelocate,
+            photo: typeof candidateData?.image === "string" && !candidateData.image.startsWith("blob:")
+              ? candidateData.image
+              : undefined,
             location: candidateData?.location || "Delhi NCR",
           },
+          whyInterested: candidateData?.whyInterested || candidateData?.summary || "",
         }),
       });
 

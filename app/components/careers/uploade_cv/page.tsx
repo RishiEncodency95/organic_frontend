@@ -9,14 +9,10 @@ import {
     CheckCircle2,
     FileUp,
     GraduationCap,
-    Loader2,
     LockKeyhole,
     MapPin,
-    Phone,
-    ShieldCheck,
     X,
 } from "lucide-react";
-import { verifyApi } from "@/lib/api";
 import businessPersonClean from "@/app/assets/carrer/business-person-clean.png";
 import leafDecoration from "@/app/assets/carrer/leaf-decoration.jpg";
 
@@ -42,7 +38,6 @@ type Job = {
 const DESIGN_WIDTH = 1360;
 const DESIGN_HEIGHT = 860;
 const MODAL_WIDTH = "min(88vw, 1180px, calc(86vh * 1360 / 860))";
-const OTP_LENGTH = 6;
 
 // Cycled under the spinner so a multi-second analysis reads as progress, not a freeze.
 const ANALYSIS_STEPS = [
@@ -100,13 +95,6 @@ const validateCvFile = (file: File): string | null => {
         return `That file is ${formatBytes(file.size)}. Maximum allowed size is 5 MB.`;
     }
     return null;
-};
-
-/** "9876543210" -> "+91 98765 43210" */
-const formatPhone = (value: string) => {
-    const digits = value.replace(/\D/g, "").slice(0, 10);
-    if (digits.length <= 5) return `+91 ${digits}`.trim();
-    return `+91 ${digits.slice(0, 5)} ${digits.slice(5)}`;
 };
 
 const jobCopy = {
@@ -336,6 +324,8 @@ export type CandidateAnalysisData = {
     firstName: string;
     email?: string | null;
     phone?: string | null;
+    /** Every number the CV listed, so the OTP step can offer each of them. */
+    phones?: string[];
     /** The number the WhatsApp OTP was actually verified against. */
     verifiedPhone?: string | null;
     linkedin?: string | null;
@@ -364,6 +354,11 @@ export type CandidateAnalysisData = {
         industryExperience: number;
         locationPreference: number;
     };
+    /** Backend ids, so later steps can patch this same candidate record. */
+    candidateId?: string;
+    jobId?: string;
+    analysisId?: string;
+    fullProfile?: any;
 };
 
 export default function UploadCvModal({
@@ -395,29 +390,6 @@ export default function UploadCvModal({
         observer.observe(shell);
         return () => observer.disconnect();
     }, []);
-
-    // WhatsApp OTP State
-    const [isOtpModalOpen, setIsOtpModalOpen] = useState(false);
-    const [otpStep, setOtpStep] = useState<"PHONE" | "OTP">("PHONE");
-    const [mobileNumber, setMobileNumber] = useState("");
-    const [otpCode, setOtpCode] = useState("");
-    const [isSendingOtp, setIsSendingOtp] = useState(false);
-    const [isVerifyingOtp, setIsVerifyingOtp] = useState(false);
-    const [otpError, setOtpError] = useState("");
-    const [resendIn, setResendIn] = useState(0);
-    const otpInputsRef = useRef<(HTMLInputElement | null)[]>([]);
-
-    // Resend cooldown after each successful send.
-    useEffect(() => {
-        if (resendIn <= 0) return;
-        const timer = setTimeout(() => setResendIn((seconds) => seconds - 1), 1000);
-        return () => clearTimeout(timer);
-    }, [resendIn]);
-
-    // Drop the caret straight into the first OTP box when the step opens.
-    useEffect(() => {
-        if (otpStep === "OTP") otpInputsRef.current[0]?.focus();
-    }, [otpStep]);
 
     // Advance the status line while the analysis runs. Elapsed time is tracked rather
     // than a step index so each run restarts from its own start time, and the copy
@@ -476,117 +448,11 @@ export default function UploadCvModal({
     ];
 
     const handleAnalyzeButtonClick = () => {
-        if (!file) return;
-        setOtpError("");
-        setOtpStep("PHONE");
-        setIsOtpModalOpen(true);
+        if (isAnalyzing || !file) return;
+        void runAnalysisPipeline();
     };
 
-    const handleSendWhatsAppOtp = async (e?: React.FormEvent) => {
-        if (e) e.preventDefault();
-        const cleanedPhone = mobileNumber.replace(/\D/g, "");
-        if (cleanedPhone.length < 10) {
-            setOtpError("Please enter a valid 10-digit mobile number.");
-            return;
-        }
-
-        setIsSendingOtp(true);
-        setOtpError("");
-
-        try {
-            const result = await verifyApi.sendPhoneOtp(
-                cleanedPhone,
-                "CAREER_CANDIDATE",
-                "Candidate",
-                "BOE2027"
-            );
-
-            // `msg` is present on failures too, so only `success` may advance the step.
-            if (result?.success) {
-                setOtpStep("OTP");
-                setOtpCode("");
-                setResendIn(30);
-            } else {
-                setOtpError(result?.message || result?.msg || "Failed to send WhatsApp OTP. Please try again.");
-            }
-        } catch (err: any) {
-            setOtpError(err?.message || "Failed to send WhatsApp OTP.");
-        } finally {
-            setIsSendingOtp(false);
-        }
-    };
-
-    // ─── OTP box helpers ─────────────────────────────────────────────────────
-    // `otpCode` stays the single source of truth; the six boxes are just a view of it.
-    const focusOtpBox = (index: number) => {
-        otpInputsRef.current[Math.max(0, Math.min(index, OTP_LENGTH - 1))]?.focus();
-    };
-
-    const handleOtpBoxChange = (index: number, raw: string) => {
-        const digits = raw.replace(/\D/g, "");
-        if (!digits) return;
-        const next = (otpCode.slice(0, index) + digits).slice(0, OTP_LENGTH);
-        setOtpCode(next);
-        setOtpError("");
-        focusOtpBox(next.length);
-    };
-
-    const handleOtpBoxKeyDown = (index: number, e: React.KeyboardEvent<HTMLInputElement>) => {
-        if (e.key === "Backspace") {
-            e.preventDefault();
-            if (otpCode[index]) {
-                setOtpCode(otpCode.slice(0, index) + otpCode.slice(index + 1));
-                focusOtpBox(index);
-            } else if (index > 0) {
-                setOtpCode(otpCode.slice(0, index - 1) + otpCode.slice(index));
-                focusOtpBox(index - 1);
-            }
-        } else if (e.key === "ArrowLeft") {
-            e.preventDefault();
-            focusOtpBox(index - 1);
-        } else if (e.key === "ArrowRight") {
-            e.preventDefault();
-            focusOtpBox(index + 1);
-        }
-    };
-
-    const handleOtpPaste = (e: React.ClipboardEvent<HTMLInputElement>) => {
-        const digits = e.clipboardData.getData("text").replace(/\D/g, "").slice(0, OTP_LENGTH);
-        if (!digits) return;
-        e.preventDefault();
-        setOtpCode(digits);
-        setOtpError("");
-        focusOtpBox(digits.length);
-    };
-
-    const handleVerifyWhatsAppOtp = async (e?: React.FormEvent) => {
-        if (e) e.preventDefault();
-        if (!otpCode || otpCode.trim().length < 4) {
-            setOtpError("Please enter the OTP received on WhatsApp.");
-            return;
-        }
-
-        const cleanedPhone = mobileNumber.replace(/\D/g, "");
-        setIsVerifyingOtp(true);
-        setOtpError("");
-
-        try {
-            const result = await verifyApi.verifyPhoneOtp(cleanedPhone, otpCode.trim());
-
-            if (result && (result.success || result.statusCode === 200)) {
-                setIsOtpModalOpen(false);
-                runAnalysisPipeline(cleanedPhone);
-            } else {
-                setOtpError(result?.message || result?.msg || "Invalid OTP code. Please enter the correct OTP.");
-            }
-        } catch (err: any) {
-            setOtpError(err?.message || "OTP verification failed. Please try again.");
-        } finally {
-            setIsVerifyingOtp(false);
-        }
-    };
-
-    const runAnalysisPipeline = async (verifiedPhone: string) => {
+    const runAnalysisPipeline = async () => {
         if (!file) return;
 
         setIsAnalyzing(true);
@@ -645,8 +511,13 @@ export default function UploadCvModal({
                 candidateName: fullName,
                 firstName: firstName,
                 email: profileData.email || null,
-                phone: profileData.phone || verifiedPhone || null,
-                verifiedPhone: verifiedPhone || null,
+                phone: profileData.phone || null,
+                phones: Array.isArray(profileData.phones) && profileData.phones.length > 0
+                    ? profileData.phones
+                    : profileData.phone
+                        ? [profileData.phone]
+                        : [],
+                verifiedPhone: null,
                 linkedin: profileData.linkedin || null,
                 cvFile: file,
                 cvName: file.name,
@@ -702,8 +573,13 @@ export default function UploadCvModal({
                             candidateName: prettifyName(nextJson.candidateName) || prettifyName(file.name.replace(/\.[^/.]+$/, "")),
                             firstName: nextJson.firstName || "Candidate",
                             email: nextJson.email || null,
-                            phone: nextJson.phone || verifiedPhone || null,
-                            verifiedPhone: verifiedPhone || null,
+                            phone: nextJson.phone || null,
+                            phones: Array.isArray(nextJson.phones) && nextJson.phones.length > 0
+                                ? nextJson.phones
+                                : nextJson.phone
+                                    ? [nextJson.phone]
+                                    : [],
+                            verifiedPhone: null,
                             linkedin: nextJson.linkedin || null,
                             cvFile: file,
                             cvName: file.name,
@@ -759,8 +635,9 @@ export default function UploadCvModal({
                 candidateName: formattedName,
                 firstName: firstName,
                 email: null,
-                phone: verifiedPhone || null,
-                verifiedPhone: verifiedPhone || null,
+                phone: null,
+                phones: [],
+                verifiedPhone: null,
                 linkedin: null,
                 cvFile: file,
                 cvName: file.name,
@@ -1052,208 +929,6 @@ export default function UploadCvModal({
                     )}
                 </div>
             </div>
-
-            {/* WHATSAPP OTP VERIFICATION */}
-            {isOtpModalOpen && (
-                <div className="fixed inset-0 z-[100000] flex items-center justify-center bg-[#04140d]/70 p-4 backdrop-blur-[6px]">
-                    <div className="relative w-full max-w-[430px] overflow-hidden rounded-[20px] bg-[#FBFCF9] shadow-[0_30px_80px_rgba(0,45,28,0.4)] ring-1 ring-[#cfe4d7]">
-
-                        {/* ── Brand header ───────────────────────────────── */}
-                        <div className="relative overflow-hidden bg-[linear-gradient(135deg,#00563f_0%,#00714f_55%,#008d55_100%)] px-6 py-5">
-                            <span className="pointer-events-none absolute -right-10 -top-14 h-36 w-36 rounded-full bg-white/10" />
-                            <span className="pointer-events-none absolute -bottom-16 right-10 h-28 w-28 rounded-full bg-white/[0.07]" />
-
-                            <button
-                                type="button"
-                                aria-label="Close verification"
-                                onClick={() => setIsOtpModalOpen(false)}
-                                className="absolute right-4 top-4 grid h-8 w-8 place-items-center rounded-full bg-white/15 text-white transition hover:bg-white/25"
-                            >
-                                <X className="h-[18px] w-[18px]" strokeWidth={2.4} />
-                            </button>
-
-                            <div className="relative flex items-center gap-3">
-                                <div className="grid h-12 w-12 shrink-0 place-items-center rounded-full bg-white/15 ring-1 ring-white/25">
-                                    <ShieldCheck className="h-6 w-6 text-white" strokeWidth={2.2} />
-                                </div>
-                                <div className="min-w-0">
-                                    <h3 className="font-poppins text-[19px] font-semibold leading-tight text-white">
-                                        WhatsApp Verification
-                                    </h3>
-                                    <p className="mt-[3px] flex items-center gap-1.5 text-[12px] font-medium text-[#bfe6cf]">
-                                        <span className="inline-block h-[7px] w-[7px] rounded-full bg-[#5df095]" />
-                                        Bharat Organic Expo 2027
-                                    </p>
-                                </div>
-                            </div>
-                        </div>
-
-                        {/* ── Body ───────────────────────────────────────── */}
-                        <div className="px-6 pb-6 pt-5">
-                            {otpStep === "PHONE" ? (
-                                <form onSubmit={handleSendWhatsAppOtp} className="space-y-4">
-                                    <p className="text-[13.5px] leading-[1.5] text-[#42566c]">
-                                        Enter your mobile number to receive a one-time password on WhatsApp.
-                                        We verify it once before running the AI CV analysis.
-                                    </p>
-
-                                    <div>
-                                        <label htmlFor="boe-otp-phone" className="mb-1.5 block text-[12px] font-semibold tracking-[0.02em] text-[#00563f]">
-                                            Mobile Number <span className="text-[#c0392b]">*</span>
-                                        </label>
-                                        <div className="flex items-stretch overflow-hidden rounded-[10px] border border-[#c3d8cb] bg-white transition focus-within:border-[#008d55] focus-within:ring-[3px] focus-within:ring-[#008d55]/15">
-                                            <span className="flex items-center gap-2 border-r border-[#dce8e1] bg-[#f2f9f3] px-3 text-[14px] font-semibold text-[#00563f]">
-                                                <Phone className="h-[17px] w-[17px]" strokeWidth={2.2} />
-                                                +91
-                                            </span>
-                                            <input
-                                                id="boe-otp-phone"
-                                                type="tel"
-                                                inputMode="numeric"
-                                                autoComplete="tel-national"
-                                                maxLength={10}
-                                                required
-                                                autoFocus
-                                                placeholder="98765 43210"
-                                                value={mobileNumber}
-                                                onChange={(e) => {
-                                                    setMobileNumber(e.target.value.replace(/\D/g, ""));
-                                                    setOtpError("");
-                                                }}
-                                                className="w-full bg-transparent px-3 py-3 text-[15px] font-semibold tracking-[0.03em] text-[#12334a] outline-none placeholder:font-normal placeholder:tracking-normal placeholder:text-[#9aa8b4]"
-                                            />
-                                        </div>
-                                    </div>
-
-                                    {otpError && (
-                                        <p className="rounded-[8px] border border-[#f3c9c4] bg-[#fdf2f1] px-3 py-2.5 text-[12.5px] font-medium text-[#b23b2e]">
-                                            {otpError}
-                                        </p>
-                                    )}
-
-                                    <button
-                                        type="submit"
-                                        disabled={isSendingOtp || mobileNumber.length < 10}
-                                        className="flex h-[46px] w-full items-center justify-center gap-2.5 rounded-[9px] bg-[linear-gradient(180deg,#008d55,#007346)] text-[15px] font-semibold text-white shadow-[0_6px_14px_rgba(0,84,51,0.25)] transition-all hover:brightness-110 disabled:cursor-not-allowed disabled:bg-none disabled:bg-[#b6c4bc] disabled:shadow-none"
-                                    >
-                                        {isSendingOtp ? (
-                                            <>
-                                                <Loader2 className="h-[18px] w-[18px] animate-spin" />
-                                                Sending OTP…
-                                            </>
-                                        ) : (
-                                            <>
-                                                Send OTP on WhatsApp
-                                                <ArrowRight className="h-[18px] w-[18px]" />
-                                            </>
-                                        )}
-                                    </button>
-
-                                    <p className="flex items-center justify-center gap-1.5 text-[11.5px] text-[#6b7a87]">
-                                        <LockKeyhole className="h-[13px] w-[13px] text-[#007a50]" />
-                                        Your number stays private and is used only for this verification.
-                                    </p>
-                                </form>
-                            ) : (
-                                <form onSubmit={handleVerifyWhatsAppOtp} className="space-y-4">
-                                    <div className="flex items-start gap-2.5 rounded-[10px] border border-[#c6e9d2] bg-[#eef9f2] px-3.5 py-3">
-                                        <CheckCircle2 className="mt-[1px] h-[17px] w-[17px] shrink-0 fill-[#007a50] text-white" />
-                                        <div className="min-w-0 flex-1">
-                                            <p className="text-[12.5px] font-semibold leading-snug text-[#0d5c40]">
-                                                OTP sent to {formatPhone(mobileNumber)}
-                                            </p>
-                                            <button
-                                                type="button"
-                                                onClick={() => {
-                                                    setOtpStep("PHONE");
-                                                    setOtpCode("");
-                                                    setOtpError("");
-                                                }}
-                                                className="mt-[3px] text-[11.5px] font-semibold text-[#007a50] underline underline-offset-2 transition hover:text-[#00563f]"
-                                            >
-                                                Change number
-                                            </button>
-                                        </div>
-                                    </div>
-
-                                    <div>
-                                        <label className="mb-2 block text-center text-[12.5px] font-semibold text-[#00563f]">
-                                            Enter the {OTP_LENGTH}-digit code
-                                        </label>
-                                        <div className="flex justify-center gap-2" onPaste={handleOtpPaste}>
-                                            {Array.from({ length: OTP_LENGTH }).map((_, index) => (
-                                                <input
-                                                    key={index}
-                                                    ref={(el) => {
-                                                        otpInputsRef.current[index] = el;
-                                                    }}
-                                                    type="text"
-                                                    inputMode="numeric"
-                                                    autoComplete={index === 0 ? "one-time-code" : "off"}
-                                                    maxLength={1}
-                                                    aria-label={`Digit ${index + 1}`}
-                                                    value={otpCode[index] ?? ""}
-                                                    onChange={(e) => handleOtpBoxChange(index, e.target.value)}
-                                                    onKeyDown={(e) => handleOtpBoxKeyDown(index, e)}
-                                                    onFocus={(e) => e.currentTarget.select()}
-                                                    className={`h-[52px] w-[46px] rounded-[10px] border bg-white text-center text-[21px] font-semibold text-[#12334a] outline-none transition ${otpError
-                                                            ? "border-[#e0a49c]"
-                                                            : otpCode[index]
-                                                                ? "border-[#008d55]"
-                                                                : "border-[#c3d8cb]"
-                                                        } focus:border-[#008d55] focus:ring-[3px] focus:ring-[#008d55]/15`}
-                                                />
-                                            ))}
-                                        </div>
-                                    </div>
-
-                                    {otpError && (
-                                        <p className="rounded-[8px] border border-[#f3c9c4] bg-[#fdf2f1] px-3 py-2.5 text-center text-[12.5px] font-medium text-[#b23b2e]">
-                                            {otpError}
-                                        </p>
-                                    )}
-
-                                    <button
-                                        type="submit"
-                                        disabled={isVerifyingOtp || otpCode.length < OTP_LENGTH}
-                                        className="flex h-[46px] w-full items-center justify-center gap-2.5 rounded-[9px] bg-[linear-gradient(180deg,#008d55,#007346)] text-[15px] font-semibold text-white shadow-[0_6px_14px_rgba(0,84,51,0.25)] transition-all hover:brightness-110 disabled:cursor-not-allowed disabled:bg-none disabled:bg-[#b6c4bc] disabled:shadow-none"
-                                    >
-                                        {isVerifyingOtp ? (
-                                            <>
-                                                <Loader2 className="h-[18px] w-[18px] animate-spin" />
-                                                Verifying…
-                                            </>
-                                        ) : (
-                                            <>
-                                                Verify &amp; Start AI Analysis
-                                                <ArrowRight className="h-[18px] w-[18px]" />
-                                            </>
-                                        )}
-                                    </button>
-
-                                    <p className="text-center text-[12px] text-[#6b7a87]">
-                                        Didn&apos;t receive the code?{" "}
-                                        {resendIn > 0 ? (
-                                            <span className="font-semibold text-[#42566c]">
-                                                Resend in {resendIn}s
-                                            </span>
-                                        ) : (
-                                            <button
-                                                type="button"
-                                                disabled={isSendingOtp}
-                                                onClick={() => handleSendWhatsAppOtp()}
-                                                className="font-semibold text-[#007a50] underline underline-offset-2 transition hover:text-[#00563f] disabled:opacity-50"
-                                            >
-                                                Resend OTP
-                                            </button>
-                                        )}
-                                    </p>
-                                </form>
-                            )}
-                        </div>
-                    </div>
-                </div>
-            )}
         </div>
     );
 }
