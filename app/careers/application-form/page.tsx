@@ -497,7 +497,7 @@ function PersonalInformation({
             )}
           </div>
 
-          <div className="flex flex-col justify-between rounded-[6px] border border-[#bfe9cf] bg-[#effbf3] p-[7px]">
+          <div className="flex flex-col justify-start gap-[6px] rounded-[6px] border border-[#bfe9cf] bg-[#effbf3] p-[7px]">
             {isVerifying ? (
               <div className="flex items-center gap-[6px] text-[13px] font-bold text-[#0284c7]">
                 <Loader2 className="h-[15px] w-[15px] animate-spin" />
@@ -539,7 +539,7 @@ function PersonalInformation({
               type="button"
               onClick={() => fileInputRef.current?.click()}
               disabled={isVerifying}
-              className="mt-[4px] h-[26px] w-full rounded-[4px] bg-[#076c3d] text-[11.5px] font-bold text-white shadow-sm hover:bg-[#055630] disabled:opacity-50"
+              className="mt-[6px] h-[26px] w-full rounded-[4px] bg-[#076c3d] text-[11.5px] font-bold text-white shadow-sm hover:bg-[#055630] disabled:opacity-50"
             >
               {photoSrc ? "Change & Re-Verify" : "Choose & Verify Photo"}
             </button>
@@ -1147,30 +1147,21 @@ function Sidebar({ onClose, candidateData }: { onClose: () => void; candidateDat
     <aside className="relative flex h-full min-h-0 flex-col overflow-hidden border-l border-[#e4ebe5] bg-[linear-gradient(180deg,#f8fcf9,#eef8f1)] pl-[28px] pr-[32px] pb-[16px] pt-[8px]">
       <SidebarFooter />
 
-      <div className="relative z-10 flex h-[72px] shrink-0 items-start justify-between">
-        <Image
-          src={assets.sidebarTop}
-          alt="Together for a Healthier Tomorrow"
-          width={2040}
-          height={771}
-          className="h-[68px] w-[210px] object-contain object-left-top"
-        />
-
+      <div className="relative z-10 flex shrink-0 items-start justify-end">
         <button
           type="button"
           onClick={onClose}
-          className="mt-[6px] flex h-[34px] items-center gap-[6px] rounded-[4px] bg-[#08743e] px-[11px] text-[10.5px] font-semibold text-white"
+          className="mt-[6px] flex h-[34px] items-center gap-[6px] rounded-[4px] bg-[#08743e] px-[11px] text-[10.5px] font-semibold text-white hover:bg-[#076637] transition-colors"
         >
           <Home className="h-[14px] w-[14px]" />
           Back to Website
         </button>
       </div>
 
-      <div className="relative z-10 mt-[6px] space-y-[11px]">
+      <div className="relative z-10 mt-[6px] flex-1 min-h-0 overflow-y-auto space-y-[11px] pr-[2px]">
         <CVCard candidateData={candidateData} />
         <AISummaryCard candidateData={candidateData} />
         <CVDetailsCard candidateData={candidateData} />
-        {/* <UpdateCVCard /> */}
       </div>
     </aside>
   );
@@ -1212,9 +1203,6 @@ function ApplicationFormContent({
   );
   const [confirmed, setConfirmed] = useState(true);
 
-  // Everything filled in across this popup only lives in local state — without merging
-  // it all here, the parent's candidateData never learns about it, so the Review &
-  // Submit step would show stale/default values even though the user just entered them.
   const handleNext = () => {
     onNext?.({
       ...candidateData,
@@ -1233,43 +1221,43 @@ function ApplicationFormContent({
 
   return (
     <div
-      className="relative grid min-h-full w-full overflow-hidden bg-white text-[#10243f]"
+      className="relative grid h-full w-full overflow-hidden bg-white text-[#10243f]"
       style={{
         width: `${DESIGN_WIDTH}px`,
         gridTemplateColumns: "64% 36%",
       }}
     >
       {/* LEFT */}
-      <section className="flex h-full min-h-0 flex-col overflow-hidden px-[32px] pb-[10px] pt-[10px]">
+      <section className="flex h-full min-h-0 flex-col px-[32px] pb-[16px] pt-[8px]">
         {/* TITLE */}
         <div className="shrink-0">
           <button
             type="button"
             onClick={onBack ?? onClose}
-            className="flex w-fit items-center gap-[6px] text-[14.5px] font-semibold text-[#0d5d3c] hover:text-[#d92027] transition-colors"
+            className="flex w-fit items-center gap-[6px] text-[14px] font-semibold text-[#0d5d3c] hover:text-[#d92027] transition-colors"
           >
-            <ArrowLeft className="h-[16px] w-[16px]" />
+            <ArrowLeft className="h-[15px] w-[15px]" />
             Back
           </button>
 
-          <h1 className="mt-[3px] text-[25px] font-semibold leading-none tracking-[-0.02em] text-[#123963]">
+          <h1 className="mt-[2px] text-[24px] font-semibold leading-none tracking-[-0.02em] text-[#123963]">
             {candidateData?.jobDetails?.title || job.title}
           </h1>
 
-          <div className="mt-[3px] flex items-center gap-[10px] text-[14.5px] text-[#1c4b78]">
+          <div className="mt-[2px] flex items-center gap-[10px] text-[14px] text-[#1c4b78]">
             <span>{candidateData?.jobDetails?.company || job.company}</span>
-            <span className="h-[14px] w-px bg-[#c8d3dc]" />
+            <span className="h-[13px] w-px bg-[#c8d3dc]" />
             <span>{candidateData?.jobDetails?.brand || job.brand}</span>
           </div>
         </div>
 
         {/* STEPS */}
-        <div className="mt-[4px] shrink-0">
+        <div className="mt-[3px] shrink-0">
           <ProgressSteps />
         </div>
 
-        {/* FORM */}
-        <div className="mt-[6px] flex shrink-0 flex-col gap-[7px]">
+        {/* FORM (SCROLLABLE AREA) */}
+        <div className="mt-[4px] flex-1 min-h-0 overflow-y-auto pr-[4px] flex flex-col gap-[5px] pb-[10px]">
           <PersonalInformation
             candidateData={candidateData}
             photoSrc={photoSrc}

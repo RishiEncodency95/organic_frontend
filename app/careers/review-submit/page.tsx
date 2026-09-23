@@ -674,7 +674,7 @@ function ReviewSubmitContent({
       }}
     >
       {/* LEFT */}
-      <section className="relative flex h-full min-h-0 flex-col justify-between overflow-hidden px-[32px] pb-[14px] pt-[10px]">
+      <section className="relative flex h-full min-h-0 flex-col justify-between overflow-y-auto px-[32px] pb-[16px] pt-[10px]">
         {/* HEADER */}
         <div className="flex shrink-0 items-center gap-[8px]">
           <Image
@@ -765,8 +765,8 @@ function ReviewSubmitContent({
           </button>
         </div>
 
-        {/* REVIEW SECTIONS - non-scrollable grid */}
-        <div className="grid min-h-0 flex-1 grid-cols-2 gap-[8px] overflow-hidden">
+        {/* REVIEW SECTIONS */}
+        <div className="grid min-h-0 flex-1 grid-cols-2 gap-[8px] overflow-y-auto pb-[10px]">
           <div className="flex flex-col gap-[8px]">
             <CandidateProfile candidateData={candidateData} />
             <ProfessionalExperience candidateData={candidateData} />
