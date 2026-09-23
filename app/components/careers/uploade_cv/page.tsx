@@ -354,6 +354,8 @@ export type CandidateAnalysisData = {
         industryExperience: number;
         locationPreference: number;
     };
+    /** Evidence strings backing the industryExperience score, for display in "Key Details from CV". */
+    industryExperienceEvidence?: string[];
     /** Backend ids, so later steps can patch this same candidate record. */
     candidateId?: string;
     jobId?: string;
@@ -545,6 +547,7 @@ export default function UploadCvModal({
                     industryExperience: analysisData.breakdown?.industryExperience?.score ?? (analysisData.matchScore ?? 0),
                     locationPreference: analysisData.breakdown?.location?.score ?? 100,
                 },
+                industryExperienceEvidence: analysisData.breakdown?.industryExperience?.evidence || [],
                 candidateId: analysisData.candidateId,
                 jobId: analysisData.jobId,
                 analysisId: analysisData.analysisId,
