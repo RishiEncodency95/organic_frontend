@@ -29,6 +29,27 @@ function formatNameWithSpaces(nameStr?: string | null): { fullName: string; firs
 const ALLOWED_CV_EXTENSIONS = ["pdf", "doc", "docx"];
 const MAX_CV_BYTES = 5 * 1024 * 1024;
 
+const DEFAULT_REQUIREMENTS = [
+  "Relevant experience in exhibition / trade show sales",
+  "Exposure to client acquisition & sponsorships",
+  "Good communication and negotiation skills",
+  "Relevant industry experience",
+  "Willing to work from Delhi NCR",
+];
+
+/** The UI always shows 5 bullets, so pad/truncate here rather than trust the model's count. */
+function normalizeRequirements(list: unknown): string[] {
+  const cleaned = Array.isArray(list)
+    ? list.filter((item): item is string => typeof item === "string" && item.trim().length > 0)
+    : [];
+  const result = [...cleaned];
+  for (const fallback of DEFAULT_REQUIREMENTS) {
+    if (result.length >= 5) break;
+    if (!result.includes(fallback)) result.push(fallback);
+  }
+  return result.slice(0, 5);
+}
+
 function rejectCvFile(file: File): string | null {
   const extension = file.name.includes(".") ? file.name.split(".").pop()!.toLowerCase() : "";
   if (!ALLOWED_CV_EXTENSIONS.includes(extension)) {
@@ -178,7 +199,7 @@ CRITICAL EXTRACTION & SCORING RULES:
 5. "linkedin": Extract the candidate's LinkedIn profile URL. Only return null if NO LinkedIn link exists in the document text.
 6. "score": Calculate a realistic match percentage score (0 to 100) based on candidate's experience vs job requirements.
 7. "summary": A brief 2-sentence feedback explaining why this score was awarded.
-8. "requirementsMet": Array of 4-5 key requirements met by candidate based on their actual CV content.
+8. "requirementsMet": Array of EXACTLY 5 key requirements met by candidate based on their actual CV content.
 9. "breakdown": Object with percentage scores (0-100) for:
    - "relevantExperience": number (0-100)
    - "educationalQualification": number (0-100)
@@ -285,13 +306,7 @@ IMPORTANT: Return ONLY raw valid JSON matching this exact structure:
           cvUrl: savedCvUrl,
           score: typeof parsed.score === "number" ? parsed.score : 72,
           summary: parsed.summary || "Evaluation complete.",
-          requirementsMet: Array.isArray(parsed.requirementsMet) ? parsed.requirementsMet : [
-            "Relevant experience in exhibition / trade show sales",
-            "Exposure to client acquisition & sponsorships",
-            "Good communication and negotiation skills",
-            "Relevant industry experience",
-            "Willing to work from Delhi NCR",
-          ],
+          requirementsMet: normalizeRequirements(parsed.requirementsMet),
           breakdown: parsed.breakdown || {
             relevantExperience: 78,
             educationalQualification: 100,
@@ -319,13 +334,7 @@ IMPORTANT: Return ONLY raw valid JSON matching this exact structure:
       cvUrl: savedCvUrl,
       score: fallbackScore,
       summary: "Evaluated candidate profile successfully.",
-      requirementsMet: [
-        "Relevant experience in exhibition / trade show sales",
-        "Exposure to client acquisition & sponsorships",
-        "Good communication and negotiation skills",
-        "Relevant industry experience",
-        "Willing to work from Delhi NCR",
-      ],
+      requirementsMet: DEFAULT_REQUIREMENTS,
       breakdown: {
         relevantExperience: fallbackScore > 70 ? 78 : fallbackScore > 50 ? 58 : 38,
         educationalQualification: 100,
@@ -346,13 +355,7 @@ IMPORTANT: Return ONLY raw valid JSON matching this exact structure:
       linkedin: null,
       score: 72,
       summary: "Analyzed CV successfully.",
-      requirementsMet: [
-        "Relevant experience in exhibition / trade show sales",
-        "Exposure to client acquisition & sponsorships",
-        "Good communication and negotiation skills",
-        "Relevant industry experience",
-        "Willing to work from Delhi NCR",
-      ],
+      requirementsMet: DEFAULT_REQUIREMENTS,
       breakdown: {
         relevantExperience: 78,
         educationalQualification: 100,
