@@ -27,6 +27,7 @@ import {
   Users,
   X,
 } from "lucide-react";
+import PhoneVerifyModal from "../PhoneVerifyModal";
 
 /* =========================================================
    CHANGE ONLY SCORE
@@ -366,6 +367,8 @@ export type CandidateProfileData = {
   firstName: string;
   email?: string | null;
   phone?: string | null;
+  /** Every number the CV listed, primary first; a CV may carry two. */
+  phones?: string[];
   /** Number the WhatsApp OTP was verified against; used to badge the profile. */
   verifiedPhone?: string | null;
   linkedin?: string | null;
@@ -394,6 +397,8 @@ export type CandidateProfileData = {
     industryExperience: number;
     locationPreference: number;
   };
+  /** Backend CandidateProfile id, so profile edits persist against that record. */
+  candidateId?: string;
 };
 
 export const defaultCandidateData: CandidateProfileData = {
@@ -401,6 +406,7 @@ export const defaultCandidateData: CandidateProfileData = {
   firstName: "Rohit",
   email: "kumarrohitji89@gmail.com",
   phone: "+91 9568816858",
+  phones: ["+91 9568816858"],
   verifiedPhone: "+91 9568816858",
   linkedin: "linkedin.com/in/rohit-kumar",
   cvName: "Rohit_Encodency.pdf",
@@ -1108,6 +1114,60 @@ const isValidEmail = (value?: string | null) =>
 const isValidPhone = (value?: string | null) => digitsOnly(value).length >= 10;
 
 /**
+ * Every number the CV yielded, primary first and de-duplicated on the last 10 digits,
+ * so a CV carrying two numbers shows both instead of only the one used for the OTP.
+ */
+function cvPhoneList(candidate: CandidateProfileData): string[] {
+  const seen = new Set<string>();
+  const list: string[] = [];
+
+  for (const value of [candidate.phone, ...(candidate.phones || [])]) {
+    const raw = (value || "").trim();
+    const key = phoneKey(raw);
+    if (!raw || key.length !== 10 || seen.has(key)) continue;
+    seen.add(key);
+    list.push(raw);
+  }
+
+  return list;
+}
+
+/**
+ * The numbers that can actually receive the WhatsApp OTP. Indian mobile numbers start
+ * 6-9, so a landline on the CV is kept on the profile but not offered here.
+ */
+const otpEligiblePhones = (candidate: CandidateProfileData): string[] =>
+  cvPhoneList(candidate).filter((value) => /^[6-9]/.test(phoneKey(value)));
+
+const API_BASE = process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000/api/v1";
+
+/**
+ * Stores the picked photo against the candidate's record so it survives this session.
+ * Returns the hosted URL, or null when there is nothing to store it against yet —
+ * the caller then keeps the local preview so the card still shows the picture.
+ */
+async function saveCandidatePhoto(candidateId: string | undefined, file: File): Promise<string | null> {
+  if (!candidateId) return null;
+
+  try {
+    const body = new FormData();
+    body.append("photo", file);
+
+    const res = await fetch(`${API_BASE}/careers/candidates/${candidateId}/photo`, {
+      method: "POST",
+      body,
+    });
+
+    const json = await res.json();
+    if (!res.ok || !json?.success) return null;
+
+    return json.data?.photo || json.data?.url || null;
+  } catch {
+    return null;
+  }
+}
+
+/**
  * Details the application form needs before it can be started. LinkedIn and the
  * photo stay optional — the form itself never asks for them.
  */
@@ -1119,6 +1179,8 @@ function profileIssues(candidate: CandidateProfileData): string[] {
   return issues;
 }
 
+/** Kept in step with the backend's uploadPhoto middleware, so a photo that passes here stores. */
+const ALLOWED_PHOTO_TYPES = ["image/jpeg", "image/jpg", "image/png", "image/webp"];
 const MIN_PHOTO_PIXELS = 200;
 const MAX_PHOTO_BYTES = 5 * 1024 * 1024;
 /** Laplacian variance under this reads as out of focus. Deliberately lenient. */
@@ -1130,8 +1192,8 @@ const MIN_PHOTO_SHARPNESS = 60;
  * grayscale downscale — the standard cheap blur test.
  */
 async function inspectPhoto(file: File): Promise<{ url: string } | { error: string }> {
-  if (!file.type.startsWith("image/")) {
-    return { error: "That file is not an image. Use a JPG or PNG photo." };
+  if (!ALLOWED_PHOTO_TYPES.includes(file.type)) {
+    return { error: "That file type is not allowed. Use a JPG, PNG or WEBP photo." };
   }
   if (file.size > MAX_PHOTO_BYTES) {
     return { error: "Photo is larger than 5 MB. Please choose a smaller one." };
@@ -1209,14 +1271,19 @@ function ProfileCard() {
   const [isCheckingPhoto, setIsCheckingPhoto] = useState(false);
   const photoInputRef = useRef<HTMLInputElement>(null);
   const verifiedKey = phoneKey(candidate.verifiedPhone);
+  const phoneList = cvPhoneList(candidate);
 
-  const [draft, setDraft] = useState({
+  const buildDraft = () => ({
     candidateName: candidate.candidateName || "",
     email: candidate.email || "",
-    phone: candidate.phone || "",
+    phone: phoneList[0] || candidate.phone || "",
+    // The CV's remaining numbers, kept so one can be promoted without retyping it.
+    otherPhones: phoneList.slice(1),
     linkedin: candidate.linkedin || "",
     image: candidate.image || "",
   });
+
+  const [draft, setDraft] = useState(buildDraft);
 
   const initials = (candidate.candidateName || "Candidate")
     .split(" ")
@@ -1228,13 +1295,7 @@ function ProfileCard() {
 
   const openEditor = () => {
     setPhotoError("");
-    setDraft({
-      candidateName: candidate.candidateName || "",
-      email: candidate.email || "",
-      phone: candidate.phone || "",
-      linkedin: candidate.linkedin || "",
-      image: candidate.image || "",
-    });
+    setDraft(buildDraft());
     setIsEditing(true);
   };
 
@@ -1242,13 +1303,23 @@ function ProfileCard() {
     if (!file) return;
     setPhotoError("");
     setIsCheckingPhoto(true);
+
     const result = await inspectPhoto(file);
-    setIsCheckingPhoto(false);
     if ("error" in result) {
+      setIsCheckingPhoto(false);
       setPhotoError(result.error);
       return;
     }
-    setDraft((d) => ({ ...d, image: result.url }));
+
+    // Saved against the candidate record straight away. If that write fails the local
+    // preview is still used, so the card never ends up blank after a successful pick.
+    const storedUrl = await saveCandidatePhoto(candidate.candidateId, file);
+    setIsCheckingPhoto(false);
+    setDraft((d) => ({ ...d, image: storedUrl || result.url }));
+
+    if (!storedUrl && candidate.candidateId) {
+      setPhotoError("Photo added here, but saving it failed. Try again before you submit.");
+    }
   };
 
   const draftIssues = profileIssues({
@@ -1260,15 +1331,38 @@ function ProfileCard() {
 
   const save = () => {
     if (draftIssues.length > 0) return;
+
+    const name = draft.candidateName.trim() || candidate.candidateName;
+    const phone = draft.phone.trim();
+    const phones = cvPhoneList({ ...candidate, phone, phones: draft.otherPhones });
+
     updateCandidate?.({
-      candidateName: draft.candidateName.trim() || candidate.candidateName,
-      firstName: (draft.candidateName.trim().split(" ")[0] || candidate.firstName) as string,
+      candidateName: name,
+      firstName: (name.split(" ")[0] || candidate.firstName) as string,
       email: draft.email.trim() || null,
-      phone: draft.phone.trim() || null,
+      phone: phone || null,
+      phones,
       linkedin: draft.linkedin.trim() || null,
       image: draft.image || null,
     });
     setIsEditing(false);
+
+    // Mirror the correction onto the stored candidate record; the popup must not wait on it.
+    if (candidate.candidateId) {
+      void fetch(`${API_BASE}/careers/candidates/${candidate.candidateId}`, {
+        method: "PATCH",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          name,
+          email: draft.email.trim(),
+          phone,
+          phones,
+          linkedin: draft.linkedin.trim(),
+          // A blob: preview only exists in this tab, so it is never worth storing.
+          photo: draft.image && !draft.image.startsWith("blob:") ? draft.image : undefined,
+        }),
+      }).catch(() => undefined);
+    }
   };
 
   const fieldClass = (invalid: boolean) =>
@@ -1321,7 +1415,7 @@ function ProfileCard() {
             <input
               ref={photoInputRef}
               type="file"
-              accept="image/*"
+              accept="image/jpeg,image/png,image/webp,.jpg,.jpeg,.png,.webp"
               className="hidden"
               onChange={(e) => {
                 void pickPhoto(e.target.files?.[0]);
@@ -1395,6 +1489,34 @@ function ProfileCard() {
                   </p>
                 )
               )}
+
+              {/* A CV listing more than one number keeps them all; either can be made primary. */}
+              {draft.otherPhones.map((other) => (
+                <div
+                  key={other}
+                  className="mt-[4px] flex items-center gap-[6px] rounded-[6px] border border-[#e2eae4] bg-[#f6faf7] px-[8px] py-[4px]"
+                >
+                  <Phone className="h-[12px] w-[12px] shrink-0 text-[#6b7a87] stroke-[2.5]" />
+                  <span className="min-w-0 flex-1 truncate text-[12.5px] font-semibold text-[#2d4766]">
+                    {other}
+                  </span>
+                  <button
+                    type="button"
+                    onClick={() =>
+                      setDraft((d) => ({
+                        ...d,
+                        phone: other,
+                        otherPhones: [d.phone, ...d.otherPhones.filter((value) => value !== other)]
+                          .map((value) => value.trim())
+                          .filter(Boolean),
+                      }))
+                    }
+                    className="shrink-0 text-[11px] font-bold text-[#0977df] transition-opacity hover:opacity-80"
+                  >
+                    Use this
+                  </button>
+                </div>
+              ))}
             </div>
 
             <input
@@ -1433,7 +1555,7 @@ function ProfileCard() {
               {candidate.candidateName}
             </h4>
 
-            <div className="mt-[4px] space-y-[4px] text-[15px] font-semibold text-[#2d4766]">
+            <div className="boe-modal-scroll mt-[4px] max-h-[136px] space-y-[4px] overflow-y-auto pr-[4px] text-[15px] font-semibold text-[#2d4766]">
               {candidate.email ? (
                 <p className="flex items-center gap-[7px]">
                   <Mail className="h-[15px] w-[15px] shrink-0 text-[#0c3363] stroke-[2.5]" />
@@ -1443,22 +1565,27 @@ function ProfileCard() {
                 <MissingDetail label="Add email" onClick={openEditor} icon={Mail} />
               )}
 
-              {candidate.phone ? (
-                <p className="flex items-center gap-[7px]">
-                  <Phone className="h-[15px] w-[15px] shrink-0 text-[#0c3363] stroke-[2.5]" />
-                  <span className="truncate">{candidate.phone}</span>
-                  {verifiedKey &&
-                    (phoneKey(candidate.phone) === verifiedKey ? (
+              {/* Both numbers are shown when the CV listed two — not just the verified one. */}
+              {phoneList.length > 0 ? (
+                phoneList.map((number, index) => (
+                  <p key={number} className="flex items-center gap-[7px]">
+                    <Phone
+                      className={`h-[15px] w-[15px] shrink-0 stroke-[2.5] ${index === 0 ? "text-[#0c3363]" : "text-[#8194a8]"
+                        }`}
+                    />
+                    <span className="truncate">{number}</span>
+                    {verifiedKey && phoneKey(number) === verifiedKey ? (
                       <ShieldCheck
                         className="h-[15px] w-[15px] shrink-0 text-[#07623a] stroke-[2.6]"
                         aria-label="Verified on WhatsApp"
                       />
-                    ) : (
+                    ) : verifiedKey && index === 0 ? (
                       <span className="shrink-0 rounded-[4px] bg-[#fdf3e8] px-[5px] py-[1px] text-[10px] font-bold text-[#b26a2e]">
                         UNVERIFIED
                       </span>
-                    ))}
-                </p>
+                    ) : null}
+                  </p>
+                ))
               ) : (
                 <MissingDetail label="Add mobile number" onClick={openEditor} icon={Phone} />
               )}
@@ -1504,7 +1631,7 @@ function MissingDetail({
    CV
    ========================================================= */
 
-function CVCard({ onClose }: { onClose?: () => void }) {
+function CVCard({ onBack, onClose }: { onBack?: () => void; onClose?: () => void }) {
   const { candidate } = useMatchData();
 
   const handleViewFile = () => {
@@ -1549,9 +1676,10 @@ function CVCard({ onClose }: { onClose?: () => void }) {
               View File
             </button>
 
+            {/* Reopens this job's upload step rather than dropping out of the flow. */}
             <button
               type="button"
-              onClick={onClose}
+              onClick={onBack ?? onClose}
               className="flex items-center gap-[5px] hover:opacity-80 transition-opacity cursor-pointer"
             >
               <RefreshCw className="h-[15px] w-[15px] stroke-[2.5]" />
@@ -1688,7 +1816,15 @@ function SidebarFooter() {
    SIDEBAR
    ========================================================= */
 
-function Sidebar({ onClose, onApply }: { onClose?: () => void; onApply?: () => void }) {
+function Sidebar({
+  onBack,
+  onClose,
+  onApply,
+}: {
+  onBack?: () => void;
+  onClose?: () => void;
+  onApply?: () => void;
+}) {
   const { matchLevel, current, candidate } = useMatchData();
   // The application form needs these, so the step cannot start without them.
   const missing = profileIssues(candidate);
@@ -1725,7 +1861,7 @@ function Sidebar({ onClose, onApply }: { onClose?: () => void; onApply?: () => v
 
       <ProfileCard />
 
-      <CVCard onClose={onClose} />
+      <CVCard onBack={onBack} onClose={onClose} />
 
       <JobSummary />
 
@@ -1892,7 +2028,7 @@ export function EligibilityPopupContent({
         </section>
 
         {/* RIGHT */}
-        <Sidebar onClose={onClose} onApply={onApply} />
+        <Sidebar onBack={onBack} onClose={onClose} onApply={onApply} />
       </div>
     </MatchContext.Provider>
   );
@@ -1915,7 +2051,45 @@ export function EligibilityModal({
   onApply?: () => void;
   onCandidateChange?: (candidate: CandidateProfileData) => void;
 }) {
+  // OTP happens here, one step after the analysis: only when "Continue & Apply" is
+  // clicked, not right after the CV comes back scored.
+  const [isPhoneVerifyOpen, setIsPhoneVerifyOpen] = useState(false);
+
   if (!isOpen) return null;
+
+  const handleContinue = () => {
+    // Already proven this session (e.g. coming back from the application form) —
+    // no need to ask again.
+    if (candidate.verifiedPhone && phoneKey(candidate.phone) === phoneKey(candidate.verifiedPhone)) {
+      onApply?.();
+      return;
+    }
+    setIsPhoneVerifyOpen(true);
+  };
+
+  const handlePhoneVerified = (verifiedPhone: string) => {
+    // The verified number leads the list, so the profile card badges the first row
+    // instead of flagging the CV's primary number as unverified.
+    const key = phoneKey(verifiedPhone);
+    const existing = cvPhoneList(candidate);
+    const others = existing.filter((value) => phoneKey(value) !== key);
+    const primary = existing.find((value) => phoneKey(value) === key) || verifiedPhone;
+    const phones = [primary, ...others];
+
+    onCandidateChange?.({ ...candidate, phone: primary, phones, verifiedPhone: primary });
+
+    if (candidate.candidateId) {
+      // Best effort: the result must not wait on this write.
+      void fetch(`${API_BASE}/careers/candidates/${candidate.candidateId}`, {
+        method: "PATCH",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ verifiedPhone: primary, phone: primary, phones }),
+      }).catch(() => undefined);
+    }
+
+    setIsPhoneVerifyOpen(false);
+    onApply?.();
+  };
 
   return (
     <div className="fixed inset-0 z-[99999] flex items-center justify-center p-3">
@@ -1945,10 +2119,24 @@ export function EligibilityModal({
               transformOrigin: "top left",
             }}
           >
-            <EligibilityPopupContent candidate={candidate} score={score} onClose={onClose} onBack={onBack} onApply={onApply} onCandidateChange={onCandidateChange} />
+            <EligibilityPopupContent candidate={candidate} score={score} onClose={onClose} onBack={onBack} onApply={handleContinue} onCandidateChange={onCandidateChange} />
           </div>
         </div>
       </div>
+
+      {/* Rendered outside the scaled content above (position: fixed does not escape a
+          transformed ancestor), so it stays a true full-viewport overlay. */}
+      <PhoneVerifyModal
+        isOpen={isPhoneVerifyOpen}
+        phoneOptions={otpEligiblePhones(candidate)}
+        candidateName={candidate.candidateName}
+        onVerified={handlePhoneVerified}
+        onDismiss={() => setIsPhoneVerifyOpen(false)}
+        onCloseAll={() => {
+          setIsPhoneVerifyOpen(false);
+          onClose();
+        }}
+      />
     </div>
   );
 }
@@ -1999,10 +2187,12 @@ export default function CareerEligibilityPage() {
         isOpen={eligibilityOpen}
         candidate={candidateData}
         score={candidateData.score}
-        onClose={() => {
+        onCandidateChange={setCandidateData}
+        onBack={() => {
           setEligibilityOpen(false);
           setUploadCvOpen(true);
         }}
+        onClose={() => setEligibilityOpen(false)}
       />
     </main>
   );

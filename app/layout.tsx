@@ -79,6 +79,9 @@ export const metadata: Metadata = {
 };
 
 import StoreProvider from "./store/StoreProvider";
+import JsonLd from "@/components/seo/JsonLd";
+import { organizationJsonLd, websiteJsonLd } from "@/lib/seo";
+import Script from "next/script";
 
 export default async function RootLayout({
   children,
@@ -89,6 +92,13 @@ export default async function RootLayout({
   const headerScripts = seoData?.headerScripts || "";
   const footerScripts = seoData?.footerScripts || "";
 
+  const configuredGa4Id = seoData?.ga4MeasurementId || process.env.NEXT_PUBLIC_GA4_MEASUREMENT_ID;
+  const configuredGtmId = seoData?.gtmContainerId || process.env.NEXT_PUBLIC_GTM_CONTAINER_ID;
+  const gscVerification = seoData?.googleSearchConsoleVerification || process.env.NEXT_PUBLIC_GSC_VERIFICATION;
+
+  const ga4MeasurementId = /^G-[A-Z0-9]+$/i.test(configuredGa4Id ?? "") ? configuredGa4Id : undefined;
+  const gtmContainerId = /^GTM-[A-Z0-9]+$/i.test(configuredGtmId ?? "") ? configuredGtmId : undefined;
+
   return (
     <html
       lang="en"
@@ -96,10 +106,15 @@ export default async function RootLayout({
       className={`${poppins.variable} ${inter.variable} h-full antialiased overflow-x-hidden`}
     >
       <head>
-        {/* Dynamic Header Scripts from Admin (Google Tag Manager, GA, Meta Pixel) */}
+        {gscVerification && (
+          <meta name="google-site-verification" content={gscVerification} />
+        )}
+        {/* Dynamic Header Scripts from Admin */}
         <HeadScripts html={headerScripts} />
       </head>
       <body suppressHydrationWarning className="min-h-full flex flex-col font-inter text-[16px] md:text-[18px] leading-[1.6] overflow-x-hidden w-full">
+        <JsonLd data={organizationJsonLd()} />
+        <JsonLd data={websiteJsonLd()} />
         <DynamicCanonical />
         <SmoothScroll>
           <Topbar />
@@ -111,10 +126,42 @@ export default async function RootLayout({
           <SocialSidebar />
           <WhatsAppFloat />
         </SmoothScroll>
-        {/* Dynamic Footer Scripts from Admin (GTM noscript, Chat, Conversion pixels) */}
+        {/* Dynamic Footer Scripts from Admin */}
         <FooterScripts html={footerScripts} />
         <ClientScriptTracker headerHtml={headerScripts} />
+
+        {/* Dynamic GA4 Integration */}
+        {ga4MeasurementId && (
+          <>
+            <Script
+              src={`https://www.googletagmanager.com/gtag/js?id=${ga4MeasurementId}`}
+              strategy="afterInteractive"
+            />
+            <Script id="google-analytics" strategy="afterInteractive">
+              {`
+                window.dataLayer = window.dataLayer || [];
+                function gtag(){window.dataLayer.push(arguments);}
+                gtag('js', new Date());
+                gtag('config', '${ga4MeasurementId}', { send_page_view: true });
+              `}
+            </Script>
+          </>
+        )}
+
+        {/* Dynamic GTM Integration */}
+        {gtmContainerId && (
+          <Script id="google-tag-manager" strategy="afterInteractive">
+            {`
+              (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+              new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+              j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+              'https://www.googletagmanager.com/gtag.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+              })(window,document,'script','dataLayer','${gtmContainerId}');
+            `}
+          </Script>
+        )}
       </body>
     </html>
   );
 }
+

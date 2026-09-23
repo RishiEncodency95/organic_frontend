@@ -70,78 +70,10 @@ const job = {
 };
 
 const candidateProfile = {
-  name: "Vijay Sharma",
-  title: "Senior Sales Executive",
-  tagline: "Driving Partnerships for a Sustainable Future",
-  phone: "+91 98765 43210",
-  email: "vijay.sharma@gmail.com",
-  linkedin: "linkedin.com/in/vijay-sharma",
-  image: assets.profile,
-};
-
-const addressData = {
-  currentAddress: "Sector 62, Noida, Uttar Pradesh – 21309",
-  willingToRelocate: "Yes, Pan India",
-  preferredLocation: "Delhi NCR (Preferred)",
-  noticePeriod: "30 Days",
-  availableToJoin: "1st Nov 2026",
-};
-
-const experienceData = [
-  {
-    company: "ABC Exhibitions Pvt. Ltd.",
-    badge: "Current Company",
-    role: "Senior Sales Executive",
-    period: "Jan 2022 – Present",
-    duration: "(3 Years 8 Months)",
-    description:
-      "Handled domestic exhibition sales, key account management, and sponsorships across multiple trade shows.",
-  },
-  {
-    company: "Event Global Services",
-    badge: "Previous Company",
-    role: "Sales Executive",
-    period: "Jun 2019 – Dec 2021",
-    duration: "(2 Years 6 Months)",
-    description:
-      "Managed exhibitor relations, generated new business, and supported event operations.",
-  },
-];
-
-const educationData = [
-  {
-    degree: "MBA (Marketing)",
-    school: "Delhi University",
-    period: "2017 – 2019",
-  },
-  {
-    degree: "B.Com (Hons.)",
-    school: "Delhi University",
-    period: "2014 – 2017",
-  },
-];
-
-const skills = [
-  "B2B Sales",
-  "Client Acquisition",
-  "Exhibition Sales",
-  "Negotiation",
-  "Relationship Management",
-  "Business Development",
-];
-
-const salaryData = {
-  currentCTC: "₹ 6,00,000",
-  currentCTCPeriod: "per annum",
-  expectedCTC: "₹ 8,00,000 – 10,00,000",
-  expectedCTCPeriod: "per annum",
-  otherBenefits: "Performance Incentive, Travel Allowance",
-};
-
-const additionalInfo = {
-  languages: "English, Hindi",
-  achievements:
-    "Increased exhibitor base by 30% in last financial year. Closed key sponsorship deals worth ₹50+ lakhs.",
+  name: "Candidate Profile",
+  phone: null as string | null,
+  email: null as string | null,
+  linkedin: null as string | null,
 };
 
 const aiMatchScore = 72;
@@ -250,6 +182,11 @@ function CandidateProfile({ candidateData }: { candidateData?: any }) {
   const email = candidateData?.email || candidateProfile.email;
   const phone = candidateData?.phone || candidateProfile.phone;
   const linkedin = candidateData?.linkedin || candidateProfile.linkedin;
+  const designation =
+    candidateData?.currentDesignation ||
+    candidateData?.fullProfile?.currentDesignation ||
+    candidateData?.jobDetails?.title ||
+    null;
 
   return (
     <div className="rounded-[8px] border border-[#dce8e0] bg-white flex flex-col justify-between">
@@ -277,12 +214,11 @@ function CandidateProfile({ candidateData }: { candidateData?: any }) {
           <h3 className="text-[18.5px] font-semibold text-[#123963]">
             {name}
           </h3>
-          <p className="mt-[1px] text-[13.5px] font-semibold text-[#1a4a7a]">
-            {candidateProfile.title}
-          </p>
-          <p className="mt-[1px] text-[12px] italic text-[#2d6f5a]">
-            {candidateProfile.tagline}
-          </p>
+          {designation && (
+            <p className="mt-[1px] text-[13.5px] font-semibold text-[#1a4a7a]">
+              {designation}
+            </p>
+          )}
 
           <div className="mt-[6px] space-y-[4px] font-semibold text-[#284766]">
             {phone && (
@@ -314,14 +250,27 @@ function CandidateProfile({ candidateData }: { candidateData?: any }) {
    ADDRESS & AVAILABILITY
    ========================================================= */
 
-function AddressAvailability() {
+/** Notice period is a duration ("30 Days"/"Immediate"), so the joining date is derived from it rather than collected separately. */
+function estimateJoiningDate(noticePeriod?: string): string | null {
+  if (!noticePeriod) return null;
+  if (noticePeriod.toLowerCase() === "immediate") return "Immediate";
+  const days = parseInt(noticePeriod, 10);
+  if (!Number.isFinite(days)) return noticePeriod;
+  const date = new Date();
+  date.setDate(date.getDate() + days);
+  return date.toLocaleDateString("en-IN", { day: "numeric", month: "short", year: "numeric" });
+}
+
+function AddressAvailability({ candidateData }: { candidateData?: any }) {
+  const noticePeriod = candidateData?.noticePeriod;
   const rows = [
-    { icon: MapPin, label: "Current Address", value: addressData.currentAddress },
-    { icon: Target, label: "Willing to Relocate?", value: addressData.willingToRelocate },
-    { icon: Building2, label: "Preferred Work Location", value: addressData.preferredLocation },
-    { icon: Clock3, label: "Notice Period", value: addressData.noticePeriod },
-    { icon: CheckCircle2, label: "Available to Join", value: addressData.availableToJoin },
-  ];
+    { icon: MapPin, label: "Current Location", value: candidateData?.location },
+    { icon: Target, label: "Willing to Relocate?", value: candidateData?.willingToRelocate },
+    { icon: Clock3, label: "Notice Period", value: noticePeriod },
+    { icon: CheckCircle2, label: "Available to Join", value: estimateJoiningDate(noticePeriod) },
+  ].filter((row) => row.value);
+
+  if (rows.length === 0) return null;
 
   return (
     <div className="rounded-[8px] border border-[#dce8e0] bg-white flex flex-col justify-between">
@@ -348,7 +297,33 @@ function AddressAvailability() {
    PROFESSIONAL EXPERIENCE
    ========================================================= */
 
-function ProfessionalExperience() {
+function ProfessionalExperience({ candidateData }: { candidateData?: any }) {
+  const profile = candidateData?.fullProfile;
+  const company = candidateData?.currentCompany || profile?.currentCompany;
+  const designation = candidateData?.currentDesignation || profile?.currentDesignation;
+  const totalExperience = candidateData?.totalExperience || profile?.totalExperience;
+  const isNotEmployed = candidateData?.employmentStatus === "Not Currently Employed";
+
+  const entries: { title: string; badge?: string; meta?: string }[] = [];
+
+  if (company || designation) {
+    entries.push({
+      title: company || designation,
+      badge: isNotEmployed ? "Previous Company" : "Current Company",
+      meta: [designation, totalExperience].filter(Boolean).join(" · "),
+    });
+  }
+
+  if (Array.isArray(profile?.experience)) {
+    for (const line of profile.experience) {
+      if (line && !entries.some((e) => e.title === line)) {
+        entries.push({ title: line });
+      }
+    }
+  }
+
+  if (entries.length === 0) return null;
+
   return (
     <div className="rounded-[8px] border border-[#dce8e0] bg-white flex flex-col justify-between">
       <SectionTitle icon={BriefcaseBusiness} title="Professional Experience" onEdit={() => { }} />
@@ -357,31 +332,26 @@ function ProfessionalExperience() {
         <div className="relative space-y-[6px] pl-[14px]">
           <div className="absolute left-[4px] top-[6px] bottom-[6px] w-[2px] bg-[#d0e0d6]" />
 
-          {experienceData.map((exp, idx) => (
+          {entries.map((exp, idx) => (
             <div key={idx} className="relative">
               <div className="absolute -left-[14px] top-[4px] h-[9px] w-[9px] rounded-full border-[2px] border-[#087447] bg-white" />
 
               <div className="flex items-center gap-[6px]">
                 <h4 className="text-[13.5px] font-semibold text-[#123963]">
-                  {exp.company}
+                  {exp.title}
                 </h4>
-                <span className="rounded-[4px] bg-[#e8f5ec] px-[6px] py-[1.5px] text-[10px] font-semibold text-[#0a7043]">
-                  {exp.badge}
-                </span>
+                {exp.badge && (
+                  <span className="rounded-[4px] bg-[#e8f5ec] px-[6px] py-[1.5px] text-[10px] font-semibold text-[#0a7043]">
+                    {exp.badge}
+                  </span>
+                )}
               </div>
 
-              <p className="mt-[1px] text-[12.5px] font-semibold text-[#1a4a7a]">
-                {exp.role}
-              </p>
-
-              <div className="mt-[1px] flex items-center gap-[6px] text-[11px] font-semibold text-[#58708c]">
-                <span>{exp.period}</span>
-                <span className="text-[#7890a7]">{exp.duration}</span>
-              </div>
-
-              <p className="mt-[2px] text-[11.5px] leading-[1.3] text-[#3a5570]">
-                {exp.description}
-              </p>
+              {exp.meta && (
+                <p className="mt-[1px] text-[12.5px] font-semibold text-[#1a4a7a]">
+                  {exp.meta}
+                </p>
+              )}
             </div>
           ))}
         </div>
@@ -394,25 +364,20 @@ function ProfessionalExperience() {
    EDUCATION
    ========================================================= */
 
-function Education() {
+function Education({ candidateData }: { candidateData?: any }) {
+  const education: string[] = candidateData?.fullProfile?.education || [];
+  if (education.length === 0) return null;
+
   return (
     <div className="rounded-[8px] border border-[#dce8e0] bg-white flex flex-col justify-between">
       <SectionTitle icon={GraduationCap} title="Education" onEdit={() => { }} />
 
       <div className="px-[14px] py-[6px]">
         <div className="space-y-[4px]">
-          {educationData.map((edu, idx) => (
+          {education.map((line, idx) => (
             <div key={idx} className="flex items-start gap-[6px] border-b border-[#e8efeb] py-[4px] last:border-b-0 last:py-0">
               <GraduationCap className="mt-[2px] h-[15px] w-[15px] text-[#087447]" />
-              <div className="flex-1">
-                <h4 className="text-[12.5px] font-semibold text-[#123963]">
-                  {edu.degree}
-                </h4>
-                <p className="text-[11.5px] font-semibold text-[#58708c]">{edu.school}</p>
-              </div>
-              <span className="text-[11.5px] font-semibold text-[#58708c]">
-                {edu.period}
-              </span>
+              <p className="flex-1 text-[12.5px] font-semibold text-[#123963]">{line}</p>
             </div>
           ))}
         </div>
@@ -425,7 +390,10 @@ function Education() {
    SKILLS
    ========================================================= */
 
-function Skills() {
+function Skills({ candidateData }: { candidateData?: any }) {
+  const skills: string[] = candidateData?.fullProfile?.skills || [];
+  if (skills.length === 0) return null;
+
   return (
     <div className="rounded-[8px] border border-[#dce8e0] bg-white flex flex-col justify-between">
       <SectionTitle icon={Target} title="Skills" onEdit={() => { }} />
@@ -450,7 +418,13 @@ function Skills() {
    SALARY DETAILS
    ========================================================= */
 
-function SalaryDetails() {
+function SalaryDetails({ candidateData }: { candidateData?: any }) {
+  const currentCTC = candidateData?.fullProfile?.currentCTC;
+  const expectedCTC = candidateData?.expectedCTC;
+  const otherBenefits = candidateData?.otherBenefits;
+
+  if (!currentCTC && !expectedCTC && !otherBenefits) return null;
+
   return (
     <div className="rounded-[8px] border border-[#dce8e0] bg-white flex flex-col justify-between">
       <SectionTitle icon={TrendingUp} title="Salary Details" onEdit={() => { }} />
@@ -459,23 +433,21 @@ function SalaryDetails() {
         <div>
           <div className="text-[11.5px] font-semibold text-[#58708c]">Current CTC</div>
           <div className="mt-[2px] text-[13.5px] font-semibold text-[#123963]">
-            {salaryData.currentCTC}
+            {currentCTC || "Not mentioned in CV"}
           </div>
-          <div className="text-[10.5px] text-[#7890a7]">{salaryData.currentCTCPeriod}</div>
         </div>
 
         <div>
           <div className="text-[11.5px] font-semibold text-[#58708c]">Expected CTC</div>
           <div className="mt-[2px] text-[13.5px] font-semibold text-[#123963]">
-            {salaryData.expectedCTC}
+            {expectedCTC || "Not specified"}
           </div>
-          <div className="text-[10.5px] text-[#7890a7]">{salaryData.expectedCTCPeriod}</div>
         </div>
 
         <div>
           <div className="text-[11.5px] font-semibold text-[#58708c]">Other Benefits</div>
           <div className="mt-[2px] text-[11.5px] font-semibold text-[#29445f]">
-            {salaryData.otherBenefits}
+            {otherBenefits || "Not specified"}
           </div>
         </div>
       </div>
@@ -487,7 +459,13 @@ function SalaryDetails() {
    ADDITIONAL INFORMATION
    ========================================================= */
 
-function AdditionalInformation() {
+function AdditionalInformation({ candidateData }: { candidateData?: any }) {
+  const profile = candidateData?.fullProfile;
+  const languages: string[] = profile?.languages || [];
+  const achievements: string[] = profile?.achievements || [];
+
+  if (!profile) return null;
+
   return (
     <div className="rounded-[8px] border border-[#dce8e0] bg-white flex flex-col justify-between">
       <SectionTitle icon={FileText} title="Additional Information" onEdit={() => { }} />
@@ -496,14 +474,14 @@ function AdditionalInformation() {
         <div>
           <div className="text-[11.5px] font-semibold text-[#58708c]">Languages Known</div>
           <div className="mt-[2px] text-[11.5px] font-semibold text-[#29445f]">
-            {additionalInfo.languages}
+            {languages.length > 0 ? languages.join(", ") : "Not mentioned in CV"}
           </div>
         </div>
 
         <div>
           <div className="text-[11.5px] font-semibold text-[#58708c]">Relevant Achievements</div>
           <div className="mt-[2px] text-[11px] leading-[1.35] text-[#29445f]">
-            {additionalInfo.achievements}
+            {achievements.length > 0 ? achievements.join(" ") : "Not mentioned in CV"}
           </div>
         </div>
       </div>
@@ -566,13 +544,14 @@ function AIMatchScoreCard({ candidateData }: { candidateData?: any }) {
   );
 }
 
-function JobSummaryCard() {
+function JobSummaryCard({ candidateData }: { candidateData?: any }) {
+  const details = candidateData?.jobDetails || {};
   const rows = [
-    { icon: Building2, value: jobSummary.company },
-    { icon: MapPin, value: jobSummary.location },
-    { icon: BriefcaseBusiness, value: jobSummary.type },
-    { icon: TrendingUp, value: jobSummary.experience },
-    { icon: GraduationCap, value: jobSummary.education },
+    { icon: Building2, value: details.company || jobSummary.company },
+    { icon: MapPin, value: details.location || jobSummary.location },
+    { icon: BriefcaseBusiness, value: details.type || jobSummary.type },
+    { icon: TrendingUp, value: details.experience || jobSummary.experience },
+    { icon: GraduationCap, value: details.education || jobSummary.education },
   ];
 
   return (
@@ -663,7 +642,7 @@ function RightSidebar({
 
       <div className="relative z-10 mt-[4px] space-y-[8px] flex-1 min-h-0">
         <AIMatchScoreCard candidateData={candidateData} />
-        <JobSummaryCard />
+        <JobSummaryCard candidateData={candidateData} />
         <LooksGoodCard />
         <SubmitCard onSubmit={onSubmit} />
       </div>
@@ -739,13 +718,13 @@ function ReviewSubmitContent({
           )}
 
           <h1 className="mt-[3px] text-[25px] font-semibold leading-none tracking-[-0.02em] text-[#123963]">
-            {job.title}
+            {candidateData?.jobDetails?.title || job.title}
           </h1>
 
           <div className="mt-[3px] flex items-center gap-[10px] text-[14px] font-semibold text-[#1c4b78]">
-            <span>{job.company}</span>
+            <span>{candidateData?.jobDetails?.company || job.company}</span>
             <span className="h-[14px] w-px bg-[#c8d3dc]" />
-            <span>{job.brand}</span>
+            <span>{candidateData?.jobDetails?.brand || job.brand}</span>
           </div>
         </div>
 
@@ -790,16 +769,16 @@ function ReviewSubmitContent({
         <div className="grid min-h-0 flex-1 grid-cols-2 gap-[8px] overflow-hidden">
           <div className="flex flex-col gap-[8px]">
             <CandidateProfile candidateData={candidateData} />
-            <ProfessionalExperience />
-            <SalaryDetails />
+            <ProfessionalExperience candidateData={candidateData} />
+            <SalaryDetails candidateData={candidateData} />
           </div>
           <div className="flex flex-col gap-[8px]">
-            <AddressAvailability />
+            <AddressAvailability candidateData={candidateData} />
             <div className="flex flex-col gap-[8px]">
-              <Education />
-              <Skills />
+              <Education candidateData={candidateData} />
+              <Skills candidateData={candidateData} />
             </div>
-            <AdditionalInformation />
+            <AdditionalInformation candidateData={candidateData} />
           </div>
         </div>
       </section>
@@ -867,11 +846,22 @@ export function ReviewSubmitModal({
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           candidateData: {
-            name: candidateData?.candidateName || "Vijay Sharma",
-            email: candidateData?.email || "vijay.sharma@gmail.com",
-            phone: candidateData?.phone || "+91 98765 43210",
-            location: candidateData?.location || "Delhi NCR",
+            name: candidateData?.candidateName || candidateData?.name,
+            email: candidateData?.email,
+            phone: candidateData?.phone,
+            verifiedPhone: candidateData?.verifiedPhone,
+            currentCompany: candidateData?.currentCompany || candidateData?.fullProfile?.currentCompany,
+            currentDesignation: candidateData?.currentDesignation || candidateData?.fullProfile?.currentDesignation,
+            totalExperience: candidateData?.totalExperience || candidateData?.fullProfile?.totalExperience,
+            noticePeriod: candidateData?.noticePeriod,
+            expectedCTC: candidateData?.expectedCTC,
+            willingToRelocate: candidateData?.willingToRelocate,
+            photo: typeof candidateData?.image === "string" && !candidateData.image.startsWith("blob:")
+              ? candidateData.image
+              : undefined,
+            location: candidateData?.location,
           },
+          whyInterested: candidateData?.whyInterested || candidateData?.summary || "",
         }),
       });
 
@@ -880,8 +870,8 @@ export function ReviewSubmitModal({
 
       setSubmittedAppDetails({
         id: resData.applicationId || "BOE2027-000001",
-        candidateName: candidateData?.candidateName || "Vijay Sharma",
-        position: candidateData?.jobTitle || "Sales Manager – Domestic Exhibition Sales & Sponsorships",
+        candidateName: candidateData?.candidateName || "Candidate",
+        position: candidateData?.jobDetails?.title || job.title,
         submittedOn: new Date(resData.submittedAt || Date.now()).toLocaleString("en-IN", {
           day: "numeric",
           month: "long",
@@ -898,8 +888,8 @@ export function ReviewSubmitModal({
       // Fallback display
       setSubmittedAppDetails({
         id: "BOE2027-000001",
-        candidateName: candidateData?.candidateName || "Vijay Sharma",
-        position: "Sales Manager – Domestic Exhibition Sales & Sponsorships",
+        candidateName: candidateData?.candidateName || "Candidate",
+        position: candidateData?.jobDetails?.title || job.title,
         submittedOn: new Date().toLocaleString("en-IN", {
           day: "numeric",
           month: "long",

@@ -90,7 +90,8 @@ export default function JobCardButtons({ job }: { job: any }) {
               setIsEligibilityOpen(true);
             }}
             onClose={() => setIsAppFormOpen(false)}
-            onNext={() => {
+            onNext={(data) => {
+              if (data) setCandidateData(data);
               setIsAppFormOpen(false);
               setIsReviewOpen(true);
             }}

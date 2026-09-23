@@ -15,7 +15,6 @@ import {
   CheckCircle2,
   ChevronDown,
   Clock3,
-  Edit3,
   Eye,
   FileText,
   GraduationCap,
@@ -87,29 +86,6 @@ const aiSummary = {
   title: "Good Match!",
   text: "You meet the key requirements for this position.",
 };
-
-const cvDetails = [
-  {
-    icon: GraduationCap,
-    label: "Education",
-    value: "MBA (Marketing)\nDelhi University",
-  },
-  {
-    icon: ShieldCheck,
-    label: "Key Skills",
-    value: "B2B Sales, Client Acquisition,\nNegotiation, Event Management",
-  },
-  {
-    icon: BriefcaseBusiness,
-    label: "Industry Experience",
-    value: "Exhibition / Trade Shows\n(4+ years)",
-  },
-  {
-    icon: Trophy,
-    label: "Relevant Achievements",
-    value: "Increased exhibitor base by 30%\nin last event cycle",
-  },
-];
 
 /* =========================================================
    HELPERS
@@ -350,18 +326,24 @@ function PersonalInformation({
   setPhotoSrc,
   isPhotoVerified,
   setIsPhotoVerified,
+  location,
+  setLocation,
+  relocate,
+  setRelocate,
 }: {
   candidateData?: any;
   photoSrc: string | null;
   setPhotoSrc: (url: string | null) => void;
   isPhotoVerified: boolean;
   setIsPhotoVerified: (verified: boolean) => void;
+  location: string;
+  setLocation: (value: string) => void;
+  relocate: string;
+  setRelocate: (value: string) => void;
 }) {
   const fullName = candidateData?.candidateName || candidateData?.firstName || profile.name;
   const email = candidateData?.email || profile.email;
   const phone = candidateData?.phone || candidateData?.verifiedPhone || profile.phone;
-  const [location, setLocation] = useState(candidateData?.location || "Delhi, NCR");
-  const [relocate, setRelocate] = useState("Yes");
 
   const [isVerifying, setIsVerifying] = useState(false);
   const [verificationError, setVerificationError] = useState<string | null>(null);
@@ -576,7 +558,7 @@ function PersonalInformation({
           />
 
           <Field
-            label="Email Address"
+            label="Email"
             required
             icon={Mail}
             type="email"
@@ -587,7 +569,7 @@ function PersonalInformation({
           />
 
           <Field
-            label="Phone Number"
+            label="Phone No."
             required
             icon={Phone}
             value={phone}
@@ -651,13 +633,35 @@ function PersonalInformation({
    PROFESSIONAL DETAILS (READ-ONLY FROM RESUME)
    ========================================================= */
 
-function ProfessionalDetails({ candidateData }: { candidateData?: any }) {
-  const [employmentStatus, setEmploymentStatus] = useState("Currently Employed");
-  const [openRoles, setOpenRoles] = useState(true);
-  const [noticePeriod, setNoticePeriod] = useState("30 Days");
-  const [expectedCTC, setExpectedCTC] = useState("As per industry standards");
-  const [ctcFlexible, setCtcFlexible] = useState("Yes");
-
+function ProfessionalDetails({
+  candidateData,
+  employmentStatus,
+  setEmploymentStatus,
+  openRoles,
+  setOpenRoles,
+  noticePeriod,
+  setNoticePeriod,
+  expectedCTC,
+  setExpectedCTC,
+  ctcFlexible,
+  setCtcFlexible,
+  otherBenefits,
+  setOtherBenefits,
+}: {
+  candidateData?: any;
+  employmentStatus: string;
+  setEmploymentStatus: (value: string) => void;
+  openRoles: boolean;
+  setOpenRoles: (value: boolean) => void;
+  noticePeriod: string;
+  setNoticePeriod: (value: string) => void;
+  expectedCTC: string;
+  setExpectedCTC: (value: string) => void;
+  ctcFlexible: string;
+  setCtcFlexible: (value: string) => void;
+  otherBenefits: string;
+  setOtherBenefits: (value: string) => void;
+}) {
   // Read-only values parsed directly from candidate's Resume/CV
   const company = candidateData?.currentCompany || candidateData?.fullProfile?.currentCompany || "ABC Exhibitions Pvt. Ltd.";
   const designation = candidateData?.currentDesignation || candidateData?.fullProfile?.currentDesignation || "Senior Sales Executive";
@@ -861,6 +865,15 @@ function ProfessionalDetails({ candidateData }: { candidateData?: any }) {
               </RadioRow>
             </div>
           </div>
+
+          <div className="col-span-2">
+            <Field
+              label="Other Benefits (Optional)"
+              icon={Trophy}
+              value={otherBenefits}
+              onChange={setOtherBenefits}
+            />
+          </div>
         </div>
       </div>
     </div>
@@ -874,15 +887,18 @@ function ProfessionalDetails({ candidateData }: { candidateData?: any }) {
 function TellUsMore({
   onNext,
   isPhotoVerified,
+  interest,
+  setInterest,
+  confirmed,
+  setConfirmed,
 }: {
   onNext?: () => void;
   isPhotoVerified: boolean;
+  interest: string;
+  setInterest: (value: string) => void;
+  confirmed: boolean;
+  setConfirmed: (value: boolean) => void;
 }) {
-  const [interest, setInterest] = useState(
-    "I am passionate about the exhibition and event industry and would love to contribute to Bharat Organic Expo's mission of promoting a healthier and more sustainable India."
-  );
-  const [confirmed, setConfirmed] = useState(true);
-
   const canContinue = confirmed && isPhotoVerified;
 
   return (
@@ -1047,20 +1063,38 @@ function AISummaryCard({ candidateData }: { candidateData?: any }) {
   );
 }
 
-function CVDetailsCard() {
+function CVDetailsCard({ candidateData }: { candidateData?: any }) {
+  const profile = candidateData?.fullProfile;
+
+  const items: { icon: React.ElementType; label: string; value: string }[] = [];
+
+  if (Array.isArray(profile?.education) && profile.education.length > 0) {
+    items.push({ icon: GraduationCap, label: "Education", value: profile.education.join("\n") });
+  }
+
+  if (Array.isArray(profile?.skills) && profile.skills.length > 0) {
+    items.push({ icon: ShieldCheck, label: "Key Skills", value: profile.skills.join(", ") });
+  }
+
+  const industryExperience = Array.isArray(candidateData?.industryExperienceEvidence) && candidateData.industryExperienceEvidence.length > 0
+    ? candidateData.industryExperienceEvidence.join("\n")
+    : profile?.totalExperience;
+  if (industryExperience) {
+    items.push({ icon: BriefcaseBusiness, label: "Industry Experience", value: industryExperience });
+  }
+
+  if (Array.isArray(profile?.achievements) && profile.achievements.length > 0) {
+    items.push({ icon: Trophy, label: "Relevant Achievements", value: profile.achievements.join("\n") });
+  }
+
+  if (items.length === 0) return null;
+
   return (
     <div className="rounded-[10px] border border-[#dce8e0] bg-white p-[15px] shadow-sm">
-      <div className="flex items-center justify-between">
-        <h3 className="text-[19px] font-semibold text-[#123963]">Key Details from CV</h3>
-
-        <button className="flex items-center gap-[5px] text-[14px] font-semibold text-[#0874ce]">
-          <Edit3 className="h-[15px] w-[15px]" />
-          Edit
-        </button>
-      </div>
+      <h3 className="text-[19px] font-semibold text-[#123963]">Key Details from CV</h3>
 
       <div className="mt-[7px] divide-y divide-[#e6ece8]">
-        {cvDetails.map(({ icon: Icon, label, value }) => (
+        {items.map(({ icon: Icon, label, value }) => (
           <div key={label} className="grid grid-cols-[26px_128px_1fr_21px] items-start gap-[6px] py-[6px]">
             <Icon className="mt-[1px] h-[18px] w-[18px] text-[#123f70]" />
             <div className="text-[13.5px] font-semibold leading-[1.25] text-[#17395f]">{label}</div>
@@ -1135,7 +1169,7 @@ function Sidebar({ onClose, candidateData }: { onClose: () => void; candidateDat
       <div className="relative z-10 mt-[6px] space-y-[11px]">
         <CVCard candidateData={candidateData} />
         <AISummaryCard candidateData={candidateData} />
-        <CVDetailsCard />
+        <CVDetailsCard candidateData={candidateData} />
         {/* <UpdateCVCard /> */}
       </div>
     </aside>
@@ -1154,13 +1188,48 @@ function ApplicationFormContent({
 }: {
   onClose: () => void;
   onBack?: () => void;
-  onNext?: () => void;
+  onNext?: (data?: any) => void;
   candidateData?: any;
 }) {
   const [photoSrc, setPhotoSrc] = useState<string | null>(candidateData?.image || null);
   const [isPhotoVerified, setIsPhotoVerified] = useState<boolean>(
     Boolean(candidateData?.image)
   );
+
+  const [location, setLocation] = useState(candidateData?.location || "Delhi, NCR");
+  const [relocate, setRelocate] = useState(candidateData?.willingToRelocate || "Yes");
+
+  const [employmentStatus, setEmploymentStatus] = useState(candidateData?.employmentStatus || "Currently Employed");
+  const [openRoles, setOpenRoles] = useState<boolean>(candidateData?.openToOtherRoles ?? true);
+  const [noticePeriod, setNoticePeriod] = useState(candidateData?.noticePeriod || "30 Days");
+  const [expectedCTC, setExpectedCTC] = useState(candidateData?.expectedCTC || "As per industry standards");
+  const [ctcFlexible, setCtcFlexible] = useState(candidateData?.ctcFlexible || "Yes");
+  const [otherBenefits, setOtherBenefits] = useState(candidateData?.otherBenefits || "");
+
+  const [interest, setInterest] = useState(
+    candidateData?.whyInterested ||
+      "I am passionate about the exhibition and event industry and would love to contribute to Bharat Organic Expo's mission of promoting a healthier and more sustainable India."
+  );
+  const [confirmed, setConfirmed] = useState(true);
+
+  // Everything filled in across this popup only lives in local state — without merging
+  // it all here, the parent's candidateData never learns about it, so the Review &
+  // Submit step would show stale/default values even though the user just entered them.
+  const handleNext = () => {
+    onNext?.({
+      ...candidateData,
+      image: photoSrc,
+      location,
+      willingToRelocate: relocate,
+      employmentStatus,
+      openToOtherRoles: openRoles,
+      noticePeriod,
+      expectedCTC,
+      ctcFlexible,
+      otherBenefits,
+      whyInterested: interest,
+    });
+  };
 
   return (
     <div
@@ -1207,9 +1276,34 @@ function ApplicationFormContent({
             setPhotoSrc={setPhotoSrc}
             isPhotoVerified={isPhotoVerified}
             setIsPhotoVerified={setIsPhotoVerified}
+            location={location}
+            setLocation={setLocation}
+            relocate={relocate}
+            setRelocate={setRelocate}
           />
-          <ProfessionalDetails candidateData={candidateData} />
-          <TellUsMore onNext={onNext} isPhotoVerified={isPhotoVerified} />
+          <ProfessionalDetails
+            candidateData={candidateData}
+            employmentStatus={employmentStatus}
+            setEmploymentStatus={setEmploymentStatus}
+            openRoles={openRoles}
+            setOpenRoles={setOpenRoles}
+            noticePeriod={noticePeriod}
+            setNoticePeriod={setNoticePeriod}
+            expectedCTC={expectedCTC}
+            setExpectedCTC={setExpectedCTC}
+            ctcFlexible={ctcFlexible}
+            setCtcFlexible={setCtcFlexible}
+            otherBenefits={otherBenefits}
+            setOtherBenefits={setOtherBenefits}
+          />
+          <TellUsMore
+            onNext={handleNext}
+            isPhotoVerified={isPhotoVerified}
+            interest={interest}
+            setInterest={setInterest}
+            confirmed={confirmed}
+            setConfirmed={setConfirmed}
+          />
         </div>
       </section>
 
@@ -1236,7 +1330,8 @@ export function ApplicationFormModal({
   onClose: () => void;
   /** Returns to the eligibility step; falls back to closing when not supplied. */
   onBack?: () => void;
-  onNext?: () => void;
+  /** Called with the candidate data merged with whatever was edited on this screen (photo included). */
+  onNext?: (data?: any) => void;
   candidateData?: any;
 }) {
   const scrollRef = useRef<HTMLDivElement>(null);
