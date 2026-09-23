@@ -902,10 +902,10 @@ function TellUsMore({
   const canContinue = confirmed && isPhotoVerified;
 
   return (
-    <div className="overflow-hidden rounded-[8px] border border-[#dce8e0] bg-white">
+    <div className="rounded-[8px] border border-[#dce8e0] bg-white">
       <SectionTitle icon={FileText} title="Tell Us More (Optional)" />
 
-      <div className="px-[12px] py-[7px]">
+      <div className="px-[12px] pb-[12px] pt-[7px]">
         <div className="text-[15px] font-semibold text-[#163a67]">
           Why are you interested in this role?
         </div>
@@ -922,7 +922,7 @@ function TellUsMore({
           </span>
         </div>
 
-        <div className="mt-[6px] flex items-center justify-between">
+        <div className="mt-[8px] flex items-center justify-between">
           <label className="flex cursor-pointer items-center gap-[7px] text-[13.5px] font-semibold text-[#355979]">
             <input
               type="checkbox"
@@ -943,7 +943,7 @@ function TellUsMore({
                 }
               }}
               className={[
-                "flex h-[42px] min-w-[210px] items-center justify-center gap-[11px] rounded-[5px] px-[18px] text-[15px] font-semibold text-white shadow-sm transition-all",
+                "flex h-[40px] min-w-[210px] items-center justify-center gap-[11px] rounded-[5px] px-[18px] text-[15px] font-semibold text-white shadow-sm transition-all",
                 canContinue
                   ? "bg-[#08743e] hover:bg-[#076637] cursor-pointer"
                   : "cursor-not-allowed bg-[#9eb8aa]",
@@ -1257,7 +1257,7 @@ function ApplicationFormContent({
         </div>
 
         {/* FORM (SCROLLABLE AREA) */}
-        <div className="mt-[4px] flex-1 min-h-0 overflow-y-auto pr-[4px] flex flex-col gap-[5px] pb-[10px]">
+        <div className="mt-[4px] flex-1 min-h-0 overflow-y-auto pr-[4px] flex flex-col gap-[8px] pb-[20px]">
           <PersonalInformation
             candidateData={candidateData}
             photoSrc={photoSrc}
