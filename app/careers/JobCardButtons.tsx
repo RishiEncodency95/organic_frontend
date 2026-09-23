@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import { createPortal } from "react-dom";
 import { ArrowRight } from "lucide-react";
 import UploadCvModal, { CandidateAnalysisData } from "@/app/components/careers/uploade_cv/page";
+import { lockScroll, unlockScroll } from "@/lib/scrollLock";
 import { EligibilityModal, CandidateProfileData, defaultCandidateData } from "./submit-resume/page";
 import { ApplicationFormModal } from "./application-form/page";
 import { ReviewSubmitModal } from "./review-submit/page";
@@ -15,15 +16,12 @@ export default function JobCardButtons({ job }: { job: any }) {
   const [isReviewOpen, setIsReviewOpen] = useState(false);
   const [candidateData, setCandidateData] = useState<CandidateProfileData>(defaultCandidateData);
 
-  // Prevent scrolling when modal is open
+  // Prevent scrolling when modal is open (locks both the native scrollbar and Lenis)
   useEffect(() => {
-    if (isOpen || isEligibilityOpen || isAppFormOpen || isReviewOpen) {
-      document.body.style.overflow = "hidden";
-    } else {
-      document.body.style.overflow = "unset";
-    }
+    const anyOpen = isOpen || isEligibilityOpen || isAppFormOpen || isReviewOpen;
+    if (anyOpen) lockScroll();
     return () => {
-      document.body.style.overflow = "unset";
+      if (anyOpen) unlockScroll();
     };
   }, [isOpen, isEligibilityOpen, isAppFormOpen, isReviewOpen]);
 
@@ -92,7 +90,8 @@ export default function JobCardButtons({ job }: { job: any }) {
               setIsEligibilityOpen(true);
             }}
             onClose={() => setIsAppFormOpen(false)}
-            onNext={() => {
+            onNext={(data) => {
+              if (data) setCandidateData(data);
               setIsAppFormOpen(false);
               setIsReviewOpen(true);
             }}

@@ -7,6 +7,7 @@ import UploadCvModal, { CandidateAnalysisData } from "@/app/components/careers/u
 import { EligibilityModal, CandidateProfileData, defaultCandidateData } from "./submit-resume/page";
 import { ApplicationFormModal } from "./application-form/page";
 import { ReviewSubmitModal } from "./review-submit/page";
+import { lockScroll, unlockScroll } from "@/lib/scrollLock";
 
 interface Props {
   variant?: "solid" | "outline";
@@ -20,13 +21,10 @@ export default function ResumeUploadButton({ variant = "solid" }: Props) {
   const [candidateData, setCandidateData] = useState<CandidateProfileData>(defaultCandidateData);
 
   useEffect(() => {
-    if (isOpen || isEligibilityOpen || isAppFormOpen || isReviewOpen) {
-      document.body.style.overflow = "hidden";
-    } else {
-      document.body.style.overflow = "unset";
-    }
+    const anyOpen = isOpen || isEligibilityOpen || isAppFormOpen || isReviewOpen;
+    if (anyOpen) lockScroll();
     return () => {
-      document.body.style.overflow = "unset";
+      if (anyOpen) unlockScroll();
     };
   }, [isOpen, isEligibilityOpen, isAppFormOpen, isReviewOpen]);
 
@@ -93,7 +91,8 @@ export default function ResumeUploadButton({ variant = "solid" }: Props) {
                 setIsEligibilityOpen(true);
               }}
               onClose={() => setIsAppFormOpen(false)}
-              onNext={() => {
+              onNext={(data) => {
+                if (data) setCandidateData(data);
                 setIsAppFormOpen(false);
                 setIsReviewOpen(true);
               }}

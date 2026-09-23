@@ -6,13 +6,9 @@ import Image from "next/image";
 import {
   ArrowRight,
   BriefcaseBusiness,
-  CalendarDays,
   Globe2,
   Lightbulb,
   MapPin,
-  Megaphone,
-  Palette,
-  PenLine,
   Sprout,
   TrendingUp,
   Users,
@@ -45,123 +41,6 @@ type JobOpening = {
   education?: string;
   eligibilityThreshold?: number;
 };
-
-const showOpenings = true;
-
-const allJobOpenings: JobOpening[] = [
-  {
-    id: "business-development-manager",
-    title: "Business Development Manager",
-    department: "Sales & Exhibitor Relations",
-    location: "New Delhi",
-    type: "Full Time",
-    experience: "3–6 Years",
-    description:
-      "Acquire exhibitors, build partnerships and drive participation from organic, natural and sustainable brands.",
-    icon: Users,
-  },
-  {
-    id: "digital-marketing-executive",
-    title: "Digital Marketing Executive",
-    department: "Marketing & Communications",
-    location: "New Delhi",
-    type: "Full Time",
-    experience: "2–4 Years",
-    description:
-      "Plan and execute digital campaigns, manage social media and content to promote the expo.",
-    icon: Megaphone,
-  },
-  {
-    id: "event-operations-executive",
-    title: "Event Operations Executive",
-    department: "Event Management",
-    location: "New Delhi",
-    type: "Full Time",
-    experience: "1–3 Years",
-    description:
-      "Coordinate event logistics, vendor management and on-ground execution during the expo.",
-    icon: CalendarDays,
-  },
-  {
-    id: "content-writer",
-    title: "Content Writer",
-    department: "Content & Media",
-    location: "New Delhi",
-    type: "Hybrid",
-    experience: "1–3 Years",
-    description:
-      "Create engaging content for website, brochures, social media and event communications.",
-    icon: PenLine,
-  },
-  {
-    id: "partnerships-alliances-executive",
-    title: "Partnerships & Alliances Executive",
-    department: "Strategic Partnerships",
-    location: "New Delhi",
-    type: "Full Time",
-    experience: "2–5 Years",
-    description:
-      "Develop and manage partnerships with government bodies, industry associations and other stakeholders.",
-    icon: Users,
-  },
-  {
-    id: "sales-manager-domestic",
-    title: "Sales Manager - Domestic Exhibitor Sales & Sponsorship",
-    department: "Sales",
-    location: "New Delhi",
-    type: "Full Time",
-    experience: "5–10 Years",
-    description:
-      "Drive revenue through exhibition space sales and sponsorship deals for the domestic market.",
-    icon: TrendingUp,
-  },
-  {
-    id: "pr-communications-specialist",
-    title: "PR & Communications Specialist",
-    department: "Marketing & Communications",
-    location: "New Delhi",
-    type: "Hybrid",
-    experience: "3–6 Years",
-    description:
-      "Manage public relations, press releases, media partnerships, and corporate communications.",
-    icon: Megaphone,
-  },
-  {
-    id: "sustainability-officer",
-    title: "Sustainability Officer",
-    department: "Operations",
-    location: "New Delhi",
-    type: "Full Time",
-    experience: "4–7 Years",
-    description:
-      "Ensure all event operations adhere to zero-waste, carbon-neutral, and sustainable guidelines.",
-    icon: Sprout,
-  },
-  {
-    id: "software-developer-full-stack",
-    title: "Software Developer – Full Stack (React, Next.js, Node.js)",
-    department: "IT & Software Engineering",
-    location: "Delhi NCR",
-    type: "Full Time",
-    experience: "1–5 Years",
-    description:
-      "Develop, maintain, and scale web applications using MERN stack (React, Next.js, Node.js, Express, MongoDB).",
-    icon: Lightbulb,
-  },
-  {
-    id: "graphic-designer",
-    title: "Graphic Designer",
-    department: "Creative",
-    location: "New Delhi",
-    type: "Hybrid",
-    experience: "2–5 Years",
-    description:
-      "Design creative assets for digital and print media, including banners, brochures, social media posts and event branding.",
-    icon: Palette,
-  },
-];
-
-const jobOpenings: JobOpening[] = showOpenings ? allJobOpenings : [];
 
 const highlights = [
   { label: "Meaningful\nWork", icon: Sprout },
@@ -279,7 +158,7 @@ export default function CareersClientContent() {
             location: j.location,
             type: j.employmentType || "Full Time",
             experience: `${j.experienceMin} - ${j.experienceMax} Years`,
-            description: j.responsibilities?.[0] || j.requirements?.[0] || j.title,
+            description: j.description || j.responsibilities?.[0] || j.requirements?.[0] || j.title,
             company: j.company,
             responsibilities: j.responsibilities,
             requirements: j.requirements,
@@ -297,7 +176,7 @@ export default function CareersClientContent() {
       });
   }, []);
 
-  const activeJobOpenings = fetchedJobs.length > 0 ? fetchedJobs : jobOpenings;
+  const activeJobOpenings = fetchedJobs;
   const openingCount = activeJobOpenings.length;
 
   const displayedJobs = showAllJobs ? activeJobOpenings : activeJobOpenings.slice(0, 8);

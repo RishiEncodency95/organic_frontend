@@ -5,6 +5,7 @@ import { Play, UploadCloud, Leaf } from 'lucide-react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import camm from '@/app/assets/icons/camm.png';
+import { lockScroll, unlockScroll } from '@/lib/scrollLock';
 import rightLeaf from '@/app/assets/icons/footerright.webp';
 import thumb1 from '@/app/assets/reels/reel_thumb_1.webp';
 import thumb2 from '@/app/assets/reels/reel_thumb_2.webp';
@@ -382,11 +383,11 @@ const VideoHighlights: React.FC<VideoHighlightsProps> = ({ dbVideos = EMPTY_VIDE
     };
     if (activeVideo) {
       window.addEventListener('keydown', handleKeyDown);
-      document.body.style.overflow = 'hidden';
+      lockScroll();
     }
     return () => {
       window.removeEventListener('keydown', handleKeyDown);
-      document.body.style.overflow = '';
+      if (activeVideo) unlockScroll();
     };
   }, [activeVideo]);
 

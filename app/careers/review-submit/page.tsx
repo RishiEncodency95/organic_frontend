@@ -5,6 +5,7 @@ import Image from "next/image";
 import Link from "next/link";
 import ApplicationSuccessModal from "../ApplicationSuccessModal";
 import sidebarFooterImage from "../../assets/carrer/grow-organic-grow-india.png";
+import { lockScroll, unlockScroll } from "@/lib/scrollLock";
 import {
   ArrowLeft,
   ArrowRight,
@@ -866,11 +867,22 @@ export function ReviewSubmitModal({
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           candidateData: {
-            name: candidateData?.candidateName || "Vijay Sharma",
+            name: candidateData?.candidateName || candidateData?.name || "Vijay Sharma",
             email: candidateData?.email || "vijay.sharma@gmail.com",
             phone: candidateData?.phone || "+91 98765 43210",
+            verifiedPhone: candidateData?.verifiedPhone,
+            currentCompany: candidateData?.currentCompany || candidateData?.fullProfile?.currentCompany,
+            currentDesignation: candidateData?.currentDesignation || candidateData?.fullProfile?.currentDesignation,
+            totalExperience: candidateData?.totalExperience || candidateData?.fullProfile?.totalExperience,
+            noticePeriod: candidateData?.noticePeriod,
+            expectedCTC: candidateData?.expectedCTC,
+            willingToRelocate: candidateData?.willingToRelocate,
+            photo: typeof candidateData?.image === "string" && !candidateData.image.startsWith("blob:")
+              ? candidateData.image
+              : undefined,
             location: candidateData?.location || "Delhi NCR",
           },
+          whyInterested: candidateData?.whyInterested || candidateData?.summary || "",
         }),
       });
 
@@ -915,13 +927,10 @@ export function ReviewSubmitModal({
   };
 
   useEffect(() => {
-    if (isOpen || showSuccessModal) {
-      document.body.style.overflow = "hidden";
-    } else {
-      document.body.style.overflow = "";
-    }
+    const anyOpen = isOpen || showSuccessModal;
+    if (anyOpen) lockScroll();
     return () => {
-      document.body.style.overflow = "";
+      if (anyOpen) unlockScroll();
     };
   }, [isOpen, showSuccessModal]);
 

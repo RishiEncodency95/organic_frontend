@@ -15,6 +15,7 @@ import {
 } from "lucide-react";
 import navbarLogo from "../../assets/logos/navbarlogo1.png";
 import SectionContainer from "@/app/components/layout/SectionContainer";
+import { lockScroll, unlockScroll } from "@/lib/scrollLock";
 
 // Local cn utility since @/lib/utils is missing
 const cn = (...classes: (string | undefined | null | false)[]) => classes.filter(Boolean).join(" ");
@@ -125,8 +126,8 @@ const Navbar = () => {
     }, [pathname]);
 
     useEffect(() => {
-        document.body.style.overflow = mobileOpen ? "hidden" : "";
-        return () => { document.body.style.overflow = ""; };
+        if (mobileOpen) lockScroll();
+        return () => { if (mobileOpen) unlockScroll(); };
     }, [mobileOpen]);
 
     return (

@@ -552,6 +552,7 @@ const HeroSection = () => {
                 className="w-full h-full object-cover select-none"
                 style={{ willChange: "transform, filter" }}
                 priority={id === 0}
+                fetchPriority={id === 0 ? "high" : "low"}
                 sizes="100vw"
                 quality={75}
               />

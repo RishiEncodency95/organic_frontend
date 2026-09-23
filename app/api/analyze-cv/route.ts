@@ -65,6 +65,8 @@ export async function POST(req: NextRequest) {
     let textSnippet = "";
     let extractedEmailFromBuffer: string | null = null;
     let extractedPhoneFromBuffer: string | null = null;
+    /** Every number on the CV — the OTP step offers each of them. */
+    let extractedPhonesFromBuffer: string[] = [];
     let extractedLinkedinFromBuffer: string | null = null;
 
     let savedCvUrl: string | null = null;
@@ -122,10 +124,22 @@ export async function POST(req: NextRequest) {
         if (valid) extractedEmailFromBuffer = valid;
       }
 
-      const phoneMatches = rawText.match(/(?:\+?\d{1,3}[\s-]?)?\(?\d{2,5}\)?[\s-]?\d{3,5}[\s-]?\d{3,5}/g);
+      // Bounded so a number cannot be cut out of a longer digit run (ids, dates).
+      const phoneMatches = rawText.match(/(?<!\d)(?:\+?\d{1,3}[\s.-]?)?\(?\d{2,5}\)?[\s.-]?\d{3,5}[\s.-]?\d{3,5}(?!\d)/g);
       if (phoneMatches && phoneMatches.length > 0) {
-        const validPhone = phoneMatches.find(p => p.replace(/\D/g, "").length >= 10 && p.replace(/\D/g, "").length <= 13);
-        if (validPhone) extractedPhoneFromBuffer = validPhone.trim();
+        const seen = new Set<string>();
+        for (const match of phoneMatches) {
+          const raw = match.trim();
+          const digits = raw.replace(/\D/g, "");
+          if (digits.length < 10 || digits.length > 13) continue;
+          // Last 10 digits, so "+91 98765 43210" and "9876543210" count as one number.
+          const key = digits.slice(-10);
+          if (seen.has(key)) continue;
+          seen.add(key);
+          extractedPhonesFromBuffer.push(raw);
+          if (extractedPhonesFromBuffer.length >= 4) break;
+        }
+        extractedPhoneFromBuffer = extractedPhonesFromBuffer[0] || null;
       }
 
       const linkedinMatches = rawText.match(/(?:https?:\/\/)?(?:www\.)?linkedin\.com\/in\/[a-zA-Z0-9_-]+/gi);
@@ -262,6 +276,11 @@ IMPORTANT: Return ONLY raw valid JSON matching this exact structure:
           firstName: formatted.firstName,
           email: finalEmail || null,
           phone: finalPhone || null,
+          phones: extractedPhonesFromBuffer.length > 0
+            ? extractedPhonesFromBuffer
+            : finalPhone
+              ? [finalPhone]
+              : [],
           linkedin: finalLinkedin || null,
           cvUrl: savedCvUrl,
           score: typeof parsed.score === "number" ? parsed.score : 72,
@@ -295,6 +314,7 @@ IMPORTANT: Return ONLY raw valid JSON matching this exact structure:
       firstName: fallbackFirstName,
       email: extractedEmailFromBuffer || null,
       phone: extractedPhoneFromBuffer || null,
+      phones: extractedPhonesFromBuffer,
       linkedin: extractedLinkedinFromBuffer || null,
       cvUrl: savedCvUrl,
       score: fallbackScore,
