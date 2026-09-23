@@ -21,6 +21,9 @@ import businessPersonClean from "@/app/assets/carrer/business-person-clean.png";
 import leafDecoration from "@/app/assets/carrer/leaf-decoration.jpg";
 
 type Job = {
+    _id?: string;
+    id?: string;
+    slug?: string;
     title?: string;
     department?: string;
     description?: string;
@@ -474,6 +477,10 @@ export default function UploadCvModal({
             : "Key skills and qualifications",
         "Overall profile match",
     ];
+    const jobDocumentId = job.slug || job._id || job.id;
+    const jobDocumentUrl = jobDocumentId
+        ? `/api/careers/jobs/${encodeURIComponent(jobDocumentId)}/export`
+        : undefined;
 
     const handleAnalyzeButtonClick = () => {
         if (!file) return;
@@ -906,13 +913,18 @@ export default function UploadCvModal({
                                     </InfoSection>
                                 </div>
 
-                                <button
-                                    type="button"
-                                    className="mt-[9px] inline-flex items-center gap-[12px] border-b-2 border-[#007a50] pb-[5px] text-[21px] font-semibold text-[#006342]"
-                                >
-                                    View Full Job Details
-                                    <ArrowRight className="h-[25px] w-[25px]" />
-                                </button>
+                                {jobDocumentUrl ? (
+                                    <a
+                                        href={jobDocumentUrl}
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                        className="mt-[9px] inline-flex items-center gap-[12px] border-b-2 border-[#007a50] pb-[5px] text-[21px] font-semibold text-[#006342] transition hover:text-[#004d32]"
+                                        title={`Download full job description for ${job.title || title}`}
+                                    >
+                                        View Full Job Details
+                                        <ArrowRight className="h-[25px] w-[25px]" />
+                                    </a>
+                                ) : null}
                             </div>
                         </section>
 
