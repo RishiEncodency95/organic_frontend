@@ -5,6 +5,7 @@ import Image from "next/image";
 import Link from "next/link";
 import ApplicationSuccessModal from "../ApplicationSuccessModal";
 import sidebarFooterImage from "../../assets/carrer/grow-organic-grow-india.png";
+import { lockScroll, unlockScroll } from "@/lib/scrollLock";
 import {
   ArrowLeft,
   ArrowRight,
@@ -915,13 +916,10 @@ export function ReviewSubmitModal({
   };
 
   useEffect(() => {
-    if (isOpen || showSuccessModal) {
-      document.body.style.overflow = "hidden";
-    } else {
-      document.body.style.overflow = "";
-    }
+    const anyOpen = isOpen || showSuccessModal;
+    if (anyOpen) lockScroll();
     return () => {
-      document.body.style.overflow = "";
+      if (anyOpen) unlockScroll();
     };
   }, [isOpen, showSuccessModal]);
 

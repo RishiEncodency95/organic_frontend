@@ -3,6 +3,7 @@
 import { useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
+import { lockScroll, unlockScroll } from "@/lib/scrollLock";
 import {
   ArrowLeft,
   ArrowRight,
@@ -166,13 +167,9 @@ export default function ApplicationSuccessModal({ isOpen, onClose, applicationDa
   const offset = circumference - (matchScoreVal / 100) * circumference;
 
   useEffect(() => {
-    if (isOpen) {
-      document.body.style.overflow = "hidden";
-    } else {
-      document.body.style.overflow = "";
-    }
+    if (isOpen) lockScroll();
     return () => {
-      document.body.style.overflow = "";
+      if (isOpen) unlockScroll();
     };
   }, [isOpen]);
 

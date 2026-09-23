@@ -209,7 +209,7 @@ export default function Footer() {
             <img
               src={downSrc}
               alt="Decoration"
-              className="hidden lg:block w-full max-w-[320px] h-auto object-contain relative top-2 -mb-14 pointer-events-none"
+              className="block w-full max-w-[220px] sm:max-w-[260px] lg:max-w-[320px] h-auto object-contain relative top-2 -mb-8 lg:-mb-14 pointer-events-none mx-auto"
             />
           ) : (
             <Image
@@ -218,7 +218,7 @@ export default function Footer() {
               width={320}
               height={120}
               quality={75}
-              className="hidden lg:block w-full max-w-[320px] h-auto object-contain relative top-2 -mb-14 pointer-events-none"
+              className="block w-full max-w-[220px] sm:max-w-[260px] lg:max-w-[320px] h-auto object-contain relative top-2 -mb-8 lg:-mb-14 pointer-events-none mx-auto"
               style={{ width: "auto", height: "auto" }}
             />
           )}
