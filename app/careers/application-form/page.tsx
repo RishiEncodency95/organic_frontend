@@ -575,7 +575,7 @@ function PersonalInformation({
           />
 
           <Field
-            label="Email Address"
+            label="Email"
             required
             icon={Mail}
             type="email"
@@ -586,7 +586,7 @@ function PersonalInformation({
           />
 
           <Field
-            label="Phone Number"
+            label="Phone No."
             required
             icon={Phone}
             value={phone}
@@ -1153,13 +1153,20 @@ function ApplicationFormContent({
 }: {
   onClose: () => void;
   onBack?: () => void;
-  onNext?: () => void;
+  onNext?: (data?: any) => void;
   candidateData?: any;
 }) {
   const [photoSrc, setPhotoSrc] = useState<string | null>(candidateData?.image || null);
   const [isPhotoVerified, setIsPhotoVerified] = useState<boolean>(
     Boolean(candidateData?.image)
   );
+
+  // The uploaded photo only lives in this popup's local state — without this, the
+  // parent's candidateData never learns about it, so the next popup opens with the
+  // photo missing even though it was verified right here.
+  const handleNext = () => {
+    onNext?.({ ...candidateData, image: photoSrc });
+  };
 
   return (
     <div
@@ -1208,7 +1215,7 @@ function ApplicationFormContent({
             setIsPhotoVerified={setIsPhotoVerified}
           />
           <ProfessionalDetails candidateData={candidateData} />
-          <TellUsMore onNext={onNext} isPhotoVerified={isPhotoVerified} />
+          <TellUsMore onNext={handleNext} isPhotoVerified={isPhotoVerified} />
         </div>
       </section>
 
@@ -1235,7 +1242,8 @@ export function ApplicationFormModal({
   onClose: () => void;
   /** Returns to the eligibility step; falls back to closing when not supplied. */
   onBack?: () => void;
-  onNext?: () => void;
+  /** Called with the candidate data merged with whatever was edited on this screen (photo included). */
+  onNext?: (data?: any) => void;
   candidateData?: any;
 }) {
   const scrollRef = useRef<HTMLDivElement>(null);

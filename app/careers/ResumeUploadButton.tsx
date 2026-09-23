@@ -93,7 +93,8 @@ export default function ResumeUploadButton({ variant = "solid" }: Props) {
                 setIsEligibilityOpen(true);
               }}
               onClose={() => setIsAppFormOpen(false)}
-              onNext={() => {
+              onNext={(data) => {
+                if (data) setCandidateData(data);
                 setIsAppFormOpen(false);
                 setIsReviewOpen(true);
               }}
