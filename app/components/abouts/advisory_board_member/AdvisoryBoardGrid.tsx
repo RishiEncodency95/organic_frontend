@@ -13,8 +13,7 @@ import dnsharmaImg from "../../../assets/about/advisory_board_member/dnsharma.pn
 import rohitImg from "../../../assets/about/advisory_board_member/rohit.png";
 
 import SectionContainer from "@/app/components/layout/SectionContainer";
-
-const BACKEND_URL = process.env.NEXT_PUBLIC_BACKEND_URL || "http://localhost:4001";
+import { SERVER_URL as BACKEND_URL } from "@/lib/api";
 
 const initialBoardMembers = [
     {

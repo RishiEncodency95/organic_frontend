@@ -3,6 +3,7 @@
 import React, { useEffect, useState, useRef } from "react";
 import Link from "next/link";
 import { Leaf, Calendar, Clock, ArrowRight, ChevronLeft, ChevronRight } from "lucide-react";
+import { API_URL } from "@/lib/api";
 
 import featuredImg1 from "../../assets/blog/featured_article1.webp";
 
@@ -81,13 +82,8 @@ const LatestInsights = () => {
   }, []);
 
   useEffect(() => {
-    const apiUrl =
-      typeof window !== "undefined" && window.location.hostname === "localhost"
-        ? "http://localhost:4000/api"
-        : process.env.NEXT_PUBLIC_API_URL || "/api";
-
     setIsLoading(true);
-    fetch(`${apiUrl}/blogs?showOnHome=true&status=published`)
+    fetch(`${API_URL}/blogs?showOnHome=true&status=published`)
       .then((res) => {
         if (!res.ok) return null;
         return res.json();

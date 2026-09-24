@@ -1,3 +1,5 @@
+import { API_URL } from "@/lib/api";
+
 export const SITE_CONFIG = {
     name: "Bharat Organic Expo 2027",
     email: "info@namogangewellness.com",
@@ -21,7 +23,7 @@ export const SITE_CONFIG = {
         sessions: "100+",
         sessionsCount: 100
     },
-    apiUrl: process.env.NEXT_PUBLIC_API_URL || "http://localhost:4000/api",
+    apiUrl: API_URL,
     socialLinks: {
         facebook: "https://www.facebook.com/bharatorganicexpo",
         instagram: "https://www.instagram.com/bharatorganicexpo",

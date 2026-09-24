@@ -1,6 +1,7 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import Link from "next/link";
+import { API_URL, SERVER_URL } from "@/lib/api";
 import {
   ArrowRight,
   Download,
@@ -59,8 +60,7 @@ const formatImgSrc = (src: any): string => {
   if (!src) return "";
   if (typeof src !== "string") return src.src || "";
   if (src.startsWith("http") || src.startsWith("data:")) return src;
-  const base = process.env.NEXT_PUBLIC_BACKEND_URL || "http://localhost:4000";
-  return `${base}${src.startsWith("/") ? "" : "/"}${src}`;
+  return `${SERVER_URL}${src.startsWith("/") ? "" : "/"}${src}`;
 };
 
 const DEFAULT_ICONS = [x1, x2, x3, x4];
@@ -249,9 +249,7 @@ const HeroSection = ({ sectionData }: { sectionData?: any }) => {
 
   useEffect(() => {
     let isMounted = true;
-    const backendUrl = process.env.NEXT_PUBLIC_BACKEND_URL || "http://localhost:4000";
-
-    fetch(`${backendUrl}/api/website/participate/why-exhibit/hero`, { cache: "no-store" })
+    fetch(`${API_URL}/website/participate/why-exhibit/hero`, { cache: "no-store" })
       .then((res) => {
         if (!res.ok) throw new Error("Failed to fetch why exhibit hero");
         return res.json();

@@ -6,7 +6,7 @@ import Link from "next/link";
 import { Users, Leaf, Lightbulb, TrendingUp, ArrowRight } from "lucide-react";
 
 // You can swap this out with the actual expo image you have
-import expoImage from "../../../assets/about/advisory_board_member/hero.png";
+import expoImage from "../../../assets/about/advisory_board_member/hero.webp";
 
 const nominateBannerData = {
     tagline: "BE PART OF A TRANSFORMATIVE JOURNEY",

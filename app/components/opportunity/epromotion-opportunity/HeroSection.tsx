@@ -1,6 +1,6 @@
 "use client";
 import React, { useEffect, useState, useRef } from "react";
-import bgImg from "../../../assets/banner/epromog.png";
+import bgImg from "../../../assets/banner/epromog.webp";
 import { Users, Store, Presentation, Globe, Handshake, Leaf } from "lucide-react";
 import SectionContainer from "@/app/components/layout/SectionContainer";
 

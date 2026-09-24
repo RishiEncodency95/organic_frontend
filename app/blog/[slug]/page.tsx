@@ -10,6 +10,7 @@ import articleImg1 from "@/app/assets/blog/latest_1.webp";
 import articleImg2 from "@/app/assets/blog/latest_2.webp";
 import articleImg3 from "@/app/assets/blog/featured_article1.webp";
 import articleImg4 from "@/app/assets/blog/featured_article2.webp";
+import { API_URL } from "@/lib/api";
 
 // Social Icons SVGs
 const FacebookIcon = () => (
@@ -154,10 +155,9 @@ export async function generateMetadata({
   params: Promise<{ slug: string }>;
 }): Promise<Metadata> {
   const { slug } = await params;
-  const backendUrl = "http://localhost:4000/api";
 
   try {
-    const res = await fetch(`${backendUrl}/blogs/${slug}`, { cache: "no-store" });
+    const res = await fetch(`${API_URL}/blogs/${slug}`, { cache: "no-store" });
     if (res.ok) {
       const json = await res.json();
       const post = json?.data || json;
@@ -289,8 +289,7 @@ export default async function BlogDetail({
   let dynamicPost: any = null;
 
   try {
-    const backendUrl = "http://localhost:4000/api";
-    const res = await fetch(`${backendUrl}/blogs/${slug}?view=true`, { cache: "no-store" });
+    const res = await fetch(`${API_URL}/blogs/${slug}?view=true`, { cache: "no-store" });
     if (res.ok) {
       const json = await res.json();
       dynamicPost = json?.data || json;

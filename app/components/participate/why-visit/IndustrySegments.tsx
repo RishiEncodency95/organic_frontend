@@ -15,7 +15,7 @@ import x6og from "@/app/assets/icons/x6og.png";
 import tleafImg from "@/app/assets/icons/tleaf.png";
 import footerrightImg from "@/app/assets/icons/footerright.png";
 
-const SERVER_URL = process.env.NEXT_PUBLIC_SERVER_URL || "http://localhost:4000";
+import { SERVER_URL } from "@/lib/api";
 
 const LOCAL_ICONS = [x1og, x2og, x3og, x4og, x5og, x6og];
 

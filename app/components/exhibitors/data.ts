@@ -46,8 +46,9 @@ import l45 from "@/app/assets/list/45.jpg";
 import l46 from "@/app/assets/list/46.jpg";
 import l47 from "@/app/assets/list/47.jpg";
 import l48 from "@/app/assets/list/48.jpg";
+import { SERVER_URL } from "@/lib/api";
 
-export const BACKEND_URL = process.env.NEXT_PUBLIC_BACKEND_URL || "http://localhost:4000";
+export const BACKEND_URL = SERVER_URL;
 
 export interface ApiExhibitor {
     _id: string;

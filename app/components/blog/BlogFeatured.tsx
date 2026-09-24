@@ -7,6 +7,7 @@ import ArticleCard, { BlogArticle } from "./BlogArticleCard";
 import featuredImg1 from "../../assets/blog/featured_article1.webp";
 import featuredImg2 from "../../assets/blog/featured_article2.webp";
 import featuredImg3 from "../../assets/blog/featured_article3.webp";
+import { API_URL } from "@/lib/api";
 
 const blogFeaturedData = {
   title: "Featured Articles",
@@ -94,13 +95,8 @@ const BlogFeatured = () => {
   }, []);
 
   useEffect(() => {
-    const apiUrl =
-      typeof window !== "undefined" && window.location.hostname === "localhost"
-        ? "http://localhost:4000/api"
-        : process.env.NEXT_PUBLIC_API_URL || "/api";
-
     setIsLoading(true);
-    fetch(`${apiUrl}/blogs?status=published`)
+    fetch(`${API_URL}/blogs?status=published`)
       .then((res) => {
         if (!res.ok) return null;
         return res.json();
