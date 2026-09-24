@@ -199,7 +199,7 @@ function CandidateProfile({ candidateData }: { candidateData?: any }) {
               src={photoSrc}
               alt={name}
               fill
-              className="object-cover scale-[1.38] object-center"
+              className="object-cover object-center"
               onError={() => setPhotoSrc(null)}
             />
           ) : (
@@ -918,7 +918,7 @@ export function ReviewSubmitModal({
   return (
     <>
       <div className="fixed inset-0 z-[99999] flex items-center justify-center p-2 overflow-hidden">
-        <div className="absolute inset-0 bg-slate-950/45 backdrop-blur-[5px]" onClick={onClose} />
+        <div className="absolute inset-0 bg-slate-950/45 backdrop-blur-[5px]" />
 
         <div
           className="relative max-h-[96vh] overflow-hidden rounded-[16px] bg-[#fbfcf9] shadow-[0_30px_90px_rgba(0,0,0,0.28)]"
