@@ -115,8 +115,8 @@ export default function OfficialRecognitionBanner() {
               <div className="flex flex-col pt-3">
                 <div className="mb-6 flex items-center gap-3">
                   <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-[#f4ebd0] shadow-sm">
-                    <img
-                      src={awardImg.src}
+                    <Image
+                      src={awardImg}
                       alt=""
                       className="h-6 w-6 object-contain"
                     />
@@ -189,8 +189,8 @@ export default function OfficialRecognitionBanner() {
                 <div className="absolute -inset-3 bg-white/20 backdrop-blur-md rounded-[28px] z-0" />
 
                 <div className="absolute -top-4 left-1/2 -translate-x-1/2 z-20">
-                  <img
-                    src={approvedImg.src}
+                  <Image
+                    src={approvedImg}
                     alt=""
                     className="h-[74px] w-[74px] object-contain"
                   />

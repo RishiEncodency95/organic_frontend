@@ -13,7 +13,7 @@ import topLeftLeaves from "@/app/assets/participate/msme/support-reference/top-l
 import topBannerIcon from "@/app/assets/participate/msme/support-reference/top-banner-icon.png";
 import approvedSchemeSeal from "@/app/assets/participate/msme/support-reference/approved-scheme-seal.png";
 // import topRightVisual from "@/app/assets/participate/msme/support-reference/top-right-visual.png";
-import topRightVisual from "@/app/assets/participate/msme/what_your_pms.png";
+import topRightVisual from "@/app/assets/participate/msme/what_your_pms.webp";
 
 /* Expense top icons */
 import spaceRentIcon from "@/app/assets/participate/msme/support-reference/space-rent-icon.png";
@@ -45,6 +45,7 @@ import badgeTimely from "@/app/assets/participate/msme/support-reference/badge-t
 import badgeDocs from "@/app/assets/participate/msme/support-reference/badge-docs.png";
 import badgeMsme from "@/app/assets/participate/msme/support-reference/badge-msme.png";
 import { ArrowRight } from "lucide-react";
+import Image from "next/image";
 
 /* =========================================================
    DATA
@@ -283,8 +284,8 @@ const PmsSupportCoverSection: FC = () => {
                 py-[5px]
               "
             >
-              <img
-                src={topBannerIcon.src}
+              <Image
+                src={topBannerIcon}
                 alt=""
                 aria-hidden="true"
                 className="h-[26px] w-[26px] shrink-0 object-contain"
@@ -322,8 +323,8 @@ const PmsSupportCoverSection: FC = () => {
               lg:block
             "
           >
-            <img
-              src={topRightVisual.src}
+            <Image
+              src={topRightVisual}
               alt=""
               aria-hidden="true"
               className="
@@ -355,8 +356,8 @@ const PmsSupportCoverSection: FC = () => {
                     LEFT TITLE
                 ================================================== */}
                 <div className="flex">
-                  <img
-                    src={topLeftLeaves.src}
+                  <Image
+                    src={topLeftLeaves}
                     alt=""
                     aria-hidden="true"
                     className="
@@ -680,8 +681,8 @@ const PmsSupportCoverSection: FC = () => {
                       )}
 
                       <div className="flex min-h-[91px] items-center gap-[8px]">
-                        <img
-                          src={expense.icon.src}
+                        <Image
+                          src={expense.icon}
                           alt=""
                           aria-hidden="true"
                           className="
@@ -779,8 +780,8 @@ const PmsSupportCoverSection: FC = () => {
                             pr-[8px]
                           "
                         >
-                          <img
-                            src={expense.descIcon.src}
+                          <Image
+                            src={expense.descIcon}
                             alt=""
                             aria-hidden="true"
                             className="
@@ -832,8 +833,8 @@ const PmsSupportCoverSection: FC = () => {
                 "
               >
                 <div className="flex items-center justify-center">
-                  <img
-                    src={additionalSupportIcon.src}
+                  <Image
+                    src={additionalSupportIcon}
                     alt=""
                     aria-hidden="true"
                     className="h-[98px] w-[98px] object-contain"
@@ -910,8 +911,8 @@ const PmsSupportCoverSection: FC = () => {
               "
             >
               <div className="flex items-start gap-[10px]">
-                <img
-                  src={checkCircleIcon.src}
+                <Image
+                  src={checkCircleIcon}
                   alt=""
                   aria-hidden="true"
                   className="mt-[1px] h-[28px] w-[28px] shrink-0 object-contain"
@@ -941,8 +942,8 @@ const PmsSupportCoverSection: FC = () => {
                       py-[6px]
                     "
                   >
-                    <img
-                      src={infoCircleIcon.src}
+                    <Image
+                      src={infoCircleIcon}
                       alt=""
                       aria-hidden="true"
                       className="mt-[1px] h-[28px] w-[28px] shrink-0 object-contain"
@@ -963,8 +964,8 @@ const PmsSupportCoverSection: FC = () => {
 
             {/* calculator */}
             <div className="flex items-center justify-center md:items-end md:justify-end">
-              <img
-                src={calculatorVisual.src}
+              <Image
+                src={calculatorVisual}
                 alt="PMS support calculation"
                 className="
                   h-[135px]
@@ -999,8 +1000,8 @@ const PmsSupportCoverSection: FC = () => {
           >
             {/* icon */}
             <div className="flex justify-start md:justify-center">
-              <img
-                src={knowBeforeIcon.src}
+              <Image
+                src={knowBeforeIcon}
                 alt=""
                 aria-hidden="true"
                 className="h-[74px] w-[74px] object-contain"
@@ -1051,8 +1052,8 @@ const PmsSupportCoverSection: FC = () => {
                         ${cta.variant === "primary" ? "bg-[#07582c] text-white" : "border border-[#07582c] bg-white text-[#07582c]"}
                       `}
                     >
-                      <img
-                        src={cta.icon.src}
+                      <Image
+                        src={cta.icon}
                         alt=""
                         aria-hidden="true"
                         className={`${cta.variant === "secondary" ? "h-[45px] w-[45px] md:h-[60px] md:w-[60px]" : "h-[60px] w-[60px]"} shrink-0 object-contain`}
@@ -1157,8 +1158,8 @@ const PmsSupportCoverSection: FC = () => {
                         }
                       `}
                     >
-                      <img
-                        src={badge.icon.src}
+                      <Image
+                        src={badge.icon}
                         alt=""
                         aria-hidden="true"
                         className="

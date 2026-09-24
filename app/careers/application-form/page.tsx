@@ -112,21 +112,21 @@ function Field({
 }) {
   return (  
     <label className="block min-w-0">
-      <div className="mb-[5px] flex items-center justify-between text-[15px] font-semibold text-[#163a67]">
+      <div className="mb-[4px] flex items-center justify-between text-[12.5px] font-semibold text-[#163a67]">
         <span>
           {label}
           {required && <span className="ml-[3px] text-[#d92027]">*</span>}
         </span>
         {disabled && (
-          <span className="flex items-center gap-[3px] text-[11px] font-normal text-[#64748b]">
-            <Lock className="h-[10px] w-[10px]" /> Read Only
+          <span className="flex items-center gap-[3px] text-[10px] font-normal text-[#64748b]">
+            <Lock className="h-[9px] w-[9px]" /> Read Only
           </span>
         )}
       </div>
 
-      <div className={`flex h-[41px] items-center rounded-[5px] border border-[#cbd8e4] px-[11px] shadow-[inset_0_1px_2px_rgba(0,0,0,.02)] ${disabled ? 'bg-[#f4f7f5] opacity-85' : 'bg-white focus-within:border-[#4e91c9] focus-within:ring-1 focus-within:ring-[#4e91c9]/20'}`}>
+      <div className={`flex h-[32px] items-center rounded-[5px] border border-[#cbd8e4] px-[9px] shadow-[inset_0_1px_2px_rgba(0,0,0,.02)] ${disabled ? 'bg-[#f4f7f5] opacity-85' : 'bg-white focus-within:border-[#4e91c9] focus-within:ring-1 focus-within:ring-[#4e91c9]/20'}`}>
         {Icon && (
-          <Icon className="mr-[9px] h-[18px] w-[18px] shrink-0 text-[#58749a]" />
+          <Icon className="mr-[7px] h-[15px] w-[15px] shrink-0 text-[#58749a]" />
         )}
 
         <input
@@ -134,7 +134,7 @@ function Field({
           value={value}
           disabled={disabled}
           onChange={(e) => onChange(e.target.value)}
-          className="min-w-0 flex-1 bg-transparent text-[15px] text-[#29445f] outline-none disabled:cursor-not-allowed font-medium"
+          className="min-w-0 flex-1 bg-transparent text-[13px] text-[#29445f] outline-none disabled:cursor-not-allowed font-medium"
         />
 
         {rightIcon}
@@ -162,28 +162,28 @@ function SelectField({
 }) {
   return (
     <label className="block min-w-0">
-      <div className="mb-[5px] flex items-center justify-between text-[15px] font-semibold text-[#163a67]">
+      <div className="mb-[4px] flex items-center justify-between text-[12.5px] font-semibold text-[#163a67]">
         <span>
           {label}
           {required && <span className="ml-[3px] text-[#d92027]">*</span>}
         </span>
         {disabled && (
-          <span className="flex items-center gap-[3px] text-[11px] font-normal text-[#64748b]">
-            <Lock className="h-[10px] w-[10px]" /> Read Only
+          <span className="flex items-center gap-[3px] text-[10px] font-normal text-[#64748b]">
+            <Lock className="h-[9px] w-[9px]" /> Read Only
           </span>
         )}
       </div>
 
-      <div className={`relative flex h-[41px] items-center rounded-[5px] border border-[#cbd8e4] px-[11px] ${disabled ? 'bg-[#f4f7f5] opacity-85' : 'bg-white focus-within:border-[#4e91c9] focus-within:ring-1 focus-within:ring-[#4e91c9]/20'}`}>
+      <div className={`relative flex h-[32px] items-center rounded-[5px] border border-[#cbd8e4] px-[9px] ${disabled ? 'bg-[#f4f7f5] opacity-85' : 'bg-white focus-within:border-[#4e91c9] focus-within:ring-1 focus-within:ring-[#4e91c9]/20'}`}>
         {Icon && (
-          <Icon className="mr-[9px] h-[18px] w-[18px] shrink-0 text-[#58749a]" />
+          <Icon className="mr-[7px] h-[15px] w-[15px] shrink-0 text-[#58749a]" />
         )}
 
         <select
           value={value}
           disabled={disabled}
           onChange={(e) => onChange(e.target.value)}
-          className="min-w-0 flex-1 appearance-none bg-transparent pr-[22px] text-[15px] text-[#29445f] outline-none disabled:cursor-not-allowed font-medium"
+          className="min-w-0 flex-1 appearance-none bg-transparent pr-[20px] text-[13px] text-[#29445f] outline-none disabled:cursor-not-allowed font-medium"
         >
           {options.map((item) => (
             <option key={item} value={item}>
@@ -192,7 +192,7 @@ function SelectField({
           ))}
         </select>
 
-        <ChevronDown className="pointer-events-none absolute right-[10px] h-[17px] w-[17px] text-[#17395f]" />
+        <ChevronDown className="pointer-events-none absolute right-[9px] h-[14px] w-[14px] text-[#17395f]" />
       </div>
     </label>
   );
@@ -227,14 +227,14 @@ function RadioRow({
   children: React.ReactNode;
 }) {
   return (
-    <label className="flex cursor-pointer items-center gap-[8px] text-[15px] font-semibold text-[#284567]">
+    <label className="flex cursor-pointer items-center gap-[7px] text-[13px] font-semibold text-[#284567]">
       <input
         type="radio"
         name={name}
         value={value}
         checked={checked}
         onChange={() => onChange(value)}
-        className="h-[18px] w-[18px] cursor-pointer accent-[#0c7ad8]"
+        className="h-[15px] w-[15px] cursor-pointer accent-[#0c7ad8]"
       />
       {children}
     </label>
@@ -400,12 +400,14 @@ function PersonalInformation({
           }
         }
 
-        // 2. OpenAI Vision Check
+        // 2. Deep AI vision check: real human adult face, appropriate content, upright,
+        // clear, and (when the résumé states a gender) matching it.
+        const resumeGender = candidateData?.fullProfile?.gender || candidateData?.gender || null;
         try {
           const res = await fetch("/api/verify-image", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ imageBase64: dataUrl }),
+            body: JSON.stringify({ imageBase64: dataUrl, expectedGender: resumeGender }),
           });
 
           const json = await res.json();
@@ -416,15 +418,16 @@ function PersonalInformation({
             setVerificationError(null);
           } else {
             setVerificationError(
-              json.reason || "OpenAI Verification Failed: Please upload an upright, clear photo of a male or female face."
+              json.reason || "Please upload a clear, upright photo of your own face."
             );
             setIsPhotoVerified(false);
           }
         } catch (err: any) {
           console.warn("API verify image error:", err);
-          // Fallback verification
-          setPhotoSrc(dataUrl);
-          setIsPhotoVerified(true);
+          // Fail closed: an unverifiable photo must not be silently accepted, since that
+          // would defeat this entire check.
+          setVerificationError("We couldn't verify this photo right now. Please try again.");
+          setIsPhotoVerified(false);
         } finally {
           setIsVerifying(false);
         }
@@ -445,7 +448,7 @@ function PersonalInformation({
     <div className="overflow-hidden rounded-[8px] border border-[#dce8e0] bg-white">
       <SectionTitle icon={User} title="Personal Information" />
 
-      <div className="grid grid-cols-[310px_1fr] gap-[14px] px-[12px] py-[8px]">
+      <div className="grid grid-cols-[310px_1fr] gap-[14px] px-[14px] py-[12px]">
         <input
           ref={fileInputRef}
           type="file"
@@ -501,7 +504,7 @@ function PersonalInformation({
             {isVerifying ? (
               <div className="flex items-center gap-[6px] text-[13px] font-bold text-[#0284c7]">
                 <Loader2 className="h-[15px] w-[15px] animate-spin" />
-                Checking OpenAI Vision...
+                Checking Vision...
               </div>
             ) : isPhotoVerified ? (
               <div className="space-y-[3px]">
@@ -590,11 +593,11 @@ function PersonalInformation({
           </div>
 
           <div className="col-span-2">
-            <div className="mb-[5px] text-[15px] font-semibold text-[#163a67]">
+            <div className="mb-[4px] text-[12.5px] font-semibold text-[#163a67]">
               Willing to Relocate? <span className="text-[#d92027]">*</span>
             </div>
 
-            <div className="flex h-[35px] items-center gap-[20px]">
+            <div className="flex h-[28px] items-center gap-[20px]">
               <RadioRow
                 name="relocate"
                 value="Yes"
@@ -675,9 +678,9 @@ function ProfessionalDetails({
     <div className="overflow-hidden rounded-[8px] border border-[#dce8e0] bg-white">
       <SectionTitle icon={BriefcaseBusiness} title="Professional Details" />
 
-      <div className="grid grid-cols-[250px_1fr] gap-[14px] px-[12px] py-[8px]">
+      <div className="grid grid-cols-[250px_1fr] gap-[10px] px-[14px] py-[10px]">
         {/* EMPLOYMENT STATUS */}
-        <div className="border-r border-[#e3e8eb] pr-[14px]">
+        <div className="border-r border-[#e3e8eb] pr-[10px]">
           <div className="mb-[6px] text-[13px] font-semibold text-[#163a67]">
             Employment Status <span className="text-[#d92027]">*</span>
           </div>
@@ -742,7 +745,7 @@ function ProfessionalDetails({
         </div>
 
         {/* DETAILS GRID (READ-ONLY FOR COMPANY, DESIGNATION, EXPERIENCE) */}
-        <div className="grid grid-cols-2 gap-x-[14px] gap-y-[8px]">
+        <div className="grid grid-cols-2 gap-x-[10px] gap-y-[4px]">
           {!isFresher ? (
             <div>
               <Field
@@ -822,7 +825,7 @@ function ProfessionalDetails({
             icon={Clock3}
             value={noticePeriod}
             onChange={setNoticePeriod}
-            options={["Immediate", "15 Days", "30 Days", "45 Days", "60 Days", "90 Days"]}
+            options={["Immediate", "7 Days", "15 Days", "30 Days", "45 Days", "60 Days", "90 Days"]}
           />
 
           <SelectField
@@ -841,11 +844,11 @@ function ProfessionalDetails({
           />
 
           <div>
-            <div className="mb-[5px] text-[15px] font-semibold text-[#163a67]">
+            <div className="mb-[4px] text-[12.5px] font-semibold text-[#163a67]">
               Expected CTC is Flexible?
             </div>
 
-            <div className="flex h-[35px] items-center gap-[20px]">
+            <div className="flex h-[28px] items-center gap-[20px]">
               <RadioRow
                 name="ctcFlexible"
                 value="Yes"
@@ -975,45 +978,45 @@ function CVCard({ candidateData }: { candidateData?: any }) {
   const cvUrl = candidateData?.cvUrl;
 
   return (
-    <div className="rounded-[10px] border border-[#dce8e0] bg-white p-[15px] shadow-sm">
-      <h3 className="text-[19px] font-semibold text-[#123963]">Your CV</h3>
+    <div className="rounded-[10px] border border-[#dce8e0] bg-white p-[11px] shadow-sm">
+      <h3 className="text-[16px] font-semibold text-[#123963]">Your CV</h3>
 
-      <div className="mt-[10px] flex items-center gap-[14px] rounded-[6px] bg-[#f2f7fa] px-[13px] py-[11px]">
-        <div className="relative grid h-[62px] w-[55px] place-items-center rounded-[6px] border-[2px] border-[#087447] text-[#087447]">
-          <FileText className="h-[31px] w-[31px]" />
+      <div className="mt-[7px] flex items-center gap-[10px] rounded-[6px] bg-[#f2f7fa] px-[10px] py-[8px]">
+        <div className="relative grid h-[46px] w-[42px] place-items-center rounded-[6px] border-[2px] border-[#087447] text-[#087447]">
+          <FileText className="h-[23px] w-[23px]" />
 
-          <span className="absolute -bottom-[6px] -right-[6px] grid h-[22px] w-[22px] place-items-center rounded-full bg-[#087447] text-white">
-            <Check className="h-[14px] w-[14px]" strokeWidth={3} />
+          <span className="absolute -bottom-[5px] -right-[5px] grid h-[18px] w-[18px] place-items-center rounded-full bg-[#087447] text-white">
+            <Check className="h-[11px] w-[11px]" strokeWidth={3} />
           </span>
         </div>
 
         <div className="min-w-0 flex-1">
-          <h4 className="truncate text-[16px] font-semibold text-[#14385f]">{cvName}</h4>
-          <p className="mt-[2px] text-[14px] text-[#58708c]">{cvSize}</p>
+          <h4 className="truncate text-[13.5px] font-semibold text-[#14385f]">{cvName}</h4>
+          <p className="mt-[1px] text-[12px] text-[#58708c]">{cvSize}</p>
 
-          <div className="mt-[7px] flex gap-[16px] text-[13.5px] font-semibold text-[#0874ce]">
+          <div className="mt-[5px] flex gap-[13px] text-[12px] font-semibold text-[#0874ce]">
             {cvUrl ? (
               <a href={cvUrl} target="_blank" rel="noopener noreferrer" className="flex items-center gap-[4px]">
-                <Eye className="h-[15px] w-[15px]" />
+                <Eye className="h-[13px] w-[13px]" />
                 View File
               </a>
             ) : (
               <button className="flex items-center gap-[4px]">
-                <Eye className="h-[15px] w-[15px]" />
+                <Eye className="h-[13px] w-[13px]" />
                 View File
               </button>
             )}
 
             <button className="flex items-center gap-[4px]">
-              <RefreshCw className="h-[15px] w-[15px]" />
+              <RefreshCw className="h-[13px] w-[13px]" />
               Upload Different CV
             </button>
           </div>
         </div>
       </div>
 
-      <div className="mt-[10px] flex items-center gap-[9px] rounded-[6px] bg-[#effaf3] px-[12px] py-[9px] text-[15px] font-semibold leading-[1.3] text-[#2e5f48]">
-        <CheckCircle2 className="h-[21px] w-[21px] shrink-0 fill-[#14a451] text-white" />
+      <div className="mt-[7px] flex items-center gap-[7px] rounded-[6px] bg-[#effaf3] px-[10px] py-[6px] text-[12.5px] font-semibold leading-[1.3] text-[#2e5f48]">
+        <CheckCircle2 className="h-[17px] w-[17px] shrink-0 fill-[#14a451] text-white" />
         <span>
           Great! We&apos;ve pre-filled this form using your CV.
         </span>
@@ -1027,35 +1030,35 @@ function AISummaryCard({ candidateData }: { candidateData?: any }) {
   const title = score >= 70 ? "Strong Match!" : score >= 50 ? "Good Match!" : "Needs Review";
 
   return (
-    <div className="rounded-[10px] border border-[#dce8e0] bg-white p-[15px] shadow-sm">
-      <h3 className="text-[19px] font-semibold text-[#123963]">AI Analysis Summary</h3>
+    <div className="rounded-[10px] border border-[#dce8e0] bg-white p-[11px] shadow-sm">
+      <h3 className="text-[16px] font-semibold text-[#123963]">AI Analysis Summary</h3>
 
-      <div className="mt-[10px] grid grid-cols-[104px_1fr] gap-[13px]">
+      <div className="mt-[7px] grid grid-cols-[80px_1fr] gap-[10px]">
         <div
           className="relative grid aspect-square place-items-center rounded-full"
           style={{
             background: `conic-gradient(#28aa42 ${score * 3.6}deg,#d7e4dd ${score * 3.6}deg)`,
           }}
         >
-          <div className="absolute inset-[9px] rounded-full bg-white" />
+          <div className="absolute inset-[7px] rounded-full bg-white" />
 
           <div className="relative z-10 text-center">
-            <div className="text-[27px] font-semibold leading-none text-[#123963]">
+            <div className="text-[21px] font-semibold leading-none text-[#123963]">
               {score}%
             </div>
-            <div className="mt-[3px] text-[11px] font-semibold text-[#123963]">Match Score</div>
+            <div className="mt-[2px] text-[9.5px] font-semibold text-[#123963]">Match Score</div>
           </div>
         </div>
 
-        <div className="flex flex-col justify-center rounded-[7px] bg-[#effaf2] px-[12px] py-[10px]">
-          <h4 className="text-[17px] font-semibold text-[#11813e]">{title}</h4>
-          <p className="mt-[4px] text-[13px] leading-[1.35] text-[#284f3f]">
+        <div className="flex flex-col justify-center rounded-[7px] bg-[#effaf2] px-[10px] py-[7px]">
+          <h4 className="text-[14.5px] font-semibold text-[#11813e]">{title}</h4>
+          <p className="mt-[3px] text-[14px] leading-[1.3] text-[#284f3f]">
             {candidateData?.summary || aiSummary.text}
           </p>
 
-          <button className="mt-[7px] flex items-center gap-[6px] text-[13px] font-semibold text-[#0b6941]">
+          <button className="mt-[5px] flex items-center gap-[5px] text-[14px] font-semibold text-[#0b6941]">
             View Detailed Analysis
-            <ArrowRight className="h-[14px] w-[14px]" />
+            <ArrowRight className="h-[12px] w-[12px]" />
           </button>
         </div>
       </div>
@@ -1090,16 +1093,16 @@ function CVDetailsCard({ candidateData }: { candidateData?: any }) {
   if (items.length === 0) return null;
 
   return (
-    <div className="rounded-[10px] border border-[#dce8e0] bg-white p-[15px] shadow-sm">
-      <h3 className="text-[19px] font-semibold text-[#123963]">Key Details from CV</h3>
+    <div className="rounded-[10px] border border-[#dce8e0] bg-white p-[11px] shadow-sm">
+      <h3 className="text-[16px] font-semibold text-[#123963]">Key Details from CV</h3>
 
-      <div className="mt-[7px] divide-y divide-[#e6ece8]">
+      <div className="mt-[5px] divide-y divide-[#e6ece8]">
         {items.map(({ icon: Icon, label, value }) => (
-          <div key={label} className="grid grid-cols-[26px_128px_1fr_21px] items-start gap-[6px] py-[6px]">
-            <Icon className="mt-[1px] h-[18px] w-[18px] text-[#123f70]" />
-            <div className="text-[13.5px] font-semibold leading-[1.25] text-[#17395f]">{label}</div>
-            <div className="whitespace-pre-line text-[13px] leading-[1.3] text-[#294a6c]">{value}</div>
-            <CheckCircle2 className="h-[18px] w-[18px] fill-[#0ca34e] text-white" />
+          <div key={label} className="grid grid-cols-[20px_100px_1fr_17px] items-start gap-[5px] py-[4px]">
+            <Icon className="mt-[1px] h-[16px] w-[16px] text-[#123f70]" />
+            <div className="text-[14px] font-semibold leading-[1.2] text-[#17395f]">{label}</div>
+            <div className="whitespace-pre-line text-[14px] leading-[1.25] text-[#294a6c]">{value}</div>
+            <CheckCircle2 className="h-[14px] w-[14px] fill-[#0ca34e] text-white" />
           </div>
         ))}
       </div>
@@ -1158,7 +1161,7 @@ function Sidebar({ onClose, candidateData }: { onClose: () => void; candidateDat
         </button>
       </div>
 
-      <div className="relative z-10 mt-[6px] flex-1 min-h-0 overflow-y-auto space-y-[11px] pr-[2px]">
+      <div className="relative z-10 mt-[6px] flex-1 min-h-0 overflow-y-auto space-y-[7px] pr-[2px]">
         <CVCard candidateData={candidateData} />
         <AISummaryCard candidateData={candidateData} />
         <CVDetailsCard candidateData={candidateData} />
@@ -1197,10 +1200,7 @@ function ApplicationFormContent({
   const [ctcFlexible, setCtcFlexible] = useState(candidateData?.ctcFlexible || "Yes");
   const [otherBenefits, setOtherBenefits] = useState(candidateData?.otherBenefits || "");
 
-  const [interest, setInterest] = useState(
-    candidateData?.whyInterested ||
-      "I am passionate about the exhibition and event industry and would love to contribute to Bharat Organic Expo's mission of promoting a healthier and more sustainable India."
-  );
+  const [interest, setInterest] = useState(candidateData?.whyInterested || "");
   const [confirmed, setConfirmed] = useState(true);
 
   const handleNext = () => {
@@ -1335,7 +1335,7 @@ export function ApplicationFormModal({
 
   return (
     <div className="fixed inset-0 z-[99999] flex items-center justify-center p-2 overflow-hidden">
-      <div className="absolute inset-0 bg-slate-950/45 backdrop-blur-[5px]" onClick={onClose} />
+      <div className="absolute inset-0 bg-slate-950/45 backdrop-blur-[5px]" />
 
       <div
         ref={scrollRef}

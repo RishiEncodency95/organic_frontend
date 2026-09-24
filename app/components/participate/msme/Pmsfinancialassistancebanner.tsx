@@ -6,7 +6,7 @@ import {
   ChevronRight,
 } from "lucide-react";
 import financialImg from "@/app/assets/participate/msme/financial_assitance.png";
-import howMuchImg from "@/app/assets/participate/msme/how_much_support.png";
+import howMuchImg from "@/app/assets/participate/msme/how_much_support.webp";
 import supportRightTop from "@/app/assets/participate/msme/support_right_top.png";
 import supportRight from "@/app/assets/participate/msme/support_right.png";
 import secureImg from "@/app/assets/participate/msme/secure.png";
@@ -193,16 +193,16 @@ const PMSFinancialAssistanceBanner: FC = () => {
         className="relative w-full overflow-hidden bg-[#fcfbfa] pb-4 border-t-6 border-[#033815]"
       >
         {/* Top-right absolute image */}
-        <img
-          src={supportRightTop.src}
+        <Image
+          src={supportRightTop}
           alt=""
           className="absolute right-0 top-0 hidden h-32 w-auto object-contain opacity-20 md:block"
         />
 
         {/* Left absolute image at section left-0 */}
         <div className="pointer-events-none absolute left-0 top-0 z-0 h-full w-full overflow-hidden lg:w-[35%]">
-          <img
-            src={howMuchImg.src}
+          <Image
+            src={howMuchImg}
             alt=""
             className="absolute inset-0 h-full w-full object-cover object-top lg:object-cover"
           />
@@ -244,8 +244,8 @@ const PMSFinancialAssistanceBanner: FC = () => {
                   <span className="block text-[#1b5e20]">{data.titleLine1}</span>
                   <span className="relative inline-flex items-center gap-3 text-slate-900">
                     {data.titleLine2}
-                    <img
-                      src={supportRight.src}
+                    <Image
+                      src={supportRight}
                       alt=""
                       className="hidden h-8 w-auto object-contain sm:h-10 md:h-10 md:inline"
                     />
@@ -269,8 +269,8 @@ const PMSFinancialAssistanceBanner: FC = () => {
                         boxShadow: "rgba(0, 0, 0, 0.24) 0px 3px 8px",
                       }}
                     >
-                      <img
-                        src={card.icon.src}
+                      <Image
+                        src={card.icon}
                         alt=""
                         aria-hidden="true"
                         className="mb-2 h-[70px] w-[70px] object-contain"
@@ -305,8 +305,8 @@ const PMSFinancialAssistanceBanner: FC = () => {
                       {/* Bottom icon with background */}
                       <div className={`absolute bottom-0 left-0 right-0 h-8 rounded-b-2xl ${card.footIconBg}`}>
                         <span className={`absolute left-1/2 -top-7 flex h-[56px] w-[56px] -translate-x-1/2 items-center justify-center rounded-full ${card.footIconBg} z-0`}>
-                          <img
-                            src={card.footIcon.src}
+                          <Image
+                            src={card.footIcon}
                             alt=""
                             aria-hidden="true"
                             className="h-12 w-12 object-contain"
@@ -327,8 +327,8 @@ const PMSFinancialAssistanceBanner: FC = () => {
         {PMS_FINANCIAL_ASSISTANCE_DATA.map((data) => (
           <div key={data.id} className="relative overflow-visible rounded-2xl bg-white shadow-lg">
             <div className="pointer-events-none absolute inset-0">
-              <img
-                src={financialImg.src}
+              <Image
+                src={financialImg}
                 alt=""
                 className="absolute inset-0 h-full w-full object-cover object-top rounded-2xl"
               />
@@ -338,8 +338,8 @@ const PMSFinancialAssistanceBanner: FC = () => {
               <div className="flex flex-col gap-4 md:flex-col lg:flex-row md:items-start lg:items-center md:gap-4 lg:gap-16 ">
                 {/* Important note */}
                 <div className="flex w-full items-start gap-3 lg:w-[38%] lg:border-r lg:border-dotted lg:border-[#1b5e20] pr-3 lg:pr-4">
-                  <img
-                    src={secureImg.src}
+                  <Image
+                    src={secureImg}
                     alt=""
                     className="h-20 w-20 shrink-0 object-contain"
                   />
@@ -354,8 +354,8 @@ const PMSFinancialAssistanceBanner: FC = () => {
                 {/* Government support */}
                 <div className="flex w-full items-center gap-3 lg:w-[25%]">
                   <span className="flex h-20 w-20 shrink-0 items-center justify-center rounded-full bg-[#1b5e20]/10">
-                    <img
-                      src={handImg.src}
+                    <Image
+                      src={handImg}
                       alt="Government Support"
                       className="h-16 w-16 object-contain"
                     />
@@ -378,7 +378,7 @@ const PMSFinancialAssistanceBanner: FC = () => {
                   href={data.ctaHref}
                   className="inline-flex items-center gap-1.5 rounded-full bg-[#1b5e20] px-4 py-2 text-base font-semibold uppercase tracking-wide text-white shadow-md transition-colors hover:bg-[#2d7a2d]"
                 >
-                  <img src={eligibilityButtonImg.src} alt="" className="h-8 w-8 object-contain" aria-hidden="true" />
+                  <Image src={eligibilityButtonImg} alt="" className="h-8 w-8 object-contain" aria-hidden="true" />
                   {data.ctaLabel}
                   <ChevronRight className="h-5 w-5 font-bold" aria-hidden="true" />
                 </a>

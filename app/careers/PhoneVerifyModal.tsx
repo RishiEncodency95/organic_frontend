@@ -223,40 +223,29 @@ export default function PhoneVerifyModal({
     };
 
     return (
-        <div
-            className="fixed inset-0 z-[100000] flex items-center justify-center bg-[#04140d]/70 p-4 backdrop-blur-[6px]"
-            // Clicking outside the card closes the whole flow too, matching the main modal's backdrop.
-            onClick={onCloseAll}
-        >
-            <div
-                className="relative w-full max-w-[430px] overflow-hidden rounded-[20px] bg-[#FBFCF9] shadow-[0_30px_80px_rgba(0,45,28,0.4)] ring-1 ring-[#cfe4d7]"
-                onClick={(e) => e.stopPropagation()}
-            >
+        <div className="fixed inset-0 z-[100000] flex items-center justify-center bg-[#04140d]/70 p-4 backdrop-blur-[6px]">
+            <div className="relative w-full max-w-[430px] overflow-hidden rounded-[20px] bg-[#FBFCF9] shadow-[0_30px_80px_rgba(0,45,28,0.4)] ring-1 ring-[#cfe4d7]">
                 {/* ── Brand header ───────────────────────────────── */}
                 <div className="relative overflow-hidden bg-[linear-gradient(135deg,#00563f_0%,#00714f_55%,#008d55_100%)] px-6 py-5">
                     <span className="pointer-events-none absolute -right-10 -top-14 h-36 w-36 rounded-full bg-white/10" />
                     <span className="pointer-events-none absolute -bottom-16 right-10 h-28 w-28 rounded-full bg-white/[0.07]" />
 
-                    <div className="absolute right-4 top-4 flex items-center gap-2">
+                    <div className="absolute right-4 top-4 z-10 flex items-center gap-2">
+
                         <button
                             type="button"
                             aria-label="Go back one step"
                             onClick={handleBack}
                             className="grid h-8 w-8 place-items-center rounded-full bg-white/15 text-white transition hover:bg-white/25"
                         >
-                            <ArrowLeft className="h-[18px] w-[18px]" strokeWidth={2.4} />
-                        </button>
-                        <button
-                            type="button"
-                            aria-label="Close"
-                            onClick={onCloseAll}
-                            className="grid h-8 w-8 place-items-center rounded-full bg-white/15 text-white transition hover:bg-white/25"
-                        >
                             <X className="h-[18px] w-[18px]" strokeWidth={2.4} />
                         </button>
                     </div>
 
-                    <div className="relative flex items-center gap-3">
+                    {/* Non-interactive: without this, this row's full-width box (it has no
+                        explicit width) sits later in DOM order than the buttons above with the
+                        same auto z-index, so it paints on top and silently eats their clicks. */}
+                    <div className="relative flex items-center gap-3 pointer-events-none">
                         <div className="grid h-12 w-12 shrink-0 place-items-center rounded-full bg-white/15 ring-1 ring-white/25">
                             <ShieldCheck className="h-6 w-6 text-white" strokeWidth={2.2} />
                         </div>
@@ -321,19 +310,6 @@ export default function PhoneVerifyModal({
                                         );
                                     })}
                                 </div>
-
-                                <button
-                                    type="button"
-                                    onClick={() => {
-                                        setStep("PHONE");
-                                        setMobileNumber("");
-                                        setSelectedPhone("");
-                                        setError("");
-                                    }}
-                                    className="mt-2.5 text-[12px] font-semibold text-[#007a50] underline underline-offset-2 transition hover:text-[#00563f]"
-                                >
-                                    Use a different number
-                                </button>
                             </div>
 
                             {error && (

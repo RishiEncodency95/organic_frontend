@@ -26,6 +26,7 @@ import quoteLeftImg from "@/app/assets/participate/msme/quote_left.png";
 import quoteRightImg from "@/app/assets/participate/msme/quote_right.png";
 import stepsTitleLeftLeafIcon from "@/app/assets/participate/msme/reference-icons/steps-title-left-leaf.png";
 import stepsTitleRightLeafIcon from "@/app/assets/participate/msme/reference-icons/steps-title-right-leaf.png";
+import Image from "next/image";
 /* ================================================================
    TYPES
 ================================================================ */
@@ -130,8 +131,8 @@ export default function OfficialMessageBanner({
             >
               <div className="flex items-center">
                 <span className="h-px w-[40px] bg-[#739052]" />
-                <img
-                  src={stepsTitleLeftLeafIcon.src}
+                <Image
+                  src={stepsTitleLeftLeafIcon}
                   alt=""
                   className="mr-2 hidden h-7 w-auto object-contain sm:block"
                   aria-hidden="true"
@@ -152,8 +153,8 @@ export default function OfficialMessageBanner({
               </span>
 
               <div className="flex items-center">
-                <img
-                  src={stepsTitleRightLeafIcon.src}
+                <Image
+                  src={stepsTitleRightLeafIcon}
                   alt=""
                   className="ml-2 h-7 w-auto object-contain"
                   aria-hidden="true"
@@ -259,8 +260,8 @@ export default function OfficialMessageBanner({
               >
                 {!playing ? (
                   <>
-                    <img
-                      src={thumbnail}
+                    <Image
+                      src={thumbnail} width={1280} height={720}
                       alt="MSME Director Official Message"
                       className="
                         absolute
@@ -540,8 +541,8 @@ export default function OfficialMessageBanner({
                       "
                     >
                       <span className="h-px flex-1 bg-[#bdc6aa]" />
-                      <img
-                        src={dividerLeafIcon.src}
+                      <Image
+                        src={dividerLeafIcon}
                         alt=""
                         className="h-8 w-auto object-contain"
                         aria-hidden="true"
@@ -559,8 +560,8 @@ export default function OfficialMessageBanner({
                     pr-[3%]
                   "
                 >
-                  <img
-                    src={quoteLeftImg.src}
+                  <Image
+                    src={quoteLeftImg}
                     alt=""
                     className="
                       absolute
@@ -590,8 +591,8 @@ export default function OfficialMessageBanner({
                     {data.quoteLine3}
                   </blockquote>
 
-                  <img
-                    src={quoteRightImg.src}
+                  <Image
+                    src={quoteRightImg}
                     alt=""
                     className="
                       absolute
@@ -683,8 +684,8 @@ export default function OfficialMessageBanner({
                   </div>
                 </div>
 
-                <img
-                  src={ministryImg.src}
+                <Image
+                  src={ministryImg}
                   alt=""
                   aria-hidden="true"
                   className="
@@ -729,7 +730,7 @@ export default function OfficialMessageBanner({
                   withBorder={idx === 1}
                   withLeftPadding={idx === 2}
                   icon={
-                    <img src={feat.icon.src} alt="" className="h-[100px] w-[100px] object-contain" />
+                    <Image src={feat.icon} alt="" className="h-[100px] w-[100px] object-contain" />
                   }
                   title={feat.title}
                   description={feat.description}
@@ -846,8 +847,8 @@ export default function OfficialMessageBanner({
             >
               {!playing ? (
                 <>
-                  <img
-                    src={thumbnail}
+                  <Image
+                    src={thumbnail} width={1280} height={720}
                     alt="MSME Director Official Message"
                     className="
                       absolute
@@ -1015,7 +1016,7 @@ export default function OfficialMessageBanner({
               {data.featureStrip.map((feat) => (
                 <MobileFeature
                   key={feat.id}
-                  icon={<img src={feat.icon.src} alt="" className="h-16 w-16 object-contain" />}
+                  icon={<Image src={feat.icon} alt="" className="h-16 w-16 object-contain" />}
                   title={feat.title}
                   description={feat.description}
                 />

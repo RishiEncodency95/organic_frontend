@@ -13,6 +13,7 @@ import reasonToVisitImg from "@/app/assets/participate/msme/reason_to_visit.png"
 import reasonToVisitBg from "@/app/assets/participate/msme/reason_to_visit_bg.png";
 import leafsImg from "@/app/assets/icons/leafs.png";
 import SectionContainer from "@/app/components/layout/SectionContainer";
+import Image from "next/image";
 
 /**
  * Bharat Organic Expo — "Reason to Visit" banner
@@ -105,8 +106,8 @@ export default function ReasonToVisitBanner() {
       <div className="absolute inset-0 bg-[#EFF7EE]/60 lg:bg-[#EFF7EE]/40" />
       <div className="relative overflow-hidden">
 
-        <img
-            src={reasonToVisitImg.src}
+        <Image
+            src={reasonToVisitImg}
             alt="Bharat Organic Expo exhibition hall with visitors"
             className="absolute right-0 top-0 h-full w-auto object-cover md:object-fill hidden lg:block"
           />

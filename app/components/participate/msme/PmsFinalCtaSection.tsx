@@ -638,8 +638,8 @@ export default function PmsFinalCta({
             gap-[1vw]
           "
         >
-          <img
-            src={startLeftDeco.src}
+          <Image
+            src={startLeftDeco}
             alt=""
             className="
               h-[0.5vw]
@@ -664,8 +664,8 @@ export default function PmsFinalCta({
             {c.subtitle}
           </p>
 
-          <img
-            src={startRightDeco.src}
+          <Image
+            src={startRightDeco}
             alt=""
             className="
               h-[0.5vw]
@@ -1099,8 +1099,8 @@ export default function PmsFinalCta({
             gap-3
           "
         >
-          <img
-            src={startLeftDeco.src}
+          <Image
+            src={startLeftDeco}
             alt=""
             className="
               h-5
@@ -1120,8 +1120,8 @@ export default function PmsFinalCta({
             {c.subtitle}
           </p>
 
-          <img
-            src={startRightDeco.src}
+          <Image
+            src={startRightDeco}
             alt=""
             className="
               h-5
