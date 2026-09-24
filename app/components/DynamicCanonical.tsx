@@ -39,7 +39,11 @@ export default function DynamicCanonical() {
 
     // Check backend API for any manual canonical tag override saved by admin
     const pageKey = !pathname || pathname === "/" ? "home" : pathname.replace(/^\/+|\/+$/g, "");
-    const cleanApiBase = API_URL.replace(/\/+$/, "");
+    const cleanApiBase = process.env.NEXT_PUBLIC_API_URL
+      ? process.env.NEXT_PUBLIC_API_URL.replace(/\/+$/, "")
+      : isLocal
+      ? "http://localhost:5000/api"
+      : "/api";
 
     fetch(`${cleanApiBase}/seo/${pageKey}?envType=${isLocal ? "local" : "live"}`)
       .then((res) => {

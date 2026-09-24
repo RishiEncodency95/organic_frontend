@@ -29,7 +29,7 @@ import {
 } from "./components/seo/CustomScripts";
 
 const SERVER_URL =
-  process.env.NEXT_PUBLIC_SERVER_URL || "http://localhost:4001";
+  process.env.NEXT_PUBLIC_SERVER_URL || "http://localhost:5000";
 const API_URL =
   process.env.NEXT_PUBLIC_API_URL || `${SERVER_URL}/api`;
 
