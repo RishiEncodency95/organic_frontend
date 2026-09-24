@@ -30,6 +30,7 @@ import bottomLeftClusterIcon from "@/app/assets/participate/msme/reference-icons
 import helpCardLeafArtIcon from "@/app/assets/participate/msme/reference-icons/help-card-leaf-art.png";
 
 import SectionContainer from "@/app/components/layout/SectionContainer";
+import Image from "next/image";
 
 const WHATS_NEXT_BANNER_DATA = [
   {
@@ -71,8 +72,8 @@ export default function WhatsNextBanner() {
       className="relative w-full overflow-hidden bg-white py-4"
     >
       {/* top-right same cropped leaves */}
-      <img
-        src={topRightCornerLeavesIcon.src}
+      <Image
+        src={topRightCornerLeavesIcon}
         alt=""
         className="pointer-events-none absolute right-0 top-0 h-[110px] w-auto object-contain opacity-90 z-0"
         aria-hidden="true"
@@ -93,8 +94,8 @@ export default function WhatsNextBanner() {
                     {data.headingLine1}
                   </h2>
 
-                  <img
-                    src={titleLeavesIcon.src}
+                  <Image
+                    src={titleLeavesIcon}
                     alt=""
                     className="mb-[2px] h-16 w-auto object-contain"
                     aria-hidden="true"
@@ -107,8 +108,8 @@ export default function WhatsNextBanner() {
 
                 <div className="my-3 flex items-center gap-3" aria-hidden="true">
                   <span className="h-[3px] w-[230px] bg-[#3b8c2a]" />
-                  <img
-                    src={dividerLeafIcon.src}
+                  <Image
+                    src={dividerLeafIcon}
                     alt=""
                     className="h-8 w-auto object-contain"
                     aria-hidden="true"
@@ -128,8 +129,8 @@ export default function WhatsNextBanner() {
                 {/* LOGO */}
                 <div className="grid grid-cols-2 sm:grid-cols-4 sm:px-6">
                   <div className="col-span-2 col-start-1 flex items-center justify-end gap-3 pr-4 sm:col-span-2 sm:col-start-3 sm:pr-8">
-                    <img
-                      src={logoLeafMarkIcon.src}
+                    <Image
+                      src={logoLeafMarkIcon}
                       alt=""
                       className="relative z-10 h-[110px] w-auto shrink-0 object-contain"
                       aria-hidden="true"
@@ -159,8 +160,8 @@ export default function WhatsNextBanner() {
                         key={benefit.id}
                         className="flex flex-col items-center px-2 text-center sm:px-3"
                       >
-                        <img
-                          src={benefit.icon.src}
+                        <Image
+                          src={benefit.icon}
                           alt=""
                           className="mb-2 h-20 w-20 object-contain"
                           aria-hidden="true"
@@ -195,8 +196,8 @@ export default function WhatsNextBanner() {
                 }}
               >
                 <div className="absolute left-1/2 top-0 z-20 flex -translate-x-1/2 -translate-y-1/2 items-center">
-                  <img
-                    src={stepsTitleLeftLeafIcon.src}
+                  <Image
+                    src={stepsTitleLeftLeafIcon}
                     alt=""
                     className="mr-2 hidden h-7 w-auto object-contain sm:block"
                     aria-hidden="true"
@@ -206,8 +207,8 @@ export default function WhatsNextBanner() {
                     {data.stepsTitle}
                   </h3>
 
-                  <img
-                    src={stepsTitleRightLeafIcon.src}
+                  <Image
+                    src={stepsTitleRightLeafIcon}
                     alt=""
                     className="ml-2 hidden h-7 w-auto object-contain sm:block"
                     aria-hidden="true"
@@ -233,8 +234,8 @@ export default function WhatsNextBanner() {
                       )}
 
                       <span className="relative mb-2 flex h-20 w-20 items-center justify-center">
-                        <img
-                          src={step.icon.src}
+                        <Image
+                          src={step.icon}
                           alt=""
                           className="h-20 w-20 object-contain"
                           aria-hidden="true"
@@ -268,8 +269,8 @@ export default function WhatsNextBanner() {
               <div className="relative flex overflow-hidden rounded-2xl bg-[#0b2912] text-white shadow-sm lg:col-span-4">
                 <div className="flex flex-1 flex-col p-4 pb-3 sm:p-4 sm:pb-3">
                   <div className="flex items-start gap-3">
-                    <img
-                      src={helpHeadsetIcon.src}
+                    <Image
+                      src={helpHeadsetIcon}
                       alt=""
                       className="h-12 w-12 shrink-0 object-contain"
                       aria-hidden="true"
@@ -294,8 +295,8 @@ export default function WhatsNextBanner() {
                       href={`mailto:${data.email}`}
                       className="flex items-center gap-3 text-white/90 hover:text-white"
                     >
-                      <img
-                        src={mailIcon.src}
+                      <Image
+                        src={mailIcon}
                         alt=""
                         className="h-5 w-5 shrink-0 object-contain"
                         aria-hidden="true"
@@ -307,8 +308,8 @@ export default function WhatsNextBanner() {
                       href={`tel:${data.phone.replace(/[^0-9+]/g, '')}`}
                       className="flex items-center gap-3 text-white/90 hover:text-white"
                     >
-                      <img
-                        src={phoneIcon.src}
+                      <Image
+                        src={phoneIcon}
                         alt=""
                         className="h-5 w-5 shrink-0 object-contain"
                         aria-hidden="true"
@@ -318,8 +319,8 @@ export default function WhatsNextBanner() {
                   </div>
                 </div>
 
-                <img
-                  src={helpCardLeafArtIcon.src}
+                <Image
+                  src={helpCardLeafArtIcon}
                   alt=""
                   className="h-auto w-[30%] shrink-0 object-contain object-bottom"
                   aria-hidden="true"
@@ -332,8 +333,8 @@ export default function WhatsNextBanner() {
 
       {/* ============ FOOTER STRIP ============ */}
       <div className="relative mt-2 overflow-hidden rounded-2xl border border-gray-200 bg-[#EFF7EE] lg:mt-2.5">
-        <img
-          src={bottomLeftClusterIcon.src}
+        <Image
+          src={bottomLeftClusterIcon}
           alt=""
           className="absolute left-0 top-1/2 z-10 h-[120px] w-auto -translate-y-1/2 object-contain hidden sm:block"
           loading="lazy"
@@ -345,8 +346,8 @@ export default function WhatsNextBanner() {
             <div key={data.id} className="flex flex-col lg:flex-row sm:items-center">
               {/* LET'S GROW */}
               <div className="relative flex items-center gap-3 overflow-hidden pr-4 py-3 lg:w-1/2 lg:pr-5 pl-4 lg:pl-16">
-                <img
-                  src={growTogetherIcon.src}
+                <Image
+                  src={growTogetherIcon}
                   alt=""
                   className="relative hidden h-16 w-16 shrink-0 object-contain sm:block"
                   aria-hidden="true"
@@ -366,8 +367,8 @@ export default function WhatsNextBanner() {
               {/* CTA */}
               <div className="flex flex-1 flex-col gap-3 rounded-lg bg-white px-4 py-3 lg:flex-row lg:items-center lg:justify-between lg:gap-6 lg:border-l lg:border-gray-200 lg:px-5">
                 <div className="flex items-center gap-3">
-                  <img
-                    src={readyNextStepIcon.src}
+                  <Image
+                    src={readyNextStepIcon}
                     alt=""
                     className="h-16 w-16 shrink-0 object-contain"
                     aria-hidden="true"
@@ -390,8 +391,8 @@ export default function WhatsNextBanner() {
                 >
                   {data.ctaText}
 
-                  <img
-                    src={applyArrowIcon.src}
+                  <Image
+                    src={applyArrowIcon}
                     alt=""
                     className="h-8 w-8 object-contain"
                     aria-hidden="true"

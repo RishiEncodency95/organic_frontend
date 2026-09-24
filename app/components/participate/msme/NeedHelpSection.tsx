@@ -82,7 +82,7 @@ export default function NeedHelpSection() {
   return (
     <section className="relative pt-6 pb-0">
       <Image
-        src={need_help_top.src}
+        src={need_help_top}
         alt="Need Help Top"
         className="absolute -right-2 -top-4 z-0 h-[110px] w-[110px] object-contain pointer-events-none"
         width={350}
@@ -97,7 +97,7 @@ export default function NeedHelpSection() {
               {/* Left: Heading + commitment */}
               <div>
                 <h2 className="text-[28px] font-semibold uppercase leading-tight text-[#0d4a1a] sm:text-[74px] flex items-end">
-                  {data.titleLine1} <Image src={need_help_deco.src} alt="Need Help" className="ml-2 h-12 w-12 object-contain" width={48} height={48} />
+                  {data.titleLine1} <Image src={need_help_deco} alt="Need Help" className="ml-2 h-12 w-12 object-contain" width={48} height={48} />
                 </h2>
                 <h3 className="text-[22px] font-semibold uppercase leading-tight sm:text-[32px] 2xl:text-[34px]">
                   {data.titleLine2}
@@ -123,8 +123,8 @@ export default function NeedHelpSection() {
                       {data.commitmentDescLine2}
                     </p>
                   </div>
-                  <img
-                    src={ourCommitmentRightImg.src}
+                  <Image
+                    src={ourCommitmentRightImg}
                     alt="Our Commitment"
                     className="h-10 w-auto shrink-0 object-contain self-end"
                     loading="lazy"
@@ -198,8 +198,8 @@ export default function NeedHelpSection() {
                 ))}
               </ul>
             </div>
-            <img
-              src={whyReachOutImg.src}
+            <Image
+              src={whyReachOutImg}
               alt=""
               className="hidden h-[160px] w-auto shrink-0 object-contain sm:block"
               loading="lazy"
@@ -209,7 +209,7 @@ export default function NeedHelpSection() {
               {/* Dedicated relationship managers */}
               <div className="w-full rounded-2xl border border-gray-200 bg-[#f6f7f4] p-5 shadow-sm">
                 <div className="flex items-start gap-3">
-                  <Image src={dedicated_relation.src} alt="Dedicated Relationship Managers" className="h-20 w-20" width={64} height={64} />
+                  <Image src={dedicated_relation} alt="Dedicated Relationship Managers" className="h-20 w-20" width={64} height={64} />
                   <div>
                     <p className="text-[16px] font-semibold text-[#0d4a1a] sm:text-[18px]">
                       {data.relationshipTitle}
@@ -248,8 +248,8 @@ export default function NeedHelpSection() {
               {/* Left */}
               <div className="flex items-center gap-3 border-b-2 border-white pb-4 lg:w-1/2 lg:border-b-0 lg:border-r-2 lg:border-white lg:pr-6 lg:pb-0 py-2">
                 <span className="flex h-20 w-20 shrink-0 items-center justify-center self-start rounded-full bg-white ">
-                  <img
-                    src={supportRightImg.src}
+                  <Image
+                    src={supportRightImg}
                     alt=""
                     className="h-16 w-16 object-contain"
                   />

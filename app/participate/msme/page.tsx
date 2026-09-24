@@ -54,7 +54,7 @@ export async function generateMetadata(): Promise<Metadata> {
     "Explore MSME Procurement & Marketing Support (PMS) Scheme for Bharat Organic Expo 2027. Check eligibility, financial assistance, documents required and apply for government-backed exhibition support.";
   const ogImage =
     seoData?.ogImage ||
-    "https://res.cloudinary.com/dr8mld4i0/image/upload/v1788165233/moksha-sewa/assets/km.jpg";
+    "";
 
   return {
     metadataBase: new URL(defaultUrl),

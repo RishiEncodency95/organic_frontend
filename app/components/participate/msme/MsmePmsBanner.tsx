@@ -2,7 +2,7 @@
 import React, { useRef, useEffect } from "react";
 import Link from "next/link";
 import { CalendarDays, MapPin, ArrowRight, Hand, Handshake } from "lucide-react";
-import bannerImg from "@/app/assets/participate/msme/home-banner1.png";
+import bannerImg from "@/app/assets/participate/msme/home-banner.webp";
 import leafImg from "@/app/assets/icons/leafs.png";
 import gsap from "gsap";
 import SectionContainer from "@/app/components/layout/SectionContainer";
@@ -174,8 +174,8 @@ export default function MsmePmsBanner({
       >
         {/* Background Image with Ken Burns zoom */}
         <div className="absolute inset-0 z-0 overflow-hidden">
-          <img
-            src={bannerImg.src}
+          <Image
+            src={bannerImg}
             alt="MSME PMS Scheme"
             className="hero-bg-img w-full h-full object-cover"
           />

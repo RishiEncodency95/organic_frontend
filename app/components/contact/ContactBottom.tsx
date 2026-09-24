@@ -1,40 +1,86 @@
 "use client";
-import React, { useRef, useEffect } from 'react';
+import React, { useRef, useEffect, useState } from 'react';
 import { Navigation, ArrowRight } from 'lucide-react';
 import beIcon from '@/app/assets/icons/be.png';
 import SectionContainer from '@/app/components/layout/SectionContainer';
+import { API_URL } from '@/lib/api';
+
+const DEFAULT_MAP_EMBED =
+  "https://maps.google.com/maps?q=12/29,%20Site%20II%20Industrial%20Area,%20Loni%20Rd,%20Mohan%20Nagar,%20Ghaziabad,%20Uttar%20Pradesh%20201007,%20India&t=&z=15&ie=UTF8&iwloc=&output=embed";
+const DEFAULT_ADDRESS = "12/29, Site II Industrial Area,\nLoni Rd, Mohan Nagar, Ghaziabad,\nUttar Pradesh 201007, India";
+
+/** Admins may paste either a bare embed URL or the full <iframe> snippet Google Maps gives you. */
+function extractMapSrc(raw: string): string {
+  const trimmed = raw.trim();
+  if (!trimmed) return DEFAULT_MAP_EMBED;
+  const iframeMatch = trimmed.match(/<iframe[^>]*\ssrc=["']([^"']+)["']/i);
+  return iframeMatch ? iframeMatch[1] : trimmed;
+}
 
 const ContactBottom = () => {
-  const defaultMapSrc = "https://maps.google.com/maps?q=12/29,%20Site%20II%20Industrial%20Area,%20Loni%20Rd,%20Mohan%20Nagar,%20Ghaziabad,%20Uttar%20Pradesh%20201007,%20India&t=&z=15&ie=UTF8&iwloc=&output=embed";
-  const mapSrc = defaultMapSrc;
-
+  const [mapSrc, setMapSrc] = useState(DEFAULT_MAP_EMBED);
+  const [mapCardAddress, setMapCardAddress] = useState(DEFAULT_ADDRESS);
+  const [directionsLabel, setDirectionsLabel] = useState('Get Directions');
+  const [newsletterSubtitle, setNewsletterSubtitle] = useState('Subscribe to our newsletter and never miss an update.');
+  const [subscribeLabel, setSubscribeLabel] = useState('Subscribe');
   const mapCardTitle = "Find Us Here";
-  const mapCardAddress = "12/29, Site II Industrial Area,\nLoni Rd, Mohan Nagar, Ghaziabad,\nUttar Pradesh 201007, India";
+
+  useEffect(() => {
+    let active = true;
+    fetch(`${API_URL}/settings`, { cache: 'no-store' })
+      .then((res) => (res.ok ? res.json() : null))
+      .then((json) => {
+        const settings = json?.data || json;
+        const sections = settings?.contactPage?.sections;
+        const bottom = Array.isArray(sections) ? sections.find((s: any) => s.key === 'contact-bottom') : null;
+        if (active && bottom) {
+          if (typeof bottom.mapEmbedUrl === 'string' && bottom.mapEmbedUrl.trim()) {
+            setMapSrc(extractMapSrc(bottom.mapEmbedUrl));
+          }
+          if (typeof bottom.description === 'string' && bottom.description.trim()) {
+            setMapCardAddress(bottom.description.trim());
+          }
+          if (typeof bottom.buttonLabel === 'string' && bottom.buttonLabel.trim()) {
+            setDirectionsLabel(bottom.buttonLabel.trim());
+          }
+          if (typeof bottom.subtitle === 'string' && bottom.subtitle.trim()) {
+            setNewsletterSubtitle(bottom.subtitle.trim());
+          }
+          if (typeof bottom.secondaryButtonLabel === 'string' && bottom.secondaryButtonLabel.trim()) {
+            setSubscribeLabel(bottom.secondaryButtonLabel.trim());
+          }
+        }
+      })
+      .catch(() => {});
+    return () => {
+      active = false;
+    };
+  }, []);
 
   const handleGetDirections = () => {
     const destination = encodeURIComponent(mapCardAddress);
     window.open(`https://www.google.com/maps/dir/?api=1&destination=${destination}`, '_blank');
   };
 
-  // Lazy-load the map iframe only when visible
-  const mapIframeRef = useRef<HTMLIFrameElement>(null);
+  // Lazy-load the map iframe only once it scrolls into view; keeps tracking `mapSrc`
+  // so the real admin-configured map replaces the default once the settings fetch resolves.
+  const mapIframeRef = useRef<HTMLDivElement>(null);
+  const [mapVisible, setMapVisible] = useState(false);
   useEffect(() => {
-    const iframe = mapIframeRef.current;
-    if (!iframe) return;
+    const el = mapIframeRef.current;
+    if (!el || mapVisible) return;
     const observer = new IntersectionObserver(
       (entries) => {
         if (entries[0].isIntersecting) {
-          if (!iframe.src || iframe.src === 'about:blank') {
-            iframe.src = mapSrc;
-          }
+          setMapVisible(true);
           observer.disconnect();
         }
       },
       { rootMargin: '200px' }
     );
-    observer.observe(iframe);
+    observer.observe(el);
     return () => observer.disconnect();
-  }, [mapSrc]);
+  }, [mapVisible]);
 
   return (
     <section className="w-full bg-[#fbfcf7] pb-10 font-inter relative z-20 -mt-4 md:-mt-8">
@@ -44,15 +90,17 @@ const ContactBottom = () => {
           {/* Left Column: Find Us Here (Map Card) */}
           <div className="flex-1 bg-white rounded-2xl shadow-sm border border-gray-100 flex overflow-hidden relative min-h-[250px]">
             {/* Map background (lazy loaded) */}
-            <div className="absolute inset-0 w-full h-full z-0">
-              <iframe
-                ref={mapIframeRef}
-                className="w-full h-full border-0"
-                allowFullScreen={true}
-                loading="lazy"
-                referrerPolicy="no-referrer-when-downgrade"
-                title="Office Map Location"
-              ></iframe>
+            <div ref={mapIframeRef} className="absolute inset-0 w-full h-full z-0">
+              {mapVisible && (
+                <iframe
+                  src={mapSrc}
+                  className="w-full h-full border-0"
+                  allowFullScreen={true}
+                  loading="lazy"
+                  referrerPolicy="no-referrer-when-downgrade"
+                  title="Office Map Location"
+                ></iframe>
+              )}
             </div>
 
             {/* Overlay card */}
@@ -65,7 +113,7 @@ const ContactBottom = () => {
                 onClick={handleGetDirections}
                 className="bg-[#032e1c] hover:bg-[#044026] text-white px-4 py-1.5 rounded-lg font-medium text-xs transition-colors flex items-center justify-center gap-2 w-fit"
               >
-                <Navigation size={14} /> Get Directions
+                <Navigation size={14} /> {directionsLabel}
               </button>
             </div>
           </div>
@@ -81,7 +129,7 @@ const ContactBottom = () => {
               <div className="text-white pt-2">
                 <h3 className="font-inter font-bold text-2xl mb-2">Stay Updated!</h3>
                 <p className="text-white/80 text-sm leading-relaxed max-w-[250px]">
-                  Subscribe to our newsletter and never miss an update.
+                  {newsletterSubtitle}
                 </p>
               </div>
             </div>
@@ -98,7 +146,7 @@ const ContactBottom = () => {
                 type="submit"
                 className="bg-[#f07e26] hover:bg-[#d96e1a] text-white px-6 py-2.5 rounded-lg font-medium text-sm transition-colors flex items-center justify-center gap-2 shrink-0 w-full sm:w-auto mt-2 sm:mt-0"
               >
-                Subscribe <ArrowRight size={16} />
+                {subscribeLabel} <ArrowRight size={16} />
               </button>
             </form>
 

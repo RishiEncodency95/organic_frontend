@@ -7,7 +7,7 @@ import {
   Phone,
   ChevronRight,
 } from "lucide-react";
-import howToApplyImg from "@/app/assets/participate/msme/how_to_apply.png";
+import howToApplyImg from "@/app/assets/participate/msme/how_to_apply.webp";
 import everySupportImg from "@/app/assets/participate/msme/every_support.png";
 import readyToApplyImg from "@/app/assets/participate/msme/ready_to_apply_right.png";
 import stepsTitleLeftLeafIcon from "@/app/assets/participate/msme/reference-icons/steps-title-left-leaf.png";
@@ -113,8 +113,8 @@ export default function PmsSupportSection() {
                         className={`py-3 px-3 ${index < data.highlightCards.length - 1 ? "sm:border-r sm:border-gray-200" : ""}`}
                       >
                         <div className="flex flex-row items-center gap-3 sm:gap-4">
-                          <img
-                            src={icon.src}
+                          <Image
+                            src={icon}
                             alt=""
                             className="h-11 w-11 shrink-0 object-contain sm:h-16 sm:w-16"
                             aria-hidden="true"
@@ -138,8 +138,8 @@ export default function PmsSupportSection() {
             {/* ---------- 4-step journey ---------- */}
             <div className="relative rounded-3xl bg-[#f5f5ed] p-4 pt-4 ring-1 ring-black/5 sm:p-5 sm:pt-4">
               <div className="absolute left-1/2 top-0 z-20 -translate-x-1/2 -translate-y-1/2 flex items-center">
-                <img
-                  src={stepsTitleLeftLeafIcon.src}
+                <Image
+                  src={stepsTitleLeftLeafIcon}
                   alt=""
                   className="mr-2 hidden h-7 w-auto object-contain sm:block"
                   aria-hidden="true"
@@ -147,8 +147,8 @@ export default function PmsSupportSection() {
                 <h3 className="whitespace-nowrap rounded-lg bg-[#1b5e20] px-8 py-1 text-[16px] font-semibold text-white shadow-lg md:text-[18px] lg:text-[20px] uppercase">
                   {data.journeyTitle}
                 </h3>
-                <img
-                  src={stepsTitleRightLeafIcon.src}
+                <Image
+                  src={stepsTitleRightLeafIcon}
                   alt=""
                   className="ml-2 hidden h-7 w-auto object-contain sm:block"
                   aria-hidden="true"
@@ -190,8 +190,8 @@ export default function PmsSupportSection() {
                       </span>
 
                       <div className="flex h-full w-full flex-col rounded-2xl bg-white px-5 py-4 shadow-sm ring-1 ring-black/5 sm:px-6 sm:py-4">
-                        <img
-                          src={icon.src}
+                        <Image
+                          src={icon}
                           alt=""
                           className="mx-auto mb-4 h-16 w-16 object-contain sm:h-20 sm:w-20"
                           aria-hidden="true"
@@ -212,8 +212,8 @@ export default function PmsSupportSection() {
               <div className="grid grid-cols-1 gap-4 sm:gap-5 lg:grid-cols-[1fr_0.7fr_0.7fr] mt-4 w-full">
                 {/* Expert support at every step */}
                 <div className="relative rounded-2xl bg-[#0b2912] text-white">
-                  <img
-                    src={everySupportImg.src}
+                  <Image
+                    src={everySupportImg}
                     alt="Bharat Organic Expo support specialist ready to help with PMS applications"
                     className="absolute -top-4 left-0 h-[calc(100%+1rem)] w-full md:w-full lg:w-[55%] object-cover object-top"
                     loading="lazy"
@@ -306,8 +306,8 @@ export default function PmsSupportSection() {
                     </div>
                   </div>
                 </div>
-                <img
-                  src={leftImage.src}
+                <Image
+                  src={leftImage}
                   alt="Ready to apply for PMS"
                   className="hidden sm:block h-[180px] w-[120px] object-contain self-end mb-5 -ml-1"
                   loading="lazy"

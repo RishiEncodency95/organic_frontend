@@ -1016,8 +1016,8 @@ export default function PMSDocumentsBanner() {
           BACKGROUND
       ========================================================== */}
 
-      <img
-        src={documentsBgImg.src}
+      <Image
+        src={documentsBgImg}
         alt=""
         aria-hidden="true"
         className="
@@ -1310,8 +1310,8 @@ export default function PMSDocumentsBanner() {
 
           {/* EXACT RIGHT DOCUMENT ART */}
 
-          <img
-            src={docsImg.src}
+          <Image
+            src={docsImg}
             alt=""
             aria-hidden="true"
             className="
@@ -1708,8 +1708,8 @@ export default function PMSDocumentsBanner() {
             </p>
           </div>
 
-          <img
-            src={docsImg.src}
+          <Image
+            src={docsImg}
             alt=""
             className="
               absolute

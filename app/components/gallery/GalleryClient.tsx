@@ -8,18 +8,12 @@ import GalleryGrid from '@/app/components/gallery/GalleryGrid';
 import Counters from '@/app/components/gallery/Counters';
 import VideoHighlights from '@/app/components/gallery/VideoHighlights';
 import JoinUsBanner from '@/app/components/gallery/JoinUsBanner';
+import { API_URL, SERVER_URL } from '@/lib/api';
 
-const BACKEND_URL =
-  process.env.NEXT_PUBLIC_API_URL?.replace("/api", "") ||
-  process.env.NEXT_PUBLIC_SERVER_URL ||
-  "http://localhost:4001";
-
-/** Ensure image src is always absolute */
 const resolveImageUrl = (src: string): string => {
   if (!src) return src;
   if (src.startsWith("http://") || src.startsWith("https://")) return src;
-  // Relative path like /uploads/... — prefix with backend origin
-  return `${BACKEND_URL}${src.startsWith("/") ? "" : "/"}${src}`;
+  return `${SERVER_URL}${src.startsWith("/") ? "" : "/"}${src}`;
 };
 
 export default function GalleryClient() {
@@ -35,8 +29,8 @@ export default function GalleryClient() {
     const fetchGalleryData = async () => {
       try {
         const [metaRes, itemsRes] = await Promise.all([
-          fetch(`${BACKEND_URL}/api/website/gallery/meta`, { cache: 'no-store' }).catch(() => null),
-          fetch(`${BACKEND_URL}/api/website/gallery/items`, { cache: 'no-store' }).catch(() => null),
+          fetch(`${API_URL}/website/gallery/meta`, { cache: 'no-store' }).catch(() => null),
+          fetch(`${API_URL}/website/gallery/items`, { cache: 'no-store' }).catch(() => null),
         ]);
 
         if (metaRes && metaRes.ok) {

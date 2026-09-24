@@ -1,13 +1,29 @@
 "use client";
 import aboutImg from "@/app/assets/banner/about.webp";
 import vleafImg from "@/app/assets/icons/vleaf.png";
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import Image from 'next/image';
 import SectionContainer from '@/app/components/layout/SectionContainer';
+import { API_URL } from '@/lib/api';
 
-const homeAboutData = {
+interface Paragraph {
+  boldLead: string;
+  text: string;
+}
+
+interface HomeAboutData {
+  tagline: string;
+  title: string;
+  image: string;
+  imageAlt: string;
+  paragraphs: Paragraph[];
+}
+
+const DEFAULT_DATA: HomeAboutData = {
   tagline: "ABOUT ORGANIC EXPO",
   title: "WHO WE ARE",
+  image: "",
+  imageAlt: "Bharat Organic Expo - Who We Are",
   paragraphs: [
     {
       boldLead: "Bharat Organic Expo 2027",
@@ -25,6 +41,32 @@ const homeAboutData = {
 };
 
 const HomeAbout = () => {
+  const [data, setData] = useState<HomeAboutData>(DEFAULT_DATA);
+
+  useEffect(() => {
+    let active = true;
+    fetch(`${API_URL}/website/abouts/about/home-about`, { cache: "no-store" })
+      .then((res) => (res.ok ? res.json() : null))
+      .then((json) => {
+        const d = json?.data || json;
+        if (!active || !d) return;
+        const paragraphs = Array.isArray(d.paragraphs) && d.paragraphs.length > 0 ? d.paragraphs : null;
+        setData({
+          tagline: d.tagline || DEFAULT_DATA.tagline,
+          title: d.title || DEFAULT_DATA.title,
+          image: typeof d.image === "string" ? d.image.trim() : "",
+          imageAlt: d.imageAlt || DEFAULT_DATA.imageAlt,
+          paragraphs: paragraphs || DEFAULT_DATA.paragraphs,
+        });
+      })
+      .catch(() => {});
+    return () => {
+      active = false;
+    };
+  }, []);
+
+  const bannerSrc = data.image || aboutImg;
+
   return (
     <section className="py-8 bg-white relative overflow-hidden border-t border-gray-100 font-inter">
       {/* Decorative Top Right Corner Leaf (vleaf.png) */}
@@ -38,29 +80,30 @@ const HomeAbout = () => {
 
       <SectionContainer className="relative z-10">
         <div className="grid grid-cols-1 lg:grid-cols-[480px_1fr] xl:grid-cols-[520px_1fr] gap-8 lg:gap-12 items-center">
-          
+
           {/* Left Column: Larger Banner Image */}
           <div className="w-full relative flex items-center">
             <div className="relative w-full h-[360px] md:h-[430px] lg:h-[450px]">
               {/* Dot pattern top-right */}
-              <div 
+              <div
                 className="absolute -top-4 -right-4 w-28 h-28 z-0 pointer-events-none"
-                style={{ backgroundImage: 'radial-gradient(circle, #d26019 1.2px, transparent 1.2px)', backgroundSize: '9px 9px', opacity: 0.25 }} 
+                style={{ backgroundImage: 'radial-gradient(circle, #d26019 1.2px, transparent 1.2px)', backgroundSize: '9px 9px', opacity: 0.25 }}
               />
               {/* Dot pattern bottom-left */}
-              <div 
+              <div
                 className="absolute -bottom-4 -left-4 w-28 h-28 z-0 pointer-events-none"
-                style={{ backgroundImage: 'radial-gradient(circle, #23471d 1.2px, transparent 1.2px)', backgroundSize: '9px 9px', opacity: 0.2 }} 
+                style={{ backgroundImage: 'radial-gradient(circle, #23471d 1.2px, transparent 1.2px)', backgroundSize: '9px 9px', opacity: 0.2 }}
               />
 
               {/* Main Image */}
-              <div 
+              <div
                 className="relative z-10 w-full h-full overflow-hidden group rounded-xl shadow-lg"
                 style={{ outline: '2px solid #d26019', outlineOffset: '-2px' }}
               >
                 <Image
-                  src={aboutImg}
-                  alt="Bharat Organic Expo - Who We Are"
+                  key={data.image || "default"}
+                  src={bannerSrc}
+                  alt={data.imageAlt}
                   fill
                   sizes="(max-width: 1024px) 100vw, 520px"
                   className="object-cover transition-transform duration-500 group-hover:scale-105"
@@ -75,19 +118,19 @@ const HomeAbout = () => {
           <div className="w-full flex flex-col justify-center">
             <p className="flex items-center gap-2 text-[#d26019] font-semibold text-[14px] uppercase tracking-[0.22em] mb-2">
               <span className="inline-block w-6 h-[1.5px] bg-[#d26019]" />
-              {homeAboutData.tagline}
+              {data.tagline}
               <span className="inline-block w-6 h-[1.5px] bg-[#d26019]" />
             </p>
 
-            <h2 
+            <h2
               className="font-semibold text-[28px] leading-[1.2] mb-3 text-[#23471d] font-poppins"
               style={{ textShadow: "1px 1px 2px rgba(0,0,0,0.4)" }}
             >
-              {homeAboutData.title}
+              {data.title}
             </h2>
 
             <div className="space-y-3">
-              {homeAboutData.paragraphs.map((para, index) => (
+              {data.paragraphs.map((para, index) => (
                 <p key={index} className="text-gray-900 text-sm leading-[1.6] text-justify font-semibold">
                   {para.boldLead && <strong className="font-semibold text-[#1a2e1a]">{para.boldLead}</strong>}
                   {para.text}

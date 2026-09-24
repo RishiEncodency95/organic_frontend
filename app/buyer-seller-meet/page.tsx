@@ -46,7 +46,7 @@ export async function generateMetadata(): Promise<Metadata> {
     "Join thousands of experts, buyers, and exhibitors at the most anticipated organic and wellness mega event.";
   const ogImage =
     seoData?.ogImage ||
-    "https://res.cloudinary.com/dr8mld4i0/image/upload/v1788165233/moksha-sewa/assets/km.jpg";
+    "";
 
   return {
     metadataBase: new URL(defaultUrl),

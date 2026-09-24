@@ -955,7 +955,7 @@ function Breakdown() {
         Here&apos;s how your profile matches with our key requirements:
       </p>
 
-      <div className="mt-[8px] grid min-h-0 flex-1 grid-cols-2 grid-rows-3 gap-x-[12px] gap-y-[8px]">
+      <div className="mt-[6px] grid min-h-0 flex-1 grid-cols-2 grid-rows-3 gap-x-[8px] gap-y-[8px]">
         {breakdownItems.map((item) => {
           const scoreColor =
             item.score >= 70
@@ -967,26 +967,26 @@ function Breakdown() {
           return (
             <div
               key={item.title}
-              className="grid min-h-0 grid-cols-[40px_minmax(0,1fr)_48px] items-center gap-[10px] rounded-[10px] border border-[#e2ece5] bg-white px-[12px] py-[8px] shadow-[0_1px_2px_rgba(0,0,0,0.03)]"
+              className="grid min-h-0 grid-cols-[28px_minmax(0,1fr)_40px] items-center gap-[8px] rounded-[10px] border border-[#e2ece5] bg-white px-[10px] py-[5px] shadow-[0_1px_2px_rgba(0,0,0,0.03)]"
             >
               <Image
                 src={iconAssets[item.title] ?? asset("briefcase-large.png")}
                 alt=""
                 width={64}
                 height={64}
-                className="h-[36px] w-[36px] object-contain"
+                className="h-[24px] w-[24px] object-contain"
               />
 
               <div className="min-w-0">
-                <h4 className="truncate text-[14px] font-bold leading-tight text-[#102e50]">
+                <h4 className="truncate text-[12.5px] font-bold leading-tight text-[#102e50]">
                   {item.title}
                 </h4>
 
-                <p className="mt-[1px] truncate text-[12.5px] font-semibold text-[#34475c]">
+                <p className="mt-[1px] truncate text-[11px] font-semibold text-[#34475c]">
                   {item.description}
                 </p>
 
-                <div className="mt-[5px] h-[8px] overflow-hidden rounded-full bg-[#e0e5e8]">
+                <div className="mt-[3px] h-[6px] overflow-hidden rounded-full bg-[#e0e5e8]">
                   <div
                     className="h-full rounded-full transition-all duration-300"
                     style={{
@@ -998,7 +998,7 @@ function Breakdown() {
               </div>
 
               <span
-                className="text-right text-[15px] font-bold"
+                className="text-right text-[13px] font-bold"
                 style={{ color: scoreColor }}
               >
                 {item.score}%
@@ -2093,7 +2093,7 @@ export function EligibilityModal({
 
   return (
     <div className="fixed inset-0 z-[99999] flex items-center justify-center p-3">
-      <div className="absolute inset-0 bg-slate-950/45 backdrop-blur-[5px]" onClick={onClose} />
+      <div className="absolute inset-0 bg-slate-950/45 backdrop-blur-[5px]" />
 
       <div
         className="

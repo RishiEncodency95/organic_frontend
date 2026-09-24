@@ -1,10 +1,10 @@
 "use client";
 import React, { useEffect, useState, useRef } from "react";
-import Image from "next/image";
-import bgImg from "../../../assets/banner/sponog.png";
+import bgImg from "../../../assets/banner/sponog.webp";
 import leafImg from "../../../assets/icons/leafs.png";
 import { Users, Store, Presentation, Globe, Handshake, Leaf } from "lucide-react";
 import SectionContainer from "@/app/components/layout/SectionContainer";
+import { API_URL } from "@/lib/api";
 
 const ICON_MAP: Record<string, React.ReactNode> = {
   Users: <Users className="w-5 h-5 md:w-6 md:h-6 text-[#2e7d32]" strokeWidth={1.5} />,
@@ -14,29 +14,43 @@ const ICON_MAP: Record<string, React.ReactNode> = {
   Handshake: <Handshake className="w-5 h-5 md:w-6 md:h-6 text-[#2e7d32]" strokeWidth={1.5} />,
 };
 
-export const HERO_SECTION_DATA = [
-  {
-    id: 1,
-    titleLine1: "SPONSORSHIP",
-    titleHighlight: "OPPORTUNITIES",
-    badgeText: "Partner. Promote. Make an Impact.",
-    descriptionBold: "Align your brand with India's Premier Organic Expo",
-    descriptionText: "and connect with the right audience, build credibility and drive real impact.",
-    stats: [
-      { iconKey: "Users", number: "8,000+", label: "BUSINESS\nVISITORS" },
-      { iconKey: "Store", number: "200+", label: "EXHIBITORS" },
-      { iconKey: "Presentation", number: "150+", label: "SPEAKERS" },
-      { iconKey: "Globe", number: "25+", label: "COUNTRIES" },
-      { iconKey: "Handshake", number: "UNLIMITED", label: "BUSINESS\nOPPORTUNITIES" },
-    ],
-  },
-];
+interface Stat {
+  iconKey: string;
+  number: string;
+  label: string;
+}
+
+interface HeroData {
+  titleLine1: string;
+  titleHighlight: string;
+  badgeText: string;
+  descriptionBold: string;
+  descriptionText: string;
+  image: string;
+  stats: Stat[];
+}
+
+const DEFAULT_DATA: HeroData = {
+  titleLine1: "SPONSORSHIP",
+  titleHighlight: "OPPORTUNITIES",
+  badgeText: "Partner. Promote. Make an Impact.",
+  descriptionBold: "Align your brand with India's Premier Organic Expo",
+  descriptionText: "and connect with the right audience, build credibility and drive real impact.",
+  image: "",
+  stats: [
+    { iconKey: "Users", number: "8,000+", label: "BUSINESS\nVISITORS" },
+    { iconKey: "Store", number: "200+", label: "EXHIBITORS" },
+    { iconKey: "Presentation", number: "150+", label: "SPEAKERS" },
+    { iconKey: "Globe", number: "25+", label: "COUNTRIES" },
+    { iconKey: "Handshake", number: "UNLIMITED", label: "BUSINESS\nOPPORTUNITIES" },
+  ],
+};
 
 const AnimatedCounter = ({ value }: { value: string }) => {
   const [count, setCount] = useState(0);
   const [isClient, setIsClient] = useState(false);
   const ref = useRef<HTMLSpanElement>(null);
-  
+
   const isUnlimited = value === "UNLIMITED";
   const numMatch = value.match(/[\d,]+/);
   const targetNumber = numMatch ? parseInt(numMatch[0].replace(/,/g, ""), 10) : 0;
@@ -45,7 +59,7 @@ const AnimatedCounter = ({ value }: { value: string }) => {
   useEffect(() => {
     setIsClient(true);
     if (isUnlimited) return;
-    
+
     const observer = new IntersectionObserver(
       (entries) => {
         if (entries[0].isIntersecting) {
@@ -54,7 +68,7 @@ const AnimatedCounter = ({ value }: { value: string }) => {
           const incrementTime = 30;
           const totalSteps = duration / incrementTime;
           const step = targetNumber / totalSteps;
-          
+
           const timer = setInterval(() => {
             start += step;
             if (start >= targetNumber) {
@@ -64,17 +78,17 @@ const AnimatedCounter = ({ value }: { value: string }) => {
               setCount(Math.ceil(start));
             }
           }, incrementTime);
-          
+
           observer.disconnect();
         }
       },
       { threshold: 0.5 }
     );
-    
+
     if (ref.current) {
       observer.observe(ref.current);
     }
-    
+
     return () => observer.disconnect();
   }, [targetNumber, isUnlimited]);
 
@@ -91,15 +105,40 @@ const AnimatedCounter = ({ value }: { value: string }) => {
 };
 
 export default function HeroSection() {
-  const data = HERO_SECTION_DATA[0];
+  const [data, setData] = useState<HeroData>(DEFAULT_DATA);
+
+  useEffect(() => {
+    let active = true;
+    fetch(`${API_URL}/website/opportunities/sponsorship/hero`, { cache: "no-store" })
+      .then((res) => (res.ok ? res.json() : null))
+      .then((json) => {
+        const d = json?.data || json;
+        if (!active || !d) return;
+        setData({
+          titleLine1: d.titleLine1 || DEFAULT_DATA.titleLine1,
+          titleHighlight: d.titleHighlight || DEFAULT_DATA.titleHighlight,
+          badgeText: d.badgeText || DEFAULT_DATA.badgeText,
+          descriptionBold: d.descriptionBold || DEFAULT_DATA.descriptionBold,
+          descriptionText: d.descriptionText || "",
+          image: typeof d.image === "string" ? d.image.trim() : "",
+          stats: Array.isArray(d.stats) && d.stats.length > 0 ? d.stats : DEFAULT_DATA.stats,
+        });
+      })
+      .catch(() => {});
+    return () => {
+      active = false;
+    };
+  }, []);
+
+  const bgUrl = data.image || bgImg.src;
 
   return (
     <section className="relative w-full min-h-[380px] sm:min-h-[420px] md:min-h-[450px] lg:min-h-[470px] flex items-center bg-[#f4f7f6] overflow-hidden font-inter pt-3 md:pt-5 pb-4 md:pb-6">
       {/* Background Image */}
-      <div 
+      <div
         className="absolute inset-0 z-0"
         style={{
-          backgroundImage: `url(${bgImg.src})`,
+          backgroundImage: `url(${bgUrl})`,
           backgroundPosition: "center top",
           backgroundSize: "cover",
           backgroundRepeat: "no-repeat",
@@ -127,7 +166,7 @@ export default function HeroSection() {
               {data.titleLine1} <br />
               <span className="text-[#7ea82a]">{data.titleHighlight}</span>
             </h1>
-            
+
             <div className="flex items-center gap-2 md:gap-3 mb-2 md:mb-3 pl-0.5">
               <div className="w-10 md:w-16 h-[2px] bg-[#d97706]"></div>
               <Leaf className="text-[#d97706] w-3.5 h-3.5 md:w-4 md:h-4 fill-[#d97706] -rotate-12" />
@@ -149,9 +188,9 @@ export default function HeroSection() {
                 {idx !== data.stats.length - 1 && (
                   <div className="hidden lg:block absolute -right-5 top-1/2 -translate-y-1/2 w-[1px] h-11 bg-gray-300"></div>
                 )}
-                
+
                 <div className="mb-1">
-                  {ICON_MAP[stat.iconKey]}
+                  {ICON_MAP[stat.iconKey] || ICON_MAP.Users}
                 </div>
                 <span className="text-xs sm:text-sm md:text-base lg:text-[17px] font-semibold text-[#d97706] font-poppins leading-none mb-0.5">
                   <AnimatedCounter value={stat.number} />

@@ -28,7 +28,7 @@ import {
 } from 'lucide-react';
 
 import Image from 'next/image';
-import seminarsImg from '../../assets/home/seminars.png';
+import seminarsImg from '../../assets/home/seminars.webp';
 import { websiteApi } from '@/lib/api';
 
 const ICON_MAP: Record<string, LucideIcon> = {

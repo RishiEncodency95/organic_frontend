@@ -177,7 +177,7 @@ export default function ApplicationSuccessModal({ isOpen, onClose, applicationDa
 
   return (
     <div className="fixed inset-0 z-[99999] flex items-center justify-center p-3">
-      <div className="absolute inset-0 bg-slate-950/45 backdrop-blur-[5px]" onClick={onClose} />
+      <div className="absolute inset-0 bg-slate-950/45 backdrop-blur-[5px]" />
       <div className="relative z-10 flex max-h-[95vh] w-[85%] max-w-[1300px] overflow-hidden rounded-[18px] bg-[#fbfcf9] shadow-[0_30px_90px_rgba(0,0,0,.28)]">
 
         {/* ===== LEFT SIDE ===== */}
@@ -313,8 +313,8 @@ export default function ApplicationSuccessModal({ isOpen, onClose, applicationDa
           </div>
 
           {/* WHAT HAPPENS NEXT */}
-          <div className="shrink-0 mt-[12px]">
-            <h2 className="text-[18px] font-semibold text-[#123963]">What Happens Next?</h2>
+          <div className="shrink-0 mt-[8px]">
+            <h2 className="text-[16px] font-semibold text-[#123963]">What Happens Next?</h2>
             <p className="mt-[2px] text-[12.5px] text-[#58708c]">Here is our typical recruitment process:</p>
 
             <div className="mt-[10px] relative">

@@ -43,7 +43,7 @@ export async function generateMetadata(): Promise<Metadata> {
     "Meet the distinguished leaders and professionals shaping the strategic direction of Bharat Organic Expo 2027.";
   const ogImage =
     seoData?.ogImage ||
-    "https://res.cloudinary.com/dr8mld4i0/image/upload/v1788165233/moksha-sewa/assets/km.jpg";
+    "";
 
   return {
     metadataBase: new URL(defaultUrl),

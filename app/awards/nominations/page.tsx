@@ -38,7 +38,7 @@ export async function generateMetadata(): Promise<Metadata> {
     "Nominate your organisation, brand, innovation, or leadership for Bharat Organic Excellence Awards 2027. Celebrate excellence in organic farming, healthcare, and sustainability.";
   const ogImage =
     seoData?.ogImage ||
-    "https://res.cloudinary.com/dr8mld4i0/image/upload/v1788165233/moksha-sewa/assets/km.jpg";
+    "";
 
   return {
     metadataBase: new URL(defaultUrl),
