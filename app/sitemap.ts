@@ -1,7 +1,7 @@
 import { MetadataRoute } from 'next';
 
 const BASE_URL = 'https://bharatorganicexpo.com';
-const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:4001/api';
+const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000/api';
 
 // Static pages (always included)
 const staticPages: MetadataRoute.Sitemap = [
