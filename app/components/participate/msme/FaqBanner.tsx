@@ -13,10 +13,11 @@ import {
   ChevronRight,
 } from "lucide-react";
 
-import faqLeftImg from "@/app/assets/participate/msme/faq-left-visual-exact.png";
+import faqLeftImg from "@/app/assets/participate/msme/faq-left-visual-exact.webp";
 import faqLeavesImg from "@/app/assets/participate/msme/faq-leaves-exact.png";
 import faqLeftDeco from "@/app/assets/participate/msme/faq_left.png";
 import faqRightDeco from "@/app/assets/participate/msme/faq_right.png";
+import Image from "next/image";
 
 /* ================================================================
    TYPES
@@ -168,8 +169,8 @@ export default function FAQBanner() {
             "0 48% 48% 0 / 0 50% 50% 0",
         }}
       >
-        <img
-          src={faqLeftImg.src}
+        <Image
+          src={faqLeftImg}
           alt=""
           className="
             h-full
@@ -196,8 +197,8 @@ export default function FAQBanner() {
           TOP RIGHT LEAF BRANCH
       ========================================================== */}
 
-      <img
-        src={faqLeavesImg.src}
+      <Image
+        src={faqLeavesImg}
         alt=""
         aria-hidden="true"
         className="
@@ -356,8 +357,8 @@ export default function FAQBanner() {
               gap-[0.5vw]
             "
           >
-            <img
-              src={faqLeftDeco.src}
+            <Image
+              src={faqLeftDeco}
               alt=""
               className="
                 h-[3vw]
@@ -395,8 +396,8 @@ export default function FAQBanner() {
               gap-[0.5vw]
             "
           >
-            <img
-              src={faqRightDeco.src}
+            <Image
+              src={faqRightDeco}
               alt=""
               className="
                 h-[3vw]
@@ -640,8 +641,8 @@ export default function FAQBanner() {
             "
           /> */}
 
-          <img
-            src={faqLeftDeco.src}
+          <Image
+            src={faqLeftDeco}
             alt=""
             className="
               h-6
@@ -663,8 +664,8 @@ export default function FAQBanner() {
             FAQ
           </h2>
 
-          <img
-            src={faqRightDeco.src}
+          <Image
+            src={faqRightDeco}
             alt=""
             className="
               h-6

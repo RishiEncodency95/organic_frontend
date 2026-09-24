@@ -125,8 +125,8 @@ export default function MsmePmsScheme() {
         py-4
       "
     >
-      <img
-        src={leftLeaves.src}
+      <Image
+        src={leftLeaves}
         alt=""
         aria-hidden="true"
         className="
@@ -166,8 +166,8 @@ export default function MsmePmsScheme() {
                   sm:mx-[18px]
                 "
               >
-                <img
-                  src={knowSchemeIcon.src}
+                <Image
+                  src={knowSchemeIcon}
                   alt=""
                   aria-hidden="true"
                   className="
@@ -310,8 +310,8 @@ export default function MsmePmsScheme() {
                     hover:shadow-[0_12px_24px_rgba(0,0,0,0.15)]
                   "
                 >
-                  <img
-                    src={feature.icon.src}
+                  <Image
+                    src={feature.icon}
                     alt=""
                     aria-hidden="true"
                     className="
@@ -367,8 +367,8 @@ export default function MsmePmsScheme() {
                     ))}
                   </p>
 
-                  <img
-                    src={feature.bottom.src}
+                  <Image
+                    src={feature.bottom}
                     alt=""
                     aria-hidden="true"
                     className="
@@ -406,8 +406,8 @@ export default function MsmePmsScheme() {
                 sm:px-[32px]
               "
             >
-              <img
-                src={bottomShield.src}
+              <Image
+                src={bottomShield}
                 alt=""
                 aria-hidden="true"
                 className="
@@ -455,8 +455,8 @@ export default function MsmePmsScheme() {
                 </p>
               </div>
 
-              <img
-                src={bottomRightLeaves.src}
+              <Image
+                src={bottomRightLeaves}
                 alt=""
                 aria-hidden="true"
                 className="

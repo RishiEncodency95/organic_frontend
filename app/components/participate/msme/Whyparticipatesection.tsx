@@ -19,25 +19,25 @@ export const WHY_PARTICIPATE_SECTION_DATA = {
   },
   features: [
     {
-      icon: pmsApprovedIcon.src,
+      icon: pmsApprovedIcon,
       title: "PMS Approved Event*",
       description:
         "Opportunity for eligible<br/> MSMEs to explore applicable<br/> PMS assistance.",
     },
     {
-      icon: focusedIndustryIcon.src,
+      icon: focusedIndustryIcon,
       title: "Focused Industry Platform",
       description:
         "Organic • Food • Nutrition •<br/> AYUSH • Herbal • Wellness •<br/> Agriculture • GreenTech",
     },
     {
-      icon: b2bOpportunitiesIcon.src,
+      icon: b2bOpportunitiesIcon,
       title: "B2B Opportunities",
       description:
         "Connect with buyers,<br/> distributors and industry<br/> professionals.",
     },
     {
-      icon: dedicatedSupportIcon.src,
+      icon: dedicatedSupportIcon,
       title: "Dedicated PMS Support",
       description: "Guidance before, during<br/> and after exhibition<br/> participation.",
     },
@@ -59,8 +59,8 @@ export default function WhyParticipateSection() {
     >
       {/* Background image */}
       <div className="absolute inset-0 z-0">
-        <img
-          src={whyParticipateBg.src}
+        <Image
+          src={whyParticipateBg}
           alt=""
           className="h-full w-full object-cover pointer-events-none"
         />
@@ -102,7 +102,7 @@ export default function WhyParticipateSection() {
             >
               {/* Icon container - half outside, half inside */}
               <div className="absolute -top-10 left-1/2 z-10 flex h-30 w-30 -translate-x-1/2 items-center justify-center overflow-hidden">
-                <img src={feature.icon} alt="" className="h-full w-full object-cover" />
+                <Image src={feature.icon} alt="" className="h-full w-full object-cover" />
               </div>
               <div className="flex flex-1 flex-col items-center px-5 pt-2 pb-2">
                 <h3 className="text-[20px] font-semibold text-slate-900">
