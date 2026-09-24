@@ -313,8 +313,8 @@ export default function ApplicationSuccessModal({ isOpen, onClose, applicationDa
           </div>
 
           {/* WHAT HAPPENS NEXT */}
-          <div className="shrink-0 mt-[12px]">
-            <h2 className="text-[18px] font-semibold text-[#123963]">What Happens Next?</h2>
+          <div className="shrink-0 mt-[8px]">
+            <h2 className="text-[16px] font-semibold text-[#123963]">What Happens Next?</h2>
             <p className="mt-[2px] text-[12.5px] text-[#58708c]">Here is our typical recruitment process:</p>
 
             <div className="mt-[10px] relative">

@@ -400,12 +400,14 @@ function PersonalInformation({
           }
         }
 
-        // 2. OpenAI Vision Check
+        // 2. Deep AI vision check: real human adult face, appropriate content, upright,
+        // clear, and (when the résumé states a gender) matching it.
+        const resumeGender = candidateData?.fullProfile?.gender || candidateData?.gender || null;
         try {
           const res = await fetch("/api/verify-image", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ imageBase64: dataUrl }),
+            body: JSON.stringify({ imageBase64: dataUrl, expectedGender: resumeGender }),
           });
 
           const json = await res.json();
@@ -416,15 +418,16 @@ function PersonalInformation({
             setVerificationError(null);
           } else {
             setVerificationError(
-              json.reason || "OpenAI Verification Failed: Please upload an upright, clear photo of a male or female face."
+              json.reason || "Please upload a clear, upright photo of your own face."
             );
             setIsPhotoVerified(false);
           }
         } catch (err: any) {
           console.warn("API verify image error:", err);
-          // Fallback verification
-          setPhotoSrc(dataUrl);
-          setIsPhotoVerified(true);
+          // Fail closed: an unverifiable photo must not be silently accepted, since that
+          // would defeat this entire check.
+          setVerificationError("We couldn't verify this photo right now. Please try again.");
+          setIsPhotoVerified(false);
         } finally {
           setIsVerifying(false);
         }
@@ -501,7 +504,7 @@ function PersonalInformation({
             {isVerifying ? (
               <div className="flex items-center gap-[6px] text-[13px] font-bold text-[#0284c7]">
                 <Loader2 className="h-[15px] w-[15px] animate-spin" />
-                Checking OpenAI Vision...
+                Checking Vision...
               </div>
             ) : isPhotoVerified ? (
               <div className="space-y-[3px]">
