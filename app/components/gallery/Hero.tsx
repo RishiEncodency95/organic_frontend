@@ -4,10 +4,7 @@ import { motion, Variants } from 'framer-motion';
 import gallarybg from '@/app/assets/banner/gallog2.webp';
 import { Leaf } from 'lucide-react';
 import SectionContainer from '@/app/components/layout/SectionContainer';
-
-const API_URL =
-  process.env.NEXT_PUBLIC_API_URL ||
-  "http://localhost:4001/api";
+import { API_URL } from '@/lib/api';
 
 const customEase: [number, number, number, number] = [0.16, 1, 0.3, 1];
 

@@ -11,6 +11,7 @@ import gal6 from '@/app/assets/icons/gal6.png';
 import leafLeft from '@/app/assets/icons/leafs.png';
 import SectionContainer from '@/app/components/layout/SectionContainer';
 import { SITE_CONFIG } from '@/app/constants/siteConfig';
+import { API_URL } from '@/lib/api';
 
 if (typeof window !== 'undefined') {
   gsap.registerPlugin(ScrollTrigger);
@@ -81,10 +82,6 @@ const defaultStats = [
   { icon: gal5, num: SITE_CONFIG.stats.countriesCount, label: 'Countries\nParticipated' },
   { icon: gal6, num: SITE_CONFIG.stats.sessionsCount, label: 'Sessions\nConducted' },
 ];
-
-const API_URL =
-  process.env.NEXT_PUBLIC_API_URL ||
-  "http://localhost:4001/api";
 
 interface CountersProps {
   dbCounters?: any[];
