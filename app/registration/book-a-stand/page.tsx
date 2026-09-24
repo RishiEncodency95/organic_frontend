@@ -38,7 +38,7 @@ export async function generateMetadata(): Promise<Metadata> {
     "Book your exhibition stall or stand at Bharat Organic Expo 2027. Reserve prime space to showcase your organic and natural products to thousands of buyers.";
   const ogImage =
     seoData?.ogImage ||
-    "https://res.cloudinary.com/dr8mld4i0/image/upload/v1788165233/moksha-sewa/assets/km.jpg";
+    "";
 
   return {
     metadataBase: new URL(defaultUrl),

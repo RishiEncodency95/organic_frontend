@@ -41,7 +41,7 @@ export async function generateMetadata(): Promise<Metadata> {
     "Maximize your brand visibility and connect with a highly targeted audience before, during and after the event.";
   const ogImage =
     seoData?.ogImage ||
-    "https://res.cloudinary.com/dr8mld4i0/image/upload/v1788165233/moksha-sewa/assets/km.jpg";
+    "";
 
   return {
     metadataBase: new URL(defaultUrl),

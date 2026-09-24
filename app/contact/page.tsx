@@ -40,7 +40,7 @@ export async function generateMetadata(): Promise<Metadata> {
     "Get in touch with the Bharat Organic Expo team for any queries regarding exhibiting, visiting, or sponsoring.";
   const ogImage =
     seoData?.ogImage ||
-    "https://res.cloudinary.com/dr8mld4i0/image/upload/v1788165233/moksha-sewa/assets/km.jpg";
+    "";
 
   return {
     metadataBase: new URL(defaultUrl),

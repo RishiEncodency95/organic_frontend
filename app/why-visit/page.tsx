@@ -54,7 +54,7 @@ export async function generateMetadata(): Promise<Metadata> {
     "Source better, connect directly, and grow your business at Bharat Organic Expo 2027. Meet 200+ exhibitors, 8,000+ visitors, and explore 6 major industry segments.";
   const ogImage =
     seoData?.ogImage ||
-    "https://res.cloudinary.com/dr8mld4i0/image/upload/v1788165233/moksha-sewa/assets/km.jpg";
+    "";
 
   return {
     metadataBase: new URL(defaultUrl),

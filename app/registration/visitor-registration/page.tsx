@@ -38,7 +38,7 @@ export async function generateMetadata(): Promise<Metadata> {
     "Register as a visitor for Bharat Organic Expo 2027. Get your free entry pass, meet 200+ organic exhibitors, and discover top natural products in New Delhi.";
   const ogImage =
     seoData?.ogImage ||
-    "https://res.cloudinary.com/dr8mld4i0/image/upload/v1788165233/moksha-sewa/assets/km.jpg";
+    "";
 
   return {
     metadataBase: new URL(defaultUrl),

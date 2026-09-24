@@ -38,7 +38,7 @@ export async function generateMetadata(): Promise<Metadata> {
     "Register as a trade buyer at Bharat Organic Expo 2027. Connect with 200+ verified organic producers, schedule B2B meetings, and source premium products.";
   const ogImage =
     seoData?.ogImage ||
-    "https://res.cloudinary.com/dr8mld4i0/image/upload/v1788165233/moksha-sewa/assets/km.jpg";
+    "";
 
   return {
     metadataBase: new URL(defaultUrl),

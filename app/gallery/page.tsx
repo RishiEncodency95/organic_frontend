@@ -38,7 +38,7 @@ export async function generateMetadata(): Promise<Metadata> {
     "Explore glimpses, photos, and video highlights from previous editions of Bharat Organic Expo. Witness the scale, energy, and impactful moments.";
   const ogImage =
     seoData?.ogImage ||
-    "https://res.cloudinary.com/dr8mld4i0/image/upload/v1788165233/moksha-sewa/assets/km.jpg";
+    "";
 
   return {
     metadataBase: new URL(defaultUrl),

@@ -1,10 +1,11 @@
 "use client";
 
-import React from "react";
+import React, { useEffect, useState } from "react";
 import aboutBanner from "../../../assets/about/about1.webp";
 import { Sprout, Users, Globe2, Heart, ArrowRight, Sun } from "lucide-react";
 import Link from "next/link";
 import Image from "next/image";
+import { API_URL } from "@/lib/api";
 
 // Sparkle component for button highlights
 const Sparkle = ({ style, color = '#7ca142', shadow }: { style?: React.CSSProperties, color?: string, shadow?: string }) => (
@@ -63,6 +64,24 @@ const aboutHeroData = {
 };
 
 const AboutHero = () => {
+  const [bgImage, setBgImage] = useState<string | typeof aboutBanner>(aboutBanner);
+
+  useEffect(() => {
+    let active = true;
+    fetch(`${API_URL}/website/abouts/about/about-hero`, { cache: "no-store" })
+      .then((res) => (res.ok ? res.json() : null))
+      .then((json) => {
+        const data = json?.data || json;
+        if (active && data && typeof data.image === "string" && data.image.trim()) {
+          setBgImage(data.image.trim());
+        }
+      })
+      .catch(() => {});
+    return () => {
+      active = false;
+    };
+  }, []);
+
   return (
     <section className="relative w-full min-h-[380px] sm:min-h-[420px] md:min-h-[450px] lg:min-h-[470px] flex items-center overflow-hidden bg-white border-b-4 border-[#ea580c]">
       <style>{`
@@ -118,7 +137,8 @@ const AboutHero = () => {
       `}</style>
       {/* Background Image */}
       <Image
-        src={aboutBanner}
+        key={typeof bgImage === "string" ? bgImage : "default"}
+        src={bgImage}
         alt="Bharat Organic Expo 2027 exhibition and visitors"
         fill
         priority

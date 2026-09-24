@@ -6,7 +6,7 @@ import { motion } from 'framer-motion';
 import Link from 'next/link';
 import Image from 'next/image';
 import { websiteApi } from '@/lib/api';
-import global1 from '../../assets/home/global1.png';
+import global1 from '../../assets/home/global1.webp';
 
 // ── Default Data Configuration ──
 const DEFAULT_CONFERENCE_DATA = {
