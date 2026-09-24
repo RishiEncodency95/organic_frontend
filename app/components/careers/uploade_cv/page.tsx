@@ -528,6 +528,8 @@ export default function UploadCvModal({
                         : [],
                 verifiedPhone: null,
                 linkedin: profileData.linkedin || null,
+                // A returning candidate's stored photo, so they never have to re-upload it.
+                image: profileData.photo || null,
                 cvFile: file,
                 cvName: file.name,
                 cvSize: fileSizeStr,
@@ -681,7 +683,7 @@ export default function UploadCvModal({
 
     return (
         <div className="fixed inset-0 z-[99999] flex items-center justify-center p-3">
-            <div className="absolute inset-0 bg-slate-950/45 backdrop-blur-[5px]" onClick={() => onClose?.()} />
+            <div className="absolute inset-0 bg-slate-950/45 backdrop-blur-[5px]" />
 
             <div
                 ref={shellRef}

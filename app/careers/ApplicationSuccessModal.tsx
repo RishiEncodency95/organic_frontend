@@ -177,7 +177,7 @@ export default function ApplicationSuccessModal({ isOpen, onClose, applicationDa
 
   return (
     <div className="fixed inset-0 z-[99999] flex items-center justify-center p-3">
-      <div className="absolute inset-0 bg-slate-950/45 backdrop-blur-[5px]" onClick={onClose} />
+      <div className="absolute inset-0 bg-slate-950/45 backdrop-blur-[5px]" />
       <div className="relative z-10 flex max-h-[95vh] w-[85%] max-w-[1300px] overflow-hidden rounded-[18px] bg-[#fbfcf9] shadow-[0_30px_90px_rgba(0,0,0,.28)]">
 
         {/* ===== LEFT SIDE ===== */}
