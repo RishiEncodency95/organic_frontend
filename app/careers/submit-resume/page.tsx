@@ -3,6 +3,7 @@
 import { createContext, useContext, useRef, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
+import { usePathname, useRouter } from "next/navigation";
 import {
   ArrowLeft,
   ArrowRight,
@@ -47,12 +48,12 @@ const asset = (file: string) => `/separated-assets/${file}`;
 
 const separatedAssets = {
   personHigh: "/career-submit-resume-assets/newimagegreat.png",
-  personModerate: asset("ChatGPT Image Sep 16, 2026, 04_31_37 PM.png"),
+  personModerate: asset("career-person-moderate.png"),
   personLow: "/career-submit-resume-assets/sadimage.png",
-  rightPeople: asset("ChatGPT Image Sep 16, 2026, 04_29_29 PM.png"),
-  stickyNote: asset("ChatGPT Image Sep 16, 2026, 04_33_26 PM.png"),
-  sidebarTop: asset("ChatGPT Image Sep 16, 2026, 04_29_31 PM.png"),
-  sidebarFooter: asset("ChatGPT Image Sep 16, 2026, 04_34_38 PM.png"),
+  rightPeople: asset("career-right-people.png"),
+  stickyNote: asset("career-sticky-note.png"),
+  sidebarTop: asset("career-sidebar-top.png"),
+  sidebarFooter: asset("career-sidebar-footer.png"),
   headerLeaf: "/separated-assets/bharat-organic-leaf.png",
 };
 
@@ -437,6 +438,8 @@ type MatchContextType = {
   candidate: CandidateProfileData;
   /** Applies an inline edit from the profile card; absent outside the popup. */
   updateCandidate?: (patch: Partial<CandidateProfileData>) => void;
+  /** Closes the whole apply flow. */
+  onClose?: () => void;
 };
 
 const MatchContext = createContext<MatchContextType>({
@@ -448,6 +451,30 @@ const MatchContext = createContext<MatchContextType>({
 });
 
 export const useMatchData = () => useContext(MatchContext);
+
+/**
+ * The popup is rendered over /careers itself, so a plain <Link href="/careers"> is a no-op
+ * there and leaves the popup open. Close the flow first, then land on the job list.
+ */
+function useGoToCareers() {
+  const { onClose } = useMatchData();
+  const router = useRouter();
+  const pathname = usePathname();
+
+  return (scrollToOpenings: boolean) => {
+    onClose?.();
+    if (pathname === "/careers") {
+      if (scrollToOpenings) {
+        // Wait for the popup to unmount and release the scroll lock before scrolling.
+        setTimeout(() => {
+          document.getElementById("current-openings")?.scrollIntoView({ behavior: "smooth", block: "start" });
+        }, 150);
+      }
+      return;
+    }
+    router.push(scrollToOpenings ? "/careers#current-openings" : "/careers");
+  };
+}
 
 export function getMatchData(
   candidate: CandidateProfileData = defaultCandidateData,
@@ -925,7 +952,7 @@ function Breakdown() {
     "Relevant Experience": asset("briefcase-large.png"),
     "Educational Qualification": asset("graduation-cap.png"),
     "Key Skills": asset("settings-large.png"),
-    "Role Fit": asset("ChatGPT Image Sep 16, 2026, 04_35_22 PM.png"),
+    "Role Fit": asset("career-role-fit.png"),
     "Industry Experience": asset("users-large.png"),
     "Location Preference": asset("location.png"),
   };
@@ -1024,6 +1051,7 @@ function Breakdown() {
    ========================================================= */
 
 function LowNextSteps() {
+  const goToCareers = useGoToCareers();
   const data = [
     {
       title: "Gain Relevant Experience",
@@ -1086,13 +1114,14 @@ function LowNextSteps() {
           ))}
         </div>
 
-        <Link
-          href="/careers"
+        <button
+          type="button"
+          onClick={() => goToCareers(true)}
           className="mt-[10px] flex h-[34px] items-center gap-[8px] rounded-[5px] border border-[#075333] px-[20px] text-[13px] font-bold text-[#075333] transition-colors hover:bg-[#075333] hover:text-white"
         >
           View Other Job Opportunities
           <ArrowRight className="h-[14px] w-[14px]" strokeWidth={2.5} />
-        </Link>
+        </button>
       </div>
     </div>
   );
@@ -1826,6 +1855,7 @@ function Sidebar({
   onApply?: () => void;
 }) {
   const { matchLevel, current, candidate } = useMatchData();
+  const goToCareers = useGoToCareers();
   // The application form needs these, so the step cannot start without them.
   const missing = profileIssues(candidate);
 
@@ -1851,7 +1881,7 @@ function Sidebar({
       <div className="flex min-h-0 items-center justify-end overflow-hidden">
         <button
           type="button"
-          onClick={onClose}
+          onClick={() => goToCareers(false)}
           className="flex items-center gap-[6px] text-[17px] font-bold text-[#075333] transition-colors hover:text-red-600 pr-1"
         >
           <ArrowLeft className="h-[18px] w-[18px] stroke-[2.5]" />
@@ -1910,13 +1940,14 @@ function Sidebar({
               </p>
             </div>
           </div>
-          <Link
-            href="/careers"
+          <button
+            type="button"
+            onClick={() => goToCareers(true)}
             className="mt-[10px] flex h-[38px] shrink-0 items-center justify-center gap-[8px] rounded-[6px] bg-[#075333] text-[13px] font-bold text-white hover:bg-[#064228] transition-colors"
           >
             View All Open Positions
             <ArrowRight className="h-[15px] w-[15px] stroke-[2.5]" />
-          </Link>
+          </button>
         </div>
       )}
 
@@ -1959,7 +1990,7 @@ export function EligibilityPopupContent({
     onCandidateChange?.({ ...merged, ...patch });
   };
 
-  const matchData = { ...getMatchData(merged, score), updateCandidate };
+  const matchData = { ...getMatchData(merged, score), updateCandidate, onClose };
 
   return (
     <MatchContext.Provider value={matchData}>

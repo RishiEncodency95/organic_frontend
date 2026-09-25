@@ -4,8 +4,7 @@ import { seoApi } from "@/lib/api";
 import SchemaInjector from "@/app/components/SchemaInjector";
 import AwardsNominationClient from "./AwardsNominationClient";
 
-export const dynamic = "force-dynamic";
-export const revalidate = 0;
+export const revalidate = 60;
 
 export async function generateMetadata(): Promise<Metadata> {
   const isLocal = process.env.NODE_ENV !== "production";
@@ -87,7 +86,7 @@ export default async function AwardsNominationPage() {
   let heroData: any = null;
   try {
     const apiUrl = process.env.NEXT_PUBLIC_API_URL || "http://localhost:4001/api";
-    const res = await fetch(`${apiUrl}/website/awards/nomination-hero`, { cache: "no-store" }).catch(() => null);
+    const res = await fetch(`${apiUrl}/website/awards/nomination-hero`, { next: { revalidate: 60 } }).catch(() => null);
     if (res && res.ok) {
       const json = await res.json().catch(() => null);
       if (json?.data) {

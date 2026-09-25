@@ -5,7 +5,7 @@ import { Target } from "lucide-react";
 import bandImg from "@/app/assets/image/band.png";
 import vleafImg from "@/app/assets/icons/vleaf.png";
 import nleafImg from "@/app/assets/icons/nleaf.png";
-import bogImg from "@/app/assets/icons/bog.png";
+import bogImg from "@/app/assets/icons/bog.webp";
 import SectionContainer from "@/app/components/layout/SectionContainer";
 
 import v1og from "@/app/assets/icons/v1og.png";

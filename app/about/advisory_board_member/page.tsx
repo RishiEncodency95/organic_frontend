@@ -3,14 +3,14 @@ import type { Metadata } from "next";
 import { seoApi } from "@/lib/api";
 import SchemaInjector from "@/app/components/SchemaInjector";
 import AdvisoryHero from "@/app/components/abouts/advisory_board_member/AdvisoryHero";
+import { getSectionData } from "@/lib/serverData";
 import AboutStrip from "@/app/components/abouts/about/AboutStrip";
 import ChairmanMessage from "@/app/components/abouts/advisory_board_member/ChairmanMessage";
 import AdvisoryBoardGrid from "@/app/components/abouts/advisory_board_member/AdvisoryBoardGrid";
 import WhyJoinAdvisory from "@/app/components/abouts/advisory_board_member/WhyJoinAdvisory";
 // import AdvisoryPartners from "@/app/components/abouts/advisory_board_member/AdvisoryPartners";
 
-export const dynamic = "force-dynamic";
-export const revalidate = 0;
+export const revalidate = 60;
 
 export async function generateMetadata(): Promise<Metadata> {
   const isLocal = process.env.NODE_ENV !== "production";
@@ -90,11 +90,13 @@ const AdvisoryBoardMemberPage = async () => {
   }
 
   const schemaContent = seoData?.schemaMarkup || null;
+  const advisoryHero = await getSectionData("/website/advisoryhero");
+
 
   return (
     <div className="bg-[#ffffff] min-h-screen">
       <SchemaInjector schema={schemaContent} />
-      <AdvisoryHero />
+      <AdvisoryHero initialData={advisoryHero} />
       <AboutStrip />
       <ChairmanMessage />
       <AdvisoryBoardGrid />

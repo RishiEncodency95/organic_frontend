@@ -3,7 +3,7 @@
 import React from "react";
 import Image from "next/image";
 import { Check, Phone, ArrowRight, ShieldCheck, Users, Globe, Handshake, Target, MapPin, Calendar, Heart, Leaf, Sprout, Store, Star, Factory, Tag, Package, Coffee, Carrot, CheckCircle2, Navigation, Headphones, TrendingUp, Megaphone, Apple, CupSoda, Utensils, Wheat, BadgeCheck, Truck, ShoppingBag, GraduationCap, Droplet, FlaskConical, Stethoscope, Building2, Beaker, FileText, Briefcase } from "lucide-react";
-import heroBg from "@/app/assets/exhibition-categories/ayush-ayurveda-herba/ayush-bg.png";
+import heroBg from "@/app/assets/exhibition-categories/ayush-ayurveda-herba/ayush-bg.webp";
 import ayurvedaImg from "@/app/assets/exhibition-categories/ayush-ayurveda-herba/ayurveda.png";
 import herbalImg from "@/app/assets/exhibition-categories/ayush-ayurveda-herba/herbal.png";
 import wellnessImg from "@/app/assets/exhibition-categories/ayush-ayurveda-herba/wellnness.png";
@@ -210,6 +210,7 @@ export default function AyushDetailsShowcase() {
                       src={prod.image || heroBg} // Needs actual category image later
                       alt={prod.title.replace('\n', ' ')}
                       fill
+                      sizes="(max-width: 768px) 50vw, (max-width: 1024px) 33vw, 20vw"
                       className="object-cover"
                     />
 

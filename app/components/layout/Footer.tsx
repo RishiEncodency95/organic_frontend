@@ -8,7 +8,7 @@ import { settingsApi } from "@/lib/api";
 import footerLogo from "../../assets/logos/footerlogo.png";
 import namoLogo from "../../assets/logos/namo1.png";
 import footogImg from "../../assets/image/bottog.webp";
-import foot1ogImg from "../../assets/icons/foot1og.png";
+import foot1ogImg from "../../assets/icons/foot1og.webp";
 import foot2ogImg from "../../assets/icons/foot2og.png";
 import uuogImg from "../../assets/icons/uuog.png";
 import foot1 from "../../assets/icons/foot1.png";

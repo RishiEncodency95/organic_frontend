@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Poppins, Inter } from "next/font/google";
+import { Poppins, Inter, Playfair_Display } from "next/font/google";
 import "./globals.css";
 import Topbar from "./components/layout/Topbar";
 import Navbar from "./components/layout/Navbar";
@@ -8,16 +8,26 @@ import SocialSidebar from "./components/layout/SocialSidebar";
 import WhatsAppFloat from "./components/layout/WhatsAppFloat";
 import SmoothScroll from "./components/SmoothScroll";
 
+// Fonts are self-hosted by next/font and exposed as CSS variables; globals.css and inline
+// styles reference these variables, so nothing loads from fonts.googleapis.com at runtime.
 const poppins = Poppins({
   subsets: ["latin"],
   weight: ["300", "400", "500", "600", "700", "800", "900"],
-  variable: "--font-poppins",
+  variable: "--font-poppins-next",
   display: "swap",
 });
 
 const inter = Inter({
   subsets: ["latin"],
-  variable: "--font-inter",
+  variable: "--font-inter-next",
+  display: "swap",
+});
+
+const playfair = Playfair_Display({
+  subsets: ["latin"],
+  weight: ["400", "600", "700"],
+  style: ["normal", "italic"],
+  variable: "--font-playfair-next",
   display: "swap",
 });
 
@@ -82,13 +92,20 @@ import StoreProvider from "./store/StoreProvider";
 import JsonLd from "@/components/seo/JsonLd";
 import { organizationJsonLd, websiteJsonLd } from "@/lib/seo";
 import Script from "next/script";
+import { getSectionData } from "@/lib/serverData";
+
+async function getTopbarSection() {
+  const settings = await getSectionData<any>("/settings");
+  const sections: any[] = settings?.landingPage?.sections || [];
+  return sections.find((s) => s.key === "topbar") || null;
+}
 
 export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const seoData = await getAdvancedSeoSettings();
+  const [seoData, topbar] = await Promise.all([getAdvancedSeoSettings(), getTopbarSection()]);
   const headerScripts = seoData?.headerScripts || "";
   const footerScripts = seoData?.footerScripts || "";
 
@@ -103,7 +120,7 @@ export default async function RootLayout({
     <html
       lang="en"
       suppressHydrationWarning
-      className={`${poppins.variable} ${inter.variable} h-full antialiased overflow-x-hidden`}
+      className={`${poppins.variable} ${inter.variable} ${playfair.variable} h-full antialiased overflow-x-hidden`}
     >
       <head>
         {gscVerification && (
@@ -117,7 +134,7 @@ export default async function RootLayout({
         <JsonLd data={websiteJsonLd()} />
         <DynamicCanonical />
         <SmoothScroll>
-          <Topbar />
+          <Topbar phone={topbar?.phoneNumber} email={topbar?.contactEmail} />
           <Navbar />
           <main className="flex-grow overflow-x-hidden w-full">
             {children}

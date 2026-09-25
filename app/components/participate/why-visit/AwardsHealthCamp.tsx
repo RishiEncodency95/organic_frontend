@@ -26,7 +26,7 @@ import t2 from "@/app/assets/icons/t2.png";
 import t3 from "@/app/assets/icons/t3.png";
 import t4 from "@/app/assets/icons/t4.png";
 import t5 from "@/app/assets/icons/t5.png";
-import tleaf from "@/app/assets/icons/tleaf.png";
+import tleaf from "@/app/assets/icons/tleaf.webp";
 
 const AWARDS_HEALTH_CAMP_DATA = [
   {

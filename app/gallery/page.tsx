@@ -3,9 +3,9 @@ import type { Metadata } from "next";
 import { seoApi } from "@/lib/api";
 import SchemaInjector from "@/app/components/SchemaInjector";
 import GalleryClient from "@/app/components/gallery/GalleryClient";
+import { getSectionData } from "@/lib/serverData";
 
-export const dynamic = "force-dynamic";
-export const revalidate = 0;
+export const revalidate = 60;
 
 export async function generateMetadata(): Promise<Metadata> {
   const isLocal = process.env.NODE_ENV !== "production";
@@ -85,11 +85,12 @@ export default async function GalleryPage() {
   }
 
   const schemaContent = seoData?.schemaMarkup || null;
+  const galleryHero = await getSectionData("/website/gallery/hero");
 
   return (
     <>
       <SchemaInjector schema={schemaContent} />
-      <GalleryClient />
+      <GalleryClient heroData={galleryHero} />
     </>
   );
 }

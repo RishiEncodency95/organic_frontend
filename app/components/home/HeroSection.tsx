@@ -449,6 +449,25 @@ const HeroSection = () => {
     };
   }, [mounted, slides, playKenBurns, startTimer]);
 
+  /* ── Pause Ken-Burns + autoplay while the hero is scrolled out of view ── */
+  useEffect(() => {
+    if (!mounted || !sectionRef.current) return;
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          kenTimeline.current?.resume();
+          startTimer(curRef.current);
+        } else {
+          kenTimeline.current?.pause();
+          if (timerRef.current) clearTimeout(timerRef.current);
+        }
+      },
+      { threshold: 0 }
+    );
+    observer.observe(sectionRef.current);
+    return () => observer.disconnect();
+  }, [mounted, startTimer]);
+
   const visibleSlides = mounted ? slides : slides.slice(0, 1);
 
   return (

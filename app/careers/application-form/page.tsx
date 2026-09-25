@@ -49,7 +49,7 @@ const DESIGN_HEIGHT = 900;
 const asset = (file: string) => `/separated-assets/${file}`;
 
 const assets = {
-  sidebarTop: asset("ChatGPT Image Sep 16, 2026, 04_29_31 PM.png"),
+  sidebarTop: asset("career-sidebar-top.png"),
   sidebarFooter: sidebarFooterImage,
   profile: "/career-submit-resume-assets/profile.png",
 

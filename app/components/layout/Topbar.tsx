@@ -10,10 +10,10 @@ import SectionContainer from "@/app/components/layout/SectionContainer";
 
 const cn = (...classes: (string | undefined | null | false)[]) => classes.filter(Boolean).join(" ");
 
-const Topbar = () => {
+const Topbar = ({ phone, email }: { phone?: string; email?: string }) => {
     const [activeDropdown, setActiveDropdown] = useState<string | null>(null);
-    const topbarEmail = SITE_CONFIG.email;
-    const topbarPhone = SITE_CONFIG.phone;
+    const topbarEmail = email || SITE_CONFIG.email;
+    const topbarPhone = phone || SITE_CONFIG.phone;
     const marqueeText = `${SITE_CONFIG.stats.speakers} SPEAKERS CONFIRMED • EARLY BIRD DISCOUNT ENDING SOON! • JOIN ${SITE_CONFIG.stats.visitors} PROFESSIONALS FROM ${SITE_CONFIG.stats.countries} COUNTRIES`;
     const deligate = SITE_CONFIG.deligate;
     return (
@@ -138,7 +138,7 @@ const Topbar = () => {
                             onMouseLeave={() => setActiveDropdown(null)}
                         >
                             <button
-                                style={{ fontFamily: "'Poppins', sans-serif" }}
+                                style={{ fontFamily: "var(--font-poppins-next), sans-serif" }}
                                 className="wave-btn flex-shrink-0"
                             >
                                 Register Now
@@ -183,7 +183,7 @@ const Topbar = () => {
                                                             )}>
                                                                 <item.icon className="w-3 h-3" />
                                                             </div>
-                                                            <span style={{ fontFamily: "'Poppins', sans-serif" }} className={cn(
+                                                            <span style={{ fontFamily: "var(--font-poppins-next), sans-serif" }} className={cn(
                                                                 "text-[9.5px] font-semibold text-slate-800 uppercase tracking-wider transition-colors leading-tight whitespace-pre-line",
                                                                 item.color === "orange" ? "group-hover:text-[#f59e0b]" : "group-hover:text-[#3b8c2a]"
                                                             )}>
@@ -209,7 +209,7 @@ const Topbar = () => {
                         <div className="relative group">
                             <button
                                 className="wave-btn btn-white"
-                                style={{ fontFamily: "'Poppins', sans-serif" }}
+                                style={{ fontFamily: "var(--font-poppins-next), sans-serif" }}
                             >
                                 Login
                                 <ChevronDown size={14} className="group-hover:rotate-180 transition-transform duration-300" />
@@ -244,7 +244,7 @@ const Topbar = () => {
                                                     )}>
                                                         <item.icon className="w-3 h-3" />
                                                     </div>
-                                                    <span style={{ fontFamily: "'Poppins', sans-serif" }} className={cn(
+                                                    <span style={{ fontFamily: "var(--font-poppins-next), sans-serif" }} className={cn(
                                                         "text-[9.5px] font-semibold text-slate-800 uppercase tracking-wider transition-colors leading-tight whitespace-pre-line",
                                                         item.color === "orange" ? "group-hover/link:text-[#f59e0b]" : "group-hover/link:text-[#3b8c2a]"
                                                     )}>

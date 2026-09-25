@@ -34,27 +34,27 @@ export default function ArticleCard({ a, delay = 0, direction = "up" }: { a: Blo
           />
           <span
             className="absolute top-3 left-3 bg-[#1b5e20] text-white text-[10px] font-bold tracking-wider uppercase px-3 py-1 rounded-md shadow-md text-center font-poppins"
-            style={{ fontFamily: "'Poppins', sans-serif" }}
+            style={{ fontFamily: "var(--font-poppins-next), sans-serif" }}
           >
             {a.tag}
           </span>
         </div>
-        <div className="p-4 sm:p-5 flex flex-col flex-1" style={{ fontFamily: "'Inter', sans-serif" }}>
+        <div className="p-4 sm:p-5 flex flex-col flex-1" style={{ fontFamily: "var(--font-inter-next), sans-serif" }}>
           <h3
             className="font-poppins font-semibold text-[16px] md:text-[17px] text-[#1b5e20] leading-[1.3] mb-2 group-hover:text-[#3b8c2a] transition-colors line-clamp-2"
-            style={{ fontFamily: "'Poppins', sans-serif" }}
+            style={{ fontFamily: "var(--font-poppins-next), sans-serif" }}
           >
             {a.title}
           </h3>
           <p
             className="font-inter text-[13px] text-gray-700 leading-relaxed mb-4 line-clamp-3"
-            style={{ fontFamily: "'Inter', sans-serif" }}
+            style={{ fontFamily: "var(--font-inter-next), sans-serif" }}
           >
             {a.desc}
           </p>
           <div
             className="flex items-center gap-4 text-[11px] text-gray-500 font-medium font-inter mt-auto pt-2 border-t border-gray-100"
-            style={{ fontFamily: "'Inter', sans-serif" }}
+            style={{ fontFamily: "var(--font-inter-next), sans-serif" }}
           >
             <span className="flex items-center gap-1.5">
               <Calendar className="w-3.5 h-3.5 text-[#3b8c2a]" strokeWidth={2.2} /> {a.date}

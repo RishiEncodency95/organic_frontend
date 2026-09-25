@@ -438,8 +438,8 @@ const TestimonialsCarousel = () => {
           100% { background-position: 0% 50%; }
         }
         @keyframes shimmer {
-          0%   { left: -75%; }
-          100% { left: 150%; }
+          0% { transform: translateX(0) skewX(-20deg); }
+          100% { transform: translateX(450%) skewX(-20deg); }
         }
         @keyframes sparkleAnim {
           0%   { opacity: 0; transform: scale(0.5) translateY(0); }

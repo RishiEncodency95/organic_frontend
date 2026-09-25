@@ -9,7 +9,7 @@ import e3og from "@/app/assets/icons/e3og.png";
 import e4og from "@/app/assets/icons/e4og.png";
 import e5og from "@/app/assets/icons/e5og.png";
 
-import pleafImg from "@/app/assets/icons/pleaf.png";
+import pleafImg from "@/app/assets/icons/pleaf.webp";
 import footerRightImg from "@/app/assets/icons/footerright.webp";
 
 const ICON_MAP: Record<string, any> = {

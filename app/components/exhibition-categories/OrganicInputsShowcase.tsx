@@ -1,7 +1,7 @@
 import React from "react";
 import Image from "next/image";
 import { Check, Phone, ArrowRight, ShieldCheck, Users, Globe, Handshake, Target, MapPin, Calendar, Heart, Leaf, Sprout, Store, Star, Factory, Tag, Package, Coffee, Carrot, CheckCircle2, Navigation, Headphones, TrendingUp, Megaphone, Apple, CupSoda, Utensils, Wheat, BadgeCheck, Truck, ShoppingBag, GraduationCap, Droplet, FlaskConical, Stethoscope, Building2, Beaker, FileText, Briefcase, Sun, Tractor, Trees, TestTube, Microscope, Search, Sprout as Plant } from "lucide-react";
-import heroBg from "@/app/assets/exhibition-categories/organic-inputs-seeds/organic-inputs-bg.png";
+import heroBg from "@/app/assets/exhibition-categories/organic-inputs-seeds/organic-inputs-bg.webp";
 import organicManuresImg from "@/app/assets/exhibition-categories/organic-inputs-seeds/organic-manures.png";
 import bioFertilizersImg from "@/app/assets/exhibition-categories/organic-inputs-seeds/bio-fertilizers.png";
 import organicSeedsImg from "@/app/assets/exhibition-categories/organic-inputs-seeds/organic-seeds.png";
@@ -200,6 +200,7 @@ export default function OrganicInputsShowcase() {
                       src={prod.image || heroBg} // Needs actual category image later
                       alt={prod.title.replace('\n', ' ')}
                       fill
+                      sizes="(max-width: 768px) 50vw, (max-width: 1024px) 33vw, 20vw"
                       className="object-cover"
                     />
 

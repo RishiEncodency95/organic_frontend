@@ -11,7 +11,7 @@ import z5og from "../../../assets/icons/z5og.png";
 import z6og from "../../../assets/icons/z6og.png";
 import z7og from "../../../assets/icons/z7og.png";
 import z8og from "../../../assets/icons/z8og.png";
-import ebotog from "../../../assets/icons/ebotog.png";
+import ebotog from "../../../assets/icons/ebotog.webp";
 import leafright from "../../../assets/icons/leafright.png";
 import sleaf from "../../../assets/icons/sleaf.png";
 import p1Img from "../../../assets/icons/P1.png";

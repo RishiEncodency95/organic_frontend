@@ -3,7 +3,7 @@
 import React from "react";
 import Link from "next/link";
 import { Users, Globe, Handshake, Calendar, MapPin, ChevronRight } from "lucide-react";
-import heroBg from "@/app/assets/exhibition-categories/hero-bg.png";
+import heroBg from "@/app/assets/exhibition-categories/hero-bg.webp";
 
 export default function ExhibitionHero() {
   return (

@@ -17,15 +17,25 @@ function extractMapSrc(raw: string): string {
   return iframeMatch ? iframeMatch[1] : trimmed;
 }
 
-const ContactBottom = () => {
-  const [mapSrc, setMapSrc] = useState(DEFAULT_MAP_EMBED);
-  const [mapCardAddress, setMapCardAddress] = useState(DEFAULT_ADDRESS);
-  const [directionsLabel, setDirectionsLabel] = useState('Get Directions');
-  const [newsletterSubtitle, setNewsletterSubtitle] = useState('Subscribe to our newsletter and never miss an update.');
-  const [subscribeLabel, setSubscribeLabel] = useState('Subscribe');
+const text = (value: unknown, fallback: string) =>
+  typeof value === 'string' && value.trim() ? value.trim() : fallback;
+
+const toBottomData = (bottom: any) => ({
+  mapSrc: typeof bottom?.mapEmbedUrl === 'string' && bottom.mapEmbedUrl.trim() ? extractMapSrc(bottom.mapEmbedUrl) : DEFAULT_MAP_EMBED,
+  mapCardAddress: text(bottom?.description, DEFAULT_ADDRESS),
+  directionsLabel: text(bottom?.buttonLabel, 'Get Directions'),
+  newsletterSubtitle: text(bottom?.subtitle, 'Subscribe to our newsletter and never miss an update.'),
+  subscribeLabel: text(bottom?.secondaryButtonLabel, 'Subscribe'),
+});
+
+const ContactBottom = ({ initialSection }: { initialSection?: any }) => {
+  const [data, setData] = useState(() => toBottomData(initialSection));
+  const { mapSrc, mapCardAddress, directionsLabel, newsletterSubtitle, subscribeLabel } = data;
   const mapCardTitle = "Find Us Here";
 
   useEffect(() => {
+    // The page already fetched this on the server; only fetch here if that failed.
+    if (initialSection) return;
     let active = true;
     fetch(`${API_URL}/settings`, { cache: 'no-store' })
       .then((res) => (res.ok ? res.json() : null))
@@ -33,29 +43,13 @@ const ContactBottom = () => {
         const settings = json?.data || json;
         const sections = settings?.contactPage?.sections;
         const bottom = Array.isArray(sections) ? sections.find((s: any) => s.key === 'contact-bottom') : null;
-        if (active && bottom) {
-          if (typeof bottom.mapEmbedUrl === 'string' && bottom.mapEmbedUrl.trim()) {
-            setMapSrc(extractMapSrc(bottom.mapEmbedUrl));
-          }
-          if (typeof bottom.description === 'string' && bottom.description.trim()) {
-            setMapCardAddress(bottom.description.trim());
-          }
-          if (typeof bottom.buttonLabel === 'string' && bottom.buttonLabel.trim()) {
-            setDirectionsLabel(bottom.buttonLabel.trim());
-          }
-          if (typeof bottom.subtitle === 'string' && bottom.subtitle.trim()) {
-            setNewsletterSubtitle(bottom.subtitle.trim());
-          }
-          if (typeof bottom.secondaryButtonLabel === 'string' && bottom.secondaryButtonLabel.trim()) {
-            setSubscribeLabel(bottom.secondaryButtonLabel.trim());
-          }
-        }
+        if (active && bottom) setData(toBottomData(bottom));
       })
       .catch(() => {});
     return () => {
       active = false;
     };
-  }, []);
+  }, [initialSection]);
 
   const handleGetDirections = () => {
     const destination = encodeURIComponent(mapCardAddress);

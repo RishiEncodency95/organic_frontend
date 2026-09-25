@@ -152,8 +152,8 @@ const ConferenceSeminars = () => {
 
         /* ── Sweep shine ── */
         @keyframes orangeSweep {
-          0%   { left: -75%; }
-          100% { left: 150%; }
+          0% { transform: translateX(0) skewX(-20deg); }
+          100% { transform: translateX(450%) skewX(-20deg); }
         }
 
         /* ── Orange sparkle float-up ── */

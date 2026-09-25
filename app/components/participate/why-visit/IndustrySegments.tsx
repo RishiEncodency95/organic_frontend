@@ -12,7 +12,7 @@ import x3og from "@/app/assets/icons/x3og.png";
 import x4og from "@/app/assets/icons/x4og.png";
 import x5og from "@/app/assets/icons/x5og.png";
 import x6og from "@/app/assets/icons/x6og.png";
-import tleafImg from "@/app/assets/icons/tleaf.png";
+import tleafImg from "@/app/assets/icons/tleaf.webp";
 import footerrightImg from "@/app/assets/icons/footerright.png";
 
 import { SERVER_URL } from "@/lib/api";

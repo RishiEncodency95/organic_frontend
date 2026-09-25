@@ -1,5 +1,5 @@
 import React from "react";
-import bgImg from "../../../assets/registration/book_a_stand.png";
+import bgImg from "../../../assets/registration/book_a_stand.webp";
 
 const BookAStandHero = () => {
     return (

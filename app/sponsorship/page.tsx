@@ -1,6 +1,7 @@
 import React from "react";
 import type { Metadata } from "next";
 import { seoApi } from "@/lib/api";
+import { getSectionData } from "@/lib/serverData";
 import SchemaInjector from "@/app/components/SchemaInjector";
 import HeroSection from "../components/opportunity/sponsorship/HeroSection";
 import WhySponsor from "../components/opportunity/sponsorship/WhySponsor";
@@ -8,8 +9,7 @@ import SponsorshipPackages from "../components/opportunity/sponsorship/Sponsorsh
 import BottomOpportunities from "../components/opportunity/sponsorship/BottomOpportunities";
 import ContactCTA from "../components/opportunity/sponsorship/ContactCTA";
 
-export const dynamic = "force-dynamic";
-export const revalidate = 0;
+export const revalidate = 60;
 
 export async function generateMetadata(): Promise<Metadata> {
   const isLocal = process.env.NODE_ENV !== "production";
@@ -89,11 +89,12 @@ export default async function SponsorshipPage() {
   }
 
   const schemaContent = seoData?.schemaMarkup || null;
+  const sponsorshipHero = await getSectionData("/website/opportunities/sponsorship/hero");
 
   return (
     <main className="min-h-screen bg-[#fcfcf0] overflow-x-hidden">
       <SchemaInjector schema={schemaContent} />
-      <HeroSection />
+      <HeroSection initialData={sponsorshipHero} />
       <WhySponsor />
       <SponsorshipPackages />
       <BottomOpportunities />

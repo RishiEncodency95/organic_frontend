@@ -3,7 +3,7 @@
 import React from "react";
 import Image from "next/image";
 import { Check, Phone, ArrowRight, ShieldCheck, Users, Globe, Handshake, Target, MapPin, Calendar, Heart, Leaf, Sprout, Store, Star, Factory, Tag, Package, Coffee, Carrot, CheckCircle2, Navigation, Headphones, TrendingUp, Megaphone, Apple, CupSoda, Utensils, Wheat, BadgeCheck, Truck, ShoppingBag } from "lucide-react";
-import heroBg from "@/app/assets/exhibition-categories/food.png";
+import heroBg from "@/app/assets/exhibition-categories/food.webp";
 import cardImg1 from "@/app/assets/exhibition-categories/organic-food/organic_grains_millets_cereals.png";
 import cardImg2 from "@/app/assets/exhibition-categories/organic-food/pulses_legumes_beans_186x140.png";
 import cardImg3 from "@/app/assets/exhibition-categories/organic-food/organic_beverages.png";
@@ -207,6 +207,7 @@ export default function CategoryDetailsShowcase() {
                       src={prod.image || heroBg} // Needs actual category image later
                       alt={prod.title.replace('\n', ' ')}
                       fill
+                      sizes="(max-width: 768px) 50vw, (max-width: 1024px) 33vw, 20vw"
                       className="object-cover"
                     />
 

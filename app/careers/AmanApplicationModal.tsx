@@ -25,7 +25,7 @@ const DESIGN_HEIGHT = 900;
 
 const assets = {
   headerLeaf: "/separated-assets/bharat-organic-leaf.png",
-  headerBanner: "/separated-assets/ChatGPT Image Sep 16, 2026, 04_29_31 PM.png",
+  headerBanner: "/separated-assets/career-sidebar-top.png",
   sidebarFooter: "/separated-assets/grow-organic-grow-india.png",
   profile: "/career-submit-resume-assets/profile.png",
 };

@@ -102,7 +102,7 @@ const Lightbox = ({ images, activeIndex, onClose, onNav }: any) => {
       <div ref={imgRef} onClick={e=>e.stopPropagation()} style={{
         maxWidth:'82vw', maxHeight:'78vh', borderRadius:10, overflow:'hidden',
       }}>
-        <img src={getImgSrc(img.src)} alt={img.title} style={{
+        <img src={getImgSrc(img.src)} alt={img.alt || img.title} style={{
           maxWidth:'82vw', maxHeight:'78vh', objectFit:'contain', display:'block',
         }}/>
       </div>
@@ -207,7 +207,7 @@ const GalleryCard = ({ img, index, onOpen, animKey }: any) => {
       <div ref={imgRef} style={{ width:'100%', height:'100%', overflow:'hidden', position:'relative' }}>
         <img 
           src={getImgSrc(img.src)} 
-          alt={img.title}
+          alt={img.alt || img.title}
           loading={index < 4 ? "eager" : "lazy"}
           decoding="async"
           onLoad={() => setIsLoaded(true)}
@@ -415,6 +415,7 @@ const GalleryGrid: React.FC<GalleryGridProps> = ({
           id: g._id || g.id || `uploaded-${i}`,
           src: g.image,
           title: g.title || g.category || 'Photo Asset',
+          alt: g.imageAlt || g.title || g.category || 'Photo Asset',
           category: g.category,
           year: String(g.year),
           style: { gridColumn: s.gridColumn, gridRow: s.gridRow },

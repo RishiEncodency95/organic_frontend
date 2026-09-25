@@ -6,7 +6,7 @@ import p3og from "@/app/assets/icons/p3og.png";
 import p4og from "@/app/assets/icons/p4og.png";
 import p5og from "@/app/assets/icons/p5og.png";
 import p7og from "@/app/assets/icons/p7og.png";
-import pleaf from "@/app/assets/icons/pleaf.png";
+import pleaf from "@/app/assets/icons/pleaf.webp";
 import SectionContainer from "@/app/components/layout/SectionContainer";
 
 const ICON_MAP: Record<string, any> = {

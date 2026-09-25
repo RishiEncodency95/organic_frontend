@@ -5,9 +5,9 @@ import SchemaInjector from '@/app/components/SchemaInjector';
 import ContactHero from '../components/contact/ContactHero';
 import ContactForm from '../components/contact/ContactForm';
 import ContactBottom from '../components/contact/ContactBottom';
+import { getSectionData } from '@/lib/serverData';
 
-export const dynamic = "force-dynamic";
-export const revalidate = 0;
+export const revalidate = 60;
 
 export async function generateMetadata(): Promise<Metadata> {
   const isLocal = process.env.NODE_ENV !== "production";
@@ -87,13 +87,17 @@ const ContactPage = async () => {
   }
 
   const schemaContent = seoData?.schemaMarkup || null;
+  const settings = await getSectionData("/settings");
+  const contactSections: any[] = Array.isArray(settings?.contactPage?.sections) ? settings.contactPage.sections : [];
+  const heroSection = contactSections.find((s) => s.key === "contact-hero");
+  const bottomSection = contactSections.find((s) => s.key === "contact-bottom");
 
   return (
     <div className="w-full bg-[#fbfcf7] min-h-screen">
       <SchemaInjector schema={schemaContent} />
-      <ContactHero />
+      <ContactHero initialSection={heroSection} />
       <ContactForm />
-      <ContactBottom />
+      <ContactBottom initialSection={bottomSection} />
     </div>
   );
 };

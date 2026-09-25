@@ -16,7 +16,7 @@ const resolveImageUrl = (src: string): string => {
   return `${SERVER_URL}${src.startsWith("/") ? "" : "/"}${src}`;
 };
 
-export default function GalleryClient() {
+export default function GalleryClient({ heroData }: { heroData?: any }) {
   const [activeYear, setActiveYear] = useState('All Years');
   const [activeCategory, setActiveCategory] = useState('All Activities');
   const [searchQuery, setSearchQuery] = useState('');
@@ -64,7 +64,7 @@ export default function GalleryClient() {
 
   return (
     <main className="min-h-screen bg-white font-inter">
-      <Hero />
+      <Hero initialData={heroData} />
       <YearsFilter 
         activeYear={activeYear} 
         onYearChange={setActiveYear} 

@@ -122,7 +122,10 @@ export default function BuyerRegistrationHero() {
           80%  { opacity:0.5; transform:scale(0.9) translateY(-6px); }
           100% { opacity:0; transform:scale(0.5) translateY(-8px); }
         }
-        @keyframes shimmerBuyer { 0% { left:-75%; } 100% { left:150%; } }
+        @keyframes shimmerBuyer {
+          0% { transform: translateX(0) skewX(-20deg); }
+          100% { transform: translateX(450%) skewX(-20deg); }
+        }
         @keyframes bgZoom {
           0%   { transform: scale(1.06); }
           100% { transform: scale(1.0); }

@@ -65,8 +65,8 @@ const AboutFaq = () => {
           100% { background-position: 0% 50%; }
         }
         @keyframes shimmer {
-          0%   { left: -75%; }
-          100% { left: 150%; }
+          0% { transform: translateX(0) skewX(-20deg); }
+          100% { transform: translateX(450%) skewX(-20deg); }
         }
         @keyframes sparkleAnim {
           0%   { opacity: 0; transform: scale(0.5) translateY(0); }
@@ -181,7 +181,7 @@ const AboutFaq = () => {
             {/* Right Column: Image & Help Desk */}
             <div className="flex lg:w-[35%] flex-col">
               <div className="flex-1 bg-gray-100 rounded-t-xl overflow-hidden relative min-h-[220px] md:min-h-[280px] group border border-gray-200">
-                <Image src={faqImg} alt="FAQ Expo Support" fill className="object-cover group-hover:scale-105 transition-transform duration-700 ease-in-out" />
+                <Image src={faqImg} alt="FAQ Expo Support" fill sizes="(max-width: 1024px) 100vw, 35vw" className="object-cover group-hover:scale-105 transition-transform duration-700 ease-in-out" />
               </div>
 
               <div className="bg-[#f0f7f0] border border-t-0 border-[#23471d]/20 rounded-b-xl py-4 px-6 flex flex-col items-center justify-center text-center shadow-sm">

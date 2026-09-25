@@ -4,7 +4,7 @@ import React from 'react';
 import { Leaf, Globe, Users, Handshake, Mic, Calendar, ArrowRight, MapPin, CalendarDays, CalendarCheck } from 'lucide-react';
 import { motion } from 'framer-motion';
 import Link from 'next/link';
-import industryImg from "../../assets/home/industry.png";
+import industryImg from "../../assets/home/industry.webp";
 
 const IndustryLeaders = () => {
   return (

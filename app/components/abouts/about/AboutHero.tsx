@@ -63,24 +63,27 @@ const aboutHeroData = {
   ]
 };
 
-const AboutHero = () => {
-  const [bgImage, setBgImage] = useState<string | typeof aboutBanner>(aboutBanner);
+const pickImage = (data: any): string | null =>
+  data && typeof data.image === "string" && data.image.trim() ? data.image.trim() : null;
+
+const AboutHero = ({ initialData }: { initialData?: any }) => {
+  const [bgImage, setBgImage] = useState<string | typeof aboutBanner>(pickImage(initialData) || aboutBanner);
 
   useEffect(() => {
+    // The page already fetched this on the server; only fetch here if that failed.
+    if (initialData) return;
     let active = true;
     fetch(`${API_URL}/website/abouts/about/about-hero`, { cache: "no-store" })
       .then((res) => (res.ok ? res.json() : null))
       .then((json) => {
-        const data = json?.data || json;
-        if (active && data && typeof data.image === "string" && data.image.trim()) {
-          setBgImage(data.image.trim());
-        }
+        const image = pickImage(json?.data || json);
+        if (active && image) setBgImage(image);
       })
       .catch(() => {});
     return () => {
       active = false;
     };
-  }, []);
+  }, [initialData]);
 
   return (
     <section className="relative w-full min-h-[380px] sm:min-h-[420px] md:min-h-[450px] lg:min-h-[470px] flex items-center overflow-hidden bg-white border-b-4 border-[#ea580c]">
@@ -92,8 +95,8 @@ const AboutHero = () => {
           100% { opacity: 0; transform: scale(0.5) translateY(-6px); }
         }
         @keyframes shimmerHero {
-          0%   { left: -75%; }
-          100% { left: 150%; }
+          0% { transform: translateX(0) skewX(-20deg); }
+          100% { transform: translateX(450%) skewX(-20deg); }
         }
         .hero-shimmer-btn {
           position: relative;

@@ -9,8 +9,15 @@ export const API_URL =
 const apiCall = async (endpoint: string, options: RequestInit = {}) => {
     try {
         const url = `${API_URL}${endpoint}`;
+        // On the server, cache for 60s so pages can be statically served and refreshed in
+        // the background (ISR) instead of re-rendering on every visit; `no-store` here would
+        // force every page that reads SEO/content data to render per request.
+        const cacheOptions: RequestInit =
+            typeof window === 'undefined'
+                ? ({ next: { revalidate: 60 } } as RequestInit)
+                : { cache: 'no-store' };
         const response = await fetch(url, {
-            cache: 'no-store',
+            ...cacheOptions,
             ...options,
             headers: {
                 'Content-Type': 'application/json',

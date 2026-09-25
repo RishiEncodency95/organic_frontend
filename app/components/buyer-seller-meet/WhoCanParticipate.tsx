@@ -1,14 +1,14 @@
 "use client";
 import React from "react";
 import img21 from "../../assets/icons/21og.png";
-import img22 from "../../assets/icons/22og.png";
-import img23 from "../../assets/icons/23og.png";
+import img22 from "../../assets/icons/22og.webp";
+import img23 from "../../assets/icons/23og.webp";
 import img24 from "../../assets/icons/24og.png";
 import img25 from "../../assets/icons/25og.png";
 import img26 from "../../assets/icons/26og.png";
 import img27 from "../../assets/icons/27og.png";
 import img28 from "../../assets/icons/28og.png";
-import img29 from "../../assets/icons/29og.png";
+import img29 from "../../assets/icons/29og.webp";
 import leafsImg from "../../assets/icons/leafs.png";
 import footerRightImg from "../../assets/icons/footerright.png";
 import SectionContainer from "@/app/components/layout/SectionContainer";

@@ -197,6 +197,7 @@ const BeyondExhibition = () => {
                 src={data.image}
                 alt={data.imageAlt}
                 fill
+                sizes="(max-width: 1024px) 100vw, 35vw"
                 className="object-cover absolute inset-0 z-0"
               />
             )}

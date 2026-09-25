@@ -1,7 +1,7 @@
 import React from "react";
 import Image from "next/image";
 import { Check, ArrowRight, ShieldCheck, Users, Globe, Handshake, Target, Heart, Leaf, Sprout, Store, Factory, Package, Headphones, Truck, Briefcase, TestTube, Microscope, Droplet, Sparkles, Scissors, Bath, Smile } from "lucide-react";
-import heroBg from "@/app/assets/exhibition-categories/natural-beauty/natural-beauty-bg.png";
+import heroBg from "@/app/assets/exhibition-categories/natural-beauty/natural-beauty-bg.webp";
 import naturalOrganicSkinCare from "@/app/assets/exhibition-categories/natural-beauty/natural-organic.png";
 import naturalHaircareImg from "@/app/assets/exhibition-categories/natural-beauty/natural-haircare.png";
 import naturalSoapsImg from "@/app/assets/exhibition-categories/natural-beauty/natural-soaps.png";
@@ -199,6 +199,7 @@ export default function NaturalBeautyShowcase() {
                       src={prod.image}
                       alt={prod.title.replace('\n', ' ')}
                       fill
+                      sizes="(max-width: 768px) 50vw, (max-width: 1024px) 33vw, 20vw"
                       className="object-cover"
                     />
 

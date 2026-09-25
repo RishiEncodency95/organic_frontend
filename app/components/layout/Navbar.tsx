@@ -175,7 +175,7 @@ const Navbar = () => {
                                                 aria-haspopup="true"
                                                 aria-expanded={activeDropdown === link.label}
                                                 onClick={() => setActiveDropdown(activeDropdown === link.label ? null : link.label)}
-                                                style={{ fontFamily: "'Poppins', sans-serif" }}
+                                                style={{ fontFamily: "var(--font-poppins-next), sans-serif" }}
                                                 className="px-1.5 2xl:px-2.5 py-2 text-[13px] lg:text-[12.5px] font-semibold tracking-wide uppercase transition-all duration-300 flex items-center gap-1 relative group whitespace-nowrap text-slate-700 hover:text-[#14532d]"
                                             >
                                                 {link.label}
@@ -187,7 +187,7 @@ const Navbar = () => {
                                                 href={link.path || "/"}
                                                 target={link.isExternal ? "_blank" : undefined}
                                                 rel={link.isExternal ? "noopener noreferrer" : undefined}
-                                                style={{ fontFamily: "'Poppins', sans-serif" }}
+                                                style={{ fontFamily: "var(--font-poppins-next), sans-serif" }}
                                                 className={`px-1.5 2xl:px-2.5 py-2 text-[13px] lg:text-[12.5px] font-semibold tracking-wide uppercase transition-all duration-300 flex items-center gap-1 relative group whitespace-nowrap ${pathname === link.path ? "text-[#14532d]" : "text-slate-700 hover:text-[#14532d]"
                                                     }`}
                                             >
@@ -226,7 +226,7 @@ const Navbar = () => {
                                                                             )}>
                                                                                 <item.icon className="w-3.5 h-3.5" />
                                                                             </div>
-                                                                            <div className="flex flex-col gap-0.5" style={{ fontFamily: "'Poppins', sans-serif" }}>
+                                                                            <div className="flex flex-col gap-0.5" style={{ fontFamily: "var(--font-poppins-next), sans-serif" }}>
                                                                                 <span className={cn(
                                                                                     "text-[12px] font-semibold text-slate-800 transition-colors",
                                                                                     isEven ? "group-hover:text-[#3b8c2a]" : "group-hover:text-[#f59e0b]"
@@ -468,7 +468,7 @@ const Navbar = () => {
                                                                         )}>
                                                                             <item.icon className={cn("w-3.5 h-3.5", idx % 2 === 0 ? "text-[#3b8c2a]" : "text-[#f59e0b]")} />
                                                                         </div>
-                                                                        <div className="flex-1 min-w-0" style={{ fontFamily: "'Poppins', sans-serif" }}>
+                                                                        <div className="flex-1 min-w-0" style={{ fontFamily: "var(--font-poppins-next), sans-serif" }}>
                                                                             <div className="text-[12px] font-medium text-slate-900">{item.label}</div>
                                                                             <div className="text-[10px] text-slate-400 truncate">{item.description}</div>
                                                                         </div>
