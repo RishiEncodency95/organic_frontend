@@ -1,22 +1,20 @@
-import React, { Suspense, lazy } from "react";
 import type { Metadata } from "next";
 import HeroSection from "./components/home/HeroSection";
 import AudienceStrip from "./components/home/AudienceStrip";
 import HomeApiPrimer from "./components/home/HomeApiPrimer";
 import DeferredHomeSections from "./components/home/DeferredHomeSections";
+import SectionBoundary from "./components/home/SectionBoundary";
+import IntroductionSection from "./components/home/IntroductionSection";
+import WhyParticipate from "./components/home/WhyParticipate";
+import BeyondExhibition from "./components/home/BeyondExhibition";
+import ExpoCategories from "./components/home/ExpoCategories";
+import ConferenceSection from "./components/home/ConferenceSection";
+import GlobalPlatform from "./components/home/GlobalPlatform";
 import { seoApi } from "../lib/api";
 import { getHomePageData } from "../lib/homeData";
 import SchemaInjector from "./components/SchemaInjector";
 
 export const revalidate = 60;
-
-// Lazy load below-the-fold components
-const IntroductionSection = lazy(() => import("./components/home/IntroductionSection"));
-const WhyParticipate = lazy(() => import("./components/home/WhyParticipate"));
-const BeyondExhibition = lazy(() => import("./components/home/BeyondExhibition"));
-const ExpoCategories = lazy(() => import("./components/home/ExpoCategories"));
-const ConferenceSection = lazy(() => import("./components/home/ConferenceSection"));
-const GlobalPlatform = lazy(() => import("./components/home/GlobalPlatform"));
 
 export async function generateMetadata(): Promise<Metadata> {
   const isLocal = process.env.NODE_ENV !== "production";
@@ -130,21 +128,25 @@ const Index = async () => {
       <HomeApiPrimer responses={homeData.apiResponses} />
       <HeroSection initialSlides={homeData.apiResponses["/website/home/home-hero"]} />
       <AudienceStrip />
-      <Suspense
-        fallback={
-          <div className="min-h-[200px] flex items-center justify-center">
-            <div className="w-8 h-8 border-4 border-[#3b8c2a] border-t-transparent rounded-full animate-spin"></div>
-          </div>
-        }
-      >
+      <SectionBoundary>
         <IntroductionSection />
+      </SectionBoundary>
+      <SectionBoundary>
         <GlobalPlatform />
-        <div className="[content-visibility:auto] [contain-intrinsic-size:700px]"><WhyParticipate /></div>
-        <div className="[content-visibility:auto] [contain-intrinsic-size:700px]"><ConferenceSection /></div>
-        <div className="[content-visibility:auto] [contain-intrinsic-size:900px]"><ExpoCategories /></div>
-        <div className="[content-visibility:auto] [contain-intrinsic-size:800px]"><BeyondExhibition /></div>
-        <DeferredHomeSections />
-      </Suspense>
+      </SectionBoundary>
+      <SectionBoundary>
+        <WhyParticipate />
+      </SectionBoundary>
+      <SectionBoundary>
+        <ConferenceSection />
+      </SectionBoundary>
+      <SectionBoundary>
+        <ExpoCategories />
+      </SectionBoundary>
+      <SectionBoundary>
+        <BeyondExhibition />
+      </SectionBoundary>
+      <DeferredHomeSections partners={homeData.partners} blogs={homeData.blogs} />
     </>
   );
 };

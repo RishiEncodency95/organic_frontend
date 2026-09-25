@@ -16,23 +16,73 @@ const resolveImageUrl = (src: string): string => {
   return `${SERVER_URL}${src.startsWith("/") ? "" : "/"}${src}`;
 };
 
-export default function GalleryClient({ heroData }: { heroData?: any }) {
+const normaliseGallery = (items: any): any[] =>
+  Array.isArray(items)
+    ? items.map((item: any) => ({
+        ...item,
+        image: resolveImageUrl(item.image),
+      }))
+    : [];
+
+const normaliseVideos = (items: any): any[] =>
+  Array.isArray(items)
+    ? items
+        .filter((video: any) => video.status === 'Published')
+        .map((video: any) => ({
+          _id: video._id,
+          title: video.title,
+          thumbnail: resolveImageUrl(video.thumbnail),
+          sourceType: (video.videoType || 'youtube').toUpperCase(),
+          videoUrl: video.videoUrl,
+          objectPosition: video.objectPosition || 'center 10%',
+          orderNumber: video.order || 0,
+        }))
+    : [];
+
+interface GalleryClientProps {
+  heroData?: any;
+  initialMeta?: any;
+  initialGallery?: any;
+  initialVideos?: any;
+}
+
+export default function GalleryClient({
+  heroData,
+  initialMeta,
+  initialGallery,
+  initialVideos,
+}: GalleryClientProps) {
   const [activeYear, setActiveYear] = useState('All Years');
   const [activeCategory, setActiveCategory] = useState('All Activities');
   const [searchQuery, setSearchQuery] = useState('');
 
-  const [dbYears, setDbYears] = useState<string[]>([]);
-  const [dbCategories, setDbCategories] = useState<string[]>([]);
-  const [dbGallery, setDbGallery] = useState<any[]>([]);
-  const [dbVideos, setDbVideos] = useState<any[]>([]);
+  const [dbYears, setDbYears] = useState<string[]>(() =>
+    Array.isArray(initialMeta?.years) ? initialMeta.years : [],
+  );
+  const [dbCategories, setDbCategories] = useState<string[]>(() =>
+    Array.isArray(initialMeta?.categories) ? initialMeta.categories : [],
+  );
+  const [dbGallery, setDbGallery] = useState<any[]>(() => normaliseGallery(initialGallery));
+  const [dbVideos, setDbVideos] = useState<any[]>(() => normaliseVideos(initialVideos));
 
   useEffect(() => {
+    const needsMeta = initialMeta === null || initialMeta === undefined;
+    const needsGallery = initialGallery === null || initialGallery === undefined;
+    const needsVideos = initialVideos === null || initialVideos === undefined;
+    if (!needsMeta && !needsGallery && !needsVideos) return;
+
     const fetchGalleryData = async () => {
       try {
         const [metaRes, itemsRes, videosRes] = await Promise.all([
-          fetch(`${API_URL}/website/gallery/meta`, { cache: 'no-store' }).catch(() => null),
-          fetch(`${API_URL}/website/gallery/items`, { cache: 'no-store' }).catch(() => null),
-          fetch(`${API_URL}/website/gallery/video-highlights/items`, { cache: 'no-store' }).catch(() => null),
+          needsMeta
+            ? fetch(`${API_URL}/website/gallery/meta`, { cache: 'default' }).catch(() => null)
+            : null,
+          needsGallery
+            ? fetch(`${API_URL}/website/gallery/items`, { cache: 'default' }).catch(() => null)
+            : null,
+          needsVideos
+            ? fetch(`${API_URL}/website/gallery/video-highlights/items`, { cache: 'default' }).catch(() => null)
+            : null,
         ]);
 
         if (metaRes && metaRes.ok) {
@@ -47,31 +97,15 @@ export default function GalleryClient({ heroData }: { heroData?: any }) {
 
         if (itemsRes && itemsRes.ok) {
           const itemsJson = await itemsRes.json();
-          if (Array.isArray(itemsJson?.data) && itemsJson.data.length > 0) {
-            // Normalise image URLs so relative paths become absolute
-            const normalised = itemsJson.data.map((item: any) => ({
-              ...item,
-              image: resolveImageUrl(item.image),
-            }));
-            setDbGallery(normalised);
+          if (Array.isArray(itemsJson?.data)) {
+            setDbGallery(normaliseGallery(itemsJson.data));
           }
         }
 
         if (videosRes && videosRes.ok) {
           const videosJson = await videosRes.json();
           if (Array.isArray(videosJson?.data)) {
-            const published = videosJson.data
-              .filter((v: any) => v.status === 'Published')
-              .map((v: any) => ({
-                _id: v._id,
-                title: v.title,
-                thumbnail: resolveImageUrl(v.thumbnail),
-                sourceType: (v.videoType || 'youtube').toUpperCase(),
-                videoUrl: v.videoUrl,
-                objectPosition: v.objectPosition || 'center 10%',
-                orderNumber: v.order || 0,
-              }));
-            if (published.length > 0) setDbVideos(published);
+            setDbVideos(normaliseVideos(videosJson.data));
           }
         }
       } catch (err) {
@@ -80,7 +114,7 @@ export default function GalleryClient({ heroData }: { heroData?: any }) {
     };
 
     fetchGalleryData();
-  }, []);
+  }, [initialGallery, initialMeta, initialVideos]);
 
   return (
     <main className="min-h-screen bg-white font-inter">

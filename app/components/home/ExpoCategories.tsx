@@ -5,7 +5,7 @@ import { motion } from "framer-motion";
 import { ArrowRight, Apple, Leaf, Sprout, Package, Milk, Droplet, Pill, Box, Tractor, Globe } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
-import { websiteApi } from "@/lib/api";
+import { API_URL } from "@/lib/api";
 
 import sectors1 from "../../assets/home/sectors1.webp";
 import sectors2 from "../../assets/home/sectors2.webp";
@@ -76,7 +76,9 @@ const ExpoCategories = () => {
     let isMounted = true;
     const fetchExpoCategories = async () => {
       try {
-        const res = await websiteApi.getExpoCategories();
+        // Bypass the shared client/ISR cache — CMS edits to this section should be visible
+        // on next reload, not after the 60s server cache / 5min client-prime window.
+        const res = await fetch(`${API_URL}/website/home/expo-categories`, { cache: 'no-store' }).then((r) => r.json());
         const serverData = res?.data || res;
         if (serverData && isMounted) {
           const rawCats = Array.isArray(serverData.categories) && serverData.categories.length > 0

@@ -1,64 +1,27 @@
-"use client";
+import SponsorsAndAttend from "./SponsorsAndAttend";
+import BecomeSponsor from "./BecomeSponsor";
+import SponsorshipCategories from "./SponsorshipCategories";
+import PartnersAndBrands from "./PartnersAndBrands";
+import BuyerSellerMeet from "./BuyerSellerMeet";
+import TestimonialsCarousel from "./TestimonialsCarousel";
+import LatestInsights from "./LatestInsights";
 
-import { useEffect, useRef, useState, type ReactNode } from "react";
-import dynamic from "next/dynamic";
-
-const SponsorsAndAttend = dynamic(() => import("./SponsorsAndAttend"));
-const BecomeSponsor = dynamic(() => import("./BecomeSponsor"));
-const SponsorshipCategories = dynamic(() => import("./SponsorshipCategories"));
-const PartnersAndBrands = dynamic(() => import("./PartnersAndBrands"));
-const BuyerSellerMeet = dynamic(() => import("./BuyerSellerMeet"));
-const TestimonialsCarousel = dynamic(() => import("./TestimonialsCarousel"));
-const LatestInsights = dynamic(() => import("./LatestInsights"));
-
-function DeferredSection({
-  children,
-  minHeight,
+export default function DeferredHomeSections({
+  partners,
+  blogs,
 }: {
-  children: ReactNode;
-  minHeight: number;
+  partners?: any;
+  blogs?: any;
 }) {
-  const markerRef = useRef<HTMLDivElement>(null);
-  const [shouldRender, setShouldRender] = useState(false);
-
-  useEffect(() => {
-    const marker = markerRef.current;
-    if (!marker || shouldRender) return;
-
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (!entry.isIntersecting) return;
-        setShouldRender(true);
-        observer.disconnect();
-      },
-      { rootMargin: "1400px 0px" },
-    );
-
-    observer.observe(marker);
-    return () => observer.disconnect();
-  }, [shouldRender]);
-
-  return (
-    <div
-      ref={markerRef}
-      style={shouldRender ? undefined : { minHeight }}
-      className="[content-visibility:auto]"
-    >
-      {shouldRender ? children : null}
-    </div>
-  );
-}
-
-export default function DeferredHomeSections() {
   return (
     <>
-      <DeferredSection minHeight={850}><SponsorsAndAttend /></DeferredSection>
-      <DeferredSection minHeight={650}><BecomeSponsor /></DeferredSection>
-      <DeferredSection minHeight={750}><SponsorshipCategories /></DeferredSection>
-      <DeferredSection minHeight={900}><PartnersAndBrands /></DeferredSection>
-      <DeferredSection minHeight={750}><BuyerSellerMeet /></DeferredSection>
-      <DeferredSection minHeight={650}><TestimonialsCarousel /></DeferredSection>
-      <DeferredSection minHeight={550}><LatestInsights /></DeferredSection>
+      <SponsorsAndAttend />
+      <BecomeSponsor />
+      <SponsorshipCategories />
+      <PartnersAndBrands initialData={partners} />
+      <BuyerSellerMeet />
+      <TestimonialsCarousel />
+      <LatestInsights initialData={blogs} />
     </>
   );
 }

@@ -5,7 +5,7 @@ import { Leaf, ArrowRight, Calendar, MapPin, Users, CheckCircle, Mic, BookOpen }
 import { motion } from 'framer-motion';
 import Link from 'next/link';
 import Image from 'next/image';
-import { websiteApi } from '@/lib/api';
+import { API_URL } from '@/lib/api';
 import global1 from '../../assets/home/global1.webp';
 
 // ── Default Data Configuration ──
@@ -61,7 +61,9 @@ const ConferenceSeminars = () => {
     let isMounted = true;
     const fetchConferenceData = async () => {
       try {
-        const res = await websiteApi.getConferenceSeminars();
+        // Bypass the shared client/ISR cache — CMS edits to this section should be visible
+        // on next reload, not after the 60s server cache / 5min client-prime window.
+        const res = await fetch(`${API_URL}/website/home/conference-seminars`, { cache: 'no-store' }).then((r) => r.json());
         const serverData = res?.data || res;
         if (serverData && isMounted) {
           const checklist = [

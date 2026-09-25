@@ -1,17 +1,24 @@
 "use client";
-import React, { useRef, useEffect } from "react";
+import React, { useRef, useEffect, useState } from "react";
 import Link from "next/link";
 import { CalendarDays, MapPin, ArrowRight, Hand, Handshake } from "lucide-react";
 import bannerImg from "@/app/assets/participate/msme/home-banner.webp";
 import leafImg from "@/app/assets/icons/leafs.png";
-import gsap from "gsap";
 import SectionContainer from "@/app/components/layout/SectionContainer";
 import handShake from "@/app/assets/participate/msme/handshake.png";
 import Image from "next/image";
+import { API_URL, SERVER_URL } from "@/lib/api";
+
 interface MsmePmsBannerProps {
   eligibilityHref?: string;
   supportHref?: string;
 }
+
+const resolveImageUrl = (src: string): string => {
+  if (!src) return src;
+  if (src.startsWith("http://") || src.startsWith("https://") || src.startsWith("data:")) return src;
+  return `${SERVER_URL}${src.startsWith("/") ? "" : "/"}${src}`;
+};
 
 const Sparkle = ({ style, color = "#F2B40E", shadow }: { style?: React.CSSProperties; color?: string; shadow?: string }) => (
   <span
@@ -21,7 +28,7 @@ const Sparkle = ({ style, color = "#F2B40E", shadow }: { style?: React.CSSProper
       fontSize: "13px",
       color,
       textShadow: shadow ? `0 0 6px ${shadow}` : undefined,
-      animation: "sparkleAnim 1.6s ease-in-out infinite",
+      animation: "sparkleAnim 3.2s ease-in-out infinite",
       opacity: 0,
       zIndex: 20,
       ...style,
@@ -31,47 +38,47 @@ const Sparkle = ({ style, color = "#F2B40E", shadow }: { style?: React.CSSProper
   </span>
 );
 
-const MSME_PMS_BANNER_DATA = [
-  {
-    id: 1,
-    category: "MSME procurement & marketing support",
-    titleLine1: "MSME PMS",
-    titleHighlight: "Scheme",
-    titleLine2: "Exhibition Support",
-    subtitle: "Exhibit. Connect. Grow with Government Support",
-    descriptionText1: "Eligible Micro & Small Enterprises can explore financial assistance for participation in ",
-    eventHighlight: "Bharat Organic Expo 2027",
-    descriptionText2: " under the applicable Procurement & Marketing Support (PMS) Scheme.",
-    dates: "19-21 February 2027",
-    venue: "Hall 12, Bharat Mandapam, New Delhi",
-    ctaButtons: [
-      {
-        id: "eligibility",
-        label: "CHECK PMS ELIGIBILITY",
-        href: "/participate/msme/eligibility-check",
-        isExternal: true,
-        variant: "primary",
-        sparkles: [
-          { color: "#4ade80", shadow: "#1b5e20", style: { top: "-12px", left: "10%", animationDelay: "0.2s" } },
-          { color: "#4ade80", shadow: "#1b5e20", style: { top: "-15px", left: "50%", animationDelay: "0.6s" } },
-          { color: "#4ade80", shadow: "#1b5e20", style: { top: "-10px", right: "10%", animationDelay: "1s" } },
-        ]
-      },
-      {
-        id: "support",
-        label: "GET PMS SUPPORT",
-        href: "tel:+9654900525",
-        isExternal: false,
-        variant: "secondary",
-        sparkles: [
-          { color: "#f97316", shadow: "#c2410c", style: { top: "-12px", left: "10%", animationDelay: "0s" } },
-          { color: "#f97316", shadow: "#c2410c", style: { top: "-15px", left: "50%", animationDelay: "0.4s" } },
-          { color: "#f97316", shadow: "#c2410c", style: { top: "-10px", right: "10%", animationDelay: "0.8s" } },
-        ]
-      }
-    ]
-  }
-];
+interface MsmeBannerData {
+  image: string;
+  imageAlt: string;
+  category: string;
+  titlePrimary: string;
+  titleSecondary: string;
+  subtitle: string;
+  description: string;
+  date: string;
+  location: string;
+  buttonLabel: string;
+  buttonHref: string;
+  secondaryButtonLabel: string;
+  secondaryButtonHref: string;
+}
+
+const DEFAULT_BANNER_DATA: MsmeBannerData = {
+  image: "",
+  imageAlt: "MSME PMS Scheme",
+  category: "MSME procurement & marketing support",
+  titlePrimary: "MSME PMS Scheme",
+  titleSecondary: "Exhibition Support",
+  subtitle: "Exhibit. Connect. Grow with Government Support",
+  description:
+    "Eligible Micro & Small Enterprises can explore financial assistance for participation in Bharat Organic Expo 2027 under the applicable Procurement & Marketing Support (PMS) Scheme.",
+  date: "19-21 February 2027",
+  location: "Hall 12, Bharat Mandapam, New Delhi",
+  buttonLabel: "CHECK PMS ELIGIBILITY",
+  buttonHref: "/participate/msme/eligibility-check",
+  secondaryButtonLabel: "GET PMS SUPPORT",
+  secondaryButtonHref: "tel:+9654900525",
+};
+
+const SPARKLE_SETS = {
+  primary: [
+    { color: "#4ade80", shadow: "#1b5e20", style: { top: "-12px", left: "50%", animationDelay: "0.2s" } },
+  ],
+  secondary: [
+    { color: "#f97316", shadow: "#c2410c", style: { top: "-12px", left: "50%", animationDelay: "0s" } },
+  ],
+};
 
 export default function MsmePmsBanner({
   eligibilityHref,
@@ -84,53 +91,42 @@ export default function MsmePmsBanner({
   const metaRef = useRef<HTMLDivElement>(null);
   const btnsRef = useRef<HTMLDivElement>(null);
 
+  const [data, setData] = useState<MsmeBannerData>(DEFAULT_BANNER_DATA);
+
   useEffect(() => {
-    const ctx = gsap.context(() => {
-      const tl = gsap.timeline({
-        defaults: { ease: "power3.out" },
-      });
-
-      // Heading lines — masked reveal with 3D tilt
-      tl.fromTo(
-        line1Ref.current,
-        { yPercent: 110, rotationX: 60, opacity: 0 },
-        { yPercent: 0, rotationX: 0, opacity: 1, duration: 0.9, ease: "expo.out" },
-        0.15
-      ).fromTo(
-        line2Ref.current,
-        { yPercent: 110, rotationX: 60, opacity: 0 },
-        { yPercent: 0, rotationX: 0, opacity: 1, duration: 0.9, ease: "expo.out" },
-        0.3
-      );
-
-      // Subtitle blur-fade in
-      tl.fromTo(
-        subtitleRef.current,
-        { opacity: 0, y: 20, filter: "blur(8px)" },
-        { opacity: 1, y: 0, filter: "blur(0px)", duration: 0.85 },
-        0.55
-      );
-
-      // Meta row
-      tl.fromTo(
-        metaRef.current,
-        { opacity: 0, y: 16 },
-        { opacity: 1, y: 0, duration: 0.7 },
-        0.75
-      );
-
-      // Buttons stagger
-      tl.fromTo(
-        btnsRef.current ? Array.from(btnsRef.current.children) : [],
-        { opacity: 0, y: 20, scale: 0.92 },
-        { opacity: 1, y: 0, scale: 1, duration: 0.6, stagger: 0.15, ease: "back.out(1.7)" },
-        0.95
-      );
-
-    }, sectionRef);
-
-    return () => ctx.revert();
+    let isMounted = true;
+    fetch(`${API_URL}/settings?website=Organicexpo`, { cache: "no-store" })
+      .then((res) => res.json())
+      .then((res) => {
+        if (!isMounted) return;
+        const sections = res?.data?.msmePage?.sections || res?.msmePage?.sections || [];
+        const section = Array.isArray(sections) ? sections.find((s: any) => s.key === "msme-pms-banner") : null;
+        if (!section) return;
+        setData({
+          image: section.image || DEFAULT_BANNER_DATA.image,
+          imageAlt: section.imageAlt || DEFAULT_BANNER_DATA.imageAlt,
+          category: section.eyebrow || DEFAULT_BANNER_DATA.category,
+          titlePrimary: section.titlePrimary || DEFAULT_BANNER_DATA.titlePrimary,
+          titleSecondary: section.titleSecondary || DEFAULT_BANNER_DATA.titleSecondary,
+          subtitle: section.subtitle || DEFAULT_BANNER_DATA.subtitle,
+          description: section.description || DEFAULT_BANNER_DATA.description,
+          date: section.date || DEFAULT_BANNER_DATA.date,
+          location: section.location || DEFAULT_BANNER_DATA.location,
+          buttonLabel: section.buttonLabel || DEFAULT_BANNER_DATA.buttonLabel,
+          buttonHref: section.buttonHref || DEFAULT_BANNER_DATA.buttonHref,
+          secondaryButtonLabel: section.secondaryButtonLabel || DEFAULT_BANNER_DATA.secondaryButtonLabel,
+          secondaryButtonHref: section.secondaryButtonHref || DEFAULT_BANNER_DATA.secondaryButtonHref,
+        });
+      })
+      .catch((err) => console.error("Failed to load MSME PMS banner:", err));
+    return () => {
+      isMounted = false;
+    };
   }, []);
+
+  // Text content renders statically now — no entrance animation on headings, subtitle,
+  // description, meta row or buttons. The sparkle twinkle and button shimmer are separate
+  // CSS keyframe effects below and are intentionally kept.
 
   return (
     <>
@@ -142,8 +138,8 @@ export default function MsmePmsBanner({
           100% { opacity:0; transform:scale(0.5) translateY(-8px); }
         }
         @keyframes shimmerHero {
-          0% { transform: translateX(0) skewX(-20deg); }
-          100% { transform: translateX(450%) skewX(-20deg); }
+          0%, 25% { transform: translateX(0) skewX(-20deg); }
+          40%, 100% { transform: translateX(450%) skewX(-20deg); }
         }
         @keyframes bgZoom {
           0%   { transform: scale(1.08); }
@@ -167,7 +163,7 @@ export default function MsmePmsBanner({
           width: 50%; height: 200%;
           background: linear-gradient(to right, transparent, rgba(255,255,255,0.3), transparent);
           transform: skewX(-20deg);
-          animation: shimmerHero 2.5s infinite;
+          animation: shimmerHero 6s ease-in-out infinite;
         }
       `}</style>
 
@@ -178,8 +174,9 @@ export default function MsmePmsBanner({
         {/* Background Image with Ken Burns zoom */}
         <div className="absolute inset-0 z-0 overflow-hidden">
           <Image
-            src={bannerImg}
-            alt="MSME PMS Scheme"
+            src={data.image ? resolveImageUrl(data.image) : bannerImg}
+            alt={data.imageAlt || "MSME PMS Scheme"}
+            fill
             className="hero-bg-img w-full h-full object-cover"
           />
         </div>
@@ -189,8 +186,35 @@ export default function MsmePmsBanner({
 
         <div className="relative z-20 w-full h-full flex flex-col justify-center py-12 md:py-6 [perspective:800px]">
           <SectionContainer>
-            {MSME_PMS_BANNER_DATA.map((data) => (
-              <div key={data.id} className="max-w-2xl text-left mt-6 md:mt-0 space-y-3.5 md:space-y-4 w-full bg-white/75 md:bg-transparent backdrop-blur-md md:backdrop-blur-none p-4 sm:p-6 md:p-0 rounded-2xl border border-white/60 md:border-none shadow-lg md:shadow-none">
+            {(() => {
+              const titleWords = data.titlePrimary.trim().split(/\s+/);
+              const titlePrefix = titleWords.slice(0, -1).join(" ");
+              const titleLastWord = titleWords[titleWords.length - 1] || "";
+              const expoMarker = "Bharat Organic Expo 2027";
+              const descIdx = data.description.indexOf(expoMarker);
+              const descBefore = descIdx >= 0 ? data.description.slice(0, descIdx) : data.description;
+              const descAfter = descIdx >= 0 ? data.description.slice(descIdx + expoMarker.length) : "";
+              const ctaButtons = [
+                {
+                  id: "eligibility",
+                  label: data.buttonLabel,
+                  href: eligibilityHref || data.buttonHref,
+                  isExternal: true,
+                  variant: "primary" as const,
+                  sparkles: SPARKLE_SETS.primary,
+                },
+                {
+                  id: "support",
+                  label: data.secondaryButtonLabel,
+                  href: supportHref || data.secondaryButtonHref,
+                  isExternal: false,
+                  variant: "secondary" as const,
+                  sparkles: SPARKLE_SETS.secondary,
+                },
+              ];
+
+              return (
+              <div className="max-w-2xl text-left mt-6 md:mt-0 space-y-3.5 md:space-y-4 w-full bg-white/75 md:bg-transparent backdrop-blur-md md:backdrop-blur-none p-4 sm:p-6 md:p-0 rounded-2xl border border-white/60 md:border-none shadow-lg md:shadow-none">
                 <div className="flex flex-col items-start justify-start">
                   <div className="w-full text-left mt-4">
 
@@ -209,13 +233,13 @@ export default function MsmePmsBanner({
                       style={{ textShadow: "1px 1px 2px rgba(0,0,0,0.4)" }}
                     >
                       <span className="block overflow-hidden">
-                        <span ref={line1Ref} style={{ opacity: 0, display: "block" }} className="text-[#1b5e20] text-2xl sm:text-4xl md:text-5xl lg:text-[58px] font-semibold tracking-tight">
-                          {data.titleLine1} <span className="capitalize">{data.titleHighlight}</span>
+                        <span ref={line1Ref} style={{ display: "block" }} className="text-[#1b5e20] text-2xl sm:text-4xl md:text-5xl lg:text-[58px] font-semibold tracking-tight">
+                          {titlePrefix} <span className="capitalize">{titleLastWord}</span>
                         </span>
                       </span>
                       <span className="block overflow-hidden">
-                        <span ref={line2Ref} style={{ opacity: 0, display: "block" }} className="text-[#1b5e20] text-[20px] sm:text-[32px] md:text-[44px] lg:text-[52px] font-semibold mb-1 uppercase">
-                          {data.titleLine2}
+                        <span ref={line2Ref} style={{ display: "block" }} className="text-[#1b5e20] text-[20px] sm:text-[32px] md:text-[44px] lg:text-[52px] font-semibold mb-1 uppercase">
+                          {data.titleSecondary}
                         </span>
                       </span>
                     </h1>
@@ -231,33 +255,35 @@ export default function MsmePmsBanner({
                     {/* Description */}
                     <p
                       ref={subtitleRef}
-                      style={{ opacity: 0 }}
                       className="text-[#131730] font-semibold text-[12.5px] sm:text-[13.5px] md:text-[15px] leading-relaxed max-w-lg mt-2 font-inter"
                     >
-                      {data.descriptionText1}<span className="text-[#1b5e20]">{data.eventHighlight}</span>{data.descriptionText2}
+                      {descIdx >= 0 ? (
+                        <>{descBefore}<span className="text-[#1b5e20]">{expoMarker}</span>{descAfter}</>
+                      ) : (
+                        data.description
+                      )}
                     </p>
 
                     {/* Date & Venue */}
                     <div
                       ref={metaRef}
-                      style={{ opacity: 0 }}
                       className="flex flex-col sm:flex-row items-start sm:items-center gap-2.5 sm:gap-4 mt-2 md:mt-2 mb-4 md:mb-4 text-[#4B1426] text-xs sm:text-sm md:text-[15px] font-semibold"
                     >
                       <div className="flex items-center gap-2">
                         <CalendarDays size={17} className="shrink-0 text-[#ea580c]" />
-                        <span>{data.dates}</span>
+                        <span>{data.date}</span>
                       </div>
                       <div className="hidden sm:block w-px h-5 bg-[#4B1426]/30"></div>
                       <div className="flex items-center gap-2">
                         <MapPin size={17} className="shrink-0 text-[#ea580c]" />
-                        <span>{data.venue}</span>
+                        <span>{data.location}</span>
                       </div>
                     </div>
 
                     {/* Buttons */}
                     <div ref={btnsRef} className="flex flex-col sm:flex-row items-start sm:items-center justify-start gap-3">
-                      {data.ctaButtons.map((btn) => {
-                        const targetHref = btn.id === "eligibility" ? (eligibilityHref || btn.href) : (supportHref || btn.href);
+                      {ctaButtons.map((btn) => {
+                        const targetHref = btn.href;
                         return (
                           <div key={btn.id} className="relative w-fit sm:w-auto">
                             {btn.sparkles.map((sp, idx) => (
@@ -293,7 +319,8 @@ export default function MsmePmsBanner({
                   </div>
                 </div>
               </div>
-            ))}
+              );
+            })()}
           </SectionContainer>
         </div>
       </section>

@@ -50,7 +50,7 @@ import {
   Info,
 } from "lucide-react";
 import SectionContainer from "@/app/components/layout/SectionContainer";
-import { websiteApi } from "@/lib/api";
+import { API_URL } from "@/lib/api";
 
 export interface AudienceStripItem {
   _id?: string;
@@ -177,7 +177,9 @@ const AudienceStrip: React.FC<AudienceStripProps> = ({ items: propItems }) => {
     let isMounted = true;
     const fetchAudienceData = async () => {
       try {
-        const res = await websiteApi.getAudienceStrip();
+        // Bypass the shared client/ISR cache — CMS edits to this section should be visible
+        // on next reload, not after the 60s server cache / 5min client-prime window.
+        const res = await fetch(`${API_URL}/website/home/audience-strip`, { cache: 'no-store' }).then((r) => r.json());
         const data = res?.data || res;
         if (data && isMounted) {
           if (data.enabled === false) {

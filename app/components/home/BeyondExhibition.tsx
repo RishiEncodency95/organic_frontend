@@ -29,7 +29,7 @@ import {
 
 import Image from 'next/image';
 import seminarsImg from '../../assets/home/seminars.webp';
-import { websiteApi } from '@/lib/api';
+import { API_URL } from '@/lib/api';
 
 const ICON_MAP: Record<string, LucideIcon> = {
   Users,
@@ -125,7 +125,9 @@ const BeyondExhibition = () => {
     let isMounted = true;
     const fetchBeyondExhibition = async () => {
       try {
-        const res = await websiteApi.getBeyondExhibition();
+        // Bypass the shared client/ISR cache — CMS edits to this section should be visible
+        // on next reload, not after the 60s server cache / 5min client-prime window.
+        const res = await fetch(`${API_URL}/website/home/beyond-exhibition`, { cache: 'no-store' }).then((r) => r.json());
         const serverData = res?.data || res;
         if (serverData && isMounted) {
           const rawItems = Array.isArray(serverData.items) && serverData.items.length > 0

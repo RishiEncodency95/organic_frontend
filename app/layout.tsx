@@ -124,6 +124,8 @@ export default async function RootLayout({
       className={`${poppins.variable} ${inter.variable} ${playfair.variable} h-full antialiased overflow-x-hidden`}
     >
       <head>
+        <link rel="dns-prefetch" href="//res.cloudinary.com" />
+        <link rel="preconnect" href="https://res.cloudinary.com" crossOrigin="anonymous" />
         {gscVerification && (
           <meta name="google-site-verification" content={gscVerification} />
         )}

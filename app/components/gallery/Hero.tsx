@@ -1,10 +1,12 @@
 "use client";
 import React, { useState, useEffect } from 'react';
+import Image from 'next/image';
 import { motion, Variants } from 'framer-motion';
 import gallarybg from '@/app/assets/banner/gallog2.webp';
 import { Leaf } from 'lucide-react';
 import SectionContainer from '@/app/components/layout/SectionContainer';
 import { API_URL } from '@/lib/api';
+import { cloudinaryImageLoader, isCloudinaryImage } from '@/lib/cloudinaryImage';
 
 const customEase: [number, number, number, number] = [0.16, 1, 0.3, 1];
 
@@ -128,26 +130,32 @@ const Hero = ({ initialData }: { initialData?: any }) => {
   }, [initialData]);
 
   const titleChars = (settings.heading || "GLIMPSES").split("");
-  const staticBg = typeof gallarybg === 'string' ? gallarybg : gallarybg.src;
-  const bgUrl = settings.rightImage || staticBg;
+  const bgSource = settings.rightImage || gallarybg;
+  const bgKey = typeof bgSource === 'string' ? bgSource : bgSource.src;
 
   return (
     <section className="relative w-full py-8 md:py-12 lg:py-16 bg-[#f8faf8] overflow-hidden font-inter" style={{ perspective: 1200 }}>
       {/* Background Image */}
       <motion.div
-        key={bgUrl}
+        key={bgKey}
         className="absolute inset-0 z-0 pointer-events-none"
         style={{
-          backgroundImage: `url(${bgUrl})`,
-          backgroundSize: 'cover',
-          backgroundPosition: 'center right',
-          backgroundRepeat: 'no-repeat',
           transformOrigin: 'center'
         }}
         initial={{ opacity: 0, scale: 1.05 }}
         animate={{ opacity: 1, scale: 1 }}
         transition={{ duration: 1.0, ease: customEase }}
-      />
+      >
+        <Image
+          src={bgSource}
+          alt=""
+          fill
+          loader={isCloudinaryImage(bgSource) ? cloudinaryImageLoader : undefined}
+          preload
+          sizes="100vw"
+          className="object-cover object-right"
+        />
+      </motion.div>
 
       {/* Mobile-only light overlay */}
       <div className="absolute inset-0 z-[1] bg-gradient-to-b from-white/95 via-white/85 to-white/40 md:hidden pointer-events-none" />
