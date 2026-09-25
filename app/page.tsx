@@ -1,24 +1,20 @@
-import React, { Suspense, lazy } from "react";
 import type { Metadata } from "next";
 import HeroSection from "./components/home/HeroSection";
 import AudienceStrip from "./components/home/AudienceStrip";
+import HomeApiPrimer from "./components/home/HomeApiPrimer";
+import DeferredHomeSections from "./components/home/DeferredHomeSections";
+import SectionBoundary from "./components/home/SectionBoundary";
+import IntroductionSection from "./components/home/IntroductionSection";
+import WhyParticipate from "./components/home/WhyParticipate";
+import BeyondExhibition from "./components/home/BeyondExhibition";
+import ExpoCategories from "./components/home/ExpoCategories";
+import ConferenceSection from "./components/home/ConferenceSection";
+import GlobalPlatform from "./components/home/GlobalPlatform";
 import { seoApi } from "../lib/api";
+import { getHomePageData } from "../lib/homeData";
 import SchemaInjector from "./components/SchemaInjector";
 
-// Lazy load below-the-fold components
-const IntroductionSection = lazy(() => import("./components/home/IntroductionSection"));
-const WhyParticipate = lazy(() => import("./components/home/WhyParticipate"));
-const BeyondExhibition = lazy(() => import("./components/home/BeyondExhibition"));
-const ExpoCategories = lazy(() => import("./components/home/ExpoCategories"));
-const ConferenceSection = lazy(() => import("./components/home/ConferenceSection"));
-const SponsorsAndAttend = lazy(() => import("./components/home/SponsorsAndAttend"));
-const BecomeSponsor = lazy(() => import("./components/home/BecomeSponsor"));
-const SponsorshipCategories = lazy(() => import("./components/home/SponsorshipCategories"));
-const PartnersAndBrands = lazy(() => import("./components/home/PartnersAndBrands"));
-const BuyerSellerMeet = lazy(() => import("./components/home/BuyerSellerMeet"));
-const TestimonialsCarousel = lazy(() => import("./components/home/TestimonialsCarousel"));
-const LatestInsights = lazy(() => import("./components/home/LatestInsights"));
-const GlobalPlatform = lazy(() => import("./components/home/GlobalPlatform"));
+export const revalidate = 60;
 
 export async function generateMetadata(): Promise<Metadata> {
   const isLocal = process.env.NODE_ENV !== "production";
@@ -90,6 +86,7 @@ export async function generateMetadata(): Promise<Metadata> {
 const Index = async () => {
   const isLocal = process.env.NODE_ENV !== "production";
   const defaultUrl = isLocal ? "http://localhost:3002" : "https://bharatorganicexpo.com";
+  const homeDataPromise = getHomePageData();
   let seoData: any = null;
   try {
     const res = await seoApi.getByPage("home", isLocal ? "local" : "live");
@@ -97,6 +94,8 @@ const Index = async () => {
   } catch (e) {
     // fallback
   }
+
+  const homeData = await homeDataPromise;
 
   const rawCanonical = (seoData?.canonicalTag || seoData?.canonicalUrl || "").trim();
   let canonicalUrl = defaultUrl;
@@ -126,29 +125,28 @@ const Index = async () => {
           }}
         />
       )}
-      <HeroSection />
+      <HomeApiPrimer responses={homeData.apiResponses} />
+      <HeroSection initialSlides={homeData.apiResponses["/website/home/home-hero"]} />
       <AudienceStrip />
-      <Suspense
-        fallback={
-          <div className="min-h-[200px] flex items-center justify-center">
-            <div className="w-8 h-8 border-4 border-[#3b8c2a] border-t-transparent rounded-full animate-spin"></div>
-          </div>
-        }
-      >
+      <SectionBoundary>
         <IntroductionSection />
+      </SectionBoundary>
+      <SectionBoundary>
         <GlobalPlatform />
+      </SectionBoundary>
+      <SectionBoundary>
         <WhyParticipate />
+      </SectionBoundary>
+      <SectionBoundary>
         <ConferenceSection />
+      </SectionBoundary>
+      <SectionBoundary>
         <ExpoCategories />
+      </SectionBoundary>
+      <SectionBoundary>
         <BeyondExhibition />
-        <SponsorsAndAttend />
-        <BecomeSponsor />
-        <SponsorshipCategories />
-        <PartnersAndBrands />
-        <BuyerSellerMeet />
-        <TestimonialsCarousel />
-        <LatestInsights />
-      </Suspense>
+      </SectionBoundary>
+      <DeferredHomeSections partners={homeData.partners} blogs={homeData.blogs} />
     </>
   );
 };

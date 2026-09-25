@@ -5,7 +5,7 @@ import Image from "next/image";
 import { motion } from "framer-motion";
 import introImg from "../../assets/home/homeIntro.webp";
 import leafog from "@/app/assets/icons/leafs.webp";
-import { websiteApi } from "@/lib/api";
+import { API_URL } from "@/lib/api";
 
 const DEFAULT_INTRO = {
   enabled: true,
@@ -41,7 +41,9 @@ const IntroductionSection = () => {
     let isMounted = true;
     const fetchIntro = async () => {
       try {
-        const res = await websiteApi.getIntroductionSection();
+        // Bypass the shared client/ISR cache — CMS edits to this section should be visible
+        // on next reload, not after the 60s server cache / 5min client-prime window.
+        const res = await fetch(`${API_URL}/website/home/introduction-section`, { cache: 'no-store' }).then((r) => r.json());
         const serverData = res?.data || res;
         if (serverData && isMounted) {
           setData((prev) => ({

@@ -76,6 +76,12 @@ export async function generateMetadata(): Promise<Metadata> {
 
 export default async function GalleryPage() {
   const isLocal = process.env.NODE_ENV !== "production";
+  const galleryDataPromise = Promise.all([
+    getSectionData("/website/gallery/hero"),
+    getSectionData("/website/gallery/meta"),
+    getSectionData("/website/gallery/items"),
+    getSectionData("/website/gallery/video-highlights/items"),
+  ]);
   let seoData: any = null;
   try {
     const res = await seoApi.getByPage("gallery", isLocal ? "local" : "live");
@@ -85,12 +91,17 @@ export default async function GalleryPage() {
   }
 
   const schemaContent = seoData?.schemaMarkup || null;
-  const galleryHero = await getSectionData("/website/gallery/hero");
+  const [galleryHero, galleryMeta, galleryItems, galleryVideos] = await galleryDataPromise;
 
   return (
     <>
       <SchemaInjector schema={schemaContent} />
-      <GalleryClient heroData={galleryHero} />
+      <GalleryClient
+        heroData={galleryHero}
+        initialMeta={galleryMeta}
+        initialGallery={galleryItems}
+        initialVideos={galleryVideos}
+      />
     </>
   );
 }

@@ -12,7 +12,7 @@ import SmoothScroll from "./components/SmoothScroll";
 // styles reference these variables, so nothing loads from fonts.googleapis.com at runtime.
 const poppins = Poppins({
   subsets: ["latin"],
-  weight: ["300", "400", "500", "600", "700", "800", "900"],
+  weight: ["400", "500", "600", "700"],
   variable: "--font-poppins-next",
   display: "swap",
 });
@@ -29,6 +29,7 @@ const playfair = Playfair_Display({
   style: ["normal", "italic"],
   variable: "--font-playfair-next",
   display: "swap",
+  preload: false,
 });
 
 import DynamicCanonical from "./components/DynamicCanonical";
@@ -123,6 +124,8 @@ export default async function RootLayout({
       className={`${poppins.variable} ${inter.variable} ${playfair.variable} h-full antialiased overflow-x-hidden`}
     >
       <head>
+        <link rel="dns-prefetch" href="//res.cloudinary.com" />
+        <link rel="preconnect" href="https://res.cloudinary.com" crossOrigin="anonymous" />
         {gscVerification && (
           <meta name="google-site-verification" content={gscVerification} />
         )}

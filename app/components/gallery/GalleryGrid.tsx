@@ -1,15 +1,12 @@
 "use client";
 import React, { useEffect, useRef, useState, useCallback } from 'react';
+import Image from 'next/image';
 import { Camera, X, ChevronLeft, ChevronRight, ZoomIn } from 'lucide-react';
 import { gsap } from 'gsap';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
 import { GALLERY_ITEMS, GalleryItem } from '@/app/data/galleryImages';
 import SectionContainer from '@/app/components/layout/SectionContainer';
-
-if (typeof window !== 'undefined') {
-  gsap.registerPlugin(ScrollTrigger);
-}
+import { buildCloudinaryImageUrl, cloudinaryImageLoader, isCloudinaryImage } from '@/lib/cloudinaryImage';
 
 const ALL_IMAGES: GalleryItem[] = GALLERY_ITEMS;
 
@@ -132,45 +129,12 @@ const Lightbox = ({ images, activeIndex, onClose, onNav }: any) => {
   );
 };
 
-const GalleryCard = ({ img, index, onOpen, animKey }: any) => {
+const GalleryCard = ({ img, onOpen }: any) => {
   const cardRef    = useRef<HTMLDivElement>(null);
   const imgRef     = useRef<HTMLDivElement>(null);
   const overlayRef = useRef<HTMLDivElement>(null);
   const labelRef   = useRef<HTMLDivElement>(null);
   const zoomRef    = useRef<HTMLDivElement>(null);
-  const [isLoaded, setIsLoaded] = useState(false);
-
-  useEffect(() => {
-    const el = cardRef.current;
-    if (!el) return;
-
-    gsap.set(el, { 
-      opacity: 0, 
-      y: 40, 
-      scale: 0.97 
-    });
-
-    const delay = (index % 4) * 0.08;
-
-    const st = ScrollTrigger.create({
-      trigger: el, 
-      start: 'top 95%',
-      onEnter: () => {
-        gsap.to(el, { 
-          opacity: 1, 
-          y: 0, 
-          scale: 1, 
-          duration: 0.6, 
-          delay: delay, 
-          ease: 'power3.out', 
-          clearProps: 'transform'
-        });
-      },
-      once: true
-    });
-
-    return () => st.kill();
-  }, [animKey, index]);
 
   const onEnter = () => {
     gsap.to(imgRef.current,     { scale:1.05, duration:0.4, ease:'power2.out' });
@@ -191,7 +155,7 @@ const GalleryCard = ({ img, index, onOpen, animKey }: any) => {
     onOpen(img.id);
   };
 
-  const getImgSrc = (src: any) => typeof src === 'string' ? src : src.src;
+  const usesCloudinaryLoader = isCloudinaryImage(img.src);
 
   return (
     <div ref={cardRef} onClick={handleClick} onMouseEnter={onEnter} onMouseLeave={onLeave}
@@ -205,19 +169,16 @@ const GalleryCard = ({ img, index, onOpen, animKey }: any) => {
       }}
     >
       <div ref={imgRef} style={{ width:'100%', height:'100%', overflow:'hidden', position:'relative' }}>
-        <img 
-          src={getImgSrc(img.src)} 
+        <Image
+          src={img.src}
           alt={img.alt || img.title}
-          loading={index < 4 ? "eager" : "lazy"}
-          decoding="async"
-          onLoad={() => setIsLoaded(true)}
+          fill
+          loader={usesCloudinaryLoader ? cloudinaryImageLoader : undefined}
+          sizes="(max-width: 640px) 42vw, (max-width: 1024px) 35vw, 28vw"
+          loading="lazy"
+          placeholder={typeof img.src === 'string' ? 'empty' : 'blur'}
           style={{ 
-            width:'100%', 
-            height:'100%', 
             objectFit:'cover', 
-            display:'block',
-            transition:'opacity 0.3s ease-in-out',
-            opacity: isLoaded ? 1 : 0.8,
           }}
         />
       </div>
@@ -401,7 +362,6 @@ const GalleryGrid: React.FC<GalleryGridProps> = ({
   dbGallery = [] 
 }) => {
   const [page, setPage]                   = useState(1);
-  const [animKey, setAnimKey]             = useState(0);
   const [lightboxIndex, setLightboxIndex] = useState<number | null>(null);
   const gridRef    = useRef<HTMLDivElement>(null);
   const sectionRef = useRef<HTMLDivElement>(null);
@@ -454,30 +414,51 @@ const GalleryGrid: React.FC<GalleryGridProps> = ({
 
   useEffect(() => {
     setPage(1);
-    setAnimKey(prev => prev + 1);
   }, [activeYear, activeCategory, searchQuery]);
 
   const pageImages = filteredImages.slice((page-1)*PAGE_SIZE, page*PAGE_SIZE);
 
+  // Warm the browser cache for the next set of admin-uploaded Cloudinary images.
+  // It starts after the current page has had time to load, so pagination feels
+  // immediate without competing with the initially visible cards.
+  useEffect(() => {
+    if (typeof window === 'undefined' || page >= TOTAL_PAGES) return;
+
+    const nextImages = filteredImages
+      .slice(page * PAGE_SIZE, (page + 1) * PAGE_SIZE)
+      .map((image) => image.src)
+      .filter(isCloudinaryImage);
+
+    if (nextImages.length === 0) return;
+
+    const preloaders: HTMLImageElement[] = [];
+    const timeoutId = window.setTimeout(() => {
+      nextImages.forEach((src) => {
+        const preloader = new window.Image();
+        preloader.decoding = 'async';
+        preloader.sizes = '(max-width: 640px) 42vw, (max-width: 1024px) 35vw, 28vw';
+        preloader.srcset = [256, 384, 640, 750]
+          .map((width) => `${buildCloudinaryImageUrl(src, width)} ${width}w`)
+          .join(', ');
+        preloader.src = buildCloudinaryImageUrl(src, 640);
+        preloaders.push(preloader);
+      });
+    }, 1200);
+
+    return () => {
+      window.clearTimeout(timeoutId);
+      preloaders.forEach((preloader) => {
+        preloader.src = '';
+        preloader.srcset = '';
+      });
+    };
+  }, [filteredImages, page, TOTAL_PAGES]);
+
   const handlePageChange = useCallback((newPage: number) => {
-    const cards = gridRef.current ? [...gridRef.current.children] : [];
-    if (cards.length === 0) { setPage(newPage); return; }
-    
-    gsap.to(cards, {
-      y: -15, 
-      opacity: 0, 
-      scale: 0.95,
-      stagger: 0.02, 
-      duration: 0.2, 
-      ease: 'power2.in',
-      onComplete: () => {
-        setPage(newPage);
-        setAnimKey(k => k+1);
-        if (sectionRef.current) {
-          window.scrollTo({ top: sectionRef.current.offsetTop - 80, behavior:'smooth' });
-        }
-      },
-    });
+    setPage(newPage);
+    if (sectionRef.current) {
+      window.scrollTo({ top: sectionRef.current.offsetTop - 80, behavior:'smooth' });
+    }
   }, []);
 
   const openLightbox = (id: number | string) => {
@@ -516,7 +497,7 @@ const GalleryGrid: React.FC<GalleryGridProps> = ({
                 hasLabel: s.hasLabel || false,
               };
               return (
-                <GalleryCard key={`${img.id}-${animKey}`} img={styledImg} index={index} onOpen={openLightbox} animKey={animKey}/>
+                <GalleryCard key={img.id} img={styledImg} onOpen={openLightbox}/>
               );
             })}
           </div>

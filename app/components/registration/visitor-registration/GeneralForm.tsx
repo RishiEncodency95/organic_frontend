@@ -1,7 +1,7 @@
 "use client";
 import React, { useState, useEffect } from "react";
 import { User, CheckCircle2, Loader2, CheckCircle, X, ChevronsUpDown, ShieldCheck } from "lucide-react";
-import { crmApi, verifyApi, visitorApi, settingsApi } from "../../../../lib/api";
+import { crmApi, verifyApi, visitorApi, ihweSettingsApi } from "../../../../lib/api";
 import Swal from 'sweetalert2';
 
 // Helper component for multi-select
@@ -86,7 +86,7 @@ export default function GeneralForm() {
   const [requireOtp, setRequireOtp] = useState(true);
 
   useEffect(() => {
-    settingsApi.getSettings().then((res: any) => {
+    ihweSettingsApi.getSettings().then((res: any) => {
       if (res && res.requireOtpForVisitorRegistration !== undefined) {
         setRequireOtp(res.requireOtpForVisitorRegistration);
       }
