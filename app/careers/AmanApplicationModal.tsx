@@ -521,7 +521,7 @@ function AmanApplicationContent({ onClose }: { onClose: () => void }) {
             className="flex items-center gap-[5px] text-[13px] font-semibold text-[#0c5e3f] hover:text-[#d92027] transition-colors"
           >
             <ArrowLeft className="h-[14px] w-[14px]" />
-            Back
+            Preview
           </button>
 
           <h1 className="mt-[3px] text-[25px] font-semibold leading-[1.05] tracking-[-0.02em] text-[#123963]">

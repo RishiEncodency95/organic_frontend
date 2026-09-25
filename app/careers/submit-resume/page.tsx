@@ -337,7 +337,7 @@ const matchConfig = {
     subtitle: "This position may not be the right fit for you at this time.",
 
     description:
-      "Based on our screening, your profile does not meet the minimum requirements for this role. Therefore, you are not eligible to apply for this position. We truly appreciate your interest in Bharat Organic Expo and encourage you to explore other opportunities that may be a better match for your skills and experience.",
+      "Your profile does not meet the minimum requirements for this role. We appreciate your interest and encourage you to explore other opportunities that better match your skills.",
 
     quote: "",
 
@@ -673,11 +673,10 @@ function ResultHero() {
         from the image remains visible behind the real dynamic icon.
       */}
       <div
-        className={`pointer-events-none absolute z-[18] ${
-          matchLevel === "moderate"
+        className={`pointer-events-none absolute z-[18] ${matchLevel === "moderate"
             ? "left-[29.5%] top-0 h-full w-[110px]"
             : "left-[32.25%] top-[7.2%] h-[78px] w-[86px]"
-        }`}
+          }`}
         style={{
           background:
             matchLevel === "high"
@@ -1102,11 +1101,11 @@ function LowNextSteps() {
               />
 
               <div>
-                <h4 className="text-[14.5px] font-semibold leading-tight text-[#113a72]">
+                <h4 className="text-[16px] font-semibold leading-tight text-[#113a72]">
                   {title}
                 </h4>
 
-                <p className="mt-[4px] text-[12.5px] font-medium leading-[1.3] text-[#3e536c]">
+                <p className="mt-[4px] text-[13.5px] font-medium leading-[1.35] text-[#3e536c]">
                   {text}
                 </p>
               </div>
@@ -1116,11 +1115,11 @@ function LowNextSteps() {
 
         <button
           type="button"
-          onClick={() => goToCareers(true)}
-          className="mt-[10px] flex h-[34px] items-center gap-[8px] rounded-[5px] border border-[#075333] px-[20px] text-[13px] font-bold text-[#075333] transition-colors hover:bg-[#075333] hover:text-white"
+          disabled
+          className="mt-[12px] flex h-[42px] cursor-not-allowed items-center gap-[8px] rounded-[8px] bg-[#b6c4bc] px-[24px] text-[14px] font-bold text-white"
         >
           View Other Job Opportunities
-          <ArrowRight className="h-[14px] w-[14px]" strokeWidth={2.5} />
+          <ArrowRight className="h-[16px] w-[16px]" strokeWidth={2.5} />
         </button>
       </div>
     </div>
@@ -1137,10 +1136,31 @@ const digitsOnly = (value?: string | null) => (value || "").replace(/\D/g, "");
 /** Last 10 digits, so "+91 98765 43210" and "9876543210" compare equal. */
 const phoneKey = (value?: string | null) => digitsOnly(value).slice(-10);
 
-const isValidEmail = (value?: string | null) =>
-  /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test((value || "").trim());
+/**
+ * WHATWG/HTML5 "valid email address" regex — the same pattern browsers use for
+ * <input type="email">. Validates local-part characters, domain label length/hyphen
+ * rules, and requires a real TLD, without the full RFC 5322 edge cases no mail
+ * provider actually accepts.
+ */
+const EMAIL_REGEX =
+  /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)+$/;
 
-const isValidPhone = (value?: string | null) => digitsOnly(value).length >= 10;
+/** Only these mail providers are accepted; everything else (work/custom domains, disposable inboxes) is rejected. */
+const ALLOWED_EMAIL_DOMAINS = ["gmail.com", "outlook.com", "yahoo.com"];
+
+const isValidEmail = (value?: string | null) => {
+  const trimmed = (value || "").trim();
+  if (!EMAIL_REGEX.test(trimmed)) return false;
+  const domain = trimmed.split("@")[1]?.toLowerCase();
+  return ALLOWED_EMAIL_DOMAINS.includes(domain);
+};
+
+/** Indian mobile numbers only: exactly 10 digits starting 6-9, with an optional +91/91 prefix. */
+const isValidPhone = (value?: string | null) => {
+  const digits = digitsOnly(value);
+  const local = digits.length === 12 && digits.startsWith("91") ? digits.slice(2) : digits;
+  return /^[6-9]\d{9}$/.test(local);
+};
 
 /**
  * Every number the CV yielded, primary first and de-duplicated on the last 10 digits,
@@ -1292,9 +1312,10 @@ async function inspectPhoto(file: File): Promise<{ url: string } | { error: stri
   return { url };
 }
 
-
 function ProfileCard() {
-  const { candidate, updateCandidate } = useMatchData();
+  const { candidate, updateCandidate, matchLevel } = useMatchData();
+  // Not-eligible candidates land on a read-only profile — nothing here can change their outcome.
+  const canEdit = matchLevel !== "low";
   const [isEditing, setIsEditing] = useState(false);
   const [photoError, setPhotoError] = useState("");
   const [isCheckingPhoto, setIsCheckingPhoto] = useState(false);
@@ -1323,6 +1344,7 @@ function ProfileCard() {
     .toUpperCase();
 
   const openEditor = () => {
+    if (!canEdit) return;
     setPhotoError("");
     setDraft(buildDraft());
     setIsEditing(true);
@@ -1406,7 +1428,7 @@ function ProfileCard() {
       <div className="flex shrink-0 items-center justify-between">
         <h3 className="text-[17px] font-bold text-[#0c3363]">Your Profile</h3>
 
-        {isEditing ? (
+        {canEdit && (isEditing ? (
           <div className="flex items-center gap-[10px]">
             <button
               type="button"
@@ -1434,10 +1456,10 @@ function ProfileCard() {
             <Pencil className="h-[15px] w-[15px] stroke-[2.5]" />
             Edit
           </button>
-        )}
+        ))}
       </div>
 
-      {isEditing ? (
+      {canEdit && isEditing ? (
         <div className="boe-modal-scroll mt-[8px] flex min-h-0 flex-1 gap-[12px] overflow-y-auto pr-[4px]">
           {/* Photo column — wide enough to judge the picture before saving. */}
           <div className="w-[132px] shrink-0">
@@ -1488,22 +1510,40 @@ function ProfileCard() {
               />
             </div>
 
-            <input
-              className={fieldClass(!isValidEmail(draft.email))}
-              type="email"
-              placeholder="Email address *"
-              value={draft.email}
-              onChange={(e) => setDraft((d) => ({ ...d, email: e.target.value }))}
-            />
+            <div>
+              <input
+                className={fieldClass(!isValidEmail(draft.email))}
+                type="email"
+                placeholder="Email address *"
+                value={draft.email}
+                onChange={(e) =>
+                  setDraft((d) => ({ ...d, email: e.target.value.replace(/\s/g, "") }))
+                }
+              />
+              {draft.email.trim() && !isValidEmail(draft.email) && (
+                <p className="mt-[3px] text-[11px] font-semibold text-[#b23b2e]">
+                  Use a Gmail, Outlook or Yahoo email address (e.g. name@gmail.com).
+                </p>
+              )}
+            </div>
 
             <div>
               <input
                 className={fieldClass(!isValidPhone(draft.phone))}
                 type="tel"
+                inputMode="numeric"
+                maxLength={10}
                 placeholder="Mobile number *"
                 value={draft.phone}
-                onChange={(e) => setDraft((d) => ({ ...d, phone: e.target.value }))}
+                onChange={(e) =>
+                  setDraft((d) => ({ ...d, phone: e.target.value.replace(/\D/g, "").slice(0, 10) }))
+                }
               />
+              {draft.phone.trim() && !isValidPhone(draft.phone) && (
+                <p className="mt-[3px] text-[11px] font-semibold text-[#b23b2e]">
+                  Enter a valid 10-digit mobile number starting with 6-9.
+                </p>
+              )}
               {/* The OTP proved one specific number; say so, and flag any change. */}
               {verifiedKey && (
                 phoneKey(draft.phone) === verifiedKey ? (
@@ -1566,7 +1606,7 @@ function ProfileCard() {
               alt={candidate.candidateName}
               className="h-[116px] w-[116px] shrink-0 rounded-[8px] object-cover object-center"
             />
-          ) : (
+          ) : canEdit ? (
             <button
               type="button"
               onClick={openEditor}
@@ -1577,6 +1617,10 @@ function ProfileCard() {
                 Add photo
               </span>
             </button>
+          ) : (
+            <div className="flex h-[116px] w-[116px] shrink-0 flex-col items-center justify-center gap-[2px] rounded-[8px] border border-dashed border-[#a9c9b6] bg-[#e4efe8] text-[#075333]">
+              <span className="text-[32px] font-bold leading-none">{initials || "CV"}</span>
+            </div>
           )}
 
           <div className="min-w-0 flex-1">
@@ -1590,8 +1634,10 @@ function ProfileCard() {
                   <Mail className="h-[15px] w-[15px] shrink-0 text-[#0c3363] stroke-[2.5]" />
                   <span className="truncate">{candidate.email}</span>
                 </p>
-              ) : (
+              ) : canEdit ? (
                 <MissingDetail label="Add email" onClick={openEditor} icon={Mail} />
+              ) : (
+                <MissingDetail label="Email not provided" icon={Mail} />
               )}
 
               {/* Both numbers are shown when the CV listed two — not just the verified one. */}
@@ -1615,8 +1661,10 @@ function ProfileCard() {
                     ) : null}
                   </p>
                 ))
-              ) : (
+              ) : canEdit ? (
                 <MissingDetail label="Add mobile number" onClick={openEditor} icon={Phone} />
+              ) : (
+                <MissingDetail label="Mobile number not provided" icon={Phone} />
               )}
 
               {/* LinkedIn sits under the phone, and only when the CV actually had one. */}
@@ -1634,16 +1682,25 @@ function ProfileCard() {
   );
 }
 
-/** Prompt shown in place of a detail the CV did not yield. */
+/** Prompt shown in place of a detail the CV did not yield; clickable only when editing is allowed. */
 function MissingDetail({
   label,
   onClick,
   icon: Icon,
 }: {
   label: string;
-  onClick: () => void;
+  onClick?: () => void;
   icon: React.ElementType;
 }) {
+  if (!onClick) {
+    return (
+      <p className="flex items-center gap-[7px] text-[14px] font-semibold text-[#8194a8]">
+        <Icon className="h-[15px] w-[15px] shrink-0 stroke-[2.5]" />
+        <span className="truncate">{label}</span>
+      </p>
+    );
+  }
+
   return (
     <button
       type="button"
@@ -1861,7 +1918,7 @@ function Sidebar({
 
   return (
     <aside
-      className="
+      className={`
         grid
         h-full
         min-h-0
@@ -1873,9 +1930,11 @@ function Sidebar({
         pb-0
         pt-[8px]
 
-        grid-rows-[54px_246px_130px_210px_48px_48px_58px_1fr]
+        ${matchLevel === "low"
+          ? "grid-rows-[54px_246px_130px_210px_96px_1fr]"
+          : "grid-rows-[54px_246px_130px_210px_48px_48px_58px_1fr]"}
         gap-[7px]
-      "
+      `}
     >
       {/* TOP BAR */}
       <div className="flex min-h-0 items-center justify-end overflow-hidden">
@@ -1922,7 +1981,7 @@ function Sidebar({
           <SupportCard />
         </>
       ) : (
-        <div className="row-span-3 flex min-h-0 flex-col justify-between rounded-[8px] border border-[#dcebdd] bg-[#f5faf6] p-[12px] shadow-sm">
+        <div className="flex min-h-0 items-center rounded-[8px] border border-[#dcebdd] bg-[#f5faf6] p-[12px] shadow-sm">
           <div className="flex gap-[10px] items-start">
             <Image
               src={separatedAssets.headerLeaf}
@@ -1932,22 +1991,15 @@ function Sidebar({
               className="h-[22px] w-[20px] shrink-0 object-contain mt-[2px]"
             />
             <div className="flex-1">
-              <h4 className="text-[13.5px] font-bold text-[#095232]">
+              <h4 className="text-[16px] font-semibold text-[#095232]">
                 Looking for a Better Fit?
               </h4>
-              <p className="mt-[3px] text-[11.5px] font-medium leading-[1.28] text-[#1c6448]">
+              <p className="mt-[3px] text-[14px] font-medium leading-[1.28] text-[#1c6448]">
                 Browse other career opportunities at<br />Bharat Organic Expo and find the right role for you.
               </p>
             </div>
           </div>
-          <button
-            type="button"
-            onClick={() => goToCareers(true)}
-            className="mt-[10px] flex h-[38px] shrink-0 items-center justify-center gap-[8px] rounded-[6px] bg-[#075333] text-[13px] font-bold text-white hover:bg-[#064228] transition-colors"
-          >
-            View All Open Positions
-            <ArrowRight className="h-[15px] w-[15px] stroke-[2.5]" />
-          </button>
+
         </div>
       )}
 
@@ -2018,7 +2070,7 @@ export function EligibilityPopupContent({
                 className="flex w-fit items-center gap-[8px] text-[17px] font-semibold text-[#113a72] transition-colors hover:text-red-600"
               >
                 <ArrowLeft className="h-[22px] w-[22px]" strokeWidth={2.5} />
-                Back
+                Preview
               </button>
             ) : (
               <Link
@@ -2026,7 +2078,7 @@ export function EligibilityPopupContent({
                 className="flex w-fit items-center gap-[8px] text-[17px] font-semibold text-[#113a72] transition-colors hover:text-red-600"
               >
                 <ArrowLeft className="h-[22px] w-[22px]" strokeWidth={2.5} />
-                Back
+                Preview
               </Link>
             )}
 
