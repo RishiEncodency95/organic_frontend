@@ -37,6 +37,8 @@ const EligibilityInputBar = () => {
     void analyzeCertificate(pickedFile);
   };
 
+  const alreadyAnalyzed = !!(result && pickedFile && pickedFile.name === fileName);
+
   const checkedTime = checkedAt
     ? checkedAt.toLocaleString("en-GB", { day: "2-digit", month: "short", year: "numeric", hour: "2-digit", minute: "2-digit", hour12: true })
     : null;
@@ -55,11 +57,15 @@ const EligibilityInputBar = () => {
         <div className="flex flex-col sm:flex-row gap-3 items-start sm:items-center">
           <label
             htmlFor="udyam-file"
-            className="cursor-pointer border border-dashed border-gray-400 rounded-lg bg-gray-50 flex items-center px-4 py-2 hover:bg-gray-100 transition-colors w-full sm:w-[320px] h-[40px]"
+            className={`cursor-pointer border rounded-lg flex items-center px-4 py-2 transition-colors w-full sm:w-[320px] h-[40px] ${pickedFile ? 'border-[#1b5e20] bg-[#f0f9f0]' : 'border-dashed border-gray-400 bg-gray-50 hover:bg-gray-100'}`}
           >
-            <Upload size={16} className="text-gray-500 mr-2 shrink-0" />
-            <span className={`text-sm truncate w-full ${fileName ? 'text-gray-900 font-medium' : 'text-gray-500'}`}>
-              {fileName || "Choose PDF, JPG or PNG file..."}
+            {pickedFile ? (
+              <Check size={16} className="text-[#1b5e20] mr-2 shrink-0" strokeWidth={3} />
+            ) : (
+              <Upload size={16} className="text-gray-500 mr-2 shrink-0" />
+            )}
+            <span className={`text-sm truncate w-full ${(pickedFile || fileName) ? 'text-gray-900 font-medium' : 'text-gray-500'}`}>
+              {pickedFile?.name || fileName || "Choose PDF, JPG or PNG file..."}
             </span>
           </label>
           <input
@@ -77,6 +83,11 @@ const EligibilityInputBar = () => {
           <div className="flex items-center gap-1.5 mt-1 text-red-600">
             <AlertTriangle size={12} />
             <span className="text-[11px] font-medium">{localError || error}</span>
+          </div>
+        ) : pickedFile && !isUploading && !alreadyAnalyzed ? (
+          <div className="flex items-center gap-1.5 mt-1 text-[#1b5e20]">
+            <Check size={12} strokeWidth={3} />
+            <span className="text-[11px] font-semibold">File selected — click &quot;Upload &amp; Verify&quot; to continue.</span>
           </div>
         ) : (
           <div className="flex items-center gap-1.5 mt-1 text-gray-500">
