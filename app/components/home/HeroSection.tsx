@@ -161,6 +161,49 @@ const DEFAULT_SLIDES: SlideData[] = [
 
 const SLIDE_DURATION = 5000;
 
+interface HeroSectionProps {
+  initialSlides?: any[];
+}
+
+const normalizeSlides = (items?: any[]): SlideData[] => {
+  if (!Array.isArray(items) || items.length === 0) return DEFAULT_SLIDES;
+
+  return items.map((item: any, idx: number) => {
+    const fallback = DEFAULT_SLIDES[idx % DEFAULT_SLIDES.length];
+    const rawImg = item.image || item.img;
+    let imgSrc: StaticImageData | string = fallback.img;
+
+    if (rawImg && typeof rawImg === "string" && rawImg.trim()) {
+      imgSrc = rawImg.startsWith("http") ? rawImg : `${SERVER_URL}${rawImg}`;
+    }
+
+    return {
+      id: idx,
+      img: imgSrc,
+      alt: item.alt || item.titlePrimary || fallback.alt,
+      tagline: item.tagline || fallback.tagline,
+      titlePrimary: item.titlePrimary || fallback.titlePrimary,
+      titleSecondary: item.titleSecondary || fallback.titleSecondary,
+      subtitle: item.subtitle || fallback.subtitle,
+      description: item.description || fallback.description,
+      date: item.date || fallback.date,
+      location: item.location || fallback.location,
+      button1Name: item.button1Name || item.buttonLabel || fallback.button1Name || "Book Your Stall",
+      button1Link: item.button1Link || item.buttonHref || fallback.button1Link || "/registration/book-a-stand",
+      button2Name: item.button2Name || item.secondaryButtonLabel || fallback.button2Name || "Register as Visitor",
+      button2Link: item.button2Link || item.secondaryButtonHref || fallback.button2Link || "/registration/visitor-registration",
+    };
+  });
+};
+
+const cloudinaryWidthUrl = (src: string, width: number) => {
+  if (!src.includes("res.cloudinary.com") || !src.includes("/image/upload/")) return src;
+  return src.replace(
+    "/image/upload/",
+    `/image/upload/f_auto,q_auto:eco,w_${width},c_limit/`,
+  );
+};
+
 /* ─────────────────────────────────────────
    CINEMATIC PROGRESS BAR
 ───────────────────────────────────────── */
@@ -197,17 +240,16 @@ const ProgressBar = ({ cur, duration }: { cur: number; duration: number }) => {
 /* ─────────────────────────────────────────
    MAIN COMPONENT
 ───────────────────────────────────────── */
-const HeroSection = () => {
-  const [slides, setSlides] = useState<SlideData[]>(DEFAULT_SLIDES);
-  const [mounted, setMounted] = useState(false);
+const HeroSection = ({ initialSlides }: HeroSectionProps) => {
+  const hasServerSlides = Array.isArray(initialSlides) && initialSlides.length > 0;
+  const [slides, setSlides] = useState<SlideData[]>(() => normalizeSlides(initialSlides));
   const [cur, setCur] = useState(0);
+  const [loadedSlideIds, setLoadedSlideIds] = useState<Set<number>>(() => new Set([0]));
   const curRef = useRef(0);
+  const loadedSlideIdsRef = useRef<Set<number>>(new Set([0]));
+  const pendingTargetRef = useRef<number | null>(null);
   const busyRef = useRef(false);
   const timerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
-
-  useEffect(() => {
-    setMounted(true);
-  }, []);
 
   /* layer refs */
   const sectionRef = useRef<HTMLElement>(null);
@@ -221,37 +263,15 @@ const HeroSection = () => {
 
   // Fetch dynamic hero data from backend
   useEffect(() => {
+    if (hasServerSlides) return;
+
     let isMounted = true;
     const fetchHeroData = async () => {
       try {
         const res = await websiteApi.getHomeHero();
         const items = Array.isArray(res) ? res : res?.data ? (Array.isArray(res.data) ? res.data : [res.data]) : [];
         if (items && items.length > 0 && isMounted) {
-          const dynamicSlides: SlideData[] = items.map((item: any, idx: number) => {
-            const fallback = DEFAULT_SLIDES[idx % DEFAULT_SLIDES.length];
-            const rawImg = item.image || item.img;
-            let imgSrc: StaticImageData | string = fallback.img;
-            if (rawImg && typeof rawImg === "string" && rawImg.trim()) {
-              imgSrc = rawImg.startsWith("http") ? rawImg : `${SERVER_URL}${rawImg}`;
-            }
-            return {
-              id: idx,
-              img: imgSrc,
-              alt: item.alt || item.titlePrimary || fallback.alt,
-              tagline: item.tagline || fallback.tagline,
-              titlePrimary: item.titlePrimary || fallback.titlePrimary,
-              titleSecondary: item.titleSecondary || fallback.titleSecondary,
-              subtitle: item.subtitle || fallback.subtitle,
-              description: item.description || fallback.description,
-              date: item.date || fallback.date,
-              location: item.location || fallback.location,
-              button1Name: item.button1Name || item.buttonLabel || fallback.button1Name || "Book Your Stall",
-              button1Link: item.button1Link || item.buttonHref || fallback.button1Link || "/registration/book-a-stand",
-              button2Name: item.button2Name || item.secondaryButtonLabel || fallback.button2Name || "Register as Visitor",
-              button2Link: item.button2Link || item.secondaryButtonHref || fallback.button2Link || "/registration/visitor-registration",
-            };
-          });
-          setSlides(dynamicSlides);
+          setSlides(normalizeSlides(items));
         }
       } catch (err) {
         console.error("Failed to load hero section dynamic data:", err);
@@ -261,7 +281,7 @@ const HeroSection = () => {
     return () => {
       isMounted = false;
     };
-  }, []);
+  }, [hasServerSlides]);
 
   /* ── Ken-Burns on current slide ── */
   const playKenBurns = useCallback((idx: number) => {
@@ -308,12 +328,27 @@ const HeroSection = () => {
     });
   }, []);
 
+  const loadSlide = useCallback((idx: number) => {
+    if (loadedSlideIdsRef.current.has(idx)) return;
+    const nextLoaded = new Set(loadedSlideIdsRef.current);
+    nextLoaded.add(idx);
+    loadedSlideIdsRef.current = nextLoaded;
+    setLoadedSlideIds(nextLoaded);
+  }, []);
+
   /* ── CORE TRANSITION ── */
   const goTo = useCallback(
     (targetIdx: number) => {
       if (busyRef.current || targetIdx === curRef.current) return;
-      busyRef.current = true;
       if (timerRef.current) clearTimeout(timerRef.current);
+
+      if (!loadedSlideIdsRef.current.has(targetIdx)) {
+        pendingTargetRef.current = targetIdx;
+        loadSlide(targetIdx);
+        return;
+      }
+
+      busyRef.current = true;
 
       const prevIdx = curRef.current;
       const prevBg = bgLayers.current[prevIdx];
@@ -332,6 +367,7 @@ const HeroSection = () => {
           gsap.set(prevImg, { scale: 1, filter: "none" });
           startTimer(targetIdx);
           playKenBurns(targetIdx);
+          loadSlide((targetIdx + 1) % slides.length);
         },
       });
 
@@ -393,7 +429,7 @@ const HeroSection = () => {
 
       tl.add(() => contentIn(targetIdx), 0.6);
     },
-    [contentOut, contentIn, playKenBurns]
+    [contentOut, contentIn, loadSlide, playKenBurns, slides.length]
   );
 
   const startTimer = useCallback(
@@ -406,10 +442,17 @@ const HeroSection = () => {
     [goTo, slides.length]
   );
 
+  useEffect(() => {
+    const targetIdx = pendingTargetRef.current;
+    if (targetIdx === null || !loadedSlideIds.has(targetIdx)) return;
+
+    pendingTargetRef.current = null;
+    const frame = requestAnimationFrame(() => goTo(targetIdx));
+    return () => cancelAnimationFrame(frame);
+  }, [goTo, loadedSlideIds]);
+
   /* ── INIT ── */
   useEffect(() => {
-    if (!mounted) return;
-
     bgLayers.current.forEach((el, i) => {
       if (!el) return;
       gsap.set(el, { zIndex: i === 0 ? 2 : 1, clipPath: "inset(0 0% 0 0)", opacity: 1, x: 0 });
@@ -443,15 +486,20 @@ const HeroSection = () => {
     playKenBurns(0);
     startTimer(0);
 
+    const preloadTimer = setTimeout(() => {
+      if (slides.length > 1) loadSlide(1);
+    }, 900);
+
     return () => {
+      clearTimeout(preloadTimer);
       if (timerRef.current) clearTimeout(timerRef.current);
       if (kenTimeline.current) kenTimeline.current.kill();
     };
-  }, [mounted, slides, playKenBurns, startTimer]);
+  }, [loadSlide, playKenBurns, slides.length, startTimer]);
 
   /* ── Pause Ken-Burns + autoplay while the hero is scrolled out of view ── */
   useEffect(() => {
-    if (!mounted || !sectionRef.current) return;
+    if (!sectionRef.current) return;
     const observer = new IntersectionObserver(
       ([entry]) => {
         if (entry.isIntersecting) {
@@ -466,9 +514,7 @@ const HeroSection = () => {
     );
     observer.observe(sectionRef.current);
     return () => observer.disconnect();
-  }, [mounted, startTimer]);
-
-  const visibleSlides = mounted ? slides : slides.slice(0, 1);
+  }, [startTimer]);
 
   return (
     <>
@@ -539,45 +585,58 @@ const HeroSection = () => {
         className="relative w-full overflow-hidden bg-[#fcfcf0] min-h-[460px] md:min-h-[400px] h-auto py-2 md:py-0 md:h-[72vh] lg:h-[78vh] flex items-center font-inter"
       >
         {/* ── BACKGROUND LAYERS ── */}
-        {visibleSlides.map(({ id, img, alt }) => (
-          <div
-            key={id}
-            ref={(el) => {
-              bgLayers.current[id] = el;
-            }}
-            className="absolute inset-0 w-full h-full pointer-events-none"
-            style={{ zIndex: id === 0 ? 2 : 1, willChange: "clip-path, opacity, transform" }}
-          >
-            {typeof img === "string" ? (
-              // eslint-disable-next-line @next/next/no-img-element
-              <img
-                ref={(el) => {
-                  imgEls.current[id] = el as any;
-                }}
-                src={img}
-                alt={alt || `Bharat Organic Expo slide ${id + 1}`}
-                className="w-full h-full object-cover select-none"
-                style={{ willChange: "transform, filter" }}
-                fetchPriority={id === 0 ? "high" : "low"}
-                loading={id === 0 ? "eager" : "lazy"}
-              />
-            ) : (
-              <Image
-                ref={(el) => {
-                  imgEls.current[id] = el;
-                }}
-                src={img}
-                alt={alt || `Bharat Organic Expo slide ${id + 1}`}
-                className="w-full h-full object-cover select-none"
-                style={{ willChange: "transform, filter" }}
-                priority={id === 0}
-                fetchPriority={id === 0 ? "high" : "low"}
-                sizes="100vw"
-                quality={75}
-              />
-            )}
-          </div>
-        ))}
+        {slides.map(({ id, img, alt }) => {
+          const isLoaded = loadedSlideIds.has(id);
+          const isCloudinary = typeof img === "string" && img.includes("res.cloudinary.com");
+
+          return (
+            <div
+              key={id}
+              ref={(el) => {
+                bgLayers.current[id] = el;
+              }}
+              className="absolute inset-0 w-full h-full pointer-events-none"
+              style={{ zIndex: id === 0 ? 2 : 1, willChange: "clip-path, opacity, transform" }}
+            >
+              {isLoaded && isCloudinary ? (
+                // Cloudinary serves responsive variants directly from its edge CDN.
+                // eslint-disable-next-line @next/next/no-img-element
+                <img
+                  ref={(el) => {
+                    imgEls.current[id] = el;
+                  }}
+                  src={cloudinaryWidthUrl(img as string, 1600)}
+                  srcSet={[480, 768, 1024, 1280, 1600]
+                    .map((width) => `${cloudinaryWidthUrl(img as string, width)} ${width}w`)
+                    .join(", ")}
+                  sizes="100vw"
+                  alt={alt || `Bharat Organic Expo slide ${id + 1}`}
+                  className="w-full h-full object-cover select-none"
+                  style={{ willChange: "transform, filter" }}
+                  fetchPriority={id === 0 ? "high" : "low"}
+                  loading={id === 0 ? "eager" : "lazy"}
+                  decoding="async"
+                />
+              ) : isLoaded ? (
+                <Image
+                  ref={(el) => {
+                    imgEls.current[id] = el;
+                  }}
+                  src={img}
+                  alt={alt || `Bharat Organic Expo slide ${id + 1}`}
+                  fill
+                  className="object-cover select-none"
+                  style={{ willChange: "transform, filter" }}
+                  priority={id === 0}
+                  fetchPriority={id === 0 ? "high" : "low"}
+                  loading={id === 0 ? "eager" : "lazy"}
+                  sizes="100vw"
+                  quality={75}
+                />
+              ) : null}
+            </div>
+          );
+        })}
 
         {/* ── TRANSITION VIGNETTE PULSE ── */}
         <div ref={vigRef} className="absolute inset-0 pointer-events-none" style={{ zIndex: 7, background: "rgba(0,0,0,0.28)", opacity: 0 }} />
@@ -619,7 +678,7 @@ const HeroSection = () => {
           className="relative z-20 h-full grid items-start pt-4 pb-6 md:py-0 md:items-center justify-items-start"
           style={{ zIndex: 20 }}
         >
-          {visibleSlides.map((slide) => (
+          {slides.map((slide) => (
             <div
               key={slide.id}
               ref={(el) => {

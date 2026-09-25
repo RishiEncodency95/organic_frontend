@@ -2,6 +2,7 @@
 
 import React, { useEffect, useState, useRef } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { Leaf, Calendar, Clock, ArrowRight, ChevronLeft, ChevronRight } from "lucide-react";
 import { API_URL } from "@/lib/api";
 
@@ -55,9 +56,30 @@ interface InsightArticle {
   link: string;
 }
 
-const LatestInsights = () => {
-  const [articles, setArticles] = useState<InsightArticle[]>([]);
-  const [isLoading, setIsLoading] = useState(true);
+const normalizeArticles = (payload: any): InsightArticle[] => {
+  const posts = payload?.data?.posts || payload?.posts || (Array.isArray(payload) ? payload : []);
+  if (!Array.isArray(posts)) return [];
+
+  return posts.map((p: any) => {
+    const rawExcerpt = p.excerpt || p.content || "";
+    const plainExcerpt = cleanText(rawExcerpt);
+    return {
+      id: p._id || p.id,
+      badge: p.category || "Organic Trends",
+      date: formatDate(p.scheduledDate || p.publishDate || p.createdAt),
+      title: p.title,
+      description: plainExcerpt.length > 140 ? `${plainExcerpt.slice(0, 140)}...` : plainExcerpt,
+      readTime: p.readTime || "4 min read",
+      image: p.image || featuredImg1.src,
+      link: `/blog/${p.slug || "indias-organic-market"}`,
+    };
+  });
+};
+
+const LatestInsights = ({ initialData }: { initialData?: any }) => {
+  const hasInitialData = initialData !== null && initialData !== undefined;
+  const [articles, setArticles] = useState<InsightArticle[]>(() => normalizeArticles(initialData));
+  const [isLoading, setIsLoading] = useState(!hasInitialData);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [cardsPerView, setCardsPerView] = useState(3);
 
@@ -82,6 +104,8 @@ const LatestInsights = () => {
   }, []);
 
   useEffect(() => {
+    if (hasInitialData) return;
+
     setIsLoading(true);
     fetch(`${API_URL}/blogs?showOnHome=true&status=published`)
       .then((res) => {
@@ -89,25 +113,8 @@ const LatestInsights = () => {
         return res.json();
       })
       .then((data) => {
-        const posts = data?.data?.posts || data?.posts || [];
-        if (Array.isArray(posts) && posts.length > 0) {
-          const dynamicItems: InsightArticle[] = posts.map((p: any) => {
-            const rawExcerpt = p.excerpt || p.content || "";
-            const plainExcerpt = cleanText(rawExcerpt);
-            return {
-              id: p._id || p.id,
-              badge: p.category || "Organic Trends",
-              date: formatDate(p.scheduledDate || p.publishDate || p.createdAt),
-              title: p.title,
-              description:
-                plainExcerpt.length > 140
-                  ? plainExcerpt.slice(0, 140) + "..."
-                  : plainExcerpt,
-              readTime: p.readTime || "4 min read",
-              image: p.image || featuredImg1.src,
-              link: `/blog/${p.slug || "indias-organic-market"}`,
-            };
-          });
+        const dynamicItems = normalizeArticles(data);
+        if (dynamicItems.length > 0) {
 
           // ONLY SHOW DYNAMIC POSTS - NO STATIC DUMMY CARDS!
           setArticles(dynamicItems);
@@ -122,7 +129,7 @@ const LatestInsights = () => {
       .finally(() => {
         setIsLoading(false);
       });
-  }, []);
+  }, [hasInitialData]);
 
   // If no dynamic posts marked for home, don't render empty section
   if (!isLoading && articles.length === 0) {
@@ -223,10 +230,14 @@ const LatestInsights = () => {
                 >
                   {/* Image Container */}
                   <div className="relative h-[160px] md:h-[220px] w-full overflow-hidden">
-                    <img
+                    <Image
                       src={article.image}
                       alt={article.title}
-                      className="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-[1.03]"
+                      fill
+                      sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                      loading="lazy"
+                      quality={75}
+                      className="object-cover transition-transform duration-700 ease-out group-hover:scale-[1.03]"
                     />
 
                     {/* Featured Badge */}

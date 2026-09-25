@@ -6,7 +6,45 @@ export const API_URL =
   process.env.NEXT_PUBLIC_API_URL ||
   (typeof window !== 'undefined' ? '/api' : 'http://localhost:4001/api');
 
+const CLIENT_CACHE_TTL_MS = 5 * 60 * 1000;
+
+type ClientCacheEntry = {
+    value: any;
+    expiresAt: number;
+};
+
+const clientResponseCache = new Map<string, ClientCacheEntry>();
+const clientRequestsInFlight = new Map<string, Promise<any>>();
+
+export function primeClientApiCache(
+    responses: Partial<Record<string, unknown>>,
+    ttlMs = CLIENT_CACHE_TTL_MS,
+) {
+    if (typeof window === 'undefined') return;
+
+    const expiresAt = Date.now() + ttlMs;
+    Object.entries(responses).forEach(([endpoint, value]) => {
+        if (value !== null && value !== undefined) {
+            clientResponseCache.set(endpoint, { value, expiresAt });
+        }
+    });
+}
+
 const apiCall = async (endpoint: string, options: RequestInit = {}) => {
+    const method = (options.method || 'GET').toUpperCase();
+    const isCacheableClientGet = typeof window !== 'undefined' && method === 'GET';
+
+    if (isCacheableClientGet) {
+        const cached = clientResponseCache.get(endpoint);
+        if (cached && cached.expiresAt > Date.now()) {
+            return cached.value;
+        }
+
+        const inFlight = clientRequestsInFlight.get(endpoint);
+        if (inFlight) return inFlight;
+    }
+
+    const request = (async () => {
     try {
         const url = `${API_URL}${endpoint}`;
         // On the server, cache for 60s so pages can be statically served and refreshed in
@@ -15,7 +53,7 @@ const apiCall = async (endpoint: string, options: RequestInit = {}) => {
         const cacheOptions: RequestInit =
             typeof window === 'undefined'
                 ? ({ next: { revalidate: 60 } } as RequestInit)
-                : { cache: 'no-store' };
+                : { cache: 'default' };
         const response = await fetch(url, {
             ...cacheOptions,
             ...options,
@@ -33,18 +71,34 @@ const apiCall = async (endpoint: string, options: RequestInit = {}) => {
         if (!text) return { data: [] };
         
         const data = JSON.parse(text);
+        let result = data;
         if (data && typeof data === 'object') {
             if (data.data !== undefined) {
-                return data.data;
-            }
-            if (data.success !== undefined) {
-                return data.success ? data : null;
+                result = data.data;
+            } else if (data.success !== undefined) {
+                result = data.success ? data : null;
             }
         }
-        return data;
+
+        if (isCacheableClientGet) {
+            clientResponseCache.set(endpoint, {
+                value: result,
+                expiresAt: Date.now() + CLIENT_CACHE_TTL_MS,
+            });
+        }
+
+        return result;
     } catch (error) {
         return [];
     }
+    })();
+
+    if (isCacheableClientGet) {
+        clientRequestsInFlight.set(endpoint, request);
+        request.finally(() => clientRequestsInFlight.delete(endpoint));
+    }
+
+    return request;
 };
 
 export const stallApi = { 

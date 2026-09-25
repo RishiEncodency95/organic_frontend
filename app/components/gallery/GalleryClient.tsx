@@ -12,7 +12,7 @@ import { API_URL, SERVER_URL } from '@/lib/api';
 
 const resolveImageUrl = (src: string): string => {
   if (!src) return src;
-  if (src.startsWith("http://") || src.startsWith("https://")) return src;
+  if (src.startsWith("http://") || src.startsWith("https://") || src.startsWith("data:")) return src;
   return `${SERVER_URL}${src.startsWith("/") ? "" : "/"}${src}`;
 };
 
@@ -24,13 +24,15 @@ export default function GalleryClient({ heroData }: { heroData?: any }) {
   const [dbYears, setDbYears] = useState<string[]>([]);
   const [dbCategories, setDbCategories] = useState<string[]>([]);
   const [dbGallery, setDbGallery] = useState<any[]>([]);
+  const [dbVideos, setDbVideos] = useState<any[]>([]);
 
   useEffect(() => {
     const fetchGalleryData = async () => {
       try {
-        const [metaRes, itemsRes] = await Promise.all([
+        const [metaRes, itemsRes, videosRes] = await Promise.all([
           fetch(`${API_URL}/website/gallery/meta`, { cache: 'no-store' }).catch(() => null),
           fetch(`${API_URL}/website/gallery/items`, { cache: 'no-store' }).catch(() => null),
+          fetch(`${API_URL}/website/gallery/video-highlights/items`, { cache: 'no-store' }).catch(() => null),
         ]);
 
         if (metaRes && metaRes.ok) {
@@ -52,6 +54,24 @@ export default function GalleryClient({ heroData }: { heroData?: any }) {
               image: resolveImageUrl(item.image),
             }));
             setDbGallery(normalised);
+          }
+        }
+
+        if (videosRes && videosRes.ok) {
+          const videosJson = await videosRes.json();
+          if (Array.isArray(videosJson?.data)) {
+            const published = videosJson.data
+              .filter((v: any) => v.status === 'Published')
+              .map((v: any) => ({
+                _id: v._id,
+                title: v.title,
+                thumbnail: resolveImageUrl(v.thumbnail),
+                sourceType: (v.videoType || 'youtube').toUpperCase(),
+                videoUrl: v.videoUrl,
+                objectPosition: v.objectPosition || 'center 10%',
+                orderNumber: v.order || 0,
+              }));
+            if (published.length > 0) setDbVideos(published);
           }
         }
       } catch (err) {
@@ -84,7 +104,7 @@ export default function GalleryClient({ heroData }: { heroData?: any }) {
         dbGallery={dbGallery}
       />
       <Counters />
-      <VideoHighlights />
+      <VideoHighlights dbVideos={dbVideos} />
       <JoinUsBanner />
     </main>
   );

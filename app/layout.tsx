@@ -12,7 +12,7 @@ import SmoothScroll from "./components/SmoothScroll";
 // styles reference these variables, so nothing loads from fonts.googleapis.com at runtime.
 const poppins = Poppins({
   subsets: ["latin"],
-  weight: ["300", "400", "500", "600", "700", "800", "900"],
+  weight: ["400", "500", "600", "700"],
   variable: "--font-poppins-next",
   display: "swap",
 });
@@ -29,6 +29,7 @@ const playfair = Playfair_Display({
   style: ["normal", "italic"],
   variable: "--font-playfair-next",
   display: "swap",
+  preload: false,
 });
 
 import DynamicCanonical from "./components/DynamicCanonical";

@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
-import Image from "next/image";
+import Image, { type StaticImageData } from "next/image";
 import { Leaf } from "lucide-react";
 import fromIndiaBg from "../../assets/home/fromIndiaBg.webp";
 
@@ -9,7 +9,13 @@ import form1 from "../../assets/home/form1.png";
 import form2 from "../../assets/home/form2.png";
 import form3 from "../../assets/home/form3.png";
 import form4 from "../../assets/home/form4.png";
-import { websiteApi } from "@/lib/api";
+import { websiteApi, SERVER_URL } from "@/lib/api";
+
+const resolveImageUrl = (src: string): string => {
+  if (!src) return src;
+  if (src.startsWith("http://") || src.startsWith("https://") || src.startsWith("data:")) return src;
+  return `${SERVER_URL}${src.startsWith("/") ? "" : "/"}${src}`;
+};
 
 const DEFAULT_GLOBAL = {
   enabled: true,
@@ -28,7 +34,7 @@ const DEFAULT_GLOBAL = {
   ],
   cards: [
     {
-      iconSrc: form1,
+      iconSrc: form1 as StaticImageData | string,
       iconAlt: "Global Connections",
       iconWidth: 90,
       iconHeight: 90,
@@ -98,6 +104,8 @@ const GlobalPlatform = () => {
                   ...fallback,
                   title: c.title || fallback.title,
                   desc: c.description || c.desc || fallback.desc,
+                  iconSrc: c.image ? resolveImageUrl(c.image) : fallback.iconSrc,
+                  iconAlt: c.imageAlt || c.title || fallback.iconAlt,
                 };
               });
             }
