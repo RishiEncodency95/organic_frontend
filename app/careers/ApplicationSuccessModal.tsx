@@ -5,7 +5,6 @@ import Image from "next/image";
 import Link from "next/link";
 import { lockScroll, unlockScroll } from "@/lib/scrollLock";
 import {
-  ArrowLeft,
   ArrowRight,
   BarChart3,
   CalendarDays,
@@ -102,8 +101,8 @@ function SuccessSidebar({ onClose }: { onClose: () => void }) {
         className="object-cover object-center"
       />
 
-      {/* Top Controls: Close X button on top right, Back to Careers link with mr-[50px] */}
-      <div className="relative z-20 flex shrink-0 flex-col items-end px-[16px] pt-[14px] gap-[10px]">
+      {/* Top Controls: Close X button on top right */}
+      <div className="relative z-20 flex shrink-0 items-end justify-end px-[16px] pt-[14px]">
         <button
           type="button"
           aria-label="Close"
@@ -112,14 +111,6 @@ function SuccessSidebar({ onClose }: { onClose: () => void }) {
         >
           <X className="h-[17px] w-[17px]" />
         </button>
-
-        <Link
-          href="/careers"
-          className="flex items-center gap-[5px] text-[12.5px] font-semibold text-[#153b66] hover:text-[#d92027] transition-colors mr-[50px]"
-        >
-          Back to Careers
-          <ArrowRight className="h-[14px] w-[14px]" />
-        </Link>
       </div>
 
       {/* Middle Content Overlay (4 Points List) */}
@@ -371,14 +362,7 @@ export default function ApplicationSuccessModal({ isOpen, onClose, applicationDa
           </div>
 
           {/* BOTTOM BUTTONS */}
-          <div className="mt-[12px] flex shrink-0 items-center justify-between">
-            <Link
-              href="/careers"
-              className="flex items-center gap-[6px] text-[14px] font-semibold text-[#0d5d3c] hover:text-[#d92027] hover:underline transition-colors"
-            >
-              <ArrowLeft className="h-[15px] w-[15px]" />
-              Back to Careers
-            </Link>
+          <div className="mt-[12px] flex shrink-0 items-center justify-end">
             <Link
               href="/careers"
               className="flex items-center gap-[8px] rounded-[8px] bg-[#08743e] px-[22px] py-[10px] text-[14px] font-semibold text-white shadow-md hover:bg-[#076637] transition-colors"

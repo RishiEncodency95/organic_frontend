@@ -190,7 +190,7 @@ function CandidateProfile({ candidateData }: { candidateData?: any }) {
 
   return (
     <div className="rounded-[8px] border border-[#dce8e0] bg-white flex flex-col justify-between">
-      <SectionTitle icon={User} title="Candidate Profile" onEdit={() => { }} />
+      <SectionTitle icon={User} title="Candidate Profile" />
 
       <div className="grid grid-cols-[105px_1fr] gap-[12px] px-[14px] py-[8px]">
         <div className="relative h-[122px] overflow-hidden rounded-[6px] border border-[#d8e3dc] bg-[#8d97a5]">
@@ -274,7 +274,7 @@ function AddressAvailability({ candidateData }: { candidateData?: any }) {
 
   return (
     <div className="rounded-[8px] border border-[#dce8e0] bg-white flex flex-col justify-between">
-      <SectionTitle icon={MapPin} title="Address & Availability" onEdit={() => { }} />
+      <SectionTitle icon={MapPin} title="Address & Availability" />
 
       <div className="px-[14px] py-[6px]">
         <div className="space-y-[3px]">
@@ -326,7 +326,7 @@ function ProfessionalExperience({ candidateData }: { candidateData?: any }) {
 
   return (
     <div className="rounded-[8px] border border-[#dce8e0] bg-white flex flex-col justify-between">
-      <SectionTitle icon={BriefcaseBusiness} title="Professional Experience" onEdit={() => { }} />
+      <SectionTitle icon={BriefcaseBusiness} title="Professional Experience" />
 
       <div className="px-[14px] py-[8px]">
         <div className="relative space-y-[6px] pl-[14px]">
@@ -370,7 +370,7 @@ function Education({ candidateData }: { candidateData?: any }) {
 
   return (
     <div className="rounded-[8px] border border-[#dce8e0] bg-white flex flex-col justify-between">
-      <SectionTitle icon={GraduationCap} title="Education" onEdit={() => { }} />
+      <SectionTitle icon={GraduationCap} title="Education" />
 
       <div className="px-[14px] py-[6px]">
         <div className="space-y-[4px]">
@@ -396,7 +396,7 @@ function Skills({ candidateData }: { candidateData?: any }) {
 
   return (
     <div className="rounded-[8px] border border-[#dce8e0] bg-white flex flex-col justify-between">
-      <SectionTitle icon={Target} title="Skills" onEdit={() => { }} />
+      <SectionTitle icon={Target} title="Skills" />
 
       <div className="px-[14px] py-[8px]">
         <div className="flex flex-wrap gap-[6px]">
@@ -427,7 +427,7 @@ function SalaryDetails({ candidateData }: { candidateData?: any }) {
 
   return (
     <div className="rounded-[8px] border border-[#dce8e0] bg-white flex flex-col justify-between">
-      <SectionTitle icon={TrendingUp} title="Salary Details" onEdit={() => { }} />
+      <SectionTitle icon={TrendingUp} title="Salary Details" />
 
       <div className="grid grid-cols-3 gap-[10px] px-[14px] py-[8px]">
         <div>
@@ -468,7 +468,7 @@ function AdditionalInformation({ candidateData }: { candidateData?: any }) {
 
   return (
     <div className="rounded-[8px] border border-[#dce8e0] bg-white flex flex-col justify-between">
-      <SectionTitle icon={FileText} title="Additional Information" onEdit={() => { }} />
+      <SectionTitle icon={FileText} title="Additional Information" />
 
       <div className="grid grid-cols-2 gap-[10px] px-[14px] py-[8px]">
         <div>
@@ -596,22 +596,37 @@ function LooksGoodCard() {
   );
 }
 
-function SubmitCard({ onSubmit }: { onSubmit?: () => void }) {
+function SubmitCard({
+  onSubmit,
+  isSubmitting,
+  error,
+}: {
+  onSubmit?: () => void;
+  isSubmitting?: boolean;
+  error?: string | null;
+}) {
   return (
     <div className="rounded-[8px] border border-[#dce8e0] bg-white p-[12px] shadow-sm">
       <button
         type="button"
         onClick={onSubmit}
-        className="flex w-full items-center justify-center gap-[8px] rounded-[6px] bg-[#08743e] px-[14px] py-[10px] text-[16px] font-semibold text-white shadow-sm hover:bg-[#076637] transition-colors"
+        disabled={isSubmitting}
+        className="flex w-full items-center justify-center gap-[8px] rounded-[6px] bg-[#08743e] px-[14px] py-[10px] text-[16px] font-semibold text-white shadow-sm transition-colors hover:bg-[#076637] disabled:cursor-not-allowed disabled:bg-[#8fae9d]"
       >
-        Submit Application
-        <ArrowRight className="h-[17px] w-[17px]" />
+        {isSubmitting ? "Submitting…" : "Submit Application"}
+        {!isSubmitting && <ArrowRight className="h-[17px] w-[17px]" />}
       </button>
 
-      <div className="mt-[6px] flex items-center justify-center gap-[6px] text-[11px] font-semibold text-[#58708c]">
-        <ShieldCheck className="h-[14px] w-[14px] text-[#087447]" />
-        Your data is secure and encrypted
-      </div>
+      {error ? (
+        <p className="mt-[6px] text-center text-[12px] font-semibold text-[#d92027]">
+          {error}
+        </p>
+      ) : (
+        <div className="mt-[6px] flex items-center justify-center gap-[6px] text-[11px] font-semibold text-[#58708c]">
+          <ShieldCheck className="h-[14px] w-[14px] text-[#087447]" />
+          Your data is secure and encrypted
+        </div>
+      )}
     </div>
   );
 }
@@ -620,10 +635,14 @@ function RightSidebar({
   onClose,
   onSubmit,
   candidateData,
+  isSubmitting,
+  submitError,
 }: {
   onClose?: () => void;
   onSubmit?: () => void;
   candidateData?: any;
+  isSubmitting?: boolean;
+  submitError?: string | null;
 }) {
   return (
     <aside className="relative flex h-full min-h-0 flex-col overflow-hidden border-l border-[#e4ebe5] bg-[linear-gradient(180deg,#f8fcf9,#eef8f1)] pl-[28px] pr-[32px] pb-[16px] pt-[8px]">
@@ -644,7 +663,7 @@ function RightSidebar({
         <AIMatchScoreCard candidateData={candidateData} />
         <JobSummaryCard candidateData={candidateData} />
         <LooksGoodCard />
-        <SubmitCard onSubmit={onSubmit} />
+        <SubmitCard onSubmit={onSubmit} isSubmitting={isSubmitting} error={submitError} />
       </div>
     </aside>
   );
@@ -659,11 +678,15 @@ function ReviewSubmitContent({
   onBack,
   onSubmit,
   candidateData,
+  isSubmitting,
+  submitError,
 }: {
   onClose?: () => void;
   onBack?: () => void;
   onSubmit?: () => void;
   candidateData?: any;
+  isSubmitting?: boolean;
+  submitError?: string | null;
 }) {
   return (
     <div
@@ -702,10 +725,10 @@ function ReviewSubmitContent({
             <button
               type="button"
               onClick={onBack ?? onClose}
-              className="flex w-fit items-center gap-[5px] text-[13px] font-semibold text-[#0d5d3c]"
+              className="flex w-fit items-center gap-[5px] text-[13px] font-semibold text-[#0d5d3c] hover:text-[#d92027] transition-colors"
             >
               <ArrowLeft className="h-[14px] w-[14px]" />
-              Back
+              Preview
             </button>
           ) : (
             <Link
@@ -713,7 +736,7 @@ function ReviewSubmitContent({
               className="flex w-fit items-center gap-[5px] text-[13px] font-semibold text-[#0d5d3c] hover:text-[#d92027] transition-colors"
             >
               <ArrowLeft className="h-[14px] w-[14px]" />
-              Back
+              Preview
             </Link>
           )}
 
@@ -746,23 +769,13 @@ function ReviewSubmitContent({
         </div>
 
         {/* REVIEW HEADING */}
-        <div className="my-[4px] flex shrink-0 items-center justify-between">
-          <div>
-            <h2 className="text-[22px] font-semibold text-[#123963]">
-              Review Your Application
-            </h2>
-            <p className="mt-[1px] text-[12.5px] font-semibold text-[#58708c]">
-              Please review your details below. You can edit any section if required.
-            </p>
-          </div>
-
-          <button
-            type="button"
-            className="flex items-center gap-[5px] rounded-[5px] border border-[#d0dce4] bg-white px-[12px] py-[5px] text-[12px] font-semibold text-[#3a5570] hover:bg-[#f5f8fa] transition-colors"
-          >
-            <Edit3 className="h-[13px] w-[13px]" />
-            Edit All
-          </button>
+        <div className="my-[4px] shrink-0">
+          <h2 className="text-[22px] font-semibold text-[#123963]">
+            Review Your Application
+          </h2>
+          <p className="mt-[1px] text-[12.5px] font-semibold text-[#58708c]">
+            Please review your details below before submitting.
+          </p>
         </div>
 
         {/* REVIEW SECTIONS */}
@@ -784,7 +797,13 @@ function ReviewSubmitContent({
       </section>
 
       {/* RIGHT */}
-      <RightSidebar onClose={onClose} onSubmit={onSubmit} candidateData={candidateData} />
+      <RightSidebar
+        onClose={onClose}
+        onSubmit={onSubmit}
+        candidateData={candidateData}
+        isSubmitting={isSubmitting}
+        submitError={submitError}
+      />
     </div>
   );
 }
@@ -808,9 +827,11 @@ export function ReviewSubmitModal({
   const [showSuccessModal, setShowSuccessModal] = useState(false);
   const [submittedAppDetails, setSubmittedAppDetails] = useState<any>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitError, setSubmitError] = useState<string | null>(null);
 
   const handleSubmit = async () => {
     setIsSubmitting(true);
+    setSubmitError(null);
     const apiBase = process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000/api/v1";
 
     try {
@@ -836,12 +857,18 @@ export function ReviewSubmitModal({
         const createJson = await createRes.json();
         if (createRes.ok && createJson.success) {
           targetAppId = createJson.data.applicationId || createJson.data._id;
+        } else {
+          setSubmitError(createJson.message || "Could not start your application. Please try again.");
+          return;
         }
       }
 
-      const submitId = targetAppId || "BOE2027-000001";
+      if (!targetAppId) {
+        setSubmitError("We couldn't find your candidate profile. Please upload your CV again.");
+        return;
+      }
 
-      const submitRes = await fetch(`${apiBase}/careers/applications/${submitId}/submit`, {
+      const submitRes = await fetch(`${apiBase}/careers/applications/${targetAppId}/submit`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
@@ -855,7 +882,12 @@ export function ReviewSubmitModal({
             totalExperience: candidateData?.totalExperience || candidateData?.fullProfile?.totalExperience,
             noticePeriod: candidateData?.noticePeriod,
             expectedCTC: candidateData?.expectedCTC,
-            willingToRelocate: candidateData?.willingToRelocate,
+            // The form stores this as "Yes"/"No" for display, but the backend's
+            // CandidateProfile schema is a real Boolean — sending the string as-is
+            // throws a Mongoose CastError and fails the whole submission.
+            willingToRelocate:
+              candidateData?.willingToRelocate === true ||
+              candidateData?.willingToRelocate === "Yes",
             photo: typeof candidateData?.image === "string" && !candidateData.image.startsWith("blob:")
               ? candidateData.image
               : undefined,
@@ -866,10 +898,21 @@ export function ReviewSubmitModal({
       });
 
       const submitJson = await submitRes.json();
-      const resData = submitJson.data || {};
+
+      // A non-2xx or { success: false } response is a real failure — never paper over
+      // it with a fake success screen, or the candidate will think they applied when
+      // they didn't.
+      if (!submitRes.ok || !submitJson.success) {
+        setSubmitError(
+          submitJson.message || "Something went wrong while submitting your application. Please try again."
+        );
+        return;
+      }
+
+      const resData = submitJson.data;
 
       setSubmittedAppDetails({
-        id: resData.applicationId || "BOE2027-000001",
+        id: resData.applicationId,
         candidateName: candidateData?.candidateName || "Candidate",
         position: candidateData?.jobDetails?.title || job.title,
         submittedOn: new Date(resData.submittedAt || Date.now()).toLocaleString("en-IN", {
@@ -885,21 +928,7 @@ export function ReviewSubmitModal({
       setShowSuccessModal(true);
     } catch (err) {
       console.error("Submit Application error:", err);
-      // Fallback display
-      setSubmittedAppDetails({
-        id: "BOE2027-000001",
-        candidateName: candidateData?.candidateName || "Candidate",
-        position: candidateData?.jobDetails?.title || job.title,
-        submittedOn: new Date().toLocaleString("en-IN", {
-          day: "numeric",
-          month: "long",
-          year: "numeric",
-          hour: "2-digit",
-          minute: "2-digit",
-        }),
-        aiMatchScore: candidateData?.score ?? 72,
-      });
-      setShowSuccessModal(true);
+      setSubmitError("We couldn't reach the server. Please check your connection and try again.");
     } finally {
       setIsSubmitting(false);
     }
@@ -937,7 +966,14 @@ export function ReviewSubmitModal({
                 transformOrigin: "top left",
               }}
             >
-              <ReviewSubmitContent onClose={onClose} onBack={onBack} onSubmit={handleSubmit} candidateData={candidateData} />
+              <ReviewSubmitContent
+                onClose={onClose}
+                onBack={onBack}
+                onSubmit={handleSubmit}
+                candidateData={candidateData}
+                isSubmitting={isSubmitting}
+                submitError={submitError}
+              />
             </div>
           </div>
         </div>
