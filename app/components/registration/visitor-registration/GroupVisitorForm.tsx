@@ -1,7 +1,7 @@
 "use client";
 import React, { useState, useEffect } from "react";
 import { Users, Plus, Trash2, CheckCircle2, Globe2, Loader2, CheckCircle, X, ChevronsUpDown, ShieldCheck } from "lucide-react";
-import { crmApi, verifyApi, visitorApi, settingsApi } from "../../../../lib/api";
+import { crmApi, verifyApi, visitorApi, ihweSettingsApi } from "../../../../lib/api";
 import Swal from 'sweetalert2';
 
 const MIN_PERSONS = 5;
@@ -37,7 +37,7 @@ export default function GroupVisitorForm() {
   const [requireOtp, setRequireOtp] = useState(true);
 
   useEffect(() => {
-    settingsApi.getSettings().then((res: any) => {
+    ihweSettingsApi.getSettings().then((res: any) => {
       if (res && res.requireOtpForVisitorRegistration !== undefined) {
         setRequireOtp(res.requireOtpForVisitorRegistration);
       }

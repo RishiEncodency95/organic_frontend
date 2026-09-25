@@ -6,6 +6,10 @@ export const API_URL =
   process.env.NEXT_PUBLIC_API_URL ||
   (typeof window !== 'undefined' ? '/api' : 'http://localhost:4001/api');
 
+const ihwe_API_URL =
+  process.env.NEXT_PUBLIC_IHWE_API_URL ||
+  (typeof window !== 'undefined' ? '/api' : 'http://localhost:5001/api');
+  
 const apiCall = async (endpoint: string, options: RequestInit = {}) => {
     try {
         const url = `${API_URL}${endpoint}`;
@@ -26,11 +30,45 @@ const apiCall = async (endpoint: string, options: RequestInit = {}) => {
         });
         
         if (!response.ok) {
-            return { data: [] };
+            return [];
         }
         
         const text = await response.text();
-        if (!text) return { data: [] };
+        if (!text) return [];
+        
+        const data = JSON.parse(text);
+        if (data && typeof data === 'object') {
+            if (data.data !== undefined) {
+                return data.data;
+            }
+            if (data.success !== undefined) {
+                return data.success ? data : null;
+            }
+        }
+        return data;
+    } catch (error) {
+        return [];
+    }
+};
+
+const ihweApiCall = async (endpoint: string, options: RequestInit = {}) => {
+    try {
+        const url = `${ihwe_API_URL}${endpoint}`;
+        const response = await fetch(url, {
+            cache: 'no-store',
+            ...options,
+            headers: {
+                'Content-Type': 'application/json',
+                ...options.headers,
+            },
+        });
+        
+        if (!response.ok) {
+            return [];
+        }
+        
+        const text = await response.text();
+        if (!text) return [];
         
         const data = JSON.parse(text);
         if (data && typeof data === 'object') {
@@ -73,6 +111,11 @@ export const settingsApi = {
     getSettings: async () => apiCall(`/settings?website=Organicexpo`)
 };
 
+export const ihweSettingsApi = {
+    get: async () => ihweApiCall(`/settings?website=Organicexpo`),
+    getSettings: async () => ihweApiCall(`/settings?website=Organicexpo`)
+};
+
 export const termsApi = { 
     getTerms: async () => apiCall('/terms-and-conditions'),
     getByPage: async (page: string) => apiCall(`/terms-and-conditions/${page}`)
@@ -85,7 +128,7 @@ export const publicApi = {
 
 export const verifyApi = {
     sendEmailOtp: async (email: string, profile: string = 'SPEAKER', name: string = '', eventName: string = process.env.NEXT_PUBLIC_EVENT_NAME || 'BOE2026') => {
-        const response = await fetch(`${API_URL}/verify/send-email-otp`, {
+        const response = await fetch(`${ihwe_API_URL}/verify/send-email-otp`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ email, profile, name: name || null, eventName })
@@ -97,7 +140,7 @@ export const verifyApi = {
         return await response.json();
     },
     verifyEmailOtp: async (email: string, otp: string) => {
-        const response = await fetch(`${API_URL}/verify/verify-email-otp`, {
+        const response = await fetch(`${ihwe_API_URL}/verify/verify-email-otp`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ email, otp })
@@ -109,7 +152,7 @@ export const verifyApi = {
         return await response.json();
     },
     sendPhoneOtp: async (phone: string, profile: string = 'CONTACT', name: string = '', eventName: string = process.env.NEXT_PUBLIC_EVENT_NAME || 'BOE2026') => {
-        const response = await fetch(`${API_URL}/verify/send-phone-otp`, {
+        const response = await fetch(`${ihwe_API_URL}/verify/send-phone-otp`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ phone, profile, name: name || null, eventName })
@@ -121,7 +164,7 @@ export const verifyApi = {
         return await response.json();
     },
     verifyPhoneOtp: async (phone: string, otp: string) => {
-        const response = await fetch(`${API_URL}/verify/verify-phone-otp`, {
+        const response = await fetch(`${ihwe_API_URL}/verify/verify-phone-otp`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ phone, otp })
@@ -139,9 +182,9 @@ export const heroBackgroundApi = {
 };
 
 export const crmApi = { 
-    getCountries: async () => apiCall('/crm-countries'),
-    getStates: async (countryCode: string) => apiCall(`/crm-states?countryCode=${countryCode}`),
-    getCities: async (stateCode: string) => apiCall(`/crm-cities?stateCode=${stateCode}`)
+    getCountries: async () => ihweApiCall('/crm-countries'),
+    getStates: async (countryCode: string) => ihweApiCall(`/crm-states?countryCode=${countryCode}`),
+    getCities: async (stateCode: string) => ihweApiCall(`/crm-cities?stateCode=${stateCode}`)
 };
 
 export const eventHighlightsApi = { 
@@ -159,22 +202,22 @@ export const adminApi = {
 };
 
 export const visitorApi = {
-    submitCorporate: async (data: any) => apiCall('/corporate-visitors', { method: 'POST', body: JSON.stringify({ ...data, mobile: data.mobile || data.mobileNo }) }),
-    submitInternational: async (data: any) => apiCall('/international-visitors', { method: 'POST', body: JSON.stringify({ ...data, mobile: data.mobile || data.mobileNo }) }),
-    submitGeneral: async (data: any) => apiCall('/general-visitors', { method: 'POST', body: JSON.stringify({ ...data, mobile: data.mobile || data.mobileNo }) }),
+    submitCorporate: async (data: any) => ihweApiCall('/corporate-visitors', { method: 'POST', body: JSON.stringify({ ...data, mobile: data.mobile || data.mobileNo }) }),
+    submitInternational: async (data: any) => ihweApiCall('/international-visitors', { method: 'POST', body: JSON.stringify({ ...data, mobile: data.mobile || data.mobileNo }) }),
+    submitGeneral: async (data: any) => ihweApiCall('/general-visitors', { method: 'POST', body: JSON.stringify({ ...data, mobile: data.mobile || data.mobileNo }) }),
     submitGroup: async (data: any) => {
         const payload = { ...data };
         if (payload.persons && Array.isArray(payload.persons)) {
             payload.persons = payload.persons.map((p: any) => ({ ...p, mobile: p.mobile || p.mobileNo }));
         }
-        return apiCall('/group-visitors', { method: 'POST', body: JSON.stringify(payload) });
+        return ihweApiCall('/group-visitors', { method: 'POST', body: JSON.stringify(payload) });
     },
-    submitHealthCamp: async (data: any) => apiCall('/health-camp-visitors', { method: 'POST', body: JSON.stringify({ ...data, mobile: data.mobile || data.mobileNo }) })
+    submitHealthCamp: async (data: any) => ihweApiCall('/health-camp-visitors', { method: 'POST', body: JSON.stringify({ ...data, mobile: data.mobile || data.mobileNo }) })
 };
 
 export const buyerApi = {
     submitInternationalBuyer: async (formData: FormData) => {
-        const response = await fetch(`${API_URL}/international-buyer/register`, {
+        const response = await fetch(`${ihwe_API_URL}/international-buyer/register`, {
             method: 'POST',
             body: formData,
         });
@@ -194,7 +237,7 @@ export const buyerApi = {
         return await response.json();
     },
     submitBuyer: async (formData: FormData) => {
-        const response = await fetch(`${API_URL}/buyer-registration`, {
+        const response = await fetch(`${ihwe_API_URL}/buyer-registration`, {
             method: 'POST',
             body: formData,
             // Let browser set Content-Type for FormData

@@ -1,7 +1,7 @@
 "use client";
 import React, { useState, useEffect } from "react";
 import { CheckCircle2, ShieldCheck, Store, Loader2, CheckCircle, X, ChevronsUpDown } from "lucide-react";
-import { crmApi, verifyApi, visitorApi, settingsApi } from "../../../../lib/api";
+import { crmApi, verifyApi, visitorApi, ihweSettingsApi } from "../../../../lib/api";
 import Swal from 'sweetalert2';
 // Helper component for multi-select
 const MultiSelectDropdown = ({ options, selected, onChange, placeholder = "Select options", error = false, accentColor = "emerald" }: any) => {
@@ -88,7 +88,7 @@ export default function CorporateForm() {
   const [requireOtp, setRequireOtp] = useState(true);
 
   useEffect(() => {
-    settingsApi.getSettings().then((res: any) => {
+    ihweSettingsApi.getSettings().then((res: any) => {
       if (res && res.requireOtpForVisitorRegistration !== undefined) {
         setRequireOtp(res.requireOtpForVisitorRegistration);
       }
