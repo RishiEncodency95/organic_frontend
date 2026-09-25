@@ -134,8 +134,99 @@ export const verifyApi = {
     }
 };
 
-export const heroBackgroundApi = { 
+export const heroBackgroundApi = {
     getByPage: async (pageName: string) => apiCall(`/hero-backgrounds/page/${encodeURIComponent(pageName)}`)
+};
+
+/** localStorage key the MSME apply flow uses to carry the draft's applicationId across its 3 separate page routes. */
+const MSME_APPLICATION_ID_KEY = 'msme_application_id';
+/** Carries the eligibility-check page's AI-extracted certificate data forward so the Apply form can pre-fill itself. */
+const MSME_UDYAM_EXTRACT_KEY = 'msme_udyam_extract';
+
+export const msmeStorage = {
+    getApplicationId: (): string | null => {
+        if (typeof window === 'undefined') return null;
+        try { return window.localStorage.getItem(MSME_APPLICATION_ID_KEY); } catch { return null; }
+    },
+    setApplicationId: (id: string) => {
+        if (typeof window === 'undefined') return;
+        try { window.localStorage.setItem(MSME_APPLICATION_ID_KEY, id); } catch { /* ignore */ }
+    },
+    clearApplicationId: () => {
+        if (typeof window === 'undefined') return;
+        try { window.localStorage.removeItem(MSME_APPLICATION_ID_KEY); } catch { /* ignore */ }
+    },
+    getUdyamExtract: (): Record<string, any> | null => {
+        if (typeof window === 'undefined') return null;
+        try {
+            const raw = window.localStorage.getItem(MSME_UDYAM_EXTRACT_KEY);
+            return raw ? JSON.parse(raw) : null;
+        } catch { return null; }
+    },
+    setUdyamExtract: (data: Record<string, any>) => {
+        if (typeof window === 'undefined') return;
+        try { window.localStorage.setItem(MSME_UDYAM_EXTRACT_KEY, JSON.stringify(data)); } catch { /* ignore */ }
+    },
+    clearUdyamExtract: () => {
+        if (typeof window === 'undefined') return;
+        try { window.localStorage.removeItem(MSME_UDYAM_EXTRACT_KEY); } catch { /* ignore */ }
+    },
+};
+
+export const msmeApi = {
+    /** Uploads a Udyam certificate and returns the AI-extracted fields (or a graceful "unclear" result). */
+    analyzeUdyamCertificate: async (file: File) => {
+        const formData = new FormData();
+        formData.append('file', file);
+        const response = await fetch(`${API_URL}/msme/udyam/analyze`, {
+            method: 'POST',
+            body: formData,
+        });
+        const text = await response.text();
+        try { return JSON.parse(text); } catch { return { success: false, message: 'HTTP ' + response.status }; }
+    },
+    saveEnterpriseDetails: async (applicationId: string | null, enterprise: Record<string, any>) => {
+        const response = await fetch(`${API_URL}/msme/applications`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ applicationId: applicationId || undefined, enterprise }),
+        });
+        const text = await response.text();
+        try { return JSON.parse(text); } catch { return { success: false, message: 'HTTP ' + response.status }; }
+    },
+    getApplication: async (applicationId: string) => {
+        const response = await fetch(`${API_URL}/msme/applications/${applicationId}`);
+        const text = await response.text();
+        try { return JSON.parse(text); } catch { return { success: false, message: 'HTTP ' + response.status }; }
+    },
+    saveParticipationDetails: async (applicationId: string, participation: Record<string, any>) => {
+        const response = await fetch(`${API_URL}/msme/applications/${applicationId}/participation`, {
+            method: 'PATCH',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ participation }),
+        });
+        const text = await response.text();
+        try { return JSON.parse(text); } catch { return { success: false, message: 'HTTP ' + response.status }; }
+    },
+    /** Server creates the Razorpay order itself (never trust a client-supplied order id). */
+    createPaymentOrder: async (applicationId: string, payload: { amount: number; currency?: string }) => {
+        const response = await fetch(`${API_URL}/msme/applications/${applicationId}/payment-order`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(payload),
+        });
+        const text = await response.text();
+        try { return JSON.parse(text); } catch { return { success: false, message: 'HTTP ' + response.status }; }
+    },
+    confirmPayment: async (applicationId: string, payload: { razorpayPaymentId: string; razorpaySignature?: string }) => {
+        const response = await fetch(`${API_URL}/msme/applications/${applicationId}/payment-confirm`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(payload),
+        });
+        const text = await response.text();
+        try { return JSON.parse(text); } catch { return { success: false, message: 'HTTP ' + response.status }; }
+    },
 };
 
 export const crmApi = { 
