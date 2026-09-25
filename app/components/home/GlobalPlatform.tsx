@@ -9,7 +9,7 @@ import form1 from "../../assets/home/form1.png";
 import form2 from "../../assets/home/form2.png";
 import form3 from "../../assets/home/form3.png";
 import form4 from "../../assets/home/form4.png";
-import { websiteApi, SERVER_URL } from "@/lib/api";
+import { SERVER_URL, API_URL } from "@/lib/api";
 
 const resolveImageUrl = (src: string): string => {
   if (!src) return src;
@@ -83,7 +83,10 @@ const GlobalPlatform = () => {
     let isMounted = true;
     const fetchGlobal = async () => {
       try {
-        const res = await websiteApi.getGlobalPlatform();
+        // Bypass the shared client/ISR cache here — this section is edited often from the
+        // CMS and admins expect to see their save reflected immediately, not after the
+        // 60s server cache / 5min client-prime window other sections tolerate.
+        const res = await fetch(`${API_URL}/website/home/global-platform`, { cache: 'no-store' }).then((r) => r.json());
         const serverData = res?.data || res;
         if (serverData && isMounted) {
           const rawCards = serverData.items || serverData.cards;
