@@ -1,7 +1,7 @@
 "use client";
 import React, { useState, useEffect } from "react";
 import { CheckCircle2, ShieldCheck, Globe2, Loader2, CheckCircle, X, ChevronsUpDown, Upload } from "lucide-react";
-import { crmApi, verifyApi, visitorApi, settingsApi } from "../../../../lib/api";
+import { crmApi, verifyApi, visitorApi, ihweSettingsApi } from "../../../../lib/api";
 import Swal from 'sweetalert2';
 
 // Helper component for multi-select
@@ -84,7 +84,7 @@ export default function InternationalVisitorForm() {
   const [resendTimers, setResendTimers] = useState({ email: 0, mobile: 0 });
 
   useEffect(() => {
-    settingsApi.getSettings().then((res: any) => {
+    ihweSettingsApi.getSettings().then((res: any) => {
       if (res && res.requireOtpForVisitorRegistration !== undefined) {
         setRequireOtp(res.requireOtpForVisitorRegistration);
       }
