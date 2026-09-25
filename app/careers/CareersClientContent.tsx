@@ -127,7 +127,7 @@ function EmptyOpenings() {
       <span className="h-[70%] w-px bg-[#d5e0d7]" />
 
       <div>
-        <ResumeUploadButton variant="outline" />
+        {/* <ResumeUploadButton variant="outline" /> */}
         <p className="mt-2 text-[15px] leading-relaxed text-[#43556c]">
           We will keep your profile on file and reach out when a suitable
           opportunity arises.
