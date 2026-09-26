@@ -6,6 +6,7 @@ import { motion } from "framer-motion";
 import introImg from "../../assets/home/homeIntro.webp";
 import leafog from "@/app/assets/icons/leafs.webp";
 import { API_URL } from "@/lib/api";
+import { isCloudinaryImage, cloudinaryImageLoader } from "@/lib/cloudinaryImage";
 
 const DEFAULT_INTRO = {
   enabled: true,
@@ -283,12 +284,13 @@ const IntroductionSection = () => {
             <div className="relative z-10 p-2 md:p-3 rounded-[1.5rem] bg-white/60 backdrop-blur-md border border-white shadow-[0_15px_40px_rgba(0,0,0,0.06)] w-full">
               {activeImage ? (
                 typeof activeImage === "string" ? (
-                  <img
+                  <Image
                     src={activeImage}
                     alt={data.imageAlt || "Bharat Organic Expo"}
                     width={640}
                     height={480}
                     loading="lazy"
+                    loader={isCloudinaryImage(activeImage) ? cloudinaryImageLoader : undefined}
                     className="w-full aspect-[4/3] h-auto object-cover rounded-2xl"
                   />
                 ) : (

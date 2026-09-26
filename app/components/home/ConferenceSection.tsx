@@ -6,6 +6,7 @@ import { motion } from 'framer-motion';
 import Link from 'next/link';
 import Image from 'next/image';
 import { API_URL } from '@/lib/api';
+import { isCloudinaryImage, cloudinaryImageLoader } from '@/lib/cloudinaryImage';
 import global1 from '../../assets/home/global1.webp';
 
 // ── Default Data Configuration ──
@@ -328,7 +329,7 @@ const ConferenceSeminars = () => {
                 alt={data.imageAlt}
                 width={600}
                 height={400}
-                unoptimized
+                loader={isCloudinaryImage(data.image) ? cloudinaryImageLoader : undefined}
                 className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
               />
             ) : (

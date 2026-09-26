@@ -30,6 +30,7 @@ import {
 import Image from 'next/image';
 import seminarsImg from '../../assets/home/seminars.webp';
 import { API_URL } from '@/lib/api';
+import { isCloudinaryImage, cloudinaryImageLoader } from '@/lib/cloudinaryImage';
 
 const ICON_MAP: Record<string, LucideIcon> = {
   Users,
@@ -191,7 +192,7 @@ const BeyondExhibition = () => {
                 src={data.image}
                 alt={data.imageAlt}
                 fill
-                unoptimized
+                loader={isCloudinaryImage(data.image) ? cloudinaryImageLoader : undefined}
                 className="object-cover absolute inset-0 z-0"
               />
             ) : (

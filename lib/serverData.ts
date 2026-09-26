@@ -1,5 +1,36 @@
 import { API_URL } from "./api";
 
+// A handful of admin upload flows fall back to embedding the raw file as a
+// `data:` URI directly in the saved content when the upload server is
+// unreachable (see e.g. admin's gallery/testimonials "Could not reach the
+// upload server; embedding image as a data URL instead"). That's a fine
+// last-resort save for the admin, but a single such image can be hundreds of
+// KB to several MB of base64 text. If it ever ends up server-side content,
+// `getSectionData` results get embedded into the page's RSC payload for
+// every visitor on every request — turning one bad upload into a
+// multi-megabyte page for the whole site. Strip those out here, at the one
+// place all server-rendered section content flows through, so a stray
+// base64 blob degrades to "this one image is missing" instead of "the whole
+// site is unusably slow."
+const isLargeDataUri = (value: unknown): value is string =>
+  typeof value === "string" && value.startsWith("data:") && value.length > 2048;
+
+function stripLargeDataUris<T>(value: T, seen: WeakSet<object> = new WeakSet()): T {
+  if (Array.isArray(value)) {
+    return value.map((item) => stripLargeDataUris(item, seen)) as unknown as T;
+  }
+  if (value && typeof value === "object") {
+    if (seen.has(value as object)) return value;
+    seen.add(value as object);
+    const out: Record<string, unknown> = {};
+    for (const [key, val] of Object.entries(value as Record<string, unknown>)) {
+      out[key] = isLargeDataUri(val) ? null : stripLargeDataUris(val, seen);
+    }
+    return out as T;
+  }
+  return isLargeDataUri(value) ? (null as unknown as T) : value;
+}
+
 /**
  * Server-side JSON fetch for section content, cached with the page (ISR, 60s).
  * Returns the unwrapped `data` payload, or null if the backend is unreachable,
@@ -10,7 +41,8 @@ export async function getSectionData<T = any>(path: string): Promise<T | null> {
     const res = await fetch(`${API_URL}${path}`, { next: { revalidate: 60 } });
     if (!res.ok) return null;
     const json = await res.json();
-    return (json?.data ?? json) as T;
+    const data = (json?.data ?? json) as T;
+    return stripLargeDataUris(data);
   } catch {
     return null;
   }

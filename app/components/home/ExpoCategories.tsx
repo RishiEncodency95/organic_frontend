@@ -6,6 +6,7 @@ import { ArrowRight, Apple, Leaf, Sprout, Package, Milk, Droplet, Pill, Box, Tra
 import Image from "next/image";
 import Link from "next/link";
 import { API_URL } from "@/lib/api";
+import { isCloudinaryImage, cloudinaryImageLoader } from "@/lib/cloudinaryImage";
 
 import sectors1 from "../../assets/home/sectors1.webp";
 import sectors2 from "../../assets/home/sectors2.webp";
@@ -209,7 +210,7 @@ const ExpoCategories = () => {
                       src={item.image}
                       alt={item.imageAlt}
                       fill
-                      unoptimized
+                      loader={isCloudinaryImage(item.image) ? cloudinaryImageLoader : undefined}
                       sizes="(max-width: 640px) 50vw, (max-width: 1024px) 25vw, 20vw"
                       className="object-cover group-hover:scale-110 transition-transform duration-700"
                     />

@@ -182,46 +182,29 @@ export default function Footer() {
             <Sparkle color="#d68523" style={{ bottom: '10px', left: '5%', animationDelay: '0.2s' }} />
             <Sparkle color="#d68523" style={{ bottom: '-10px', right: '20%', animationDelay: '0.6s' }} />
 
-            {typeof logoSrc === "string" ? (
-              <img
-                src={logoSrc}
-                alt="Bharat Organic Expo"
-                className="w-full h-auto max-h-[90px] object-contain mx-auto"
-                style={{ filter: "drop-shadow(0 0 1px rgba(255,255,255,0.6))" }}
-              />
-            ) : (
-              <Image
-                src={logoSrc}
-                alt="Bharat Organic Expo"
-                width={224}
-                height={90}
-                className="w-full h-auto object-contain"
-                style={{ width: "auto", height: "auto", filter: "drop-shadow(0 0 1px rgba(255,255,255,0.6))" }}
-              />
-            )}
+            <Image
+              src={logoSrc}
+              alt="Bharat Organic Expo"
+              width={224}
+              height={90}
+              className="w-full h-auto max-h-[90px] object-contain mx-auto"
+              style={{ width: "auto", height: "auto", filter: "drop-shadow(0 0 1px rgba(255,255,255,0.6))" }}
+            />
           </div>
 
           <p className="text-[13.5px] sm:text-[14px] font-semibold leading-relaxed max-w-[340px] text-black text-center mx-auto whitespace-pre-line">
             {descriptionText}
           </p>
 
-          {typeof downSrc === "string" ? (
-            <img
-              src={downSrc}
-              alt="Decoration"
-              className="block w-full max-w-[220px] sm:max-w-[260px] lg:max-w-[320px] h-auto object-contain relative top-2 -mb-8 lg:-mb-14 pointer-events-none mx-auto"
-            />
-          ) : (
-            <Image
-              src={downSrc}
-              alt="Decoration"
-              width={320}
-              height={120}
-              quality={75}
-              className="block w-full max-w-[220px] sm:max-w-[260px] lg:max-w-[320px] h-auto object-contain relative top-2 -mb-8 lg:-mb-14 pointer-events-none mx-auto"
-              style={{ width: "auto", height: "auto" }}
-            />
-          )}
+          <Image
+            src={downSrc}
+            alt="Decoration"
+            width={320}
+            height={120}
+            quality={75}
+            className="block w-full max-w-[220px] sm:max-w-[260px] lg:max-w-[320px] h-auto object-contain relative top-2 -mb-8 lg:-mb-14 pointer-events-none mx-auto"
+            style={{ width: "auto", height: "auto" }}
+          />
         </div>
 
         {/* Right Area (Dark Green) */}
@@ -345,22 +328,14 @@ export default function Footer() {
               <Sparkle color="#F3B71B" style={{ bottom: '4px', left: '5%', animationDelay: '0.2s' }} />
               <Sparkle color="#F3B71B" style={{ bottom: '-8px', right: '10%', animationDelay: '0.6s' }} />
 
-              {typeof namoLogoSrc === "string" ? (
-                <img
-                  src={namoLogoSrc}
-                  alt="Organised by Namo Gange"
-                  className="w-full h-auto max-h-[80px] object-contain mx-auto sm:mx-0"
-                />
-              ) : (
-                <Image
-                  src={namoLogoSrc}
-                  alt="Namo Gange Wellness"
-                  width={224}
-                  height={80}
-                  className="w-full h-auto object-contain mx-auto sm:mx-0"
-                  style={{ width: "auto", height: "auto" }}
-                />
-              )}
+              <Image
+                src={namoLogoSrc}
+                alt="Organised by Namo Gange"
+                width={224}
+                height={80}
+                className="w-full h-auto max-h-[80px] object-contain mx-auto sm:mx-0"
+                style={{ width: "auto", height: "auto" }}
+              />
             </div>
 
             <p className="text-gray-200 text-[12px] mb-3 leading-relaxed font-medium max-w-[280px]">
@@ -369,26 +344,15 @@ export default function Footer() {
 
             {/* Nature's Bounty Image */}
             <div className="w-full max-w-[300px] sm:max-w-[280px] mb-2 bg-[#F1DEC4] p-1 rounded-xl shadow-[0_4px_20px_rgba(0,0,0,0.3)] border border-[#d6ad60]/40">
-              {typeof bountySrc === "string" ? (
-                <img
-                  src={bountySrc}
-                  alt="Nature's Bounty"
-                  width={250}
-                  height={100}
-                  className="w-full h-auto object-contain drop-shadow-sm"
-                  style={{ width: "auto", height: "auto" }}
-                />
-              ) : (
-                <Image
-                  src={bountySrc}
-                  alt="Nature's Bounty"
-                  width={250}
-                  height={100}
-                  quality={100}
-                  className="w-full h-auto object-contain drop-shadow-sm"
-                  style={{ width: "auto", height: "auto" }}
-                />
-              )}
+              <Image
+                src={bountySrc}
+                alt="Nature's Bounty"
+                width={250}
+                height={100}
+                quality={100}
+                className="w-full h-auto object-contain drop-shadow-sm"
+                style={{ width: "auto", height: "auto" }}
+              />
             </div>
 
             <h4 className="font-poppins font-semibold text-[#F3B71B] uppercase mb-2 text-[12px] tracking-wider">CONNECT WITH US</h4>
