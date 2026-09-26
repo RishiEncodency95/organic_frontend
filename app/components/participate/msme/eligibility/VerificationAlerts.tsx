@@ -29,9 +29,8 @@ const VerificationAlerts = () => {
 
         {/* Description */}
         <p className="text-[15px] leading-[1.55] font-medium text-gray-700 mb-3 max-w-[700px]">
-          Your preliminary eligibility is positive, but we found a few details
-          that may require supporting documents during application/claim
-          processing:
+          Beyond what's printed on your Udyam certificate, the following are typically
+          checked during application/claim processing:
         </p>
 
         {/* Verification Table */}
@@ -52,8 +51,8 @@ const VerificationAlerts = () => {
                   </div>
                 </td>
 
-                <td className="px-5 py-2 w-[190px] text-[15px] font-semibold text-gray-900">
-                  ₹0
+                <td className="px-5 py-2 w-[190px] text-[13px] font-semibold text-gray-500">
+                  Verified during review
                 </td>
               </tr>
 
@@ -70,8 +69,8 @@ const VerificationAlerts = () => {
                   </div>
                 </td>
 
-                <td className="px-5 py-2 text-[15px] font-semibold text-gray-900">
-                  No
+                <td className="px-5 py-2 text-[13px] font-semibold text-gray-500">
+                  Verified during review
                 </td>
               </tr>
 
@@ -88,8 +87,8 @@ const VerificationAlerts = () => {
                   </div>
                 </td>
 
-                <td className="px-5 py-2 text-[15px] font-semibold text-gray-900">
-                  Inactive
+                <td className="px-5 py-2 text-[13px] font-semibold text-gray-500">
+                  Verified during review
                 </td>
               </tr>
 
@@ -97,18 +96,11 @@ const VerificationAlerts = () => {
           </table>
         </div>
 
-        {/* Bottom Warning */}
+        {/* Bottom Note */}
         <div className="bg-[#fff7e9] border border-[#f4dfbd] rounded-lg px-3 py-3">
-          <p className="text-[14px] leading-[1.7] font-medium">
-            <span className="text-[#91451f]">
-              This does <strong className="font-semibold text-[#000]">NOT</strong>{' '}
-              currently change <span className="text-[#000]">your result to</span> &quot;Not Eligible.&quot;
-            </span>
-            <br />
-            <span className="text-gray-700">
-              It means supporting business/financial documents may be required during
-              final verification.
-            </span>
+          <p className="text-[14px] leading-[1.7] font-medium text-gray-700">
+            These aren't captured from your Udyam certificate — our team will request
+            supporting business/financial documents where needed during final verification.
           </p>
         </div>
       </div>

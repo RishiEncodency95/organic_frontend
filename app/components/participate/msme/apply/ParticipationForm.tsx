@@ -1,13 +1,20 @@
 "use client";
 import { useState, useEffect, useRef } from "react";
+import { useRouter } from "next/navigation";
 import { FileText, ChevronDown, CheckCircle2, User, ArrowLeft, ArrowRight, CheckCircle } from "lucide-react";
-import Link from "next/link";
-import { verifyApi } from "@/lib/api";
+import { verifyApi, msmeApi, msmeStorage } from "@/lib/api";
 import Swal from "sweetalert2";
 
+const STALL_TYPES = ["Shell Scheme", "Bare Space", "Country Pavilion", "Other"];
+
 export default function ParticipationForm() {
+  const router = useRouter();
+
+  const [stallType, setStallType] = useState(STALL_TYPES[0]);
   const [stallSize, setStallSize] = useState<number>(9);
-  
+  const [stallLocation, setStallLocation] = useState("Hall 12 - Organic & Natural Products Zone");
+  const [isSaving, setIsSaving] = useState(false);
+
   // Verification States
   const [contactPerson, setContactPerson] = useState({
     name: "",
@@ -25,9 +32,19 @@ export default function ParticipationForm() {
   const [phoneTimer, setPhoneTimer] = useState(0);
   const [isEmailLoading, setIsEmailLoading] = useState(false);
   const [isPhoneLoading, setIsPhoneLoading] = useState(false);
-  
+
   const emailTimerRef = useRef<number | null>(null);
   const phoneTimerRef = useRef<number | null>(null);
+
+  useEffect(() => {
+    if (!msmeStorage.getApplicationId()) {
+      Swal.fire({
+        title: "Enterprise details missing",
+        text: "Please complete Step 1 (Enterprise Details) first.",
+        icon: "warning",
+      }).then(() => router.replace("/participate/msme/apply"));
+    }
+  }, [router]);
 
   useEffect(() => {
     if (emailTimer > 0) {
@@ -167,6 +184,55 @@ export default function ParticipationForm() {
     }).format(amount);
   };
 
+  const handleSaveAndContinue = async () => {
+    const applicationId = msmeStorage.getApplicationId();
+    if (!applicationId) {
+      Swal.fire({ title: "Enterprise details missing", text: "Please complete Step 1 first.", icon: "warning" })
+        .then(() => router.replace("/participate/msme/apply"));
+      return;
+    }
+    if (!contactPerson.name.trim() || !contactPerson.designation.trim()) {
+      Swal.fire({ title: "Contact person required", text: "Please enter the contact person's name and designation.", icon: "error" });
+      return;
+    }
+    if (contactPerson.mobile.length !== 10) {
+      Swal.fire({ title: "Mobile number required", text: "Please enter a valid 10-digit mobile number.", icon: "error" });
+      return;
+    }
+    if (!contactPerson.email.trim()) {
+      Swal.fire({ title: "Email required", text: "Please enter an email address.", icon: "error" });
+      return;
+    }
+
+    setIsSaving(true);
+    try {
+      const res = await msmeApi.saveParticipationDetails(applicationId, {
+        stallType,
+        stallSize: String(stallSize),
+        stallLocation,
+        contactPerson: {
+          name: contactPerson.name,
+          designation: contactPerson.designation,
+          mobile: contactPerson.mobile,
+          email: contactPerson.email,
+          verifiedMobile: phoneVerified ? contactPerson.mobile : undefined,
+          verifiedEmail: emailVerified ? contactPerson.email : undefined,
+        },
+      });
+
+      if (!res.success) {
+        Swal.fire({ title: "Error", text: res.message || "Could not save your details. Please try again.", icon: "error" });
+        return;
+      }
+
+      router.push("/participate/msme/apply/payment");
+    } catch (error) {
+      Swal.fire({ title: "Error", text: "Something went wrong while saving. Please try again.", icon: "error" });
+    } finally {
+      setIsSaving(false);
+    }
+  };
+
   return (
     <div className="flex flex-col gap-4">
       <div className="w-full bg-white rounded-xl shadow-[0_4px_20px_rgb(0,0,0,0.03)] p-4 md:p-6">
@@ -229,7 +295,7 @@ export default function ParticipationForm() {
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-3">
             {/* Option 1 */}
             <label className="relative cursor-pointer">
-              <input type="radio" name="stall_type" defaultChecked className="peer sr-only" />
+              <input type="radio" name="stall_type" checked={stallType === "Shell Scheme"} onChange={() => setStallType("Shell Scheme")} className="peer sr-only" />
               <div className="flex flex-col items-center justify-center py-4 px-2 border border-gray-200 hover:border-[#176b27] peer-checked:border-[#176b27] peer-checked:border-2 peer-checked:bg-[#f9fbf9] rounded-lg text-center transition-all h-full">
                 <div className="absolute top-2 right-2 text-[#176b27] opacity-0 peer-checked:opacity-100 transition-opacity">
                   <CheckCircle2 size={18} strokeWidth={3} fill="currentColor" className="text-white bg-[#176b27] rounded-full" />
@@ -246,7 +312,7 @@ export default function ParticipationForm() {
 
             {/* Option 2 */}
             <label className="relative cursor-pointer">
-              <input type="radio" name="stall_type" className="peer sr-only" />
+              <input type="radio" name="stall_type" checked={stallType === "Bare Space"} onChange={() => setStallType("Bare Space")} className="peer sr-only" />
               <div className="flex flex-col items-center justify-center py-4 px-2 border border-gray-200 hover:border-[#176b27] peer-checked:border-[#176b27] peer-checked:border-2 peer-checked:bg-[#f9fbf9] rounded-lg text-center transition-all h-full">
                 <div className="absolute top-2 right-2 text-[#176b27] opacity-0 peer-checked:opacity-100 transition-opacity">
                   <CheckCircle2 size={18} strokeWidth={3} fill="currentColor" className="text-white bg-[#176b27] rounded-full" />
@@ -263,7 +329,7 @@ export default function ParticipationForm() {
 
             {/* Option 3 */}
             <label className="relative cursor-pointer">
-              <input type="radio" name="stall_type" className="peer sr-only" />
+              <input type="radio" name="stall_type" checked={stallType === "Country Pavilion"} onChange={() => setStallType("Country Pavilion")} className="peer sr-only" />
               <div className="flex flex-col items-center justify-center py-4 px-2 border border-gray-200 hover:border-[#176b27] peer-checked:border-[#176b27] peer-checked:border-2 peer-checked:bg-[#f9fbf9] rounded-lg text-center transition-all h-full">
                 <div className="absolute top-2 right-2 text-[#176b27] opacity-0 peer-checked:opacity-100 transition-opacity">
                   <CheckCircle2 size={18} strokeWidth={3} fill="currentColor" className="text-white bg-[#176b27] rounded-full" />
@@ -280,7 +346,7 @@ export default function ParticipationForm() {
 
             {/* Option 4 */}
             <label className="relative cursor-pointer">
-              <input type="radio" name="stall_type" className="peer sr-only" />
+              <input type="radio" name="stall_type" checked={stallType === "Other"} onChange={() => setStallType("Other")} className="peer sr-only" />
               <div className="flex flex-col items-center justify-center py-4 px-2 border border-gray-200 hover:border-[#176b27] peer-checked:border-[#176b27] peer-checked:border-2 peer-checked:bg-[#f9fbf9] rounded-lg text-center transition-all h-full">
                 <div className="absolute top-2 right-2 text-[#176b27] opacity-0 peer-checked:opacity-100 transition-opacity">
                   <CheckCircle2 size={18} strokeWidth={3} fill="currentColor" className="text-white bg-[#176b27] rounded-full" />
@@ -322,7 +388,8 @@ export default function ParticipationForm() {
               </label>
               <input
                 type="text"
-                defaultValue="Hall 12 - Organic & Natural Products Zone"
+                value={stallLocation}
+                onChange={(e) => setStallLocation(e.target.value)}
                 className="w-full h-[36px] px-3 bg-[#fafbfa] border border-[#e5e7eb] rounded-md text-[13px] font-semibold text-gray-800 focus:outline-none"
               />
             </div>
@@ -578,12 +645,25 @@ export default function ParticipationForm() {
 
       {/* Form Bottom Actions */}
       <div className="flex flex-col sm:flex-row items-center justify-between gap-4 mt-2">
-        <button type="button" className="h-[36px] px-5 rounded-md border border-gray-300 text-gray-700 font-semibold text-[12px] uppercase tracking-wide hover:bg-gray-50 transition-colors flex items-center justify-center gap-2">
+        <button
+          type="button"
+          onClick={() => router.push("/participate/msme/apply")}
+          className="h-[36px] px-5 rounded-md border border-gray-300 text-gray-700 font-semibold text-[12px] uppercase tracking-wide hover:bg-gray-50 transition-colors flex items-center justify-center gap-2"
+        >
           <ArrowLeft size={16} strokeWidth={2.5} /> Back
         </button>
-        <Link href="/participate/msme/apply/payment" className="w-full sm:w-auto h-[36px] px-8 rounded-md bg-[#176b27] text-white font-semibold text-[12px] uppercase tracking-wide hover:bg-[#115d20] transition-colors flex items-center justify-center gap-2 shadow-md">
-          Save & Continue to Payment <ArrowRight size={16} strokeWidth={2.5} />
-        </Link>
+        <button
+          type="button"
+          onClick={handleSaveAndContinue}
+          disabled={isSaving}
+          className="w-full sm:w-auto h-[36px] px-8 rounded-md bg-[#176b27] text-white font-semibold text-[12px] uppercase tracking-wide hover:bg-[#115d20] transition-colors flex items-center justify-center gap-2 shadow-md disabled:opacity-70 disabled:cursor-not-allowed"
+        >
+          {isSaving ? "Saving..." : (
+            <>
+              Save &amp; Continue to Payment <ArrowRight size={16} strokeWidth={2.5} />
+            </>
+          )}
+        </button>
       </div>
 
     </div>

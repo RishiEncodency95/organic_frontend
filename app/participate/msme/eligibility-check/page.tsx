@@ -3,6 +3,7 @@ import { Metadata } from 'next';
 import EligibilityHero from '@/app/components/participate/msme/eligibility/EligibilityHero';
 import EligibilityInputBar from '@/app/components/participate/msme/eligibility/EligibilityInputBar';
 import PreliminaryStatus from '@/app/components/participate/msme/eligibility/PreliminaryStatus';
+import { EligibilityProvider } from '@/app/components/participate/msme/eligibility/EligibilityContext';
 import EnterpriseDetails from '@/app/components/participate/msme/eligibility/EnterpriseDetails';
 import IndustryMatch from '@/app/components/participate/msme/eligibility/IndustryMatch';
 import CalculationSteps from '@/app/components/participate/msme/eligibility/CalculationSteps';
@@ -36,21 +37,25 @@ export default async function PMSEligibilityCheckPage() {
       <EligibilityHero customProps={heroSec} />
 
       <div className="full px-4 md:px-14 lg:px-14">
-        {/* Input Bar */}
-        <EligibilityInputBar />
+        <EligibilityProvider>
+          {/* Input Bar */}
+          <EligibilityInputBar />
 
-        {/* Content sections */}
-        <PreliminaryStatus customProps={statusSec} />
+          {/* Content sections */}
+          <PreliminaryStatus customProps={statusSec} />
 
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mt-4 items-stretch">
-          <EnterpriseDetails customProps={detailsSec} />
-          <IndustryMatch customProps={matchSec} />
-        </div>
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mt-4 items-stretch">
+            <EnterpriseDetails customProps={detailsSec} />
+            <IndustryMatch customProps={matchSec} />
+          </div>
 
-        <CalculationSteps customTitle={stepsSec.title} customSteps={stepsSec.items} />
-        <EstimateSection />
-        <VerificationAlerts />
-        <FinalScoreFooter />
+          <FinalScoreFooter />
+
+          <CalculationSteps customTitle={stepsSec.title} customSteps={stepsSec.items} />
+          <EstimateSection />
+          <VerificationAlerts />
+        </EligibilityProvider>
+
         <EligibilityDisclaimer />
       </div>
     </div>

@@ -1,7 +1,39 @@
+"use client";
+
 import React from 'react';
-import { Building2, Settings2, Factory, Layout, UserCircle2, Venus, Calendar, MapPin, ShieldCheck, CheckCircle2, Star } from 'lucide-react';
+import { Building2, Settings2, Factory, Layout, UserCircle2, Venus, Calendar, MapPin, ShieldCheck, CheckCircle2, XCircle } from 'lucide-react';
+import { useEligibility } from './EligibilityContext';
+
+const Row = ({ icon, label, value, ok }: { icon: React.ReactNode; label: string; value: React.ReactNode; ok?: boolean }) => (
+  <div className="grid grid-cols-12 gap-2 border-b border-gray-100 pb-2.5 mb-2.5 items-center">
+    <div className="col-span-5 flex items-center gap-2 text-gray-500">
+      {icon} {label}
+    </div>
+    <div className="col-span-7 font-semibold text-gray-900 flex items-center gap-1.5 leading-tight">
+      {ok !== undefined && (ok ? <CheckCircle2 size={16} className="text-[#1b5e20]" /> : <XCircle size={16} className="text-gray-300" />)}
+      {value}
+    </div>
+  </div>
+);
 
 const EnterpriseDetails = ({ customProps }: { customProps?: any }) => {
+  const { result } = useEligibility();
+
+  if (!result || result.documentType !== "valid_udyam_certificate") {
+    return (
+      <div className="w-full bg-white rounded-xl shadow-[0_2px_10px_rgba(0,0,0,0.05)] border border-dashed border-gray-200 p-4 md:px-5 md:py-6 flex flex-col h-full items-center justify-center text-center">
+        <h3 className="text-[12px] md:text-[16px] font-semibold text-[#1b5e20] uppercase tracking-wider mb-2">
+          {customProps?.title || "Your Enterprise Details"}
+        </h3>
+        <p className="text-[13px] font-medium text-gray-500">
+          Upload your Udyam certificate above to see your enterprise details here.
+        </p>
+      </div>
+    );
+  }
+
+  const location = [result.district, result.state].filter(Boolean).join(", ") || "—";
+
   return (
     <div className="w-full bg-white rounded-xl shadow-[0_2px_10px_rgba(0,0,0,0.05)] border border-gray-100 p-4 md:px-5 md:py-2 flex flex-col h-full">
       <h3 className="text-[12px] md:text-[16px] font-semibold text-[#1b5e20] uppercase tracking-wider mb-4">
@@ -9,94 +41,24 @@ const EnterpriseDetails = ({ customProps }: { customProps?: any }) => {
       </h3>
 
       <div className="flex flex-col text-xs md:text-sm font-medium text-gray-600 mb-4 flex-1">
-
-        <div className="grid grid-cols-12 gap-2 border-b border-gray-100 pb-2.5 mb-2.5 items-center">
-          <div className="col-span-5 flex items-center gap-2 text-gray-500">
-            <Building2 size={16} className="text-[#1b5e20]/70" /> Enterprise Name
-          </div>
-          <div className="col-span-7 font-semibold text-gray-900 leading-tight">RAMMANI TRADELINK PRIVATE LIMITED</div>
-        </div>
-
-        <div className="grid grid-cols-12 gap-2 border-b border-gray-100 pb-2.5 mb-2.5 items-center">
-          <div className="col-span-5 flex items-center gap-2 text-gray-500">
-            <Settings2 size={16} className="text-[#1b5e20]/70" /> Enterprise Type
-          </div>
-          <div className="col-span-7 font-semibold text-gray-900 flex items-center gap-1.5">
-            <CheckCircle2 size={16} className="text-[#1b5e20]" /> Micro
-          </div>
-        </div>
-
-        <div className="grid grid-cols-12 gap-2 border-b border-gray-100 pb-2.5 mb-2.5 items-center">
-          <div className="col-span-5 flex items-center gap-2 text-gray-500">
-            <Factory size={16} className="text-[#1b5e20]/70" /> Major Activity
-          </div>
-          <div className="col-span-7 font-semibold text-gray-900 flex items-center gap-1.5">
-            <CheckCircle2 size={16} className="text-[#1b5e20]" /> Manufacturing
-          </div>
-        </div>
-
-        <div className="grid grid-cols-12 gap-2 border-b border-gray-100 pb-2.5 mb-2.5 items-center">
-          <div className="col-span-5 flex items-center gap-2 text-gray-500">
-            <Layout size={16} className="text-[#1b5e20]/70" /> Organisation
-          </div>
-          <div className="col-span-7 font-semibold text-gray-900">Private Limited Company</div>
-        </div>
-
-        <div className="grid grid-cols-12 gap-2 border-b border-gray-100 pb-2.5 mb-2.5 items-center">
-          <div className="col-span-5 flex items-center gap-2 text-gray-500">
-            <UserCircle2 size={16} className="text-[#1b5e20]/70" /> Entrepreneur Category
-          </div>
-          <div className="col-span-7 font-semibold text-gray-900">General</div>
-        </div>
-
-        <div className="grid grid-cols-12 gap-2 border-b border-gray-100 pb-2.5 mb-2.5 items-center">
-          <div className="col-span-5 flex items-center gap-2 text-gray-500">
-            <Venus size={16} className="text-[#1b5e20]/70" /> Gender
-          </div>
-          <div className="col-span-7 font-semibold text-gray-900 flex items-center gap-1.5">
-            <Venus size={16} className="text-[#ec4899]" /> Female
-          </div>
-        </div>
-
-        <div className="grid grid-cols-12 gap-2 border-b border-gray-100 pb-2.5 mb-2.5 items-center">
-          <div className="col-span-5 flex items-center gap-2 text-gray-500">
-            <Calendar size={16} className="text-[#1b5e20]/70" /> Udyam Registration Date
-          </div>
-          <div className="col-span-7 font-semibold text-gray-900">25 May 2026</div>
-        </div>
-
-        <div className="grid grid-cols-12 gap-2 border-b border-gray-100 pb-2.5 mb-2.5 items-center">
-          <div className="col-span-5 flex items-center gap-2 text-gray-500">
-            <MapPin size={16} className="text-[#1b5e20]/70" /> Location
-          </div>
-          <div className="col-span-7 font-semibold text-gray-900">East Delhi, Delhi</div>
-        </div>
-
-        <div className="grid grid-cols-12 gap-2 items-center">
-          <div className="col-span-5 flex items-center gap-2 text-gray-500">
-            <ShieldCheck size={16} className="text-[#1b5e20]/70" /> GSTIN Available
-          </div>
-          <div className="col-span-7 font-semibold text-gray-900 flex items-center gap-1.5">
-            <CheckCircle2 size={16} className="text-[#1b5e20]" /> Yes
-          </div>
-        </div>
-
+        <Row icon={<Building2 size={16} className="text-[#1b5e20]/70" />} label="Enterprise Name" value={result.enterpriseName || "Not found"} />
+        <Row icon={<Settings2 size={16} className="text-[#1b5e20]/70" />} label="Enterprise Type" value={result.enterpriseType || "Not found"} ok={!!result.enterpriseType} />
+        <Row icon={<Factory size={16} className="text-[#1b5e20]/70" />} label="Major Activity" value={result.majorActivity || "Not found"} ok={!!result.majorActivity} />
+        <Row icon={<Layout size={16} className="text-[#1b5e20]/70" />} label="Social Category" value={result.socialCategory || "Not found"} />
+        <Row icon={<UserCircle2 size={16} className="text-[#1b5e20]/70" />} label="Entrepreneur Gender" value={result.gender || "Not stated"} />
+        <Row
+          icon={<Venus size={16} className="text-[#1b5e20]/70" />}
+          label="Udyam Registration No."
+          value={result.udyamRegistrationNumber || "Not found"}
+        />
+        <Row icon={<Calendar size={16} className="text-[#1b5e20]/70" />} label="Date of Udyam Registration" value={result.dateOfUdyamRegistration || "Not found"} />
+        <Row icon={<MapPin size={16} className="text-[#1b5e20]/70" />} label="Location" value={location} />
+        <Row icon={<ShieldCheck size={16} className="text-[#1b5e20]/70" />} label="NIC Code" value={result.nicCode || "Not found"} />
       </div>
 
-      <div className="bg-[#f4fbf4] p-3 rounded-lg mb-4 text-[11px] md:text-[14px] leading-relaxed font-medium text-[#1b5e20]/80">
-        The Udyam certificate confirms Micro classification and Manufacturing as the major activity. The detailed record identifies the entrepreneur as female.
+      <div className="bg-[#f4fbf4] p-3 rounded-lg text-[11px] md:text-[13px] leading-relaxed font-medium text-[#1b5e20]/80">
+        These details are read directly from your uploaded certificate. Please review them for accuracy — you can correct anything in the application form on the next step.
       </div>
-
-      <div className="flex items-center gap-3 border-t border-gray-100 pt-3">
-        <span className="text-[12px] md:text-[14px] font-semibold text-[#1b5e20] uppercase tracking-wider">Match Quality</span>
-        <div className="flex gap-0.5">
-          {[1, 2, 3, 4, 5].map((star) => (
-            <Star key={star} size={14} className="text-[#1b5e20] fill-[#1b5e20]" />
-          ))}
-        </div>
-        <span className="text-[11px] md:text-[14px] font-semibold text-gray-900 ml-auto md:ml-2">Strong Match</span>
-      </div>
-
     </div>
   );
 };

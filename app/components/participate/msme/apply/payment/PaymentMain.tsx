@@ -1,8 +1,13 @@
 "use client";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { useRouter } from "next/navigation";
 import { CheckCircle2, CreditCard, Landmark, Receipt, ShieldCheck, ArrowLeft, ArrowRight, Shield } from "lucide-react";
 import Link from "next/link";
 import Swal from "sweetalert2";
+import { msmeApi, msmeStorage } from "@/lib/api";
+
+const STALL_RATE = 11000;
+const GST_RATE = 0.18;
 
 const loadScript = (src: string) => {
   return new Promise((resolve) => {
@@ -15,8 +20,11 @@ const loadScript = (src: string) => {
 };
 
 export default function PaymentMain({ section }: { section?: any }) {
+  const router = useRouter();
   const [selectedMethod, setSelectedMethod] = useState("online");
   const [isLoading, setIsLoading] = useState(false);
+  const [application, setApplication] = useState<any>(null);
+  const [loadError, setLoadError] = useState(false);
 
   const mainTitle = section?.title || "3. PAYMENT DETAILS";
   const mainSubtitle = section?.subtitle || "Review your payment summary and make the secure payment to complete your PMS Support application.";
@@ -24,21 +32,47 @@ export default function PaymentMain({ section }: { section?: any }) {
   const methodTitle = section?.eyebrow || "CHOOSE PAYMENT METHOD";
   const buttonLabel = section?.buttonLabel || "Proceed to Payment";
 
+  useEffect(() => {
+    const applicationId = msmeStorage.getApplicationId();
+    if (!applicationId) {
+      Swal.fire({ title: "Application details missing", text: "Please complete Steps 1 and 2 first.", icon: "warning" })
+        .then(() => router.replace("/participate/msme/apply"));
+      return;
+    }
+
+    msmeApi.getApplication(applicationId).then((res) => {
+      if (res.success) {
+        setApplication(res.data);
+      } else {
+        setLoadError(true);
+      }
+    });
+  }, [router]);
+
+  const stallSize = Number(application?.participation?.stallSize) || 9;
+  const stallType = application?.participation?.stallType || "Shell Scheme";
+  const category = application?.enterprise?.category || "General";
+  const amountBeforeGst = stallSize * STALL_RATE;
+  const gst = amountBeforeGst * GST_RATE;
+  const totalAmount = Math.round(amountBeforeGst + gst);
+
+  const formatCurrency = (amount: number) =>
+    new Intl.NumberFormat("en-IN", { style: "currency", currency: "INR", maximumFractionDigits: 0 }).format(amount);
+
   const handlePayment = async () => {
+    const applicationId = msmeStorage.getApplicationId();
+    if (!applicationId) {
+      Swal.fire("Error", "Your application details are missing. Please start again from Step 1.", "error");
+      return;
+    }
+
     setIsLoading(true);
 
     try {
-      // 1. Create order via Next.js API
-      const res = await fetch("/api/razorpay/create-order", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          amount: 116820,
-        }),
-      });
-      const orderData = await res.json();
+      // 1. Create the order on our own backend — it holds the Razorpay key secret, so the
+      // order id can't be forged by the client, and payment confirmation later verifies
+      // against this exact order.
+      const orderData = await msmeApi.createPaymentOrder(applicationId, { amount: totalAmount });
 
       if (!orderData.success) {
         Swal.fire("Error", orderData.message || "Failed to create order", "error");
@@ -56,20 +90,36 @@ export default function PaymentMain({ section }: { section?: any }) {
 
       // 3. Initialize Razorpay options
       const options = {
-        key: orderData.key,
-        amount: orderData.order.amount,
-        currency: orderData.order.currency,
+        key: orderData.data.razorpayKeyId,
+        amount: orderData.data.amount,
+        currency: orderData.data.currency,
         name: "Organic Expo",
         description: "PMS Support Application - Stall Booking",
-        order_id: orderData.order.id,
-        handler: function (response: any) {
+        order_id: orderData.data.razorpayOrderId,
+        handler: async function (response: any) {
+          const confirmRes = await msmeApi.confirmPayment(applicationId, {
+            razorpayPaymentId: response.razorpay_payment_id,
+            razorpaySignature: response.razorpay_signature,
+          });
+
+          if (!confirmRes.success) {
+            Swal.fire({
+              title: "Payment received, confirmation pending",
+              text: `Your payment succeeded, but we couldn't finalize your application automatically. Please contact support with Application ID ${applicationId}.`,
+              icon: "warning",
+            });
+            setIsLoading(false);
+            return;
+          }
+
+          msmeStorage.clearApplicationId();
           Swal.fire({
             title: "Payment Successful!",
-            text: "Your application will be submitted for verification.",
+            html: `Your application <b>${confirmRes.data.applicationId}</b> has been submitted for verification.`,
             icon: "success",
             confirmButtonColor: "#176b27",
           }).then(() => {
-            // Optional: redirect to a success page or handle post-payment logic
+            router.push("/participate/msme");
           });
         },
         modal: {
@@ -108,12 +158,21 @@ export default function PaymentMain({ section }: { section?: any }) {
         </p>
 
         {/* Banner */}
-        <div className="bg-[#f7faf7] border border-[#dce7dc] rounded-md px-4 py-3 flex items-start gap-3">
-          <CheckCircle2 size={18} className="text-[#176b27] shrink-0 mt-0.5" />
-          <p className="text-[13px] text-gray-700 font-medium leading-snug">
-            {mainBannerText}
-          </p>
-        </div>
+        {loadError ? (
+          <div className="bg-[#fdf2f0] border border-[#f3c6bc] rounded-md px-4 py-3 flex items-start gap-3">
+            <span className="text-[#c0392b] font-semibold text-[16px] shrink-0 mt-0.5">!</span>
+            <p className="text-[13px] text-[#c0392b] font-medium leading-snug">
+              We couldn&apos;t load your application details. Please go back and try again, or contact support if this continues.
+            </p>
+          </div>
+        ) : (
+          <div className="bg-[#f7faf7] border border-[#dce7dc] rounded-md px-4 py-3 flex items-start gap-3">
+            <CheckCircle2 size={18} className="text-[#176b27] shrink-0 mt-0.5" />
+            <p className="text-[13px] text-gray-700 font-medium leading-snug">
+              {mainBannerText}
+            </p>
+          </div>
+        )}
       </div>
 
       {/* PAYMENT SUMMARY Block */}
@@ -129,33 +188,25 @@ export default function PaymentMain({ section }: { section?: any }) {
           <div className="flex flex-col gap-2 text-[12px]">
             <div className="flex justify-between items-center py-1.5 border-b border-gray-100">
               <span className="text-gray-600 font-medium">Stall Size</span>
-              <span className="text-gray-900 font-semibold">9 sqm</span>
+              <span className="text-gray-900 font-semibold">{stallSize} sqm</span>
             </div>
             <div className="flex justify-between items-center py-1.5 border-b border-gray-100">
               <span className="text-gray-600 font-medium">Stall Type</span>
-              <span className="text-gray-900 font-semibold">Shell Scheme</span>
+              <span className="text-gray-900 font-semibold">{stallType}</span>
             </div>
             <div className="flex justify-between items-center py-1.5 border-b border-gray-100">
               <span className="text-gray-600 font-medium">Total Amount (Inclusive of GST)</span>
-              <span className="text-gray-900 font-semibold">₹1,16,820</span>
+              <span className="text-gray-900 font-semibold">{formatCurrency(totalAmount)}</span>
             </div>
             <div className="flex justify-between items-center py-1.5 border-b border-gray-100">
-              <span className="text-gray-600 font-medium">PMS Category</span>
-              <span className="text-gray-900 font-semibold">Women MSME</span>
-            </div>
-            <div className="flex justify-between items-center py-1.5 border-b border-gray-100">
-              <span className="text-gray-600 font-medium">Potential Assistance</span>
-              <span className="text-gray-900 font-semibold">Up to 100%</span>
-            </div>
-            <div className="flex justify-between items-center py-1.5 border-b border-gray-100">
-              <span className="text-gray-600 font-medium">Estimated Assistance (Up to)</span>
-              <span className="text-gray-900 font-semibold">Up to ₹99,000*</span>
+              <span className="text-gray-600 font-medium">Entrepreneur Category</span>
+              <span className="text-gray-900 font-semibold">{category}</span>
             </div>
 
             {/* Amount Payable Highlight */}
             <div className="mt-2 bg-[#f1f6f1] rounded-lg px-4 py-3 flex justify-between items-center">
               <span className="text-[#176b27] font-semibold text-[15px]">Amount Payable Now</span>
-              <span className="text-[#176b27] font-black text-[22px]">₹1,16,820</span>
+              <span className="text-[#176b27] font-black text-[22px]">{formatCurrency(totalAmount)}</span>
             </div>
           </div>
 
@@ -163,7 +214,7 @@ export default function PaymentMain({ section }: { section?: any }) {
           <div className="mt-2 bg-[#fff8ed] border border-[#efc080] rounded-md px-4 py-3 flex items-start gap-3">
             <span className="text-[#e98218] font-semibold text-[16px] shrink-0 mt-0.5">!</span>
             <p className="text-[12.5px] text-gray-700 font-medium leading-snug">
-              This is the total amount towards your stall booking. PMS assistance (if approved) will be processed by the Ministry of MSME as per scheme guidelines after the event.
+              This is the total amount towards your stall booking. PMS assistance eligibility and the assisted amount (if approved) will be assessed and processed by the Ministry of MSME as per scheme guidelines after the event.
             </p>
           </div>
         </div>

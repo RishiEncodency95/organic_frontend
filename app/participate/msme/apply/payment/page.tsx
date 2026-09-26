@@ -46,7 +46,7 @@ export default async function PaymentDetailsPage() {
         </div>
 
         {/* Footer (Only Help Banner for this step) */}
-        <ApplyFooter showDeclaration={false} showActions={false} section={footerSec} />
+        <ApplyFooter showDeclaration={false} section={footerSec} />
       </main>
     </div>
   );

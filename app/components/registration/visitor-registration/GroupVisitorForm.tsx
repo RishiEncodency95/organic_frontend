@@ -77,14 +77,28 @@ export default function GroupVisitorForm() {
   }, [company.state, states]);
 
   const handleCompanyChange = (e: any) => {
-    const { name, value, type, checked } = e.target;
+    let { name, value, type, checked } = e.target;
     if (name === "country") { setCompany(prev => ({ ...prev, country: value, state: "", city: "" })); setStates([]); setCities([]); return; }
     if (name === "state") { setCompany(prev => ({ ...prev, state: value, city: "" })); setCities([]); return; }
-    setCompany(prev => ({ ...prev, [name]: type === "checkbox" ? checked : value }));
+    
+    let finalValue = type === "checkbox" ? checked : value;
+
+    if (name === 'pinCode' || name === 'companyPincode') {
+      finalValue = String(finalValue).replace(/\D/g, '').slice(0, 6);
+    }
+    if (name === 'mobileNo' || name === 'alternateNo' || name === 'whatsappNumber') {
+      finalValue = String(finalValue).replace(/\D/g, '').slice(0, 10);
+    }
+
+    setCompany(prev => ({ ...prev, [name]: finalValue }));
   };
 
   const handlePersonChange = (index: number, field: keyof Person, value: string) => {
-    setPersons(prev => prev.map((p, i) => i === index ? { ...p, [field]: value } : p));
+    let finalValue = value;
+    if (field === 'mobileNo') {
+      finalValue = String(finalValue).replace(/\D/g, '').slice(0, 10);
+    }
+    setPersons(prev => prev.map((p, i) => i === index ? { ...p, [field]: finalValue } : p));
   };
 
   const addPerson = () => {
@@ -222,11 +236,11 @@ export default function GroupVisitorForm() {
           <span className="text-[10px] font-bold bg-[#4d7f1d]/10 text-[#4d7f1d] px-2 py-1 rounded tracking-widest uppercase w-fit">Step 1 of 3</span>
         </div>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-x-3 gap-y-3">
-          <div className="md:col-span-2"><label className={labelClasses}>Company Name *</label><input required name="companyName" value={company.companyName} onChange={handleCompanyChange} className={inputClasses} placeholder="Enter Company Name.." /></div>
-          <div className="md:col-span-2"><label className={labelClasses}>Company Website *</label><input required name="companyWebsite" value={company.companyWebsite} onChange={handleCompanyChange} className={inputClasses} placeholder="Enter Company Website.." /></div>
+          <div className="md:col-span-2"><label className={labelClasses}>Company Name <span className="text-red-600">*</span></label><input required name="companyName" value={company.companyName} onChange={handleCompanyChange} className={inputClasses} placeholder="Enter Company Name.." /></div>
+          <div className="md:col-span-2"><label className={labelClasses}>Company Website <span className="text-red-600">*</span></label><input required name="companyWebsite" value={company.companyWebsite} onChange={handleCompanyChange} className={inputClasses} placeholder="Enter Company Website.." /></div>
 
           <div>
-            <label className={labelClasses}>Industry / Sector *</label>
+            <label className={labelClasses}>Industry / Sector <span className="text-red-600">*</span></label>
             <select required name="industry" value={company.industry} onChange={handleCompanyChange} className={inputClasses}>
               <option value="">Select</option>
               <option value="ayush">AYUSH</option>
@@ -238,7 +252,7 @@ export default function GroupVisitorForm() {
             </select>
           </div>
           <div>
-            <label className={labelClasses}>Company Size *</label>
+            <label className={labelClasses}>Company Size <span className="text-red-600">*</span></label>
             <select required name="companySize" value={company.companySize} onChange={handleCompanyChange} className={inputClasses}>
               <option value="">Select</option>
               <option value="1-10">1-10 Employees</option>
@@ -249,27 +263,27 @@ export default function GroupVisitorForm() {
           </div>
 
           <div>
-            <label className={labelClasses}>Country *</label>
+            <label className={labelClasses}>Country <span className="text-red-600">*</span></label>
             <select required name="country" value={company.country} onChange={handleCompanyChange} className={inputClasses}>
               <option value="">Select Country</option>
               {countries.length > 0 ? countries.map((c: any) => <option key={c.countryCode} value={c.name}>{c.name}</option>) : <option value="India">India</option>}
             </select>
           </div>
           <div>
-            <label className={labelClasses}>State *</label>
+            <label className={labelClasses}>State <span className="text-red-600">*</span></label>
             <select required name="state" value={company.state} onChange={handleCompanyChange} className={inputClasses} disabled={!company.country}>
               <option value="">Select State</option>
               {states.map((s: any) => <option key={s.stateCode} value={s.name}>{s.name}</option>)}
             </select>
           </div>
           <div>
-            <label className={labelClasses}>City *</label>
+            <label className={labelClasses}>City <span className="text-red-600">*</span></label>
             <select required name="city" value={company.city} onChange={handleCompanyChange} className={inputClasses} disabled={!company.state}>
               <option value="">Select City</option>
               {cities.map((c: any) => <option key={c.name} value={c.name}>{c.name}</option>)}
             </select>
           </div>
-          <div><label className={labelClasses}>Pincode *</label><input required name="companyPincode" value={company.companyPincode} onChange={handleCompanyChange} className={inputClasses} placeholder="Enter Pincode" /></div>
+          <div><label className={labelClasses}>Pincode <span className="text-red-600">*</span></label><input required name="companyPincode" value={company.companyPincode} onChange={handleCompanyChange} className={inputClasses} placeholder="Enter Pincode" /></div>
         </div>
       </div>
 
@@ -312,19 +326,19 @@ export default function GroupVisitorForm() {
 
                   <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-6 gap-x-3 gap-y-3">
                     <div>
-                      <label className={labelClasses}>First Name *</label>
+                      <label className={labelClasses}>First Name <span className="text-red-600">*</span></label>
                       <input required value={person.firstName} onChange={e => handlePersonChange(idx, "firstName", e.target.value)} className={inputClasses} placeholder="First Name" />
                     </div>
                     <div>
-                      <label className={labelClasses}>Last Name *</label>
+                      <label className={labelClasses}>Last Name <span className="text-red-600">*</span></label>
                       <input required value={person.lastName} onChange={e => handlePersonChange(idx, "lastName", e.target.value)} className={inputClasses} placeholder="Last Name" />
                     </div>
                     <div>
-                      <label className={labelClasses}>Designation *</label>
+                      <label className={labelClasses}>Designation <span className="text-red-600">*</span></label>
                       <input required value={person.designation} onChange={e => handlePersonChange(idx, "designation", e.target.value)} className={inputClasses} placeholder="Designation" />
                     </div>
                     <div>
-                      <label className={labelClasses}>Gender *</label>
+                      <label className={labelClasses}>Gender <span className="text-red-600">*</span></label>
                       <select required value={person.gender} onChange={e => handlePersonChange(idx, "gender", e.target.value)} className={inputClasses}>
                         <option value="">Select</option>
                         <option value="male">Male</option>
@@ -334,7 +348,7 @@ export default function GroupVisitorForm() {
                     </div>
                     <div className={idx === 0 ? "md:col-span-2" : ""}>
                       <div className="flex justify-between items-end">
-                        <label className={`${labelClasses} mb-0`}>Email Address *</label>
+                        <label className={`${labelClasses} mb-0`}>Email Address <span className="text-red-600">*</span></label>
                         {requireOtp && idx === 0 && otpSent.email && !otpVerified.email && (
                           <button type="button" onClick={() => handleRequestOtp('email')} disabled={resendTimers.email > 0 || isVerifying.email} className="text-[#4d7f1d] text-[10px] font-bold uppercase disabled:opacity-50 hover:underline">
                             {resendTimers.email > 0 ? `Resend (${resendTimers.email}s)` : 'Resend'}
@@ -361,7 +375,7 @@ export default function GroupVisitorForm() {
                     </div>
                     <div className={`relative ${idx === 0 ? "md:col-span-2" : ""}`}>
                       <div className="flex justify-between items-end">
-                        <label className={`${labelClasses} mb-0`}>WhatsApp No. *</label>
+                        <label className={`${labelClasses} mb-0`}>WhatsApp No. <span className="text-red-600">*</span></label>
                         {requireOtp && idx === 0 && otpSent.mobile && !otpVerified.mobile && (
                           <button type="button" onClick={() => handleRequestOtp('mobile')} disabled={resendTimers.mobile > 0 || isVerifying.mobile} className="text-[#4d7f1d] text-[10px] font-bold uppercase disabled:opacity-50 hover:underline">
                             {resendTimers.mobile > 0 ? `Resend (${resendTimers.mobile}s)` : 'Resend'}
@@ -404,7 +418,7 @@ export default function GroupVisitorForm() {
             </div>
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-x-3 gap-y-3">
               <div className="space-y-3 bg-white p-4 border border-slate-200 rounded-sm shadow-sm">
-                <label className="text-[11px] font-medium uppercase text-[#d26019] tracking-[0.05em] block border-b border-slate-200 pb-1">Purpose of Visit <span className="text-red-500">*</span></label>
+                <label className="text-[11px] font-medium uppercase text-[#d26019] tracking-[0.05em] block border-b border-slate-200 pb-1">Purpose of Visit <span className="text-red-600">*</span></label>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 pt-1">
                   {PURPOSE_OPTIONS.map(option => (
                     <label key={option} className="flex items-start gap-2 cursor-pointer group">
@@ -425,7 +439,7 @@ export default function GroupVisitorForm() {
                 </div>
               </div>
               <div className="space-y-3 bg-white p-4 border border-slate-200 rounded-sm shadow-sm">
-                <label className="text-[11px] font-medium uppercase text-[#d26019] tracking-[0.05em] block border-b border-slate-200 pb-1">Area of Interest <span className="text-red-500">*</span></label>
+                <label className="text-[11px] font-medium uppercase text-[#d26019] tracking-[0.05em] block border-b border-slate-200 pb-1">Area of Interest <span className="text-red-600">*</span></label>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 pt-1">
                   {INTEREST_OPTIONS.map(option => (
                     <label key={option} className="flex items-start gap-2 cursor-pointer group">

@@ -1,13 +1,46 @@
 "use client";
 import { useState, useEffect, useRef } from "react";
-import { Building2, MapPin, Check, ChevronDown, Calendar, CheckCircle } from "lucide-react";
-import { verifyApi } from "@/lib/api";
+import { useRouter } from "next/navigation";
+import { Building2, MapPin, Check, ChevronDown, Calendar, CheckCircle, ArrowRight } from "lucide-react";
+import { verifyApi, msmeApi, msmeStorage } from "@/lib/api";
 import Swal from "sweetalert2";
 
+const INDIAN_STATES_AND_UTS = [
+  "Andaman and Nicobar Islands", "Andhra Pradesh", "Arunachal Pradesh", "Assam", "Bihar",
+  "Chandigarh", "Chhattisgarh", "Dadra and Nagar Haveli and Daman and Diu", "Delhi", "Goa",
+  "Gujarat", "Haryana", "Himachal Pradesh", "Jammu and Kashmir", "Jharkhand", "Karnataka",
+  "Kerala", "Ladakh", "Lakshadweep", "Madhya Pradesh", "Maharashtra", "Manipur", "Meghalaya",
+  "Mizoram", "Nagaland", "Odisha", "Puducherry", "Punjab", "Rajasthan", "Sikkim", "Tamil Nadu",
+  "Telangana", "Tripura", "Uttar Pradesh", "Uttarakhand", "West Bengal",
+];
+
 export default function EnterpriseForm() {
+  const router = useRouter();
+
   const [mobile, setMobile] = useState("");
   const [email, setEmail] = useState("");
+  const [udyamNumber, setUdyamNumber] = useState("");
+  const [udyamVerified, setUdyamVerified] = useState(false);
   const [enterpriseName, setEnterpriseName] = useState("");
+  const [enterpriseType, setEnterpriseType] = useState("");
+  const [majorActivity, setMajorActivity] = useState("");
+  const [constitution, setConstitution] = useState("");
+  const [category, setCategory] = useState("");
+  const [gender, setGender] = useState("");
+  const [dateOfIncorporation, setDateOfIncorporation] = useState("");
+  const [address, setAddress] = useState("");
+  const [state, setState] = useState("");
+  const [district, setDistrict] = useState("");
+  const [pincode, setPincode] = useState("");
+  const [gstin, setGstin] = useState("");
+  const [pan, setPan] = useState("");
+  const [accountHolderName, setAccountHolderName] = useState("");
+  const [bankName, setBankName] = useState("");
+  const [accountNumber, setAccountNumber] = useState("");
+  const [ifsc, setIfsc] = useState("");
+  const [branch, setBranch] = useState("");
+
+  const [isSaving, setIsSaving] = useState(false);
 
   // Verification States
   const [emailVerified, setEmailVerified] = useState(false);
@@ -21,6 +54,33 @@ export default function EnterpriseForm() {
 
   const emailTimerRef = useRef<number | null>(null);
   const phoneTimerRef = useRef<number | null>(null);
+
+  // Pre-fill from whatever the eligibility-check page's AI already read off the
+  // candidate's certificate, so they never have to retype it here.
+  useEffect(() => {
+    const extract = msmeStorage.getUdyamExtract();
+    if (!extract || extract.documentType !== "valid_udyam_certificate") return;
+
+    if (extract.udyamRegistrationNumber) {
+      setUdyamNumber(extract.udyamRegistrationNumber);
+      setUdyamVerified(true);
+    }
+    if (extract.enterpriseName) setEnterpriseName(extract.enterpriseName);
+    if (extract.enterpriseType) setEnterpriseType(extract.enterpriseType);
+    if (extract.majorActivity) setMajorActivity(extract.majorActivity);
+    if (extract.gender === "Female") setCategory("Women");
+    else if (extract.socialCategory === "SC" || extract.socialCategory === "ST") setCategory("SC/ST");
+    else if (extract.socialCategory) setCategory(extract.socialCategory);
+    if (extract.gender) setGender(extract.gender);
+    if (extract.dateOfIncorporation) setDateOfIncorporation(extract.dateOfIncorporation);
+    if (extract.address) setAddress(extract.address);
+    if (extract.state) setState(extract.state);
+    if (extract.district) setDistrict(extract.district);
+    if (extract.pincode) setPincode(extract.pincode);
+    if (extract.mobile) setMobile(extract.mobile.replace(/\D/g, "").slice(-10));
+    if (extract.email) setEmail(extract.email);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   useEffect(() => {
     if (emailTimer > 0) {
@@ -148,6 +208,63 @@ export default function EnterpriseForm() {
     }
   };
 
+  const handleSaveAndProceed = async () => {
+    if (!udyamNumber.trim()) {
+      Swal.fire({ title: "Udyam Registration Number required", text: "Please enter your Udyam Registration Number.", icon: "error" });
+      return;
+    }
+    if (!enterpriseName.trim()) {
+      Swal.fire({ title: "Enterprise Name required", text: "Please enter your enterprise name.", icon: "error" });
+      return;
+    }
+    if (mobile.length !== 10) {
+      Swal.fire({ title: "Mobile number required", text: "Please enter a valid 10-digit mobile number.", icon: "error" });
+      return;
+    }
+    if (!email.trim()) {
+      Swal.fire({ title: "Email required", text: "Please enter your email address.", icon: "error" });
+      return;
+    }
+
+    setIsSaving(true);
+    try {
+      const existingId = msmeStorage.getApplicationId();
+      const res = await msmeApi.saveEnterpriseDetails(existingId, {
+        udyamNumber,
+        enterpriseName,
+        enterpriseType,
+        majorActivity,
+        constitution,
+        category,
+        gender,
+        dateOfIncorporation,
+        address,
+        state,
+        district,
+        pincode,
+        gstin,
+        pan,
+        bank: { accountHolderName, bankName, accountNumber, ifsc, branch },
+        mobile,
+        email,
+        verifiedMobile: phoneVerified ? mobile : undefined,
+        verifiedEmail: emailVerified ? email : undefined,
+      });
+
+      if (!res.success) {
+        Swal.fire({ title: "Error", text: res.message || "Could not save your details. Please try again.", icon: "error" });
+        return;
+      }
+
+      msmeStorage.setApplicationId(res.data.applicationId);
+      router.push("/participate/msme/apply/participation-details");
+    } catch (error) {
+      Swal.fire({ title: "Error", text: "Something went wrong while saving. Please try again.", icon: "error" });
+    } finally {
+      setIsSaving(false);
+    }
+  };
+
   return (
     <div className="w-full bg-white rounded-xl shadow-[0_4px_20px_rgb(0,0,0,0.03)] p-3 md:p-4">
       {/* Header */}
@@ -173,15 +290,23 @@ export default function EnterpriseForm() {
           <div className="relative">
             <input
               type="text"
-              defaultValue="UDYAM-DL-02-0118490"
-              readOnly
-              className="w-full h-[32px] px-3 bg-[#fafbfa] border border-[#e5e7eb] rounded-md text-[12px] font-semibold text-gray-800 focus:outline-none"
+              value={udyamNumber}
+              onChange={(e) => { setUdyamNumber(e.target.value.toUpperCase()); setUdyamVerified(false); }}
+              placeholder="e.g. UDYAM-DL-02-0118490"
+              className={`w-full h-[32px] px-3 bg-[#fafbfa] border rounded-md text-[12px] font-semibold text-gray-800 focus:outline-none ${udyamVerified ? "border-[#176b27] pr-[90px]" : "border-[#e5e7eb]"}`}
             />
-            <div className="absolute right-2 top-1/2 -translate-y-1/2 bg-[#e8f3ea] text-[#176b27] px-2 py-1 rounded-md flex items-center gap-1">
-              <Check size={14} strokeWidth={3} />
-              <span className="text-[11px] font-semibold">Verified</span>
-            </div>
+            {udyamVerified && (
+              <div className="absolute right-2 top-1/2 -translate-y-1/2 bg-[#e8f3ea] text-[#176b27] px-2 py-1 rounded-md flex items-center gap-1">
+                <Check size={14} strokeWidth={3} />
+                <span className="text-[11px] font-semibold">Verified</span>
+              </div>
+            )}
           </div>
+          {!udyamVerified && (
+            <p className="mt-1 text-[10.5px] font-medium text-gray-500">
+              Not verified via certificate upload — you can still enter it manually.
+            </p>
+          )}
         </div>
 
         {/* Row 2 */}
@@ -204,7 +329,11 @@ export default function EnterpriseForm() {
             <label className="block text-[11px] font-semibold text-gray-700 mb-1">
               Enterprise Type <span className="text-red-500">*</span>
             </label>
-            <select className="w-full h-[32px] px-3 bg-[#fafbfa] border border-[#e5e7eb] rounded-md text-[12px] font-semibold text-gray-800 appearance-none focus:outline-none">
+            <select
+              value={enterpriseType}
+              onChange={(e) => setEnterpriseType(e.target.value)}
+              className="w-full h-[32px] px-3 bg-[#fafbfa] border border-[#e5e7eb] rounded-md text-[12px] font-semibold text-gray-800 appearance-none focus:outline-none"
+            >
               <option value="">Select Enterprise Type</option>
               <option value="Micro">Micro</option>
               <option value="Small">Small</option>
@@ -216,7 +345,11 @@ export default function EnterpriseForm() {
             <label className="block text-[11px] font-semibold text-gray-700 mb-1">
               Major Activity <span className="text-red-500">*</span>
             </label>
-            <select className="w-full h-[32px] px-3 bg-[#fafbfa] border border-[#e5e7eb] rounded-md text-[12px] font-semibold text-gray-800 appearance-none focus:outline-none">
+            <select
+              value={majorActivity}
+              onChange={(e) => setMajorActivity(e.target.value)}
+              className="w-full h-[32px] px-3 bg-[#fafbfa] border border-[#e5e7eb] rounded-md text-[12px] font-semibold text-gray-800 appearance-none focus:outline-none"
+            >
               <option value="">Select Major Activity</option>
               <option value="Manufacturing">Manufacturing</option>
               <option value="Services">Services</option>
@@ -232,7 +365,11 @@ export default function EnterpriseForm() {
             <label className="block text-[11px] font-semibold text-gray-700 mb-1">
               Constitution / Organisation <span className="text-red-500">*</span>
             </label>
-            <select className="w-full h-[32px] px-3 bg-[#fafbfa] border border-[#e5e7eb] rounded-md text-[12px] font-semibold text-gray-800 appearance-none focus:outline-none">
+            <select
+              value={constitution}
+              onChange={(e) => setConstitution(e.target.value)}
+              className="w-full h-[32px] px-3 bg-[#fafbfa] border border-[#e5e7eb] rounded-md text-[12px] font-semibold text-gray-800 appearance-none focus:outline-none"
+            >
               <option value="">Select Constitution</option>
               <option value="Private Limited Company">Private Limited Company</option>
               <option value="Proprietorship">Proprietorship</option>
@@ -246,7 +383,11 @@ export default function EnterpriseForm() {
             <label className="block text-[11px] font-semibold text-gray-700 mb-1">
               Entrepreneur Category <span className="text-red-500">*</span>
             </label>
-            <select className="w-full h-[32px] px-3 bg-[#fafbfa] border border-[#e5e7eb] rounded-md text-[12px] font-semibold text-gray-800 appearance-none focus:outline-none">
+            <select
+              value={category}
+              onChange={(e) => setCategory(e.target.value)}
+              className="w-full h-[32px] px-3 bg-[#fafbfa] border border-[#e5e7eb] rounded-md text-[12px] font-semibold text-gray-800 appearance-none focus:outline-none"
+            >
               <option value="">Select Category</option>
               <option value="General">General</option>
               <option value="OBC">OBC</option>
@@ -263,7 +404,11 @@ export default function EnterpriseForm() {
             <label className="block text-[11px] font-semibold text-gray-700 mb-1">
               Gender of Entrepreneur <span className="text-red-500">*</span>
             </label>
-            <select className="w-full h-[32px] px-3 bg-[#fafbfa] border border-[#e5e7eb] rounded-md text-[12px] font-semibold text-gray-800 appearance-none focus:outline-none">
+            <select
+              value={gender}
+              onChange={(e) => setGender(e.target.value)}
+              className="w-full h-[32px] px-3 bg-[#fafbfa] border border-[#e5e7eb] rounded-md text-[12px] font-semibold text-gray-800 appearance-none focus:outline-none"
+            >
               <option value="">Select Gender</option>
               <option value="Male">Male</option>
               <option value="Female">Female</option>
@@ -277,6 +422,8 @@ export default function EnterpriseForm() {
             </label>
             <input
               type="date"
+              value={dateOfIncorporation}
+              onChange={(e) => setDateOfIncorporation(e.target.value)}
               className="w-full h-[32px] px-3 bg-[#fafbfa] border border-[#e5e7eb] rounded-md text-[12px] font-semibold text-gray-800 focus:outline-none"
             />
           </div>
@@ -299,6 +446,8 @@ export default function EnterpriseForm() {
           </label>
           <input
             type="text"
+            value={address}
+            onChange={(e) => setAddress(e.target.value)}
             placeholder="e.g. East Delhi"
             className="w-full h-[32px] px-3 bg-[#fafbfa] border border-[#e5e7eb] rounded-md text-[12px] font-semibold text-gray-800 focus:outline-none"
           />
@@ -309,21 +458,29 @@ export default function EnterpriseForm() {
             <label className="block text-[11px] font-semibold text-gray-700 mb-1">
               State <span className="text-red-500">*</span>
             </label>
-            <select className="w-full h-[32px] px-3 bg-[#fafbfa] border border-[#e5e7eb] rounded-md text-[12px] font-semibold text-gray-800 appearance-none focus:outline-none">
+            <select
+              value={state}
+              onChange={(e) => setState(e.target.value)}
+              className="w-full h-[32px] px-3 bg-[#fafbfa] border border-[#e5e7eb] rounded-md text-[12px] font-semibold text-gray-800 appearance-none focus:outline-none"
+            >
               <option value="">Select State</option>
-              <option value="Delhi">Delhi</option>
+              {INDIAN_STATES_AND_UTS.map((s) => (
+                <option key={s} value={s}>{s}</option>
+              ))}
             </select>
             <ChevronDown size={16} className="absolute right-3 top-[23px] text-gray-400 pointer-events-none" />
           </div>
-          <div className="w-full relative">
+          <div className="w-full">
             <label className="block text-[11px] font-semibold text-gray-700 mb-1">
               District <span className="text-red-500">*</span>
             </label>
-            <select className="w-full h-[32px] px-3 bg-[#fafbfa] border border-[#e5e7eb] rounded-md text-[12px] font-semibold text-gray-800 appearance-none focus:outline-none">
-              <option value="">Select District</option>
-              <option value="East Delhi">East Delhi</option>
-            </select>
-            <ChevronDown size={16} className="absolute right-3 top-[23px] text-gray-400 pointer-events-none" />
+            <input
+              type="text"
+              value={district}
+              onChange={(e) => setDistrict(e.target.value)}
+              placeholder="e.g. East Delhi"
+              className="w-full h-[32px] px-3 bg-[#fafbfa] border border-[#e5e7eb] rounded-md text-[12px] font-semibold text-gray-800 focus:outline-none"
+            />
           </div>
           <div className="w-full">
             <label className="block text-[11px] font-semibold text-gray-700 mb-1">
@@ -331,6 +488,8 @@ export default function EnterpriseForm() {
             </label>
             <input
               type="text"
+              value={pincode}
+              onChange={(e) => setPincode(e.target.value.replace(/\D/g, "").slice(0, 6))}
               placeholder="e.g. 110092"
               className="w-full h-[32px] px-3 bg-[#fafbfa] border border-[#e5e7eb] rounded-md text-[12px] font-semibold text-gray-800 focus:outline-none"
             />
@@ -438,6 +597,8 @@ export default function EnterpriseForm() {
             </label>
             <input
               type="text"
+              value={gstin}
+              onChange={(e) => setGstin(e.target.value.toUpperCase())}
               placeholder="e.g. 07AAXCR1234R1Z5"
               className="w-full h-[32px] px-3 bg-[#fafbfa] border border-[#e5e7eb] rounded-md text-[12px] font-semibold text-gray-800 focus:outline-none"
             />
@@ -448,6 +609,8 @@ export default function EnterpriseForm() {
             </label>
             <input
               type="text"
+              value={pan}
+              onChange={(e) => setPan(e.target.value.toUpperCase())}
               placeholder="e.g. AAXCR1234R"
               className="w-full h-[32px] px-3 bg-[#fafbfa] border border-[#e5e7eb] rounded-md text-[12px] font-semibold text-gray-800 focus:outline-none"
             />
@@ -471,6 +634,8 @@ export default function EnterpriseForm() {
             </label>
             <input
               type="text"
+              value={accountHolderName}
+              onChange={(e) => setAccountHolderName(e.target.value)}
               placeholder="Company or Individual Name"
               className="w-full h-[32px] px-3 bg-[#fafbfa] border border-[#e5e7eb] rounded-md text-[12px] font-semibold text-gray-800 focus:outline-none"
             />
@@ -481,6 +646,8 @@ export default function EnterpriseForm() {
             </label>
             <input
               type="text"
+              value={bankName}
+              onChange={(e) => setBankName(e.target.value)}
               placeholder="e.g. HDFC BANK LTD."
               className="w-full h-[32px] px-3 bg-[#fafbfa] border border-[#e5e7eb] rounded-md text-[12px] font-semibold text-gray-800 focus:outline-none"
             />
@@ -494,6 +661,8 @@ export default function EnterpriseForm() {
             </label>
             <input
               type="text"
+              value={accountNumber}
+              onChange={(e) => setAccountNumber(e.target.value.replace(/\D/g, ""))}
               placeholder="e.g. 1234567894321"
               className="w-full h-[32px] px-3 bg-[#fafbfa] border border-[#e5e7eb] rounded-md text-[12px] font-semibold text-gray-800 focus:outline-none"
             />
@@ -504,6 +673,8 @@ export default function EnterpriseForm() {
             </label>
             <input
               type="text"
+              value={ifsc}
+              onChange={(e) => setIfsc(e.target.value.toUpperCase())}
               placeholder="e.g. HDFC0001234"
               className="w-full h-[32px] px-3 bg-[#fafbfa] border border-[#e5e7eb] rounded-md text-[12px] font-semibold text-gray-800 focus:outline-none"
             />
@@ -514,11 +685,29 @@ export default function EnterpriseForm() {
             </label>
             <input
               type="text"
+              value={branch}
+              onChange={(e) => setBranch(e.target.value)}
               placeholder="e.g. LAXMI NAGAR, DELHI"
               className="w-full h-[32px] px-3 bg-[#fafbfa] border border-[#e5e7eb] rounded-md text-[12px] font-semibold text-gray-800 focus:outline-none"
             />
           </div>
         </div>
+      </div>
+
+      {/* Save & Proceed */}
+      <div className="mt-5 flex justify-end">
+        <button
+          type="button"
+          onClick={handleSaveAndProceed}
+          disabled={isSaving}
+          className="h-[38px] px-8 rounded-md bg-[#176b27] text-white font-semibold text-[13px] uppercase tracking-wide hover:bg-[#115d20] transition-colors flex items-center justify-center gap-2 shadow-md disabled:opacity-70 disabled:cursor-not-allowed"
+        >
+          {isSaving ? "Saving..." : (
+            <>
+              Save &amp; Proceed to Next <ArrowRight size={18} strokeWidth={2.5} />
+            </>
+          )}
+        </button>
       </div>
     </div>
   );
