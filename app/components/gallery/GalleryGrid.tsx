@@ -52,7 +52,7 @@ const Lightbox = ({ images, activeIndex, onClose, onNav }: any) => {
   }, [activeIndex]);
 
   const img = images[activeIndex];
-  const getImgSrc = (src: any) => typeof src === 'string' ? src : src.src;
+  const getImgSrc = (src: any) => typeof src === 'string' ? src : (src?.src || "");
 
   const navBtn = (pos: 'left' | 'right', dir: 'prev' | 'next') => (
     <button
@@ -99,7 +99,7 @@ const Lightbox = ({ images, activeIndex, onClose, onNav }: any) => {
       <div ref={imgRef} onClick={e=>e.stopPropagation()} style={{
         maxWidth:'82vw', maxHeight:'78vh', borderRadius:10, overflow:'hidden',
       }}>
-        <img src={getImgSrc(img.src)} alt={img.alt || img.title} style={{
+        <img src={getImgSrc(img.src || "")} alt={img.alt || img.title} style={{
           maxWidth:'82vw', maxHeight:'78vh', objectFit:'contain', display:'block',
         }}/>
       </div>
@@ -170,13 +170,13 @@ const GalleryCard = ({ img, onOpen }: any) => {
     >
       <div ref={imgRef} style={{ width:'100%', height:'100%', overflow:'hidden', position:'relative' }}>
         <Image
-          src={img.src}
+          src={img.src || ""}
           alt={img.alt || img.title}
           fill
           loader={usesCloudinaryLoader ? cloudinaryImageLoader : undefined}
           sizes="(max-width: 640px) 42vw, (max-width: 1024px) 35vw, 28vw"
           loading="lazy"
-          placeholder={typeof img.src === 'string' ? 'empty' : 'blur'}
+          placeholder={typeof img.src === 'string' && img.src ? 'empty' : 'blur'}
           style={{ 
             objectFit:'cover', 
           }}
