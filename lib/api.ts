@@ -365,6 +365,10 @@ export const buyerApi = {
         const response = await fetch(`${ihwe_API_URL}/buyer-registration/config`);
         return await response.json();
     },
+    getInternationalConfig: async () => {
+        const response = await fetch(`${ihwe_API_URL}/international-buyer/config`);
+        return await response.json();
+    },
     submitInternationalBuyer: async (formData: FormData) => {
         const response = await fetch(`${ihwe_API_URL}/international-buyer/register`, {
             method: 'POST',
