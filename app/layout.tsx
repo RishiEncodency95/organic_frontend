@@ -101,12 +101,28 @@ async function getTopbarSection() {
   return sections.find((s) => s.key === "topbar") || null;
 }
 
+// Footer used to fetch this itself client-side (a "use client" useEffect),
+// which meant every visitor first painted the hardcoded default footer, then
+// a moment later swapped in the real CMS content — that swap was almost the
+// entire site's Cumulative Layout Shift (0.484 of 0.486 measured). Fetching
+// it here, server-side, means the footer renders with its real content on
+// the very first paint, so there's nothing left to swap.
+async function getFooterSection() {
+  const settings = await getSectionData<any>("/settings");
+  const sections: any[] = settings?.landingPage?.sections || [];
+  return sections.find((s) => s.key === "footer") || null;
+}
+
 export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const [seoData, topbar] = await Promise.all([getAdvancedSeoSettings(), getTopbarSection()]);
+  const [seoData, topbar, footerData] = await Promise.all([
+    getAdvancedSeoSettings(),
+    getTopbarSection(),
+    getFooterSection(),
+  ]);
   const headerScripts = seoData?.headerScripts || "";
   const footerScripts = seoData?.footerScripts || "";
 
@@ -142,7 +158,7 @@ export default async function RootLayout({
           <main className="flex-grow overflow-x-hidden w-full">
             {children}
           </main>
-          <Footer />
+          <Footer initialFooterData={footerData} />
           <SocialSidebar />
           <WhatsAppFloat />
         </SmoothScroll>

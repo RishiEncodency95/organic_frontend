@@ -49,10 +49,15 @@ const Sparkle = ({ style, color = '#F3B71B' }: { style?: React.CSSProperties; co
   </span>
 );
 
-export default function Footer() {
-  const [footerData, setFooterData] = useState<any>(null);
+export default function Footer({ initialFooterData }: { initialFooterData?: any } = {}) {
+  // Server-rendered from layout.tsx (getFooterSection) whenever possible, so the
+  // real footer content is there on the very first paint — no client fetch, no
+  // swap, no layout shift. The client fetch below only runs as a fallback for
+  // the rare case the server-side fetch didn't return anything.
+  const [footerData, setFooterData] = useState<any>(initialFooterData ?? null);
 
   useEffect(() => {
+    if (initialFooterData) return;
     settingsApi.get()
       .then((res: any) => {
         const sections = res?.landingPage?.sections || res?.data?.landingPage?.sections || [];
@@ -62,7 +67,7 @@ export default function Footer() {
         }
       })
       .catch(() => { });
-  }, []);
+  }, [initialFooterData]);
 
   const defaultQuickLinks = [
     { name: "Home", path: "/" },
