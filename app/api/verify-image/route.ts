@@ -8,7 +8,6 @@ interface VisionCheck {
   isAppropriate: boolean;
   isUpright: boolean;
   isClear: boolean;
-  gender: "male" | "female" | "unknown";
   reason?: string;
 }
 
@@ -17,7 +16,7 @@ interface VisionCheck {
  * trusting a single "isValid" summary from the model, so the caller can enforce each
  * one explicitly and cannot be talked past by a model being generous with "isValid".
  */
-const VISION_PROMPT = (expectedGender?: string) => `You are a strict AI photo moderator for a professional job application portal. A candidate uploaded this image as their profile photo.
+const VISION_PROMPT = () => `You are a strict AI photo moderator for a professional job application portal. A candidate uploaded this image as their profile photo.
 
 Examine the image very carefully and answer each check truthfully and conservatively — when in doubt, mark it as failing:
 
@@ -26,8 +25,6 @@ Examine the image very carefully and answer each check truthfully and conservati
 3. isAppropriate: Is the image fully appropriate for a professional workplace context — properly clothed, no nudity, no sexual or suggestive content, no violence, no offensive gestures or material? Answer false for anything explicit, suggestive, or inappropriate in any way.
 4. isUpright: Is the photo the right way up (not upside down, not sideways/rotated 90°, not mirrored oddly)?
 5. isClear: Is the photo in focus, well-lit, and not blurry, pixelated, or too dark to make out the face clearly?
-6. gender: What gender does the person present as — "male", "female", or "unknown" if genuinely unclear or not applicable (e.g. not a human face at all).
-${expectedGender ? `\nThe candidate's résumé states their gender as "${expectedGender}". Judge the photo's gender independently and honestly — do not let this bias your answer.` : ""}
 
 Return ONLY a strictly valid JSON object, no markdown, no commentary:
 {
@@ -36,12 +33,11 @@ Return ONLY a strictly valid JSON object, no markdown, no commentary:
   "isAppropriate": boolean,
   "isUpright": boolean,
   "isClear": boolean,
-  "gender": "male" | "female" | "unknown",
   "reason": "One short, specific sentence naming the first failing check if any check is false, e.g. 'This looks like an animal photo, not a human face.' or 'The photo appears blurry.' — empty string if everything passes"
 }`;
 
 /** All gates must hold; this is intentionally never delegated to the model's own opinion of "isValid". */
-function evaluate(check: VisionCheck, expectedGender?: string): { success: boolean; reason: string } {
+function evaluate(check: VisionCheck): { success: boolean; reason: string } {
   if (!check.isHumanFace) {
     return { success: false, reason: check.reason || "Please upload a real photo of your face — not an animal, cartoon, icon, avatar, or other image." };
   }
@@ -58,26 +54,13 @@ function evaluate(check: VisionCheck, expectedGender?: string): { success: boole
     return { success: false, reason: check.reason || "The photo is blurry or unclear. Please upload a sharper photo." };
   }
 
-  if (
-    expectedGender &&
-    (expectedGender === "male" || expectedGender === "female") &&
-    check.gender !== "unknown" &&
-    check.gender !== expectedGender
-  ) {
-    return {
-      success: false,
-      reason: `The photo appears to show a ${check.gender} candidate, but the résumé states the candidate's gender as ${expectedGender}. Please upload a genuine photo of yourself.`,
-    };
-  }
-
   return { success: true, reason: "Image verified successfully." };
 }
 
 async function verifyWithOpenAI(
   apiKey: string,
   base64Data: string,
-  mimeType: string,
-  expectedGender?: string
+  mimeType: string
 ): Promise<VisionCheck | null> {
   const res = await fetch("https://api.openai.com/v1/chat/completions", {
     method: "POST",
@@ -91,7 +74,7 @@ async function verifyWithOpenAI(
         {
           role: "user",
           content: [
-            { type: "text", text: VISION_PROMPT(expectedGender) },
+            { type: "text", text: VISION_PROMPT() },
             { type: "image_url", image_url: { url: `data:${mimeType};base64,${base64Data}` } },
           ],
         },
@@ -101,18 +84,24 @@ async function verifyWithOpenAI(
     }),
   });
 
-  if (!res.ok) return null;
+  if (!res.ok) {
+    const errBody = await res.text().catch(() => "");
+    console.warn(`OpenAI Vision API returned ${res.status} ${res.statusText}:`, errBody.slice(0, 500));
+    return null;
+  }
   const data = await res.json();
   const content = data.choices?.[0]?.message?.content;
-  if (!content) return null;
+  if (!content) {
+    console.warn("OpenAI Vision API returned no content:", JSON.stringify(data).slice(0, 500));
+    return null;
+  }
   return JSON.parse(content) as VisionCheck;
 }
 
 async function verifyWithGemini(
   apiKey: string,
   base64Data: string,
-  mimeType: string,
-  expectedGender?: string
+  mimeType: string
 ): Promise<VisionCheck | null> {
   const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${apiKey}`;
   const res = await fetch(url, {
@@ -123,7 +112,7 @@ async function verifyWithGemini(
         {
           role: "user",
           parts: [
-            { text: VISION_PROMPT(expectedGender) },
+            { text: VISION_PROMPT() },
             { inline_data: { mime_type: mimeType, data: base64Data } },
           ],
         },
@@ -132,21 +121,29 @@ async function verifyWithGemini(
     }),
   });
 
-  if (!res.ok) return null;
+  if (!res.ok) {
+    const errBody = await res.text().catch(() => "");
+    console.warn(`Gemini Vision API returned ${res.status} ${res.statusText}:`, errBody.slice(0, 500));
+    return null;
+  }
   const data = await res.json();
   const text = data.candidates?.[0]?.content?.parts?.[0]?.text;
-  if (!text) return null;
+  if (!text) {
+    console.warn("Gemini Vision API returned no text:", JSON.stringify(data).slice(0, 500));
+    return null;
+  }
   const jsonMatch = text.match(/\{[\s\S]*\}/);
-  if (!jsonMatch) return null;
+  if (!jsonMatch) {
+    console.warn("Gemini Vision API response had no parseable JSON:", text.slice(0, 500));
+    return null;
+  }
   return JSON.parse(jsonMatch[0]) as VisionCheck;
 }
 
 export async function POST(req: NextRequest) {
   try {
     const body = await req.json();
-    const { imageBase64, expectedGender: rawExpectedGender } = body;
-    const expectedGender =
-      rawExpectedGender === "male" || rawExpectedGender === "female" ? rawExpectedGender : undefined;
+    const { imageBase64 } = body;
 
     if (!imageBase64 || typeof imageBase64 !== "string") {
       return NextResponse.json({ success: false, reason: "No image data provided." }, { status: 400 });
@@ -160,12 +157,15 @@ export async function POST(req: NextRequest) {
       : "image/jpeg";
 
     const openAiApiKey = process.env.OPENAI_API_KEY;
+    if (!openAiApiKey) {
+      console.warn("verify-image: OPENAI_API_KEY is not set in this environment.");
+    }
     if (openAiApiKey) {
       try {
-        const check = await verifyWithOpenAI(openAiApiKey, base64Data, mimeType, expectedGender);
+        const check = await verifyWithOpenAI(openAiApiKey, base64Data, mimeType);
         if (check) {
-          const { success, reason } = evaluate(check, expectedGender);
-          return NextResponse.json({ success, gender: check.gender, reason, provider: "openai" });
+          const { success, reason } = evaluate(check);
+          return NextResponse.json({ success, reason, provider: "openai" });
         }
       } catch (err: any) {
         console.warn("OpenAI Vision fetch error:", err?.message);
@@ -173,12 +173,15 @@ export async function POST(req: NextRequest) {
     }
 
     const geminiKey = process.env.GEMINI_API_KEY;
+    if (!geminiKey) {
+      console.warn("verify-image: GEMINI_API_KEY is not set in this environment.");
+    }
     if (geminiKey) {
       try {
-        const check = await verifyWithGemini(geminiKey, base64Data, mimeType, expectedGender);
+        const check = await verifyWithGemini(geminiKey, base64Data, mimeType);
         if (check) {
-          const { success, reason } = evaluate(check, expectedGender);
-          return NextResponse.json({ success, gender: check.gender, reason, provider: "gemini" });
+          const { success, reason } = evaluate(check);
+          return NextResponse.json({ success, reason, provider: "gemini" });
         }
       } catch (gErr: any) {
         console.warn("Gemini Vision fetch error:", gErr?.message);
