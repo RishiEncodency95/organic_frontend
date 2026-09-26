@@ -347,7 +347,6 @@ function PersonalInformation({
 
   const [isVerifying, setIsVerifying] = useState(false);
   const [verificationError, setVerificationError] = useState<string | null>(null);
-  const [verifiedGender, setVerifiedGender] = useState<string | null>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   const handlePhotoSelect = async (file: File) => {
@@ -400,21 +399,18 @@ function PersonalInformation({
           }
         }
 
-        // 2. Deep AI vision check: real human adult face, appropriate content, upright,
-        // clear, and (when the résumé states a gender) matching it.
-        const resumeGender = candidateData?.fullProfile?.gender || candidateData?.gender || null;
+        // 2. Deep AI vision check: real human adult face, appropriate content, upright, clear.
         try {
           const res = await fetch("/api/verify-image", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ imageBase64: dataUrl, expectedGender: resumeGender }),
+            body: JSON.stringify({ imageBase64: dataUrl }),
           });
 
           const json = await res.json();
           if (json.success) {
             setPhotoSrc(dataUrl);
             setIsPhotoVerified(true);
-            setVerifiedGender(json.gender || "Human");
             setVerificationError(null);
           } else {
             setVerificationError(
