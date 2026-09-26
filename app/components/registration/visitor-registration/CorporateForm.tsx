@@ -152,8 +152,25 @@ export default function CorporateForm() {
     }
   }, [formData.state, states]);
 
-  const handleChange = (e: any) => {
-    setFormData((prev) => ({ ...prev, [e.target.name]: e.target.type === 'checkbox' ? e.target.checked : e.target.value }));
+    const handleChange = (e: any) => {
+    let { name, value, type, checked } = e.target;
+    
+    // Checkbox handling
+    let finalValue = type === 'checkbox' ? checked : value;
+
+    // Numeric field validations (no chars, spaces allowed)
+    if (name === 'mobileNo' || name === 'alternateNo' || name === 'whatsappNumber' || name === 'mobileNumber' || name === 'alternateNumber') {
+      finalValue = String(finalValue).replace(/\D/g, '').slice(0, 10);
+    }
+    if (name === 'pinCode' || name === 'companyPincode') {
+      finalValue = String(finalValue).replace(/\D/g, '').slice(0, 6);
+    }
+    if (name === 'yearOfEstablishment' || name === 'yearsInBusiness' || name === 'numberOfOutlets') {
+      finalValue = String(finalValue).replace(/\D/g, '');
+      if (name === 'yearOfEstablishment') finalValue = finalValue.slice(0, 4);
+    }
+
+    setFormData((prev) => ({ ...prev, [name]: finalValue }));
   };
 
   const handleSelectChange = (name: string, value: any) => {
@@ -280,15 +297,15 @@ export default function CorporateForm() {
           <span className="text-[10px] font-bold bg-[#4d7f1d]/10 text-[#4d7f1d] px-2 py-1 rounded tracking-widest uppercase w-fit">Step 1 of 3</span>
         </div>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-x-3 gap-y-3">
-          <div><label className={labelClasses}>First Name *</label><input required name="firstName" value={formData.firstName} onChange={handleChange} className={inputClasses} placeholder="Enter First Name" /></div>
-          <div><label className={labelClasses}>Last Name *</label><input required name="lastName" value={formData.lastName} onChange={handleChange} className={inputClasses} placeholder="Enter Last Name" /></div>
-          <div><label className={labelClasses}>Gender *</label><select required name="gender" value={formData.gender} onChange={handleChange} className={inputClasses}><option value="">Select</option><option value="Male">Male</option><option value="Female">Female</option><option value="Other">Other</option></select></div>
+          <div><label className={labelClasses}>First Name <span className="text-red-600">*</span></label><input required name="firstName" value={formData.firstName} onChange={handleChange} className={inputClasses} placeholder="Enter First Name" /></div>
+          <div><label className={labelClasses}>Last Name <span className="text-red-600">*</span></label><input required name="lastName" value={formData.lastName} onChange={handleChange} className={inputClasses} placeholder="Enter Last Name" /></div>
+          <div><label className={labelClasses}>Gender <span className="text-red-600">*</span></label><select required name="gender" value={formData.gender} onChange={handleChange} className={inputClasses}><option value="">Select</option><option value="Male">Male</option><option value="Female">Female</option><option value="Other">Other</option></select></div>
           <div><label className={labelClasses}>Date of Birth (Optional)</label><input type="date" name="dob" value={formData.dob} onChange={handleChange} className={inputClasses} /></div>
-          <div><label className={labelClasses}>Designation *</label><input required name="designation" value={formData.designation} onChange={handleChange} className={inputClasses} placeholder="Enter Designation.." /></div>
+          <div><label className={labelClasses}>Designation <span className="text-red-600">*</span></label><input required name="designation" value={formData.designation} onChange={handleChange} className={inputClasses} placeholder="Enter Designation.." /></div>
 
           <div className="space-y-1">
             <div className="flex justify-between items-end">
-              <label className={`${labelClasses} mb-0`}>WhatsApp Number *</label>
+              <label className={`${labelClasses} mb-0`}>WhatsApp Number <span className="text-red-600">*</span></label>
               {requireOtp && otpSent.mobile && !otpVerified.mobile && (
                 <button type="button" onClick={() => handleRequestOtp('mobile')} disabled={resendTimers.mobile > 0 || isVerifying.mobile} className="text-[#23471d] text-[10px] font-bold uppercase disabled:opacity-50 hover:underline">
                   {resendTimers.mobile > 0 ? `Resend (${resendTimers.mobile}s)` : 'Resend'}
@@ -318,7 +335,7 @@ export default function CorporateForm() {
 
           <div className="space-y-1">
             <div className="flex justify-between items-end">
-              <label className={`${labelClasses} mb-0`}>Email Address *</label>
+              <label className={`${labelClasses} mb-0`}>Email Address <span className="text-red-600">*</span></label>
               {requireOtp && otpSent.email && !otpVerified.email && (
                 <button type="button" onClick={() => handleRequestOtp('email')} disabled={resendTimers.email > 0 || isVerifying.email} className="text-[#23471d] text-[10px] font-bold uppercase disabled:opacity-50 hover:underline">
                   {resendTimers.email > 0 ? `Resend (${resendTimers.email}s)` : 'Resend'}
@@ -354,10 +371,10 @@ export default function CorporateForm() {
         <span className="text-[10px] font-bold bg-[#4d7f1d]/10 text-[#4d7f1d] px-2 py-1 rounded tracking-widest uppercase w-fit">Step 2 of 3</span>
       </div>
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-x-3 gap-y-3">
-        <div><label className={labelClasses}>Company Name *</label><input required name="companyName" value={formData.companyName} onChange={handleChange} className={inputClasses} placeholder="Enter Company Name.." /></div>
+        <div><label className={labelClasses}>Company Name <span className="text-red-600">*</span></label><input required name="companyName" value={formData.companyName} onChange={handleChange} className={inputClasses} placeholder="Enter Company Name.." /></div>
         <div><label className={labelClasses}>Company Website</label><input type="url" name="companyWebsite" value={formData.companyWebsite} onChange={handleChange} className={inputClasses} placeholder="Enter Company Website.." /></div>
         <div>
-          <label className={labelClasses}>Industry Sector *</label>
+          <label className={labelClasses}>Industry Sector <span className="text-red-600">*</span></label>
           <select required name="industry" value={formData.industry} onChange={handleChange} className={inputClasses}>
             <option value="">Select Here</option>
             <option value="Healthcare">Healthcare</option>
@@ -385,21 +402,21 @@ export default function CorporateForm() {
         </div>
 
         <div>
-          <label className={labelClasses}>Country *</label>
+          <label className={labelClasses}>Country <span className="text-red-600">*</span></label>
           <select required name="country" value={formData.country} onChange={handleChange} className={inputClasses}>
             <option value="">Select Country</option>
             {countries.length > 0 ? countries.map((c: any) => <option key={c.countryCode} value={c.name}>{c.name}</option>) : <option value="India">India</option>}
           </select>
         </div>
         <div>
-          <label className={labelClasses}>State *</label>
+          <label className={labelClasses}>State <span className="text-red-600">*</span></label>
           <select required name="state" value={formData.state} onChange={handleChange} className={inputClasses} disabled={!formData.country}>
             <option value="">Select State</option>
             {states.map((s: any) => <option key={s.stateCode} value={s.name}>{s.name}</option>)}
           </select>
         </div>
         <div>
-          <label className={labelClasses}>City *</label>
+          <label className={labelClasses}>City <span className="text-red-600">*</span></label>
           <select required name="city" value={formData.city} onChange={handleChange} className={inputClasses} disabled={!formData.state}>
             <option value="">Select City</option>
             {cities.map((c: any) => <option key={c.name} value={c.name}>{c.name}</option>)}
@@ -415,7 +432,7 @@ export default function CorporateForm() {
         </div>
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-x-3 gap-y-3">
           <div className="space-y-3 bg-white p-4 border border-slate-200 rounded-sm shadow-sm">
-            <label className="text-[11px] font-medium uppercase text-[#d26019] tracking-[0.05em] block border-b border-slate-200 pb-1">Purpose of Visit <span className="text-red-500">*</span></label>
+            <label className="text-[11px] font-medium uppercase text-[#d26019] tracking-[0.05em] block border-b border-slate-200 pb-1">Purpose of Visit <span className="text-red-600">*</span></label>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 pt-1">
               {PURPOSE_CORPORATE.map(option => (
                 <label key={option} className="flex items-start gap-2 cursor-pointer group">
@@ -437,7 +454,7 @@ export default function CorporateForm() {
           </div>
 
           <div className="space-y-3 bg-white p-4 border border-slate-200 rounded-sm shadow-sm">
-            <label className="text-[11px] font-medium uppercase text-[#d26019] tracking-[0.05em] block border-b border-slate-200 pb-1">Area of Interest <span className="text-red-500">*</span></label>
+            <label className="text-[11px] font-medium uppercase text-[#d26019] tracking-[0.05em] block border-b border-slate-200 pb-1">Area of Interest <span className="text-red-600">*</span></label>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 pt-1">
               {INTEREST_CORPORATE.map(option => (
                 <label key={option} className="flex items-start gap-2 cursor-pointer group">
@@ -462,7 +479,7 @@ export default function CorporateForm() {
       <div className="md:col-span-2 lg:col-span-4 mt-2">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
           <div className="space-y-4 text-left">
-            <label className="text-[11px] font-bold text-[#4d7f1d] uppercase tracking-wider block">Would you like to schedule B2B meetings? <span className=" text-red-500">*</span></label>
+            <label className="text-[11px] font-bold text-[#4d7f1d] uppercase tracking-wider block">Would you like to schedule B2B meetings? <span className="text-red-600">*</span></label>
             <div className="flex gap-6">
               <label className="flex items-center space-x-2 cursor-pointer">
                 <input type="radio" name="schedulingB2B" value="yes" checked={formData.schedulingB2B === 'yes'} onChange={handleChange} className="w-4 h-4 text-[#23471d] accent-[#23471d] border-slate-400" />
