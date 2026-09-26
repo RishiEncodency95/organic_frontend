@@ -45,7 +45,7 @@ if (typeof window !== 'undefined') {
   gsap.registerPlugin(ScrollTrigger);
 }
 
-const getImgSrc = (src: any): string => (typeof src === 'string' ? src : src.src);
+const getImgSrc = (src: any): string => (typeof src === 'string' ? src : src?.src || "");
 
 const extractYouTubeId = (url: string): string | null => {
   if (!url || typeof url !== 'string') return null;

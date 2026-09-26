@@ -52,7 +52,7 @@ const Lightbox = ({ images, activeIndex, onClose, onNav }: any) => {
   }, [activeIndex]);
 
   const img = images[activeIndex];
-  const getImgSrc = (src: any) => typeof src === 'string' ? src : src.src;
+  const getImgSrc = (src: any) => typeof src === 'string' ? src : src?.src || "";
 
   const navBtn = (pos: 'left' | 'right', dir: 'prev' | 'next') => (
     <button
@@ -368,7 +368,7 @@ const GalleryGrid: React.FC<GalleryGridProps> = ({
 
   const dynamicImages = React.useMemo(() => {
     const publishedBackend = (dbGallery || [])
-      .filter((g: any) => !g.status || g.status === 'Published')
+      .filter((g: any) => (!g.status || g.status === 'Published') && g.image)
       .map((g: any, i: number) => {
         const s = styleCycle[i % styleCycle.length];
         return {

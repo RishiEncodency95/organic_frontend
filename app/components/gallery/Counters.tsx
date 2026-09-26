@@ -88,7 +88,7 @@ interface CountersProps {
 }
 
 const EMPTY_COUNTERS: any[] = [];
-const getImgSrc = (src: any): string => (typeof src === 'string' ? src : src.src);
+const getImgSrc = (src: any): string => (typeof src === 'string' ? src : src?.src || "");
 
 const Counters: React.FC<CountersProps> = ({ dbCounters = EMPTY_COUNTERS }) => {
   const sectionRef = useRef<HTMLDivElement>(null);
