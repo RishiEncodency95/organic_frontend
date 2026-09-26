@@ -5,15 +5,23 @@ import { API_URL } from "./api";
 // unreachable (see e.g. admin's gallery/testimonials "Could not reach the
 // upload server; embedding image as a data URL instead"). That's a fine
 // last-resort save for the admin, but a single such image can be hundreds of
-// KB to several MB of base64 text. If it ever ends up server-side content,
+// KB to several MB of base64 text (the testimonials logos this was written
+// for ranged 298 KB–2 MB). If it ever ends up server-side content,
 // `getSectionData` results get embedded into the page's RSC payload for
 // every visitor on every request — turning one bad upload into a
 // multi-megabyte page for the whole site. Strip those out here, at the one
 // place all server-rendered section content flows through, so a stray
 // base64 blob degrades to "this one image is missing" instead of "the whole
 // site is unusably slow."
+//
+// The threshold is deliberately well above small intentional data URIs —
+// e.g. the gallery's Instagram video-highlight thumbnails are a ~5 KB
+// generated SVG placeholder by design (Instagram doesn't hand out real
+// thumbnails without their API), not a broken upload. Only genuinely
+// oversized blobs should be stripped.
+const LARGE_DATA_URI_THRESHOLD = 40 * 1024; // 40 KB
 const isLargeDataUri = (value: unknown): value is string =>
-  typeof value === "string" && value.startsWith("data:") && value.length > 2048;
+  typeof value === "string" && value.startsWith("data:") && value.length > LARGE_DATA_URI_THRESHOLD;
 
 function stripLargeDataUris<T>(value: T, seen: WeakSet<object> = new WeakSet()): T {
   if (Array.isArray(value)) {
