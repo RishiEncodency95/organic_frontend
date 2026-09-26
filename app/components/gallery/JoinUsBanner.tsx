@@ -11,7 +11,7 @@ if (typeof window !== 'undefined') {
   gsap.registerPlugin(ScrollTrigger);
 }
 
-const getImgSrc = (src: any): string => (typeof src === 'string' ? src : src.src);
+const getImgSrc = (src: any): string => (typeof src === 'string' ? src : (src?.src || ""));
 
 const Sparkle = ({ style, color = '#fff176' }: { style: React.CSSProperties; color?: string }) => (
   <span style={{ position:'absolute', pointerEvents:'none', fontSize:'14px', color,

@@ -131,7 +131,7 @@ const Hero = ({ initialData }: { initialData?: any }) => {
 
   const titleChars = (settings.heading || "GLIMPSES").split("");
   const bgSource = settings.rightImage || gallarybg;
-  const bgKey = typeof bgSource === 'string' ? bgSource : bgSource.src;
+  const bgKey = typeof bgSource === 'string' ? bgSource : (bgSource?.src || "");
 
   return (
     <section className="relative w-full py-8 md:py-12 lg:py-16 bg-[#f8faf8] overflow-hidden font-inter" style={{ perspective: 1200 }}>
