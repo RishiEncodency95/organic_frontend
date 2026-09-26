@@ -41,12 +41,12 @@ export default function BuyerRegistrationPage() {
               >
                 <div className="bg-green-800 px-6 py-1 text-white flex justify-between items-center border-b-2 border-[#a8d060]">
                   <div>
-                      <h2 className="text-sm font-medium uppercase tracking-wider text-white">
-                          {buyerType === "domestic" ? "Domestic Buyer Registration" : "International Buyer Registration"}
-                      </h2>
-                      <p className="text-[10px] text-green-200 uppercase tracking-widest font-semibold mt-0.5">
-                          Premier Edition of Bharat Organic Expo 2027 (Global Edition)
-                      </p>
+                    <h2 className="text-sm font-medium uppercase tracking-wider text-white">
+                      {buyerType === "domestic" ? "Domestic Buyer Registration" : "International Buyer Registration"}
+                    </h2>
+                    <p className="text-[10px] text-green-200 uppercase tracking-widest font-semibold mt-0.5">
+                      Premier Edition of Bharat Organic Expo 2027 (Global Edition)
+                    </p>
                   </div>
                   <ShieldCheck className="text-[#a8d060]" size={22} />
                 </div>
