@@ -4,7 +4,6 @@ import { useState, useEffect } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
-import { motion, AnimatePresence } from "framer-motion";
 import {
     X, ChevronDown, Briefcase, Users, Layout, MapPin,
     Handshake, Camera, Sparkles, FileCheck,
@@ -134,7 +133,7 @@ const Navbar = () => {
         <>
             {scrolled && <div className="h-[72px] xl:h-[80px] w-full print-hidden" />}
 
-            <motion.nav
+            <nav
                 className={`${scrolled
                     ? "fixed top-0 left-0 right-0 z-[100] bg-white shadow-md py-0.5 border-b border-slate-200"
                     : "relative z-[100] bg-white border-b border-slate-200 py-1 shadow-sm"
@@ -196,17 +195,11 @@ const Navbar = () => {
                                             </Link>
                                         )}
 
-                                        {link.dropdown && (
-                                            <AnimatePresence>
-                                                {activeDropdown === link.label && (
+                                        {link.dropdown && activeDropdown === link.label && (
                                                     <div className="absolute top-[calc(100%-10px)] left-1/2 -translate-x-1/2 pt-4 w-[230px]">
                                                         <div className="absolute top-2 left-1/2 -translate-x-1/2 w-4 h-4 bg-white border-t border-l border-slate-100 rotate-45 z-10" />
-                                                        <motion.div
-                                                            initial={{ opacity: 0, scale: 0.95, y: 10 }}
-                                                            animate={{ opacity: 1, scale: 1, y: 0 }}
-                                                            exit={{ opacity: 0, scale: 0.95, y: 10 }}
-                                                            transition={{ duration: 0.2, ease: "easeOut" }}
-                                                            className="relative bg-white/95 backdrop-blur-2xl rounded-2xl shadow-[0_20px_60px_rgba(0,0,0,0.12)] border border-slate-100 py-2 overflow-hidden z-20"
+                                                        <div
+                                                            className="relative origin-top animate-in fade-in zoom-in-95 bg-white/95 backdrop-blur-2xl rounded-2xl shadow-[0_20px_60px_rgba(0,0,0,0.12)] border border-slate-100 py-2 overflow-hidden z-20"
                                                         >
                                                             {link.dropdown
                                                                 .map((item, idx) => {
@@ -238,11 +231,9 @@ const Navbar = () => {
                                                                         </Link>
                                                                     );
                                                                 })}
-                                                        </motion.div>
+                                                        </div>
                                                     </div>
                                                 )}
-                                            </AnimatePresence>
-                                        )}
                                     </div>
                                 ))}
                             </div>
@@ -291,7 +282,7 @@ const Navbar = () => {
                         </div>
                     </div>
                 </div>
-            </motion.nav>
+            </nav>
 
             {/* ─── MOBILE BOTTOM TAB BAR ─── */}
             <div className="xl:hidden fixed bottom-0 left-0 right-0 z-[90] bg-white/95 backdrop-blur-xl border-t border-slate-100">
@@ -336,26 +327,17 @@ const Navbar = () => {
             </div>
 
             {/* ─── MOBILE BOTTOM SHEET MENU ─── */}
-            <AnimatePresence>
-                {mobileOpen && (
+            {mobileOpen && (
                     <>
                         {/* Backdrop */}
-                        <motion.div
-                            initial={{ opacity: 0 }}
-                            animate={{ opacity: 1 }}
-                            exit={{ opacity: 0 }}
-                            transition={{ duration: 0.25 }}
-                            className="xl:hidden fixed inset-0 z-[95] bg-black/50 backdrop-blur-sm"
+                        <div
+                            className="xl:hidden fixed inset-0 z-[95] animate-in fade-in bg-black/50 backdrop-blur-sm"
                             onClick={() => setMobileOpen(false)}
                         />
 
                         {/* Panel */}
-                        <motion.div
-                            initial={{ y: "100%" }}
-                            animate={{ y: 0 }}
-                            exit={{ y: "100%" }}
-                            transition={{ type: "spring", damping: 28, stiffness: 280 }}
-                            className="xl:hidden fixed bottom-0 left-0 right-0 z-[99] bg-white rounded-t-[28px] max-h-[90vh] overflow-y-auto"
+                        <div
+                            className="xl:hidden fixed bottom-0 left-0 right-0 z-[99] animate-in slide-in-from-bottom bg-white rounded-t-[28px] max-h-[90vh] overflow-y-auto"
                         >
                             {/* Sticky handle only (No Header) */}
                             <div className="sticky top-0 bg-white z-10 rounded-t-[28px]">
@@ -444,15 +426,9 @@ const Navbar = () => {
                                                 <ChevronDown className={cn("w-4 h-4 transition-transform duration-300", isOpen ? "rotate-180 text-[#3b8c2a]" : "text-slate-400")} />
                                             </button>
 
-                                            <AnimatePresence initial={false}>
-                                                {isOpen && (
-                                                    <motion.div
-                                                        key="content"
-                                                        initial={{ height: 0, opacity: 0 }}
-                                                        animate={{ height: "auto", opacity: 1 }}
-                                                        exit={{ height: 0, opacity: 0 }}
-                                                        transition={{ duration: 0.25, ease: "easeInOut" }}
-                                                        className="overflow-hidden"
+                                            {isOpen && (
+                                                    <div
+                                                        className="overflow-hidden animate-in fade-in slide-in-from-top-1"
                                                     >
                                                         <div className="pl-12 pr-2 pb-2 flex flex-col gap-0.5">
                                                             {link.dropdown!
@@ -476,9 +452,8 @@ const Navbar = () => {
                                                                     </Link>
                                                                 ))}
                                                         </div>
-                                                    </motion.div>
+                                                    </div>
                                                 )}
-                                            </AnimatePresence>
                                         </div>
                                     );
                                 })}
@@ -562,10 +537,9 @@ const Navbar = () => {
 
                             {/* Bottom padding for tab bar */}
                             <div className="h-24 md:h-28" />
-                        </motion.div>
+                        </div>
                     </>
                 )}
-            </AnimatePresence>
         </>
     );
 };

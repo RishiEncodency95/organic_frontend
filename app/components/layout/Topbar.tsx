@@ -3,7 +3,6 @@
 import { useState } from "react";
 import Link from "next/link";
 import { Mail, Phone, ChevronDown, Store, Briefcase, Users, UserPlus, Globe, Award } from "lucide-react";
-import { motion, AnimatePresence } from "framer-motion";
 
 import { SITE_CONFIG } from "@/app/constants/siteConfig";
 import SectionContainer from "@/app/components/layout/SectionContainer";
@@ -104,7 +103,7 @@ const Topbar = ({ phone, email }: { phone?: string; email?: string }) => {
                 }
             `}</style>
 
-            <motion.div
+            <div
                 className="bg-black border-b border-[#3b8c2a]/30 text-slate-200 text-[11px] relative z-[150] py-1 shadow-md shadow-black/20"
             >
                 <SectionContainer className="flex items-center justify-between py-1 flex-nowrap gap-x-4">
@@ -145,16 +144,11 @@ const Topbar = ({ phone, email }: { phone?: string; email?: string }) => {
                                 <ChevronDown className={cn("w-3.5 h-3.5 transition-transform duration-300", activeDropdown === "registration" ? "rotate-180" : "")} />
                             </button>
 
-                            <AnimatePresence>
-                                {activeDropdown === "registration" && (
+                            {activeDropdown === "registration" && (
                                     <div className="absolute top-[calc(100%-2px)] right-0 pt-4 w-[260px] z-50">
                                         <div className="absolute top-[10px] right-10 w-4 h-4 bg-white border-t border-l border-slate-100 rotate-45 z-10" />
-                                        <motion.div
-                                            initial={{ opacity: 0, scale: 0.9, y: 15 }}
-                                            animate={{ opacity: 1, scale: 1, y: 0 }}
-                                            exit={{ opacity: 0, scale: 0.9, y: 10 }}
-                                            transition={{ type: "spring" as const, damping: 25, stiffness: 300 }}
-                                            className="relative bg-white rounded-2xl shadow-[0_15px_45px_rgba(0,0,0,0.15)] border border-slate-100 p-1 overflow-hidden z-20"
+                                        <div
+                                            className="relative origin-top-right animate-in fade-in zoom-in-95 bg-white rounded-2xl shadow-[0_15px_45px_rgba(0,0,0,0.15)] border border-slate-100 p-1 overflow-hidden z-20"
                                         >
                                             <div className="grid grid-cols-2">
                                                 {[
@@ -199,10 +193,9 @@ const Topbar = ({ phone, email }: { phone?: string; email?: string }) => {
                                                     );
                                                 })}
                                             </div>
-                                        </motion.div>
+                                        </div>
                                     </div>
                                 )}
-                            </AnimatePresence>
                         </div>
 
                         {/* User Login Dropdown */}
@@ -265,7 +258,7 @@ const Topbar = ({ phone, email }: { phone?: string; email?: string }) => {
                         </div>
                     </div>
                 </SectionContainer>
-            </motion.div>
+            </div>
         </>
     );
 };

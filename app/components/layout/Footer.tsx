@@ -1,10 +1,7 @@
-"use client";
-
-import React, { useState, useEffect } from "react";
+import React from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { SITE_CONFIG } from "@/app/constants/siteConfig";
-import { settingsApi } from "@/lib/api";
 import footerLogo from "../../assets/logos/footerlogo.png";
 import namoLogo from "../../assets/logos/namo1.png";
 import footogImg from "../../assets/image/bottog.webp";
@@ -54,20 +51,7 @@ export default function Footer({ initialFooterData }: { initialFooterData?: any 
   // real footer content is there on the very first paint — no client fetch, no
   // swap, no layout shift. The client fetch below only runs as a fallback for
   // the rare case the server-side fetch didn't return anything.
-  const [footerData, setFooterData] = useState<any>(initialFooterData ?? null);
-
-  useEffect(() => {
-    if (initialFooterData) return;
-    settingsApi.get()
-      .then((res: any) => {
-        const sections = res?.landingPage?.sections || res?.data?.landingPage?.sections || [];
-        const found = sections.find((s: any) => s.key === "footer");
-        if (found) {
-          setFooterData(found);
-        }
-      })
-      .catch(() => { });
-  }, [initialFooterData]);
+  const footerData = initialFooterData ?? null;
 
   const defaultQuickLinks = [
     { name: "Home", path: "/" },

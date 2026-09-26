@@ -2,14 +2,8 @@ import type { Metadata } from "next";
 import HeroSection from "./components/home/HeroSection";
 import AudienceStrip from "./components/home/AudienceStrip";
 import HomeApiPrimer from "./components/home/HomeApiPrimer";
-import DeferredHomeSections from "./components/home/DeferredHomeSections";
-import SectionBoundary from "./components/home/SectionBoundary";
 import IntroductionSection from "./components/home/IntroductionSection";
-import WhyParticipate from "./components/home/WhyParticipate";
-import BeyondExhibition from "./components/home/BeyondExhibition";
-import ExpoCategories from "./components/home/ExpoCategories";
-import ConferenceSection from "./components/home/ConferenceSection";
-import GlobalPlatform from "./components/home/GlobalPlatform";
+import LazyHomeSections from "./components/home/LazyHomeSections";
 import { seoApi } from "../lib/api";
 import { getHomePageData } from "../lib/homeData";
 import SchemaInjector from "./components/SchemaInjector";
@@ -128,25 +122,8 @@ const Index = async () => {
       <HomeApiPrimer responses={homeData.apiResponses} />
       <HeroSection initialSlides={homeData.apiResponses["/website/home/home-hero"]} />
       <AudienceStrip />
-      <SectionBoundary>
-        <IntroductionSection />
-      </SectionBoundary>
-      <SectionBoundary>
-        <GlobalPlatform />
-      </SectionBoundary>
-      <SectionBoundary>
-        <WhyParticipate />
-      </SectionBoundary>
-      <SectionBoundary>
-        <ConferenceSection />
-      </SectionBoundary>
-      <SectionBoundary>
-        <ExpoCategories />
-      </SectionBoundary>
-      <SectionBoundary>
-        <BeyondExhibition />
-      </SectionBoundary>
-      <DeferredHomeSections partners={homeData.partners} blogs={homeData.blogs} />
+      <IntroductionSection initialData={homeData.apiResponses["/website/home/introduction-section"]} />
+      <LazyHomeSections />
     </>
   );
 };

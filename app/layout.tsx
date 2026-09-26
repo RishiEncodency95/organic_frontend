@@ -137,7 +137,7 @@ export default async function RootLayout({
     <html
       lang="en"
       suppressHydrationWarning
-      className={`${poppins.variable} ${inter.variable} ${playfair.variable} h-full antialiased overflow-x-hidden`}
+      className={`${poppins.variable} ${inter.variable} ${playfair.variable} h-full antialiased overflow-x-clip`}
     >
       <head>
         <link rel="dns-prefetch" href="//res.cloudinary.com" />
@@ -148,14 +148,14 @@ export default async function RootLayout({
         {/* Dynamic Header Scripts from Admin */}
         <HeadScripts html={headerScripts} />
       </head>
-      <body suppressHydrationWarning className="min-h-full flex flex-col font-inter text-[16px] md:text-[18px] leading-[1.6] overflow-x-hidden w-full">
+      <body suppressHydrationWarning className="min-h-full flex flex-col font-inter text-[16px] md:text-[18px] leading-[1.6] overflow-x-clip w-full">
         <JsonLd data={organizationJsonLd()} />
         <JsonLd data={websiteJsonLd()} />
         <DynamicCanonical />
         <SmoothScroll>
           <Topbar phone={topbar?.phoneNumber} email={topbar?.contactEmail} />
           <Navbar />
-          <main className="flex-grow overflow-x-hidden w-full">
+          <main className="flex-grow min-h-[calc(100svh-7rem)] overflow-x-clip w-full">
             {children}
           </main>
           <Footer initialFooterData={footerData} />
@@ -171,9 +171,9 @@ export default async function RootLayout({
           <>
             <Script
               src={`https://www.googletagmanager.com/gtag/js?id=${ga4MeasurementId}`}
-              strategy="afterInteractive"
+              strategy="lazyOnload"
             />
-            <Script id="google-analytics" strategy="afterInteractive">
+            <Script id="google-analytics" strategy="lazyOnload">
               {`
                 window.dataLayer = window.dataLayer || [];
                 function gtag(){window.dataLayer.push(arguments);}
@@ -186,12 +186,12 @@ export default async function RootLayout({
 
         {/* Dynamic GTM Integration */}
         {gtmContainerId && (
-          <Script id="google-tag-manager" strategy="afterInteractive">
+          <Script id="google-tag-manager" strategy="lazyOnload">
             {`
               (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
               new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
               j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
-              'https://www.googletagmanager.com/gtag.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+              'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
               })(window,document,'script','dataLayer','${gtmContainerId}');
             `}
           </Script>

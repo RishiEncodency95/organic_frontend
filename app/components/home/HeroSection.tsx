@@ -6,6 +6,7 @@ import { CalendarDays, MapPin, ArrowRight } from "lucide-react";
 import gsap from "gsap";
 import SectionContainer from "@/app/components/layout/SectionContainer";
 import { websiteApi, SERVER_URL } from "@/lib/api";
+import { buildCloudinaryImageUrl } from "@/lib/cloudinaryImage";
 import home1 from "../../assets/home/home11.webp";
 import home2 from "../../assets/home/home22.webp";
 import home3 from "../../assets/home/home33.webp";
@@ -194,14 +195,6 @@ const normalizeSlides = (items?: any[]): SlideData[] => {
       button2Link: item.button2Link || item.secondaryButtonHref || fallback.button2Link || "/registration/visitor-registration",
     };
   });
-};
-
-const cloudinaryWidthUrl = (src: string, width: number) => {
-  if (!src.includes("res.cloudinary.com") || !src.includes("/image/upload/")) return src;
-  return src.replace(
-    "/image/upload/",
-    `/image/upload/f_auto,q_auto:eco,w_${width},c_limit/`,
-  );
 };
 
 /* ─────────────────────────────────────────
@@ -458,30 +451,17 @@ const HeroSection = ({ initialSlides }: HeroSectionProps) => {
       gsap.set(el, { zIndex: i === 0 ? 2 : 1, clipPath: "inset(0 0% 0 0)", opacity: 1, x: 0 });
     });
 
-    panels.current.forEach((panel) => {
+    panels.current.forEach((panel, index) => {
       if (!panel) return;
       const items = panel.querySelectorAll("[data-anim]");
-      gsap.set(items, { opacity: 0, y: 40, filter: "blur(4px)" });
+      gsap.set(items, index === 0
+        ? { opacity: 1, y: 0, filter: "blur(0px)" }
+        : { opacity: 0, y: 40, filter: "blur(4px)" });
     });
 
     if (lensRef.current) gsap.set(lensRef.current, { opacity: 0, xPercent: -50, yPercent: -50 });
     if (vigRef.current) gsap.set(vigRef.current, { opacity: 0 });
     if (revealBar.current) gsap.set(revealBar.current, { scaleX: 0, opacity: 0 });
-
-    const initPanel = panels.current[0];
-    if (initPanel) {
-      const items = initPanel.querySelectorAll("[data-anim]");
-      gsap.set(items, { opacity: 0, y: 60, filter: "blur(8px)" });
-      gsap.to(items, {
-        opacity: 1,
-        y: 0,
-        filter: "blur(0px)",
-        duration: 1.0,
-        ease: "power4.out",
-        stagger: { each: 0.1, from: "start" },
-        delay: 0.3,
-      });
-    }
 
     playKenBurns(0);
     startTimer(0);
@@ -605,9 +585,9 @@ const HeroSection = ({ initialSlides }: HeroSectionProps) => {
                   ref={(el) => {
                     imgEls.current[id] = el;
                   }}
-                  src={cloudinaryWidthUrl(img as string, 1600)}
+                  src={buildCloudinaryImageUrl(img as string, 1600)}
                   srcSet={[480, 768, 1024, 1280, 1600]
-                    .map((width) => `${cloudinaryWidthUrl(img as string, width)} ${width}w`)
+                    .map((width) => `${buildCloudinaryImageUrl(img as string, width)} ${width}w`)
                     .join(", ")}
                   sizes="100vw"
                   alt={alt || `Bharat Organic Expo slide ${id + 1}`}
