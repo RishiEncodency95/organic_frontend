@@ -105,9 +105,10 @@ const ContactForm = () => {
         name: formData.name,
         email: formData.email,
         phone: formData.phone,
+        alternatePhone: formData.alternatePhone,
+        subject: formData.subject,
         service: formData.subject,
         eventName: process.env.NEXT_PUBLIC_EVENT_NAME || "BOE2026",
-        // message: `Alternate Phone: ${formData.alternatePhone || 'N/A'}\n\n${formData.message}`
         message: `${formData.message}`
       };
       const res = await contactEnquiryApi.submitEnquiry(payload);
