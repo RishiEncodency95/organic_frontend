@@ -72,7 +72,7 @@ export default function PaymentMain({ section }: { section?: any }) {
       // 1. Create the order on our own backend — it holds the Razorpay key secret, so the
       // order id can't be forged by the client, and payment confirmation later verifies
       // against this exact order.
-      const orderData = await msmeApi.createPaymentOrder(applicationId, { amount: totalAmount });
+      const orderData = await msmeApi.createPaymentOrder(applicationId);
 
       if (!orderData.success) {
         Swal.fire("Error", orderData.message || "Failed to create order", "error");
@@ -134,6 +134,11 @@ export default function PaymentMain({ section }: { section?: any }) {
 
       const rzp = new (window as any).Razorpay(options);
       rzp.on("payment.failed", function (response: any) {
+        const failedPaymentId = response?.error?.metadata?.payment_id;
+        if (failedPaymentId) {
+          // Best effort: the applicant's retry must not wait on, or break over, this record.
+          msmeApi.reportPaymentFailure(applicationId, { razorpayPaymentId: failedPaymentId }).catch(() => {});
+        }
         Swal.fire("Payment Failed", response.error.description || "Something went wrong.", "error");
         setIsLoading(false);
       });

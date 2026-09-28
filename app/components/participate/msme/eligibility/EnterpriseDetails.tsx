@@ -1,7 +1,7 @@
 "use client";
 
 import React from 'react';
-import { Building2, Settings2, Factory, Layout, UserCircle2, Venus, Calendar, MapPin, ShieldCheck, CheckCircle2, XCircle } from 'lucide-react';
+import { Building2, Settings2, Factory, Layout, UserCircle2, Venus, Calendar, CalendarClock, Briefcase, CreditCard, Landmark, MapPin, ShieldCheck, CheckCircle2, XCircle } from 'lucide-react';
 import { useEligibility } from './EligibilityContext';
 
 const Row = ({ icon, label, value, ok }: { icon: React.ReactNode; label: string; value: React.ReactNode; ok?: boolean }) => (
@@ -33,6 +33,9 @@ const EnterpriseDetails = ({ customProps }: { customProps?: any }) => {
   }
 
   const location = [result.district, result.state].filter(Boolean).join(", ") || "—";
+  // Shown as one line because they are only useful together, and omitted entirely when the
+  // certificate carried no bank section rather than printing three "Not found" rows.
+  const bank = [result.bankName, result.bankIfsc, result.bankAccountNumber].filter(Boolean).join(" · ");
 
   return (
     <div className="w-full bg-white rounded-xl shadow-[0_2px_10px_rgba(0,0,0,0.05)] border border-gray-100 p-4 md:px-5 md:py-2 flex flex-col h-full">
@@ -45,15 +48,21 @@ const EnterpriseDetails = ({ customProps }: { customProps?: any }) => {
         <Row icon={<Settings2 size={16} className="text-[#1b5e20]/70" />} label="Enterprise Type" value={result.enterpriseType || "Not found"} ok={!!result.enterpriseType} />
         <Row icon={<Factory size={16} className="text-[#1b5e20]/70" />} label="Major Activity" value={result.majorActivity || "Not found"} ok={!!result.majorActivity} />
         <Row icon={<Layout size={16} className="text-[#1b5e20]/70" />} label="Social Category" value={result.socialCategory || "Not found"} />
-        <Row icon={<UserCircle2 size={16} className="text-[#1b5e20]/70" />} label="Entrepreneur Gender" value={result.gender || "Not stated"} />
+        <Row icon={<UserCircle2 size={16} className="text-[#1b5e20]/70" />} label="Entrepreneur Gender" value={result.gender || "Not stated"} ok={!!result.gender} />
+        <Row icon={<Briefcase size={16} className="text-[#1b5e20]/70" />} label="Constitution" value={result.constitution || "Not found"} ok={!!result.constitution} />
         <Row
           icon={<Venus size={16} className="text-[#1b5e20]/70" />}
           label="Udyam Registration No."
           value={result.udyamRegistrationNumber || "Not found"}
         />
         <Row icon={<Calendar size={16} className="text-[#1b5e20]/70" />} label="Date of Udyam Registration" value={result.dateOfUdyamRegistration || "Not found"} />
+        <Row icon={<CalendarClock size={16} className="text-[#1b5e20]/70" />} label="Date of Incorporation" value={result.dateOfIncorporation || "Not found"} />
         <Row icon={<MapPin size={16} className="text-[#1b5e20]/70" />} label="Location" value={location} />
         <Row icon={<ShieldCheck size={16} className="text-[#1b5e20]/70" />} label="NIC Code" value={result.nicCode || "Not found"} />
+        <Row icon={<CreditCard size={16} className="text-[#1b5e20]/70" />} label="PAN" value={result.pan || "Not printed on certificate"} ok={!!result.pan} />
+        {bank && (
+          <Row icon={<Landmark size={16} className="text-[#1b5e20]/70" />} label="Bank Details" value={bank} />
+        )}
       </div>
 
       <div className="bg-[#f4fbf4] p-3 rounded-lg text-[11px] md:text-[13px] leading-relaxed font-medium text-[#1b5e20]/80">
