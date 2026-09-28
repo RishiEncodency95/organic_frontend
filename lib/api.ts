@@ -475,6 +475,21 @@ export const contactEnquiryApi = {
     }
 };
 
+export const partnershipEnquiryApi = {
+    submit: async (payload: any) => {
+        const response = await fetch(`${API_URL}/partnership-enquiry`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(payload)
+        });
+        if (!response.ok) {
+            const text = await response.text();
+            try { return JSON.parse(text); } catch(e) { return { success: false, message: "HTTP " + response.status + ": " + text.substring(0, 50) }; }
+        }
+        return await response.json();
+    }
+};
+
 export const sponsorshipEnquiryApi = {
     submit: async (data: any) => {
         const response = await fetch(`${API_URL}/sponsorship-enquiry`, {
