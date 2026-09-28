@@ -19,6 +19,12 @@ export interface UdyamExtractedData {
   mobile: string | null;
   email: string | null;
   nicCode: string | null;
+  gstin: string | null;
+  pan: string | null;
+  constitution: string | null;
+  bankName: string | null;
+  bankIfsc: string | null;
+  bankAccountNumber: string | null;
 }
 
 interface EligibilityContextValue {
@@ -63,6 +69,8 @@ export function EligibilityProvider({ children }: { children: ReactNode }) {
       setResult(res.data.extractedData);
       setCheckedAt(new Date());
       msmeStorage.setUdyamExtract(res.data.extractedData);
+      // The id is what the Apply form actually pre-fills from; the copy above is its fallback.
+      if (res.data.verificationId) msmeStorage.setUdyamVerificationId(String(res.data.verificationId));
     } catch (err) {
       setError("Could not reach the server. Please check your connection and try again.");
     } finally {
