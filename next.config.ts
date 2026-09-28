@@ -2,10 +2,16 @@ import type { NextConfig } from "next";
 import path from "path";
 
 const nextConfig: NextConfig = {
+  // Disable streaming metadata: on dynamic pages (e.g. /blog/[slug]) Next otherwise streams
+  // <title>, description, canonical and OG tags into <body>. Blocking metadata keeps them in <head>
+  // for every visitor and crawler.
+  htmlLimitedBots: /.*/,
   turbopack: {
     root: path.resolve(__dirname),
   },
   images: {
+    formats: ["image/avif", "image/webp"],
+    deviceSizes: [360, 480, 640, 750, 828, 1080, 1200, 1600, 1920],
     remotePatterns: [
       {
         protocol: "https",

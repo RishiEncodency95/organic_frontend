@@ -239,6 +239,9 @@ export const heroBackgroundApi = {
 const MSME_APPLICATION_ID_KEY = 'msme_application_id';
 /** Carries the eligibility-check page's AI-extracted certificate data forward so the Apply form can pre-fill itself. */
 const MSME_UDYAM_EXTRACT_KEY = 'msme_udyam_extract';
+/** Points at the saved UdyamVerification record. The Apply form re-reads the extraction from
+ *  the database through this, and only falls back to the copy above if that read fails. */
+const MSME_UDYAM_VERIFICATION_ID_KEY = 'msme_udyam_verification_id';
 
 export const msmeStorage = {
     getApplicationId: (): string | null => {
@@ -268,6 +271,14 @@ export const msmeStorage = {
         if (typeof window === 'undefined') return;
         try { window.localStorage.removeItem(MSME_UDYAM_EXTRACT_KEY); } catch { /* ignore */ }
     },
+    getUdyamVerificationId: (): string | null => {
+        if (typeof window === 'undefined') return null;
+        try { return window.localStorage.getItem(MSME_UDYAM_VERIFICATION_ID_KEY); } catch { return null; }
+    },
+    setUdyamVerificationId: (id: string) => {
+        if (typeof window === 'undefined') return;
+        try { window.localStorage.setItem(MSME_UDYAM_VERIFICATION_ID_KEY, id); } catch { /* ignore */ }
+    },
 };
 
 export const msmeApi = {
@@ -279,6 +290,13 @@ export const msmeApi = {
             method: 'POST',
             body: formData,
         });
+        const text = await response.text();
+        try { return JSON.parse(text); } catch { return { success: false, message: 'HTTP ' + response.status }; }
+    },
+    /** Re-reads a saved certificate analysis straight from the database, so the Apply form
+     *  pre-fills from the stored reading rather than trusting the browser's own copy. */
+    getUdyamVerification: async (verificationId: string) => {
+        const response = await fetch(`${API_URL}/msme/udyam/verification/${encodeURIComponent(verificationId)}`);
         const text = await response.text();
         try { return JSON.parse(text); } catch { return { success: false, message: 'HTTP ' + response.status }; }
     },
@@ -306,8 +324,19 @@ export const msmeApi = {
         try { return JSON.parse(text); } catch { return { success: false, message: 'HTTP ' + response.status }; }
     },
     /** Server creates the Razorpay order itself (never trust a client-supplied order id). */
-    createPaymentOrder: async (applicationId: string, payload: { amount: number; currency?: string }) => {
+    /** The server prices the order from the saved stall size; no amount is sent. */
+    createPaymentOrder: async (applicationId: string) => {
         const response = await fetch(`${API_URL}/msme/applications/${applicationId}/payment-order`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({}),
+        });
+        const text = await response.text();
+        try { return JSON.parse(text); } catch { return { success: false, message: 'HTTP ' + response.status }; }
+    },
+    /** Reports a failed checkout; the server checks the failure with Razorpay before recording it. */
+    reportPaymentFailure: async (applicationId: string, payload: { razorpayPaymentId: string }) => {
+        const response = await fetch(`${API_URL}/msme/applications/${applicationId}/payment-failed`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(payload),

@@ -1,8 +1,9 @@
 import React from "react";
 import type { Metadata } from "next";
+import { OG_IMAGE, OG_IMAGE_ALT } from "@/lib/seo";
 import { seoApi } from "@/lib/api";
 import { getSectionData } from "@/lib/serverData";
-import SchemaInjector from "@/app/components/SchemaInjector";
+import AdminSchema from "@/components/seo/AdminSchema";
 import HeroSection from "../components/opportunity/sponsorship/HeroSection";
 import WhySponsor from "../components/opportunity/sponsorship/WhySponsor";
 import SponsorshipPackages from "../components/opportunity/sponsorship/SponsorshipPackages";
@@ -40,9 +41,6 @@ export async function generateMetadata(): Promise<Metadata> {
   const description =
     seoData?.metaDescription ||
     "Maximize your brand visibility and connect with a highly targeted audience at Bharat Organic Expo 2027.";
-  const ogImage =
-    seoData?.ogImage ||
-    "";
 
   return {
     metadataBase: new URL(defaultUrl),
@@ -63,10 +61,10 @@ export async function generateMetadata(): Promise<Metadata> {
       siteName: "Bharat Organic Expo 2027",
       images: [
         {
-          url: ogImage,
+          url: OG_IMAGE,
           width: 1200,
           height: 630,
-          alt: title,
+          alt: OG_IMAGE_ALT,
         },
       ],
       type: "website",
@@ -93,7 +91,7 @@ export default async function SponsorshipPage() {
 
   return (
     <main className="min-h-screen bg-[#fcfcf0] overflow-x-hidden">
-      <SchemaInjector schema={schemaContent} />
+      <AdminSchema schema={schemaContent} />
       <HeroSection initialData={sponsorshipHero} />
       <WhySponsor />
       <SponsorshipPackages />

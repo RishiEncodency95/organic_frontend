@@ -543,7 +543,7 @@ const TestimonialsCarousel = () => {
             </div>
 
             {/* Title with textShadow and colors #1b5e20 / #4B1426 */}
-            <h1
+            <h2
               className="text-[17px] sm:text-3xl md:text-[36px] lg:text-[40px] font-semibold leading-[1.15] mb-1.5 md:mb-3 text-left font-poppins"
               style={{ textShadow: "1px 1px 2px rgba(0,0,0,0.4)" }}
             >
@@ -553,7 +553,7 @@ const TestimonialsCarousel = () => {
               <span className="block text-[#4B1426] font-semibold tracking-tight md:whitespace-nowrap">
                 {sectionData.heroBanner.titleHighlight}
               </span>
-            </h1>
+            </h2>
 
 
 

@@ -17,7 +17,12 @@
 
 html, body {
   max-width: 100vw;
+  /* `hidden` turns an element into its own vertical scroll container (overflow-y
+     silently becomes `auto`), which produced a second, nested scrollbar. `clip`
+     hides horizontal overflow the same way without creating a scroll container.
+     `hidden` stays first as a fallback for browsers without `clip` support. */
   overflow-x: hidden;
+  overflow-x: clip;
   font-family: var(--font-inter-next), system-ui, -apple-system, sans-serif;
   scroll-behavior: smooth;
 }

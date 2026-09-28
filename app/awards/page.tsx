@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
+import { OG_IMAGE, OG_IMAGE_ALT } from "@/lib/seo";
 import { seoApi } from "@/lib/api";
-import SchemaInjector from "@/app/components/SchemaInjector";
+import AdminSchema from "@/components/seo/AdminSchema";
 import AwardsHero from "@/app/components/awards/AwardsHero";
 import AwardsStats from "@/app/components/awards/AwardsStats";
 import AwardsAbout from "@/app/components/awards/AwardsAbout";
@@ -42,9 +43,6 @@ export async function generateMetadata(): Promise<Metadata> {
   const description =
     seoData?.metaDescription ||
     "Bharat Organic Excellence Awards 2027 recognise outstanding organisations, brands, entrepreneurs, farmers and professionals for their remarkable contribution to the growth and promotion of the organic, natural and sustainable industry.";
-  const ogImage =
-    seoData?.ogImage ||
-    "";
 
   return {
     metadataBase: new URL(defaultUrl),
@@ -65,10 +63,10 @@ export async function generateMetadata(): Promise<Metadata> {
       siteName: "Bharat Organic Expo 2027",
       images: [
         {
-          url: ogImage,
+          url: OG_IMAGE,
           width: 1200,
           height: 630,
-          alt: title,
+          alt: OG_IMAGE_ALT,
         },
       ],
       type: "website",
@@ -178,7 +176,7 @@ const AwardsPage = async () => {
 
   return (
     <div className="overflow-x-hidden bg-white font-sans text-neutral-800">
-      <SchemaInjector schema={schemaContent} />
+      <AdminSchema schema={schemaContent} />
       <AwardsHero initialData={awardsHeroData} />
       <AwardsStats initialData={awardsStatsData} />
       <AwardsAbout initialData={awardsAboutData} />

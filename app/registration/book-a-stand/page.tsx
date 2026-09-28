@@ -1,7 +1,8 @@
 import React from "react";
 import type { Metadata } from "next";
+import { OG_IMAGE, OG_IMAGE_ALT } from "@/lib/seo";
 import { seoApi } from "@/lib/api";
-import SchemaInjector from "@/app/components/SchemaInjector";
+import AdminSchema from "@/components/seo/AdminSchema";
 import BookAStandClient from "./BookAStandClient";
 
 export const revalidate = 60;
@@ -35,9 +36,6 @@ export async function generateMetadata(): Promise<Metadata> {
   const description =
     seoData?.metaDescription ||
     "Book your exhibition stall or stand at Bharat Organic Expo 2027. Reserve prime space to showcase your organic and natural products to thousands of buyers.";
-  const ogImage =
-    seoData?.ogImage ||
-    "";
 
   return {
     metadataBase: new URL(defaultUrl),
@@ -58,10 +56,10 @@ export async function generateMetadata(): Promise<Metadata> {
       siteName: "Bharat Organic Expo 2027",
       images: [
         {
-          url: ogImage,
+          url: OG_IMAGE,
           width: 1200,
           height: 630,
-          alt: title,
+          alt: OG_IMAGE_ALT,
         },
       ],
       type: "website",
@@ -87,7 +85,7 @@ export default async function BookAStandPage() {
 
   return (
     <>
-      <SchemaInjector schema={schemaContent} />
+      <AdminSchema schema={schemaContent} />
       <BookAStandClient />
     </>
   );

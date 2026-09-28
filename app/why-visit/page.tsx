@@ -1,5 +1,6 @@
 import React from "react";
 import type { Metadata } from "next";
+import { OG_IMAGE, OG_IMAGE_ALT } from "@/lib/seo";
 import HeroSection from "@/app/components/participate/why-visit/HeroSection";
 import WhyVisitMatters from "@/app/components/participate/why-visit/WhyVisitMatters";
 import IndustrySegments from "@/app/components/participate/why-visit/IndustrySegments";
@@ -8,7 +9,7 @@ import AwardsHealthCamp from "@/app/components/participate/why-visit/AwardsHealt
 import NeedHelpSupport from "@/app/components/participate/why-visit/NeedHelpSupport";
 import WhoShouldVisit from "@/app/components/participate/why-visit/WhoShouldVisit";
 import { settingsApi, seoApi, websiteApi } from "@/lib/api";
-import SchemaInjector from "@/app/components/SchemaInjector";
+import AdminSchema from "@/components/seo/AdminSchema";
 
 export const revalidate = 60;
 
@@ -51,9 +52,6 @@ export async function generateMetadata(): Promise<Metadata> {
   const description =
     seoData?.metaDescription ||
     "Source better, connect directly, and grow your business at Bharat Organic Expo 2027. Meet 200+ exhibitors, 8,000+ visitors, and explore 6 major industry segments.";
-  const ogImage =
-    seoData?.ogImage ||
-    "";
 
   return {
     metadataBase: new URL(defaultUrl),
@@ -74,10 +72,10 @@ export async function generateMetadata(): Promise<Metadata> {
       siteName: "Bharat Organic Expo 2027",
       images: [
         {
-          url: ogImage,
+          url: OG_IMAGE,
           width: 1200,
           height: 630,
-          alt: title,
+          alt: OG_IMAGE_ALT,
         },
       ],
       type: "website",
@@ -206,7 +204,7 @@ export default async function WhyVisitPage() {
 
   return (
     <>
-      <SchemaInjector schema={schemaContent} />
+      <AdminSchema schema={schemaContent} />
       <main className="min-h-screen bg-white font-inter">
         {heroSec?.enabled !== false && <HeroSection sectionData={heroSec} />}
         {mattersSec?.enabled !== false && <WhyVisitMatters sectionData={mattersSec} />}

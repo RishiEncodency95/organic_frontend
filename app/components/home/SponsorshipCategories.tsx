@@ -2,6 +2,7 @@
 
 import React, { useState } from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 import { motion } from 'framer-motion';
 import {
   Trophy, Zap, Users, Mic, UserCheck,
@@ -281,9 +282,13 @@ const SponsorshipCategories = () => {
             <div className="rounded-xl md:rounded-[24px] relative overflow-hidden flex-1 shadow-lg flex min-h-[180px] md:min-h-[300px] bg-[#0b2912]">
               {/* Background Image on Right */}
               <div className="absolute top-0 right-0 bottom-0 w-[50%] z-0">
-                <img src={sectionData.promoBox.image}
-
-                  className="w-full h-full object-cover"
+                <Image
+                  src={sectionData.promoBox.image}
+                  fill
+                  sizes="(max-width: 1024px) 50vw, 28vw"
+                  quality={60}
+                  loading="lazy"
+                  className="object-cover"
                   alt={sectionData.promoBox.imageAlt}
                 />
                 {/* Bottom decorative wave line on the image */}

@@ -148,6 +148,8 @@ const bottomBannerData = [
 
 import { Metadata } from "next";
 import BlogSeoInjector from "@/app/components/blog/BlogSeoInjector";
+import { SITE_URL } from "@/lib/seo";
+import AdminSchema, { parseSchemaBlocks } from "@/components/seo/AdminSchema";
 
 export async function generateMetadata({
   params,
@@ -163,7 +165,7 @@ export async function generateMetadata({
       const post = json?.data || json;
       if (post && post.title) {
         const rawCanonical = (post.canonicalTag || post.canonicalUrl || "").trim();
-        let canonical = `http://localhost:3002/blog/${slug}`;
+        let canonical = `${SITE_URL}/blog/${slug}`;
         if (rawCanonical) {
           const hrefMatch = rawCanonical.match(/href=["']([^"']+)["']/i);
           canonical = hrefMatch ? hrefMatch[1] : rawCanonical.replace(/<[^>]*>/g, "").trim();
@@ -280,6 +282,49 @@ function formatArticleContent(content?: string): string {
   return html;
 }
 
+const ARTICLE_TYPES = ["BlogPosting", "Article", "NewsArticle"];
+
+// Admin-entered schema for a post, with any missing BlogPosting fields (dates, image, publisher,
+// url...) filled from the post itself. Admin values always win; if the admin entered no
+// article schema at all, a complete BlogPosting is generated.
+function buildBlogSchema(post: any, slug: string): Record<string, unknown>[] {
+  const url = `${SITE_URL}/blog/${slug}`;
+  const image = post.ogImage || post.image;
+  const auto: Record<string, unknown> = {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    headline: String(post.metaTitle || post.title).slice(0, 110),
+    description: post.metaDescription || cleanExcerpt(post.excerpt) || undefined,
+    image: image ? [image] : undefined,
+    datePublished: post.publishDate || post.createdAt || undefined,
+    // Not post.updatedAt: every page view bumps the view counter, which also bumps updatedAt.
+    dateModified: post.publishDate || post.createdAt || undefined,
+    author: { "@type": "Organization", name: "Bharat Organic Expo", url: SITE_URL },
+    publisher: {
+      "@type": "Organization",
+      name: "Bharat Organic Expo",
+      logo: { "@type": "ImageObject", url: `${SITE_URL}/partners/navbarlogo1.png` },
+    },
+    mainEntityOfPage: { "@type": "WebPage", "@id": url },
+    url,
+    keywords: post.metaKeywords || undefined,
+  };
+
+  const blocks = parseSchemaBlocks(post.schemaMarkup).map((b) => JSON.parse(b) as Record<string, unknown>);
+  const article = blocks.find((b) => {
+    const types = ([] as unknown[]).concat(b["@type"]);
+    return types.some((t) => ARTICLE_TYPES.includes(String(t)));
+  });
+  if (article) {
+    for (const [key, value] of Object.entries(auto)) {
+      if (article[key] === undefined || article[key] === null || article[key] === "") article[key] = value;
+    }
+  } else {
+    blocks.push(auto);
+  }
+  return blocks;
+}
+
 export default async function BlogDetail({
   params,
 }: {
@@ -309,11 +354,6 @@ export default async function BlogDetail({
   const displayImageAlt = isDynamic ? (dynamicPost.imageAlt || dynamicPost.title) : "Bharat Organic Expo Blog";
   const displayAuthor = isDynamic ? (dynamicPost.author || "Bharat Organic Expo Admin") : sidebarData.author.name;
 
-  const rawCanonical = isDynamic ? (dynamicPost.canonicalTag || dynamicPost.canonicalUrl || "").trim() : "";
-  const canonicalUrl = rawCanonical
-    ? (rawCanonical.match(/href=["']([^"']+)["']/i)?.[1] || rawCanonical.replace(/<[^>]*>/g, "").trim())
-    : `http://localhost:3002/blog/${slug}`;
-
   return (
     <div className="min-h-screen bg-white font-sans text-neutral-800">
       {/* Dynamic SEO & Head Tags Injector */}
@@ -322,22 +362,15 @@ export default async function BlogDetail({
           metaTitle={dynamicPost.metaTitle || `${dynamicPost.title} | Bharat Organic Expo`}
           metaDescription={dynamicPost.metaDescription || cleanExcerpt(dynamicPost.excerpt)}
           metaKeywords={dynamicPost.metaKeywords}
-          canonicalUrl={canonicalUrl}
           ogTitle={dynamicPost.ogTitle || dynamicPost.metaTitle || dynamicPost.title}
           ogDescription={dynamicPost.ogDescription || dynamicPost.metaDescription || cleanExcerpt(dynamicPost.excerpt)}
           ogImage={dynamicPost.ogImage || dynamicPost.image}
           openGraphTags={dynamicPost.openGraphTags}
-          schemaMarkup={dynamicPost.schemaMarkup}
         />
       )}
 
       {/* JSON-LD Schema Markup injection */}
-      {isDynamic && dynamicPost.schemaMarkup && (
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: dynamicPost.schemaMarkup }}
-        />
-      )}
+      {isDynamic && <AdminSchema schema={buildBlogSchema(dynamicPost, slug)} />}
 
       <div className="w-full px-4 md:px-8 lg:px-14 py-6">
         {/* Breadcrumbs */}

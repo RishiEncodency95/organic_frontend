@@ -1,18 +1,13 @@
 import type { Metadata } from "next";
+import { OG_IMAGE, OG_IMAGE_ALT } from "@/lib/seo";
 import HeroSection from "./components/home/HeroSection";
 import AudienceStrip from "./components/home/AudienceStrip";
 import HomeApiPrimer from "./components/home/HomeApiPrimer";
-import DeferredHomeSections from "./components/home/DeferredHomeSections";
-import SectionBoundary from "./components/home/SectionBoundary";
 import IntroductionSection from "./components/home/IntroductionSection";
-import WhyParticipate from "./components/home/WhyParticipate";
-import BeyondExhibition from "./components/home/BeyondExhibition";
-import ExpoCategories from "./components/home/ExpoCategories";
-import ConferenceSection from "./components/home/ConferenceSection";
-import GlobalPlatform from "./components/home/GlobalPlatform";
+import LazyHomeSections from "./components/home/LazyHomeSections";
 import { seoApi } from "../lib/api";
 import { getHomePageData } from "../lib/homeData";
-import SchemaInjector from "./components/SchemaInjector";
+import AdminSchema from "@/components/seo/AdminSchema";
 
 export const revalidate = 60;
 
@@ -45,9 +40,6 @@ export async function generateMetadata(): Promise<Metadata> {
   const description =
     seoData?.metaDescription ||
     "Join Bharat Organic Expo 2027, the premier exhibition and conference for organic food, agriculture, and natural products in India.";
-  const ogImage =
-    seoData?.ogImage ||
-    "";
 
   return {
     metadataBase: new URL(defaultUrl),
@@ -68,10 +60,10 @@ export async function generateMetadata(): Promise<Metadata> {
       siteName: "Bharat Organic Expo 2027",
       images: [
         {
-          url: ogImage,
+          url: OG_IMAGE,
           width: 1200,
           height: 630,
-          alt: title,
+          alt: OG_IMAGE_ALT,
         },
       ],
       type: "website",
@@ -85,7 +77,6 @@ export async function generateMetadata(): Promise<Metadata> {
 
 const Index = async () => {
   const isLocal = process.env.NODE_ENV !== "production";
-  const defaultUrl = isLocal ? "http://localhost:3002" : "https://bharatorganicexpo.com";
   const homeDataPromise = getHomePageData();
   let seoData: any = null;
   try {
@@ -97,56 +88,17 @@ const Index = async () => {
 
   const homeData = await homeDataPromise;
 
-  const rawCanonical = (seoData?.canonicalTag || seoData?.canonicalUrl || "").trim();
-  let canonicalUrl = defaultUrl;
-  if (rawCanonical) {
-    const match = rawCanonical.match(/href=["']([^"']+)["']/i);
-    if (match && match[1]) {
-      canonicalUrl = match[1].trim();
-    } else {
-      const stripped = rawCanonical.replace(/<[^>]*>/g, "").trim();
-      if (stripped.startsWith("http://") || stripped.startsWith("https://") || stripped.startsWith("/")) {
-        canonicalUrl = stripped.startsWith("/") ? `${defaultUrl}${stripped}` : stripped;
-      }
-    }
-  }
-
   const schemaContent = seoData?.schemaMarkup || null;
 
+  // Canonical is emitted once, from generateMetadata's alternates.canonical.
   return (
     <>
-      <SchemaInjector schema={schemaContent} />
-      <link rel="canonical" href={canonicalUrl} />
-      {schemaContent && (
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{
-            __html: typeof schemaContent === "string" ? schemaContent : JSON.stringify(schemaContent),
-          }}
-        />
-      )}
+      <AdminSchema schema={schemaContent} />
       <HomeApiPrimer responses={homeData.apiResponses} />
       <HeroSection initialSlides={homeData.apiResponses["/website/home/home-hero"]} />
       <AudienceStrip />
-      <SectionBoundary>
-        <IntroductionSection />
-      </SectionBoundary>
-      <SectionBoundary>
-        <GlobalPlatform />
-      </SectionBoundary>
-      <SectionBoundary>
-        <WhyParticipate />
-      </SectionBoundary>
-      <SectionBoundary>
-        <ConferenceSection />
-      </SectionBoundary>
-      <SectionBoundary>
-        <ExpoCategories />
-      </SectionBoundary>
-      <SectionBoundary>
-        <BeyondExhibition />
-      </SectionBoundary>
-      <DeferredHomeSections partners={homeData.partners} blogs={homeData.blogs} />
+      <IntroductionSection initialData={homeData.apiResponses["/website/home/introduction-section"]} />
+      <LazyHomeSections />
     </>
   );
 };

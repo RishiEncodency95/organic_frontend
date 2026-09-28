@@ -1,7 +1,8 @@
 import React from "react";
 import type { Metadata } from "next";
+import { OG_IMAGE, OG_IMAGE_ALT } from "@/lib/seo";
 import { seoApi } from "@/lib/api";
-import SchemaInjector from "@/app/components/SchemaInjector";
+import AdminSchema from "@/components/seo/AdminSchema";
 import GalleryClient from "@/app/components/gallery/GalleryClient";
 import { getSectionData } from "@/lib/serverData";
 
@@ -36,9 +37,6 @@ export async function generateMetadata(): Promise<Metadata> {
   const description =
     seoData?.metaDescription ||
     "Explore glimpses, photos, and video highlights from previous editions of Bharat Organic Expo. Witness the scale, energy, and impactful moments.";
-  const ogImage =
-    seoData?.ogImage ||
-    "";
 
   return {
     metadataBase: new URL(defaultUrl),
@@ -59,10 +57,10 @@ export async function generateMetadata(): Promise<Metadata> {
       siteName: "Bharat Organic Expo 2027",
       images: [
         {
-          url: ogImage,
+          url: OG_IMAGE,
           width: 1200,
           height: 630,
-          alt: title,
+          alt: OG_IMAGE_ALT,
         },
       ],
       type: "website",
@@ -95,7 +93,7 @@ export default async function GalleryPage() {
 
   return (
     <>
-      <SchemaInjector schema={schemaContent} />
+      <AdminSchema schema={schemaContent} />
       <GalleryClient
         heroData={galleryHero}
         initialMeta={galleryMeta}
