@@ -15,7 +15,6 @@ import {
   CheckCircle2,
   ChevronDown,
   Clock3,
-  Eye,
   FileText,
   GraduationCap,
   Home,
@@ -629,6 +628,66 @@ function PersonalInformation({
 }
 
 /* =========================================================
+   CAREER OPTIONS (MANAGED IN ADMIN → ADD BY ADMIN)
+   ========================================================= */
+
+type CareerOptionLists = {
+  notice_period: string[];
+  joining_period: string[];
+  expected_ctc: string[];
+};
+
+// Used until the API responds, and whenever admin has not added any values for a list.
+const DEFAULT_CAREER_OPTIONS: CareerOptionLists = {
+  notice_period: ["Immediate", "7 Days", "15 Days", "30 Days", "45 Days", "60 Days", "90 Days"],
+  joining_period: ["Immediate", "Within 7 Days", "Within 15 Days", "Within 30 Days"],
+  expected_ctc: [
+    "As per industry standards",
+    "₹4 - 6 LPA",
+    "₹6 - 8 LPA",
+    "₹8 - 10 LPA",
+    "₹10 - 12 LPA",
+    "₹12+ LPA",
+  ],
+};
+
+function useCareerOptions(): CareerOptionLists & { loaded: boolean } {
+  const [lists, setLists] = useState<CareerOptionLists>(DEFAULT_CAREER_OPTIONS);
+  const [loaded, setLoaded] = useState(false);
+
+  useEffect(() => {
+    let cancelled = false;
+    fetch("/api/careers/options")
+      .then((res) => (res.ok ? res.json() : null))
+      .then((body) => {
+        if (cancelled || !body?.data) return;
+        const pick = (key: keyof CareerOptionLists): string[] => {
+          const labels: string[] = Array.isArray(body.data[key])
+            ? body.data[key]
+                .map((o: { label?: string }) => o?.label)
+                .filter((label: unknown): label is string => typeof label === "string" && label.length > 0)
+            : [];
+          return labels.length ? labels : DEFAULT_CAREER_OPTIONS[key];
+        };
+        setLists({
+          notice_period: pick("notice_period"),
+          joining_period: pick("joining_period"),
+          expected_ctc: pick("expected_ctc"),
+        });
+      })
+      .catch(() => {})
+      .finally(() => {
+        if (!cancelled) setLoaded(true);
+      });
+    return () => {
+      cancelled = true;
+    };
+  }, []);
+
+  return { ...lists, loaded };
+}
+
+/* =========================================================
    PROFESSIONAL DETAILS (READ-ONLY FROM RESUME)
    ========================================================= */
 
@@ -669,6 +728,20 @@ function ProfessionalDetails({
   const isFresher = employmentStatus === "Fresher";
   const isNotEmployed = employmentStatus === "Not Currently Employed";
   const isCurrentlyEmployed = employmentStatus === "Currently Employed";
+
+  const careerOptions = useCareerOptions();
+  // Currently employed candidates serve a notice period; everyone else picks when they can join.
+  const periodOptions = isCurrentlyEmployed ? careerOptions.notice_period : careerOptions.joining_period;
+  const ctcOptions = careerOptions.expected_ctc;
+
+  // Keep the selected values valid when the list changes (status switch or admin-managed list loads).
+  useEffect(() => {
+    if (careerOptions.loaded && !periodOptions.includes(noticePeriod)) setNoticePeriod(periodOptions[0]);
+  }, [careerOptions.loaded, periodOptions, noticePeriod, setNoticePeriod]);
+
+  useEffect(() => {
+    if (careerOptions.loaded && !ctcOptions.includes(expectedCTC)) setExpectedCTC(ctcOptions[0]);
+  }, [careerOptions.loaded, ctcOptions, expectedCTC, setExpectedCTC]);
 
   return (
     <div className="overflow-hidden rounded-[8px] border border-[#dce8e0] bg-white">
@@ -816,12 +889,12 @@ function ProfessionalDetails({
           />
 
           <SelectField
-            label="Notice Period"
+            label={isCurrentlyEmployed ? "Notice Period" : "Joining Period"}
             required
             icon={Clock3}
             value={noticePeriod}
             onChange={setNoticePeriod}
-            options={["Immediate", "7 Days", "15 Days", "30 Days", "45 Days", "60 Days", "90 Days"]}
+            options={periodOptions}
           />
 
           <SelectField
@@ -829,14 +902,7 @@ function ProfessionalDetails({
             required
             value={expectedCTC}
             onChange={setExpectedCTC}
-            options={[
-              "As per industry standards",
-              "₹4 - 6 LPA",
-              "₹6 - 8 LPA",
-              "₹8 - 10 LPA",
-              "₹10 - 12 LPA",
-              "₹12+ LPA",
-            ]}
+            options={ctcOptions}
           />
 
           <div>
@@ -971,7 +1037,6 @@ function TellUsMore({
 function CVCard({ candidateData }: { candidateData?: any }) {
   const cvName = candidateData?.cvName || profile.cvName;
   const cvSize = candidateData?.cvSize || profile.cvSize;
-  const cvUrl = candidateData?.cvUrl;
 
   return (
     <div className="rounded-[10px] border border-[#dce8e0] bg-white p-[11px] shadow-sm">
@@ -991,18 +1056,6 @@ function CVCard({ candidateData }: { candidateData?: any }) {
           <p className="mt-[1px] text-[12px] text-[#58708c]">{cvSize}</p>
 
           <div className="mt-[5px] flex gap-[13px] text-[12px] font-semibold text-[#0874ce]">
-            {cvUrl ? (
-              <a href={cvUrl} target="_blank" rel="noopener noreferrer" className="flex items-center gap-[4px]">
-                <Eye className="h-[13px] w-[13px]" />
-                View File
-              </a>
-            ) : (
-              <button className="flex items-center gap-[4px]">
-                <Eye className="h-[13px] w-[13px]" />
-                View File
-              </button>
-            )}
-
             <button className="flex items-center gap-[4px]">
               <RefreshCw className="h-[13px] w-[13px]" />
               Upload Different CV
@@ -1052,10 +1105,10 @@ function AISummaryCard({ candidateData }: { candidateData?: any }) {
             {candidateData?.summary || aiSummary.text}
           </p>
 
-          <button className="mt-[5px] flex items-center gap-[5px] text-[14px] font-semibold text-[#0b6941]">
+          {/* <button className="mt-[5px] flex items-center gap-[5px] text-[14px] font-semibold text-[#0b6941]">
             View Detailed Analysis
             <ArrowRight className="h-[12px] w-[12px]" />
-          </button>
+          </button> */}
         </div>
       </div>
     </div>
