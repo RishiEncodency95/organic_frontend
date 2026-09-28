@@ -1914,7 +1914,7 @@ function Sidebar({
 
         ${matchLevel === "low"
           ? "grid-rows-[54px_246px_130px_210px_96px_1fr]"
-          : "grid-rows-[54px_246px_130px_210px_48px_48px_58px_1fr]"}
+          : "grid-rows-[54px_246px_130px_210px_48px_58px_1fr]"}
         gap-[7px]
       `}
     >
