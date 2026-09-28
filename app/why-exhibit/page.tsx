@@ -8,8 +8,7 @@ import TestimonialsSection from "@/app/components/participate/why-exhibit/Testim
 import { settingsApi, seoApi, websiteApi } from "@/lib/api";
 import SchemaInjector from "@/app/components/SchemaInjector";
 
-export const dynamic = "force-dynamic";
-export const revalidate = 0;
+export const revalidate = 60;
 
 export async function generateMetadata(): Promise<Metadata> {
   const isLocal = process.env.NODE_ENV !== "production";
@@ -180,8 +179,8 @@ export default async function WhyExhibitPage() {
           100% { background-position: 0% 50%; }
         }
         @keyframes shimmer {
-          0%   { left: -75%; }
-          100% { left: 150%; }
+          0% { transform: translateX(0) skewX(-20deg); }
+          100% { transform: translateX(450%) skewX(-20deg); }
         }
         @keyframes sparkleAnim {
           0%   { opacity: 0; transform: scale(0.5) translateY(0); }

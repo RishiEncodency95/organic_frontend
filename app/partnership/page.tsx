@@ -7,8 +7,7 @@ import PartnershipOpportunities from "../components/opportunity/partnership/Part
 import WhyPartner from "../components/opportunity/partnership/WhyPartner";
 import EnquiryForm from "../components/opportunity/partnership/EnquiryForm";
 
-export const dynamic = "force-dynamic";
-export const revalidate = 0;
+export const revalidate = 60;
 
 export async function generateMetadata(): Promise<Metadata> {
   const isLocal = process.env.NODE_ENV !== "production";

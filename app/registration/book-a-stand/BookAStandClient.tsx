@@ -20,7 +20,7 @@ import {
     Plane
 } from "lucide-react";
 import HeroBg from "@/app/assets/buyer.webp";
-import DiscountImg from "@/app/assets/registration/discount.png";
+import DiscountImg from "@/app/assets/registration/discount.webp";
 import { Badge } from "@/app/components/ui/badge";
 import { Button } from "@/app/components/ui/button";
 import { Input } from "@/app/components/ui/input";

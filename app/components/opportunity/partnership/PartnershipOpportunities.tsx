@@ -2,7 +2,7 @@ import React from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { ArrowRight, CheckCircle2 } from "lucide-react";
-import leaf from "@/app/assets/icons/bleaf.png";
+import leaf from "@/app/assets/icons/bleaf.webp";
 import leafsImg from "@/app/assets/icons/leafs.png";
 import footerRightImg from "@/app/assets/icons/footerright.webp";
 import SectionContainer from "@/app/components/layout/SectionContainer";

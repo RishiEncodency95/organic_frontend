@@ -1,7 +1,7 @@
 import React from "react";
 import Image from "next/image";
 import { Check, ArrowRight, ShieldCheck, Users, Globe, Handshake, Target, Heart, Leaf, Sprout, Store, Factory, Package, Headphones, Truck, Briefcase, TestTube, Microscope, Droplet, Sparkles, Box, Sun, Droplets, Trash2, Lightbulb, Cpu, Building2, TrendingUp, Tractor, Wifi, Plane, Wind, Award, Network, FileText, BarChart, Scale, ShoppingCart, Landmark, GraduationCap, Monitor } from "lucide-react";
-import heroBg from "@/app/assets/exhibition-categories/certification/certification-bg.png";
+import heroBg from "@/app/assets/exhibition-categories/certification/certification-bg.webp";
 import certificationImg from "@/app/assets/exhibition-categories/certification/certification.png";
 import exportImg from "@/app/assets/exhibition-categories/certification/export.png";
 import globalImg from "@/app/assets/exhibition-categories/certification/global.png";
@@ -196,6 +196,7 @@ export default function CertificationTradeShowcase() {
                       src={prod.image}
                       alt={prod.title.replace('\n', ' ')}
                       fill
+                      sizes="(max-width: 768px) 50vw, (max-width: 1024px) 33vw, 20vw"
                       className="object-cover"
                     />
                   </div>

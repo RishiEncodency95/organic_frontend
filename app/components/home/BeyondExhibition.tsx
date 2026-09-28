@@ -29,7 +29,8 @@ import {
 
 import Image from 'next/image';
 import seminarsImg from '../../assets/home/seminars.webp';
-import { websiteApi } from '@/lib/api';
+import { API_URL } from '@/lib/api';
+import { isCloudinaryImage, cloudinaryImageLoader } from '@/lib/cloudinaryImage';
 
 const ICON_MAP: Record<string, LucideIcon> = {
   Users,
@@ -125,7 +126,9 @@ const BeyondExhibition = () => {
     let isMounted = true;
     const fetchBeyondExhibition = async () => {
       try {
-        const res = await websiteApi.getBeyondExhibition();
+        // Bypass the shared client/ISR cache — CMS edits to this section should be visible
+        // on next reload, not after the 60s server cache / 5min client-prime window.
+        const res = await fetch(`${API_URL}/website/home/beyond-exhibition`, { cache: 'no-store' }).then((r) => r.json());
         const serverData = res?.data || res;
         if (serverData && isMounted) {
           const rawItems = Array.isArray(serverData.items) && serverData.items.length > 0
@@ -189,7 +192,7 @@ const BeyondExhibition = () => {
                 src={data.image}
                 alt={data.imageAlt}
                 fill
-                unoptimized
+                loader={isCloudinaryImage(data.image) ? cloudinaryImageLoader : undefined}
                 className="object-cover absolute inset-0 z-0"
               />
             ) : (
@@ -197,6 +200,7 @@ const BeyondExhibition = () => {
                 src={data.image}
                 alt={data.imageAlt}
                 fill
+                sizes="(max-width: 1024px) 100vw, 35vw"
                 className="object-cover absolute inset-0 z-0"
               />
             )}

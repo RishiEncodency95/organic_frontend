@@ -1,18 +1,35 @@
 "use client";
 import React, { useState } from 'react';
 import { ChevronDown } from 'lucide-react';
+import { useEligibility } from './EligibilityContext';
 
 const EstimateSection = () => {
-  const [selectedCategory, setSelectedCategory] = useState<'standard' | 'applicable'>('applicable');
+  const { result } = useEligibility();
+  const hasResult = !!(result && result.documentType === 'valid_udyam_certificate');
+
+  // Rule: Female entrepreneur -> 100% assistance, regardless of social category
+  // (General/OBC/SC/ST). Male entrepreneur, in any category -> 80%. When no
+  // certificate has been analyzed yet, fall back to a manually toggled example.
+  const autoCategory: 'standard' | 'applicable' = result?.gender === 'Female' ? 'applicable' : 'standard';
+
+  const [manualCategory, setManualCategory] = useState<'standard' | 'applicable'>('applicable');
   const [stallSize, setStallSize] = useState<number>(9);
+
+  const selectedCategory = hasResult ? autoCategory : manualCategory;
 
   const spaceRate = 11500;
   const basicRent = stallSize * spaceRate;
   const assistanceRate = selectedCategory === 'standard' ? 80 : 100;
   const eligibleAssistance = (basicRent * assistanceRate) / 100;
 
-  const categoryName = selectedCategory === 'standard' ? 'Standard General' : 'Women MSME';
+  const categoryName = selectedCategory === 'standard' ? 'General' : 'Women MSME';
   const formatCurrency = (amount: number) => `₹${new Intl.NumberFormat('en-IN').format(amount)}`;
+
+  const explanation = hasResult
+    ? result?.gender === 'Female'
+      ? "Your Udyam certificate identifies the entrepreneur's gender as Female. Under PMS guidelines, Women-owned enterprises are eligible for up to 100% assistance on eligible space rent, regardless of social category (General/OBC/SC/ST)."
+      : "Your Udyam certificate does not identify the entrepreneur as Female, so the standard assistance rate of up to 80% on eligible space rent applies."
+    : "Therefore, although the social category shown in Udyam is General, the record separately shows the entrepreneur's gender as Female.";
 
   return (
     <div className="w-full mt-4 grid grid-cols-1 lg:grid-cols-2 gap-2 lg:gap-4">
@@ -20,15 +37,15 @@ const EstimateSection = () => {
       {/* Left Column: Your Estimated PMS Benefit */}
       <div className="bg-white rounded-xl lg:rounded-2xl border border-gray-100 p-4 md:px-5 md:py-4 flex flex-col justify-between shadow-[0_2px_10px_rgba(0,0,0,0.03)]">
         <h3 className="text-[13px] lg:text-[14px] font-semibold text-[#1b5e20] uppercase tracking-wide mb-6">
-          YOUR ESTIMATED PMS BENEFIT
+          {hasResult ? "YOUR PMS BENEFIT" : "YOUR ESTIMATED PMS BENEFIT"}
         </h3>
 
         <div className="flex flex-col sm:flex-row gap-4 mb-6 min-h-[180px] lg:min-h-[200px]">
 
           {/* Card 1: Standard */}
           <div
-            onClick={() => setSelectedCategory('standard')}
-            className={`flex-1 rounded-xl p-4 md:px-3 md:py-4 flex flex-col items-center justify-center text-center cursor-pointer transition-all relative overflow-hidden ${selectedCategory === 'standard'
+            onClick={() => !hasResult && setManualCategory('standard')}
+            className={`flex-1 rounded-xl p-4 md:px-3 md:py-4 flex flex-col items-center justify-center text-center transition-all relative overflow-hidden ${hasResult ? '' : 'cursor-pointer'} ${selectedCategory === 'standard'
               ? 'bg-[#fffcf5] border border-[#f59e0b]/40'
               : 'bg-[#f9fafb] border border-gray-100'
               }`}
@@ -40,15 +57,15 @@ const EstimateSection = () => {
                 </svg>
               </div>
             )}
-            <span className={`text-[11px] lg:text-lg font-semibold mb-3 ${selectedCategory === 'standard' ? 'text-[#d97706]' : 'text-gray-700'}`}>Standard General Category</span>
+            <span className={`text-[11px] lg:text-lg font-semibold mb-3 ${selectedCategory === 'standard' ? 'text-[#d97706]' : 'text-gray-700'}`}>General Category (Male)</span>
             <h4 className="text-xl lg:text-4xl font-semibold text-[#1b5e20] mb-2">Up to 80%</h4>
             <span className="text-[11px] lg:text-lg font-medium text-gray-500">Eligible Space Rent</span>
           </div>
 
           {/* Card 2: Applicable */}
           <div
-            onClick={() => setSelectedCategory('applicable')}
-            className={`flex-1 rounded-xl p-4 md:px-3 md:py-4 flex flex-col items-center justify-center text-center relative overflow-hidden cursor-pointer transition-all ${selectedCategory === 'applicable'
+            onClick={() => !hasResult && setManualCategory('applicable')}
+            className={`flex-1 rounded-xl p-4 md:px-3 md:py-4 flex flex-col items-center justify-center text-center relative overflow-hidden transition-all ${hasResult ? '' : 'cursor-pointer'} ${selectedCategory === 'applicable'
               ? 'bg-[#fffcf5] border border-[#f59e0b]/40'
               : 'bg-[#f9fafb] border border-gray-100'
               }`}
@@ -61,7 +78,9 @@ const EstimateSection = () => {
               </div>
             )}
 
-            <span className={`text-[11px] lg:text-[15px] font-semibold mb-3 uppercase tracking-wide ${selectedCategory === 'applicable' ? 'text-[#d97706]' : 'text-gray-700'}`}>YOUR APPLICABLE CATEGORY</span>
+            <span className={`text-[11px] lg:text-[15px] font-semibold mb-3 uppercase tracking-wide ${selectedCategory === 'applicable' ? 'text-[#d97706]' : 'text-gray-700'}`}>
+              {hasResult ? "YOUR APPLICABLE CATEGORY" : "WOMEN CATEGORY (EXAMPLE)"}
+            </span>
             <h4 className="text-xl lg:text-4xl font-semibold text-[#1b5e20] mb-2">Up to 100%</h4>
             <span className="text-[11px] lg:text-lg font-semibold text-gray-800">Women MSME Category</span>
           </div>
@@ -69,14 +88,14 @@ const EstimateSection = () => {
         </div>
 
         <p className="text-[11px] lg:text-[14px] font-medium text-gray-700 leading-relaxed">
-          Therefore, although the social category shown in Udyam is General, the record separately shows the entrepreneur&apos;s gender as Female.
+          {explanation}
         </p>
       </div>
 
       {/* Right Column: Estimate Your Potential Assistance */}
       <div className="bg-white rounded-xl lg:rounded-2xl border border-gray-100 p-4 md:px-5 md:py-4 shadow-[0_2px_10px_rgba(0,0,0,0.03)]">
         <h3 className="text-[13px] lg:text-[14px] font-semibold text-[#1b5e20] uppercase tracking-wide mb-5">
-          ESTIMATE YOUR POTENTIAL ASSISTANCE
+          {hasResult ? "YOUR POTENTIAL ASSISTANCE" : "ESTIMATE YOUR POTENTIAL ASSISTANCE"}
         </h3>
 
         <div className="flex flex-col sm:flex-row items-start sm:items-center gap-6 mb-5">
@@ -107,7 +126,7 @@ const EstimateSection = () => {
           </div>
         </div>
 
-        <h4 className="text-xs font-semibold text-gray-800 mb-3">Example Calculation</h4>
+        <h4 className="text-xs font-semibold text-gray-800 mb-3">{hasResult ? "Your Calculation" : "Example Calculation"}</h4>
 
         <div className="border border-gray-100 rounded-lg overflow-hidden mb-5">
           <table className="w-full text-left text-[11px] lg:text-xs">
@@ -136,7 +155,7 @@ const EstimateSection = () => {
               </tr>
               <tr className="bg-[#f4fbf4]">
                 <td className="px-4 py-3 font-semibold text-gray-800">Estimated Eligible Assistance</td>
-                <td className="px-4 py-3 font-semibold text-[#1b5e20]">Up to 99,000*</td>
+                <td className="px-4 py-3 font-semibold text-[#1b5e20]">Up to {formatCurrency(eligibleAssistance)}*</td>
               </tr>
             </tbody>
           </table>
@@ -150,7 +169,9 @@ const EstimateSection = () => {
             </svg>
           </div>
           <div className="flex flex-col gap-1">
-            <span className="text-[15px] font-semibold text-[#1b5e20]">You may be eligible for assistance of up to 99,000*</span>
+            <span className="text-[15px] font-semibold text-[#1b5e20]">
+              You may be eligible for assistance of up to {formatCurrency(eligibleAssistance)}*
+            </span>
             <span className="text-[10px] lg:text-[14px] font-medium text-gray-600 leading-[1.4]">
               This is an indicative calculation. Final eligible amount may be restricted by the approved stall area, scheme ceiling and other PMS conditions.
             </span>

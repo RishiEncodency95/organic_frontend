@@ -65,7 +65,7 @@ const organizerData = {
 
 const AboutOrganizer = () => {
   return (
-    <div style={{ fontFamily: "'Inter', sans-serif" }}>
+    <div style={{ fontFamily: "var(--font-inter-next), sans-serif" }}>
 
       {/* ABOUT THE ORGANIZER SECTION */}
       <section className="pt-6 pb-6 bg-[#FFFDF1] border-t border-gray-100">

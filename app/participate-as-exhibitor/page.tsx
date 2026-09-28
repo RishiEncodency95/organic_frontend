@@ -9,8 +9,7 @@ import ParticipateWhyParticipate from "@/app/components/participate-as-exhibitor
 import ParticipateCta from "@/app/components/participate-as-exhibitor/ParticipateCta";
 import ParticipateStats from "@/app/components/participate-as-exhibitor/ParticipateStats";
 
-export const dynamic = "force-dynamic";
-export const revalidate = 0;
+export const revalidate = 60;
 
 export async function generateMetadata(): Promise<Metadata> {
   const isLocal = process.env.NODE_ENV !== "production";

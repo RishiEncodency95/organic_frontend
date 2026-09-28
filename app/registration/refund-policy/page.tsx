@@ -30,7 +30,7 @@ import {
   Star
 } from "lucide-react";
 import { policyApi } from "@/lib/api";
-import termBanner from "@/app/assets/registration/terms-and-conditions.png";
+import termBanner from "@/app/assets/registration/terms-and-conditions.webp";
 import team1Icon from "@/app/assets/registration/team1.webp";
 import doc22Icon from "@/app/assets/registration/doc22.webp";
 
@@ -200,8 +200,8 @@ const RefundPolicy: React.FC = () => {
       <style dangerouslySetInnerHTML={{
         __html: `
         @keyframes shimmerHero {
-          0%   { left: -75%; }
-          100% { left: 150%; }
+          0% { transform: translateX(0) skewX(-20deg); }
+          100% { transform: translateX(450%) skewX(-20deg); }
         }
         .hero-shimmer-btn {
           position: relative;
@@ -269,8 +269,8 @@ const RefundPolicy: React.FC = () => {
         }
 
         @keyframes shimmerBtn {
-          0%   { left: -75%; }
-          100% { left: 125%; }
+          0% { transform: translateX(0) skewX(-20deg); }
+          100% { transform: translateX(400%) skewX(-20deg); }
         }
 
         @keyframes sparkleAnim {

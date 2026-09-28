@@ -28,7 +28,7 @@ import {
 } from "lucide-react";
 import nominationBg from "../../assets/awards/nomination.webp";
 import bharatOrganicLogo from "../../assets/awards/bharat_organic.webp";
-import beTheLeft from "../../assets/exhibitors/be_the_left.png";
+import beTheLeft from "../../assets/exhibitors/be_the_left.webp";
 import beTheRight from "../../assets/exhibitors/be_the_right.png";
 import SectionContainer from "@/app/components/layout/SectionContainer";
 

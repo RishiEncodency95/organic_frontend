@@ -1,14 +1,9 @@
-import { AlertTriangle, Check, ArrowRight, Headphones, Phone } from "lucide-react";
-import Link from "next/link";
+import { AlertTriangle, Check, Headphones, Phone } from "lucide-react";
 import { SITE_CONFIG } from "@/app/constants/siteConfig";
 
 export const APPLY_FOOTER_DATA = {
   declarationText:
     "I hereby declare that the information provided above is true and correct to the best of my knowledge and belief. I understand that any misrepresentation of facts may lead to rejection of my PMS claim and action as per applicable government guidelines.",
-  actions: {
-    saveLaterLabel: "Save & Continue Later",
-    proceedLabel: "Save & Proceed to Next",
-  },
   helpBanner: {
     title: "Need Help with PMS Application?",
     description:
@@ -20,20 +15,15 @@ export const APPLY_FOOTER_DATA = {
   },
 };
 
-export default function ApplyFooter({ 
-  nextLink = "/participate/msme/apply/participation-details",
+export default function ApplyFooter({
   showDeclaration = true,
-  showActions = true,
   section,
-}: { 
-  nextLink?: string;
+}: {
   showDeclaration?: boolean;
-  showActions?: boolean;
   section?: any;
 }) {
   const data = section ? {
     declarationText: section.description || APPLY_FOOTER_DATA.declarationText,
-    actions: APPLY_FOOTER_DATA.actions,
     helpBanner: {
       title: section.title || APPLY_FOOTER_DATA.helpBanner.title,
       description: section.description || APPLY_FOOTER_DATA.helpBanner.description,
@@ -69,18 +59,6 @@ export default function ApplyFooter({
               {data.declarationText}
             </div>
           </label>
-        </div>
-      )}
-
-      {/* Actions */}
-      {showActions && (
-        <div className="flex flex-col sm:flex-row items-center justify-between gap-4 mt-4 bg-[#fff] px-4 md:mx-14 py-4 rounded-xl shadow-[0_4px_20px_rgb(0,0,0,0.03)]">
-          <button type="button" className="w-full sm:w-auto h-[38px] px-6 rounded-md border-2 border-[#176b27] text-[#176b27] font-semibold text-[13px] uppercase tracking-wide hover:bg-[#f1f6f1] transition-colors">
-            {data.actions.saveLaterLabel}
-          </button>
-          <Link href={nextLink} target="_blank" className="w-full sm:w-auto h-[38px] px-8 rounded-md bg-[#176b27] text-white font-semibold text-[13px] uppercase tracking-wide hover:bg-[#115d20] transition-colors flex items-center justify-center gap-2 shadow-md">
-            {data.actions.proceedLabel} <ArrowRight size={18} strokeWidth={2.5} />
-          </Link>
         </div>
       )}
 

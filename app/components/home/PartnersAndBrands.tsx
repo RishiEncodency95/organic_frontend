@@ -44,8 +44,6 @@ const Marquee = ({
       >
         {children}
         {children}
-        {children}
-        {children}
       </div>
     </div>
   );
@@ -69,18 +67,6 @@ const renderLogo = (
   const src = item?.image || item;
   const alt = item?.imageAlt || item?.name || fallbackAlt;
 
-  if (typeof src === "string") {
-    return (
-      // eslint-disable-next-line @next/next/no-img-element
-      <img
-        src={src}
-        alt={alt}
-        className={className}
-        loading="lazy"
-      />
-    );
-  }
-
   return (
     <Image
       src={src}
@@ -88,12 +74,19 @@ const renderLogo = (
       className={className}
       height={height}
       width={width}
-      unoptimized
+      loading="lazy"
+      sizes={`${width}px`}
     />
   );
 };
 
-const PartnersAndBrands = () => {
+const activePartnerList = (value: any, fallback: any[]) => {
+  if (!Array.isArray(value) || value.length === 0) return fallback;
+  const active = value.filter((item: any) => item.status !== "Draft");
+  return active.length > 0 ? active : fallback;
+};
+
+const PartnersAndBrands = ({ initialData }: { initialData?: any }) => {
   // Default fallback lists
   const defaultIndustry = [
     { image: logo1, imageAlt: "Industry Partner 1" },
@@ -147,22 +140,24 @@ const PartnersAndBrands = () => {
     { image: logo4, imageAlt: "Emerging Brand 10" },
   ];
 
-  const [industryLeaders, setIndustryLeaders] = useState<any[]>(defaultIndustry);
-  const [knowledge, setKnowledge] = useState<any[]>(defaultKnowledge);
-  const [wellness, setWellness] = useState<any[]>(defaultWellness);
-  const [supporting, setSupporting] = useState<any[]>(defaultSupporting);
-  const [emergingBrands, setEmergingBrands] = useState<any[]>(defaultEmerging);
+  const [industryLeaders, setIndustryLeaders] = useState<any[]>(() => activePartnerList(initialData?.industryLeadersLogos, defaultIndustry));
+  const [knowledge, setKnowledge] = useState<any[]>(() => activePartnerList(initialData?.knowledgeLogos, defaultKnowledge));
+  const [wellness, setWellness] = useState<any[]>(() => activePartnerList(initialData?.wellnessLogos, defaultWellness));
+  const [supporting, setSupporting] = useState<any[]>(() => activePartnerList(initialData?.supportingLogos, defaultSupporting));
+  const [emergingBrands, setEmergingBrands] = useState<any[]>(() => activePartnerList(initialData?.emergingBrandsLogos, defaultEmerging));
 
   // Fetch live partners from backend
   useEffect(() => {
+    if (initialData) return;
+
     const fetchLivePartners = async () => {
       try {
         const backendUrl = process.env.NEXT_PUBLIC_SERVER_URL || "";
         const res = await fetch(`${backendUrl}/api/v1/website/home/partners-brands`).catch(() => null);
         if (res && res.ok) {
           const json = await res.json().catch(() => null);
-          if (json?.data) {
-            const data = json.data;
+          if (json?.data || json) {
+            const data = json?.data || json;
             if (Array.isArray(data.industryLeadersLogos) && data.industryLeadersLogos.length > 0) {
               const active = data.industryLeadersLogos.filter((x: any) => x.status !== "Draft");
               if (active.length > 0) setIndustryLeaders(active);
@@ -191,7 +186,7 @@ const PartnersAndBrands = () => {
     };
 
     fetchLivePartners();
-  }, []);
+  }, [initialData]);
 
   return (
     <section className="bg-white pt-4 pb-6 md:pt-6 md:pb-12 relative z-10 font-inter">

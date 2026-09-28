@@ -1,7 +1,7 @@
 import React from "react";
 import Image from "next/image";
 import { Check, ArrowRight, ShieldCheck, Users, Globe, Handshake, Target, Heart, Leaf, Sprout, Store, Factory, Package, Headphones, Truck, Briefcase, TestTube, Microscope, Droplet, Sparkles, Box, Sun, Droplets, Trash2, Lightbulb, Cpu, Building2, TrendingUp, Tractor, Wifi, Plane, Wind } from "lucide-react";
-import heroBg from "@/app/assets/exhibition-categories/agritech/agritech-bg.png";
+import heroBg from "@/app/assets/exhibition-categories/agritech/agritech-bg.webp";
 import smartImg from "@/app/assets/exhibition-categories/agritech/smart.png";
 import dronesImg from "@/app/assets/exhibition-categories/agritech/drones.png";
 import plantImg from "@/app/assets/exhibition-categories/agritech/plant.png";
@@ -207,6 +207,7 @@ export default function AgriTechShowcase() {
                       src={prod.image}
                       alt={prod.title.replace('\n', ' ')}
                       fill
+                      sizes="(max-width: 768px) 50vw, (max-width: 1024px) 33vw, 20vw"
                       className="object-cover"
                     />
                   </div>

@@ -17,8 +17,7 @@ import Whyparticipatesection from "@/app/components/participate/msme/Whyparticip
 import Faqbanner from "@/app/components/participate/msme/FaqBanner";
 import PmsFinalCtaSection from "@/app/components/participate/msme/PmsFinalCtaSection";
 
-export const dynamic = "force-dynamic";
-export const revalidate = 0;
+export const revalidate = 60;
 
 export async function generateMetadata(): Promise<Metadata> {
   const isLocal = process.env.NODE_ENV !== "production";

@@ -4,8 +4,7 @@ import type { Metadata } from 'next';
 import { seoApi } from "@/lib/api";
 import SchemaInjector from "@/app/components/SchemaInjector";
 
-export const dynamic = "force-dynamic";
-export const revalidate = 0;
+export const revalidate = 60;
 
 export async function generateMetadata(): Promise<Metadata> {
   const isLocal = process.env.NODE_ENV !== "production";
@@ -76,6 +75,7 @@ export async function generateMetadata(): Promise<Metadata> {
 
 // Synchronous load for above the fold
 import AboutHero from "@/app/components/abouts/about/AboutHero";
+import { getSectionData } from "@/lib/serverData";
 import AboutStrip from "@/app/components/abouts/about/AboutStrip";
 import EventOverview from "../components/abouts/about/EventOverview";
 import FourPillars from "../components/abouts/about/FourPillars";
@@ -102,16 +102,20 @@ const AboutPage = async () => {
   }
 
   const schemaContent = seoData?.schemaMarkup || null;
+  const [aboutHero, homeAbout] = await Promise.all([
+    getSectionData("/website/abouts/about/about-hero"),
+    getSectionData("/website/abouts/about/home-about"),
+  ]);
 
   return (
     <>
       <SchemaInjector schema={schemaContent} />
       <div className="bg-[#ffffff] min-h-screen">
-        <AboutHero />
+        <AboutHero initialData={aboutHero} />
         <AboutStrip />
 
         <Suspense fallback={<LoadingFallback />}>
-          <HomeAbout />
+          <HomeAbout initialData={homeAbout} />
           <EventOverview />
 
           <AboutOrganizer />

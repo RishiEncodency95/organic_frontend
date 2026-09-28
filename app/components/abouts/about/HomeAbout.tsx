@@ -40,30 +40,35 @@ const DEFAULT_DATA: HomeAboutData = {
   ]
 };
 
-const HomeAbout = () => {
-  const [data, setData] = useState<HomeAboutData>(DEFAULT_DATA);
+const toHomeAboutData = (d: any): HomeAboutData => {
+  const paragraphs = Array.isArray(d?.paragraphs) && d.paragraphs.some((p: any) => p?.text) ? d.paragraphs : null;
+  return {
+    tagline: d?.tagline || DEFAULT_DATA.tagline,
+    title: d?.title || DEFAULT_DATA.title,
+    image: typeof d?.image === "string" ? d.image.trim() : "",
+    imageAlt: d?.imageAlt || DEFAULT_DATA.imageAlt,
+    paragraphs: paragraphs || DEFAULT_DATA.paragraphs,
+  };
+};
+
+const HomeAbout = ({ initialData }: { initialData?: any }) => {
+  const [data, setData] = useState<HomeAboutData>(initialData ? toHomeAboutData(initialData) : DEFAULT_DATA);
 
   useEffect(() => {
+    // The page already fetched this on the server; only fetch here if that failed.
+    if (initialData) return;
     let active = true;
     fetch(`${API_URL}/website/abouts/about/home-about`, { cache: "no-store" })
       .then((res) => (res.ok ? res.json() : null))
       .then((json) => {
         const d = json?.data || json;
-        if (!active || !d) return;
-        const paragraphs = Array.isArray(d.paragraphs) && d.paragraphs.length > 0 ? d.paragraphs : null;
-        setData({
-          tagline: d.tagline || DEFAULT_DATA.tagline,
-          title: d.title || DEFAULT_DATA.title,
-          image: typeof d.image === "string" ? d.image.trim() : "",
-          imageAlt: d.imageAlt || DEFAULT_DATA.imageAlt,
-          paragraphs: paragraphs || DEFAULT_DATA.paragraphs,
-        });
+        if (active && d) setData(toHomeAboutData(d));
       })
       .catch(() => {});
     return () => {
       active = false;
     };
-  }, []);
+  }, [initialData]);
 
   const bannerSrc = data.image || aboutImg;
 

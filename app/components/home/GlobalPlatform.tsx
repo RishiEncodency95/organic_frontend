@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
-import Image from "next/image";
+import Image, { type StaticImageData } from "next/image";
 import { Leaf } from "lucide-react";
 import fromIndiaBg from "../../assets/home/fromIndiaBg.webp";
 
@@ -9,7 +9,13 @@ import form1 from "../../assets/home/form1.png";
 import form2 from "../../assets/home/form2.png";
 import form3 from "../../assets/home/form3.png";
 import form4 from "../../assets/home/form4.png";
-import { websiteApi } from "@/lib/api";
+import { SERVER_URL, API_URL } from "@/lib/api";
+
+const resolveImageUrl = (src: string): string => {
+  if (!src) return src;
+  if (src.startsWith("http://") || src.startsWith("https://") || src.startsWith("data:")) return src;
+  return `${SERVER_URL}${src.startsWith("/") ? "" : "/"}${src}`;
+};
 
 const DEFAULT_GLOBAL = {
   enabled: true,
@@ -28,7 +34,7 @@ const DEFAULT_GLOBAL = {
   ],
   cards: [
     {
-      iconSrc: form1,
+      iconSrc: form1 as StaticImageData | string,
       iconAlt: "Global Connections",
       iconWidth: 90,
       iconHeight: 90,
@@ -77,7 +83,10 @@ const GlobalPlatform = () => {
     let isMounted = true;
     const fetchGlobal = async () => {
       try {
-        const res = await websiteApi.getGlobalPlatform();
+        // Bypass the shared client/ISR cache here — this section is edited often from the
+        // CMS and admins expect to see their save reflected immediately, not after the
+        // 60s server cache / 5min client-prime window other sections tolerate.
+        const res = await fetch(`${API_URL}/website/home/global-platform`, { cache: 'no-store' }).then((r) => r.json());
         const serverData = res?.data || res;
         if (serverData && isMounted) {
           const rawCards = serverData.items || serverData.cards;
@@ -98,6 +107,8 @@ const GlobalPlatform = () => {
                   ...fallback,
                   title: c.title || fallback.title,
                   desc: c.description || c.desc || fallback.desc,
+                  iconSrc: c.image ? resolveImageUrl(c.image) : fallback.iconSrc,
+                  iconAlt: c.imageAlt || c.title || fallback.iconAlt,
                 };
               });
             }

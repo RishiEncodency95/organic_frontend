@@ -1,10 +1,12 @@
 "use client";
 import React, { useState, useEffect } from 'react';
+import Image from 'next/image';
 import { motion, Variants } from 'framer-motion';
 import gallarybg from '@/app/assets/banner/gallog2.webp';
 import { Leaf } from 'lucide-react';
 import SectionContainer from '@/app/components/layout/SectionContainer';
 import { API_URL } from '@/lib/api';
+import { cloudinaryImageLoader, isCloudinaryImage } from '@/lib/cloudinaryImage';
 
 const customEase: [number, number, number, number] = [0.16, 1, 0.3, 1];
 
@@ -72,10 +74,22 @@ const DEFAULT_SETTINGS = {
   rightImage: '',
 };
 
-const Hero = () => {
-  const [settings, setSettings] = useState(DEFAULT_SETTINGS);
+const toGalleryHero = (d: any): typeof DEFAULT_SETTINGS | null =>
+  d && (d.title || d.subtitle || d.rightImage || d.image)
+    ? {
+        heading: d.title || DEFAULT_SETTINGS.heading,
+        subheading: d.subtitle || DEFAULT_SETTINGS.subheading,
+        description: d.shortDescription || d.description || DEFAULT_SETTINGS.description,
+        rightImage: d.rightImage || d.image || '',
+      }
+    : null;
+
+const Hero = ({ initialData }: { initialData?: any }) => {
+  const [settings, setSettings] = useState(() => toGalleryHero(initialData) || DEFAULT_SETTINGS);
 
   useEffect(() => {
+    // The page already fetched this on the server; only fetch here if that failed.
+    if (toGalleryHero(initialData)) return;
     const fetchHero = async () => {
       try {
         const res = await fetch(`${API_URL}/website/gallery/hero`, {
@@ -83,14 +97,9 @@ const Hero = () => {
         });
         if (res.ok) {
           const json = await res.json();
-          const d = json?.data || json;
-          if (d && (d.title || d.subtitle || d.rightImage || d.image)) {
-            setSettings({
-              heading: d.title || DEFAULT_SETTINGS.heading,
-              subheading: d.subtitle || DEFAULT_SETTINGS.subheading,
-              description: d.shortDescription || d.description || DEFAULT_SETTINGS.description,
-              rightImage: d.rightImage || d.image || '',
-            });
+          const mapped = toGalleryHero(json?.data || json);
+          if (mapped) {
+            setSettings(mapped);
             return;
           }
         }
@@ -118,29 +127,35 @@ const Hero = () => {
       }
     };
     fetchHero();
-  }, []);
+  }, [initialData]);
 
   const titleChars = (settings.heading || "GLIMPSES").split("");
-  const staticBg = typeof gallarybg === 'string' ? gallarybg : gallarybg.src;
-  const bgUrl = settings.rightImage || staticBg;
+  const bgSource = settings.rightImage || gallarybg;
+  const bgKey = typeof bgSource === 'string' ? bgSource : bgSource?.src || 'gallery-hero-bg';
 
   return (
     <section className="relative w-full py-8 md:py-12 lg:py-16 bg-[#f8faf8] overflow-hidden font-inter" style={{ perspective: 1200 }}>
       {/* Background Image */}
       <motion.div
-        key={bgUrl}
+        key={bgKey}
         className="absolute inset-0 z-0 pointer-events-none"
         style={{
-          backgroundImage: `url(${bgUrl})`,
-          backgroundSize: 'cover',
-          backgroundPosition: 'center right',
-          backgroundRepeat: 'no-repeat',
           transformOrigin: 'center'
         }}
         initial={{ opacity: 0, scale: 1.05 }}
         animate={{ opacity: 1, scale: 1 }}
         transition={{ duration: 1.0, ease: customEase }}
-      />
+      >
+        <Image
+          src={bgSource}
+          alt=""
+          fill
+          loader={isCloudinaryImage(bgSource) ? cloudinaryImageLoader : undefined}
+          preload
+          sizes="100vw"
+          className="object-cover object-right"
+        />
+      </motion.div>
 
       {/* Mobile-only light overlay */}
       <div className="absolute inset-0 z-[1] bg-gradient-to-b from-white/95 via-white/85 to-white/40 md:hidden pointer-events-none" />
@@ -175,7 +190,7 @@ const Hero = () => {
             initial="hidden"
             animate="visible"
             className="text-base sm:text-[20px] md:text-[28px] text-[#4B1426] font-bold mb-1.5 italic text-center"
-            style={{ fontFamily: "'Playfair Display', serif" }}
+            style={{ fontFamily: "var(--font-playfair-next), serif" }}
           >
             {settings.subheading}
           </motion.h2>
@@ -220,7 +235,7 @@ const Hero = () => {
             initial="hidden"
             animate="visible"
             className="text-slate-900 text-xs sm:text-sm md:text-base max-w-3xl font-semibold leading-relaxed whitespace-pre-line font-inter text-center"
-            style={{ fontFamily: "'Inter', sans-serif" }}
+            style={{ fontFamily: "var(--font-inter-next), sans-serif" }}
           >
             {settings.description}
           </motion.p>

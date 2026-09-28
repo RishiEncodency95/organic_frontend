@@ -1,7 +1,7 @@
 import React from "react";
 import Image from "next/image";
 import { Check, ArrowRight, ShieldCheck, Users, Globe, Handshake, Target, Heart, Leaf, Sprout, Store, Factory, Package, Headphones, Truck, Briefcase, TestTube, Microscope, Droplet, Sparkles, Box, Sun, Droplets, Trash2, Lightbulb, Cpu, Building2, TrendingUp } from "lucide-react";
-import heroBg from "@/app/assets/exhibition-categories/sustainable/sustainable-bg.png";
+import heroBg from "@/app/assets/exhibition-categories/sustainable/sustainable-bg.webp";
 import sustainnableImg from "@/app/assets/exhibition-categories/sustainable/sustainnable.png";
 import ecoImg from "@/app/assets/exhibition-categories/sustainable/eco.png";
 import renewableImg from "@/app/assets/exhibition-categories/sustainable/renewable.png";
@@ -196,6 +196,7 @@ export default function SustainablePackagingShowcase() {
                       src={prod.image}
                       alt={prod.title.replace('\n', ' ')}
                       fill
+                      sizes="(max-width: 768px) 50vw, (max-width: 1024px) 33vw, 20vw"
                       className="object-cover"
                     />
 

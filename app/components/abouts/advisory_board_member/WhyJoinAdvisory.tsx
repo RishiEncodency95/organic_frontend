@@ -1,7 +1,7 @@
 import React from "react";
 import { Target, Globe2, Lightbulb, ShieldCheck, ArrowRight, Leaf, Users, TrendingUp } from "lucide-react";
 import Link from "next/link";
-import nominateBg from "../../../assets/about/advisory_board_member/nominate1.png";
+import nominateBg from "../../../assets/about/advisory_board_member/nominate1.webp";
 
 const whyJoinAdvisoryData = {
     topSection: {

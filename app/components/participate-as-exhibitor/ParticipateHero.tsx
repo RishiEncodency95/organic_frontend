@@ -85,8 +85,8 @@ const ParticipateHero = () => {
           100% { opacity: 0; transform: scale(0.5) translateY(-6px); }
         }
         @keyframes shimmerHero {
-          0%   { left: -75%; }
-          100% { left: 150%; }
+          0% { transform: translateX(0) skewX(-20deg); }
+          100% { transform: translateX(450%) skewX(-20deg); }
         }
         .blue-btn-hero {
           background: linear-gradient(135deg, #1b5e20 0%, #2e7d32 30%, #0e3b1c 60%, #1b5e20 100%);

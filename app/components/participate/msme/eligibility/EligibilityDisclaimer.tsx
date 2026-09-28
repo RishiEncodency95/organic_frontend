@@ -12,7 +12,7 @@ const EligibilityDisclaimer = () => {
           Important Disclaimer
         </h4>
         <p className="text-[11px] md:text-[12px] font-medium text-gray-700 leading-relaxed">
-          This is a preliminary eligibility screening based on the Udyam Registration details provided and the approved industry scope of Bharat Organic Expo. &quot;Up to 100%&quot; refers to potential assistance on eligible space rent under the applicable PMS category and does not mean a guaranteed refund of the complete exhibition invoice. Final eligibility, admissible stall area, financial ceiling, sanction and reimbursement are subject to applicable Ministry of MSME guidelines and approval by the competent authority.
+          This page reads and displays details directly from the Udyam Registration Certificate you upload — it is not a determination of PMS eligibility or assistance amount. Final eligibility, admissible stall area, applicable assistance percentage, financial ceiling, sanction and reimbursement are subject to applicable Ministry of MSME guidelines and approval by the competent authority after you submit your application.
         </p>
       </div>
     </div>

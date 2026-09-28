@@ -6,7 +6,8 @@ import Image from 'next/image';
 import { motion } from 'framer-motion';
 import { CheckCircle2, FileDown, ArrowRight, Leaf, Store, Info } from 'lucide-react';
 import SectionContainer from '../layout/SectionContainer';
-import { websiteApi, SERVER_URL } from '@/lib/api';
+import { SERVER_URL, API_URL } from '@/lib/api';
+import { isCloudinaryImage, cloudinaryImageLoader } from '@/lib/cloudinaryImage';
 import meetingImg from "../../assets/home/bs_meet.webp";
 
 // ── Sparkle Component (same as Footer) ──
@@ -62,7 +63,9 @@ const WhyParticipate = () => {
     let isMounted = true;
     const fetchWhyParticipate = async () => {
       try {
-        const res = await websiteApi.getWhyParticipate();
+        // Bypass the shared client/ISR cache — CMS edits to this section should be visible
+        // on next reload, not after the 60s server cache / 5min client-prime window.
+        const res = await fetch(`${API_URL}/website/home/why-participate`, { cache: 'no-store' }).then((r) => r.json());
         const serverData = res?.data || res;
         if (serverData && isMounted) {
           const keyPoints = [
@@ -306,7 +309,7 @@ const WhyParticipate = () => {
                 alt={data.imageAlt}
                 width={700}
                 height={450}
-                unoptimized
+                loader={isCloudinaryImage(data.image) ? cloudinaryImageLoader : undefined}
                 className="w-full h-[200px] sm:h-[240px] md:h-[390px] object-cover"
               />
             ) : (

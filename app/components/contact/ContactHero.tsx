@@ -35,10 +35,20 @@ const DEFAULT_DATA: ContactHeroData = {
   ],
 };
 
-const ContactHero = () => {
-  const [data, setData] = useState<ContactHeroData>(DEFAULT_DATA);
+const toContactHeroData = (hero: any): ContactHeroData => ({
+  eyebrow: hero?.eyebrow || DEFAULT_DATA.eyebrow,
+  title: hero?.title || DEFAULT_DATA.title,
+  subtitle: hero?.subtitle || DEFAULT_DATA.subtitle,
+  image: typeof hero?.image === 'string' ? hero.image.trim() : '',
+  items: Array.isArray(hero?.items) && hero.items.length > 0 ? hero.items : DEFAULT_DATA.items,
+});
+
+const ContactHero = ({ initialSection }: { initialSection?: any }) => {
+  const [data, setData] = useState<ContactHeroData>(initialSection ? toContactHeroData(initialSection) : DEFAULT_DATA);
 
   useEffect(() => {
+    // The page already fetched this on the server; only fetch here if that failed.
+    if (initialSection) return;
     let active = true;
     fetch(`${API_URL}/settings`, { cache: 'no-store' })
       .then((res) => (res.ok ? res.json() : null))
@@ -46,21 +56,13 @@ const ContactHero = () => {
         const settings = json?.data || json;
         const sections = settings?.contactPage?.sections;
         const hero = Array.isArray(sections) ? sections.find((s: any) => s.key === 'contact-hero') : null;
-        if (active && hero) {
-          setData({
-            eyebrow: hero.eyebrow || DEFAULT_DATA.eyebrow,
-            title: hero.title || DEFAULT_DATA.title,
-            subtitle: hero.subtitle || DEFAULT_DATA.subtitle,
-            image: typeof hero.image === 'string' ? hero.image.trim() : '',
-            items: Array.isArray(hero.items) && hero.items.length > 0 ? hero.items : DEFAULT_DATA.items,
-          });
-        }
+        if (active && hero) setData(toContactHeroData(hero));
       })
       .catch(() => {});
     return () => {
       active = false;
     };
-  }, []);
+  }, [initialSection]);
 
   const bgUrl = data.image || (contactbg as any)?.src || contactbg;
 
@@ -89,7 +91,7 @@ const ContactHero = () => {
             {/* Heading */}
             <h1
               className="text-2xl sm:text-3xl md:text-4xl lg:text-6xl font-[700] text-[#03221c] leading-tight mb-2 md:mb-4"
-              style={{ fontFamily: "'Playfair Display', serif" }}
+              style={{ fontFamily: "var(--font-playfair-next), serif" }}
             >
               {(() => {
                 const words = data.title.trim().split(/\s+/);

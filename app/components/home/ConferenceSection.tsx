@@ -5,7 +5,8 @@ import { Leaf, ArrowRight, Calendar, MapPin, Users, CheckCircle, Mic, BookOpen }
 import { motion } from 'framer-motion';
 import Link from 'next/link';
 import Image from 'next/image';
-import { websiteApi } from '@/lib/api';
+import { API_URL } from '@/lib/api';
+import { isCloudinaryImage, cloudinaryImageLoader } from '@/lib/cloudinaryImage';
 import global1 from '../../assets/home/global1.webp';
 
 // ── Default Data Configuration ──
@@ -61,7 +62,9 @@ const ConferenceSeminars = () => {
     let isMounted = true;
     const fetchConferenceData = async () => {
       try {
-        const res = await websiteApi.getConferenceSeminars();
+        // Bypass the shared client/ISR cache — CMS edits to this section should be visible
+        // on next reload, not after the 60s server cache / 5min client-prime window.
+        const res = await fetch(`${API_URL}/website/home/conference-seminars`, { cache: 'no-store' }).then((r) => r.json());
         const serverData = res?.data || res;
         if (serverData && isMounted) {
           const checklist = [
@@ -152,8 +155,8 @@ const ConferenceSeminars = () => {
 
         /* ── Sweep shine ── */
         @keyframes orangeSweep {
-          0%   { left: -75%; }
-          100% { left: 150%; }
+          0% { transform: translateX(0) skewX(-20deg); }
+          100% { transform: translateX(450%) skewX(-20deg); }
         }
 
         /* ── Orange sparkle float-up ── */
@@ -326,7 +329,7 @@ const ConferenceSeminars = () => {
                 alt={data.imageAlt}
                 width={600}
                 height={400}
-                unoptimized
+                loader={isCloudinaryImage(data.image) ? cloudinaryImageLoader : undefined}
                 className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
               />
             ) : (

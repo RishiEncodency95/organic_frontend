@@ -44,7 +44,7 @@ export default async function ParticipationDetailsPage() {
         </div>
 
         {/* Footer (Only Help Banner for this step, as actions are inside the form) */}
-        <ApplyFooter showDeclaration={false} showActions={false} section={footerSec} />
+        <ApplyFooter showDeclaration={false} section={footerSec} />
       </main>
     </div>
   );

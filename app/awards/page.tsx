@@ -11,8 +11,7 @@ import AwardsCelebratingLeaders from "@/app/components/awards/AwardsCelebratingL
 import AwardsInfoColumns from "@/app/components/awards/AwardsInfoColumns";
 import AwardsCta from "@/app/components/awards/AwardsCta";
 
-export const dynamic = "force-dynamic";
-export const revalidate = 0;
+export const revalidate = 60;
 
 export async function generateMetadata(): Promise<Metadata> {
   const isLocal = process.env.NODE_ENV !== "production";
@@ -96,7 +95,7 @@ const AwardsPage = async () => {
   let awardsHeroData: any = null;
   try {
     const apiUrl = process.env.NEXT_PUBLIC_API_URL || "http://localhost:4001/api";
-    const res = await fetch(`${apiUrl}/website/awards/hero`, { cache: "no-store" }).catch(() => null);
+    const res = await fetch(`${apiUrl}/website/awards/hero`, { next: { revalidate: 60 } }).catch(() => null);
     if (res && res.ok) {
       const json = await res.json().catch(() => null);
       if (json?.data) {
@@ -110,7 +109,7 @@ const AwardsPage = async () => {
   let awardsStatsData: any = null;
   try {
     const apiUrl = process.env.NEXT_PUBLIC_API_URL || "http://localhost:4001/api";
-    const res = await fetch(`${apiUrl}/website/awards/stats`, { cache: "no-store" }).catch(() => null);
+    const res = await fetch(`${apiUrl}/website/awards/stats`, { next: { revalidate: 60 } }).catch(() => null);
     if (res && res.ok) {
       const json = await res.json().catch(() => null);
       if (json?.data) {
@@ -124,7 +123,7 @@ const AwardsPage = async () => {
   let awardsAboutData: any = null;
   try {
     const apiUrl = process.env.NEXT_PUBLIC_API_URL || "http://localhost:4001/api";
-    const res = await fetch(`${apiUrl}/website/awards/about`, { cache: "no-store" }).catch(() => null);
+    const res = await fetch(`${apiUrl}/website/awards/about`, { next: { revalidate: 60 } }).catch(() => null);
     if (res && res.ok) {
       const json = await res.json().catch(() => null);
       if (json?.data) {
@@ -138,7 +137,7 @@ const AwardsPage = async () => {
   let awardsCategoriesData: any = null;
   try {
     const apiUrl = process.env.NEXT_PUBLIC_API_URL || "http://localhost:4001/api";
-    const res = await fetch(`${apiUrl}/website/awards/categories`, { cache: "no-store" }).catch(() => null);
+    const res = await fetch(`${apiUrl}/website/awards/categories`, { next: { revalidate: 60 } }).catch(() => null);
     if (res && res.ok) {
       const json = await res.json().catch(() => null);
       if (json?.data) {
@@ -152,7 +151,7 @@ const AwardsPage = async () => {
   let awardsGrandAwardsData: any = null;
   try {
     const apiUrl = process.env.NEXT_PUBLIC_API_URL || "http://localhost:4001/api";
-    const res = await fetch(`${apiUrl}/website/awards/grand-awards`, { cache: "no-store" }).catch(() => null);
+    const res = await fetch(`${apiUrl}/website/awards/grand-awards`, { next: { revalidate: 60 } }).catch(() => null);
     if (res && res.ok) {
       const json = await res.json().catch(() => null);
       if (json?.data) {
@@ -166,7 +165,7 @@ const AwardsPage = async () => {
   let awardsProcessData: any = null;
   try {
     const apiUrl = process.env.NEXT_PUBLIC_API_URL || "http://localhost:4001/api";
-    const res = await fetch(`${apiUrl}/website/awards/process`, { cache: "no-store" }).catch(() => null);
+    const res = await fetch(`${apiUrl}/website/awards/process`, { next: { revalidate: 60 } }).catch(() => null);
     if (res && res.ok) {
       const json = await res.json().catch(() => null);
       if (json?.data) {

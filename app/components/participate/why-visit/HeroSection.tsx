@@ -6,7 +6,7 @@ import { ArrowRight, CalendarDays, MapPin, UserCheck, Users, Building2, Globe, M
 import gsap from "gsap";
 import { useInView, animate } from "framer-motion";
 
-import visitBanner from "@/app/assets/banner/visitog.png";
+import visitBanner from "@/app/assets/banner/visitog.webp";
 import leafImg from "@/app/assets/icons/leafs.png";
 import SectionContainer from "@/app/components/layout/SectionContainer";
 
@@ -263,8 +263,8 @@ export default function HeroSection({ sectionData }: { sectionData?: any }) {
           100% { opacity: 0; transform: scale(0.5) translateY(-6px); }
         }
         @keyframes shimmerHero {
-          0%   { left: -75%; }
-          100% { left: 150%; }
+          0% { transform: translateX(0) skewX(-20deg); }
+          100% { transform: translateX(450%) skewX(-20deg); }
         }
         .blue-btn-hero-exh {
           background: linear-gradient(135deg, #1b5e20 0%, #2e7d32 30%, #0e3b1c 60%, #1b5e20 100%);

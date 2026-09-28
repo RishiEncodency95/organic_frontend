@@ -1,7 +1,7 @@
 import React from "react";
 import Image from "next/image";
 import { Check, ArrowRight, ShieldCheck, Users, Globe, Handshake, Target, Heart, Leaf, Sprout, Store, Factory, Package, Headphones, Truck, Briefcase, TestTube, Microscope, Droplet, Sparkles, Stethoscope, BadgeCheck, Dumbbell, Activity, Apple, Brain, Pill, FlaskConical, Building2, Smile, FileText } from "lucide-react";
-import heroBg from "@/app/assets/exhibition-categories/nutraceuticals/nutraceuticals-bg.png";
+import heroBg from "@/app/assets/exhibition-categories/nutraceuticals/nutraceuticals-bg.webp";
 import dietaryImg from "@/app/assets/exhibition-categories/nutraceuticals/dietary.png";
 import sportsImg from "@/app/assets/exhibition-categories/nutraceuticals/sports.png";
 import immunityImg from "@/app/assets/exhibition-categories/nutraceuticals/immunity.png";
@@ -197,6 +197,7 @@ export default function NutraceuticalsShowcase() {
                       src={prod.image}
                       alt={prod.title.replace('\n', ' ')}
                       fill
+                      sizes="(max-width: 768px) 50vw, (max-width: 1024px) 33vw, 20vw"
                       className="object-cover"
                     />
 

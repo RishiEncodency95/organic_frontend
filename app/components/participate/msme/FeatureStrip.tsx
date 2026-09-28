@@ -1,10 +1,32 @@
 "use client";
-import React, { useRef, useEffect } from "react";
-import { Users, CheckCircle, Target, ArrowUpRight, TrendingUp } from "lucide-react";
+import React, { useRef, useEffect, useState } from "react";
+import {
+  Users, CheckCircle, Target, ArrowUpRight, TrendingUp, Store, Presentation, Building2, Globe,
+  Leaf, GraduationCap, Stethoscope, Landmark, ShieldCheck, Handshake, Award, Medal, Lightbulb,
+  Mic, CalendarDays, Eye, Sprout, HeartPulse, Trophy, Megaphone, UserCheck, Briefcase, Sparkles,
+  Zap, IdCard, Plug, Contact, Wifi, ShoppingBag, Coffee, Newspaper, FileText, Camera, Headphones,
+  MessageCircle, Clock, Phone, Mail, MapPin, Heart, Star, Info, type LucideIcon,
+} from "lucide-react";
 import gsap from "gsap";
 import SectionContainer from "@/app/components/layout/SectionContainer";
+import { API_URL } from "@/lib/api";
 
-export const FEATURE_STRIP_DATA = [
+const ICON_MAP: Record<string, LucideIcon> = {
+  Users, CheckCircle, Target, ArrowUpRight, TrendingUp, Store, Presentation, Building2, Globe,
+  Leaf, GraduationCap, Stethoscope, Landmark, ShieldCheck, Handshake, Award, Medal, Lightbulb,
+  Mic, CalendarDays, Eye, Sprout, HeartPulse, Trophy, Megaphone, UserCheck, Briefcase, Sparkles,
+  Zap, IdCard, Plug, Contact, Wifi, ShoppingBag, Coffee, Newspaper, FileText, Camera, Headphones,
+  MessageCircle, Clock, Phone, Mail, MapPin, Heart, Star, Info,
+};
+
+interface FeatureStripItem {
+  id: number;
+  icon: LucideIcon;
+  title: string;
+  subtitle: string;
+}
+
+const DEFAULT_FEATURE_STRIP_DATA: FeatureStripItem[] = [
   { id: 1, icon: Users, title: "Curated Meetings", subtitle: "Relevant Connections" },
   { id: 2, icon: CheckCircle, title: "Verified Business", subtitle: "Profiles" },
   { id: 3, icon: Target, title: "Industry Focused", subtitle: "Networking" },
@@ -13,6 +35,32 @@ export const FEATURE_STRIP_DATA = [
 ];
 
 export default function FeatureStrip() {
+  const [FEATURE_STRIP_DATA, setFeatureStripData] = useState<FeatureStripItem[]>(DEFAULT_FEATURE_STRIP_DATA);
+
+  useEffect(() => {
+    let isMounted = true;
+    fetch(`${API_URL}/settings?website=Organicexpo`, { cache: "no-store" })
+      .then((res) => res.json())
+      .then((res) => {
+        if (!isMounted) return;
+        const sections = res?.data?.msmePage?.sections || res?.msmePage?.sections || [];
+        const section = Array.isArray(sections) ? sections.find((s: any) => s.key === "feature-strip") : null;
+        if (!section || !Array.isArray(section.items) || section.items.length === 0) return;
+        setFeatureStripData(
+          section.items.map((it: any, idx: number) => ({
+            id: idx + 1,
+            icon: ICON_MAP[it.icon] || Users,
+            title: it.title || DEFAULT_FEATURE_STRIP_DATA[idx % DEFAULT_FEATURE_STRIP_DATA.length].title,
+            subtitle: it.subtitle || "",
+          }))
+        );
+      })
+      .catch((err) => console.error("Failed to load MSME feature strip:", err));
+    return () => {
+      isMounted = false;
+    };
+  }, []);
+
   const bandRef = useRef<HTMLDivElement>(null);
   const shimmerRef = useRef<HTMLDivElement>(null);
   const itemRefs = useRef<(HTMLDivElement | null)[]>([]);

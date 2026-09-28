@@ -1,7 +1,7 @@
 import React from "react";
 import Image from "next/image";
 import { Check, Phone, ArrowRight, ShieldCheck, Users, Globe, Handshake, Target, MapPin, Calendar, Heart, Leaf, Sprout, Store, Star, Factory, Tag, Package, Coffee, Carrot, CheckCircle2, Navigation, Headphones, TrendingUp, Megaphone, Apple, CupSoda, Utensils, Wheat, BadgeCheck, Truck, ShoppingBag, GraduationCap, Droplet, FlaskConical, Stethoscope, Building2, Beaker, FileText, Briefcase, Sun, Tractor, Trees, TestTube, Microscope, Search, Sprout as Plant, Milk, Cross, Syringe, Home, Recycle, Box, Dna, Settings } from "lucide-react";
-import heroBg from "@/app/assets/exhibition-categories/dairy-livestock-allied/dairy-ayurveda-bg.png";
+import heroBg from "@/app/assets/exhibition-categories/dairy-livestock-allied/dairy-ayurveda-bg.webp";
 import dairyProductsImg from "@/app/assets/exhibition-categories/dairy-livestock-allied/dairy-products.png";
 import cattleImg from "@/app/assets/exhibition-categories/dairy-livestock-allied/cattle.png";
 import animalFeedImg from "@/app/assets/exhibition-categories/dairy-livestock-allied/animal-feed.png";
@@ -197,6 +197,7 @@ export default function DairyLivestockShowcase() {
                       src={prod.image || heroBg} // Needs actual category image later
                       alt={prod.title.replace('\n', ' ')}
                       fill
+                      sizes="(max-width: 768px) 50vw, (max-width: 1024px) 33vw, 20vw"
                       className="object-cover"
                     />
 

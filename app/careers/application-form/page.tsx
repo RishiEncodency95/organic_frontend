@@ -49,7 +49,7 @@ const DESIGN_HEIGHT = 900;
 const asset = (file: string) => `/separated-assets/${file}`;
 
 const assets = {
-  sidebarTop: asset("ChatGPT Image Sep 16, 2026, 04_29_31 PM.png"),
+  sidebarTop: asset("career-sidebar-top.png"),
   sidebarFooter: sidebarFooterImage,
   profile: "/career-submit-resume-assets/profile.png",
 
@@ -347,7 +347,6 @@ function PersonalInformation({
 
   const [isVerifying, setIsVerifying] = useState(false);
   const [verificationError, setVerificationError] = useState<string | null>(null);
-  const [verifiedGender, setVerifiedGender] = useState<string | null>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   const handlePhotoSelect = async (file: File) => {
@@ -400,21 +399,18 @@ function PersonalInformation({
           }
         }
 
-        // 2. Deep AI vision check: real human adult face, appropriate content, upright,
-        // clear, and (when the résumé states a gender) matching it.
-        const resumeGender = candidateData?.fullProfile?.gender || candidateData?.gender || null;
+        // 2. Deep AI vision check: real human adult face, appropriate content, upright, clear.
         try {
           const res = await fetch("/api/verify-image", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ imageBase64: dataUrl, expectedGender: resumeGender }),
+            body: JSON.stringify({ imageBase64: dataUrl }),
           });
 
           const json = await res.json();
           if (json.success) {
             setPhotoSrc(dataUrl);
             setIsPhotoVerified(true);
-            setVerifiedGender(json.gender || "Human");
             setVerificationError(null);
           } else {
             setVerificationError(
@@ -510,7 +506,7 @@ function PersonalInformation({
               <div className="space-y-[3px]">
                 <div className="flex items-center gap-[5px] text-[13.5px] font-bold text-[#047857]">
                   <CheckCircle2 className="h-[16px] w-[16px] fill-[#059669] text-white" />
-                  OpenAI Photo Verified
+                  Photo Verified
                 </div>
                 <p className="text-[11.5px] font-semibold text-[#065f46]">
                   ✓ Valid male/female face, upright & sharp photo.
@@ -1237,7 +1233,7 @@ function ApplicationFormContent({
             className="flex w-fit items-center gap-[6px] text-[14px] font-semibold text-[#0d5d3c] hover:text-[#d92027] transition-colors"
           >
             <ArrowLeft className="h-[15px] w-[15px]" />
-            Back
+            Preview
           </button>
 
           <h1 className="mt-[2px] text-[24px] font-semibold leading-none tracking-[-0.02em] text-[#123963]">

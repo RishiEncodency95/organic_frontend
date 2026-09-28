@@ -4,7 +4,7 @@ import React from "react";
 import Link from "next/link";
 import { Leaf, ArrowRight } from "lucide-react";
 import SectionContainer from "@/app/components/layout/SectionContainer";
-import visitBg from "@/app/assets/banner/visit.png";
+import visitBg from "@/app/assets/banner/visit.webp";
 
 import u1 from "@/app/assets/icons/u1.png";
 import u2 from "@/app/assets/icons/u2.png";

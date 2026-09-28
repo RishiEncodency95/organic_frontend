@@ -2,6 +2,7 @@
 
 import React, { useEffect, useState, useRef } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { Leaf, Calendar, Clock, ArrowRight, ChevronLeft, ChevronRight } from "lucide-react";
 import { API_URL } from "@/lib/api";
 
@@ -55,9 +56,30 @@ interface InsightArticle {
   link: string;
 }
 
-const LatestInsights = () => {
-  const [articles, setArticles] = useState<InsightArticle[]>([]);
-  const [isLoading, setIsLoading] = useState(true);
+const normalizeArticles = (payload: any): InsightArticle[] => {
+  const posts = payload?.data?.posts || payload?.posts || (Array.isArray(payload) ? payload : []);
+  if (!Array.isArray(posts)) return [];
+
+  return posts.map((p: any) => {
+    const rawExcerpt = p.excerpt || p.content || "";
+    const plainExcerpt = cleanText(rawExcerpt);
+    return {
+      id: p._id || p.id,
+      badge: p.category || "Organic Trends",
+      date: formatDate(p.scheduledDate || p.publishDate || p.createdAt),
+      title: p.title,
+      description: plainExcerpt.length > 140 ? `${plainExcerpt.slice(0, 140)}...` : plainExcerpt,
+      readTime: p.readTime || "4 min read",
+      image: p.image || featuredImg1.src,
+      link: `/blog/${p.slug || "indias-organic-market"}`,
+    };
+  });
+};
+
+const LatestInsights = ({ initialData }: { initialData?: any }) => {
+  const hasInitialData = initialData !== null && initialData !== undefined;
+  const [articles, setArticles] = useState<InsightArticle[]>(() => normalizeArticles(initialData));
+  const [isLoading, setIsLoading] = useState(!hasInitialData);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [cardsPerView, setCardsPerView] = useState(3);
 
@@ -82,6 +104,8 @@ const LatestInsights = () => {
   }, []);
 
   useEffect(() => {
+    if (hasInitialData) return;
+
     setIsLoading(true);
     fetch(`${API_URL}/blogs?showOnHome=true&status=published`)
       .then((res) => {
@@ -89,25 +113,8 @@ const LatestInsights = () => {
         return res.json();
       })
       .then((data) => {
-        const posts = data?.data?.posts || data?.posts || [];
-        if (Array.isArray(posts) && posts.length > 0) {
-          const dynamicItems: InsightArticle[] = posts.map((p: any) => {
-            const rawExcerpt = p.excerpt || p.content || "";
-            const plainExcerpt = cleanText(rawExcerpt);
-            return {
-              id: p._id || p.id,
-              badge: p.category || "Organic Trends",
-              date: formatDate(p.scheduledDate || p.publishDate || p.createdAt),
-              title: p.title,
-              description:
-                plainExcerpt.length > 140
-                  ? plainExcerpt.slice(0, 140) + "..."
-                  : plainExcerpt,
-              readTime: p.readTime || "4 min read",
-              image: p.image || featuredImg1.src,
-              link: `/blog/${p.slug || "indias-organic-market"}`,
-            };
-          });
+        const dynamicItems = normalizeArticles(data);
+        if (dynamicItems.length > 0) {
 
           // ONLY SHOW DYNAMIC POSTS - NO STATIC DUMMY CARDS!
           setArticles(dynamicItems);
@@ -122,7 +129,7 @@ const LatestInsights = () => {
       .finally(() => {
         setIsLoading(false);
       });
-  }, []);
+  }, [hasInitialData]);
 
   // If no dynamic posts marked for home, don't render empty section
   if (!isLoading && articles.length === 0) {
@@ -159,7 +166,7 @@ const LatestInsights = () => {
   return (
     <section
       className="relative w-full py-3 md:py-5 overflow-hidden border-t border-gray-100 font-inter"
-      style={{ backgroundColor: "#F7F8F0", fontFamily: "'Inter', sans-serif" }}
+      style={{ backgroundColor: "#F7F8F0", fontFamily: "var(--font-inter-next), sans-serif" }}
     >
       <div className="w-full px-2 md:px-14 relative z-10">
         {/* BRANDED HEADING (Matching WhoCanParticipate font-poppins & font-semibold) */}
@@ -169,7 +176,7 @@ const LatestInsights = () => {
               <div className="h-px w-6 md:w-8 bg-[#1b5e20]" />
               <span
                 className="uppercase tracking-[0.3em] md:tracking-[0.4em] text-[#1b5e20] font-bold text-[10px] md:text-xs font-poppins"
-                style={{ fontFamily: "'Poppins', sans-serif" }}
+                style={{ fontFamily: "var(--font-poppins-next), sans-serif" }}
               >
                 {sectionHeader.badge}
               </span>
@@ -177,7 +184,7 @@ const LatestInsights = () => {
             </div>
             <h2
               className="text-[17px] md:text-2xl lg:text-3xl font-semibold text-[#1b5e20] uppercase leading-[1.1] font-poppins"
-              style={{ fontFamily: "'Poppins', sans-serif" }}
+              style={{ fontFamily: "var(--font-poppins-next), sans-serif" }}
             >
               {sectionHeader.titlePrefix}{" "}
               <span className="text-[#d26019]">{sectionHeader.titleHighlight}</span>
@@ -188,7 +195,7 @@ const LatestInsights = () => {
             <Link
               href={sectionHeader.linkHref}
               className="flex items-center gap-1 md:gap-2 text-[#c2410c] hover:text-[#9a3412] font-poppins font-bold text-[10px] md:text-xs uppercase tracking-widest hover:gap-4 transition-all w-fit"
-              style={{ fontFamily: "'Poppins', sans-serif" }}
+              style={{ fontFamily: "var(--font-poppins-next), sans-serif" }}
             >
               {sectionHeader.linkText} <ArrowRight className="w-3 h-3 md:w-4 md:h-4" />
             </Link>
@@ -223,17 +230,21 @@ const LatestInsights = () => {
                 >
                   {/* Image Container */}
                   <div className="relative h-[160px] md:h-[220px] w-full overflow-hidden">
-                    <img
+                    <Image
                       src={article.image}
                       alt={article.title}
-                      className="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-[1.03]"
+                      fill
+                      sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                      loading="lazy"
+                      quality={75}
+                      className="object-cover transition-transform duration-700 ease-out group-hover:scale-[1.03]"
                     />
 
                     {/* Featured Badge */}
                     {article.badge && (
                       <div
                         className="absolute top-2 left-2 md:top-4 md:left-4 bg-[#1b5e20] text-white text-[9px] md:text-[10px] font-semibold tracking-wider uppercase px-2 py-1 md:px-3 md:py-1.5 rounded-md shadow-md z-20 font-poppins"
-                        style={{ fontFamily: "'Poppins', sans-serif" }}
+                        style={{ fontFamily: "var(--font-poppins-next), sans-serif" }}
                       >
                         {article.badge}
                       </div>
@@ -243,7 +254,7 @@ const LatestInsights = () => {
                   {/* Content */}
                   <div
                     className="p-3 md:p-4 lg:p-5 flex flex-col flex-1 relative bg-white font-inter"
-                    style={{ fontFamily: "'Inter', sans-serif" }}
+                    style={{ fontFamily: "var(--font-inter-next), sans-serif" }}
                   >
                     {/* Subtle Leaf bg inside card */}
                     <div className="absolute bottom-3 right-3 w-10 h-10 opacity-[0.06] pointer-events-none">
@@ -254,7 +265,7 @@ const LatestInsights = () => {
                       <Calendar className="w-3 h-3 md:w-4 md:h-4 text-[#3b8c2a]" strokeWidth={2.5} />
                       <span
                         className="text-gray-700 font-semibold text-[10px] md:text-xs"
-                        style={{ fontFamily: "'Inter', sans-serif" }}
+                        style={{ fontFamily: "var(--font-inter-next), sans-serif" }}
                       >
                         {article.date}
                       </span>
@@ -262,14 +273,14 @@ const LatestInsights = () => {
 
                     <h3
                       className="text-[13px] md:text-lg font-semibold text-[#1b5e20] leading-[1.2] md:leading-snug mb-1.5 md:mb-2 font-poppins group-hover:text-[#3b8c2a] transition-colors line-clamp-2"
-                      style={{ fontFamily: "'Poppins', sans-serif" }}
+                      style={{ fontFamily: "var(--font-poppins-next), sans-serif" }}
                     >
                       {article.title}
                     </h3>
 
                     <p
                       className="text-gray-700 text-[11px] md:text-sm font-medium md:font-semibold leading-tight md:leading-relaxed mb-3 md:mb-4 flex-1 line-clamp-3 font-inter"
-                      style={{ fontFamily: "'Inter', sans-serif" }}
+                      style={{ fontFamily: "var(--font-inter-next), sans-serif" }}
                     >
                       {article.description}
                     </p>
@@ -277,7 +288,7 @@ const LatestInsights = () => {
                     <div className="flex items-center justify-between mt-auto">
                       <div
                         className="flex items-center text-[#1b5e20] font-semibold text-[10.5px] md:text-sm group/btn transition-colors hover:text-[#3b8c2a] font-poppins"
-                        style={{ fontFamily: "'Poppins', sans-serif" }}
+                        style={{ fontFamily: "var(--font-poppins-next), sans-serif" }}
                       >
                         Read more
                         <ArrowRight
@@ -288,7 +299,7 @@ const LatestInsights = () => {
 
                       <div
                         className="flex items-center gap-1 md:gap-1.5 text-gray-600 font-semibold text-[9.5px] md:text-xs"
-                        style={{ fontFamily: "'Inter', sans-serif" }}
+                        style={{ fontFamily: "var(--font-inter-next), sans-serif" }}
                       >
                         <Clock className="w-3 h-3 md:w-3.5 md:h-3.5 text-gray-500" />
                         <span>{article.readTime}</span>

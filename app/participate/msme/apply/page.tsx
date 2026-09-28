@@ -42,6 +42,7 @@ export default async function PMSApplyPage() {
 
           </div>
         </div>
+        {/* Actions live inside EnterpriseForm, which needs the collected field values to save. */}
         <ApplyFooter section={footerSec} />
       </main>
     </div>

@@ -2,10 +2,10 @@
 
 import React, { useState, useEffect } from "react";
 import Image from "next/image";
-import { motion } from "framer-motion";
 import introImg from "../../assets/home/homeIntro.webp";
 import leafog from "@/app/assets/icons/leafs.webp";
-import { websiteApi } from "@/lib/api";
+import { API_URL } from "@/lib/api";
+import { isCloudinaryImage, cloudinaryImageLoader } from "@/lib/cloudinaryImage";
 
 const DEFAULT_INTRO = {
   enabled: true,
@@ -27,8 +27,16 @@ const DEFAULT_INTRO = {
   imageAlt: "Bharat Organic Expo 2027 Introduction",
 };
 
-const IntroductionSection = () => {
-  const [data, setData] = useState(DEFAULT_INTRO);
+const mergeIntroData = (serverData?: any) => ({
+  ...DEFAULT_INTRO,
+  ...(serverData || {}),
+  enabled: serverData?.enabled !== false,
+  description2: serverData?.description2 ?? DEFAULT_INTRO.description2,
+  showTimer: serverData?.showTimer !== false,
+});
+
+const IntroductionSection = ({ initialData }: { initialData?: any }) => {
+  const [data, setData] = useState(() => mergeIntroData(initialData));
   const [timeLeft, setTimeLeft] = useState({
     days: 0,
     hours: 0,
@@ -38,13 +46,16 @@ const IntroductionSection = () => {
 
   // Fetch dynamic content from backend
   useEffect(() => {
+    if (initialData) return;
     let isMounted = true;
     const fetchIntro = async () => {
       try {
-        const res = await websiteApi.getIntroductionSection();
+        // Bypass the shared client/ISR cache — CMS edits to this section should be visible
+        // on next reload, not after the 60s server cache / 5min client-prime window.
+        const res = await fetch(`${API_URL}/website/home/introduction-section`, { cache: 'no-store' }).then((r) => r.json());
         const serverData = res?.data || res;
         if (serverData && isMounted) {
-          setData((prev) => ({
+          setData((prev: any) => ({
             ...prev,
             enabled: serverData.enabled !== false,
             eyebrow: serverData.eyebrow || prev.eyebrow,
@@ -74,7 +85,7 @@ const IntroductionSection = () => {
     return () => {
       isMounted = false;
     };
-  }, []);
+  }, [initialData]);
 
   // Dynamic Countdown Timer
   useEffect(() => {
@@ -132,11 +143,7 @@ const IntroductionSection = () => {
       <div className="w-full px-4 sm:px-6 lg:px-14 relative z-10">
         <div className="flex flex-col lg:flex-row gap-2 lg:gap-6 items-center mb-2">
           {/* LEFT: Content */}
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.8, ease: "easeOut" }}
+          <div
             className="w-full lg:w-[60%]"
           >
             {/* Introduction Badge */}
@@ -226,14 +233,10 @@ const IntroductionSection = () => {
                 </a>
               </div>
             ) : null}
-          </motion.div>
+          </div>
 
           {/* RIGHT: Image & Countdown Timer */}
-          <motion.div
-            initial={{ opacity: 0, scale: 0.95 }}
-            whileInView={{ opacity: 1, scale: 1 }}
-            viewport={{ once: true }}
-            transition={{ duration: 1, ease: "easeOut" }}
+          <div
             className="w-full lg:w-[40%] flex flex-col items-center gap-4 relative mt-2 lg:mt-0"
           >
             {/* Highly Highlighted White Countdown Timer */}
@@ -281,12 +284,14 @@ const IntroductionSection = () => {
             <div className="relative z-10 p-2 md:p-3 rounded-[1.5rem] bg-white/60 backdrop-blur-md border border-white shadow-[0_15px_40px_rgba(0,0,0,0.06)] w-full">
               {activeImage ? (
                 typeof activeImage === "string" ? (
-                  <img
+                  <Image
                     src={activeImage}
                     alt={data.imageAlt || "Bharat Organic Expo"}
                     width={640}
                     height={480}
+                    sizes="(max-width: 1024px) calc(100vw - 2rem), 38vw"
                     loading="lazy"
+                    loader={isCloudinaryImage(activeImage) ? cloudinaryImageLoader : undefined}
                     className="w-full aspect-[4/3] h-auto object-cover rounded-2xl"
                   />
                 ) : (
@@ -295,7 +300,7 @@ const IntroductionSection = () => {
                     alt={data.imageAlt || "Bharat Organic Expo"}
                     width={640}
                     height={480}
-                    sizes="(max-width: 768px) 100vw, 40vw"
+                    sizes="(max-width: 1024px) calc(100vw - 2rem), 38vw"
                     quality={75}
                     loading="lazy"
                     className="w-full aspect-[4/3] h-auto object-cover rounded-2xl"
@@ -312,7 +317,7 @@ const IntroductionSection = () => {
               {/* Floating Decorative Elements */}
               <div className="absolute -top-6 -right-6 w-24 h-24 bg-[url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxMDAgMTAwIj48Y2lyY2xlIGN4PSI1MCIgY3k9IjUwIiByPSI0MCIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjM2I4YzJhIiBzdHJva2Utd2lkdGg9IjIiIHN0cm9rZS1kYXNoYXJyYXk9IjQgNCIgb3BhY2l0eT0iMC4yIi8+PC9zdmc+')] animate-[spin_20s_linear_infinite] pointer-events-none z-0"></div>
             </div>
-          </motion.div>
+          </div>
         </div>
       </div>
     </section>

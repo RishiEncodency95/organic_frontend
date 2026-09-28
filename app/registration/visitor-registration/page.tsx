@@ -4,8 +4,7 @@ import { seoApi } from "@/lib/api";
 import SchemaInjector from "@/app/components/SchemaInjector";
 import VisitorRegistrationClient from "./VisitorRegistrationClient";
 
-export const dynamic = "force-dynamic";
-export const revalidate = 0;
+export const revalidate = 60;
 
 export async function generateMetadata(): Promise<Metadata> {
   const isLocal = process.env.NODE_ENV !== "production";

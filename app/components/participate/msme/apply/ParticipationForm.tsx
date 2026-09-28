@@ -1,13 +1,23 @@
 "use client";
 import { useState, useEffect, useRef } from "react";
+import { useRouter } from "next/navigation";
 import { FileText, ChevronDown, CheckCircle2, User, ArrowLeft, ArrowRight, CheckCircle } from "lucide-react";
-import Link from "next/link";
-import { verifyApi } from "@/lib/api";
+import { verifyApi, msmeApi, msmeStorage } from "@/lib/api";
 import Swal from "sweetalert2";
 
+const STALL_TYPES = ["Shell Scheme", "Bare Space", "Country Pavilion", "Other"];
+// Indian mobile numbers are 10 digits and always start with 6-9.
+const MOBILE_RE = /^[6-9][0-9]{9}$/;
+const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[A-Za-z]{2,}$/;
+
 export default function ParticipationForm() {
+  const router = useRouter();
+
+  const [stallType, setStallType] = useState(STALL_TYPES[0]);
   const [stallSize, setStallSize] = useState<number>(9);
-  
+  const [stallLocation, setStallLocation] = useState("Hall 12 - Organic & Natural Products Zone");
+  const [isSaving, setIsSaving] = useState(false);
+
   // Verification States
   const [contactPerson, setContactPerson] = useState({
     name: "",
@@ -25,9 +35,19 @@ export default function ParticipationForm() {
   const [phoneTimer, setPhoneTimer] = useState(0);
   const [isEmailLoading, setIsEmailLoading] = useState(false);
   const [isPhoneLoading, setIsPhoneLoading] = useState(false);
-  
+
   const emailTimerRef = useRef<number | null>(null);
   const phoneTimerRef = useRef<number | null>(null);
+
+  useEffect(() => {
+    if (!msmeStorage.getApplicationId()) {
+      Swal.fire({
+        title: "Enterprise details missing",
+        text: "Please complete Step 1 (Enterprise Details) first.",
+        icon: "warning",
+      }).then(() => router.replace("/participate/msme/apply"));
+    }
+  }, [router]);
 
   useEffect(() => {
     if (emailTimer > 0) {
@@ -167,6 +187,67 @@ export default function ParticipationForm() {
     }).format(amount);
   };
 
+  // Format checks, shown under a field only once the applicant has typed into it.
+  const mobileError = contactPerson.mobile && !MOBILE_RE.test(contactPerson.mobile)
+    ? "Enter a valid 10-digit mobile number starting with 6-9." : "";
+  const emailError = contactPerson.email && !EMAIL_RE.test(contactPerson.email.trim())
+    ? "Enter a valid email address, e.g. name@company.com." : "";
+  const alternateMobileError = contactPerson.alternateMobile && !MOBILE_RE.test(contactPerson.alternateMobile)
+    ? "Enter a valid 10-digit mobile number starting with 6-9." : "";
+
+  /** Every starred field, paired with whether it currently holds a usable value. */
+  const requiredChecks: [string, boolean][] = [
+    ["Stall Type", !!stallType],
+    ["Stall Size", stallSize > 0],
+    ["Contact Person Name", !!contactPerson.name.trim()],
+    ["Designation", !!contactPerson.designation.trim()],
+    ["Mobile Number", MOBILE_RE.test(contactPerson.mobile)],
+    ["Email ID", EMAIL_RE.test(contactPerson.email.trim())],
+  ];
+  const missingFields = requiredChecks.filter(([, ok]) => !ok).map(([label]) => label);
+  // A correctly formatted number or address still has to clear its OTP before the applicant moves on.
+  if (MOBILE_RE.test(contactPerson.mobile) && !phoneVerified) missingFields.push("Mobile OTP verification");
+  if (EMAIL_RE.test(contactPerson.email.trim()) && !emailVerified) missingFields.push("Email OTP verification");
+  const isFormValid = missingFields.length === 0 && !alternateMobileError;
+
+  const handleSaveAndContinue = async () => {
+    const applicationId = msmeStorage.getApplicationId();
+    if (!applicationId) {
+      Swal.fire({ title: "Enterprise details missing", text: "Please complete Step 1 first.", icon: "warning" })
+        .then(() => router.replace("/participate/msme/apply"));
+      return;
+    }
+    if (!isFormValid) return;
+
+    setIsSaving(true);
+    try {
+      const res = await msmeApi.saveParticipationDetails(applicationId, {
+        stallType,
+        stallSize: String(stallSize),
+        stallLocation,
+        contactPerson: {
+          name: contactPerson.name,
+          designation: contactPerson.designation,
+          mobile: contactPerson.mobile,
+          email: contactPerson.email,
+          verifiedMobile: phoneVerified ? contactPerson.mobile : undefined,
+          verifiedEmail: emailVerified ? contactPerson.email : undefined,
+        },
+      });
+
+      if (!res.success) {
+        Swal.fire({ title: "Error", text: res.message || "Could not save your details. Please try again.", icon: "error" });
+        return;
+      }
+
+      router.push("/participate/msme/apply/payment");
+    } catch (error) {
+      Swal.fire({ title: "Error", text: "Something went wrong while saving. Please try again.", icon: "error" });
+    } finally {
+      setIsSaving(false);
+    }
+  };
+
   return (
     <div className="flex flex-col gap-4">
       <div className="w-full bg-white rounded-xl shadow-[0_4px_20px_rgb(0,0,0,0.03)] p-4 md:p-6">
@@ -229,7 +310,7 @@ export default function ParticipationForm() {
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-3">
             {/* Option 1 */}
             <label className="relative cursor-pointer">
-              <input type="radio" name="stall_type" defaultChecked className="peer sr-only" />
+              <input type="radio" name="stall_type" checked={stallType === "Shell Scheme"} onChange={() => setStallType("Shell Scheme")} className="peer sr-only" />
               <div className="flex flex-col items-center justify-center py-4 px-2 border border-gray-200 hover:border-[#176b27] peer-checked:border-[#176b27] peer-checked:border-2 peer-checked:bg-[#f9fbf9] rounded-lg text-center transition-all h-full">
                 <div className="absolute top-2 right-2 text-[#176b27] opacity-0 peer-checked:opacity-100 transition-opacity">
                   <CheckCircle2 size={18} strokeWidth={3} fill="currentColor" className="text-white bg-[#176b27] rounded-full" />
@@ -246,7 +327,7 @@ export default function ParticipationForm() {
 
             {/* Option 2 */}
             <label className="relative cursor-pointer">
-              <input type="radio" name="stall_type" className="peer sr-only" />
+              <input type="radio" name="stall_type" checked={stallType === "Bare Space"} onChange={() => setStallType("Bare Space")} className="peer sr-only" />
               <div className="flex flex-col items-center justify-center py-4 px-2 border border-gray-200 hover:border-[#176b27] peer-checked:border-[#176b27] peer-checked:border-2 peer-checked:bg-[#f9fbf9] rounded-lg text-center transition-all h-full">
                 <div className="absolute top-2 right-2 text-[#176b27] opacity-0 peer-checked:opacity-100 transition-opacity">
                   <CheckCircle2 size={18} strokeWidth={3} fill="currentColor" className="text-white bg-[#176b27] rounded-full" />
@@ -263,7 +344,7 @@ export default function ParticipationForm() {
 
             {/* Option 3 */}
             <label className="relative cursor-pointer">
-              <input type="radio" name="stall_type" className="peer sr-only" />
+              <input type="radio" name="stall_type" checked={stallType === "Country Pavilion"} onChange={() => setStallType("Country Pavilion")} className="peer sr-only" />
               <div className="flex flex-col items-center justify-center py-4 px-2 border border-gray-200 hover:border-[#176b27] peer-checked:border-[#176b27] peer-checked:border-2 peer-checked:bg-[#f9fbf9] rounded-lg text-center transition-all h-full">
                 <div className="absolute top-2 right-2 text-[#176b27] opacity-0 peer-checked:opacity-100 transition-opacity">
                   <CheckCircle2 size={18} strokeWidth={3} fill="currentColor" className="text-white bg-[#176b27] rounded-full" />
@@ -280,7 +361,7 @@ export default function ParticipationForm() {
 
             {/* Option 4 */}
             <label className="relative cursor-pointer">
-              <input type="radio" name="stall_type" className="peer sr-only" />
+              <input type="radio" name="stall_type" checked={stallType === "Other"} onChange={() => setStallType("Other")} className="peer sr-only" />
               <div className="flex flex-col items-center justify-center py-4 px-2 border border-gray-200 hover:border-[#176b27] peer-checked:border-[#176b27] peer-checked:border-2 peer-checked:bg-[#f9fbf9] rounded-lg text-center transition-all h-full">
                 <div className="absolute top-2 right-2 text-[#176b27] opacity-0 peer-checked:opacity-100 transition-opacity">
                   <CheckCircle2 size={18} strokeWidth={3} fill="currentColor" className="text-white bg-[#176b27] rounded-full" />
@@ -322,7 +403,8 @@ export default function ParticipationForm() {
               </label>
               <input
                 type="text"
-                defaultValue="Hall 12 - Organic & Natural Products Zone"
+                value={stallLocation}
+                onChange={(e) => setStallLocation(e.target.value)}
                 className="w-full h-[36px] px-3 bg-[#fafbfa] border border-[#e5e7eb] rounded-md text-[13px] font-semibold text-gray-800 focus:outline-none"
               />
             </div>
@@ -447,7 +529,7 @@ export default function ParticipationForm() {
                     <button
                       type="button"
                       onClick={handleSendPhoneOtp}
-                      disabled={isPhoneLoading || phoneTimer > 0}
+                      disabled={isPhoneLoading || phoneTimer > 0 || !MOBILE_RE.test(contactPerson.mobile)}
                       className="inline-flex items-center justify-center h-[18px] bg-[#176b27] text-white text-[9px] font-semibold uppercase rounded-[2px] px-2 transition-colors disabled:opacity-50 hover:bg-[#11501d]"
                     >
                       {phoneTimer > 0 ? `Resend ${phoneTimer}s` : "Get OTP"}
@@ -466,14 +548,15 @@ export default function ParticipationForm() {
                   readOnly={phoneVerified}
                   placeholder="10-digit mobile number"
                   className={`w-full h-[36px] px-3 bg-[#fafbfa] border rounded-md text-[13px] font-semibold text-gray-800 focus:outline-none ${
-                    phoneVerified ? "border-green-500" : "border-[#e5e7eb]"
+                    phoneVerified ? "border-green-500" : mobileError ? "border-red-400" : "border-[#e5e7eb]"
                   }`}
                 />
+                {mobileError && <p className="mt-1 text-[10.5px] font-medium text-red-500">{mobileError}</p>}
                 {!phoneVerified && phoneTimer > 0 && (
                   <div className="flex gap-1 mt-1 animate-in fade-in slide-in-from-top-1">
                     <input
                       value={phoneOtp}
-                      onChange={(e) => setPhoneOtp(e.target.value)}
+                      onChange={(e) => setPhoneOtp(e.target.value.replace(/\D/g, "").slice(0, 6))}
                       placeholder="6-Digit OTP"
                       maxLength={6}
                       className="h-[32px] border border-[#176b27] bg-white text-gray-900 text-[12px] font-semibold text-center tracking-[0.3em] outline-none rounded-md w-full"
@@ -499,7 +582,7 @@ export default function ParticipationForm() {
                     <button
                       type="button"
                       onClick={handleSendEmailOtp}
-                      disabled={isEmailLoading || emailTimer > 0}
+                      disabled={isEmailLoading || emailTimer > 0 || !EMAIL_RE.test(contactPerson.email.trim())}
                       className="inline-flex items-center justify-center h-[18px] bg-[#176b27] text-white text-[9px] font-semibold uppercase rounded-[2px] px-2 transition-colors disabled:opacity-50 hover:bg-[#11501d]"
                     >
                       {emailTimer > 0 ? `Resend ${emailTimer}s` : "Get OTP"}
@@ -518,14 +601,15 @@ export default function ParticipationForm() {
                   readOnly={emailVerified}
                   placeholder="Official Email"
                   className={`w-full h-[36px] px-3 bg-[#fafbfa] border rounded-md text-[13px] font-semibold text-gray-800 focus:outline-none ${
-                    emailVerified ? "border-green-500" : "border-[#e5e7eb]"
+                    emailVerified ? "border-green-500" : emailError ? "border-red-400" : "border-[#e5e7eb]"
                   }`}
                 />
+                {emailError && <p className="mt-1 text-[10.5px] font-medium text-red-500">{emailError}</p>}
                 {!emailVerified && emailTimer > 0 && (
                   <div className="flex gap-1 mt-1 animate-in fade-in slide-in-from-top-1">
                     <input
                       value={emailOtp}
-                      onChange={(e) => setEmailOtp(e.target.value)}
+                      onChange={(e) => setEmailOtp(e.target.value.replace(/\D/g, "").slice(0, 6))}
                       placeholder="6-Digit OTP"
                       maxLength={6}
                       className="h-[32px] border border-[#176b27] bg-white text-gray-900 text-[12px] font-semibold text-center tracking-[0.3em] outline-none rounded-md w-full"
@@ -554,8 +638,11 @@ export default function ParticipationForm() {
                   value={contactPerson.alternateMobile}
                   onChange={handleContactChange}
                   placeholder="10-digit mobile number"
-                  className="w-full h-[36px] px-3 bg-[#fafbfa] border border-[#e5e7eb] rounded-md text-[13px] font-semibold text-gray-800 focus:outline-none"
+                  className={`w-full h-[36px] px-3 bg-[#fafbfa] border rounded-md text-[13px] font-semibold text-gray-800 focus:outline-none ${
+                    alternateMobileError ? "border-red-400" : "border-[#e5e7eb]"
+                  }`}
                 />
+                {alternateMobileError && <p className="mt-1 text-[10.5px] font-medium text-red-500">{alternateMobileError}</p>}
               </div>
               <div className="w-full">
                 <label className="block text-[11px] font-semibold text-gray-700 mb-1">
@@ -577,13 +664,33 @@ export default function ParticipationForm() {
       </div>
 
       {/* Form Bottom Actions */}
+      {!isFormValid && (
+        <p className="text-right text-[11px] font-medium text-gray-500">
+          {missingFields.length > 0
+            ? `Please complete: ${missingFields.join(", ")}`
+            : "Please correct the highlighted fields."}
+        </p>
+      )}
       <div className="flex flex-col sm:flex-row items-center justify-between gap-4 mt-2">
-        <button type="button" className="h-[36px] px-5 rounded-md border border-gray-300 text-gray-700 font-semibold text-[12px] uppercase tracking-wide hover:bg-gray-50 transition-colors flex items-center justify-center gap-2">
+        <button
+          type="button"
+          onClick={() => router.push("/participate/msme/apply")}
+          className="h-[36px] px-5 rounded-md border border-gray-300 text-gray-700 font-semibold text-[12px] uppercase tracking-wide hover:bg-gray-50 transition-colors flex items-center justify-center gap-2"
+        >
           <ArrowLeft size={16} strokeWidth={2.5} /> Back
         </button>
-        <Link href="/participate/msme/apply/payment" className="w-full sm:w-auto h-[36px] px-8 rounded-md bg-[#176b27] text-white font-semibold text-[12px] uppercase tracking-wide hover:bg-[#115d20] transition-colors flex items-center justify-center gap-2 shadow-md">
-          Save & Continue to Payment <ArrowRight size={16} strokeWidth={2.5} />
-        </Link>
+        <button
+          type="button"
+          onClick={handleSaveAndContinue}
+          disabled={isSaving || !isFormValid}
+          className="w-full sm:w-auto h-[36px] px-8 rounded-md bg-[#176b27] text-white font-semibold text-[12px] uppercase tracking-wide hover:bg-[#115d20] transition-colors flex items-center justify-center gap-2 shadow-md disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:bg-[#176b27]"
+        >
+          {isSaving ? "Saving..." : (
+            <>
+              Save &amp; Continue to Payment <ArrowRight size={16} strokeWidth={2.5} />
+            </>
+          )}
+        </button>
       </div>
 
     </div>

@@ -4,8 +4,7 @@ import { ApiExhibitor, fallbackExhibitors, BACKEND_URL } from "@/app/components/
 import { seoApi } from "@/lib/api";
 import SchemaInjector from "@/app/components/SchemaInjector";
 
-export const dynamic = "force-dynamic";
-export const revalidate = 0;
+export const revalidate = 60;
 
 export async function generateMetadata(): Promise<Metadata> {
   const isLocal = process.env.NODE_ENV !== "production";
@@ -77,7 +76,7 @@ export async function generateMetadata(): Promise<Metadata> {
 const getExhibitors = async (): Promise<ApiExhibitor[]> => {
     try {
         const res = await fetch(`${BACKEND_URL}/api/website/participate/exhibitor-list/items`, {
-            cache: "no-store",
+            next: { revalidate: 60 },
         });
         if (!res.ok) throw new Error("Failed to fetch exhibitors");
         const json = await res.json();
@@ -109,7 +108,7 @@ const getExhibitors = async (): Promise<ApiExhibitor[]> => {
 const getExhibitorsHeader = async (): Promise<{ title: string; subtitle: string }> => {
     try {
         const res = await fetch(`${BACKEND_URL}/api/website/participate/exhibitor-list/header`, {
-            cache: "no-store",
+            next: { revalidate: 60 },
         });
         if (res.ok) {
             const json = await res.json();

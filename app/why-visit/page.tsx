@@ -10,8 +10,7 @@ import WhoShouldVisit from "@/app/components/participate/why-visit/WhoShouldVisi
 import { settingsApi, seoApi, websiteApi } from "@/lib/api";
 import SchemaInjector from "@/app/components/SchemaInjector";
 
-export const dynamic = "force-dynamic";
-export const revalidate = 0;
+export const revalidate = 60;
 
 export async function generateMetadata(): Promise<Metadata> {
   const isLocal = process.env.NODE_ENV !== "production";

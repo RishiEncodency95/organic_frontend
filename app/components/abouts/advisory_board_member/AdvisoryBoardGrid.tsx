@@ -2,15 +2,15 @@
 
 import React, { useState, useEffect } from "react";
 import { Leaf, ArrowUpRight, MapPin } from "lucide-react";
-import tomarImg from "../../../assets/about/advisory_board_member/tomar.png";
+import tomarImg from "../../../assets/about/advisory_board_member/tomar.webp";
 import pradeepImg from "../../../assets/about/advisory_board_member/pradeep.png";
 import nareshImg from "../../../assets/about/advisory_board_member/naresh.png";
-import kamleshImg from "../../../assets/about/advisory_board_member/kamlesh.png";
+import kamleshImg from "../../../assets/about/advisory_board_member/kamlesh.webp";
 import atulImg from "../../../assets/about/advisory_board_member/atul.png";
-import sandeepImg from "../../../assets/about/advisory_board_member/sandeep.png";
+import sandeepImg from "../../../assets/about/advisory_board_member/sandeep.webp";
 import jagdishImg from "../../../assets/about/advisory_board_member/jagdish.png";
-import dnsharmaImg from "../../../assets/about/advisory_board_member/dnsharma.png";
-import rohitImg from "../../../assets/about/advisory_board_member/rohit.png";
+import dnsharmaImg from "../../../assets/about/advisory_board_member/dnsharma.webp";
+import rohitImg from "../../../assets/about/advisory_board_member/rohit.webp";
 
 import SectionContainer from "@/app/components/layout/SectionContainer";
 import { SERVER_URL as BACKEND_URL } from "@/lib/api";

@@ -104,31 +104,34 @@ const AnimatedCounter = ({ value }: { value: string }) => {
   );
 };
 
-export default function HeroSection() {
-  const [data, setData] = useState<HeroData>(DEFAULT_DATA);
+const toHeroData = (d: any): HeroData => ({
+  titleLine1: d?.titleLine1 || DEFAULT_DATA.titleLine1,
+  titleHighlight: d?.titleHighlight || DEFAULT_DATA.titleHighlight,
+  badgeText: d?.badgeText || DEFAULT_DATA.badgeText,
+  descriptionBold: d?.descriptionBold || DEFAULT_DATA.descriptionBold,
+  descriptionText: d?.descriptionText || "",
+  image: typeof d?.image === "string" ? d.image.trim() : "",
+  stats: Array.isArray(d?.stats) && d.stats.length > 0 ? d.stats : DEFAULT_DATA.stats,
+});
+
+export default function HeroSection({ initialData }: { initialData?: any }) {
+  const [data, setData] = useState<HeroData>(initialData ? toHeroData(initialData) : DEFAULT_DATA);
 
   useEffect(() => {
+    // The page already fetched this on the server; only fetch here if that failed.
+    if (initialData) return;
     let active = true;
     fetch(`${API_URL}/website/opportunities/sponsorship/hero`, { cache: "no-store" })
       .then((res) => (res.ok ? res.json() : null))
       .then((json) => {
         const d = json?.data || json;
-        if (!active || !d) return;
-        setData({
-          titleLine1: d.titleLine1 || DEFAULT_DATA.titleLine1,
-          titleHighlight: d.titleHighlight || DEFAULT_DATA.titleHighlight,
-          badgeText: d.badgeText || DEFAULT_DATA.badgeText,
-          descriptionBold: d.descriptionBold || DEFAULT_DATA.descriptionBold,
-          descriptionText: d.descriptionText || "",
-          image: typeof d.image === "string" ? d.image.trim() : "",
-          stats: Array.isArray(d.stats) && d.stats.length > 0 ? d.stats : DEFAULT_DATA.stats,
-        });
+        if (active && d) setData(toHeroData(d));
       })
       .catch(() => {});
     return () => {
       active = false;
     };
-  }, []);
+  }, [initialData]);
 
   const bgUrl = data.image || bgImg.src;
 

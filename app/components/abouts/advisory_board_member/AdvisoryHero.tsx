@@ -42,40 +42,45 @@ const DEFAULT_DATA: AdvisoryHeroData = {
     ],
 };
 
-const AdvisoryHero = () => {
-    const [data, setData] = useState<AdvisoryHeroData>(DEFAULT_DATA);
+const toAdvisoryHeroData = (d: any): AdvisoryHeroData => {
+    const hasSubtitle = typeof d?.subtitlePart1 === "string" || typeof d?.subtitlePart2 === "string";
+    return {
+        titlePart1: d?.titlePart1 || DEFAULT_DATA.titlePart1,
+        titlePart2: d?.titlePart2 || DEFAULT_DATA.titlePart2,
+        subtitlePart1: hasSubtitle ? d.subtitlePart1 || "" : DEFAULT_DATA.subtitlePart1,
+        subtitlePart2: hasSubtitle ? d.subtitlePart2 || "" : DEFAULT_DATA.subtitlePart2,
+        description: d?.description || DEFAULT_DATA.description,
+        image: typeof d?.image === "string" ? d.image.trim() : "",
+        imageAlt: d?.imageAlt || DEFAULT_DATA.imageAlt,
+        features:
+            Array.isArray(d?.features) && d.features.length > 0
+                ? d.features.map((f: any) => ({
+                    icon: f.icon || "Users",
+                    title: [f.titlePart1, f.titlePart2].filter(Boolean).join(" "),
+                    subtitle: [f.descPart1, f.descPart2].filter(Boolean).join(" "),
+                }))
+                : DEFAULT_DATA.features,
+    };
+};
+
+const AdvisoryHero = ({ initialData }: { initialData?: any }) => {
+    const [data, setData] = useState<AdvisoryHeroData>(initialData ? toAdvisoryHeroData(initialData) : DEFAULT_DATA);
 
     useEffect(() => {
+        // The page already fetched this on the server; only fetch here if that failed.
+        if (initialData) return;
         let active = true;
         fetch(`${API_URL}/website/advisoryhero`, { cache: "no-store" })
             .then((res) => (res.ok ? res.json() : null))
             .then((json) => {
                 const d = json?.data || json;
-                if (!active || !d) return;
-                const hasSubtitle = typeof d.subtitlePart1 === "string" || typeof d.subtitlePart2 === "string";
-                setData({
-                    titlePart1: d.titlePart1 || DEFAULT_DATA.titlePart1,
-                    titlePart2: d.titlePart2 || DEFAULT_DATA.titlePart2,
-                    subtitlePart1: hasSubtitle ? d.subtitlePart1 || "" : DEFAULT_DATA.subtitlePart1,
-                    subtitlePart2: hasSubtitle ? d.subtitlePart2 || "" : DEFAULT_DATA.subtitlePart2,
-                    description: d.description || DEFAULT_DATA.description,
-                    image: typeof d.image === "string" ? d.image.trim() : "",
-                    imageAlt: d.imageAlt || DEFAULT_DATA.imageAlt,
-                    features:
-                        Array.isArray(d.features) && d.features.length > 0
-                            ? d.features.map((f: any) => ({
-                                icon: f.icon || "Users",
-                                title: [f.titlePart1, f.titlePart2].filter(Boolean).join(" "),
-                                subtitle: [f.descPart1, f.descPart2].filter(Boolean).join(" "),
-                            }))
-                            : DEFAULT_DATA.features,
-                });
+                if (active && d) setData(toAdvisoryHeroData(d));
             })
             .catch(() => { });
         return () => {
             active = false;
         };
-    }, []);
+    }, [initialData]);
 
     const bannerSrc = data.image || heroBanner;
 

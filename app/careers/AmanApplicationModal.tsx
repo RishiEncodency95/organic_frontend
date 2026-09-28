@@ -25,7 +25,7 @@ const DESIGN_HEIGHT = 900;
 
 const assets = {
   headerLeaf: "/separated-assets/bharat-organic-leaf.png",
-  headerBanner: "/separated-assets/ChatGPT Image Sep 16, 2026, 04_29_31 PM.png",
+  headerBanner: "/separated-assets/career-sidebar-top.png",
   sidebarFooter: "/separated-assets/grow-organic-grow-india.png",
   profile: "/career-submit-resume-assets/profile.png",
 };
@@ -521,7 +521,7 @@ function AmanApplicationContent({ onClose }: { onClose: () => void }) {
             className="flex items-center gap-[5px] text-[13px] font-semibold text-[#0c5e3f] hover:text-[#d92027] transition-colors"
           >
             <ArrowLeft className="h-[14px] w-[14px]" />
-            Back
+            Preview
           </button>
 
           <h1 className="mt-[3px] text-[25px] font-semibold leading-[1.05] tracking-[-0.02em] text-[#123963]">

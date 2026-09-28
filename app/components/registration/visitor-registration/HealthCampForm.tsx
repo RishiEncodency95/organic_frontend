@@ -96,8 +96,25 @@ export default function HealthCampForm() {
     }
   }, [formData.state, states]);
 
-  const handleChange = (e: any) => {
-    setFormData((prev) => ({ ...prev, [e.target.name]: e.target.type === 'checkbox' ? e.target.checked : e.target.value }));
+    const handleChange = (e: any) => {
+    let { name, value, type, checked } = e.target;
+    
+    // Checkbox handling
+    let finalValue = type === 'checkbox' ? checked : value;
+
+    // Numeric field validations (no chars, spaces allowed)
+    if (name === 'mobileNo' || name === 'alternateNo' || name === 'whatsappNumber' || name === 'mobileNumber' || name === 'alternateNumber') {
+      finalValue = String(finalValue).replace(/\D/g, '').slice(0, 10);
+    }
+    if (name === 'pinCode' || name === 'companyPincode') {
+      finalValue = String(finalValue).replace(/\D/g, '').slice(0, 6);
+    }
+    if (name === 'yearOfEstablishment' || name === 'yearsInBusiness' || name === 'numberOfOutlets') {
+      finalValue = String(finalValue).replace(/\D/g, '');
+      if (name === 'yearOfEstablishment') finalValue = finalValue.slice(0, 4);
+    }
+
+    setFormData((prev) => ({ ...prev, [name]: finalValue }));
   };
 
   const handleHealthServiceChange = (key: string, checked: boolean) => {
@@ -164,19 +181,19 @@ export default function HealthCampForm() {
         </div>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-x-3 gap-y-3">
           <div>
-            <label className={labelClasses}>Event Name *</label>
+            <label className={labelClasses}>Event Name <span className="text-red-600">*</span></label>
             <select required name="registrationFor" value={formData.registrationFor} onChange={handleChange} className={inputClasses} disabled>
               <option value={defaultEventName}>{defaultEventName}</option>
             </select>
           </div>
-          <div><label className={labelClasses}>First Name *</label><input required name="firstName" value={formData.firstName} onChange={handleChange} className={inputClasses} placeholder="First Name" /></div>
-          <div><label className={labelClasses}>Last Name *</label><input required name="lastName" value={formData.lastName} onChange={handleChange} className={inputClasses} placeholder="Last Name" /></div>
-          <div><label className={labelClasses}>Email Address *</label><input required type="email" name="email" value={formData.email} onChange={handleChange} className={inputClasses} placeholder="Email" /></div>
-          <div><label className={labelClasses}>Mobile Number *</label><input required type="tel" name="mobile" value={formData.mobile} onChange={handleChange} className={inputClasses} placeholder="Mobile No." /></div>
+          <div><label className={labelClasses}>First Name <span className="text-red-600">*</span></label><input required name="firstName" value={formData.firstName} onChange={handleChange} className={inputClasses} placeholder="First Name" /></div>
+          <div><label className={labelClasses}>Last Name <span className="text-red-600">*</span></label><input required name="lastName" value={formData.lastName} onChange={handleChange} className={inputClasses} placeholder="Last Name" /></div>
+          <div><label className={labelClasses}>Email Address <span className="text-red-600">*</span></label><input required type="email" name="email" value={formData.email} onChange={handleChange} className={inputClasses} placeholder="Email" /></div>
+          <div><label className={labelClasses}>Mobile Number <span className="text-red-600">*</span></label><input required type="tel" name="mobile" value={formData.mobile} onChange={handleChange} className={inputClasses} placeholder="Mobile No." /></div>
           <div><label className={labelClasses}>Alternate No.</label><input type="tel" name="alternateNo" value={formData.alternateNo} onChange={handleChange} className={inputClasses} placeholder="Optional" /></div>
-          <div><label className={labelClasses}>Date of Birth *</label><input required type="date" name="dateOfBirth" value={formData.dateOfBirth} onChange={handleChange} className={inputClasses} /></div>
+          <div><label className={labelClasses}>Date of Birth <span className="text-red-600">*</span></label><input required type="date" name="dateOfBirth" value={formData.dateOfBirth} onChange={handleChange} className={inputClasses} /></div>
           <div>
-            <label className={labelClasses}>Gender *</label>
+            <label className={labelClasses}>Gender <span className="text-red-600">*</span></label>
             <select required name="gender" value={formData.gender} onChange={handleChange} className={inputClasses}>
               <option value="">Select</option>
               <option value="Male">Male</option>
@@ -186,21 +203,21 @@ export default function HealthCampForm() {
           </div>
           <div className="md:col-span-2"><label className={labelClasses}>Residence Address</label><input name="residenceAddress" value={formData.residenceAddress} onChange={handleChange} className={inputClasses} placeholder="Full Address" /></div>
           <div>
-            <label className={labelClasses}>Country *</label>
+            <label className={labelClasses}>Country <span className="text-red-600">*</span></label>
             <select required name="country" value={formData.country} onChange={handleChange} className={inputClasses}>
               <option value="">Select Country</option>
               {countries.length > 0 ? countries.map((c: any) => <option key={c.countryCode} value={c.name}>{c.name}</option>) : <option value="India">India</option>}
             </select>
           </div>
           <div>
-            <label className={labelClasses}>State *</label>
+            <label className={labelClasses}>State <span className="text-red-600">*</span></label>
             <select required name="state" value={formData.state} onChange={handleChange} className={inputClasses} disabled={!formData.country}>
               <option value="">Select State</option>
               {states.map((s: any) => <option key={s.stateCode} value={s.name}>{s.name}</option>)}
             </select>
           </div>
           <div>
-            <label className={labelClasses}>City *</label>
+            <label className={labelClasses}>City <span className="text-red-600">*</span></label>
             <select required name="city" value={formData.city} onChange={handleChange} className={inputClasses} disabled={!formData.state}>
               <option value="">Select City</option>
               {cities.map((c: any) => <option key={c.name} value={c.name}>{c.name}</option>)}
@@ -275,11 +292,11 @@ export default function HealthCampForm() {
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-3 gap-y-3">
             <div>
-              <label className={labelClasses}>Preferred Date *</label>
+              <label className={labelClasses}>Preferred Date <span className="text-red-600">*</span></label>
               <input required type="date" name="preferredDate" value={formData.preferredDate} onChange={handleChange} className={inputClasses} />
             </div>
             <div>
-              <label className={labelClasses}>Preferred Time Slot *</label>
+              <label className={labelClasses}>Preferred Time Slot <span className="text-red-600">*</span></label>
               <select required name="preferredTimeSlot" value={formData.preferredTimeSlot} onChange={handleChange} className={inputClasses}>
                 <option value="">Select Time Slot</option>
                 {TIME_SLOTS.map(slot => <option key={slot} value={slot}>{slot}</option>)}

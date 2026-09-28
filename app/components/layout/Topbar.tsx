@@ -3,17 +3,16 @@
 import { useState } from "react";
 import Link from "next/link";
 import { Mail, Phone, ChevronDown, Store, Briefcase, Users, UserPlus, Globe, Award } from "lucide-react";
-import { motion, AnimatePresence } from "framer-motion";
 
 import { SITE_CONFIG } from "@/app/constants/siteConfig";
 import SectionContainer from "@/app/components/layout/SectionContainer";
 
 const cn = (...classes: (string | undefined | null | false)[]) => classes.filter(Boolean).join(" ");
 
-const Topbar = () => {
+const Topbar = ({ phone, email }: { phone?: string; email?: string }) => {
     const [activeDropdown, setActiveDropdown] = useState<string | null>(null);
-    const topbarEmail = SITE_CONFIG.email;
-    const topbarPhone = SITE_CONFIG.phone;
+    const topbarEmail = email || SITE_CONFIG.email;
+    const topbarPhone = phone || SITE_CONFIG.phone;
     const marqueeText = `${SITE_CONFIG.stats.speakers} SPEAKERS CONFIRMED • EARLY BIRD DISCOUNT ENDING SOON! • JOIN ${SITE_CONFIG.stats.visitors} PROFESSIONALS FROM ${SITE_CONFIG.stats.countries} COUNTRIES`;
     const deligate = SITE_CONFIG.deligate;
     return (
@@ -104,7 +103,7 @@ const Topbar = () => {
                 }
             `}</style>
 
-            <motion.div
+            <div
                 className="bg-black border-b border-[#3b8c2a]/30 text-slate-200 text-[11px] relative z-[150] py-1 shadow-md shadow-black/20"
             >
                 <SectionContainer className="flex items-center justify-between py-1 flex-nowrap gap-x-4">
@@ -138,23 +137,18 @@ const Topbar = () => {
                             onMouseLeave={() => setActiveDropdown(null)}
                         >
                             <button
-                                style={{ fontFamily: "'Poppins', sans-serif" }}
+                                style={{ fontFamily: "var(--font-poppins-next), sans-serif" }}
                                 className="wave-btn flex-shrink-0"
                             >
                                 Register Now
                                 <ChevronDown className={cn("w-3.5 h-3.5 transition-transform duration-300", activeDropdown === "registration" ? "rotate-180" : "")} />
                             </button>
 
-                            <AnimatePresence>
-                                {activeDropdown === "registration" && (
+                            {activeDropdown === "registration" && (
                                     <div className="absolute top-[calc(100%-2px)] right-0 pt-4 w-[260px] z-50">
                                         <div className="absolute top-[10px] right-10 w-4 h-4 bg-white border-t border-l border-slate-100 rotate-45 z-10" />
-                                        <motion.div
-                                            initial={{ opacity: 0, scale: 0.9, y: 15 }}
-                                            animate={{ opacity: 1, scale: 1, y: 0 }}
-                                            exit={{ opacity: 0, scale: 0.9, y: 10 }}
-                                            transition={{ type: "spring" as const, damping: 25, stiffness: 300 }}
-                                            className="relative bg-white rounded-2xl shadow-[0_15px_45px_rgba(0,0,0,0.15)] border border-slate-100 p-1 overflow-hidden z-20"
+                                        <div
+                                            className="relative origin-top-right animate-in fade-in zoom-in-95 bg-white rounded-2xl shadow-[0_15px_45px_rgba(0,0,0,0.15)] border border-slate-100 p-1 overflow-hidden z-20"
                                         >
                                             <div className="grid grid-cols-2">
                                                 {[
@@ -183,7 +177,7 @@ const Topbar = () => {
                                                             )}>
                                                                 <item.icon className="w-3 h-3" />
                                                             </div>
-                                                            <span style={{ fontFamily: "'Poppins', sans-serif" }} className={cn(
+                                                            <span style={{ fontFamily: "var(--font-poppins-next), sans-serif" }} className={cn(
                                                                 "text-[9.5px] font-semibold text-slate-800 uppercase tracking-wider transition-colors leading-tight whitespace-pre-line",
                                                                 item.color === "orange" ? "group-hover:text-[#f59e0b]" : "group-hover:text-[#3b8c2a]"
                                                             )}>
@@ -199,17 +193,16 @@ const Topbar = () => {
                                                     );
                                                 })}
                                             </div>
-                                        </motion.div>
+                                        </div>
                                     </div>
                                 )}
-                            </AnimatePresence>
                         </div>
 
                         {/* User Login Dropdown */}
                         <div className="relative group">
                             <button
                                 className="wave-btn btn-white"
-                                style={{ fontFamily: "'Poppins', sans-serif" }}
+                                style={{ fontFamily: "var(--font-poppins-next), sans-serif" }}
                             >
                                 Login
                                 <ChevronDown size={14} className="group-hover:rotate-180 transition-transform duration-300" />
@@ -244,7 +237,7 @@ const Topbar = () => {
                                                     )}>
                                                         <item.icon className="w-3 h-3" />
                                                     </div>
-                                                    <span style={{ fontFamily: "'Poppins', sans-serif" }} className={cn(
+                                                    <span style={{ fontFamily: "var(--font-poppins-next), sans-serif" }} className={cn(
                                                         "text-[9.5px] font-semibold text-slate-800 uppercase tracking-wider transition-colors leading-tight whitespace-pre-line",
                                                         item.color === "orange" ? "group-hover/link:text-[#f59e0b]" : "group-hover/link:text-[#3b8c2a]"
                                                     )}>
@@ -265,7 +258,7 @@ const Topbar = () => {
                         </div>
                     </div>
                 </SectionContainer>
-            </motion.div>
+            </div>
         </>
     );
 };

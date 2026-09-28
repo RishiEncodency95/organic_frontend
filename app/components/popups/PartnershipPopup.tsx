@@ -3,7 +3,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { CheckCircle, ShieldCheck, Zap, Handshake, Users, Award } from "lucide-react";
 
 import pop1 from "../../assets/icons/icon1.png";
-import leaf2 from "../../assets/icons/bleaf.png";
+import leaf2 from "../../assets/icons/bleaf.webp";
 import why1 from "../../assets/icons/icon2.png";
 
 const Sparkle = ({ style, color = '#fff176' }: { style?: React.CSSProperties, color?: string }) => (
@@ -148,9 +148,9 @@ export default function PartnershipPopup({ isOpen, onClose, initialService }: Pa
               100% { background-position: 0% 50%; }
             }
             @keyframes shimmer {
-              0%   { left: -75%; }
-              100% { left: 150%; }
-            }
+          0% { transform: translateX(0) skewX(-20deg); }
+          100% { transform: translateX(450%) skewX(-20deg); }
+        }
             @keyframes sparkleAnim {
               0%   { opacity: 0; transform: scale(0.5) translateY(0); }
               40%  { opacity: 1; transform: scale(1.2) translateY(-4px); }

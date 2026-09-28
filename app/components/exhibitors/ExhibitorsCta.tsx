@@ -2,7 +2,7 @@ import React from "react";
 import { Leaf, ArrowRight, Download } from "lucide-react";
 import { Reveal } from "../shared/Reveal";
 import beImg from "../../assets/icons/be.png";
-import bleafImg from "../../assets/icons/bleaf.png";
+import bleafImg from "../../assets/icons/bleaf.webp";
 import SectionContainer from "@/app/components/layout/SectionContainer";
 
 // Mock API response / JSON array of objects

@@ -11,7 +11,7 @@ if (typeof window !== 'undefined') {
   gsap.registerPlugin(ScrollTrigger);
 }
 
-const getImgSrc = (src: any): string => (typeof src === 'string' ? src : src.src);
+const getImgSrc = (src: any): string => (typeof src === 'string' ? src : src?.src || "");
 
 const Sparkle = ({ style, color = '#fff176' }: { style: React.CSSProperties; color?: string }) => (
   <span style={{ position:'absolute', pointerEvents:'none', fontSize:'14px', color,
@@ -109,7 +109,7 @@ const JoinUsBanner = () => {
               <div className="banner-text flex flex-col items-start text-left w-full xl:w-auto shrink-0" style={{ willChange: 'transform, opacity' }}>
                 <span 
                   className="text-[#facc15] text-[16px] sm:text-[18px] md:text-[22px] font-medium leading-none mb-1.5 whitespace-nowrap italic" 
-                  style={{ fontFamily: "'Playfair Display', cursive, serif" }}
+                  style={{ fontFamily: "var(--font-playfair-next), cursive, serif" }}
                 >
                   Be a Part of the Next Legacy
                 </span>

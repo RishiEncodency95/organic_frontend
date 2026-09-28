@@ -7,8 +7,7 @@ import EPromoteBand from "../components/opportunity/epromotion-opportunity/EProm
 import WhyEPromote from "../components/opportunity/epromotion-opportunity/WhyEPromote";
 import EPromotionOpportunities from "../components/opportunity/epromotion-opportunity/EPromotionOpportunities";
 
-export const dynamic = "force-dynamic";
-export const revalidate = 0;
+export const revalidate = 60;
 
 export async function generateMetadata(): Promise<Metadata> {
   const isLocal = process.env.NODE_ENV !== "production";
