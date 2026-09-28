@@ -32,7 +32,6 @@ const playfair = Playfair_Display({
   preload: false,
 });
 
-import DynamicCanonical from "./components/DynamicCanonical";
 import {
   HeadScripts,
   FooterScripts,
@@ -145,13 +144,13 @@ export default async function RootLayout({
         {gscVerification && (
           <meta name="google-site-verification" content={gscVerification} />
         )}
+        {/* Site-wide structured data */}
+        <JsonLd data={organizationJsonLd()} />
+        <JsonLd data={websiteJsonLd()} />
         {/* Dynamic Header Scripts from Admin */}
         <HeadScripts html={headerScripts} />
       </head>
       <body suppressHydrationWarning className="min-h-full flex flex-col font-inter text-[16px] md:text-[18px] leading-[1.6] overflow-x-clip w-full">
-        <JsonLd data={organizationJsonLd()} />
-        <JsonLd data={websiteJsonLd()} />
-        <DynamicCanonical />
         <SmoothScroll>
           <Topbar phone={topbar?.phoneNumber} email={topbar?.contactEmail} />
           <Navbar />

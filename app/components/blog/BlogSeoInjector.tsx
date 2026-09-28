@@ -6,24 +6,20 @@ interface BlogSeoInjectorProps {
   metaTitle?: string;
   metaDescription?: string;
   metaKeywords?: string;
-  canonicalUrl?: string;
   ogTitle?: string;
   ogDescription?: string;
   ogImage?: string;
   openGraphTags?: string;
-  schemaMarkup?: string;
 }
 
 export default function BlogSeoInjector({
   metaTitle,
   metaDescription,
   metaKeywords,
-  canonicalUrl,
   ogTitle,
   ogDescription,
   ogImage,
   openGraphTags,
-  schemaMarkup,
 }: BlogSeoInjectorProps) {
   useEffect(() => {
     if (typeof window === "undefined") return;
@@ -62,17 +58,7 @@ export default function BlogSeoInjector({
     setMeta("name", "twitter:description", ogDescription || metaDescription);
     setMeta("name", "twitter:image", ogImage);
 
-    // 5. Canonical Link
-    if (canonicalUrl) {
-      let link = document.querySelector<HTMLLinkElement>("link[rel='canonical']");
-      if (!link) {
-        link = document.createElement("link");
-        link.setAttribute("rel", "canonical");
-        link.setAttribute("data-dynamic-seo", "true");
-        document.head.appendChild(link);
-      }
-      link.setAttribute("href", canonicalUrl);
-    }
+    // Canonical is not touched here — it is rendered once, server-side, by generateMetadata.
 
     // 6. Additional Custom OG / Meta Tags
     if (openGraphTags && openGraphTags.trim()) {
@@ -91,28 +77,15 @@ export default function BlogSeoInjector({
       });
     }
 
-    // 7. Schema Markup (JSON-LD) injected into <head>
-    if (schemaMarkup && schemaMarkup.trim()) {
-      let script = document.querySelector<HTMLScriptElement>("#blog-schema-markup");
-      if (!script) {
-        script = document.createElement("script");
-        script.setAttribute("type", "application/ld+json");
-        script.id = "blog-schema-markup";
-        script.setAttribute("data-dynamic-seo", "true");
-        document.head.appendChild(script);
-      }
-      script.textContent = schemaMarkup;
-    }
+    // Schema markup is rendered server-side by <AdminSchema> on the page, not injected here.
   }, [
     metaTitle,
     metaDescription,
     metaKeywords,
-    canonicalUrl,
     ogTitle,
     ogDescription,
     ogImage,
     openGraphTags,
-    schemaMarkup,
   ]);
 
   return null;

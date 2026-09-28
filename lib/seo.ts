@@ -8,7 +8,12 @@ export const SITE_URL =
 
 export const SITE_NAME = "Bharat Organic Expo 2027";
 export const DEFAULT_OG_IMAGE = `${SITE_URL}/assets/images/logo.png`;
-export const DEFAULT_OG_CARD_IMAGE = `${SITE_URL}/assets/images/og-banner.png`;
+export const DEFAULT_OG_CARD_IMAGE = `${SITE_URL}/og-image.jpg`;
+
+// Single share image used on every page (WhatsApp / Facebook / LinkedIn / X link previews).
+// Relative path — resolved against each page's metadataBase.
+export const OG_IMAGE = "/og-image.jpg";
+export const OG_IMAGE_ALT = "Exhibition in Delhi";
 
 type RouteSeo = {
   path: string;
@@ -318,7 +323,7 @@ export function organizationJsonLd() {
     "@type": "Organization",
     name: SITE_NAME,
     url: SITE_URL,
-    logo: absoluteUrl("/assets/images/logo.png"),
+    logo: absoluteUrl("/partners/navbarlogo1.png"),
     contactPoint: [
       {
         "@type": "ContactPoint",

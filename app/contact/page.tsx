@@ -1,11 +1,12 @@
 import { Metadata } from 'next';
 import React from 'react';
 import { seoApi } from '@/lib/api';
-import SchemaInjector from '@/app/components/SchemaInjector';
+import AdminSchema from '@/components/seo/AdminSchema';
 import ContactHero from '../components/contact/ContactHero';
 import ContactForm from '../components/contact/ContactForm';
 import ContactBottom from '../components/contact/ContactBottom';
 import { getSectionData } from '@/lib/serverData';
+import { OG_IMAGE, OG_IMAGE_ALT } from '@/lib/seo';
 
 export const revalidate = 60;
 
@@ -38,9 +39,6 @@ export async function generateMetadata(): Promise<Metadata> {
   const description =
     seoData?.metaDescription ||
     "Get in touch with the Bharat Organic Expo team for any queries regarding exhibiting, visiting, or sponsoring.";
-  const ogImage =
-    seoData?.ogImage ||
-    "";
 
   return {
     metadataBase: new URL(defaultUrl),
@@ -61,10 +59,10 @@ export async function generateMetadata(): Promise<Metadata> {
       siteName: "Bharat Organic Expo 2027",
       images: [
         {
-          url: ogImage,
+          url: OG_IMAGE,
           width: 1200,
           height: 630,
-          alt: title,
+          alt: OG_IMAGE_ALT,
         },
       ],
       type: "website",
@@ -94,7 +92,7 @@ const ContactPage = async () => {
 
   return (
     <div className="w-full bg-[#fbfcf7] min-h-screen">
-      <SchemaInjector schema={schemaContent} />
+      <AdminSchema schema={schemaContent} />
       <ContactHero initialSection={heroSection} />
       <ContactForm />
       <ContactBottom initialSection={bottomSection} />

@@ -1,8 +1,9 @@
 import type { Metadata } from "next";
+import { OG_IMAGE, OG_IMAGE_ALT } from "@/lib/seo";
 import ExhibitorsSection from "@/app/components/exhibitors/ExhibitorsSection";
 import { ApiExhibitor, fallbackExhibitors, BACKEND_URL } from "@/app/components/exhibitors/data";
 import { seoApi } from "@/lib/api";
-import SchemaInjector from "@/app/components/SchemaInjector";
+import AdminSchema from "@/components/seo/AdminSchema";
 
 export const revalidate = 60;
 
@@ -35,9 +36,6 @@ export async function generateMetadata(): Promise<Metadata> {
   const description =
     seoData?.metaDescription ||
     "Meet leading health, Ayurveda, fitness and wellness brands at Bharat Organic Expo. Browse our exhibitors across Ayurveda, Pharma, Fitness, Organic Nutrition, Medical Devices and more.";
-  const ogImage =
-    seoData?.ogImage ||
-    "";
 
   return {
     metadataBase: new URL(defaultUrl),
@@ -58,10 +56,10 @@ export async function generateMetadata(): Promise<Metadata> {
       siteName: "Bharat Organic Expo 2027",
       images: [
         {
-          url: ogImage,
+          url: OG_IMAGE,
           width: 1200,
           height: 630,
-          alt: title,
+          alt: OG_IMAGE_ALT,
         },
       ],
       type: "website",
@@ -147,7 +145,7 @@ const ExhibitorsPage = async () => {
 
     return (
         <div className="min-h-screen bg-white font-sans text-neutral-800 overflow-x-clip">
-            <SchemaInjector schema={schemaContent} />
+            <AdminSchema schema={schemaContent} />
             <ExhibitorsSection exhibitors={exhibitors} header={header} />
         </div>
     );

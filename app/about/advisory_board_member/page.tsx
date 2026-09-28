@@ -1,7 +1,8 @@
 import React from "react";
 import type { Metadata } from "next";
+import { OG_IMAGE, OG_IMAGE_ALT } from "@/lib/seo";
 import { seoApi } from "@/lib/api";
-import SchemaInjector from "@/app/components/SchemaInjector";
+import AdminSchema from "@/components/seo/AdminSchema";
 import AdvisoryHero from "@/app/components/abouts/advisory_board_member/AdvisoryHero";
 import { getSectionData } from "@/lib/serverData";
 import AboutStrip from "@/app/components/abouts/about/AboutStrip";
@@ -41,9 +42,6 @@ export async function generateMetadata(): Promise<Metadata> {
   const description =
     seoData?.metaDescription ||
     "Meet the distinguished leaders and professionals shaping the strategic direction of Bharat Organic Expo 2027.";
-  const ogImage =
-    seoData?.ogImage ||
-    "";
 
   return {
     metadataBase: new URL(defaultUrl),
@@ -64,10 +62,10 @@ export async function generateMetadata(): Promise<Metadata> {
       siteName: "Bharat Organic Expo 2027",
       images: [
         {
-          url: ogImage,
+          url: OG_IMAGE,
           width: 1200,
           height: 630,
-          alt: title,
+          alt: OG_IMAGE_ALT,
         },
       ],
       type: "website",
@@ -95,7 +93,7 @@ const AdvisoryBoardMemberPage = async () => {
 
   return (
     <div className="bg-[#ffffff] min-h-screen">
-      <SchemaInjector schema={schemaContent} />
+      <AdminSchema schema={schemaContent} />
       <AdvisoryHero initialData={advisoryHero} />
       <AboutStrip />
       <ChairmanMessage />

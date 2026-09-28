@@ -339,8 +339,10 @@ export default function Footer({ initialFooterData }: { initialFooterData?: any 
                 width={250}
                 height={100}
                 quality={100}
-                className="w-full h-auto object-contain drop-shadow-sm"
-                style={{ width: "auto", height: "auto" }}
+                className="block w-full h-auto mx-auto object-contain drop-shadow-sm"
+                // width must be 100% (not "auto"), otherwise the image sits at its natural width on
+                // the left of the box and leaves an empty band of background on the right.
+                style={{ width: "100%", height: "auto" }}
               />
             </div>
 

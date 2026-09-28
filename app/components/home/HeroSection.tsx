@@ -681,7 +681,7 @@ const HeroSection = ({ initialSlides }: HeroSectionProps) => {
                 </div>
 
                 {/* Title */}
-                <h1
+                <h2
                   data-anim="2"
                   className="text-3xl md:text-4xl lg:text-[54px] font-semibold leading-[1.06] font-poppins mb-3"
                   style={{ textShadow: "1px 1px 2px rgba(0,0,0,0.4)" }}
@@ -692,7 +692,7 @@ const HeroSection = ({ initialSlides }: HeroSectionProps) => {
                   <div className="text-[#F6A919] tracking-tight mt-0.5">
                     {slide.titleSecondary}
                   </div>
-                </h1>
+                </h2>
 
                 {/* Subtitle */}
                 <p data-anim="3" className="text-[#131730] font-bold text-sm md:text-base lg:text-lg leading-relaxed mb-2 font-inter">

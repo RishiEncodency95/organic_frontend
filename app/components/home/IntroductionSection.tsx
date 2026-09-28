@@ -146,12 +146,12 @@ const IntroductionSection = ({ initialData }: { initialData?: any }) => {
           <div
             className="w-full lg:w-[60%]"
           >
-            {/* Introduction Badge */}
+            {/* Introduction Badge — the eyebrow is the home page's only <h1> (text editable from admin) */}
             <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-gradient-to-r from-[#3b8c2a]/10 to-[#F2B40E]/10 border border-[#3b8c2a]/20 shadow-[0_4px_15px_rgba(59,140,42,0.06)] mb-2 transform hover:scale-105 transition-transform duration-300">
               <span className="w-2 h-2 rounded-full bg-[#F2B40E] animate-pulse"></span>
-              <span className="text-[11px] md:text-[14px] font-semibold uppercase tracking-[0.2em] md:tracking-[0.25em] text-[#1a6b3a]">
+              <h1 className="font-inter text-[11px] md:text-[14px] font-semibold uppercase tracking-[0.2em] md:tracking-[0.25em] text-[#1a6b3a]">
                 {data.eyebrow}
-              </span>
+              </h1>
             </div>
 
             {/* Title */}
