@@ -1,8 +1,9 @@
 "use client";
 import React, { useState, useRef, useEffect } from "react";
 import { CheckCircle2, CheckCircle, ShieldCheck, User, Globe, Store, Factory, Laptop, HeartPulse, Leaf, Hotel, Briefcase, ChevronsUpDown, Loader2, X, AlertTriangle } from "lucide-react";
-import { verifyApi, buyerApi, settingsApi } from "@/lib/api";
+import { verifyApi, buyerApi, settingsApi, crmApi } from "@/lib/api";
 import Swal from "sweetalert2";
+import Link from "next/link";
 
 // Mock Data
 const defaultMockConfig = {
@@ -286,6 +287,76 @@ export default function DomesticBuyerForm() {
     registrationCategory: "",
     registrationFee: ""
   });
+
+  const [countries, setCountries] = useState<any[]>([]);
+  const [states, setStates] = useState<any[]>([]);
+  const [cities, setCities] = useState<any[]>([]);
+  const [loadingLocations, setLoadingLocations] = useState({ countries: false, states: false, cities: false });
+
+  useEffect(() => {
+    const fetchCountries = async () => {
+      setLoadingLocations(prev => ({ ...prev, countries: true }));
+      try {
+        const data = await crmApi.getCountries();
+        setCountries(data);
+      } catch (err) {
+        console.error("Error fetching countries:", err);
+      } finally {
+        setLoadingLocations(prev => ({ ...prev, countries: false }));
+      }
+    };
+    fetchCountries();
+  }, []);
+
+  useEffect(() => {
+    if (!formData.country) {
+      setStates([]);
+      setCities([]);
+      return;
+    }
+    const fetchStates = async () => {
+      setLoadingLocations(prev => ({ ...prev, states: true }));
+      try {
+        const selectedCountry = countries.find(c => c.name === formData.country);
+        if (selectedCountry) {
+          const data = await crmApi.getStates(selectedCountry.countryCode);
+          setStates(data);
+        } else {
+          setStates([]);
+        }
+      } catch (err) {
+        console.error("Error fetching states:", err);
+      } finally {
+        setLoadingLocations(prev => ({ ...prev, states: false }));
+      }
+    };
+    fetchStates();
+  }, [formData.country, countries]);
+
+  useEffect(() => {
+    if (!formData.stateProvince) {
+      setCities([]);
+      return;
+    }
+    const fetchCities = async () => {
+      setLoadingLocations(prev => ({ ...prev, cities: true }));
+      try {
+        const selectedState = states.find(s => s.name === formData.stateProvince);
+        if (selectedState) {
+          const data = await crmApi.getCities(selectedState.stateCode);
+          setCities(data);
+        } else {
+          setCities([]);
+        }
+      } catch (err) {
+        console.error("Error fetching cities:", err);
+      } finally {
+        setLoadingLocations(prev => ({ ...prev, cities: false }));
+      }
+    };
+    fetchCities();
+  }, [formData.stateProvince, states]);
+
   const [requireOtp, setRequireOtp] = useState(true);
 
   useEffect(() => {
@@ -328,7 +399,7 @@ export default function DomesticBuyerForm() {
   }, []);
   const handleChange = (e: any) => {
     let { name, value } = e.target;
-    
+
     // Numeric field validations (no chars, spaces allowed)
     if (name === 'mobileNumber' || name === 'alternateNumber') {
       value = value.replace(/\D/g, '').slice(0, 10);
@@ -518,17 +589,20 @@ export default function DomesticBuyerForm() {
 
   if (submitted) {
     return (
-      <div className="flex flex-col items-center justify-center py-16 text-center">
-        <div className="w-20 h-20 rounded-full bg-[#eef6e2] flex items-center justify-center mb-6 shadow-lg">
-          <CheckCircle2 size={40} className="text-[#4d7f1d]" />
+      <div className="bg-white border border-slate-200 p-12 flex flex-col items-center text-center space-y-5 shadow-2xl rounded-2xl animate-in fade-in zoom-in duration-500">
+        <div className="w-20 h-20 bg-emerald-100 rounded-full flex items-center justify-center mb-4">
+          <CheckCircle2 size={48} className="text-emerald-600" />
         </div>
-        <h3 className="text-2xl font-bold text-[#1a3352] mb-2 font-poppins">Registration Successful!</h3>
-        <p className="text-gray-500 text-sm max-w-sm leading-relaxed">
+        <h2 className="text-3xl font-bold text-slate-900">Registration Successful!</h2>
+        <p className="text-slate-500 max-w-md leading-relaxed">
           Thank you for registering as a Domestic Buyer at Bharat Organic Expo 2027. A confirmation will be sent to your email.
         </p>
-        <div className="mt-8 px-6 py-3 rounded-xl bg-[#4d7f1d] text-white text-sm font-bold uppercase tracking-wider">
+        <div className="px-6 py-3 rounded-xl bg-[#4d7f1d]/10 text-[#4d7f1d] text-sm font-bold uppercase tracking-wider mb-2">
           19 – 21 February 2027 · Hall 12, Bharat Mandapam
         </div>
+        <Link href="/" className="inline-flex items-center justify-center rounded-full bg-[#23471d] hover:bg-[#1a3516] px-8 h-12 text-sm font-bold uppercase tracking-widest text-white transition-colors">
+          Return Home
+        </Link>
       </div>
     );
   }
@@ -616,10 +690,31 @@ export default function DomesticBuyerForm() {
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-x-3 gap-y-3 mt-4">
-          <div><label className={labelClasses}>State/Province <span className="text-red-600">*</span></label><input required name="stateProvince" value={formData.stateProvince} onChange={handleChange} placeholder="e.g. Maharashtra" className={inputClasses} /></div>
-          <div><label className={labelClasses}>City <span className="text-red-600">*</span></label><input required name="city" value={formData.city} onChange={handleChange} placeholder="e.g. Mumbai" className={inputClasses} /></div>
-          <div><label className={labelClasses}>Country <span className="text-red-600">*</span></label><input required name="country" value={formData.country} onChange={handleChange} placeholder="e.g. India" className={inputClasses} /></div>
-          <div><label className={labelClasses}>Pin Code <span className="text-red-600">*</span></label><input required name="pinCode" value={formData.pinCode} onChange={handleChange} placeholder="6-digit code" className={inputClasses} maxLength={6} /></div>
+          <div>
+            <label className={labelClasses}>Country <span className="text-red-600">*</span></label>
+            <select required name="country" value={formData.country} onChange={handleChange} className={inputClasses} disabled={loadingLocations.countries}>
+              <option value="">Select Country</option>
+              {countries.map((c: any) => <option key={c._id} value={c.name}>{c.name}</option>)}
+            </select>
+          </div>
+          <div>
+            <label className={labelClasses}>State/Province <span className="text-red-600">*</span></label>
+            <select required name="stateProvince" value={formData.stateProvince} onChange={handleChange} className={inputClasses} disabled={!formData.country || loadingLocations.states}>
+              <option value="">Select State</option>
+              {states.map((s: any) => <option key={s._id} value={s.name}>{s.name}</option>)}
+            </select>
+          </div>
+          <div>
+            <label className={labelClasses}>City <span className="text-red-600">*</span></label>
+            <select required name="city" value={formData.city} onChange={handleChange} className={inputClasses} disabled={!formData.stateProvince || loadingLocations.cities}>
+              <option value="">Select City</option>
+              {cities.map((c: any) => <option key={c._id} value={c.name}>{c.name}</option>)}
+            </select>
+          </div>
+          <div className="lg:col-span-2">
+            <label className={labelClasses}>Pin Code <span className="text-red-600">*</span></label>
+            <input required name="pinCode" value={formData.pinCode} onChange={handleChange} placeholder="6-digit code" className={inputClasses} maxLength={6} />
+          </div>
         </div>
       </div>
 
