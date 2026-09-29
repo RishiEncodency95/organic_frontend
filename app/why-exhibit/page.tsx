@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { OG_IMAGE, OG_IMAGE_ALT } from "@/lib/seo";
 import HeroSection from "@/app/components/participate/why-exhibit/HeroSection";
 import StatsBand from "@/app/components/participate/why-exhibit/StatsBand";
 import ReasonsSection from "@/app/components/participate/why-exhibit/ReasonsSection";
@@ -6,7 +7,7 @@ import IndustriesSection from "@/app/components/participate/why-exhibit/Industri
 import BuyersSection from "@/app/components/participate/why-exhibit/BuyersSection";
 import TestimonialsSection from "@/app/components/participate/why-exhibit/TestimonialsSection";
 import { settingsApi, seoApi, websiteApi } from "@/lib/api";
-import SchemaInjector from "@/app/components/SchemaInjector";
+import AdminSchema from "@/components/seo/AdminSchema";
 
 export const revalidate = 60;
 
@@ -42,9 +43,6 @@ export async function generateMetadata(): Promise<Metadata> {
   const description =
     seoData?.metaDescription ||
     "Exhibit at Bharat Organic Expo 2027 – India's premier B2B platform for organic food, agriculture, AYUSH and sustainable industries. Reach 8,000+ qualified buyers, 200+ exhibitors and global decision makers.";
-  const ogImage =
-    seoData?.ogImage ||
-    "";
 
   return {
     metadataBase: new URL(defaultUrl),
@@ -65,10 +63,10 @@ export async function generateMetadata(): Promise<Metadata> {
       siteName: "Bharat Organic Expo 2027",
       images: [
         {
-          url: ogImage,
+          url: OG_IMAGE,
           width: 1200,
           height: 630,
-          alt: title,
+          alt: OG_IMAGE_ALT,
         },
       ],
       type: "website",
@@ -170,7 +168,7 @@ export default async function WhyExhibitPage() {
 
   return (
     <>
-      <SchemaInjector schema={schemaContent} />
+      <AdminSchema schema={schemaContent} />
       <div className="bg-white min-h-screen overflow-x-hidden font-inter">
       <style>{`
         @keyframes goldShift {

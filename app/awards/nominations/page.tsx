@@ -1,7 +1,8 @@
 import React from "react";
 import type { Metadata } from "next";
+import { OG_IMAGE, OG_IMAGE_ALT } from "@/lib/seo";
 import { seoApi } from "@/lib/api";
-import SchemaInjector from "@/app/components/SchemaInjector";
+import AdminSchema from "@/components/seo/AdminSchema";
 import AwardsNominationClient from "./AwardsNominationClient";
 
 export const revalidate = 60;
@@ -35,9 +36,6 @@ export async function generateMetadata(): Promise<Metadata> {
   const description =
     seoData?.metaDescription ||
     "Nominate your organisation, brand, innovation, or leadership for Bharat Organic Excellence Awards 2027. Celebrate excellence in organic farming, healthcare, and sustainability.";
-  const ogImage =
-    seoData?.ogImage ||
-    "";
 
   return {
     metadataBase: new URL(defaultUrl),
@@ -58,10 +56,10 @@ export async function generateMetadata(): Promise<Metadata> {
       siteName: "Bharat Organic Expo 2027",
       images: [
         {
-          url: ogImage,
+          url: OG_IMAGE,
           width: 1200,
           height: 630,
-          alt: title,
+          alt: OG_IMAGE_ALT,
         },
       ],
       type: "website",
@@ -101,7 +99,7 @@ export default async function AwardsNominationPage() {
 
   return (
     <>
-      <SchemaInjector schema={schemaContent} />
+      <AdminSchema schema={schemaContent} />
       <AwardsNominationClient initialHeroData={heroData} />
     </>
   );

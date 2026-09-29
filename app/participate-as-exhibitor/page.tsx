@@ -1,7 +1,8 @@
 import React from "react";
 import type { Metadata } from "next";
+import { OG_IMAGE, OG_IMAGE_ALT } from "@/lib/seo";
 import { seoApi } from "@/lib/api";
-import SchemaInjector from "@/app/components/SchemaInjector";
+import AdminSchema from "@/components/seo/AdminSchema";
 import ParticipateHero from "@/app/components/participate-as-exhibitor/ParticipateHero";
 import ParticipateFeatureStrip from "@/app/components/participate-as-exhibitor/ParticipateFeatureStrip";
 import WhoCanParticipate from "@/app/components/buyer-seller-meet/WhoCanParticipate";
@@ -40,9 +41,6 @@ export async function generateMetadata(): Promise<Metadata> {
   const description =
     seoData?.metaDescription ||
     "Showcase your organic products, agro-tech innovations, and sustainable solutions at Bharat Organic Expo 2027. Book your booth today!";
-  const ogImage =
-    seoData?.ogImage ||
-    "";
 
   return {
     metadataBase: new URL(defaultUrl),
@@ -63,10 +61,10 @@ export async function generateMetadata(): Promise<Metadata> {
       siteName: "Bharat Organic Expo 2027",
       images: [
         {
-          url: ogImage,
+          url: OG_IMAGE,
           width: 1200,
           height: 630,
-          alt: title,
+          alt: OG_IMAGE_ALT,
         },
       ],
       type: "website",
@@ -92,7 +90,7 @@ const ParticipateAsExhibitorPage = async () => {
 
   return (
     <div className="min-h-screen bg-white font-sans text-neutral-800 overflow-x-clip">
-      <SchemaInjector schema={schemaContent} />
+      <AdminSchema schema={schemaContent} />
       <ParticipateHero />
       <ParticipateFeatureStrip />
       <WhoCanParticipate />

@@ -248,7 +248,7 @@ const RefundPolicy: React.FC = () => {
           .grid-cols-1.lg\\:grid-cols-2 > div { break-inside: avoid !important; page-break-inside: avoid !important; display: block !important; }
           section { margin-bottom: 4px !important; padding: 0 !important; }
           h1 { font-size: 24px !important; line-height: 1 !important; margin-bottom: 4px !important; }
-          h3 { font-size: 13px !important; }
+          .grid h2, h3 { font-size: 13px !important; }
           p, span, .text-\[12\.5px\], .text-sm { font-size: 10.5px !important; line-height: 1.3 !important; }
           .prose li, .prose p { font-size: 10px !important; margin-bottom: 1px !important; }
           .relative.z-10.w-full.mx-auto.px-6.md\\:px-12.max-w-\\[1400px\\].-mt-6.md\\:-mt-8 { margin-top: -30px !important; }
@@ -339,9 +339,9 @@ const RefundPolicy: React.FC = () => {
               {/* Subtitle */}
               <div className="flex items-center gap-3 mb-2">
                 <div className="w-12 h-1 bg-[#7ca142] rounded-full"></div>
-                <span className="text-[#2b5825] font-bold text-[14px] md:text-[16px] tracking-widest uppercase">
+                <h2 className="text-[#2b5825] font-bold text-[14px] md:text-[16px] tracking-widest uppercase" style={{ fontFamily: "inherit" }}>
                   Bharat Organic Expo 2027
-                </span>
+                </h2>
                 <div className="w-12 h-1 bg-[#7ca142] rounded-full"></div>
               </div>
 
@@ -448,9 +448,9 @@ const RefundPolicy: React.FC = () => {
                               <span className="text-[18px] md:text-[24px] font-[900] text-slate-900 leading-none">
                                 {term.id.toString().padStart(2, '0')}
                               </span>
-                              <h3 className="text-[15px] md:text-[20px] font-semibold text-slate-900 leading-none">
+                              <h2 className="text-[15px] md:text-[20px] font-semibold text-slate-900 leading-none" style={{ fontFamily: "inherit" }}>
                                 {term.title}
-                              </h3>
+                              </h2>
                             </div>
                             <div className="mt-1.5">
                               <div

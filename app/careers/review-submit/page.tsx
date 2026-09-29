@@ -266,7 +266,14 @@ function AddressAvailability({ candidateData }: { candidateData?: any }) {
   const rows = [
     { icon: MapPin, label: "Current Location", value: candidateData?.location },
     { icon: Target, label: "Willing to Relocate?", value: candidateData?.willingToRelocate },
-    { icon: Clock3, label: "Notice Period", value: noticePeriod },
+    {
+      icon: Clock3,
+      label:
+        candidateData?.employmentStatus && candidateData.employmentStatus !== "Currently Employed"
+          ? "Joining Period"
+          : "Notice Period",
+      value: noticePeriod,
+    },
     { icon: CheckCircle2, label: "Available to Join", value: estimateJoiningDate(noticePeriod) },
   ].filter((row) => row.value);
 

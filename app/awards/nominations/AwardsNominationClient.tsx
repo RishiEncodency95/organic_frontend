@@ -31,6 +31,7 @@ import bharatOrganicLogo from "../../assets/awards/bharat_organic.webp";
 import beTheLeft from "../../assets/exhibitors/be_the_left.webp";
 import beTheRight from "../../assets/exhibitors/be_the_right.png";
 import SectionContainer from "@/app/components/layout/SectionContainer";
+import { verifyApi } from "@/lib/api";
 
 interface FormState {
   applicantType: string;
@@ -52,9 +53,6 @@ interface FormState {
   impactCreated: string;
   innovation: string;
   whyDeserve: string;
-  deckFileName: string;
-  certFileName: string;
-  mediaFileName: string;
   socialLink: string;
   declaration: boolean;
 }
@@ -79,9 +77,6 @@ const INITIAL_FORM: FormState = {
   impactCreated: "",
   innovation: "",
   whyDeserve: "",
-  deckFileName: "",
-  certFileName: "",
-  mediaFileName: "",
   socialLink: "",
   declaration: false,
 };
@@ -131,8 +126,178 @@ function Reveal({
 }
 
 /* ---------------------------------------------------------
+   Validation
+--------------------------------------------------------- */
+type FileKey = "deckFile" | "certFile" | "mediaFile";
+type NominationFiles = Partial<Record<FileKey, File>>;
+type FieldKey = keyof FormState | FileKey;
+
+const MOBILE_RE = /^[6-9]\d{9}$/;
+const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
+const URL_RE = /^(https?:\/\/)?([\w-]+\.)+[a-z]{2,}(\/\S*)?$/i;
+const NAME_RE = /^[a-zA-Z][a-zA-Z .'-]*$/;
+const MAX_FILE_BYTES = 10 * 1024 * 1024;
+const DOC_EXT = /\.(pdf|docx?|jpe?g|png)$/i;
+const MEDIA_EXT = /\.(jpe?g|png|webp|mp4|mov|webm)$/i;
+
+const wordCount = (text: string) => (text.trim() ? text.trim().split(/\s+/).length : 0);
+const pointCount = (text: string) => text.split(/\n/).filter((line) => line.trim()).length;
+
+// Short names used in the "still to complete" list under the submit button.
+const FIELD_LABELS: Record<FieldKey, string> = {
+  applicantType: "Applicant Type",
+  orgName: "Full Name / Org Name",
+  contactPerson: "Contact Person",
+  designation: "Designation",
+  mobile: "Mobile Number",
+  email: "Email ID",
+  website: "Website",
+  city: "City",
+  stateCountry: "State / Country",
+  awardCategory: "Award Category",
+  briefProfile: "Brief Profile",
+  yearsExperience: "Years of Experience",
+  teamSize: "Team Size",
+  keyServices: "Key Services / Products",
+  keyAchievements: "Key Achievements",
+  uniqueContribution: "Unique Contribution",
+  impactCreated: "Impact Created",
+  innovation: "Innovation / Technology",
+  whyDeserve: "Why do you deserve this award?",
+  socialLink: "Social Links",
+  declaration: "Declaration",
+  deckFile: "Profile Deck",
+  certFile: "Certifications",
+  mediaFile: "Images / Videos",
+};
+
+function validateForm(form: FormState, files: NominationFiles): Partial<Record<FieldKey, string>> {
+  const e: Partial<Record<FieldKey, string>> = {};
+  const t = (v: string) => v.trim();
+
+  if (!form.applicantType) e.applicantType = "Please select applicant type.";
+  if (!t(form.orgName)) e.orgName = "Full name / organisation name is required.";
+  else if (t(form.orgName).length < 2) e.orgName = "Name is too short.";
+  if (!t(form.contactPerson)) e.contactPerson = "Contact person is required.";
+  else if (!NAME_RE.test(t(form.contactPerson))) e.contactPerson = "Use letters only.";
+  if (!form.mobile) e.mobile = "Mobile number is required.";
+  else if (!MOBILE_RE.test(form.mobile)) e.mobile = "Enter a valid 10-digit mobile number.";
+  if (!t(form.email)) e.email = "Email ID is required.";
+  else if (!EMAIL_RE.test(t(form.email))) e.email = "Enter a valid email address.";
+  if (t(form.website) && !URL_RE.test(t(form.website))) e.website = "Enter a valid website, e.g. www.example.com";
+  if (!t(form.city)) e.city = "City is required.";
+  if (!form.stateCountry) e.stateCountry = "Please select state / country.";
+  if (!form.awardCategory) e.awardCategory = "Please select an award category.";
+
+  const profileWords = wordCount(form.briefProfile);
+  if (!profileWords) e.briefProfile = "Brief profile is required.";
+  else if (profileWords < 150 || profileWords > 200)
+    e.briefProfile = `Write 150–200 words (currently ${profileWords}).`;
+  if (!form.yearsExperience) e.yearsExperience = "Please select years of experience.";
+  if (!t(form.keyServices)) e.keyServices = "Key services / products are required.";
+
+  if (!t(form.keyAchievements)) e.keyAchievements = "Key achievements are required.";
+  else if (pointCount(form.keyAchievements) > 5) e.keyAchievements = "Maximum 5 points (one per line).";
+  if (!t(form.uniqueContribution)) e.uniqueContribution = "Unique contribution is required.";
+  if (!t(form.impactCreated)) e.impactCreated = "Impact created is required.";
+  const whyWords = wordCount(form.whyDeserve);
+  if (!whyWords) e.whyDeserve = "Please share why you deserve this award.";
+  else if (whyWords > 100) e.whyDeserve = `Maximum 100 words (currently ${whyWords}).`;
+
+  (["deckFile", "certFile", "mediaFile"] as FileKey[]).forEach((key) => {
+    const file = files[key];
+    if (!file) return;
+    const allowed = key === "mediaFile" ? MEDIA_EXT : DOC_EXT;
+    if (!allowed.test(file.name)) e[key] = "Unsupported file type.";
+    else if (file.size > MAX_FILE_BYTES) e[key] = "File must be 10MB or smaller.";
+  });
+  if (t(form.socialLink) && !URL_RE.test(t(form.socialLink))) e.socialLink = "Enter a valid link.";
+
+  if (!form.declaration) e.declaration = "Please accept the declaration.";
+  return e;
+}
+
+/* ---------------------------------------------------------
+   OTP verification (WhatsApp for mobile, email for email)
+--------------------------------------------------------- */
+type OtpResponse = { success?: boolean; message?: string };
+
+function useOtp() {
+  const [verified, setVerified] = useState(false);
+  const [sent, setSent] = useState(false);
+  const [otp, setOtp] = useState("");
+  const [timer, setTimer] = useState(0);
+  const [loading, setLoading] = useState(false);
+  const [message, setMessage] = useState<{ text: string; ok: boolean } | null>(null);
+
+  useEffect(() => {
+    if (timer <= 0) return;
+    const id = setTimeout(() => setTimer((value) => value - 1), 1000);
+    return () => clearTimeout(id);
+  }, [timer]);
+
+  const reset = () => {
+    setVerified(false);
+    setSent(false);
+    setOtp("");
+    setTimer(0);
+    setMessage(null);
+  };
+
+  const send = async (request: () => Promise<OtpResponse>) => {
+    setLoading(true);
+    setMessage(null);
+    try {
+      const res = await request();
+      if (res?.success) {
+        setSent(true);
+        setTimer(60);
+        setMessage({ text: res.message || "OTP sent.", ok: true });
+      } else {
+        setMessage({ text: res?.message || "Could not send OTP. Please try again.", ok: false });
+      }
+    } catch {
+      setMessage({ text: "Could not send OTP. Please try again.", ok: false });
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const confirm = async (request: (code: string) => Promise<OtpResponse>) => {
+    if (otp.length !== 6) return;
+    setLoading(true);
+    setMessage(null);
+    try {
+      const res = await request(otp);
+      if (res?.success) {
+        setVerified(true);
+        setOtp("");
+        setMessage(null);
+      } else {
+        setMessage({ text: res?.message || "Invalid OTP. Please try again.", ok: false });
+      }
+    } catch {
+      setMessage({ text: "Verification failed. Please try again.", ok: false });
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  return { verified, sent, otp, setOtp, timer, loading, message, reset, send, confirm };
+}
+
+/* ---------------------------------------------------------
    Small reusable pieces
 --------------------------------------------------------- */
+const inputBase =
+  "w-full rounded-md border bg-white px-3 py-2 text-sm text-emerald-950 placeholder:text-black outline-none transition-all duration-200 focus:border-amber-500 focus:ring-2 focus:ring-amber-400/30 disabled:bg-gray-50";
+const borderFor = (error?: string) =>
+  error ? "border-red-400" : "border-emerald-900/15 hover:border-emerald-900/30";
+
+function FieldError({ error }: { error?: string }) {
+  return error ? <p className="mt-1 text-[11px] font-medium text-red-600">{error}</p> : null;
+}
+
 function Field({
   label,
   placeholder,
@@ -141,6 +306,12 @@ function Field({
   span = 1,
   value,
   onChange,
+  onBlur,
+  error,
+  inputMode,
+  maxLength,
+  rightSlot,
+  children,
 }: {
   label: string;
   placeholder: string;
@@ -149,19 +320,33 @@ function Field({
   span?: number;
   value: string;
   onChange: (v: string) => void;
+  onBlur?: () => void;
+  error?: string;
+  inputMode?: React.HTMLAttributes<HTMLInputElement>["inputMode"];
+  maxLength?: number;
+  rightSlot?: React.ReactNode;
+  children?: React.ReactNode;
 }) {
   return (
     <div className={span === 2 ? "sm:col-span-2" : ""}>
       <label className="block text-[13px] font-medium text-emerald-950 mb-1">
         {label} {required && <span className="text-amber-600">*</span>}
       </label>
-      <input
-        type={type}
-        placeholder={placeholder}
-        value={value}
-        onChange={(e) => onChange(e.target.value)}
-        className="w-full rounded-md border border-emerald-900/15 bg-white px-3 py-2 text-sm text-emerald-950 placeholder:text-black outline-none transition-all duration-200 focus:border-amber-500 focus:ring-2 focus:ring-amber-400/30 hover:border-emerald-900/30"
-      />
+      <div className="relative">
+        <input
+          type={type}
+          placeholder={placeholder}
+          value={value}
+          inputMode={inputMode}
+          maxLength={maxLength}
+          onChange={(e) => onChange(e.target.value)}
+          onBlur={onBlur}
+          className={`${inputBase} ${borderFor(error)} ${rightSlot ? "pr-24" : ""}`}
+        />
+        {rightSlot && <div className="absolute right-1 top-1/2 -translate-y-1/2">{rightSlot}</div>}
+      </div>
+      <FieldError error={error} />
+      {children}
     </div>
   );
 }
@@ -173,6 +358,7 @@ function Select({
   options = [],
   value,
   onChange,
+  error,
 }: {
   label: string;
   placeholder: string;
@@ -180,6 +366,7 @@ function Select({
   options?: string[];
   value: string;
   onChange: (v: string) => void;
+  error?: string;
 }) {
   return (
     <div>
@@ -189,7 +376,7 @@ function Select({
       <select
         value={value}
         onChange={(e) => onChange(e.target.value)}
-        className="w-full rounded-md border border-emerald-900/15 bg-white px-3 py-2 text-sm text-black outline-none transition-all duration-200 focus:border-amber-500 focus:ring-2 focus:ring-amber-400/30 hover:border-emerald-900/30"
+        className={`${inputBase} text-black ${borderFor(error)}`}
       >
         <option value="">{placeholder}</option>
         {options.map((opt) => (
@@ -198,6 +385,7 @@ function Select({
           </option>
         ))}
       </select>
+      <FieldError error={error} />
     </div>
   );
 }
@@ -209,6 +397,9 @@ function TextArea({
   span = 1,
   value,
   onChange,
+  onBlur,
+  error,
+  hint,
 }: {
   label: string;
   placeholder: string;
@@ -216,6 +407,9 @@ function TextArea({
   span?: number;
   value: string;
   onChange: (v: string) => void;
+  onBlur?: () => void;
+  error?: string;
+  hint?: string;
 }) {
   return (
     <div className={span === 2 ? "sm:col-span-2" : span === 4 ? "sm:col-span-2 lg:col-span-4" : ""}>
@@ -227,8 +421,13 @@ function TextArea({
         placeholder={placeholder}
         value={value}
         onChange={(e) => onChange(e.target.value)}
-        className="w-full resize-none rounded-md border border-emerald-900/15 bg-white px-3 py-2 text-sm text-emerald-950 placeholder:text-black outline-none transition-all duration-200 focus:border-amber-500 focus:ring-2 focus:ring-amber-400/30 hover:border-emerald-900/30"
+        onBlur={onBlur}
+        className={`${inputBase} resize-none ${borderFor(error)}`}
       />
+      <div className="flex items-start justify-between gap-2">
+        <FieldError error={error} />
+        {hint && <p className="mt-1 ml-auto shrink-0 text-[11px] text-emerald-950/60">{hint}</p>}
+      </div>
     </div>
   );
 }
@@ -236,13 +435,17 @@ function TextArea({
 function UploadRow({
   label,
   subLabel,
-  fileName,
+  file,
+  accept,
   onChange,
+  error,
 }: {
   label: string;
   subLabel: string;
-  fileName: string;
-  onChange: (v: string) => void;
+  file?: File;
+  accept: string;
+  onChange: (file: File | undefined) => void;
+  error?: string;
 }) {
   return (
     <div>
@@ -250,19 +453,97 @@ function UploadRow({
         <p className="text-[13px] font-medium text-emerald-950">{label}</p>
         <p className="text-[11px] text-black">{subLabel}</p>
       </div>
-      <label className="flex cursor-pointer items-center gap-2 rounded-md border border-dashed border-amber-500/50 bg-amber-50 px-3 py-2 text-xs text-black transition-colors duration-200 hover:bg-amber-100">
+      <label
+        className={`flex cursor-pointer items-center gap-2 rounded-md border border-dashed px-3 py-2 text-xs text-black transition-colors duration-200 hover:bg-amber-100 ${
+          error ? "border-red-400 bg-red-50" : "border-amber-500/50 bg-amber-50"
+        }`}
+      >
         <Upload className="h-4 w-4 shrink-0 text-amber-600" />
         Upload File
-        <span className="truncate text-black">
-          {fileName || "No file chosen"}
-        </span>
+        <span className="truncate text-black">{file?.name || "No file chosen"}</span>
         <input
           type="file"
+          accept={accept}
           className="hidden"
-          onChange={(e) => onChange(e.target.files?.[0]?.name || "")}
+          onChange={(e) => {
+            onChange(e.target.files?.[0]);
+            e.target.value = "";
+          }}
         />
       </label>
+      {file && (
+        <button
+          type="button"
+          onClick={() => onChange(undefined)}
+          className="mt-1 text-[11px] font-medium text-emerald-800 underline"
+        >
+          Remove
+        </button>
+      )}
+      <FieldError error={error} />
     </div>
+  );
+}
+
+function OtpButton({
+  state,
+  disabled,
+  onClick,
+}: {
+  state: ReturnType<typeof useOtp>;
+  disabled: boolean;
+  onClick: () => void;
+}) {
+  if (state.verified) {
+    return (
+      <span className="flex items-center gap-1 rounded bg-emerald-50 px-2 py-1 text-[11px] font-semibold text-emerald-700">
+        <CheckCircle2 className="h-3.5 w-3.5" /> Verified
+      </span>
+    );
+  }
+  if (disabled) return null;
+  return (
+    <button
+      type="button"
+      onClick={onClick}
+      disabled={state.loading || state.timer > 0}
+      className="rounded bg-emerald-800 px-2.5 py-1 text-[11px] font-semibold uppercase text-white transition-colors hover:bg-emerald-900 disabled:cursor-not-allowed disabled:opacity-50"
+    >
+      {state.loading && !state.sent ? "Sending…" : state.timer > 0 ? `Resend ${state.timer}s` : state.sent ? "Resend" : "Verify"}
+    </button>
+  );
+}
+
+function OtpEntry({ state, onConfirm }: { state: ReturnType<typeof useOtp>; onConfirm: () => void }) {
+  return (
+    <>
+      {state.sent && !state.verified && (
+        <div className="mt-2 flex items-center gap-2">
+          <input
+            type="text"
+            inputMode="numeric"
+            maxLength={6}
+            placeholder="Enter 6-digit OTP"
+            value={state.otp}
+            onChange={(e) => state.setOtp(e.target.value.replace(/\D/g, "").slice(0, 6))}
+            className={`${inputBase} ${borderFor()} h-[34px]`}
+          />
+          <button
+            type="button"
+            onClick={onConfirm}
+            disabled={state.otp.length !== 6 || state.loading}
+            className="h-[34px] whitespace-nowrap rounded-md bg-emerald-950 px-4 text-[11px] font-semibold uppercase text-white hover:bg-emerald-900 disabled:cursor-not-allowed disabled:opacity-50"
+          >
+            Confirm
+          </button>
+        </div>
+      )}
+      {state.message && (
+        <p className={`mt-1 text-[11px] font-medium ${state.message.ok ? "text-emerald-700" : "text-red-600"}`}>
+          {state.message.text}
+        </p>
+      )}
+    </>
   );
 }
 
@@ -401,6 +682,10 @@ export default function BharatOrganicAwards({ initialHeroData }: AwardsNominatio
   const [heroData, setHeroData] = useState<any>(initialHeroData || null);
   const [stepsData, setStepsData] = useState<any>(null);
   const [form, setForm] = useState<FormState>(INITIAL_FORM);
+  const [files, setFiles] = useState<NominationFiles>({});
+  const [touched, setTouched] = useState<Partial<Record<FieldKey, boolean>>>({});
+  const phoneOtp = useOtp();
+  const emailOtp = useOtp();
   const [submitting, setSubmitting] = useState(false);
   const [submitted, setSubmitted] = useState(false);
   const [error, setError] = useState("");
@@ -457,33 +742,83 @@ export default function BharatOrganicAwards({ initialHeroData }: AwardsNominatio
   const update = (field: keyof FormState, value: string | boolean) => {
     setForm((prev) => ({ ...prev, [field]: value }));
     setError("");
+    // A changed number or address has to be verified again.
+    if (field === "mobile" && value !== form.mobile) phoneOtp.reset();
+    if (field === "email" && value !== form.email) emailOtp.reset();
   };
 
-  const handleSubmit = () => {
-    if (!form.applicantType) return setError("Please select applicant type.");
-    if (!form.orgName.trim()) return setError("Full name / organisation name is required.");
-    if (!form.contactPerson.trim()) return setError("Contact person is required.");
-    if (!form.designation.trim()) return setError("Designation is required.");
-    if (!form.mobile.trim()) return setError("Mobile number is required.");
-    if (!form.email.trim()) return setError("Email ID is required.");
-    if (!form.city.trim()) return setError("City / state / country is required.");
-    if (!form.stateCountry) return setError("Please select state / country.");
-    if (!form.awardCategory) return setError("Please select an award category.");
-    if (!form.briefProfile.trim()) return setError("Brief profile is required.");
-    if (!form.yearsExperience) return setError("Please select years of experience.");
-    if (!form.keyServices.trim()) return setError("Key services / products are required.");
-    if (!form.keyAchievements.trim()) return setError("Key achievements are required.");
-    if (!form.uniqueContribution.trim()) return setError("Unique contribution is required.");
-    if (!form.impactCreated.trim()) return setError("Impact created is required.");
-    if (!form.whyDeserve.trim()) return setError("Please share why you deserve this award.");
-    if (!form.declaration) return setError("Please accept the declaration.");
+  const touch = (field: FieldKey) => setTouched((prev) => ({ ...prev, [field]: true }));
+
+  const errors = validateForm(form, files);
+  const errorFor = (field: FieldKey) => (touched[field] ? errors[field] : undefined);
+
+  const pending = (Object.keys(errors) as FieldKey[]).map((key) => FIELD_LABELS[key]);
+  if (!errors.mobile && !phoneOtp.verified) pending.push("Mobile OTP verification");
+  if (!errors.email && !emailOtp.verified) pending.push("Email OTP verification");
+  const canSubmit = pending.length === 0 && !submitting;
+
+  const otpName = form.contactPerson.trim() || form.orgName.trim() || "Nominee";
+  const normalizedEmail = form.email.trim().toLowerCase();
+
+  const sendPhoneOtp = () =>
+    phoneOtp.send(() => verifyApi.sendPhoneOtp(`91${form.mobile}`, "AWARDS_NOMINATION", otpName));
+  const confirmPhoneOtp = () =>
+    phoneOtp.confirm((code) => verifyApi.verifyPhoneOtp(`91${form.mobile}`, code));
+  const sendEmailOtp = () =>
+    emailOtp.send(() => verifyApi.sendEmailOtp(normalizedEmail, "AWARDS_NOMINATION", otpName));
+  const confirmEmailOtp = () =>
+    emailOtp.confirm((code) => verifyApi.verifyEmailOtp(normalizedEmail, code));
+
+  const setFile = (key: FileKey, file: File | undefined) => {
+    setFiles((prev) => ({ ...prev, [key]: file }));
+    touch(key);
+  };
+
+  const resetAll = () => {
+    setForm(INITIAL_FORM);
+    setFiles({});
+    setTouched({});
+    phoneOtp.reset();
+    emailOtp.reset();
+    setError("");
+  };
+
+  const handleSubmit = async () => {
+    if (!canSubmit) {
+      setTouched(Object.fromEntries(Object.keys(FIELD_LABELS).map((key) => [key, true])));
+      return;
+    }
 
     setSubmitting(true);
     setError("");
-    setTimeout(() => {
-      setSubmitting(false);
+    try {
+      const body = new FormData();
+      (Object.keys(form) as (keyof FormState)[]).forEach((key) => {
+        const value = form[key];
+        body.append(key, typeof value === "string" ? value.trim() : String(value));
+      });
+      body.set("email", normalizedEmail);
+      (Object.keys(files) as FileKey[]).forEach((key) => {
+        const file = files[key];
+        if (file) body.append(key, file);
+      });
+
+      const apiUrl = process.env.NEXT_PUBLIC_API_URL || "/api";
+      const res = await fetch(`${apiUrl}/website/awards/nominations`, { method: "POST", body });
+      const json = await res.json().catch(() => null);
+
+      if (!res.ok || !json?.success) {
+        const list: string[] = Array.isArray(json?.errors) ? json.errors : [];
+        setError(list.length ? list.join(" • ") : json?.message || "Could not submit your nomination. Please try again.");
+        return;
+      }
       setSubmitted(true);
-    }, 800);
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    } catch {
+      setError("Could not reach the server. Please check your connection and try again.");
+    } finally {
+      setSubmitting(false);
+    }
   };
 
   if (submitted) {
@@ -504,7 +839,7 @@ export default function BharatOrganicAwards({ initialHeroData }: AwardsNominatio
           <button
             onClick={() => {
               setSubmitted(false);
-              setForm(INITIAL_FORM);
+              resetAll();
             }}
             className="mt-6 inline-flex items-center gap-2 rounded-full bg-emerald-950 px-6 py-2.5 text-sm font-semibold text-white shadow-lg transition-all duration-300 hover:bg-emerald-900 active:scale-95"
           >
@@ -815,57 +1150,101 @@ export default function BharatOrganicAwards({ initialHeroData }: AwardsNominatio
                 required
                 options={APPLICANT_TYPES}
                 value={form.applicantType}
-                onChange={(v) => update("applicantType", v)}
+                onChange={(v) => {
+                  update("applicantType", v);
+                  touch("applicantType");
+                }}
+                error={errorFor("applicantType")}
               />
               <Field
                 label="Full Name / Org Name"
                 placeholder="Enter full name or organization name"
                 required
+                maxLength={150}
                 value={form.orgName}
                 onChange={(v) => update("orgName", v)}
+                onBlur={() => touch("orgName")}
+                error={errorFor("orgName")}
               />
               <Field
                 label="Contact Person"
                 placeholder="Enter contact person name"
                 required
+                maxLength={100}
                 value={form.contactPerson}
                 onChange={(v) => update("contactPerson", v)}
+                onBlur={() => touch("contactPerson")}
+                error={errorFor("contactPerson")}
               />
               <Field
                 label="Designation"
                 placeholder="Enter designation"
+                maxLength={100}
                 value={form.designation}
                 onChange={(v) => update("designation", v)}
               />
               <Field
                 label="Mobile Number"
-                placeholder="Enter mobile number"
+                placeholder="10-digit mobile number"
                 type="tel"
+                inputMode="numeric"
+                maxLength={10}
                 required
                 value={form.mobile}
-                onChange={(v) => update("mobile", v)}
-              />
+                onChange={(v) => update("mobile", v.replace(/\D/g, "").slice(0, 10))}
+                onBlur={() => touch("mobile")}
+                error={errorFor("mobile")}
+                rightSlot={
+                  <OtpButton state={phoneOtp} disabled={!!errors.mobile} onClick={sendPhoneOtp} />
+                }
+              >
+                <OtpEntry state={phoneOtp} onConfirm={confirmPhoneOtp} />
+              </Field>
               <Field
                 label="Email ID"
                 placeholder="Enter email address"
                 type="email"
                 required
+                maxLength={150}
                 value={form.email}
                 onChange={(v) => update("email", v)}
-              />
+                onBlur={() => touch("email")}
+                error={errorFor("email")}
+                rightSlot={
+                  <OtpButton state={emailOtp} disabled={!!errors.email} onClick={sendEmailOtp} />
+                }
+              >
+                <OtpEntry state={emailOtp} onConfirm={confirmEmailOtp} />
+              </Field>
               <Field
                 label="Website (If any)"
                 placeholder="www.example.com"
                 value={form.website}
                 onChange={(v) => update("website", v)}
+                onBlur={() => touch("website")}
+                error={errorFor("website")}
+              />
+              <Field
+                label="City"
+                placeholder="Enter city"
+                required
+                maxLength={80}
+                value={form.city}
+                onChange={(v) => update("city", v)}
+                onBlur={() => touch("city")}
+                error={errorFor("city")}
               />
               <Select
-                label="City / State / Country"
+                label="State / Country"
                 placeholder="Select state / country"
                 required
                 options={INDIAN_STATES}
                 value={form.stateCountry}
-                onChange={(v) => update("stateCountry", v)}
+                onChange={(v) => {
+                  update("stateCountry", v);
+                  touch("stateCountry");
+                }}
+                error={errorFor("stateCountry")}
               />
             </div>
 
@@ -880,7 +1259,11 @@ export default function BharatOrganicAwards({ initialHeroData }: AwardsNominatio
                     required
                     options={AWARD_CATEGORIES}
                     value={form.awardCategory}
-                    onChange={(v) => update("awardCategory", v)}
+                    onChange={(v) => {
+                      update("awardCategory", v);
+                      touch("awardCategory");
+                    }}
+                    error={errorFor("awardCategory")}
                   />
                 </div>
               </div>
@@ -897,6 +1280,9 @@ export default function BharatOrganicAwards({ initialHeroData }: AwardsNominatio
                   span={2}
                   value={form.briefProfile}
                   onChange={(v) => update("briefProfile", v)}
+                  onBlur={() => touch("briefProfile")}
+                  error={errorFor("briefProfile")}
+                  hint={`${wordCount(form.briefProfile)} / 150–200 words`}
                 />
                 <Select
                   label="Years of Experience"
@@ -904,7 +1290,11 @@ export default function BharatOrganicAwards({ initialHeroData }: AwardsNominatio
                   required
                   options={YEARS_EXPERIENCE}
                   value={form.yearsExperience}
-                  onChange={(v) => update("yearsExperience", v)}
+                  onChange={(v) => {
+                    update("yearsExperience", v);
+                    touch("yearsExperience");
+                  }}
+                  error={errorFor("yearsExperience")}
                 />
                 <Select
                   label="Team Size (If Organization)"
@@ -920,6 +1310,8 @@ export default function BharatOrganicAwards({ initialHeroData }: AwardsNominatio
                   span={4}
                   value={form.keyServices}
                   onChange={(v) => update("keyServices", v)}
+                  onBlur={() => touch("keyServices")}
+                  error={errorFor("keyServices")}
                 />
               </div>
             </div>
@@ -930,10 +1322,13 @@ export default function BharatOrganicAwards({ initialHeroData }: AwardsNominatio
               <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
                 <TextArea
                   label="Key Achievements (Max 5 points)"
-                  placeholder="List your major achievements, awards, recognitions or milestones."
+                  placeholder="One achievement per line: awards, recognitions or milestones."
                   required
                   value={form.keyAchievements}
                   onChange={(v) => update("keyAchievements", v)}
+                  onBlur={() => touch("keyAchievements")}
+                  error={errorFor("keyAchievements")}
+                  hint={`${pointCount(form.keyAchievements)} / 5 points`}
                 />
                 <TextArea
                   label="Unique Contribution to Healthcare / Wellness"
@@ -941,6 +1336,8 @@ export default function BharatOrganicAwards({ initialHeroData }: AwardsNominatio
                   required
                   value={form.uniqueContribution}
                   onChange={(v) => update("uniqueContribution", v)}
+                  onBlur={() => touch("uniqueContribution")}
+                  error={errorFor("uniqueContribution")}
                 />
                 <TextArea
                   label="Impact Created"
@@ -948,6 +1345,8 @@ export default function BharatOrganicAwards({ initialHeroData }: AwardsNominatio
                   required
                   value={form.impactCreated}
                   onChange={(v) => update("impactCreated", v)}
+                  onBlur={() => touch("impactCreated")}
+                  error={errorFor("impactCreated")}
                 />
                 <TextArea
                   label="Innovation / Technology Used (If any)"
@@ -962,6 +1361,9 @@ export default function BharatOrganicAwards({ initialHeroData }: AwardsNominatio
                   span={2}
                   value={form.whyDeserve}
                   onChange={(v) => update("whyDeserve", v)}
+                  onBlur={() => touch("whyDeserve")}
+                  error={errorFor("whyDeserve")}
+                  hint={`${wordCount(form.whyDeserve)} / 100 words`}
                 />
               </div>
             </div>
@@ -976,20 +1378,26 @@ export default function BharatOrganicAwards({ initialHeroData }: AwardsNominatio
                 <UploadRow
                   label="Profile Deck"
                   subLabel="Profile / Company Deck"
-                  fileName={form.deckFileName}
-                  onChange={(v) => update("deckFileName", v)}
+                  accept=".pdf,.doc,.docx,.jpg,.jpeg,.png"
+                  file={files.deckFile}
+                  onChange={(f) => setFile("deckFile", f)}
+                  error={errorFor("deckFile")}
                 />
                 <UploadRow
                   label="Certifications"
                   subLabel="Certifications / Awards"
-                  fileName={form.certFileName}
-                  onChange={(v) => update("certFileName", v)}
+                  accept=".pdf,.doc,.docx,.jpg,.jpeg,.png"
+                  file={files.certFile}
+                  onChange={(f) => setFile("certFile", f)}
+                  error={errorFor("certFile")}
                 />
                 <UploadRow
                   label="Images Videos"
-                  subLabel="Images / Videos"
-                  fileName={form.mediaFileName}
-                  onChange={(v) => update("mediaFileName", v)}
+                  subLabel="Images / Videos (JPG, PNG, MP4)"
+                  accept=".jpg,.jpeg,.png,.webp,.mp4,.mov,.webm"
+                  file={files.mediaFile}
+                  onChange={(f) => setFile("mediaFile", f)}
+                  error={errorFor("mediaFile")}
                 />
                 <div>
                   <div className="mb-1">
@@ -1003,14 +1411,13 @@ export default function BharatOrganicAwards({ initialHeroData }: AwardsNominatio
                       placeholder="https://www.example.com"
                       value={form.socialLink}
                       onChange={(e) => update("socialLink", e.target.value)}
-                      className="w-full rounded-md border border-emerald-900/15 bg-white py-2 pl-9 pr-3 text-sm text-emerald-950 placeholder:text-black outline-none transition-all duration-200 focus:border-amber-500 focus:ring-2 focus:ring-amber-400/30 hover:border-emerald-900/30"
+                      onBlur={() => touch("socialLink")}
+                      className={`${inputBase} ${borderFor(errorFor("socialLink"))} pl-9`}
                     />
                   </div>
+                  <FieldError error={errorFor("socialLink")} />
                 </div>
               </div>
-              <p className="mt-3 text-[11px] italic text-black">
-                You can upload multiple files after submission.
-              </p>
             </div>
 
             {/* 6. Declaration */}
@@ -1020,7 +1427,10 @@ export default function BharatOrganicAwards({ initialHeroData }: AwardsNominatio
                 <input
                   type="checkbox"
                   checked={form.declaration}
-                  onChange={(e) => update("declaration", e.target.checked)}
+                  onChange={(e) => {
+                    update("declaration", e.target.checked);
+                    touch("declaration");
+                  }}
                   className="mt-0.5 h-3.5 w-3.5 accent-emerald-800"
                 />
                 <span>
@@ -1028,6 +1438,7 @@ export default function BharatOrganicAwards({ initialHeroData }: AwardsNominatio
                   correct and complete to the best of my knowledge.
                 </span>
               </label>
+              <FieldError error={errorFor("declaration")} />
 
               {error && (
                 <p className="mt-3 rounded-md bg-red-50 px-3 py-2 text-xs font-semibold text-red-600">
@@ -1036,13 +1447,21 @@ export default function BharatOrganicAwards({ initialHeroData }: AwardsNominatio
               )}
 
               <button
+                type="button"
                 onClick={handleSubmit}
-                disabled={submitting}
+                disabled={!canSubmit}
                 className="group mt-4 flex w-full items-center justify-center gap-2 rounded-md bg-emerald-950 py-2.5 text-sm font-bold text-white shadow-md transition-all duration-300 hover:bg-emerald-900 hover:shadow-lg active:scale-[0.98] disabled:opacity-60 disabled:cursor-not-allowed sm:w-auto sm:px-8"
               >
                 <Send className="h-4 w-4 transition-transform duration-300 group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
                 {submitting ? "SUBMITTING..." : "SUBMIT NOMINATION"}
               </button>
+
+              {pending.length > 0 && !submitting && (
+                <p className="mt-2 text-[12px] leading-relaxed text-amber-700">
+                  <strong>To enable submit, complete:</strong> {pending.join(", ")}
+                </p>
+              )}
+
               <p className="mt-3 text-sm text-black sm:text-[15px]">
                 <ShieldCheck className="mr-1 inline h-3.5 w-3.5 text-amber-600" />
                 Your information is secure and will be kept confidential.

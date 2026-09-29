@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
+import { OG_IMAGE, OG_IMAGE_ALT } from "@/lib/seo";
 import { seoApi } from "@/lib/api";
-import SchemaInjector from "@/app/components/SchemaInjector";
+import AdminSchema from "@/components/seo/AdminSchema";
 import MsmePmsBanner from "@/app/components/participate/msme/MsmePmsBanner";
 import FeatureStrip from "@/app/components/participate/msme/FeatureStrip";
 import OfficialRecognitionBanner from "@/app/components/participate/msme/OfficialRecognitionBanner";
@@ -51,9 +52,6 @@ export async function generateMetadata(): Promise<Metadata> {
   const description =
     seoData?.metaDescription ||
     "Explore MSME Procurement & Marketing Support (PMS) Scheme for Bharat Organic Expo 2027. Check eligibility, financial assistance, documents required and apply for government-backed exhibition support.";
-  const ogImage =
-    seoData?.ogImage ||
-    "";
 
   return {
     metadataBase: new URL(defaultUrl),
@@ -74,10 +72,10 @@ export async function generateMetadata(): Promise<Metadata> {
       siteName: "Bharat Organic Expo 2027",
       images: [
         {
-          url: ogImage,
+          url: OG_IMAGE,
           width: 1200,
           height: 630,
-          alt: title,
+          alt: OG_IMAGE_ALT,
         },
       ],
       type: "website",
@@ -106,7 +104,7 @@ const MsmePage = async () => {
 
   return (
     <div className="min-h-screen bg-white font-sans text-neutral-800 overflow-x-clip">
-      <SchemaInjector schema={schemaContent} />
+      <AdminSchema schema={schemaContent} />
       <MsmePmsBanner />
       <FeatureStrip />
       <OfficialRecognitionBanner />

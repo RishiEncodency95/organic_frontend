@@ -11,7 +11,6 @@ import {
   BookOpen,
   BriefcaseBusiness,
   Check,
-  Eye,
   FileText,
   GraduationCap,
   Info,
@@ -674,8 +673,8 @@ function ResultHero() {
       */}
       <div
         className={`pointer-events-none absolute z-[18] ${matchLevel === "moderate"
-            ? "left-[29.5%] top-0 h-full w-[110px]"
-            : "left-[32.25%] top-[7.2%] h-[78px] w-[86px]"
+          ? "left-[29.5%] top-0 h-full w-[110px]"
+          : "left-[32.25%] top-[7.2%] h-[78px] w-[86px]"
           }`}
         style={{
           background:
@@ -1720,14 +1719,6 @@ function MissingDetail({
 function CVCard({ onBack, onClose }: { onBack?: () => void; onClose?: () => void }) {
   const { candidate } = useMatchData();
 
-  const handleViewFile = () => {
-    if (candidate.cvUrl) {
-      window.open(candidate.cvUrl, "_blank");
-    } else {
-      alert(`CV File: ${candidate.cvName} (${candidate.cvSize})`);
-    }
-  };
-
   return (
     <div className="flex h-full min-h-0 flex-col overflow-hidden rounded-[8px] border border-[#eaefeb] bg-white p-[12px] shadow-[0_2px_8px_rgba(0,0,0,0.03)]">
       <h3 className="shrink-0 text-[17px] font-bold text-[#0c3363]">
@@ -1753,15 +1744,6 @@ function CVCard({ onBack, onClose }: { onBack?: () => void; onClose?: () => void
           </p>
 
           <div className="mt-[6px] flex flex-wrap gap-x-[12px] gap-y-[3px] text-[14px] font-bold text-[#0977df]">
-            <button
-              type="button"
-              onClick={handleViewFile}
-              className="flex items-center gap-[5px] hover:opacity-80 transition-opacity cursor-pointer"
-            >
-              <Eye className="h-[15px] w-[15px] stroke-[2.5]" />
-              View File
-            </button>
-
             {/* Reopens this job's upload step rather than dropping out of the flow. */}
             <button
               type="button"
@@ -1932,7 +1914,7 @@ function Sidebar({
 
         ${matchLevel === "low"
           ? "grid-rows-[54px_246px_130px_210px_96px_1fr]"
-          : "grid-rows-[54px_246px_130px_210px_48px_48px_58px_1fr]"}
+          : "grid-rows-[54px_246px_130px_210px_48px_58px_1fr]"}
         gap-[7px]
       `}
     >
@@ -1971,12 +1953,12 @@ function Sidebar({
           </div>
 
           {/* SECOND */}
-          <div className="min-h-0">
+          {/* <div className="min-h-0">
             <button className="flex h-full w-full items-center justify-center gap-[8px] rounded-[8px] border border-[#07623a] bg-white text-[16px] font-bold text-[#07623a] hover:bg-[#f2faf4] transition-colors shadow-sm">
               <Bookmark className="h-[20px] w-[20px] stroke-[2.2] text-[#07623a]" />
               Save for Later
             </button>
-          </div>
+          </div> */}
 
           <SupportCard />
         </>

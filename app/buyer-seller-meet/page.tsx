@@ -1,7 +1,8 @@
 import React from "react";
 import type { Metadata } from "next";
+import { OG_IMAGE, OG_IMAGE_ALT } from "@/lib/seo";
 import { seoApi } from "@/lib/api";
-import SchemaInjector from "@/app/components/SchemaInjector";
+import AdminSchema from "@/components/seo/AdminSchema";
 import HeroSection from "../components/buyer-seller-meet/HeroSection";
 import FeatureStrip from "../components/buyer-seller-meet/FeatureStrip";
 import AboutSection from "../components/buyer-seller-meet/AboutSection";
@@ -43,9 +44,6 @@ export async function generateMetadata(): Promise<Metadata> {
   const description =
     seoData?.metaDescription ||
     "Join thousands of experts, buyers, and exhibitors at the most anticipated organic and wellness mega event.";
-  const ogImage =
-    seoData?.ogImage ||
-    "";
 
   return {
     metadataBase: new URL(defaultUrl),
@@ -66,10 +64,10 @@ export async function generateMetadata(): Promise<Metadata> {
       siteName: "Bharat Organic Expo 2027",
       images: [
         {
-          url: ogImage,
+          url: OG_IMAGE,
           width: 1200,
           height: 630,
-          alt: title,
+          alt: OG_IMAGE_ALT,
         },
       ],
       type: "website",
@@ -95,7 +93,7 @@ export default async function BuyerSellerMeetPage() {
 
   return (
     <main className="min-h-screen bg-[#f8fafc]">
-      <SchemaInjector schema={schemaContent} />
+      <AdminSchema schema={schemaContent} />
       <HeroSection />
       <FeatureStrip />
       <AboutSection />

@@ -305,7 +305,8 @@ export default function Footer({ initialFooterData }: { initialFooterData?: any 
 
           {/* Organised By & Connect */}
           <div className="flex flex-col items-center sm:items-start text-center sm:text-left">
-            <h3 className="font-poppins font-semibold text-[#F3B71B] uppercase text-[13px] tracking-wider mb-1">
+            {/* Same width as the logo box below (w-56) so the heading is centred over it */}
+            <h3 className="w-56 text-center font-poppins font-semibold text-[#F3B71B] uppercase text-[13px] tracking-wider mb-1">
               Organised by:
             </h3>
 
@@ -332,15 +333,17 @@ export default function Footer({ initialFooterData }: { initialFooterData?: any 
             </p>
 
             {/* Nature's Bounty Image */}
-            <div className="w-full max-w-[300px] sm:max-w-[280px] mb-2 bg-[#F1DEC4] p-1 rounded-xl shadow-[0_4px_20px_rgba(0,0,0,0.3)] border border-[#d6ad60]/40">
+            <div className="w-full max-w-[300px] sm:max-w-[280px] mb-2">
               <Image
                 src={bountySrc}
                 alt="Nature's Bounty"
                 width={250}
                 height={100}
                 quality={100}
-                className="w-full h-auto object-contain drop-shadow-sm"
-                style={{ width: "auto", height: "auto" }}
+                className="block w-full h-auto mx-auto object-contain drop-shadow-sm"
+                // width must be 100% (not "auto"), otherwise the image sits at its natural width on
+                // the left of the box and leaves an empty band of background on the right.
+                style={{ width: "100%", height: "auto" }}
               />
             </div>
 
