@@ -252,8 +252,8 @@ const NominateForm = () => {
                         <div className="flex flex-col gap-1.5">
                             <label className="text-[12px] md:text-[13px] font-semibold text-[#1a1a1a]">Industry / Sector <span className="text-red-500">*</span></label>
                             <div className="relative">
-                                <select className="w-full px-3 py-2.5 pr-8 rounded-lg border border-[#e2e8f0] text-[13px] text-gray-500 focus:outline-none focus:border-[#0a4d22] focus:ring-1 focus:ring-[#0a4d22] transition-colors bg-white appearance-none cursor-pointer">
-                                    <option value="" disabled selected>Select industry / sector</option>
+                                <select defaultValue="" className="w-full px-3 py-2.5 pr-8 rounded-lg border border-[#e2e8f0] text-[13px] text-gray-500 focus:outline-none focus:border-[#0a4d22] focus:ring-1 focus:ring-[#0a4d22] transition-colors bg-white appearance-none cursor-pointer">
+                                    <option value="" disabled>Select industry / sector</option>
                                     <option value="agriculture">Agriculture</option>
                                     <option value="technology">Technology</option>
                                     <option value="retail">Retail</option>
@@ -379,8 +379,8 @@ const NominateForm = () => {
                             <div className="flex flex-col gap-1.5">
                                 <label className="text-[12px] md:text-[13px] font-semibold text-[#1a1a1a]">Areas of Expertise <span className="text-red-500">*</span></label>
                                 <div className="relative">
-                                    <select className="w-full px-3 py-2.5 pr-8 rounded-lg border border-[#e2e8f0] text-[13px] text-gray-500 focus:outline-none focus:border-[#0a4d22] focus:ring-1 focus:ring-[#0a4d22] transition-colors bg-white appearance-none cursor-pointer">
-                                        <option value="" disabled selected>Select areas of expertise</option>
+                                    <select defaultValue="" className="w-full px-3 py-2.5 pr-8 rounded-lg border border-[#e2e8f0] text-[13px] text-gray-500 focus:outline-none focus:border-[#0a4d22] focus:ring-1 focus:ring-[#0a4d22] transition-colors bg-white appearance-none cursor-pointer">
+                                        <option value="" disabled>Select areas of expertise</option>
                                         <option value="farming">Organic Farming</option>
                                         <option value="supply">Supply Chain</option>
                                         <option value="policy">Policy Making</option>
@@ -539,8 +539,8 @@ const NominateForm = () => {
                         <div className="flex flex-col gap-1.5">
                             <label className="text-[12px] md:text-[13px] font-semibold text-[#1a1a1a]">Relationship with Nominee <span className="text-red-500">*</span></label>
                             <div className="relative">
-                                <select className="w-full px-3 py-2.5 pr-8 rounded-lg border border-[#e2e8f0] text-[13px] text-gray-500 focus:outline-none focus:border-[#0a4d22] focus:ring-1 focus:ring-[#0a4d22] transition-colors bg-white appearance-none cursor-pointer">
-                                    <option value="" disabled selected>Select relationship</option>
+                                <select defaultValue="" className="w-full px-3 py-2.5 pr-8 rounded-lg border border-[#e2e8f0] text-[13px] text-gray-500 focus:outline-none focus:border-[#0a4d22] focus:ring-1 focus:ring-[#0a4d22] transition-colors bg-white appearance-none cursor-pointer">
+                                    <option value="" disabled>Select relationship</option>
                                     <option value="colleague">Colleague</option>
                                     <option value="manager">Manager</option>
                                     <option value="self">Self</option>

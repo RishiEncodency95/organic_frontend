@@ -1,91 +1,27 @@
 import React from "react";
 import type { Metadata } from "next";
-import { OG_IMAGE, OG_IMAGE_ALT } from "@/lib/seo";
-import { seoApi } from "@/lib/api";
 import AdminSchema from "@/components/seo/AdminSchema";
+import { adminSeoMetadata, getAdminSeo } from "@/lib/adminSeo";
 import BookAStandClient from "./BookAStandClient";
 
 export const revalidate = 60;
 
+const SEO_PAGE_KEY = "registration/book-a-stand";
+
 export async function generateMetadata(): Promise<Metadata> {
-  const isLocal = process.env.NODE_ENV !== "production";
-  const defaultUrl = isLocal ? "http://localhost:3002" : "https://bharatorganicexpo.com";
-  let seoData: any = null;
-  try {
-    const res = await seoApi.getByPage("registration/book-a-stand", isLocal ? "local" : "live");
-    seoData = res?.data || res;
-  } catch (err) {
-    // fallback
-  }
-
-  const rawCanonical = (seoData?.canonicalTag || seoData?.canonicalUrl || "").trim();
-  let canonicalUrl = `${defaultUrl}/registration/book-a-stand`;
-  if (rawCanonical) {
-    const match = rawCanonical.match(/href=["']([^"']+)["']/i);
-    if (match && match[1]) {
-      canonicalUrl = match[1].trim();
-    } else {
-      const stripped = rawCanonical.replace(/<[^>]*>/g, "").trim();
-      if (stripped.startsWith("http://") || stripped.startsWith("https://") || stripped.startsWith("/")) {
-        canonicalUrl = stripped.startsWith("/") ? `${defaultUrl}${stripped}` : stripped;
-      }
-    }
-  }
-
-  const title = seoData?.metaTitle || "Book a Stall | Bharat Organic Expo 2027";
-  const description =
-    seoData?.metaDescription ||
-    "Book your exhibition stall or stand at Bharat Organic Expo 2027. Reserve prime space to showcase your organic and natural products to thousands of buyers.";
-
-  return {
-    metadataBase: new URL(defaultUrl),
-    title: {
-      absolute: title,
-    },
-    description,
-    keywords: seoData?.metaKeywords
-      ? seoData.metaKeywords.split(",").map((k: string) => k.trim()).filter(Boolean)
-      : ["book a stall", "book a stand", "exhibitor stall booking", "bharat organic expo stall", "organic expo booth registration"],
-    alternates: {
-      canonical: canonicalUrl,
-    },
-    openGraph: {
-      title: seoData?.ogTitle || title,
-      description: seoData?.ogDescription || description,
-      url: canonicalUrl,
-      siteName: "Bharat Organic Expo 2027",
-      images: [
-        {
-          url: OG_IMAGE,
-          width: 1200,
-          height: 630,
-          alt: OG_IMAGE_ALT,
-        },
-      ],
-      type: "website",
-    },
-    robots: {
-      index: seoData?.robotsIndex !== false,
-      follow: seoData?.robotsFollow !== false,
-    },
-  };
+  return adminSeoMetadata(SEO_PAGE_KEY, {
+    title: "Book a Stall | Bharat Organic Expo 2027",
+    description:
+      "Book your exhibition stall or stand at Bharat Organic Expo 2027. Reserve prime space to showcase your organic and natural products to thousands of buyers.",
+  });
 }
 
 export default async function BookAStandPage() {
-  const isLocal = process.env.NODE_ENV !== "production";
-  let seoData: any = null;
-  try {
-    const res = await seoApi.getByPage("registration/book-a-stand", isLocal ? "local" : "live");
-    seoData = res?.data || res;
-  } catch (err) {
-    // fallback
-  }
-
-  const schemaContent = seoData?.schemaMarkup || null;
+  const seoData = await getAdminSeo(SEO_PAGE_KEY);
 
   return (
     <>
-      <AdminSchema schema={schemaContent} />
+      <AdminSchema schema={seoData?.schemaMarkup || null} />
       <BookAStandClient />
     </>
   );

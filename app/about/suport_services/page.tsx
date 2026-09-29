@@ -2,16 +2,22 @@ import React from 'react';
 import { Headphones, Ticket, Megaphone } from 'lucide-react';
 import { Metadata } from 'next';
 import { settingsApi } from '@/lib/api';
+import AdminSchema from '@/components/seo/AdminSchema';
+import { adminSeoMetadata, getAdminSeo } from '@/lib/adminSeo';
 
-export const metadata: Metadata = {
-  title: "Support Services | Bharat Organic Expo 2027",
-  description: "Find the resources and help you need for a successful experience at the Bharat Organic Expo 2027. We provide Exhibitor Support, Visitor Information, and Media resources.",
-  alternates: {
-    canonical: "/about/suport_services",
-  }
-};
+export const revalidate = 60;
+
+const SEO_PAGE_KEY = "about/suport_services";
+
+export async function generateMetadata(): Promise<Metadata> {
+  return adminSeoMetadata(SEO_PAGE_KEY, {
+    title: "Support Services | Bharat Organic Expo 2027",
+    description: "Find the resources and help you need for a successful experience at the Bharat Organic Expo 2027. We provide Exhibitor Support, Visitor Information, and Media resources.",
+  });
+}
 
 export default async function SupportServicesPage() {
+  const seoData = await getAdminSeo(SEO_PAGE_KEY);
   const settings = await settingsApi.getSettings().catch(() => ({} as any));
   const pageConfig = settings?.supportServicesPage || {};
   const sections = pageConfig.sections || [];
@@ -20,6 +26,7 @@ export default async function SupportServicesPage() {
 
   return (
     <>
+      <AdminSchema schema={seoData?.schemaMarkup || null} />
       <div className="bg-[#ffffff] min-h-screen pt-24 md:pt-32 pb-16 md:pb-20">
         <div className="w-full px-4 md:px-14">
 

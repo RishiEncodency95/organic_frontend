@@ -80,6 +80,11 @@ export const metadata: Metadata = {
     url: defaultSiteUrl,
     siteName: "Bharat Organic Expo 2027",
     type: "website",
+    images: [{ url: OG_IMAGE, width: 1200, height: 630, alt: OG_IMAGE_ALT }],
+  },
+  twitter: {
+    card: "summary_large_image",
+    images: [OG_IMAGE],
   },
   icons: {
     icon: "/favicon.ico",
@@ -89,10 +94,9 @@ export const metadata: Metadata = {
 };
 
 import StoreProvider from "./store/StoreProvider";
-import JsonLd from "@/components/seo/JsonLd";
-import { organizationJsonLd, websiteJsonLd } from "@/lib/seo";
 import Script from "next/script";
 import { getSectionData } from "@/lib/serverData";
+import { OG_IMAGE, OG_IMAGE_ALT } from "@/lib/seo";
 
 async function getTopbarSection() {
   const settings = await getSectionData<any>("/settings");
@@ -144,9 +148,6 @@ export default async function RootLayout({
         {gscVerification && (
           <meta name="google-site-verification" content={gscVerification} />
         )}
-        {/* Site-wide structured data */}
-        <JsonLd data={organizationJsonLd()} />
-        <JsonLd data={websiteJsonLd()} />
         {/* Dynamic Header Scripts from Admin */}
         <HeadScripts html={headerScripts} />
       </head>
