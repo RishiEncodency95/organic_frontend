@@ -1,7 +1,7 @@
 "use client";
 import React, { useState, useRef, useEffect } from "react";
 import { CheckCircle2, CheckCircle, ShieldCheck, User, Globe, Store, Factory, Laptop, HeartPulse, Leaf, Hotel, Briefcase, ChevronsUpDown, Loader2, X, AlertTriangle } from "lucide-react";
-import { verifyApi, buyerApi, settingsApi, crmApi } from "@/lib/api";
+import { verifyApi, buyerApi, settingsApi, crmApi, ihweEventApi } from "@/lib/api";
 import Swal from "sweetalert2";
 import Link from "next/link";
 
@@ -202,6 +202,7 @@ const MultiSelectDropdown = ({ options, selected, onChange, placeholder = "Selec
 
 export default function DomesticBuyerForm() {
   const [submitted, setSubmitted] = useState(false);
+  const [eventName, setEventName] = useState("BOE 2027");
   const [mockConfig, setMockConfig] = useState<any>(defaultMockConfig);
   const [isVerifying, setIsVerifying] = useState({ email: false, mobile: false });
   const [otpSent, setOtpSent] = useState({ email: false, mobile: false });
@@ -396,6 +397,11 @@ export default function DomesticBuyerForm() {
         setRequireOtp(res.data.requireOtpForVisitorRegistration);
       }
     }).catch((err: any) => console.error(err));
+    ihweEventApi.getActive().then((res: any) => {
+      if (res && res.success && res.data && res.data.name?.toLowerCase().includes('bharat organic')) {
+        setFormData(prev => ({ ...prev, eventName: res.data.name }));
+      }
+    }).catch((err: any) => console.error(err));
   }, []);
   const handleChange = (e: any) => {
     let { name, value } = e.target;
@@ -487,7 +493,9 @@ export default function DomesticBuyerForm() {
         registrationCategory: pkg.name,
         registrationFee: `₹${pkg.price}`,
         transactionId,
-        paymentStatus
+        paymentStatus,
+        eventName: eventName,
+        domainName: "bharatorganic"
       };
 
       const res = await buyerApi.submitBuyer(jsonPayload);
@@ -643,27 +651,27 @@ export default function DomesticBuyerForm() {
                 </button>
               )}
               {requireOtp && otpSent.mobile && !otpVerified.mobile && (
-                  <button type="button" onClick={() => handleVerifyOtp('mobile')} className={`bg-[#23471d] text-white px-3 rounded-[2px] transition hover:bg-[#1a3516] h-full ${buttonTextClasses}`}>
-                    {isVerifying.mobile ? <Loader2 className="animate-spin" size={14} /> : 'Verify'}
-                  </button>
-                )}
+                <button type="button" onClick={() => handleVerifyOtp('mobile')} className={`bg-[#23471d] text-white px-3 rounded-[2px] transition hover:bg-[#1a3516] h-full ${buttonTextClasses}`}>
+                  {isVerifying.mobile ? <Loader2 className="animate-spin" size={14} /> : 'Verify'}
+                </button>
+              )}
               {requireOtp && otpVerified.mobile && <CheckCircle size={18} className="text-emerald-600 self-center shrink-0 ml-2" />}
             </div>
             {requireOtp && otpSent.mobile && !otpVerified.mobile && (
-                <div className="space-y-1 mt-1">
-                  <input type="text" placeholder="Enter 6-digit OTP" value={otpValue.mobile} onChange={e => setOtpValue(p => ({ ...p, mobile: e.target.value }))} className={`${inputClasses} text-center tracking-[0.3em] font-bold`} maxLength={6} inputMode="numeric" />
-                  <div className="flex items-center justify-between">
-                    <span className="text-[10px] text-slate-400">Didn't receive it?</span>
-                    {resendTimers.mobile > 0 ? (
-                      <span className="text-[10px] font-bold text-slate-400">Resend in {resendTimers.mobile}s</span>
-                    ) : (
-                      <button type="button" onClick={() => handleSimulateOtp('mobile')} disabled={isVerifying.mobile} className="text-[10px] font-bold text-[#23471d] hover:underline disabled:opacity-50">
-                        Resend OTP
-                      </button>
-                    )}
-                  </div>
+              <div className="space-y-1 mt-1">
+                <input type="text" placeholder="Enter 6-digit OTP" value={otpValue.mobile} onChange={e => setOtpValue(p => ({ ...p, mobile: e.target.value }))} className={`${inputClasses} text-center tracking-[0.3em] font-bold`} maxLength={6} inputMode="numeric" />
+                <div className="flex items-center justify-between">
+                  <span className="text-[10px] text-slate-400">Didn't receive it?</span>
+                  {resendTimers.mobile > 0 ? (
+                    <span className="text-[10px] font-bold text-slate-400">Resend in {resendTimers.mobile}s</span>
+                  ) : (
+                    <button type="button" onClick={() => handleSimulateOtp('mobile')} disabled={isVerifying.mobile} className="text-[10px] font-bold text-[#23471d] hover:underline disabled:opacity-50">
+                      Resend OTP
+                    </button>
+                  )}
                 </div>
-              )}
+              </div>
+            )}
           </div>
           <div><label className={labelClasses}>Alternate Number <span className="text-red-600">*</span></label><input required type="tel" name="alternateNumber" value={formData.alternateNumber} onChange={handleChange} placeholder="Alternate number" className={inputClasses} /></div>
           <div className="space-y-1">
@@ -676,27 +684,27 @@ export default function DomesticBuyerForm() {
                 </button>
               )}
               {requireOtp && otpSent.email && !otpVerified.email && (
-                  <button type="button" onClick={() => handleVerifyOtp('email')} className={`bg-[#23471d] text-white px-3 rounded-[2px] transition hover:bg-[#1a3516] h-full ${buttonTextClasses}`}>
-                    {isVerifying.email ? <Loader2 className="animate-spin" size={14} /> : 'Verify'}
-                  </button>
-                )}
+                <button type="button" onClick={() => handleVerifyOtp('email')} className={`bg-[#23471d] text-white px-3 rounded-[2px] transition hover:bg-[#1a3516] h-full ${buttonTextClasses}`}>
+                  {isVerifying.email ? <Loader2 className="animate-spin" size={14} /> : 'Verify'}
+                </button>
+              )}
               {requireOtp && otpVerified.email && <CheckCircle size={18} className="text-emerald-600 self-center shrink-0 ml-2" />}
             </div>
             {requireOtp && otpSent.email && !otpVerified.email && (
-                <div className="space-y-1 mt-1">
-                  <input type="text" placeholder="Enter 6-digit OTP" value={otpValue.email} onChange={e => setOtpValue(p => ({ ...p, email: e.target.value }))} className={`${inputClasses} text-center tracking-[0.3em] font-bold`} maxLength={6} inputMode="numeric" />
-                  <div className="flex items-center justify-between">
-                    <span className="text-[10px] text-slate-400">Didn't receive it?</span>
-                    {resendTimers.email > 0 ? (
-                      <span className="text-[10px] font-bold text-slate-400">Resend in {resendTimers.email}s</span>
-                    ) : (
-                      <button type="button" onClick={() => handleSimulateOtp('email')} disabled={isVerifying.email} className="text-[10px] font-bold text-[#23471d] hover:underline disabled:opacity-50">
-                        Resend OTP
-                      </button>
-                    )}
-                  </div>
+              <div className="space-y-1 mt-1">
+                <input type="text" placeholder="Enter 6-digit OTP" value={otpValue.email} onChange={e => setOtpValue(p => ({ ...p, email: e.target.value }))} className={`${inputClasses} text-center tracking-[0.3em] font-bold`} maxLength={6} inputMode="numeric" />
+                <div className="flex items-center justify-between">
+                  <span className="text-[10px] text-slate-400">Didn't receive it?</span>
+                  {resendTimers.email > 0 ? (
+                    <span className="text-[10px] font-bold text-slate-400">Resend in {resendTimers.email}s</span>
+                  ) : (
+                    <button type="button" onClick={() => handleSimulateOtp('email')} disabled={isVerifying.email} className="text-[10px] font-bold text-[#23471d] hover:underline disabled:opacity-50">
+                      Resend OTP
+                    </button>
+                  )}
                 </div>
-              )}
+              </div>
+            )}
           </div>
           <div><label className={labelClasses}>Website (Optional)</label><input type="url" name="website" value={formData.website} onChange={handleChange} placeholder="https://..." className={inputClasses} /></div>
           <div><label className={labelClasses}>Registered Address <span className="text-red-600">*</span></label><input required name="registeredAddress" value={formData.registeredAddress} onChange={handleChange} placeholder="Full Corporate Address" className={inputClasses} /></div>

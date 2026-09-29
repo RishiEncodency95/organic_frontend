@@ -160,6 +160,11 @@ export const eventApi = {
     getActive: async () => apiCall('/events/active')
 };
 
+export const ihweEventApi = { 
+    getActive: async () => ihweApiCall('/events/active'),
+    getAll: async () => ihweApiCall('/events')
+};
+
 export const settingsApi = { 
     get: async () => apiCall(`/settings?website=Organicexpo`),
     getSettings: async () => apiCall(`/settings?website=Organicexpo`)

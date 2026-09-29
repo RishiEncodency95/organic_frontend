@@ -36,7 +36,7 @@ import { Checkbox } from "@/app/components/ui/checkbox";
 
 
 
-import { verifyApi, buyerApi, crmApi, policyApi } from "@/lib/api";
+import { verifyApi, buyerApi, crmApi, policyApi, ihweEventApi } from "@/lib/api";
 import Swal from "sweetalert2";
 const toast = { error: (msg: any) => Swal.fire({ icon: "error", text: msg }), success: (msg: any) => Swal.fire({ icon: "success", text: msg }) };
 import { useEffect as useEffectDropdown } from "react";
@@ -209,6 +209,7 @@ const loadRazorpayScript = () => {
 const InternationalBuyerRegistration = () => {
   const [config, setConfig] = useState<any>(null);
   const [submitted, setSubmitted] = useState(false);
+  const [eventName, setEventName] = useState("BOE 2027");
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [heroData, setHeroData] = useState<any>(null);
   const [countries, setCountries] = useState<any[]>([]);
@@ -367,6 +368,15 @@ const InternationalBuyerRegistration = () => {
       } catch (err) { console.error("Error fetching data:", err); }
     };
     fetchData();
+
+    const ihweEvent = async () => {
+      ihweEventApi.getActive().then((res: any) => {
+        if (res && res.success && res.data && res.data.name?.toLowerCase().includes('bharat organic')) {
+          setFormData(prev => ({ ...prev, eventName: res.data.name }));
+        }
+      }).catch((err: any) => console.error(err));
+    }
+    ihweEvent();
   }, []);
 
   useEffect(() => {
@@ -558,7 +568,9 @@ const InternationalBuyerRegistration = () => {
         registrationCategory: tempSelectedPackage.name,
         registrationFee: `${tempSelectedPackage.price}`,
         transactionId,
-        paymentStatus: transactionId === "N/A" ? "Free" : "Completed"
+        paymentStatus: transactionId === "N/A" ? "Free" : "Completed",
+        eventName: eventName,
+        domainName: "bharatorganic"
       };
 
       // Add any files if needed, but none are currently supported by JSON. 
