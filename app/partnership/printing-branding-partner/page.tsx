@@ -4,15 +4,26 @@ import FeatureStrip from "../../components/buyer-seller-meet/FeatureStrip";
 import KeyBenefits from "../../components/opportunity/partnership/printing-branding-partner/KeyBenefits";
 import Deliverables from "../../components/opportunity/partnership/printing-branding-partner/Deliverables";
 import WhyPartnerPrinting from "../../components/opportunity/partnership/printing-branding-partner/WhyPartnerPrinting";
+import type { Metadata } from "next";
+import AdminSchema from "@/components/seo/AdminSchema";
+import { adminSeoMetadata, getAdminSeo } from "@/lib/adminSeo";
 
-export const metadata = {
-  title: "Official Printing & Branding Partner | Bharat Organic Expo 2027",
-  description: "Become the official printing & branding partner of Bharat Organic Expo 2027.",
-};
+export const revalidate = 60;
 
-export default function PrintingBrandingPartnerPage() {
+const SEO_PAGE_KEY = "partnership/printing-branding-partner";
+
+export async function generateMetadata(): Promise<Metadata> {
+  return adminSeoMetadata(SEO_PAGE_KEY, {
+    title: "Official Printing & Branding Partner | Bharat Organic Expo 2027",
+    description: "Become the official printing & branding partner of Bharat Organic Expo 2027.",
+  });
+}
+
+export default async function PrintingBrandingPartnerPage() {
+  const seoData = await getAdminSeo(SEO_PAGE_KEY);
   return (
     <main className="w-full bg-white">
+      <AdminSchema schema={seoData?.schemaMarkup || null} />
       <Hero />
       <FeatureStrip />
       <KeyBenefits />

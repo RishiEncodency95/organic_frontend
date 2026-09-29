@@ -148,8 +148,8 @@ const bottomBannerData = [
 
 import { Metadata } from "next";
 import BlogSeoInjector from "@/app/components/blog/BlogSeoInjector";
-import { SITE_URL } from "@/lib/seo";
-import AdminSchema, { parseSchemaBlocks } from "@/components/seo/AdminSchema";
+import { OG_IMAGE, SITE_URL, absoluteUrl } from "@/lib/seo";
+import AdminSchema from "@/components/seo/AdminSchema";
 
 export async function generateMetadata({
   params,
@@ -179,6 +179,10 @@ export async function generateMetadata({
           while ((match = metaRegex.exec(post.openGraphTags)) !== null) {
             customOther[match[1]] = match[2];
           }
+          // The share image is the site-wide og-image.jpg; don't let a pasted og:image add a second one.
+          for (const key of Object.keys(customOther)) {
+            if (/^(og|twitter):image/i.test(key)) delete customOther[key];
+          }
         }
 
         const seoTitle = post.metaTitle
@@ -187,7 +191,8 @@ export async function generateMetadata({
         const seoDesc = post.metaDescription || cleanExcerpt(post.excerpt) || "Stay updated with the latest trends and perspectives in the organic sector.";
         const ogTitle = post.ogTitle || post.metaTitle || post.title;
         const ogDesc = post.ogDescription || post.metaDescription || cleanExcerpt(post.excerpt);
-        const ogImg = post.ogImage || post.image;
+        // One share image for every page, articles included.
+        const ogImg = OG_IMAGE;
 
         return {
           title: seoTitle,
@@ -282,49 +287,6 @@ function formatArticleContent(content?: string): string {
   return html;
 }
 
-const ARTICLE_TYPES = ["BlogPosting", "Article", "NewsArticle"];
-
-// Admin-entered schema for a post, with any missing BlogPosting fields (dates, image, publisher,
-// url...) filled from the post itself. Admin values always win; if the admin entered no
-// article schema at all, a complete BlogPosting is generated.
-function buildBlogSchema(post: any, slug: string): Record<string, unknown>[] {
-  const url = `${SITE_URL}/blog/${slug}`;
-  const image = post.ogImage || post.image;
-  const auto: Record<string, unknown> = {
-    "@context": "https://schema.org",
-    "@type": "BlogPosting",
-    headline: String(post.metaTitle || post.title).slice(0, 110),
-    description: post.metaDescription || cleanExcerpt(post.excerpt) || undefined,
-    image: image ? [image] : undefined,
-    datePublished: post.publishDate || post.createdAt || undefined,
-    // Not post.updatedAt: every page view bumps the view counter, which also bumps updatedAt.
-    dateModified: post.publishDate || post.createdAt || undefined,
-    author: { "@type": "Organization", name: "Bharat Organic Expo", url: SITE_URL },
-    publisher: {
-      "@type": "Organization",
-      name: "Bharat Organic Expo",
-      logo: { "@type": "ImageObject", url: `${SITE_URL}/partners/navbarlogo1.png` },
-    },
-    mainEntityOfPage: { "@type": "WebPage", "@id": url },
-    url,
-    keywords: post.metaKeywords || undefined,
-  };
-
-  const blocks = parseSchemaBlocks(post.schemaMarkup).map((b) => JSON.parse(b) as Record<string, unknown>);
-  const article = blocks.find((b) => {
-    const types = ([] as unknown[]).concat(b["@type"]);
-    return types.some((t) => ARTICLE_TYPES.includes(String(t)));
-  });
-  if (article) {
-    for (const [key, value] of Object.entries(auto)) {
-      if (article[key] === undefined || article[key] === null || article[key] === "") article[key] = value;
-    }
-  } else {
-    blocks.push(auto);
-  }
-  return blocks;
-}
-
 export default async function BlogDetail({
   params,
 }: {
@@ -364,13 +326,13 @@ export default async function BlogDetail({
           metaKeywords={dynamicPost.metaKeywords}
           ogTitle={dynamicPost.ogTitle || dynamicPost.metaTitle || dynamicPost.title}
           ogDescription={dynamicPost.ogDescription || dynamicPost.metaDescription || cleanExcerpt(dynamicPost.excerpt)}
-          ogImage={dynamicPost.ogImage || dynamicPost.image}
+          ogImage={absoluteUrl(OG_IMAGE)}
           openGraphTags={dynamicPost.openGraphTags}
         />
       )}
 
       {/* JSON-LD Schema Markup injection */}
-      {isDynamic && <AdminSchema schema={buildBlogSchema(dynamicPost, slug)} />}
+      {isDynamic && <AdminSchema schema={dynamicPost.schemaMarkup} />}
 
       <div className="w-full px-4 md:px-8 lg:px-14 py-6">
         {/* Breadcrumbs */}
@@ -544,19 +506,15 @@ export default async function BlogDetail({
                         </div>
 
                         {/* Author */}
-                        <section
-                            className="bg-[#FAFBFA] rounded-lg p-5 text-center border border-gray-100"
-                            itemScope
-                            itemType="https://schema.org/Organization"
-                        >
+                        <section className="bg-[#FAFBFA] rounded-lg p-5 text-center border border-gray-100">
                             <h3 className="text-[13px] font-bold text-neutral-700 mb-4 uppercase tracking-wider">About the Author</h3>
                             <div className="w-14 h-14 rounded-full bg-white border border-green-100 flex items-center justify-center mx-auto mb-3 shadow-sm" aria-hidden="true">
                                 <Leaf className="w-6 h-6 text-[#34A853] fill-[#34A853]" />
                             </div>
-                            <div itemProp="name" className="font-bold text-[#1B4332] text-[14px] mb-1">
+                            <div className="font-bold text-[#1B4332] text-[14px] mb-1">
                                 {displayAuthor}
                             </div>
-                            <p itemProp="description" className="text-[12px] text-neutral-500 leading-relaxed px-2">
+                            <p className="text-[12px] text-neutral-500 leading-relaxed px-2">
                                 {sidebarData.author.description}
                             </p>
                         </section>

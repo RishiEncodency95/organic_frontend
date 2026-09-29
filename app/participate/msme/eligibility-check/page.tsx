@@ -12,16 +12,22 @@ import VerificationAlerts from '@/app/components/participate/msme/eligibility/Ve
 import FinalScoreFooter from '@/app/components/participate/msme/eligibility/FinalScoreFooter';
 import EligibilityDisclaimer from '@/app/components/participate/msme/eligibility/EligibilityDisclaimer';
 import { settingsApi } from '@/lib/api';
+import AdminSchema from '@/components/seo/AdminSchema';
+import { adminSeoMetadata, getAdminSeo } from '@/lib/adminSeo';
 
-export const metadata: Metadata = {
-  title: "PMS Eligibility Check | Bharat Organic Expo",
-  description: "Check your PMS Eligibility for Bharat Organic Expo 2027.",
-  alternates: {
-    canonical: "/participate/msme/eligibility-check",
-  },
-};
+export const revalidate = 60;
+
+const SEO_PAGE_KEY = "participate/msme/eligibility-check";
+
+export async function generateMetadata(): Promise<Metadata> {
+  return adminSeoMetadata(SEO_PAGE_KEY, {
+    title: "PMS Eligibility Check | Bharat Organic Expo",
+    description: "Check your PMS Eligibility for Bharat Organic Expo 2027.",
+  });
+}
 
 export default async function PMSEligibilityCheckPage() {
+  const seoData = await getAdminSeo(SEO_PAGE_KEY);
   const settings = await settingsApi.getSettings().catch(() => ({} as any));
   const pageConfig = settings?.msmeEligibilityCheckPage || {};
   const sections = pageConfig.sections || [];
@@ -33,6 +39,7 @@ export default async function PMSEligibilityCheckPage() {
 
   return (
     <div className="min-h-screen bg-[#f8f9fa] font-sans text-neutral-800 pb-4">
+      <AdminSchema schema={seoData?.schemaMarkup || null} />
       {/* Hero Section */}
       <EligibilityHero customProps={heroSec} />
 

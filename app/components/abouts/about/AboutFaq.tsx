@@ -39,25 +39,8 @@ const faqData = {
 const AboutFaq = () => {
   const [openIndex, setOpenIndex] = useState<number | null>(null);
 
-  const faqSchema = {
-    "@context": "https://schema.org",
-    "@type": "FAQPage",
-    "mainEntity": faqData.faqs.map(faq => ({
-      "@type": "Question",
-      "name": faq.question,
-      "acceptedAnswer": {
-        "@type": "Answer",
-        "text": faq.answer
-      }
-    }))
-  };
-
   return (
     <>
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
-      />
       <style>{`
         @keyframes goldShift {
           0%   { background-position: 0% 50%; }

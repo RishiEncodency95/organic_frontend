@@ -1,4 +1,6 @@
 import { Metadata } from "next";
+import { adminSeoMetadata, getAdminSeo } from "@/lib/adminSeo";
+import AdminSchema from "@/components/seo/AdminSchema";
 import BlogHero from "@/app/components/blog/BlogHero";
 import AboutStrip from "@/app/components/abouts/about/AboutStrip";
 import BlogFeatured from "@/app/components/blog/BlogFeatured";
@@ -10,17 +12,23 @@ import BlogSidebar from "@/app/components/blog/BlogSidebar";
 import BlogStats from "@/app/components/blog/BlogStats";
 import BlogCta from "@/app/components/blog/BlogCta";
 
-export const metadata: Metadata = {
-    title: "Blog | Bharat Organic Expo",
-    description: "Stay updated with the latest trends, expert perspectives, innovations and success stories shaping India's organic food, agriculture and sustainable products industry.",
-    alternates: {
-        canonical: "/blog",
-    },
-};
+export const revalidate = 60;
 
-const BlogPage = () => {
+export async function generateMetadata(): Promise<Metadata> {
+    return adminSeoMetadata("blog", {
+        title: "Blog | Bharat Organic Expo 2027",
+        description:
+            "Stay updated with the latest trends, expert perspectives, innovations and success stories shaping India's organic food, agriculture and sustainable products industry.",
+    });
+}
+
+const BlogPage = async () => {
+    const seoData = await getAdminSeo("blog");
+    const schemaContent = seoData?.schemaMarkup || null;
+
     return (
         <div className="min-h-screen bg-white font-sans text-neutral-800 overflow-x-clip">
+            <AdminSchema schema={schemaContent} />
             <BlogHero />
             <AboutStrip />
 
