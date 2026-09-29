@@ -484,8 +484,8 @@ const InternationalBuyerRegistration = () => {
         : await verifyApi.sendPhoneOtp(identifier, 'INTERNATIONAL_BUYER', formData.primaryContact.fullName);
       if (res.success) {
         toast.success(`OTP sent to your ${type === 'email' ? 'Email' : 'Mobile'}.`);
-        if (type === 'email') { setEmailOtpSent(true); setEmailResendTimer(60); }
-        else { setMobileOtpSent(true); setMobileResendTimer(60); }
+        if (type === 'email') { setEmailOtpSent(true); setEmailResendTimer(30); }
+        else { setMobileOtpSent(true); setMobileResendTimer(30); }
       } else { toast.error(res.message || "Failed to send OTP."); }
     } catch (err) { toast.error("Connection error."); }
     finally { setIsVerifying(prev => ({ ...prev, [type]: false })); }
@@ -521,7 +521,7 @@ const InternationalBuyerRegistration = () => {
     if (!razorpayLoaded) { toast.error("Failed to load payment gateway."); return; }
     const gatewayPrice = Math.round(tempSelectedPackage.price * 1.025);
     const options = {
-      key: process.env.NEXT_PUBLIC_SERVER_URL || "",
+      key: process.env.NEXT_PUBLIC_RAZORPAY_KEY_ID || "rzp_test_RTd9y3ngRanKxq",
       amount: gatewayPrice * 100,
       currency: "USD",
       name: "BOE 2027",
@@ -552,18 +552,20 @@ const InternationalBuyerRegistration = () => {
   const submitFinal = async (transactionId: string) => {
     setIsSubmitting(true);
     try {
-      const finalFormData = new FormData();
-      Object.keys(formData).forEach(key => {
-        const val = formData[key as keyof typeof formData];
-        if (typeof val === 'object' && val !== null) finalFormData.append(key, JSON.stringify(val));
-        else finalFormData.append(key, String(val));
-      });
-      Object.keys(files).forEach(key => { if (files[key]) finalFormData.append(key, files[key] as File); });
-      if (transactionId) {
-        finalFormData.append('transactionId', transactionId);
-        finalFormData.append('paymentStatus', 'Completed');
-      }
-      const res = await buyerApi.submitInternationalBuyer(finalFormData);
+      const payload = {
+        ...formData,
+        buyerType: 'International',
+        registrationCategory: tempSelectedPackage.name,
+        registrationFee: `${tempSelectedPackage.price}`,
+        transactionId,
+        paymentStatus: transactionId === "N/A" ? "Free" : "Completed"
+      };
+
+      // Add any files if needed, but none are currently supported by JSON. 
+      // If the backend requires FormData for files, IHWE's api handles it. 
+      // Since there are no files in this form, JSON is perfect.
+
+      const res = await buyerApi.submitInternationalBuyer(payload);
       if (res.success) { setSubmitted(true); window.scrollTo({ top: 0, behavior: "smooth" }); }
       else toast.error(res.message || "Submission failed.");
     } catch (error) { toast.error("Submission error."); }
@@ -679,22 +681,51 @@ const InternationalBuyerRegistration = () => {
               <div className="flex gap-2">
                 <input type="email" name="primaryContact.emailId" value={formData.primaryContact.emailId} onChange={handleInputChange} className={inputClasses} disabled={emailOtpVerified || emailOtpSent} placeholder="email@example.com" />
                 {!emailOtpVerified && !emailOtpSent && <button type="button" onClick={() => requestOtp('email')} disabled={!formData.primaryContact.emailId || isVerifying.email} className="bg-[#4d7f1d] text-white px-3 rounded text-[10px] uppercase font-bold transition hover:bg-[#3b6315] h-7 disabled:opacity-50 shrink-0">{isVerifying.email ? <Loader2 className="animate-spin" size={14} /> : 'OTP'}</button>}
-                {emailOtpSent && !emailOtpVerified && <div className="flex gap-1"><input className="w-16 h-7 text-center text-[10px] border border-slate-400 rounded focus:border-[#23471d] focus:outline-none" value={emailOtpValue} onChange={e => setEmailOtpValue(e.target.value)} maxLength={6} /><button type="button" onClick={() => verifyOtp('email')} className="bg-[#23471d] text-white px-3 rounded text-[10px] uppercase font-bold transition hover:bg-[#1a3516] h-7 shrink-0">VERIFY</button></div>}
-                {emailOtpVerified && <CheckCircle size={16} className="text-emerald-500 self-center" />}
+                {emailOtpSent && !emailOtpVerified && <button type="button" onClick={() => verifyOtp('email')} disabled={!emailOtpValue || isVerifying.email} className="bg-[#23471d] text-white px-3 rounded text-[10px] uppercase font-bold transition hover:bg-[#1a3516] h-7 shrink-0">{isVerifying.email ? <Loader2 className="animate-spin" size={14} /> : 'VERIFY'}</button>}
+                {emailOtpVerified && <CheckCircle size={16} className="text-emerald-500 self-center shrink-0" />}
               </div>
+              {emailOtpSent && !emailOtpVerified && (
+                <div className="space-y-1 mt-1">
+                  <input type="text" placeholder="Enter 6-digit OTP" value={emailOtpValue} onChange={e => setEmailOtpValue(e.target.value)} className={`${inputClasses} text-center tracking-[0.3em] font-bold`} maxLength={6} inputMode="numeric" />
+                  <div className="flex items-center justify-between">
+                    <span className="text-[10px] text-slate-400">Didn't receive it?</span>
+                    {emailResendTimer > 0 ? (
+                      <span className="text-[10px] font-bold text-slate-400">Resend in {emailResendTimer}s</span>
+                    ) : (
+                      <button type="button" onClick={() => requestOtp('email')} disabled={isVerifying.email} className="text-[10px] font-bold text-[#23471d] hover:underline disabled:opacity-50">
+                        Resend OTP
+                      </button>
+                    )}
+                  </div>
+                </div>
+              )}
             </div>
             <div className="lg:col-span-2">
               <label className={labelClasses}>Mobile Number <span className="text-red-600">*</span> (with Country Code)</label>
               <div className="flex gap-2">
                 <input type="tel" name="primaryContact.mobileNumber" value={formData.primaryContact.mobileNumber} onChange={handleInputChange} className={inputClasses} disabled={mobileOtpVerified || mobileOtpSent} placeholder="+91 9XXXXXXXXX" />
                 {!mobileOtpVerified && !mobileOtpSent && <button type="button" onClick={() => requestOtp('mobile')} disabled={!formData.primaryContact.mobileNumber || isVerifying.mobile} className="bg-[#4d7f1d] text-white px-3 rounded text-[10px] uppercase font-bold transition hover:bg-[#3b6315] h-7 disabled:opacity-50 shrink-0">{isVerifying.mobile ? <Loader2 className="animate-spin" size={14} /> : 'OTP'}</button>}
-                {mobileOtpSent && !mobileOtpVerified && <div className="flex gap-1"><input className="w-16 h-7 text-center text-[10px] border border-slate-400 rounded focus:border-[#23471d] focus:outline-none" value={mobileOtpValue} onChange={e => setMobileOtpValue(e.target.value)} maxLength={6} /><button type="button" onClick={() => verifyOtp('mobile')} className="bg-[#23471d] text-white px-3 rounded text-[10px] uppercase font-bold transition hover:bg-[#1a3516] h-7 shrink-0">VERIFY</button></div>}
-                {mobileOtpVerified && <CheckCircle size={16} className="text-emerald-500 self-center" />}
+                {mobileOtpSent && !mobileOtpVerified && <button type="button" onClick={() => verifyOtp('mobile')} disabled={!mobileOtpValue || isVerifying.mobile} className="bg-[#23471d] text-white px-3 rounded text-[10px] uppercase font-bold transition hover:bg-[#1a3516] h-7 shrink-0">{isVerifying.mobile ? <Loader2 className="animate-spin" size={14} /> : 'VERIFY'}</button>}
+                {mobileOtpVerified && <CheckCircle size={16} className="text-emerald-500 self-center shrink-0" />}
               </div>
+              {mobileOtpSent && !mobileOtpVerified && (
+                <div className="space-y-1 mt-1">
+                  <input type="text" placeholder="Enter 6-digit OTP" value={mobileOtpValue} onChange={e => setMobileOtpValue(e.target.value)} className={`${inputClasses} text-center tracking-[0.3em] font-bold`} maxLength={6} inputMode="numeric" />
+                  <div className="flex items-center justify-between">
+                    <span className="text-[10px] text-slate-400">Didn't receive it?</span>
+                    {mobileResendTimer > 0 ? (
+                      <span className="text-[10px] font-bold text-slate-400">Resend in {mobileResendTimer}s</span>
+                    ) : (
+                      <button type="button" onClick={() => requestOtp('mobile')} disabled={isVerifying.mobile} className="text-[10px] font-bold text-[#23471d] hover:underline disabled:opacity-50">
+                        Resend OTP
+                      </button>
+                    )}
+                  </div>
+                </div>
+              )}
             </div>
           </div>
         </div>
-
 
         <div className="space-y-1">
           <h3 className={sectionTitleClasses}>Section 4 – Secondary Contact Person</h3>
@@ -1285,7 +1316,7 @@ const InternationalBuyerRegistration = () => {
           showPaymentConfirmModal && tempSelectedPackage && (
             <div className="fixed inset-0 z-[110] flex items-center justify-center p-4 backdrop-blur-md bg-black/60">
               <motion.div initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} className="bg-white w-full max-w-md rounded-2xl overflow-hidden shadow-2xl">
-                <div className="bg-[#23471d] p-6 text-white text-center">
+                <div className="bg-[#1B5E20] p-6 text-white text-center">
                   <CreditCard size={32} className="mx-auto mb-2" />
                   <h3 className="text-xl font-bold uppercase tracking-wider">Confirm Payment</h3>
                 </div>
@@ -1293,9 +1324,9 @@ const InternationalBuyerRegistration = () => {
                   <div className="space-y-2 border-b pb-4">
                     <div className="flex justify-between"><span>Plan:</span><span className="font-bold">{tempSelectedPackage.name}</span></div>
                     <div className="flex justify-between"><span>Fee:</span><span className="font-bold">${tempSelectedPackage.price}</span></div>
-                    <div className="flex justify-between text-[#23471d] font-black uppercase tracking-widest pt-2"><span>Total (+Tax/Fee):</span><span>${Math.round(tempSelectedPackage.price * 1.025)}</span></div>
+                    <div className="flex justify-between text-[#1B5E20] font-black uppercase tracking-widest pt-2"><span>Total (+Tax/Fee):</span><span>${Math.round(tempSelectedPackage.price * 1.025)}</span></div>
                   </div>
-                  <Button onClick={initiateRazorpayPayment} disabled={isSubmitting} className="w-full h-14 rounded-xl bg-[#23471d] font-black uppercase tracking-[0.2em] shadow-xl">Pay Now</Button>
+                  <Button onClick={initiateRazorpayPayment} disabled={isSubmitting} className="w-full h-14 rounded-xl bg-[#1B5E20] hover:bg-[#3b6315] text-white font-black uppercase tracking-[0.2em] shadow-xl text-white">Pay Now</Button>
                 </div>
               </motion.div>
             </div>
