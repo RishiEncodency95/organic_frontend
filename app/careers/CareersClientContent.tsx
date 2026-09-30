@@ -14,9 +14,9 @@ import {
   Users,
   type LucideIcon,
 } from "lucide-react";
-import { EligibilityModal } from "./submit-resume/page";
-import { ApplicationFormModal } from "./application-form/page";
-import { ReviewSubmitModal } from "./review-submit/page";
+import { EligibilityModal } from "./submit-resume/SubmitResume";
+import { ApplicationFormModal } from "./application-form/ApplicationForm";
+import { ReviewSubmitModal } from "./review-submit/ReviewSubmit";
 import ResumeUploadButton from "./ResumeUploadButton";
 import JobCardButtons from "./JobCardButtons";
 

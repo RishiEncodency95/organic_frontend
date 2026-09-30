@@ -3,6 +3,7 @@ import React, { useState, useEffect } from "react";
 import { Users, Plus, Trash2, CheckCircle2, Globe2, Loader2, CheckCircle, X, ChevronsUpDown, ShieldCheck } from "lucide-react";
 import { crmApi, verifyApi, visitorApi, ihweSettingsApi } from "../../../../lib/api";
 import Swal from 'sweetalert2';
+import { toOptions, useDropdowns } from "@/lib/dropdowns";
 
 const MIN_PERSONS = 5;
 const MAX_PERSONS = 10;
@@ -24,7 +25,27 @@ const defaultCompany = {
 const PURPOSE_OPTIONS = ["Business Networking", "Product Sourcing", "Distributor Search", "Franchise Opportunity", "Investment Opportunity", "Medical Tourism", "Healthcare Collaboration", "Wellness Industry Exploration", "Ayurveda & AYUSH Interest", "Conference Participation", "Knowledge Sessions", "Startup Collaboration", "Government Delegation", "General Visit"];
 const INTEREST_OPTIONS = ["AYUSH & Herbal Products", "Organic & Natural Products", "Fitness & Wellness Equipment", "Health Supplements", "Hospitals & Healthcare Services", "Agriculture & Organic Farming", "R&D & Innovations", "Others"];
 
+// Admin-managed (Dropdown Manager); these are the fallback options.
+const VISITOR_DROPDOWNS = {
+  "visitor-industry": [
+    { label: "AYUSH", value: "ayush" },
+    { label: "Agriculture & Organic", value: "agriculture" },
+    { label: "Fitness & Wellness", value: "fitness" },
+    { label: "Healthcare Services", value: "healthcare" },
+    { label: "Pharmaceutical", value: "pharma" },
+    { label: "Others", value: "others" },
+  ],
+  "visitor-company-size": [
+    { label: "1-10 Employees", value: "1-10" },
+    { label: "11-50 Employees", value: "11-50" },
+    { label: "51-200 Employees", value: "51-200" },
+    { label: "200+ Employees", value: "200+" },
+  ],
+  "gender": toOptions(["Male", "Female", "Other"]),
+};
+
 export default function GroupVisitorForm() {
+  const dropdowns = useDropdowns(VISITOR_DROPDOWNS);
   const [step, setStep] = useState(1);
   const [submitted, setSubmitted] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -243,22 +264,14 @@ export default function GroupVisitorForm() {
             <label className={labelClasses}>Industry / Sector <span className="text-red-600">*</span></label>
             <select required name="industry" value={company.industry} onChange={handleCompanyChange} className={inputClasses}>
               <option value="">Select</option>
-              <option value="ayush">AYUSH</option>
-              <option value="agriculture">Agriculture & Organic</option>
-              <option value="fitness">Fitness & Wellness</option>
-              <option value="healthcare">Healthcare Services</option>
-              <option value="pharma">Pharmaceutical</option>
-              <option value="others">Others</option>
+              {dropdowns["visitor-industry"].map((o) => <option key={o.value} value={o.value}>{o.label}</option>)}
             </select>
           </div>
           <div>
             <label className={labelClasses}>Company Size <span className="text-red-600">*</span></label>
             <select required name="companySize" value={company.companySize} onChange={handleCompanyChange} className={inputClasses}>
               <option value="">Select</option>
-              <option value="1-10">1-10 Employees</option>
-              <option value="11-50">11-50 Employees</option>
-              <option value="51-200">51-200 Employees</option>
-              <option value="200+">200+ Employees</option>
+              {dropdowns["visitor-company-size"].map((o) => <option key={o.value} value={o.value}>{o.label}</option>)}
             </select>
           </div>
 
@@ -341,9 +354,7 @@ export default function GroupVisitorForm() {
                       <label className={labelClasses}>Gender <span className="text-red-600">*</span></label>
                       <select required value={person.gender} onChange={e => handlePersonChange(idx, "gender", e.target.value)} className={inputClasses}>
                         <option value="">Select</option>
-                        <option value="male">Male</option>
-                        <option value="female">Female</option>
-                        <option value="others">Others</option>
+                        {dropdowns["gender"].map((o) => <option key={o.value} value={o.value}>{o.label}</option>)}
                       </select>
                     </div>
                     <div className={idx === 0 ? "md:col-span-2" : ""}>

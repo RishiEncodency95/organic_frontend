@@ -3,6 +3,7 @@ import React, { useState, useEffect } from "react";
 import { CheckCircle2, ShieldCheck, HeartPulse, Loader2, CheckCircle, Activity, Calendar, Heart } from "lucide-react";
 import { crmApi, visitorApi } from "../../../../lib/api";
 import Swal from 'sweetalert2';
+import { toOptions, useDropdowns } from "@/lib/dropdowns";
 
 const HEALTH_SERVICES = [
   { key: "generalCheckup", label: "General Check-up" },
@@ -22,7 +23,14 @@ const TIME_SLOTS = [
   "04:00 PM - 05:00 PM",
 ];
 
+// Admin-managed (Dropdown Manager); these are the fallback options.
+const VISITOR_DROPDOWNS = {
+  "gender": toOptions(["Male", "Female", "Other"]),
+  "health-camp-time-slot": toOptions(TIME_SLOTS),
+};
+
 export default function HealthCampForm() {
+  const dropdowns = useDropdowns(VISITOR_DROPDOWNS);
   const [submitted, setSubmitted] = useState(false);
   const [loading, setLoading] = useState(false);
 
@@ -196,9 +204,7 @@ export default function HealthCampForm() {
             <label className={labelClasses}>Gender <span className="text-red-600">*</span></label>
             <select required name="gender" value={formData.gender} onChange={handleChange} className={inputClasses}>
               <option value="">Select</option>
-              <option value="Male">Male</option>
-              <option value="Female">Female</option>
-              <option value="Other">Other</option>
+              {dropdowns["gender"].map((o) => <option key={o.value} value={o.value}>{o.label}</option>)}
             </select>
           </div>
           <div className="md:col-span-2"><label className={labelClasses}>Residence Address</label><input name="residenceAddress" value={formData.residenceAddress} onChange={handleChange} className={inputClasses} placeholder="Full Address" /></div>
@@ -299,7 +305,7 @@ export default function HealthCampForm() {
               <label className={labelClasses}>Preferred Time Slot <span className="text-red-600">*</span></label>
               <select required name="preferredTimeSlot" value={formData.preferredTimeSlot} onChange={handleChange} className={inputClasses}>
                 <option value="">Select Time Slot</option>
-                {TIME_SLOTS.map(slot => <option key={slot} value={slot}>{slot}</option>)}
+                {dropdowns["health-camp-time-slot"].map((o) => <option key={o.value} value={o.value}>{o.label}</option>)}
               </select>
             </div>
           </div>

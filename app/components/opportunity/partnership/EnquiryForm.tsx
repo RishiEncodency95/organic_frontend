@@ -3,6 +3,7 @@ import React, { useEffect, useState } from "react";
 import { ArrowRight, Mail, Phone, Globe, MapPin, CheckCircle2 } from "lucide-react";
 import Swal from "sweetalert2";
 import { verifyApi, partnershipEnquiryApi } from "@/lib/api";
+import { useDropdowns } from "@/lib/dropdowns";
 import hogImg from "@/app/assets/icons/hog.png";
 import rightRightImg from "@/app/assets/icons/leafright.png";
 import SectionContainer from "@/app/components/layout/SectionContainer";
@@ -42,7 +43,11 @@ const inputClass =
 const floatingLabelClass =
   "absolute inset-y-0 left-4 flex items-center pointer-events-none text-sm text-gray-600 font-semibold z-0 opacity-0 peer-placeholder-shown:opacity-100 transition-opacity";
 
+// Admin-managed (Dropdown Manager); the categories above are the fallback.
+const PARTNERSHIP_DROPDOWNS = { "partnership-category": ENQUIRY_FORM_DATA[0].categories };
+
 export default function EnquiryForm() {
+  const dropdowns = useDropdowns(PARTNERSHIP_DROPDOWNS);
   const [category, setCategory] = useState("");
   const [form, setForm] = useState(EMPTY_FORM);
   const [otp, setOtp] = useState("");
@@ -313,8 +318,8 @@ export default function EnquiryForm() {
                     className="w-full px-4 py-2.5 border border-gray-200 rounded-md bg-transparent text-sm text-gray-900 focus:outline-none focus:ring-1 focus:ring-[#113217] focus:border-[#113217] relative z-10"
                   >
                     <option value="" disabled hidden></option>
-                    {data.categories.map((cat, idx) => (
-                      <option key={idx} value={cat.value}>{cat.label}</option>
+                    {dropdowns["partnership-category"].map((cat) => (
+                      <option key={cat.value} value={cat.value}>{cat.label}</option>
                     ))}
                   </select>
                   {!category && (

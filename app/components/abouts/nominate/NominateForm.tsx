@@ -4,8 +4,29 @@ import React, { useState, useEffect, useRef } from "react";
 import { Users, ArrowRight, ShieldCheck, User, Building2, Mail, Phone, ChevronDown, Check, MapPin, CheckCircle, Send, AtSign } from "lucide-react";
 import { verifyApi } from "@/lib/api";
 import Swal from "sweetalert2";
+import { useDropdowns } from "@/lib/dropdowns";
+
+// Admin-managed (Dropdown Manager); these are the fallback options.
+const ADVISORY_DROPDOWNS = {
+    "advisory-industry-sector": [
+        { label: "Agriculture", value: "agriculture" },
+        { label: "Technology", value: "technology" },
+        { label: "Retail", value: "retail" },
+    ],
+    "advisory-expertise-area": [
+        { label: "Organic Farming", value: "farming" },
+        { label: "Supply Chain", value: "supply" },
+        { label: "Policy Making", value: "policy" },
+    ],
+    "advisory-relationship": [
+        { label: "Colleague", value: "colleague" },
+        { label: "Manager", value: "manager" },
+        { label: "Self", value: "self" },
+    ],
+};
 
 const NominateForm = () => {
+    const dropdowns = useDropdowns(ADVISORY_DROPDOWNS);
     const [achievements, setAchievements] = useState("");
     const [reason, setReason] = useState("");
 
@@ -254,9 +275,9 @@ const NominateForm = () => {
                             <div className="relative">
                                 <select defaultValue="" className="w-full px-3 py-2.5 pr-8 rounded-lg border border-[#e2e8f0] text-[13px] text-gray-500 focus:outline-none focus:border-[#0a4d22] focus:ring-1 focus:ring-[#0a4d22] transition-colors bg-white appearance-none cursor-pointer">
                                     <option value="" disabled>Select industry / sector</option>
-                                    <option value="agriculture">Agriculture</option>
-                                    <option value="technology">Technology</option>
-                                    <option value="retail">Retail</option>
+                                    {dropdowns["advisory-industry-sector"].map((o) => (
+                                        <option key={o.value} value={o.value}>{o.label}</option>
+                                    ))}
                                 </select>
                                 <ChevronDown size={16} className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 pointer-events-none" />
                             </div>
@@ -381,9 +402,9 @@ const NominateForm = () => {
                                 <div className="relative">
                                     <select defaultValue="" className="w-full px-3 py-2.5 pr-8 rounded-lg border border-[#e2e8f0] text-[13px] text-gray-500 focus:outline-none focus:border-[#0a4d22] focus:ring-1 focus:ring-[#0a4d22] transition-colors bg-white appearance-none cursor-pointer">
                                         <option value="" disabled>Select areas of expertise</option>
-                                        <option value="farming">Organic Farming</option>
-                                        <option value="supply">Supply Chain</option>
-                                        <option value="policy">Policy Making</option>
+                                        {dropdowns["advisory-expertise-area"].map((o) => (
+                                            <option key={o.value} value={o.value}>{o.label}</option>
+                                        ))}
                                     </select>
                                     <ChevronDown size={16} className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 pointer-events-none" />
                                 </div>
@@ -541,9 +562,9 @@ const NominateForm = () => {
                             <div className="relative">
                                 <select defaultValue="" className="w-full px-3 py-2.5 pr-8 rounded-lg border border-[#e2e8f0] text-[13px] text-gray-500 focus:outline-none focus:border-[#0a4d22] focus:ring-1 focus:ring-[#0a4d22] transition-colors bg-white appearance-none cursor-pointer">
                                     <option value="" disabled>Select relationship</option>
-                                    <option value="colleague">Colleague</option>
-                                    <option value="manager">Manager</option>
-                                    <option value="self">Self</option>
+                                    {dropdowns["advisory-relationship"].map((o) => (
+                                        <option key={o.value} value={o.value}>{o.label}</option>
+                                    ))}
                                 </select>
                                 <ChevronDown size={16} className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 pointer-events-none" />
                             </div>

@@ -12,6 +12,7 @@ import {
 } from 'lucide-react';
 import { verifyApi, sponsorshipEnquiryApi } from '../../../lib/api';
 import Swal from 'sweetalert2';
+import { toOptions, useDropdowns } from '../../../lib/dropdowns';
 
 const Sparkle = ({ style, color = "#ffc107", shadow = "#4B1426" }: { style?: React.CSSProperties; color?: string; shadow?: string }) => (
   <span
@@ -80,7 +81,13 @@ const sectionData = {
   }
 };
 
+// Dropdown options are admin-managed (Dropdown Manager); the cards above are the fallback.
+const SPONSORSHIP_DROPDOWNS = {
+  'sponsorship-category': toOptions(sectionData.categories.map((c) => c.title)),
+};
+
 const SponsorshipCategories = () => {
+  const dropdowns = useDropdowns(SPONSORSHIP_DROPDOWNS);
   const [formData, setFormData] = useState({ fullName: '', companyName: '', email: '', phone: '', category: '', message: '' });
   const [isVerifying, setIsVerifying] = useState({ email: false, phone: false });
   const [otpSent, setOtpSent] = useState({ email: false, phone: false });
@@ -479,8 +486,8 @@ const SponsorshipCategories = () => {
                   className="w-full text-[13px] md:text-[14px] px-3 py-2.5 rounded-md border border-gray-300 focus:outline-none focus:border-[#3b8c2a] focus:ring-1 focus:ring-[#3b8c2a]/30 appearance-none text-black font-normal"
                 >
                   <option value="">Interested Sponsorship Category*</option>
-                  {sectionData.categories.map(s => (
-                    <option key={s.title} value={s.title}>{s.title}</option>
+                  {dropdowns['sponsorship-category'].map(o => (
+                    <option key={o.value} value={o.value}>{o.label}</option>
                   ))}
                 </select>
                 <ChevronDown className="absolute right-3 top-1/2 -translate-y-1/2 w-4 h-4 text-black pointer-events-none" />

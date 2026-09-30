@@ -113,6 +113,7 @@ export default function PaymentMain({ section }: { section?: any }) {
           }
 
           msmeStorage.clearApplicationId();
+          msmeStorage.clearUdyamReading();
           Swal.fire({
             title: "Payment Successful!",
             html: `Your application <b>${confirmRes.data.applicationId}</b> has been submitted for verification.`,
