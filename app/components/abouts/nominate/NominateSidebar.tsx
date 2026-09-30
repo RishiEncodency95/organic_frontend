@@ -109,7 +109,7 @@ const NominateSidebar = () => {
                         <div className="w-7 h-7 rounded-full bg-[#dbe8dc] flex items-center justify-center shrink-0">
                             <Phone size={14} className="text-[#0a4d22] stroke-[2]" />
                         </div>
-                        <span className="text-[#222] text-[13px] font-bold">+91 11 4304 5555</span>
+                        <span className="text-[#222] text-[13px] font-bold">+91 96549 00525</span>
                     </div>
                     <div className="flex items-center gap-3">
                         <div className="w-7 h-7 rounded-full bg-[#dbe8dc] flex items-center justify-center shrink-0">

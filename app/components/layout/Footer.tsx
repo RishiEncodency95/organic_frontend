@@ -328,10 +328,6 @@ export default function Footer({ initialFooterData }: { initialFooterData?: any 
               />
             </div>
 
-            <p className="text-gray-200 text-[12px] mb-3 leading-relaxed font-medium max-w-[280px]">
-              Your conference companion for agenda, updates and networking.
-            </p>
-
             {/* Nature's Bounty Image */}
             <div className="w-full max-w-[300px] sm:max-w-[280px] mb-2">
               <Image

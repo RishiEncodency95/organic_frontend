@@ -42,19 +42,109 @@ type JobOpening = {
   eligibilityThreshold?: number;
 };
 
-const highlights = [
-  { label: "Meaningful\nWork", icon: Sprout },
-  { label: "Collaborative\nTeam", icon: Users },
-  { label: "Growth\nOpportunities", icon: TrendingUp },
-  { label: "Real\nImpact", icon: Globe2 },
-];
+const HIGHLIGHT_ICONS: LucideIcon[] = [Sprout, Users, TrendingUp, Globe2];
+const WORK_REASON_ICONS: LucideIcon[] = [Sprout, Users, Lightbulb, Globe2];
 
-const workReasons = [
-  { label: "Purpose-Driven\nWork", icon: Sprout },
-  { label: "Inclusive\nEnvironment", icon: Users },
-  { label: "Learn from\nIndustry Experts", icon: Lightbulb },
-  { label: "Be Part of a\nGlobal Platform", icon: Globe2 },
-];
+// Defaults for the admin-editable sections (Pages & CMS > Careers).
+const DEFAULT_CAREERS = {
+  hero: {
+    enabled: true,
+    eyebrow: "CAREER",
+    title: "Be Part of Something Bigger",
+    description:
+      "Build your career with Bharat Organic Expo and contribute to a sustainable, healthier and more conscious tomorrow.",
+    badgeText: "Join the people who connect business, nature and a better tomorrow.",
+    image: heroImage,
+    imageAlt: "Professionals networking at a sustainable organic expo",
+    items: ["Meaningful Work", "Collaborative Team", "Growth Opportunities", "Real Impact"],
+  },
+  openings: {
+    enabled: true,
+    title: "Current Openings",
+    description: "Explore exciting opportunities and find the right role for you.",
+    emptyTitle: "No open positions at the moment",
+    emptyDescription:
+      "We are not hiring for any specific roles right now. But we are always on the lookout for passionate individuals who want to make a difference.",
+    emptyNote: "We will keep your profile on file and reach out when a suitable opportunity arises.",
+  },
+  whyWork: {
+    enabled: true,
+    title: "Why Work With Us?",
+    description:
+      "At Bharat Organic Expo, you’ll grow with a purpose-driven team and be part of a movement that creates lasting change.",
+    items: ["Purpose-Driven Work", "Inclusive Environment", "Learn from Industry Experts", "Be Part of a Global Platform"],
+  },
+  bottomBanner: {
+    enabled: true,
+    image: "/assets/careers/aman6.png",
+    imageAlt: "Don't see the right role? We are always looking for passionate individuals.",
+  },
+};
+
+const pickText = (value: unknown, fallback: string) =>
+  typeof value === "string" && value.trim() ? value.trim() : fallback;
+
+const pickItems = (items: unknown, fallback: string[]) => {
+  const titles = Array.isArray(items)
+    ? items.map((it: any) => (typeof it?.title === "string" ? it.title.trim() : "")).filter(Boolean)
+    : [];
+  return titles.length ? titles : fallback;
+};
+
+/** Two-line icon labels: "Learn from Industry Experts" -> "Learn from\nIndustry Experts". */
+const twoLineLabel = (label: string) => {
+  const words = label.split(/\s+/);
+  if (words.length < 2) return label;
+  const half = Math.ceil(words.length / 2);
+  return `${words.slice(0, half).join(" ")}\n${words.slice(half).join(" ")}`;
+};
+
+/** "Be Part of Something Bigger" -> ["Be Part of", "Something", "Bigger"] (last word is orange). */
+const splitHeroTitle = (title: string): [string, string, string] => {
+  const words = title.trim().split(/\s+/);
+  if (words.length < 3) return ["", words.slice(0, -1).join(" "), words[words.length - 1] || ""];
+  return [words.slice(0, -2).join(" "), words[words.length - 2], words[words.length - 1]];
+};
+
+function resolveCareersSections(sections: any[] = []) {
+  const find = (key: string) => sections.find((sec) => sec?.key === key) || {};
+  const hero = find("careers-hero");
+  const openings = find("careers-openings");
+  const whyWork = find("careers-why-work");
+  const bottom = find("careers-bottom-banner");
+  const d = DEFAULT_CAREERS;
+  return {
+    hero: {
+      enabled: hero.enabled !== false,
+      eyebrow: pickText(hero.eyebrow, d.hero.eyebrow),
+      title: pickText(hero.title, d.hero.title),
+      description: pickText(hero.description, d.hero.description),
+      badgeText: pickText(hero.badgeText, d.hero.badgeText),
+      image: pickText(hero.image, d.hero.image),
+      imageAlt: pickText(hero.imageAlt, d.hero.imageAlt),
+      items: pickItems(hero.items, d.hero.items),
+    },
+    openings: {
+      enabled: openings.enabled !== false,
+      title: pickText(openings.title, d.openings.title),
+      description: pickText(openings.description, d.openings.description),
+      emptyTitle: pickText(openings.emptyTitle, d.openings.emptyTitle),
+      emptyDescription: pickText(openings.emptyDescription, d.openings.emptyDescription),
+      emptyNote: pickText(openings.emptyNote, d.openings.emptyNote),
+    },
+    whyWork: {
+      enabled: whyWork.enabled !== false,
+      title: pickText(whyWork.title, d.whyWork.title),
+      description: pickText(whyWork.description, d.whyWork.description),
+      items: pickItems(whyWork.items, d.whyWork.items),
+    },
+    bottomBanner: {
+      enabled: bottom.enabled !== false,
+      image: pickText(bottom.image, d.bottomBanner.image),
+      imageAlt: pickText(bottom.imageAlt, d.bottomBanner.imageAlt),
+    },
+  };
+}
 
 function JobCard({ job }: { job: JobOpening }) {
   const Icon = job.icon;
@@ -103,7 +193,7 @@ function JobCard({ job }: { job: JobOpening }) {
   );
 }
 
-function EmptyOpenings() {
+function EmptyOpenings({ title, description, note }: { title: string; description: string; note: string }) {
   return (
     <div className="w-full grid w-[96%] grid-cols-[80px_minmax(0,1fr)_1px_300px] items-center gap-[clamp(18px,2vw,32px)] rounded-[24px] bg-[#eef8e9]/90 px-4 py-2">
       <span className="grid h-[clamp(62px,5.2vw,82px)] w-[clamp(62px,5.2vw,82px)] place-items-center rounded-full bg-[#e4f2e5] text-[#08713f]">
@@ -115,12 +205,10 @@ function EmptyOpenings() {
 
       <div>
         <h3 className="text-lg lg:text-2xl font-semibold leading-tight text-[#0b5638]">
-          No open positions at the moment
+          {title}
         </h3>
         <p className="mt-2 max-w-[720px] text-sm lg:text-[15px] leading-relaxed text-[#33475b]">
-          We are not hiring for any specific roles right now. But we are always
-          on the lookout for passionate individuals who want to make a
-          difference.
+          {description}
         </p>
       </div>
 
@@ -129,15 +217,16 @@ function EmptyOpenings() {
       <div>
         {/* <ResumeUploadButton variant="outline" /> */}
         <p className="mt-2 text-[15px] leading-relaxed text-[#43556c]">
-          We will keep your profile on file and reach out when a suitable
-          opportunity arises.
+          {note}
         </p>
       </div>
     </div>
   );
 }
 
-export default function CareersClientContent() {
+export default function CareersClientContent({ sections }: { sections?: any[] }) {
+  const content = resolveCareersSections(sections);
+  const [heroLead, heroMid, heroAccent] = splitHeroTitle(content.hero.title);
   const [selectedScore, setSelectedScore] = useState<number | null>(null);
   const [isNoneModalOpen, setIsNoneModalOpen] = useState(false);
   const [isAmanModalOpen, setIsAmanModalOpen] = useState(false);
@@ -185,10 +274,11 @@ export default function CareersClientContent() {
     <main className="bg-[#f8fbf6] text-[#0a1831]">
       <div className="flex min-h-screen w-full flex-col bg-white">
         {/* HERO */}
+        {content.hero.enabled && (
         <section className="relative isolate min-h-[330px] h-[460px] overflow-hidden md:aspect-[2110/745]">
           <Image
-            src={heroImage}
-            alt="Professionals networking at a sustainable organic expo"
+            src={content.hero.image}
+            alt={content.hero.imageAlt}
             fill
             priority
             sizes="100vw"
@@ -200,46 +290,52 @@ export default function CareersClientContent() {
             <div className="w-[50%]">
               <div className="">
                 <div className="text-[18px] mt-2 font-semibold uppercase tracking-[0.28em] text-[#0a5536]">
-                  <p>CAREER</p>
+                  <p>{content.hero.eyebrow}</p>
                 </div>
                 <div className="mb-6 h-[2.5px] w-20 bg-[#0a5536]" />
 
                 <h1 className="max-w-[750px] text-lg lg:text-6xl font-semibold leading-[0.98] tracking-[-0.04em] text-[#07553a]">
-                  Be Part of
-                  <br />
-                  <span className="whitespace-nowrap">Something <span className="text-[#f5791b]">Bigger</span></span>
+                  {heroLead && (
+                    <>
+                      {heroLead}
+                      <br />
+                    </>
+                  )}
+                  <span className="whitespace-nowrap">{heroMid} <span className="text-[#f5791b]">{heroAccent}</span></span>
                 </h1>
 
                 <p className="mt-4 max-w-[650px] text-lg leading-[1.35] text-[#14253a]">
-                  Build your career with Bharat Organic Expo and contribute to a
-                  sustainable, healthier and more conscious tomorrow.
+                  {content.hero.description}
                 </p>
 
                 <div className="mt-4 grid max-w-[640px] grid-cols-4 divide-x divide-[#d7e1d8]">
-                  {highlights.map(({ label, icon: Icon }) => (
-                    <div key={label} className="px-3 text-center first:pl-0 last:pr-0">
+                  {content.hero.items.map((label, idx) => {
+                    const Icon = HIGHLIGHT_ICONS[idx % HIGHLIGHT_ICONS.length];
+                    return (
+                    <div key={`${label}-${idx}`} className="px-3 text-center first:pl-0 last:pr-0">
                       <Icon
                         className="mx-auto h-[clamp(32px,3.4vh,42px)] w-[clamp(32px,3.4vh,42px)] text-[#08723e]"
                         strokeWidth={2.1}
                       />
                       <span className="mt-2 block whitespace-pre-line text-[clamp(12px,0.88vw,15px)] font-semibold leading-tight text-[#0c2235]">
-                        {label}
+                        {twoLineLabel(label)}
                       </span>
                     </div>
-                  ))}
+                    );
+                  })}
                 </div>
               </div>
             </div>
 
             <div className="absolute bottom-[6%] right-12 w-fit max-w-[440px] rounded-sm bg-[#00683e]/90 px-4 py-2 text-[14px] font-semibold leading-snug text-white backdrop-blur-[1px]">
-              Join the people who connect
-              <br />
-              business, nature and a better tomorrow.
+              {content.hero.badgeText}
             </div>
           </div>
         </section>
+        )}
 
         {/* CURRENT OPENINGS */}
+        {content.openings.enabled && (
         <section
           id="current-openings"
           className={`relative isolate overflow-hidden bg-white ${openingCount === 0
@@ -273,7 +369,7 @@ export default function CareersClientContent() {
                 <div>
                   <div className="flex flex-wrap items-center gap-3">
                     <h2 className="text-sm lg:text-2xl font-semibold leading-[1.12] tracking-[-0.04em] text-[#0a1831]">
-                      Current Openings{" "}
+                      {content.openings.title}{" "}
                       {openingCount > 0 ? (
                         <span className="align-baseline text-[0.78em] text-[#0c7b46]">
                           ({openingCount})
@@ -324,8 +420,7 @@ export default function CareersClientContent() {
                     </div>
                   </div>
                   <p className="mt-2 text-[clamp(13px,1vw,17px)] leading-snug text-[#314256]">
-                    Explore exciting opportunities and find the right role for
-                    you.
+                    {content.openings.description}
                     {openingCount === 0 ? (
                       <span className="block">(Only active positions are listed here.)</span>
                     ) : null}
@@ -355,50 +450,61 @@ export default function CareersClientContent() {
                   ))}
                 </div>
               ) : (
-                <EmptyOpenings />
+                <EmptyOpenings
+                  title={content.openings.emptyTitle}
+                  description={content.openings.emptyDescription}
+                  note={content.openings.emptyNote}
+                />
               )}
             </div>
           </div>
         </section>
+        )}
 
         {/* WHY WORK WITH US */}
+        {content.whyWork.enabled && (
         <section className="grid shrink-0 gap-5 border-y border-[#e4ebe3] bg-[linear-gradient(90deg,#f6fbf2_0%,#fbfdf8_100%)] px-4 lg:px-14 py-1 lg:py-2 lg:grid-cols-[1.15fr_2fr] lg:items-center">
           <div>
             <h2 className="text-lg lg:text-2xl font-semibold leading-none tracking-[-0.035em] text-[#07553a]">
-              Why Work With Us?
+              {content.whyWork.title}
             </h2>
             <p className="mt-2 max-w-[650px] text-sm lg:text-[15px] leading-[1.35] text-[#1f3145]">
-              At Bharat Organic Expo, you’ll grow with a purpose-driven team and
-              be part of a movement that creates lasting change.
+              {content.whyWork.description}
             </p>
           </div>
 
           <div className="flex flex-wrap justify-end divide-x divide-[#d6e0d8] lg:ml-auto">
-            {workReasons.map(({ label, icon: Icon }) => (
-              <div key={label} className="px-4 sm:px-6 lg:px-10 text-center first:pl-0">
+            {content.whyWork.items.map((label, idx) => {
+              const Icon = WORK_REASON_ICONS[idx % WORK_REASON_ICONS.length];
+              return (
+              <div key={`${label}-${idx}`} className="px-4 sm:px-6 lg:px-10 text-center first:pl-0">
 
                 <Icon
                   className="mx-auto h-8 w-8 text-[#08723e]"
                   strokeWidth={2.1}
                 />
                 <span className="mt-2 block whitespace-pre-line text-sm lg:text-[12px] font-semibold leading-tight text-[#0e2234]">
-                  {label}
+                  {twoLineLabel(label)}
                 </span>
               </div>
-            ))}
+              );
+            })}
           </div>
         </section>
+        )}
 
         {/* BOTTOM CTA */}
+        {content.bottomBanner.enabled && (
         <section className="relative h-[160px] lg:h-[160px] mt-2 w-full shrink-0 overflow-hidden bg-white">
           <Image
-            src="/assets/careers/aman6.png"
-            alt="Careers footer banner"
+            src={content.bottomBanner.image}
+            alt={content.bottomBanner.imageAlt}
             fill
             sizes="100vw"
             className="object-cover object-center"
           />
         </section>
+        )}
       </div>
 
       <EligibilityModal

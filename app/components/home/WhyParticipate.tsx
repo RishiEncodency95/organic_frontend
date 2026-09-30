@@ -51,7 +51,7 @@ const DEFAULT_WHY_PARTICIPATE = {
   mainPoints: ["Exhibit", "Connect", "Grow"],
   buttons: {
     stall: { text: "BOOK A STALL", link: "/registration/book-a-stand" },
-    brochure: { text: "Download Brochure", link: "/download/invited card.pdf" },
+    brochure: { text: "Download Brochure", link: "/boe.pdf" },
     moreInfo: { text: "Why Exhibit?", link: "/why-exhibit" }
   }
 };

@@ -210,7 +210,7 @@ export default async function WhyVisitPage() {
         {heroSec?.enabled !== false && <HeroSection sectionData={heroSec} />}
         {mattersSec?.enabled !== false && <WhyVisitMatters sectionData={mattersSec} />}
         {industrySec?.enabled !== false && <IndustrySegments sectionData={segmentsSec} />}
-        {buyerSellerSec?.enabled !== false && <BuyerSellerMeetSection />}
+        {buyerSellerSec?.enabled !== false && <BuyerSellerMeetSection sectionData={buyerSellerSec} />}
         {awardsSec?.enabled !== false && <AwardsHealthCamp sectionData={awardsSec} />}
         {helpSec?.enabled !== false && <NeedHelpSupport />}
         {whoSec?.enabled !== false && <WhoShouldVisit />}

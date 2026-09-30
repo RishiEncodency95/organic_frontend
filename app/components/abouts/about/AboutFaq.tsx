@@ -216,7 +216,7 @@ const AboutFaq = () => {
               {[
                 { label: "BOOK YOUR STALL", link: "/registration/book-a-stand", style: "gold" },
                 { label: "VISITOR REGISTRATION", link: "/registration/visitor-registration", style: "visitor" },
-                { label: "DELEGATE REGISTER", link: "/contact", style: "delegate" },
+                { label: "DELEGATE REGISTER", link: "https://arogya.namogange.org/register-now", style: "delegate" },
                 { label: "BUYER REGISTER", link: "/registration/buyer-registration", style: "buyer" },
               ].map((btn, i) => (
                 <div key={i} className="relative group/btn flex-1 xl:flex-none">

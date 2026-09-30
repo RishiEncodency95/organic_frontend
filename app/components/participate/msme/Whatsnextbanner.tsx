@@ -61,7 +61,7 @@ const WHATS_NEXT_BANNER_DATA = [
     ctaTitle: "Ready to Take the Next Step?",
     ctaSub: "Apply now and grow your business with government support.",
     ctaText: "Apply Now",
-    ctaHref: "#apply"
+    ctaHref: "/participate/msme/apply"
   }
 ];
 
@@ -387,6 +387,8 @@ export default function WhatsNextBanner() {
 
                 <a
                   href={data.ctaHref}
+                  target="_blank"
+                  rel="noopener noreferrer"
                   className="inline-flex shrink-0 items-center justify-center gap-1 rounded-lg bg-[#1b5e20] px-6 py-2 text-[14px] font-semibold uppercase tracking-wide text-white transition-colors hover:bg-[#2d7a2d] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#3b8c2a] focus-visible:ring-offset-2 sm:text-[15px]"
                 >
                   {data.ctaText}

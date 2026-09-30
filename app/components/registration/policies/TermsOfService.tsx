@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect, useState } from "react";
+import React from "react";
 import {
   FileText,
   ShieldCheck,
@@ -26,10 +26,8 @@ import {
   Scale,
   User,
   Phone,
-  Loader2,
   Star
 } from "lucide-react";
-import { policyApi } from "@/lib/api";
 import termBanner from "@/app/assets/registration/terms-and-conditions.webp";
 import team1Icon from "@/app/assets/registration/team1.webp";
 import doc22Icon from "@/app/assets/registration/doc22.webp";
@@ -69,82 +67,134 @@ const getIconForTitle = (title: string) => {
   if (t.includes("govern") || t.includes("jurisdiction")) return Scale;
   return FileText;
 };
-const parseContent = (htmlContent: string) => {
-  if (!htmlContent) return null;
-  const regex = /<(h[1-4]|strong|b|u)[^>]*>(.*?)<\/\1>|(?:\r?\n|^)\s*([A-Z][^<.\n\r]{2,80})(?:\r?\n|$)|<p[^>]*>\s*<(strong|b|u|h[1-4])[^>]*>(.*?)<\/\4>\s*<\/p>/gim;
-
-  const rawMatches = Array.from(htmlContent.matchAll(regex));
-  const uniqueMatches: any[] = [];
-  const seenIndices = new Set<number>();
-
-  rawMatches.forEach(m => {
-    const titleText = (m[2] || m[3] || m[5] || "")
-      .replace(/<[^>]*>?/gm, "")
-      .replace(/&nbsp;/g, " ")
-      .replace(/&amp;/g, "&")
-      .replace(/&quot;/g, '"')
-      .trim();
-    const cleanTitle = titleText.replace(/^\d+[\s.)-]+\s*/, "").trim();
-    if (cleanTitle.length > 2 && cleanTitle.length < 100 && !cleanTitle.endsWith('.') && !seenIndices.has(m.index)) {
-      uniqueMatches.push({
-        index: m.index,
-        length: m[0].length,
-        title: cleanTitle
-      });
-      seenIndices.add(m.index);
-    }
-  });
-  uniqueMatches.sort((a, b) => a.index - b.index);
-
-  if (uniqueMatches.length === 0) {
-    return {
-      preamble: "",
-      terms: [{ id: 1, title: "Terms of Service", content: htmlContent }]
-    };
-  }
-
-  const preamble = htmlContent.substring(0, uniqueMatches[0].index).trim();
-  const terms = [];
-
-  for (let i = 0; i < uniqueMatches.length; i++) {
-    const current = uniqueMatches[i];
-    const next = uniqueMatches[i + 1];
-
-    const contentStart = current.index + current.length;
-    const contentEnd = next ? next.index : htmlContent.length;
-    const content = htmlContent.substring(contentStart, contentEnd).trim();
-
-    if (current.title) {
-      terms.push({
-        id: i + 1,
-        title: current.title,
-        content: content
-      });
-    }
-  }
-
-  return { preamble, terms };
+type TermClause = {
+  title: string;
+  intro?: string;
+  points?: string[];
+  outro?: string;
 };
 
-const TermsOfService: React.FC = () => {
-  const [policy, setPolicy] = useState<any>(null);
-  const [isLoading, setIsLoading] = useState(true);
+const termsClauses: TermClause[] = [
+  {
+    title: "Acceptance of Terms",
+    intro: "By proceeding with registration and/or payment, the Participant:",
+    points: [
+      "Confirms that they have read, understood, and agreed to these Terms & Conditions;",
+      "Enters into a legally binding agreement with Namo Gange Wellness Pvt. Ltd. under the provisions of the Indian Contract Act, 1872;",
+      "Agrees to comply with applicable laws, including the Information Technology Act, 2000.",
+    ],
+  },
+  {
+    title: "Scope of Payment",
+    intro: "Payments made through this platform may include, but are not limited to:",
+    points: [
+      "Exhibition Stall Booking",
+      "Sponsorship Packages (Expo / Seminar / Conference)",
+      "Buyer / Seller Registration (including ICOA Buyer-Seller Meet)",
+      "Delegate Registration",
+      "Seminar / Conference Participation (Arogya Sanghosthi)",
+      "ICOA Buyer Membership",
+    ],
+  },
+  {
+    title: "Payment Confirmation",
+    points: [
+      "Registration/booking shall be deemed confirmed only upon successful receipt of payment by the Organiser.",
+      "A confirmation email, receipt, or invoice shall be issued upon successful transaction.",
+      "In case of incomplete or failed transactions, no booking shall be considered valid.",
+    ],
+  },
+  {
+    title: "Pricing & Taxes",
+    points: [
+      "All fees are exclusive of applicable taxes (including GST), unless otherwise specified.",
+      "The Participant agrees to bear all applicable taxes, duties, and statutory charges.",
+    ],
+  },
+  {
+    title: "Strict No Refund & Non-Transfer Policy",
+    intro: "All payments are final, non-refundable, and non-transferable. No refund shall be provided under any circumstances, including but not limited to:",
+    points: [
+      "Cancellation by the Participant",
+      "No-show or partial participation",
+      "Change in business plans, schedule, or preferences",
+    ],
+    outro: "This clause constitutes a binding agreement and shall be enforceable under applicable Indian laws.",
+  },
+  {
+    title: "Cancellation / Rescheduling by Organiser",
+    intro: "The Organiser reserves the right to reschedule or modify the Event. In such cases:",
+    points: [
+      "Registration shall remain valid for revised dates",
+      "No refund obligation shall arise",
+    ],
+  },
+  {
+    title: "Payment Modes",
+    intro: "Payments shall be made only through authorised channels: UPI / Net Banking / Debit Card / Credit Card / Official Bank Transfer. The Organiser shall not be responsible for payments made through unauthorised modes or third parties.",
+  },
+  {
+    title: "Transaction Failure & Payment Disputes",
+    points: [
+      "Refunds (if any) shall be processed as per bank/payment gateway policies",
+      "The Organiser shall not be liable for delays caused by banks or payment gateways",
+      "Any discrepancy must be reported within 7 (seven) days of transaction",
+    ],
+  },
+  {
+    title: "Chargeback & Fraud Policy",
+    intro: "Initiating a chargeback without valid grounds shall be treated as breach of agreement. The Organiser reserves the right to:",
+    points: [
+      "Suspend or cancel participation",
+      "Recover dues through legal means",
+      "Initiate appropriate legal proceedings",
+    ],
+  },
+  {
+    title: "Role of Associate Partners",
+    intro: "International Council of AYUSH (ICOA) and Namo Gange Trust act solely as facilitation / knowledge partners. They shall not be responsible for collection of payments, refunds, cancellations, or financial disputes. All financial transactions are managed exclusively by the Organiser.",
+  },
+  {
+    title: "Limitation of Liability",
+    intro: "To the maximum extent permitted under applicable law, the Organiser shall not be liable for any direct or indirect loss, business loss, missed opportunities, or damages. Participation is at the sole risk of the Participant.",
+  },
+  {
+    title: "Indemnity",
+    intro: "The Participant agrees to indemnify and hold harmless Namo Gange Wellness Pvt. Ltd., its directors, employees, affiliates, and partners against any claims, damages, liabilities, or expenses arising from payment disputes, misrepresentation, or breach of these Terms.",
+  },
+  {
+    title: "Force Majeure",
+    intro: "The Organiser shall not be liable for failure or delay due to natural disasters, government restrictions, pandemic, or unforeseen circumstances.",
+  },
+  {
+    title: "Governing Law & Jurisdiction",
+    intro: "These Terms shall be governed by the laws of India. All disputes shall be subject to the exclusive jurisdiction of Courts in Delhi NCR, India.",
+  },
+];
 
-  useEffect(() => {
-    const fetchPolicy = async () => {
-      try {
-        const data = await policyApi.getByPage("terms-of-service");
-        setPolicy(data);
-      } catch (error) {
-        console.error("Failed to fetch terms:", error);
-      } finally {
-        setIsLoading(false);
-      }
-    };
-    fetchPolicy();
-  }, []);
+const pickText = (value: unknown, fallback: string) =>
+  typeof value === "string" && value.trim() ? value.trim() : fallback;
 
-  const parsedData = policy ? parseContent(policy.content) : null;
+// Splits the hero title so the last word gets the accent colour on its own line
+// ("TERMS & CONDITIONS" -> "TERMS &" / "CONDITIONS").
+const splitHeroTitle = (title: string): [string, string] => {
+  const words = title.trim().split(/\s+/);
+  if (words.length < 2) return [title, ""];
+  return [words.slice(0, -1).join(" "), words[words.length - 1]];
+};
+
+const TermsOfService = ({ heroData }: { heroData?: any }) => {
+  const hero = {
+    enabled: heroData?.enabled !== false,
+    eyebrow: pickText(heroData?.eyebrow, "POLICY GUIDE"),
+    title: pickText(heroData?.title, "TERMS & CONDITIONS"),
+    subtitle: pickText(heroData?.subtitle, "Bharat Organic Expo 2027"),
+    description: pickText(heroData?.description, "Please read these terms carefully before proceeding."),
+    buttonLabel: pickText(heroData?.buttonLabel, "Print Terms & Conditions"),
+    image: pickText(heroData?.image, termBanner.src),
+    imageAlt: pickText(heroData?.imageAlt, "Terms & Conditions - Bharat Organic Expo 2027"),
+  };
+  const [titleLine1, titleLine2] = splitHeroTitle(hero.title);
 
   return (
     <div className="bg-[#f8f9fa] min-h-screen pb-1" style={{ fontFamily: "'Barlow', sans-serif" }}>
@@ -253,12 +303,13 @@ const TermsOfService: React.FC = () => {
       ` }} />
 
       {/* Hero Section */}
+      {hero.enabled && (
       <section className="relative w-full flex flex-col items-center">
         <div className="w-full relative h-[280px] sm:h-[350px] md:h-[400px] lg:h-[470px] bg-[#eef5f0] overflow-hidden">
           {/* Background Layer */}
           <div className="absolute inset-0 w-full h-full z-0">
-            <img loading="lazy" decoding="async" src={termBanner.src}
-              alt="Terms Banner"
+            <img decoding="async" src={hero.image}
+              alt={hero.imageAlt}
               className="w-full h-full object-cover object-center"
             />
             {/* Lightened dark gradient overlay so text is readable, just like home */}
@@ -273,31 +324,33 @@ const TermsOfService: React.FC = () => {
               <div className="animate-badge-special hero-shimmer-btn overflow-hidden inline-flex items-center gap-3 px-6 py-2 bg-gradient-to-r from-[#f58220]/15 to-[#e65c00]/15 backdrop-blur-md font-black text-[15px] md:text-[18px] tracking-[0.25em] uppercase rounded-full mb-2 mt-6 border-2 border-[#f58220] w-max cursor-default">
                 <ShieldCheck className="w-5 h-5 md:w-6 md:h-6 text-[#f58220]" fill="currentColor" />
                 <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#f58220] to-[#e65c00] drop-shadow-md">
-                  POLICY GUIDE
+                  {hero.eyebrow}
                 </span>
               </div>
 
               {/* Title */}
               <h1 className="leading-[1.1] font-semibold uppercase pb-1">
                 <div className="text-[#1f471b] text-[30px] md:text-[40px] lg:text-[48px] tracking-tight pb-1">
-                  TERMS &
+                  {titleLine1}
                 </div>
-                <div className="text-[#7ca142] text-[30px] md:text-[40px] lg:text-[52px] tracking-tight">
-                  CONDITIONS
-                </div>
+                {titleLine2 && (
+                  <div className="text-[#7ca142] text-[30px] md:text-[40px] lg:text-[52px] tracking-tight">
+                    {titleLine2}
+                  </div>
+                )}
               </h1>
 
               {/* Subtitle */}
               <div className="flex items-center gap-3 mb-2">
                 <div className="w-12 h-1 bg-[#7ca142] rounded-full"></div>
                 <h2 className="text-[#2b5825] font-bold text-[14px] md:text-[16px] tracking-widest uppercase" style={{ fontFamily: "inherit" }}>
-                  Bharat Organic Expo 2027
+                  {hero.subtitle}
                 </h2>
                 <div className="w-12 h-1 bg-[#7ca142] rounded-full"></div>
               </div>
 
               <p className="text-[#4a4a4a] font-semibold text-[16px] md:text-[18px] leading-[1.6] max-w-3xl mt-2 border-l-2 border-[#7ca142]/30 pl-4">
-                Please read these terms carefully before proceeding.
+                {hero.description}
               </p>
 
               <div className="mt-6 md:mt-8 print-hidden">
@@ -307,7 +360,7 @@ const TermsOfService: React.FC = () => {
                     className="hero-shimmer-btn bg-[#2b5825] hover:bg-[#1f471b] text-white px-5 sm:px-6 py-2 lg:py-3 rounded-md font-bold text-[11px] md:text-[13px] tracking-wider uppercase transition-all shadow-md hover:-translate-y-0.5 text-center flex items-center justify-center whitespace-nowrap gap-2"
                   >
                     <Printer className="w-4 h-4" strokeWidth={2.5} />
-                    <span>Print Terms & Conditions</span>
+                    <span>{hero.buttonLabel}</span>
                   </button>
                 </div>
               </div>
@@ -315,6 +368,7 @@ const TermsOfService: React.FC = () => {
           </div>
         </div>
       </section>
+      )}
 
       {/* Info Strip (Like StatsBand) */}
       <div className="relative z-20 -mt-6 md:-mt-8 w-full max-w-[1440px] mx-auto px-6 md:px-14">
@@ -380,22 +434,11 @@ const TermsOfService: React.FC = () => {
       {/* Main Content */}
       <section className="py-3 w-full">
         <div className="w-full px-6 md:px-14">
-          {isLoading ? (
-            <div className="flex justify-center py-10">
-              <Loader2 className="w-10 h-10 text-[#23471d] animate-spin" />
-            </div>
-          ) : !parsedData ? (
-            <div className="text-center py-10">
-              <ShieldCheck className="w-12 h-12 text-slate-300 mx-auto mb-4" />
-              <h3 className="text-xl font-bold text-slate-400">Terms Content Not Found</h3>
-            </div>
-          ) : (
-            <>
+          <>
               <div className="bg-white rounded-3xl shadow-[0_2px_20px_rgb(0,0,0,0.03)] border border-gray-200 overflow-hidden">
                 <div className="grid grid-cols-1 lg:grid-cols-2">
-                  {parsedData.terms.map((term, index) => {
-                    const Icon = getIconForTitle(term.title);
-                    const isLastRow = index >= parsedData.terms.length - (parsedData.terms.length % 2 === 0 ? 2 : 1);
+                  {termsClauses.map((term, index) => {
+                    const isLastRow = index >= termsClauses.length - (termsClauses.length % 2 === 0 ? 2 : 1);
                     return (
                       <div
                         key={index}
@@ -408,7 +451,7 @@ const TermsOfService: React.FC = () => {
                           <div className="flex flex-col pt-0">
                             <div className="flex items-center gap-2.5">
                               <span className="text-[18px] md:text-[24px] font-[900] text-slate-900 leading-none">
-                                {term.id.toString().padStart(2, '0')}
+                                {(index + 1).toString().padStart(2, '0')}
                               </span>
                               <h2 className="text-[15px] md:text-[20px] font-semibold text-slate-900 leading-none" style={{ fontFamily: "inherit" }}>
                                 {term.title}
@@ -421,8 +464,17 @@ const TermsOfService: React.FC = () => {
                                      [&_li::before]:content-['•'] [&_li::before]:absolute [&_li::before]:left-0 [&_li::before]:text-slate-900 [&_li::before]:font-black
                                      [&_p]:text-slate-600 [&_p]:leading-[1.3] [&_p]:mb-0 [&>*:not(:last-child)]:mb-2 [&_p]:text-[13px] md:[&_p]:text-[14px]
                                      [&_a]:text-[#3b8c2a] [&_a]:font-semibold [&_a]:underline"
-                                dangerouslySetInnerHTML={{ __html: term.content }}
-                              />
+                              >
+                                {term.intro && <p>{term.intro}</p>}
+                                {term.points && (
+                                  <ul>
+                                    {term.points.map((point, i) => (
+                                      <li key={i}>{point}</li>
+                                    ))}
+                                  </ul>
+                                )}
+                                {term.outro && <p>{term.outro}</p>}
+                              </div>
                             </div>
                           </div>
                         </div>
@@ -470,16 +522,7 @@ const TermsOfService: React.FC = () => {
                   </div>
                 </div>
               </div>
-            </>
-          )}
-
-          {policy && (
-            <div className="mt-4 pl-4 md:pl-6 print-hidden">
-              <p className="text-[9px] md:text-[10px] text-slate-400 font-[800] uppercase tracking-wider">
-                LAST UPDATED: {new Date(policy.updatedAt).toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' }).toUpperCase()}
-              </p>
-            </div>
-          )}
+          </>
         </div>
       </section>
     </div>

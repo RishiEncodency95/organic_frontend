@@ -110,7 +110,7 @@ const NEED_HELP_SUPPORT_DATA = [
       title: "READY TO MOVE AHEAD?",
       desc: "Start your PMS application today and unlock government support for your growth.",
       ctaText: "START YOUR APPLICATION",
-      ctaHref: "/registration/book-a-stand",
+      ctaHref: "/participate/msme",
     },
   },
 ];

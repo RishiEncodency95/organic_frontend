@@ -12,6 +12,7 @@ import { API_URL, SERVER_URL } from "@/lib/api";
 interface MsmePmsBannerProps {
   eligibilityHref?: string;
   supportHref?: string;
+  initialSection?: any;
 }
 
 const resolveImageUrl = (src: string): string => {
@@ -71,6 +72,22 @@ const DEFAULT_BANNER_DATA: MsmeBannerData = {
   secondaryButtonHref: "tel:+9654900525",
 };
 
+const toBannerData = (section: any): MsmeBannerData => ({
+  image: section.image || DEFAULT_BANNER_DATA.image,
+  imageAlt: section.imageAlt || DEFAULT_BANNER_DATA.imageAlt,
+  category: section.eyebrow || DEFAULT_BANNER_DATA.category,
+  titlePrimary: section.titlePrimary || DEFAULT_BANNER_DATA.titlePrimary,
+  titleSecondary: section.titleSecondary || DEFAULT_BANNER_DATA.titleSecondary,
+  subtitle: section.subtitle || DEFAULT_BANNER_DATA.subtitle,
+  description: section.description || DEFAULT_BANNER_DATA.description,
+  date: section.date || DEFAULT_BANNER_DATA.date,
+  location: section.location || DEFAULT_BANNER_DATA.location,
+  buttonLabel: section.buttonLabel || DEFAULT_BANNER_DATA.buttonLabel,
+  buttonHref: section.buttonHref || DEFAULT_BANNER_DATA.buttonHref,
+  secondaryButtonLabel: section.secondaryButtonLabel || DEFAULT_BANNER_DATA.secondaryButtonLabel,
+  secondaryButtonHref: section.secondaryButtonHref || DEFAULT_BANNER_DATA.secondaryButtonHref,
+});
+
 const SPARKLE_SETS = {
   primary: [
     { color: "#4ade80", shadow: "#1b5e20", style: { top: "-12px", left: "50%", animationDelay: "0.2s" } },
@@ -83,6 +100,7 @@ const SPARKLE_SETS = {
 export default function MsmePmsBanner({
   eligibilityHref,
   supportHref,
+  initialSection,
 }: MsmePmsBannerProps) {
   const sectionRef = useRef<HTMLElement>(null);
   const line1Ref = useRef<HTMLSpanElement>(null);
@@ -91,9 +109,13 @@ export default function MsmePmsBanner({
   const metaRef = useRef<HTMLDivElement>(null);
   const btnsRef = useRef<HTMLDivElement>(null);
 
-  const [data, setData] = useState<MsmeBannerData>(DEFAULT_BANNER_DATA);
+  const [data, setData] = useState<MsmeBannerData>(
+    initialSection ? toBannerData(initialSection) : DEFAULT_BANNER_DATA
+  );
 
   useEffect(() => {
+    // The page already fetched this on the server; only fetch here if that failed.
+    if (initialSection) return;
     let isMounted = true;
     fetch(`${API_URL}/settings?website=Organicexpo`, { cache: "no-store" })
       .then((res) => res.json())
@@ -102,27 +124,13 @@ export default function MsmePmsBanner({
         const sections = res?.data?.msmePage?.sections || res?.msmePage?.sections || [];
         const section = Array.isArray(sections) ? sections.find((s: any) => s.key === "msme-pms-banner") : null;
         if (!section) return;
-        setData({
-          image: section.image || DEFAULT_BANNER_DATA.image,
-          imageAlt: section.imageAlt || DEFAULT_BANNER_DATA.imageAlt,
-          category: section.eyebrow || DEFAULT_BANNER_DATA.category,
-          titlePrimary: section.titlePrimary || DEFAULT_BANNER_DATA.titlePrimary,
-          titleSecondary: section.titleSecondary || DEFAULT_BANNER_DATA.titleSecondary,
-          subtitle: section.subtitle || DEFAULT_BANNER_DATA.subtitle,
-          description: section.description || DEFAULT_BANNER_DATA.description,
-          date: section.date || DEFAULT_BANNER_DATA.date,
-          location: section.location || DEFAULT_BANNER_DATA.location,
-          buttonLabel: section.buttonLabel || DEFAULT_BANNER_DATA.buttonLabel,
-          buttonHref: section.buttonHref || DEFAULT_BANNER_DATA.buttonHref,
-          secondaryButtonLabel: section.secondaryButtonLabel || DEFAULT_BANNER_DATA.secondaryButtonLabel,
-          secondaryButtonHref: section.secondaryButtonHref || DEFAULT_BANNER_DATA.secondaryButtonHref,
-        });
+        setData(toBannerData(section));
       })
       .catch((err) => console.error("Failed to load MSME PMS banner:", err));
     return () => {
       isMounted = false;
     };
-  }, []);
+  }, [initialSection]);
 
   // Text content renders statically now — no entrance animation on headings, subtitle,
   // description, meta row or buttons. The sparkle twinkle and button shimmer are separate
@@ -140,14 +148,6 @@ export default function MsmePmsBanner({
         @keyframes shimmerHero {
           0%, 25% { transform: translateX(0) skewX(-20deg); }
           40%, 100% { transform: translateX(450%) skewX(-20deg); }
-        }
-        @keyframes bgZoom {
-          0%   { transform: scale(1.08); }
-          100% { transform: scale(1.0); }
-        }
-        .hero-bg-img {
-          animation: bgZoom 8s ease-out forwards;
-          transform-origin: center center;
         }
         .blue-btn-hero {
           background: linear-gradient(135deg, #1b5e20 0%, #2e7d32 30%, #0e3b1c 60%, #1b5e20 100%);
@@ -171,13 +171,15 @@ export default function MsmePmsBanner({
         ref={sectionRef}
         className="relative w-full min-h-[380px] sm:min-h-[420px] md:min-h-[450px] lg:min-h-[470px] flex items-center overflow-hidden bg-white border-b-4 border-[#ea580c]"
       >
-        {/* Background Image with Ken Burns zoom */}
+        {/* Background Image (no animation - it is the page's first paint) */}
         <div className="absolute inset-0 z-0 overflow-hidden">
           <Image
             src={data.image ? resolveImageUrl(data.image) : bannerImg}
             alt={data.imageAlt || "MSME PMS Scheme"}
             fill
-            className="hero-bg-img w-full h-full object-cover"
+            priority
+            sizes="100vw"
+            className="w-full h-full object-cover"
           />
         </div>
 

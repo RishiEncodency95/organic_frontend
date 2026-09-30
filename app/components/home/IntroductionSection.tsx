@@ -146,15 +146,15 @@ const IntroductionSection = ({ initialData }: { initialData?: any }) => {
           <div
             className="w-full lg:w-[60%]"
           >
-            {/* Introduction Badge — the eyebrow is the home page's only <h1> (text editable from admin) */}
+            {/* Introduction Badge (eyebrow) */}
             <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-gradient-to-r from-[#3b8c2a]/10 to-[#F2B40E]/10 border border-[#3b8c2a]/20 shadow-[0_4px_15px_rgba(59,140,42,0.06)] mb-2 transform hover:scale-105 transition-transform duration-300">
               <span className="w-2 h-2 rounded-full bg-[#F2B40E] animate-pulse"></span>
-              <h1 className="font-inter text-[11px] md:text-[14px] font-semibold uppercase tracking-[0.2em] md:tracking-[0.25em] text-[#1a6b3a]">
+              <p className="font-inter text-[11px] md:text-[14px] font-semibold uppercase tracking-[0.2em] md:tracking-[0.25em] text-[#1a6b3a]">
                 {data.eyebrow}
-              </h1>
+              </p>
             </div>
 
-            {/* Title */}
+            {/* Title — the home page's only <h1> (text editable from admin) */}
             {(() => {
               const full = data.titlePrimary || "WELCOME TO BHARAT ORGANIC EXPO";
               let prefix = "";
@@ -172,7 +172,8 @@ const IntroductionSection = ({ initialData }: { initialData?: any }) => {
               }
 
               return (
-                <h2 className="text-[22px] sm:text-[28px] md:text-[32px] lg:text-[36px] font-semibold font-poppins text-slate-900 leading-[1.3] md:leading-[1.4] mb-4 tracking-tight">
+                <>
+                <h1 className={`text-[22px] sm:text-[28px] md:text-[32px] lg:text-[36px] font-semibold font-poppins text-slate-900 leading-[1.3] md:leading-[1.4] tracking-tight ${data.subtitle ? "" : "mb-4"}`}>
                   {prefix}
                   <span className="relative inline-block max-w-full">
                     <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#3b8c2a] to-[#1a6b3a] whitespace-normal break-words">
@@ -195,13 +196,14 @@ const IntroductionSection = ({ initialData }: { initialData?: any }) => {
                         fill="transparent"
                       />
                     </svg>
-                  </span>{" "}
-                  {data.subtitle ? (
-                    <span className="text-[13px] sm:text-[15px] md:text-[18px] font-medium text-black mt-3 block tracking-normal leading-snug">
-                      {data.subtitle}
-                    </span>
-                  ) : null}
-                </h2>
+                  </span>
+                </h1>
+                {data.subtitle ? (
+                  <p className="text-[13px] sm:text-[15px] md:text-[18px] font-medium font-poppins text-black mt-3 mb-4 tracking-normal leading-snug">
+                    {data.subtitle}
+                  </p>
+                ) : null}
+                </>
               );
             })()}
 

@@ -26,7 +26,32 @@ const Sparkle = ({ style, color = "#F2B40E", shadow }: { style?: React.CSSProper
   </span>
 );
 
-export default function HeroSection() {
+const pickText = (value: unknown, fallback: string) =>
+  typeof value === "string" && value.trim() ? value.trim() : fallback;
+
+// "BUYER-SELLER MEET 2027" -> ["BUYER-SELLER", "MEET 2027"]
+const splitHeroTitle = (title: string): [string, string] => {
+  const [first, ...rest] = title.trim().split(/\s+/);
+  return [first || "", rest.join(" ")];
+};
+
+export default function HeroSection({ initialData }: { initialData?: any }) {
+  const defaults = HERO_DATA[0];
+  const hero = {
+    enabled: initialData?.enabled !== false,
+    title: pickText(initialData?.title, `${defaults.titleLine1} ${defaults.titleLine2}`),
+    subtitle: pickText(initialData?.subtitle, defaults.subtitle),
+    dates: pickText(initialData?.dates, defaults.dates),
+    venue: pickText(initialData?.venue, defaults.venue),
+    buyerButtonLabel: pickText(initialData?.buyerButtonLabel, defaults.buyerButtonLabel),
+    buyerButtonHref: pickText(initialData?.buyerButtonHref, defaults.buyerButtonHref),
+    exhibitorButtonLabel: pickText(initialData?.exhibitorButtonLabel, defaults.exhibitorButtonLabel),
+    exhibitorButtonHref: pickText(initialData?.exhibitorButtonHref, defaults.exhibitorButtonHref),
+    image: pickText(initialData?.image, bgImage.src),
+    imageAlt: pickText(initialData?.imageAlt, "Buyer-Seller Meet at Bharat Organic Expo 2027"),
+  };
+  const [titleLine1, titleLine2] = splitHeroTitle(hero.title);
+
   const sectionRef = useRef<HTMLElement>(null);
   const leafRef = useRef<HTMLDivElement>(null);
   const line1Ref = useRef<HTMLSpanElement>(null);
@@ -36,6 +61,7 @@ export default function HeroSection() {
   const btnsRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
+    if (!sectionRef.current) return;
     const ctx = gsap.context(() => {
       const tl = gsap.timeline({
         defaults: { ease: "power3.out" },
@@ -86,6 +112,8 @@ export default function HeroSection() {
     return () => ctx.revert();
   }, []);
 
+  if (!hero.enabled) return null;
+
   return (
     <>
       <style>{`
@@ -132,8 +160,9 @@ export default function HeroSection() {
         {/* Background Image with Ken Burns zoom */}
         <div className="absolute inset-0 z-0 overflow-hidden">
           <img
-            src={bgImage.src}
-            alt="Buyer-Seller Meet"
+            src={hero.image}
+            alt={hero.imageAlt}
+            fetchPriority="high"
             className="hero-bg-img w-full h-full object-cover"
           />
         </div>
@@ -156,8 +185,8 @@ export default function HeroSection() {
         </div>
 
         <SectionContainer className="relative z-20 py-1 md:py-2 [perspective:800px]">
-          {HERO_DATA.map((data) => (
-            <div key={data.id} className="flex flex-col lg:flex-row items-center justify-start">
+          {[hero].map((data) => (
+            <div key="hero" className="flex flex-col lg:flex-row items-center justify-start">
               <div className="w-full lg:w-[60%] xl:w-[50%] text-left shrink-0 ml-0 lg:ml-8 xl:ml-12">
 
                 {/* Heading */}
@@ -167,14 +196,16 @@ export default function HeroSection() {
                 >
                   <span className="block overflow-hidden">
                     <span ref={line1Ref} style={{ opacity: 0, display: "block" }} className="text-[#1b5e20] text-2xl sm:text-4xl md:text-5xl lg:text-[64px] font-semibold mb-1">
-                      {data.titleLine1}
+                      {titleLine1}
                     </span>
                   </span>
-                  <span className="block overflow-hidden">
-                    <span ref={line2Ref} style={{ opacity: 0, display: "block" }} className="text-[#4B1426] text-2xl sm:text-4xl md:text-5xl lg:text-[64px] font-semibold tracking-tight whitespace-nowrap">
-                      {data.titleLine2}
+                  {titleLine2 && (
+                    <span className="block overflow-hidden">
+                      <span ref={line2Ref} style={{ opacity: 0, display: "block" }} className="text-[#4B1426] text-2xl sm:text-4xl md:text-5xl lg:text-[64px] font-semibold tracking-tight whitespace-nowrap">
+                        {titleLine2}
+                      </span>
                     </span>
-                  </span>
+                  )}
                 </h1>
 
                 {/* Subtitle */}

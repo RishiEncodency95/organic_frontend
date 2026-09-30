@@ -28,59 +28,178 @@ import stepsTitleLeftLeafIcon from "@/app/assets/participate/msme/reference-icon
 import stepsTitleRightLeafIcon from "@/app/assets/participate/msme/reference-icons/steps-title-right-leaf.png";
 import Image from "next/image";
 /* ================================================================
-   TYPES
+   DATA (editable from admin: MSME page -> Msmedirectormessage)
 ================================================================ */
 
-interface OfficialMessageBannerProps {
-  videoThumbnailUrl?: string;
-  videoDuration?: string;
+const DEFAULT_YOUTUBE_ID = "0DQ71A1CnOw";
+const EXPO_MARKER = "Bharat Organic Expo 2027";
+
+const DEFAULT_MESSAGE = {
+  enabled: true,
+  eyebrow: "Hear From MSME Leadership",
+  title: "Official Message From MSME Director",
+  subtitle: "A message of support and encouragement for all MSMEs participating in Bharat Organic Expo 2027 under the PMS Scheme.",
+  messageTitle: "Message From MSME Leadership",
+  quote: "Government of India is committed to empowering MSMEs and creating more opportunities for their growth. We appreciate initiatives like Bharat Organic Expo 2027 that provide a strong platform for MSMEs to showcase their products, build business, and expand globally.",
+  authorName: "Shri. S. C. L. Das",
+  authorDesignation: "Development Commissioner (MSME), Ministry of Micro, Small & Medium Enterprises, Government of India",
+  videoUrl: `https://www.youtube.com/watch?v=${DEFAULT_YOUTUBE_ID}`,
+  thumbnailImage: "",
+  thumbnailAlt: "MSME Director Official Message",
+};
+
+const FEATURE_STRIP = [
+  { id: 1, icon: officialIconImg, title: "Official Message", description: "Direct message from MSME Leadership" },
+  { id: 2, icon: forAllMsmeImg, title: "For All MSMEs", description: "Encouragement for every entrepreneur across India" },
+  { id: 3, icon: governmentApprovedImg, title: "Government Support", description: "Strong support for growth, competitiveness & global reach" },
+];
+
+const pickText = (value: unknown, fallback: string) =>
+  typeof value === "string" && value.trim() ? value.trim() : fallback;
+
+/** Splits text around the "Bharat Organic Expo 2027" marker so it can be highlighted. */
+const splitAroundExpo = (text: string): [string, string, string] => {
+  const idx = text.indexOf(EXPO_MARKER);
+  return idx >= 0
+    ? [text.slice(0, idx), EXPO_MARKER, text.slice(idx + EXPO_MARKER.length)]
+    : [text, "", ""];
+};
+
+/** "Official Message From MSME Director" -> ["Official Message", "From MSME Director"] */
+const splitTitle = (title: string): [string, string] => {
+  const match = title.match(/^(.*?)\s+(from\s+.*)$/i);
+  if (match) return [match[1], match[2]];
+  const words = title.trim().split(/\s+/);
+  const half = Math.ceil(words.length / 2);
+  return [words.slice(0, half).join(" "), words.slice(half).join(" ")];
+};
+
+/** Puts "Ministry ..." / "Government ..." parts of the designation on their own lines. */
+const splitDesignation = (designation: string): string[] =>
+  designation
+    .split(/,\s*(?=(?:Ministry|Government|Department)\b)/)
+    .map((part) => part.trim())
+    .filter(Boolean);
+
+type VideoSource =
+  | { kind: "youtube"; id: string }
+  | { kind: "instagram"; embedUrl: string }
+  | { kind: "file"; url: string };
+
+const getYoutubeId = (url: string): string | null => {
+  const match = url.match(/(?:youtube\.com\/(?:watch\?(?:.*&)?v=|embed\/|shorts\/|live\/)|youtu\.be\/)([\w-]{11})/);
+  return match ? match[1] : null;
+};
+
+const getInstagramEmbedUrl = (url: string): string | null => {
+  const match = url.match(/instagram\.com\/(?:[\w.]+\/)?(p|reels?|tv)\/([\w-]+)/);
+  if (!match) return null;
+  const type = match[1] === "reels" ? "reel" : match[1];
+  return `https://www.instagram.com/${type}/${match[2]}/embed`;
+};
+
+const resolveVideo = (url: string): VideoSource => {
+  const trimmed = url.trim();
+  const youtubeId = getYoutubeId(trimmed);
+  if (youtubeId) return { kind: "youtube", id: youtubeId };
+  const instagramEmbed = getInstagramEmbedUrl(trimmed);
+  if (instagramEmbed) return { kind: "instagram", embedUrl: instagramEmbed };
+  if (trimmed) return { kind: "file", url: trimmed };
+  return { kind: "youtube", id: DEFAULT_YOUTUBE_ID };
+};
+
+/** Still frame shown before the visitor presses play. A custom thumbnail from the admin wins. */
+function VideoPoster({
+  video,
+  className,
+  thumbnail,
+  thumbnailAlt,
+}: {
+  video: VideoSource;
+  className: string;
+  thumbnail?: string;
+  thumbnailAlt: string;
+}) {
+  if (thumbnail) {
+    return <img src={thumbnail} alt={thumbnailAlt} decoding="async" className={className} />;
+  }
+  if (video.kind === "youtube") {
+    const quality = video.id === DEFAULT_YOUTUBE_ID ? "maxresdefault" : "hqdefault";
+    return (
+      <Image
+        src={`https://img.youtube.com/vi/${video.id}/${quality}.jpg`}
+        width={1280}
+        height={720}
+        alt={thumbnailAlt}
+        className={className}
+      />
+    );
+  }
+  if (video.kind === "file") {
+    return (
+      <video
+        src={`${video.url}#t=0.5`}
+        preload="metadata"
+        muted
+        playsInline
+        aria-hidden="true"
+        className={className}
+      />
+    );
+  }
+  return <div aria-hidden="true" className={`${className} bg-gradient-to-br from-[#2a3a24] via-[#172014] to-[#0b120a]`} />;
 }
 
-/* ================================================================
-   DEFAULT VIDEO
-================================================================ */
+/** The actual player, rendered once the visitor presses play. */
+function VideoEmbed({ video }: { video: VideoSource }) {
+  const className = "absolute inset-0 h-full w-full";
+  if (video.kind === "file") {
+    return <video src={video.url} controls autoPlay playsInline className={`${className} bg-black object-contain`} />;
+  }
+  const src =
+    video.kind === "youtube"
+      ? `https://www.youtube.com/embed/${video.id}?autoplay=1&rel=0`
+      : video.embedUrl;
+  return (
+    <iframe
+      src={src}
+      title="MSME Director Official Message"
+      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+      allowFullScreen
+      className={className}
+    />
+  );
+}
 
-const YOUTUBE_ID = "0DQ71A1CnOw";
 /* ================================================================
    MAIN
 ================================================================ */
 
-const MSME_DIRECTOR_MESSAGE_DATA = [
-  {
-    id: 1,
-    eyebrow: "Hear From MSME Leadership",
-    titleMain: "Official Message",
-    titleHighlight: "From MSME Director",
-    introLead: "A message of support and encouragement for all MSMEs participating in",
-    introHighlight: "Bharat Organic Expo 2027",
-    introSub: "under the PMS Scheme.",
-    videoDuration: "1:12",
-    messageTitle: "Message From MSME Leadership",
-    quoteLine1: "Government of India is committed to empowering MSMEs and creating more opportunities for their growth.",
-    quoteLine2: "We appreciate initiatives like ",
-    quoteExpo: "Bharat Organic Expo 2027",
-    quoteLine3: " that provide a strong platform for MSMEs to showcase their products, build business, and expand globally.",
-    speakerName: "Shri. S. C. L. Das",
-    speakerRole: "Development Commissioner (MSME)",
-    speakerMinistry: "Ministry of Micro, Small & Medium Enterprises",
-    speakerGov: "Government of India",
-    featureStrip: [
-      { id: 1, icon: officialIconImg, title: "Official Message", description: "Direct message from MSME Leadership" },
-      { id: 2, icon: forAllMsmeImg, title: "For All MSMEs", description: "Encouragement for every entrepreneur across India" },
-      { id: 3, icon: governmentApprovedImg, title: "Government Support", description: "Strong support for growth, competitiveness & global reach" },
-    ]
-  }
-];
-
-export default function OfficialMessageBanner({
-  videoThumbnailUrl,
-  videoDuration = "1:12",
-}: OfficialMessageBannerProps) {
+export default function OfficialMessageBanner({ initialData }: { initialData?: any }) {
   const [playing, setPlaying] = useState(false);
 
-  const thumbnail =
-    videoThumbnailUrl ||
-    `https://img.youtube.com/vi/${YOUTUBE_ID}/maxresdefault.jpg`;
+  const message = {
+    enabled: initialData?.enabled !== false,
+    eyebrow: pickText(initialData?.eyebrow, DEFAULT_MESSAGE.eyebrow),
+    title: pickText(initialData?.title, DEFAULT_MESSAGE.title),
+    subtitle: pickText(initialData?.subtitle, DEFAULT_MESSAGE.subtitle),
+    messageTitle: pickText(initialData?.messageTitle, DEFAULT_MESSAGE.messageTitle),
+    quote: pickText(initialData?.quote, DEFAULT_MESSAGE.quote),
+    authorName: pickText(initialData?.authorName, DEFAULT_MESSAGE.authorName),
+    authorDesignation: pickText(initialData?.authorDesignation, DEFAULT_MESSAGE.authorDesignation),
+    videoUrl: pickText(initialData?.videoUrl, DEFAULT_MESSAGE.videoUrl),
+    thumbnailImage: pickText(initialData?.thumbnailImage, DEFAULT_MESSAGE.thumbnailImage),
+    thumbnailAlt: pickText(initialData?.thumbnailAlt, DEFAULT_MESSAGE.thumbnailAlt),
+  };
+  if (!message.enabled) return null;
+
+  const [titleMain, titleHighlight] = splitTitle(message.title);
+  const [introLead, introHighlight, introSub] = splitAroundExpo(message.subtitle);
+  const [quoteBefore, quoteExpo, quoteAfter] = splitAroundExpo(message.quote);
+  const designationLines = splitDesignation(message.authorDesignation);
+  const video = resolveVideo(message.videoUrl);
+  const isDefaultVideo = video.kind === "youtube" && video.id === DEFAULT_YOUTUBE_ID;
+  const data = { eyebrow: message.eyebrow, messageTitle: message.messageTitle, speakerName: message.authorName };
 
   return (
     <section
@@ -101,8 +220,7 @@ export default function OfficialMessageBanner({
         sm:pb-0
       "
     >
-      {MSME_DIRECTOR_MESSAGE_DATA.map((data) => (
-        <React.Fragment key={data.id}>
+      <React.Fragment>
           {/* ==========================================================
               DESKTOP
           ========================================================== */}
@@ -182,9 +300,9 @@ export default function OfficialMessageBanner({
                 text-[#111b2c]
               "
             >
-              {data.titleMain}{" "}
+              {titleMain}{" "}
               <span className="text-[#285b12]">
-                {data.titleHighlight}
+                {titleHighlight}
               </span>
             </h2>
 
@@ -222,12 +340,16 @@ export default function OfficialMessageBanner({
                 text-[#252934]
               "
             >
-              {data.introLead}
-              <br />
-              <span className="font-[600] text-[#315f14]">
-                {data.introHighlight}
-              </span>{" "}
-              {data.introSub}
+              {introLead}
+              {introHighlight && (
+                <>
+                  <br />
+                  <span className="font-[600] text-[#315f14]">
+                    {introHighlight}
+                  </span>
+                </>
+              )}
+              {introSub}
             </p>
 
             {/* MAIN CONTENT */}
@@ -260,18 +382,11 @@ export default function OfficialMessageBanner({
               >
                 {!playing ? (
                   <>
-                    <Image
-                      src={thumbnail} width={1280} height={720}
-                      alt="MSME Director Official Message"
-                      className="
-                        absolute
-                        inset-x-0
-                        top-0
-                        h-[84%]
-                        w-full
-                        object-cover
-                        object-top
-                      "
+                    <VideoPoster
+                      video={video}
+                      thumbnail={message.thumbnailImage}
+                      thumbnailAlt={message.thumbnailAlt}
+                      className="absolute inset-x-0 top-0 h-[84%] w-full object-cover object-top"
                     />
 
                     <div
@@ -381,16 +496,18 @@ export default function OfficialMessageBanner({
                         />
                       </button>
 
-                      <span
-                        className="
-                          ml-[10px]
-                          whitespace-nowrap
-                          text-[14px]
-                          font-[400]
-                        "
-                      >
-                        0:00 / {data.videoDuration}
-                      </span>
+                      {isDefaultVideo && (
+                        <span
+                          className="
+                            ml-[10px]
+                            whitespace-nowrap
+                            text-[14px]
+                            font-[400]
+                          "
+                        >
+                          0:00 / 1:12
+                        </span>
+                      )}
 
                       <div
                         className="
@@ -432,18 +549,7 @@ export default function OfficialMessageBanner({
                   </>
                 ) : (
                   <>
-                    <iframe
-                      src={`https://www.youtube.com/embed/${YOUTUBE_ID}?autoplay=1&rel=0`}
-                      title="MSME Director Official Message"
-                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                      allowFullScreen
-                      className="
-                        absolute
-                        inset-0
-                        h-full
-                        w-full
-                      "
-                    />
+                    <VideoEmbed video={video} />
 
                     <button
                       type="button"
@@ -581,14 +687,13 @@ export default function OfficialMessageBanner({
                       text-[#262c38]
                     "
                   >
-                    {data.quoteLine1}
-                    <br />
-                    {data.quoteLine2}
-                    <span className="font-[600] text-[#315d16]">
-                      {data.quoteExpo}
-                    </span>{" "}
-                    <br/>
-                    {data.quoteLine3}
+                    {quoteBefore}
+                    {quoteExpo && (
+                      <span className="font-[600] text-[#315d16]">
+                        {quoteExpo}
+                      </span>
+                    )}
+                    {quoteAfter}
                   </blockquote>
 
                   <Image
@@ -675,11 +780,12 @@ export default function OfficialMessageBanner({
                         text-[#414753]
                       "
                     >
-                      {data.speakerRole}
-                      <br />
-                      {data.speakerMinistry}
-                      <br />
-                      {data.speakerGov}
+                      {designationLines.map((line, idx) => (
+                        <React.Fragment key={idx}>
+                          {idx > 0 && <br />}
+                          {line}
+                        </React.Fragment>
+                      ))}
                     </p>
                   </div>
                 </div>
@@ -724,7 +830,7 @@ export default function OfficialMessageBanner({
                 shadow-[0_4px_13px_rgba(42,55,31,0.08)]
               "
             >
-              {data.featureStrip.map((feat, idx) => (
+              {FEATURE_STRIP.map((feat, idx) => (
                 <FeatureItem
                   key={feat.id}
                   withBorder={idx === 1}
@@ -791,9 +897,9 @@ export default function OfficialMessageBanner({
                 text-[#111b2c]
               "
             >
-              {data.titleMain}{" "}
+              {titleMain}{" "}
               <span className="text-[#285b12]">
-                {data.titleHighlight}
+                {titleHighlight}
               </span>
             </h2>
 
@@ -825,11 +931,13 @@ export default function OfficialMessageBanner({
                 text-[#30343d]
               "
             >
-              {data.introLead}{" "}
-              <span className="font-[600] text-[#315f14]">
-                {data.introHighlight}
-              </span>{" "}
-              {data.introSub}
+              {introLead}
+              {introHighlight && (
+                <span className="font-[600] text-[#315f14]">
+                  {introHighlight}
+                </span>
+              )}
+              {introSub}
             </p>
 
             <div
@@ -847,16 +955,11 @@ export default function OfficialMessageBanner({
             >
               {!playing ? (
                 <>
-                  <Image
-                    src={thumbnail} width={1280} height={720}
-                    alt="MSME Director Official Message"
-                    className="
-                      absolute
-                      inset-0
-                      h-full
-                      w-full
-                      object-cover
-                    "
+                  <VideoPoster
+                    video={video}
+                    thumbnail={message.thumbnailImage}
+                    thumbnailAlt={message.thumbnailAlt}
+                    className="absolute inset-0 h-full w-full object-cover"
                   />
                   <button
                     type="button"
@@ -882,18 +985,7 @@ export default function OfficialMessageBanner({
                   </button>
                 </>
               ) : (
-                <iframe
-                  src={`https://www.youtube.com/embed/${YOUTUBE_ID}?autoplay=1&rel=0`}
-                  title="MSME Director Official Message"
-                  allow="autoplay; encrypted-media; picture-in-picture"
-                  allowFullScreen
-                  className="
-                    absolute
-                    inset-0
-                    h-full
-                    w-full
-                  "
-                />
+                <VideoEmbed video={video} />
               )}
             </div>
 
@@ -952,11 +1044,13 @@ export default function OfficialMessageBanner({
                   text-[#303541]
                 "
               >
-                “{data.quoteLine1} {data.quoteLine2}
-                <span className="font-[600] text-[#315d16]">
-                  {data.quoteExpo}
-                </span>{" "}
-                {data.quoteLine3}”
+                “{quoteBefore}
+                {quoteExpo && (
+                  <span className="font-[600] text-[#315d16]">
+                    {quoteExpo}
+                  </span>
+                )}
+                {quoteAfter}”
               </blockquote>
 
               <div
@@ -989,11 +1083,12 @@ export default function OfficialMessageBanner({
                       {data.speakerName}
                     </p>
                     <p className="mt-1 text-[14px] leading-[1.5] text-[#555c67]">
-                      {data.speakerRole}
-                      <br />
-                      {data.speakerMinistry}
-                      <br />
-                      {data.speakerGov}
+                      {designationLines.map((line, idx) => (
+                        <React.Fragment key={idx}>
+                          {idx > 0 && <br />}
+                          {line}
+                        </React.Fragment>
+                      ))}
                     </p>
                   </div>
                 </div>
@@ -1013,7 +1108,7 @@ export default function OfficialMessageBanner({
                 sm:grid-cols-3
               "
             >
-              {data.featureStrip.map((feat) => (
+              {FEATURE_STRIP.map((feat) => (
                 <MobileFeature
                   key={feat.id}
                   icon={<Image src={feat.icon} alt="" className="h-16 w-16 object-contain" />}
@@ -1023,8 +1118,7 @@ export default function OfficialMessageBanner({
               ))}
             </div>
           </div>
-        </React.Fragment>
-      ))}
+      </React.Fragment>
     </section>
   );
 }

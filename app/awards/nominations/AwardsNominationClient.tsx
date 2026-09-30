@@ -852,7 +852,7 @@ export default function BharatOrganicAwards({ initialHeroData }: AwardsNominatio
 
   // Dynamic Hero values
   const heroEnabled = heroData?.enabled !== false;
-  const bgImgSrc = heroData?.bgImage || heroData?.image || nominationBg.src;
+  const bgImgSrc = heroData?.image || heroData?.bgImage || nominationBg.src;
   const eyebrow = heroData?.eyebrow || ""; // eyebrow hidden by default
 
   let titlePrefix = heroData?.titlePrefix;
@@ -942,7 +942,7 @@ export default function BharatOrganicAwards({ initialHeroData }: AwardsNominatio
           <div className="absolute inset-0 z-0">
             <img
               src={bgImgSrc}
-              alt={`${titlePrefix} ${titlePrimary} ${titleSecondary}`}
+              alt={heroData?.imageAlt || `${titlePrefix} ${titlePrimary} ${titleSecondary}`}
               className="h-full w-full object-cover"
             />
           </div>

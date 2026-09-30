@@ -141,7 +141,7 @@ const JoinUsBanner = () => {
                 <div className="flex items-center gap-3 text-white text-left">
                   <Calendar size={30} strokeWidth={1.5} className="text-white shrink-0 opacity-90" />
                   <div className="flex flex-col">
-                    <span className="font-bold text-[15px] leading-snug tracking-wide">21 – 23 August 2026</span>
+                    <span className="font-bold text-[15px] leading-snug tracking-wide">19 – 21 February 2027</span>
                     <span className="text-[12px] text-gray-300">(Friday – Sunday)</span>
                   </div>
                 </div>

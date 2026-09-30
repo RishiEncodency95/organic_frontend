@@ -58,6 +58,14 @@ const PMS_SUPPORT_SECTION_DATA = [
   }
 ];
 
+// Divider lines for the highlight cards: 2x2 grid below 2xl, a single row of 4 at 2xl.
+const HIGHLIGHT_CARD_BORDERS = [
+  "sm:border-r sm:border-b 2xl:border-b-0",
+  "sm:border-b 2xl:border-b-0 2xl:border-r",
+  "sm:border-r",
+  "",
+];
+
 export default function PmsSupportSection() {
   return (
     <section
@@ -105,12 +113,12 @@ export default function PmsSupportSection() {
 
               {/* Highlight cards */}
               <div className="w-full md:w-full lg:w-[56%] rounded-2xl border border-gray-200 bg-white p-4 shadow-[rgba(0,0,0,0.12)_0px_1px_3px,rgba(0,0,0,0.24)_0px_1px_2px]">
-                <ul className="flex flex-col md:flex-col lg:flex-row sm:items-stretch">
+                <ul className="grid grid-cols-1 sm:grid-cols-2 2xl:grid-cols-4">
                   {data.highlightCards.map(
                     ({ id, icon, title, description }, index) => (
                       <li
                         key={id}
-                        className={`py-3 px-3 ${index < data.highlightCards.length - 1 ? "sm:border-r sm:border-gray-200" : ""}`}
+                        className={`min-w-0 py-3 px-3 border-gray-200 ${HIGHLIGHT_CARD_BORDERS[index] ?? ""}`}
                       >
                         <div className="flex flex-row items-center gap-3 sm:gap-4">
                           <Image
