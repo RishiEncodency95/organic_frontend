@@ -329,7 +329,7 @@ export default function Footer({ initialFooterData }: { initialFooterData?: any 
             </div>
 
             {/* Nature's Bounty Image */}
-            <div className="w-full max-w-[300px] sm:max-w-[280px] mb-2">
+            <div className="w-full max-w-[300px] sm:max-w-[280px] mt-3 mb-2 bg-white rounded-md p-2 shadow-sm">
               <Image
                 src={bountySrc}
                 alt="Nature's Bounty"
