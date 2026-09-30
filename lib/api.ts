@@ -160,6 +160,11 @@ export const eventApi = {
     getActive: async () => apiCall('/events/active')
 };
 
+export const ihweEventApi = { 
+    getActive: async () => ihweApiCall('/events/active'),
+    getAll: async () => ihweApiCall('/events')
+};
+
 export const settingsApi = { 
     get: async () => apiCall(`/settings?website=Organicexpo`),
     getSettings: async () => apiCall(`/settings?website=Organicexpo`)
@@ -384,10 +389,12 @@ export const buyerApi = {
         const response = await fetch(`${ihwe_API_URL}/international-buyer/config`);
         return await response.json();
     },
-    submitInternationalBuyer: async (formData: FormData) => {
+    submitInternationalBuyer: async (payload: any) => {
+        const isFormData = payload instanceof FormData;
         const response = await fetch(`${ihwe_API_URL}/international-buyer/register`, {
             method: 'POST',
-            body: formData,
+            headers: isFormData ? {} : { 'Content-Type': 'application/json' },
+            body: isFormData ? payload : JSON.stringify(payload),
         });
         if (!response.ok) {
             const text = await response.text();
@@ -404,11 +411,12 @@ export const buyerApi = {
         }
         return await response.json();
     },
-    submitBuyer: async (formData: FormData) => {
+    submitBuyer: async (payload: any) => {
+        const isFormData = payload instanceof FormData;
         const response = await fetch(`${ihwe_API_URL}/buyer-registration`, {
             method: 'POST',
-            body: formData,
-            // Let browser set Content-Type for FormData
+            headers: isFormData ? {} : { 'Content-Type': 'application/json' },
+            body: isFormData ? payload : JSON.stringify(payload),
         });
         if (!response.ok) {
             const text = await response.text();
