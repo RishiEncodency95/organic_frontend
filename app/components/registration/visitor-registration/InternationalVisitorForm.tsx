@@ -3,6 +3,35 @@ import React, { useState, useEffect } from "react";
 import { CheckCircle2, ShieldCheck, Globe2, Loader2, CheckCircle, X, ChevronsUpDown, Upload } from "lucide-react";
 import { crmApi, verifyApi, visitorApi, ihweSettingsApi } from "../../../../lib/api";
 import Swal from 'sweetalert2';
+import { toOptions, useDropdowns } from "@/lib/dropdowns";
+
+// Admin-managed (Dropdown Manager); these are the fallback options.
+const VISITOR_DROPDOWNS = {
+  "gender": toOptions(["Male", "Female", "Other"]),
+  "visitor-industry": [
+    { label: "AYUSH", value: "ayush" },
+    { label: "Agriculture & Organic", value: "agriculture" },
+    { label: "Fitness & Wellness", value: "fitness" },
+    { label: "Healthcare Services", value: "healthcare" },
+    { label: "Pharmaceutical", value: "pharma" },
+    { label: "Others", value: "others" },
+  ],
+  "visitor-company-size": [
+    { label: "1-10 Employees", value: "1-10" },
+    { label: "11-50 Employees", value: "11-50" },
+    { label: "51-200 Employees", value: "51-200" },
+    { label: "200+ Employees", value: "200+" },
+  ],
+  "visitor-visit-days": toOptions(["1 Day", "2 Days", "3 Days", "All Days"]),
+  "yes-no": toOptions(["Yes", "No"]),
+  "visitor-conference-role": [
+    { label: "Delegate", value: "delegate" },
+    { label: "Attendee", value: "attendee" },
+    { label: "Speaker", value: "speaker" },
+    { label: "Panel Participant", value: "panel-participant" },
+    { label: "Industry Expert", value: "industry-expert" },
+  ],
+};
 
 // Helper component for multi-select
 const MultiSelectDropdown = ({ options, selected, onChange, placeholder = "Select options", error = false, accentColor = "orange" }: any) => {
@@ -71,6 +100,7 @@ const PURPOSE_OPTIONS = ["Business Networking", "Product Sourcing", "Distributor
 const INTEREST_OPTIONS = ["AYUSH & Herbal Products", "Organic & Natural Products", "Fitness & Wellness Equipment", "Health Supplements", "Hospitals & Healthcare Services", "Agriculture & Organic Farming", "R&D & Innovations", "Others"];
 
 export default function InternationalVisitorForm() {
+  const dropdowns = useDropdowns(VISITOR_DROPDOWNS);
   const [step, setStep] = useState(1);
   const [submitted, setSubmitted] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -102,10 +132,10 @@ export default function InternationalVisitorForm() {
     industry: "", otherIndustry: "", companySize: "",
     address: "", country: "", state: "", city: "", companyPincode: "",
     preferredDate: "", numAttendees: "",
-    invitationLetter: "no", hotelAssistance: "no", airportPickup: "no", translatorSupport: "no",
-    conferenceInterest: "no", conferenceRole: "",
+    invitationLetter: "No", hotelAssistance: "No", airportPickup: "No", translatorSupport: "No",
+    conferenceInterest: "No", conferenceRole: "",
     vipPass: "no",
-    schedulingB2B: "no", whatsappUpdates: "yes",
+    schedulingB2B: "No", whatsappUpdates: "yes",
     anyRequirement: "", subscribeNewsletter: true,
     purposeOfVisit: [] as string[],
     areaOfInterest: [] as string[],
@@ -307,9 +337,7 @@ export default function InternationalVisitorForm() {
             <label className={labelClasses}>Gender <span className="text-red-600">*</span></label>
             <select required name="gender" value={formData.gender} onChange={handleChange} className={inputClasses}>
               <option value="">Select</option>
-              <option value="male">Male</option>
-              <option value="female">Female</option>
-              <option value="other">Other</option>
+              {dropdowns["gender"].map((o) => <option key={o.value} value={o.value}>{o.label}</option>)}
             </select>
           </div>
           <div><label className={labelClasses}>Date of Birth</label><input type="date" name="dob" value={formData.dob} onChange={handleChange} className={inputClasses} /></div>
@@ -332,12 +360,7 @@ export default function InternationalVisitorForm() {
             <label className={labelClasses}>Industry / Sector</label>
             <select name="industry" value={formData.industry} onChange={handleChange} className={inputClasses}>
               <option value="">Select Here</option>
-              <option value="ayush">AYUSH</option>
-              <option value="agriculture">Agriculture & Organic</option>
-              <option value="fitness">Fitness & Wellness</option>
-              <option value="healthcare">Healthcare Services</option>
-              <option value="pharma">Pharmaceutical</option>
-              <option value="others">Others</option>
+              {dropdowns["visitor-industry"].map((o) => <option key={o.value} value={o.value}>{o.label}</option>)}
             </select>
           </div>
           {formData.industry === "others" && (
@@ -348,10 +371,7 @@ export default function InternationalVisitorForm() {
             <label className={labelClasses}>Company Size</label>
             <select name="companySize" value={formData.companySize} onChange={handleChange} className={inputClasses}>
               <option value="">Select Size</option>
-              <option value="1-10">1-10 Employees</option>
-              <option value="11-50">11-50 Employees</option>
-              <option value="51-200">51-200 Employees</option>
-              <option value="200+">200+ Employees</option>
+              {dropdowns["visitor-company-size"].map((o) => <option key={o.value} value={o.value}>{o.label}</option>)}
             </select>
           </div>
         </div>
@@ -513,10 +533,7 @@ export default function InternationalVisitorForm() {
                 <label className={labelClasses}>Preferred Visit Days</label>
                 <select name="preferredDate" value={formData.preferredDate} onChange={handleChange} className={inputClasses}>
                   <option value="">Select Days</option>
-                  <option value="1 Day">1 Day</option>
-                  <option value="2 Days">2 Days</option>
-                  <option value="3 Days">3 Days</option>
-                  <option value="All Days">All Days</option>
+                  {dropdowns["visitor-visit-days"].map((o) => <option key={o.value} value={o.value}>{o.label}</option>)}
                 </select>
               </div>
 
@@ -529,8 +546,7 @@ export default function InternationalVisitorForm() {
                 <div key={key}>
                   <label className={labelClasses}>{label}</label>
                   <select name={key} value={(formData as any)[key]} onChange={handleChange} className={inputClasses}>
-                    <option value="no">No</option>
-                    <option value="yes">Yes</option>
+                    {dropdowns["yes-no"].map((o) => <option key={o.value} value={o.value}>{o.label}</option>)}
                   </select>
                 </div>
               ))}
@@ -545,25 +561,21 @@ export default function InternationalVisitorForm() {
               <div>
                 <label className={labelClasses}>Schedule B2B meetings? <span className="text-red-600">*</span></label>
                 <select required name="schedulingB2B" value={formData.schedulingB2B} onChange={handleChange} className={inputClasses}>
-                  <option value="no">No</option>
-                  <option value="yes">Yes</option>
+                  {dropdowns["yes-no"].map((o) => <option key={o.value} value={o.value}>{o.label}</option>)}
                 </select>
               </div>
               <div>
                 <label className={labelClasses}>Interested in Conference?</label>
                 <select name="conferenceInterest" value={formData.conferenceInterest} onChange={handleChange} className={inputClasses}>
-                  <option value="no">No</option>
-                  <option value="yes">Yes</option>
+                  {dropdowns["yes-no"].map((o) => <option key={o.value} value={o.value}>{o.label}</option>)}
                 </select>
               </div>
-              {formData.conferenceInterest === 'yes' && (
+              {formData.conferenceInterest.toLowerCase() === 'yes' && (
                 <div>
                   <label className={labelClasses}>Interested As</label>
                   <select name="conferenceRole" value={formData.conferenceRole} onChange={handleChange} className={inputClasses}>
                     <option value="">Select Role</option>
-                    {["Delegate", "Attendee", "Speaker", "Panel Participant", "Industry Expert"].map(r => (
-                      <option key={r} value={r.toLowerCase().replace(' ', '-')}>{r}</option>
-                    ))}
+                    {dropdowns["visitor-conference-role"].map((o) => <option key={o.value} value={o.value}>{o.label}</option>)}
                   </select>
                 </div>
               )}

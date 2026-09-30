@@ -3,6 +3,19 @@ import React, { useState, useEffect } from "react";
 import { CheckCircle2, ShieldCheck, Store, Loader2, CheckCircle, X, ChevronsUpDown } from "lucide-react";
 import { crmApi, verifyApi, visitorApi, ihweSettingsApi } from "../../../../lib/api";
 import Swal from 'sweetalert2';
+import { toOptions, useDropdowns } from "@/lib/dropdowns";
+// Admin-managed (Dropdown Manager); these are the fallback options.
+const VISITOR_DROPDOWNS = {
+  "gender": toOptions(["Male", "Female", "Other"]),
+  "visitor-corporate-industry": toOptions(["Healthcare", "Wellness", "Ayurveda", "Medical Devices", "Pharmaceuticals", "Hospitality", "IT & Tech", "Others"]),
+  "visitor-corporate-company-size": [
+    { label: "1-50 employees", value: "1-50" },
+    { label: "51-200 employees", value: "51-200" },
+    { label: "201-500 employees", value: "201-500" },
+    { label: "500+ employees", value: "500+" },
+  ],
+};
+
 // Helper component for multi-select
 const MultiSelectDropdown = ({ options, selected, onChange, placeholder = "Select options", error = false, accentColor = "emerald" }: any) => {
   const [open, setOpen] = useState(false);
@@ -71,6 +84,7 @@ const PURPOSE_CORPORATE = ["Business Networking", "Product Sourcing", "Distribut
 const INTEREST_CORPORATE = ["Business Networking", "Product Sourcing", "Distributor Search", "Franchise Opportunity", "Investment Opportunity", "Medical Tourism", "Healthcare Collaboration", "Wellness Industry Exploration", "Ayurveda & AYUSH Interest", "Conference Participation", "Knowledge Sessions", "Startup Collaboration", "Government Delegation", "General Visit"];
 
 export default function CorporateForm() {
+  const dropdowns = useDropdowns(VISITOR_DROPDOWNS);
   const [submitted, setSubmitted] = useState(false);
   const [isVerifying, setIsVerifying] = useState({ email: false, mobile: false });
   const [otpSent, setOtpSent] = useState({ email: false, mobile: false });
@@ -299,7 +313,7 @@ export default function CorporateForm() {
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-x-3 gap-y-3">
           <div><label className={labelClasses}>First Name <span className="text-red-600">*</span></label><input required name="firstName" value={formData.firstName} onChange={handleChange} className={inputClasses} placeholder="Enter First Name" /></div>
           <div><label className={labelClasses}>Last Name <span className="text-red-600">*</span></label><input required name="lastName" value={formData.lastName} onChange={handleChange} className={inputClasses} placeholder="Enter Last Name" /></div>
-          <div><label className={labelClasses}>Gender <span className="text-red-600">*</span></label><select required name="gender" value={formData.gender} onChange={handleChange} className={inputClasses}><option value="">Select</option><option value="Male">Male</option><option value="Female">Female</option><option value="Other">Other</option></select></div>
+          <div><label className={labelClasses}>Gender <span className="text-red-600">*</span></label><select required name="gender" value={formData.gender} onChange={handleChange} className={inputClasses}><option value="">Select</option>{dropdowns["gender"].map((o) => <option key={o.value} value={o.value}>{o.label}</option>)}</select></div>
           <div><label className={labelClasses}>Date of Birth (Optional)</label><input type="date" name="dob" value={formData.dob} onChange={handleChange} className={inputClasses} /></div>
           <div><label className={labelClasses}>Designation <span className="text-red-600">*</span></label><input required name="designation" value={formData.designation} onChange={handleChange} className={inputClasses} placeholder="Enter Designation.." /></div>
 
@@ -377,14 +391,7 @@ export default function CorporateForm() {
           <label className={labelClasses}>Industry Sector <span className="text-red-600">*</span></label>
           <select required name="industry" value={formData.industry} onChange={handleChange} className={inputClasses}>
             <option value="">Select Here</option>
-            <option value="Healthcare">Healthcare</option>
-            <option value="Wellness">Wellness</option>
-            <option value="Ayurveda">Ayurveda</option>
-            <option value="Medical Devices">Medical Devices</option>
-            <option value="Pharmaceuticals">Pharmaceuticals</option>
-            <option value="Hospitality">Hospitality</option>
-            <option value="IT & Tech">IT & Tech</option>
-            <option value="Others">Others</option>
+            {dropdowns["visitor-corporate-industry"].map((o) => <option key={o.value} value={o.value}>{o.label}</option>)}
           </select>
         </div>
         {formData.industry === "Others" && (
@@ -394,10 +401,7 @@ export default function CorporateForm() {
           <label className={labelClasses}>Company Size</label>
           <select name="companySize" value={formData.companySize} onChange={handleChange} className={inputClasses}>
             <option value="">Select Here</option>
-            <option value="1-50">1-50 employees</option>
-            <option value="51-200">51-200 employees</option>
-            <option value="201-500">201-500 employees</option>
-            <option value="500+">500+ employees</option>
+            {dropdowns["visitor-corporate-company-size"].map((o) => <option key={o.value} value={o.value}>{o.label}</option>)}
           </select>
         </div>
 

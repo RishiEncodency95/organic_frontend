@@ -3,6 +3,12 @@ import React, { useState, useEffect } from "react";
 import { User, CheckCircle2, Loader2, CheckCircle, X, ChevronsUpDown, ShieldCheck } from "lucide-react";
 import { crmApi, verifyApi, visitorApi, ihweSettingsApi } from "../../../../lib/api";
 import Swal from 'sweetalert2';
+import { toOptions, useDropdowns } from "@/lib/dropdowns";
+
+// Admin-managed (Dropdown Manager); these are the fallback options.
+const VISITOR_DROPDOWNS = {
+  "gender": toOptions(["Male", "Female", "Other"]),
+};
 
 // Helper component for multi-select
 const MultiSelectDropdown = ({ options, selected, onChange, placeholder = "Select options", error = false, accentColor = "amber" }: any) => {
@@ -72,6 +78,7 @@ const PURPOSE_GENERAL = ["Business Networking", "Exploring New Products", "Buyin
 const INTEREST_GENERAL = ["AYUSH & Herbal Products", "Organic & Natural Products", "Fitness & Wellness Equipment", "Health Supplements", "Hospitals & Healthcare Services", "Agriculture & Organic Farming", "R&D & Innovations", "Others"];
 
 export default function GeneralForm() {
+  const dropdowns = useDropdowns(VISITOR_DROPDOWNS);
   const [submitted, setSubmitted] = useState(false);
   const [isVerifying, setIsVerifying] = useState({ email: false, mobile: false });
   const [otpSent, setOtpSent] = useState({ email: false, mobile: false });
@@ -296,7 +303,7 @@ export default function GeneralForm() {
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-x-3 gap-y-3">
           <div><label className={labelClasses}>First Name <span className="text-red-600">*</span></label><input required name="firstName" value={formData.firstName} onChange={handleChange} className={inputClasses} placeholder="Enter First Name" /></div>
           <div><label className={labelClasses}>Last Name <span className="text-red-600">*</span></label><input required name="lastName" value={formData.lastName} onChange={handleChange} className={inputClasses} placeholder="Enter Last Name" /></div>
-          <div><label className={labelClasses}>Gender <span className="text-red-600">*</span></label><select required name="gender" value={formData.gender} onChange={handleChange} className={inputClasses}><option value="">Select</option><option value="Male">Male</option><option value="Female">Female</option><option value="Other">Other</option></select></div>
+          <div><label className={labelClasses}>Gender <span className="text-red-600">*</span></label><select required name="gender" value={formData.gender} onChange={handleChange} className={inputClasses}><option value="">Select</option>{dropdowns["gender"].map((o) => <option key={o.value} value={o.value}>{o.label}</option>)}</select></div>
           <div><label className={labelClasses}>Date of Birth (Optional)</label><input type="date" name="dob" value={formData.dob} onChange={handleChange} className={inputClasses} /></div>
 
           <div className="space-y-1">

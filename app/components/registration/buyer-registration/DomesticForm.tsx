@@ -1,8 +1,10 @@
 "use client";
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState, useRef, useEffect, useMemo } from "react";
 import { CheckCircle2, CheckCircle, ShieldCheck, User, Globe, Store, Factory, Laptop, HeartPulse, Leaf, Hotel, Briefcase, ChevronsUpDown, Loader2, X, AlertTriangle } from "lucide-react";
 import { verifyApi, buyerApi, settingsApi } from "@/lib/api";
 import Swal from "sweetalert2";
+import { useDropdowns } from "@/lib/dropdowns";
+import { BUYER_DROPDOWNS, buyerConfigFrom } from "./buyerDropdowns";
 
 // Mock Data
 const mockConfig = {
@@ -151,6 +153,9 @@ const MultiSelectDropdown = ({ options, selected, onChange, placeholder = "Selec
 };
 
 export default function DomesticBuyerForm() {
+  // Option lists are admin-managed (Dropdown Manager); mockConfig only keeps the pass packages.
+  const dropdowns = useDropdowns(BUYER_DROPDOWNS);
+  const config = useMemo(() => ({ ...mockConfig, ...buyerConfigFrom(dropdowns) }), [dropdowns]);
   const [submitted, setSubmitted] = useState(false);
   const [isVerifying, setIsVerifying] = useState({ email: false, mobile: false });
   const [otpSent, setOtpSent] = useState({ email: false, mobile: false });
@@ -426,11 +431,7 @@ export default function DomesticBuyerForm() {
             <label className={labelClasses}>Business Role *</label>
             <select required name="businessType" value={formData.businessType} onChange={handleChange} className={inputClasses}>
               <option value="">Select Type</option>
-              <option value="Distributor">Distributor / Wholesaler</option>
-              <option value="Retailer">Retailer (Single/Multi Store)</option>
-              <option value="Manufacturer">Manufacturer / OEM</option>
-              <option value="Importer">Importer / Exporter</option>
-              <option value="Consultant">Consultant / Professional</option>
+              {dropdowns["buyer-business-role"].map((o) => <option key={o.value} value={o.value}>{o.label}</option>)}
             </select>
           </div>
         </div>
@@ -496,33 +497,33 @@ export default function DomesticBuyerForm() {
         <div className={sectionTitleWrapperClasses}><h3 className={sectionTitleClasses}>3. Company Business Profile</h3></div>
         <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-x-3 gap-y-3">
           <div><label className={labelClasses}>Company / Firm Name *</label><input required name="companyFirmName" value={formData.companyFirmName} onChange={handleChange} className={inputClasses} /></div>
-          <div><label className={labelClasses}>Business Type *</label><select required name="basicBusinessType" value={formData.basicBusinessType} onChange={handleChange} className={inputClasses}><option value="">Select</option><option value="Proprietorship">Proprietorship</option><option value="Partnership">Partnership</option><option value="Pvt Ltd">Pvt Ltd</option><option value="LLP">LLP</option></select></div>
+          <div><label className={labelClasses}>Business Type *</label><select required name="basicBusinessType" value={formData.basicBusinessType} onChange={handleChange} className={inputClasses}><option value="">Select</option>{dropdowns["buyer-business-type"].map((o) => <option key={o.value} value={o.value}>{o.label}</option>)}</select></div>
           <div><label className={labelClasses}>Year of Est. *</label><input required type="number" name="yearOfEstablishment" value={formData.yearOfEstablishment} onChange={handleChange} placeholder="e.g. 2010" className={inputClasses} /></div>
           <div><label className={labelClasses}>GST Number (Optional)</label><input name="gstNumber" value={formData.gstNumber} onChange={handleChange} className={inputClasses} /></div>
-          <div><label className={labelClasses}>Buyer Industry *</label><select required name="buyerIndustry" value={formData.buyerIndustry} onChange={handleChange} className={inputClasses}><option value="">Select Industry</option>{mockConfig.primaryProductInterests.map((i: string) => <option key={i} value={i}>{i}</option>)}</select></div>
+          <div><label className={labelClasses}>Buyer Industry *</label><select required name="buyerIndustry" value={formData.buyerIndustry} onChange={handleChange} className={inputClasses}><option value="">Select Industry</option>{config.primaryProductInterests.map((i: string) => <option key={i} value={i}>{i}</option>)}</select></div>
           <div><label className={labelClasses}>Nature of Business *</label><input required name="natureOfBusiness" value={formData.natureOfBusiness} onChange={handleChange} className={inputClasses} /></div>
           <div><label className={labelClasses}>Years in Business *</label><input required type="number" name="yearsInBusiness" value={formData.yearsInBusiness} onChange={handleChange} className={inputClasses} /></div>
-          <div><label className={labelClasses}>Annual Turnover *</label><select required name="annualTurnover" value={formData.annualTurnover} onChange={handleChange} className={inputClasses}><option value="">Select Range</option>{mockConfig.annualPurchaseValueRanges.map((r: string) => <option key={r} value={r}>{r}</option>)}</select></div>
+          <div><label className={labelClasses}>Annual Turnover *</label><select required name="annualTurnover" value={formData.annualTurnover} onChange={handleChange} className={inputClasses}><option value="">Select Range</option>{config.annualPurchaseValueRanges.map((r: string) => <option key={r} value={r}>{r}</option>)}</select></div>
         </div>
       </div>
 
       <div>
         <div className={sectionTitleWrapperClasses}><h3 className={sectionTitleClasses}>4. Sourcing & Buying Interests</h3></div>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-6 gap-x-3 gap-y-3">
-          <div><label className={labelClasses}>Primary Product Interest *</label><select required name="primaryProductInterest" value={formData.primaryProductInterest} onChange={handleChange} className={inputClasses}><option value="">Choose Interest</option>{mockConfig.primaryProductInterests.map((i: string) => <option key={i} value={i}>{i}</option>)}</select></div>
+          <div><label className={labelClasses}>Primary Product Interest *</label><select required name="primaryProductInterest" value={formData.primaryProductInterest} onChange={handleChange} className={inputClasses}><option value="">Choose Interest</option>{config.primaryProductInterests.map((i: string) => <option key={i} value={i}>{i}</option>)}</select></div>
           <div className="space-y-1 z-40">
             <label className={labelClasses}>Secondary Product Categories</label>
-            <MultiSelectDropdown options={mockConfig.secondaryProductCategories} selected={formData.secondaryProductCategories} onChange={(val: any) => handleSelectChange('secondaryProductCategories', val)} placeholder="Select categories..." accentColor="emerald" />
+            <MultiSelectDropdown options={config.secondaryProductCategories} selected={formData.secondaryProductCategories} onChange={(val: any) => handleSelectChange('secondaryProductCategories', val)} placeholder="Select categories..." accentColor="emerald" />
           </div>
-          <div><label className={labelClasses}>Interested in Importing?</label><select name="interestedInImporting" value={formData.interestedInImporting} onChange={handleChange} className={inputClasses}><option value="No">No</option><option value="Yes">Yes</option></select></div>
-          <div><label className={labelClasses}>Interested in Exporting?</label><select name="interestedInExporting" value={formData.interestedInExporting} onChange={handleChange} className={inputClasses}><option value="No">No</option><option value="Yes">Yes</option></select></div>
-          <div><label className={labelClasses}>Business Model Preference</label><select name="businessModelPreference" value={formData.businessModelPreference} onChange={handleChange} className={inputClasses}><option value="">Select Model</option>{mockConfig.businessModelOptions.map((m: string) => <option key={m} value={m}>{m}</option>)}</select></div>
+          <div><label className={labelClasses}>Interested in Importing?</label><select name="interestedInImporting" value={formData.interestedInImporting} onChange={handleChange} className={inputClasses}>{dropdowns["yes-no"].map((o) => <option key={o.value} value={o.value}>{o.label}</option>)}</select></div>
+          <div><label className={labelClasses}>Interested in Exporting?</label><select name="interestedInExporting" value={formData.interestedInExporting} onChange={handleChange} className={inputClasses}>{dropdowns["yes-no"].map((o) => <option key={o.value} value={o.value}>{o.label}</option>)}</select></div>
+          <div><label className={labelClasses}>Business Model Preference</label><select name="businessModelPreference" value={formData.businessModelPreference} onChange={handleChange} className={inputClasses}><option value="">Select Model</option>{config.businessModelOptions.map((m: string) => <option key={m} value={m}>{m}</option>)}</select></div>
           <div><label className={labelClasses}>Estimated Monthly Purchase</label><input name="estimatedPurchaseVolume" value={formData.estimatedPurchaseVolume} onChange={handleChange} placeholder="e.g. 5000" className={inputClasses} /></div>
-          <div><label className={labelClasses}>Est. Annual Purchase Value *</label><select required name="estimatedAnnualPurchaseValue" value={formData.estimatedAnnualPurchaseValue} onChange={handleChange} className={inputClasses}><option value="">Select Range</option>{mockConfig.annualPurchaseValueRanges.map((v: string) => <option key={v} value={v}>{v}</option>)}</select></div>
-          <div><label className={labelClasses}>Purchase Frequency</label><select name="purchaseFrequency" value={formData.purchaseFrequency} onChange={handleChange} className={inputClasses}><option value="">Select Frequency</option>{mockConfig.purchaseFrequencyOptions.map((f: string) => <option key={f} value={f}>{f}</option>)}</select></div>
-          <div><label className={labelClasses}>Purchase Timeline *</label><select required name="purchaseTimeline" value={formData.purchaseTimeline} onChange={handleChange} className={inputClasses}><option value="">Select</option>{mockConfig.purchaseTimelines.map((t: string) => <option key={t} value={t}>{t}</option>)}</select></div>
-          <div><label className={labelClasses}>Matchmaking Interest *</label><select required name="matchmakingInterest" value={formData.matchmakingInterest} onChange={handleChange} className={inputClasses}><option value="Yes">Yes</option><option value="No">No</option></select></div>
-          <div><label className={labelClasses}>Role in Purchase Decision *</label><select required name="roleInPurchaseDecision" value={formData.roleInPurchaseDecision} onChange={handleChange} className={inputClasses}><option value="">Select Role</option>{mockConfig.roles.map((r: string) => <option key={r} value={r}>{r}</option>)}</select></div>
+          <div><label className={labelClasses}>Est. Annual Purchase Value *</label><select required name="estimatedAnnualPurchaseValue" value={formData.estimatedAnnualPurchaseValue} onChange={handleChange} className={inputClasses}><option value="">Select Range</option>{config.annualPurchaseValueRanges.map((v: string) => <option key={v} value={v}>{v}</option>)}</select></div>
+          <div><label className={labelClasses}>Purchase Frequency</label><select name="purchaseFrequency" value={formData.purchaseFrequency} onChange={handleChange} className={inputClasses}><option value="">Select Frequency</option>{config.purchaseFrequencyOptions.map((f: string) => <option key={f} value={f}>{f}</option>)}</select></div>
+          <div><label className={labelClasses}>Purchase Timeline *</label><select required name="purchaseTimeline" value={formData.purchaseTimeline} onChange={handleChange} className={inputClasses}><option value="">Select</option>{config.purchaseTimelines.map((t: string) => <option key={t} value={t}>{t}</option>)}</select></div>
+          <div><label className={labelClasses}>Matchmaking Interest *</label><select required name="matchmakingInterest" value={formData.matchmakingInterest} onChange={handleChange} className={inputClasses}>{dropdowns["yes-no"].map((o) => <option key={o.value} value={o.value}>{o.label}</option>)}</select></div>
+          <div><label className={labelClasses}>Role in Purchase Decision *</label><select required name="roleInPurchaseDecision" value={formData.roleInPurchaseDecision} onChange={handleChange} className={inputClasses}><option value="">Select Role</option>{config.roles.map((r: string) => <option key={r} value={r}>{r}</option>)}</select></div>
           <div><label className={labelClasses}>Specific Product Requirements</label><input name="specificProductRequirements" value={formData.specificProductRequirements} onChange={handleChange} placeholder="Any custom needs..." className={inputClasses} /></div>
         </div>
       </div>
@@ -532,16 +533,16 @@ export default function DomesticBuyerForm() {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-x-3 gap-y-3">
           <div className="space-y-1 z-30">
             <label className={labelClasses}>Preferred Supplier Region *</label>
-            <MultiSelectDropdown options={mockConfig.regions} selected={formData.preferredSupplierRegion} onChange={(val: any) => handleSelectChange('preferredSupplierRegion', val)} placeholder="Select regions..." accentColor="emerald" />
+            <MultiSelectDropdown options={config.regions} selected={formData.preferredSupplierRegion} onChange={(val: any) => handleSelectChange('preferredSupplierRegion', val)} placeholder="Select regions..." accentColor="emerald" />
           </div>
           <div className="space-y-1 z-30">
             <label className={labelClasses}>Preferred Supplier Type *</label>
-            <MultiSelectDropdown options={mockConfig.supplierTypes} selected={formData.preferredSupplierType} onChange={(val: any) => handleSelectChange('preferredSupplierType', val)} placeholder="Select supplier types..." accentColor="emerald" />
+            <MultiSelectDropdown options={config.supplierTypes} selected={formData.preferredSupplierType} onChange={(val: any) => handleSelectChange('preferredSupplierType', val)} placeholder="Select supplier types..." accentColor="emerald" />
           </div>
-          <div><label className={labelClasses}>Preferred Company Size</label><select name="preferredCompanySize" value={formData.preferredCompanySize} onChange={handleChange} className={inputClasses}><option value="">Select Size</option>{mockConfig.companySizes.map((s: string) => <option key={s} value={s}>{s}</option>)}</select></div>
+          <div><label className={labelClasses}>Preferred Company Size</label><select name="preferredCompanySize" value={formData.preferredCompanySize} onChange={handleChange} className={inputClasses}><option value="">Select Size</option>{config.companySizes.map((s: string) => <option key={s} value={s}>{s}</option>)}</select></div>
           <div className="space-y-1 z-30">
             <label className={labelClasses}>Certification & Compliance</label>
-            <MultiSelectDropdown options={mockConfig.certificationOptions} selected={formData.requiredCertifications} onChange={(val: any) => handleSelectChange('requiredCertifications', val)} placeholder="Select certifications..." accentColor="slate" />
+            <MultiSelectDropdown options={config.certificationOptions} selected={formData.requiredCertifications} onChange={(val: any) => handleSelectChange('requiredCertifications', val)} placeholder="Select certifications..." accentColor="slate" />
           </div>
         </div>
       </div>
@@ -562,23 +563,23 @@ export default function DomesticBuyerForm() {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-x-3 gap-y-3">
           <div className="space-y-1 z-20">
             <label className={labelClasses}>Preferred Meeting Categories *</label>
-            <MultiSelectDropdown options={mockConfig.meetingCategoryOptions} selected={formData.preferredMeetingCategories} onChange={(val: any) => handleSelectChange('preferredMeetingCategories', val)} placeholder="Select categories..." accentColor="emerald" />
+            <MultiSelectDropdown options={config.meetingCategoryOptions} selected={formData.preferredMeetingCategories} onChange={(val: any) => handleSelectChange('preferredMeetingCategories', val)} placeholder="Select categories..." accentColor="emerald" />
           </div>
           <div className="space-y-1 z-20">
             <label className={labelClasses}>Exhibitor Types to Meet</label>
-            <MultiSelectDropdown options={mockConfig.exhibitorTypeOptions} selected={formData.preferredExhibitorTypes} onChange={(val: any) => handleSelectChange('preferredExhibitorTypes', val)} placeholder="Select exhibitor types..." accentColor="emerald" />
+            <MultiSelectDropdown options={config.exhibitorTypeOptions} selected={formData.preferredExhibitorTypes} onChange={(val: any) => handleSelectChange('preferredExhibitorTypes', val)} placeholder="Select exhibitor types..." accentColor="emerald" />
           </div>
           <div className="space-y-1 z-20">
             <label className={labelClasses}>Meeting Objectives *</label>
-            <MultiSelectDropdown options={mockConfig.meetingObjectiveOptions} selected={formData.meetingObjectives} onChange={(val: any) => handleSelectChange('meetingObjectives', val)} placeholder="Select objectives..." accentColor="amber" />
+            <MultiSelectDropdown options={config.meetingObjectiveOptions} selected={formData.meetingObjectives} onChange={(val: any) => handleSelectChange('meetingObjectives', val)} placeholder="Select objectives..." accentColor="amber" />
           </div>
           <div className="space-y-1 z-20">
             <label className={labelClasses}>Preferred Business Type *</label>
-            <MultiSelectDropdown options={mockConfig.preferredBusinessTypeOptions} selected={formData.preferredBusinessTypes} onChange={(val: any) => handleSelectChange('preferredBusinessTypes', val)} placeholder="Select business types..." accentColor="blue" />
+            <MultiSelectDropdown options={config.preferredBusinessTypeOptions} selected={formData.preferredBusinessTypes} onChange={(val: any) => handleSelectChange('preferredBusinessTypes', val)} placeholder="Select business types..." accentColor="blue" />
           </div>
-          <div><label className={labelClasses}>Preferred Day *</label><select required name="preferredMeetingDay" value={formData.preferredMeetingDay} onChange={handleChange} className={inputClasses}><option value="">Select Day</option>{mockConfig.meetingDayOptions.map((d: string) => <option key={d} value={d}>{d}</option>)}</select></div>
-          <div><label className={labelClasses}>Time Slot *</label><select required name="preferredTimeSlot" value={formData.preferredTimeSlot} onChange={handleChange} className={inputClasses}><option value="">Select Slot</option><option value="Morning (10AM - 1PM)">Morning (10AM - 1PM)</option><option value="Afternoon (2PM - 4PM)">Afternoon (2PM - 4PM)</option></select></div>
-          <div><label className={labelClasses}>Number of Meetings</label><select name="numberOfMeetingsInterested" value={formData.numberOfMeetingsInterested} onChange={handleChange} className={inputClasses}><option value="">Select Count</option><option value="3-5 Meetings">3-5 Meetings</option><option value="5-10 Meetings">5-10 Meetings</option></select></div>
+          <div><label className={labelClasses}>Preferred Day *</label><select required name="preferredMeetingDay" value={formData.preferredMeetingDay} onChange={handleChange} className={inputClasses}><option value="">Select Day</option>{config.meetingDayOptions.map((d: string) => <option key={d} value={d}>{d}</option>)}</select></div>
+          <div><label className={labelClasses}>Time Slot *</label><select required name="preferredTimeSlot" value={formData.preferredTimeSlot} onChange={handleChange} className={inputClasses}><option value="">Select Slot</option>{dropdowns["buyer-time-slot"].map((o) => <option key={o.value} value={o.value}>{o.label}</option>)}</select></div>
+          <div><label className={labelClasses}>Number of Meetings</label><select name="numberOfMeetingsInterested" value={formData.numberOfMeetingsInterested} onChange={handleChange} className={inputClasses}><option value="">Select Count</option>{dropdowns["buyer-meeting-count"].map((o) => <option key={o.value} value={o.value}>{o.label}</option>)}</select></div>
           <div className="md:col-span-2 lg:col-span-2">
             <label className={labelClasses}>Specific Meeting Requirements</label>
             <textarea name="meetingRequirements" value={formData.meetingRequirements} onChange={handleChange} placeholder="Mention specific expectations..." className={`${inputClasses} h-auto py-2 resize-none`} rows={1}></textarea>

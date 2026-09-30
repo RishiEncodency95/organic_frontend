@@ -3,6 +3,7 @@
 import React, { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
+import { useDropdowns } from "@/lib/dropdowns";
 import { Inter, Kaushan_Script } from "next/font/google";
 import {
   Handshake,
@@ -257,7 +258,11 @@ const roles: { label: string; icon: React.ElementType }[] = [
   { label: "Media", icon: Camera },
 ];
 
+// Admin-managed (Dropdown Manager); this is the fallback edition.
+const EDITION_DROPDOWNS = { "expo-edition": [{ label: "Bharat Organic Expo 2027", value: "2027" }] };
+
 export default function FeedbackPage() {
+  const editions = useDropdowns(EDITION_DROPDOWNS);
   const [role, setRole] = useState("Exhibitor");
   const [overallRating, setOverallRating] = useState(0);
   const [networkingRating, setNetworkingRating] = useState(0);
@@ -446,7 +451,9 @@ export default function FeedbackPage() {
                       defaultValue="2027"
                       className={`${inputCls} appearance-none pr-8 text-[13px]`}
                     >
-                      <option value="2027">Bharat Organic Expo 2027</option>
+                      {editions["expo-edition"].map((o) => (
+                        <option key={o.value} value={o.value}>{o.label}</option>
+                      ))}
                     </select>
                     <ChevronDown
                       className="pointer-events-none absolute right-2.5 top-1/2 h-3.5 w-3.5 -translate-y-1/2 text-[#374151]"

@@ -58,7 +58,7 @@ export function EligibilityProvider({ children }: { children: ReactNode }) {
     setResult(null);
 
     try {
-      const { msmeApi, msmeStorage } = await import("@/lib/api");
+      const { msmeApi } = await import("@/lib/api");
       const res = await msmeApi.analyzeUdyamCertificate(file);
 
       if (!res.success) {
@@ -68,9 +68,6 @@ export function EligibilityProvider({ children }: { children: ReactNode }) {
 
       setResult(res.data.extractedData);
       setCheckedAt(new Date());
-      msmeStorage.setUdyamExtract(res.data.extractedData);
-      // The id is what the Apply form actually pre-fills from; the copy above is its fallback.
-      if (res.data.verificationId) msmeStorage.setUdyamVerificationId(String(res.data.verificationId));
     } catch (err) {
       setError("Could not reach the server. Please check your connection and try again.");
     } finally {

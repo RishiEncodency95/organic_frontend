@@ -237,11 +237,10 @@ export const heroBackgroundApi = {
 
 /** localStorage key the MSME apply flow uses to carry the draft's applicationId across its 3 separate page routes. */
 const MSME_APPLICATION_ID_KEY = 'msme_application_id';
-/** Carries the eligibility-check page's AI-extracted certificate data forward so the Apply form can pre-fill itself. */
+// Certificate data older builds stored in the browser; now only ever removed.
 const MSME_UDYAM_EXTRACT_KEY = 'msme_udyam_extract';
-/** Points at the saved UdyamVerification record. The Apply form re-reads the extraction from
- *  the database through this, and only falls back to the copy above if that read fails. */
 const MSME_UDYAM_VERIFICATION_ID_KEY = 'msme_udyam_verification_id';
+const MSME_UDYAM_READING_KEY = 'msme_udyam_reading';
 
 export const msmeStorage = {
     getApplicationId: (): string | null => {
@@ -256,28 +255,15 @@ export const msmeStorage = {
         if (typeof window === 'undefined') return;
         try { window.localStorage.removeItem(MSME_APPLICATION_ID_KEY); } catch { /* ignore */ }
     },
-    getUdyamExtract: (): Record<string, any> | null => {
-        if (typeof window === 'undefined') return null;
+    /** The Apply form is always filled in by hand; this only removes certificate data
+     *  (including bank details) that earlier builds kept in the browser. */
+    clearUdyamReading: () => {
+        if (typeof window === 'undefined') return;
         try {
-            const raw = window.localStorage.getItem(MSME_UDYAM_EXTRACT_KEY);
-            return raw ? JSON.parse(raw) : null;
-        } catch { return null; }
-    },
-    setUdyamExtract: (data: Record<string, any>) => {
-        if (typeof window === 'undefined') return;
-        try { window.localStorage.setItem(MSME_UDYAM_EXTRACT_KEY, JSON.stringify(data)); } catch { /* ignore */ }
-    },
-    clearUdyamExtract: () => {
-        if (typeof window === 'undefined') return;
-        try { window.localStorage.removeItem(MSME_UDYAM_EXTRACT_KEY); } catch { /* ignore */ }
-    },
-    getUdyamVerificationId: (): string | null => {
-        if (typeof window === 'undefined') return null;
-        try { return window.localStorage.getItem(MSME_UDYAM_VERIFICATION_ID_KEY); } catch { return null; }
-    },
-    setUdyamVerificationId: (id: string) => {
-        if (typeof window === 'undefined') return;
-        try { window.localStorage.setItem(MSME_UDYAM_VERIFICATION_ID_KEY, id); } catch { /* ignore */ }
+            window.localStorage.removeItem(MSME_UDYAM_READING_KEY);
+            window.localStorage.removeItem(MSME_UDYAM_EXTRACT_KEY);
+            window.localStorage.removeItem(MSME_UDYAM_VERIFICATION_ID_KEY);
+        } catch { /* ignore */ }
     },
 };
 

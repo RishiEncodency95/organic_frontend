@@ -32,6 +32,7 @@ import beTheLeft from "../../assets/exhibitors/be_the_left.webp";
 import beTheRight from "../../assets/exhibitors/be_the_right.png";
 import SectionContainer from "@/app/components/layout/SectionContainer";
 import { verifyApi } from "@/lib/api";
+import { toOptions, useDropdowns, type DropdownOption } from "@/lib/dropdowns";
 
 interface FormState {
   applicantType: string;
@@ -363,7 +364,7 @@ function Select({
   label: string;
   placeholder: string;
   required?: boolean;
-  options?: string[];
+  options?: DropdownOption[];
   value: string;
   onChange: (v: string) => void;
   error?: string;
@@ -380,8 +381,8 @@ function Select({
       >
         <option value="">{placeholder}</option>
         {options.map((opt) => (
-          <option key={opt} value={opt}>
-            {opt}
+          <option key={opt.value} value={opt.value}>
+            {opt.label}
           </option>
         ))}
       </select>
@@ -671,6 +672,15 @@ const AWARD_CATEGORIES = [
   "Lifetime Achievement Award",
 ];
 
+// Admin-managed options (Dropdown Manager); the lists above are the fallback.
+const AWARDS_DROPDOWNS = {
+  "awards-applicant-type": toOptions(APPLICANT_TYPES),
+  "awards-state-country": toOptions(INDIAN_STATES),
+  "awards-category": toOptions(AWARD_CATEGORIES),
+  "awards-years-experience": toOptions(YEARS_EXPERIENCE),
+  "awards-team-size": toOptions(TEAM_SIZES),
+};
+
 /* ---------------------------------------------------------
    Main component
 --------------------------------------------------------- */
@@ -686,6 +696,7 @@ export default function BharatOrganicAwards({ initialHeroData }: AwardsNominatio
   const [touched, setTouched] = useState<Partial<Record<FieldKey, boolean>>>({});
   const phoneOtp = useOtp();
   const emailOtp = useOtp();
+  const dropdowns = useDropdowns(AWARDS_DROPDOWNS);
   const [submitting, setSubmitting] = useState(false);
   const [submitted, setSubmitted] = useState(false);
   const [error, setError] = useState("");
@@ -1148,7 +1159,7 @@ export default function BharatOrganicAwards({ initialHeroData }: AwardsNominatio
                 label="Applicant Type"
                 placeholder="Select Type"
                 required
-                options={APPLICANT_TYPES}
+                options={dropdowns["awards-applicant-type"]}
                 value={form.applicantType}
                 onChange={(v) => {
                   update("applicantType", v);
@@ -1238,7 +1249,7 @@ export default function BharatOrganicAwards({ initialHeroData }: AwardsNominatio
                 label="State / Country"
                 placeholder="Select state / country"
                 required
-                options={INDIAN_STATES}
+                options={dropdowns["awards-state-country"]}
                 value={form.stateCountry}
                 onChange={(v) => {
                   update("stateCountry", v);
@@ -1257,7 +1268,7 @@ export default function BharatOrganicAwards({ initialHeroData }: AwardsNominatio
                     label="Select Award Category"
                     placeholder="-- Select Award Category --"
                     required
-                    options={AWARD_CATEGORIES}
+                    options={dropdowns["awards-category"]}
                     value={form.awardCategory}
                     onChange={(v) => {
                       update("awardCategory", v);
@@ -1288,7 +1299,7 @@ export default function BharatOrganicAwards({ initialHeroData }: AwardsNominatio
                   label="Years of Experience"
                   placeholder="Select Experience"
                   required
-                  options={YEARS_EXPERIENCE}
+                  options={dropdowns["awards-years-experience"]}
                   value={form.yearsExperience}
                   onChange={(v) => {
                     update("yearsExperience", v);
@@ -1299,7 +1310,7 @@ export default function BharatOrganicAwards({ initialHeroData }: AwardsNominatio
                 <Select
                   label="Team Size (If Organization)"
                   placeholder="Select Team Size"
-                  options={TEAM_SIZES}
+                  options={dropdowns["awards-team-size"]}
                   value={form.teamSize}
                   onChange={(v) => update("teamSize", v)}
                 />

@@ -2,8 +2,20 @@
 import React, { useState } from 'react';
 import { ChevronDown } from 'lucide-react';
 import { useEligibility } from './EligibilityContext';
+import { useDropdowns } from '@/lib/dropdowns';
+
+// Admin-managed (Dropdown Manager); these are the fallback stall sizes.
+const STALL_SIZE_DROPDOWNS = {
+  "msme-stall-size": [
+    { label: "9 sqm", value: "9" },
+    { label: "12 sqm", value: "12" },
+    { label: "15 sqm", value: "15" },
+    { label: "18 sqm", value: "18" },
+  ],
+};
 
 const EstimateSection = () => {
+  const dropdowns = useDropdowns(STALL_SIZE_DROPDOWNS);
   const { result } = useEligibility();
   const hasResult = !!(result && result.documentType === 'valid_udyam_certificate');
 
@@ -107,10 +119,9 @@ const EstimateSection = () => {
                 onChange={(e) => setStallSize(Number(e.target.value))}
                 className="w-full appearance-none bg-white border border-gray-200 px-3 py-1.5 rounded-md text-xs font-semibold text-gray-800 focus:outline-none"
               >
-                <option value="9">9 sqm</option>
-                <option value="12">12 sqm</option>
-                <option value="15">15 sqm</option>
-                <option value="18">18 sqm</option>
+                {dropdowns["msme-stall-size"].map((o) => (
+                  <option key={o.value} value={o.value}>{o.label}</option>
+                ))}
               </select>
               <ChevronDown size={14} className="absolute right-2.5 top-1/2 -translate-y-1/2 text-gray-500 pointer-events-none" />
             </div>
