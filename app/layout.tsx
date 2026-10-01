@@ -6,6 +6,7 @@ import Navbar from "./components/layout/Navbar";
 import Footer from "./components/layout/Footer";
 import SocialSidebar from "./components/layout/SocialSidebar";
 import WhatsAppFloat from "./components/layout/WhatsAppFloat";
+import ChatLauncher from "./components/chat/ChatLauncher";
 import SmoothScroll from "./components/SmoothScroll";
 
 // Fonts are self-hosted by next/font and exposed as CSS variables; globals.css and inline
@@ -161,6 +162,7 @@ export default async function RootLayout({
           <Footer initialFooterData={footerData} />
           <SocialSidebar />
           <WhatsAppFloat />
+          <ChatLauncher />
         </SmoothScroll>
         {/* Dynamic Footer Scripts from Admin */}
         <FooterScripts html={footerScripts} />
