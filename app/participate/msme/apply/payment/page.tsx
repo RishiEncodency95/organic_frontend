@@ -4,13 +4,23 @@ import PaymentMain from "../../../../components/participate/msme/apply/payment/P
 import PaymentSidebar from "../../../../components/participate/msme/apply/payment/PaymentSidebar";
 import ApplyFooter from "../../../../components/participate/msme/apply/ApplyFooter";
 import { settingsApi } from "@/lib/api";
+import type { Metadata } from "next";
+import AdminSchema from "@/components/seo/AdminSchema";
+import { adminSeoMetadata, getAdminSeo } from "@/lib/adminSeo";
 
-export const metadata = {
-  title: "Payment Details | Apply for PMS Support | Bharat Organic Expo",
-  description: "Review and complete payment for your PMS Support application.",
-};
+export const revalidate = 60;
+
+const SEO_PAGE_KEY = "participate/msme/apply/payment";
+
+export async function generateMetadata(): Promise<Metadata> {
+  return adminSeoMetadata(SEO_PAGE_KEY, {
+    title: "Payment Details | Apply for PMS Support | Bharat Organic Expo",
+    description: "Review and complete payment for your PMS Support application.",
+  });
+}
 
 export default async function PaymentDetailsPage() {
+  const seoData = await getAdminSeo(SEO_PAGE_KEY);
   const settings = await settingsApi.getSettings().catch(() => ({} as any));
   const pageConfig = settings?.msmeApplyPaymentPage || {};
   const sections = pageConfig.sections || [];
@@ -21,6 +31,7 @@ export default async function PaymentDetailsPage() {
 
   return (
     <div className="min-h-screen bg-[#f9faf9] font-sans text-neutral-800 flex flex-col">
+      <AdminSchema schema={seoData?.schemaMarkup || null} />
       <main className="flex-1 w-full pb-10">
         <ApplicationHero section={heroSec} />
         

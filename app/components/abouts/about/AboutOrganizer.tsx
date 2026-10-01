@@ -23,10 +23,6 @@ const organizerData = {
       "Focused on delivering measurable ROI and business growth for participants."
     ]
   },
-  badge: {
-    number: "10+",
-    text: "YEARS"
-  },
   journey: {
     tagline: "OUR JOURNEY & FLAGSHIP EVENTS",
     title: "A LEGACY OF GROWTH & INNOVATION",
@@ -141,19 +137,6 @@ const AboutOrganizer = () => {
                   />
                   <div className="absolute bottom-0 left-0 w-full h-[4px] bg-[#d26019]" />
                   <div className="absolute top-0 left-0 h-full w-[4px] bg-[#23471d]" />
-                </div>
-
-                {/* Badge */}
-                <div
-                  className="absolute z-20 flex flex-col items-center justify-center text-center p-2"
-                  style={{ bottom: '0px', right: '0px', minWidth: '85px', minHeight: '85px', background: '#d26019', border: '3px solid #fff', boxShadow: '0 6px 24px rgba(210,96,25,0.4)' }}
-                >
-                  <span className="font-black text-[22px] text-white leading-none">
-                    {organizerData.badge.number}
-                  </span>
-                  <span className="font-bold text-[8px] text-[#ffe0c8] uppercase tracking-[0.1em] mt-1">
-                    {organizerData.badge.text}
-                  </span>
                 </div>
 
               </div>

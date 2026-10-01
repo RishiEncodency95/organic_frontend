@@ -49,6 +49,7 @@ import PaymentProcessingModal from '@/app/components/PaymentProcessingModal';
 import SectionContainer from "@/app/components/layout/SectionContainer";
 import BookAStandHero from "@/app/components/registration/book-a-stand/BookAStandHero";
 import BookAStandBanner from "@/app/components/registration/book-a-stand/BookAStandBanner";
+import { childrenOf, toOptions, useDropdowns } from "@/lib/dropdowns";
 
 const loadScript = (src: string) => {
     return new Promise((resolve) => {
@@ -204,7 +205,32 @@ const initialFormData = {
     }
 };
 
+// Admin-managed (Dropdown Manager); the constants above are the fallback.
+const STAND_DROPDOWNS = {
+    "exhibitor-business-type": toOptions(BUSINESS_TYPES),
+    "exhibitor-primary-category": toOptions(PRIMARY_CATEGORIES),
+    "exhibitor-sub-category": Object.entries(SUB_CATEGORIES).flatMap(([parentValue, subs]) =>
+        subs.map((sub) => ({ label: sub, value: sub, parentValue }))
+    ),
+    "exhibitor-nature-of-business": toOptions(NATURE_OF_BUSINESS),
+    "exhibitor-referred-by": toOptions(["Direct Website", "Email Marketing", "Social Media", "Search Engine", "Telecalling", "Referral", "Others"]),
+    "social-media-platform": [
+        { label: "Instagram", value: "Instagram" },
+        { label: "Facebook", value: "Facebook" },
+        { label: "X (Twitter)", value: "X" },
+        { label: "LinkedIn", value: "LinkedIn" },
+    ],
+    salutation: toOptions(["Mr.", "Ms.", "Mrs.", "Dr."]),
+    "exhibitor-stall-type": toOptions(["Shell Space", "Raw Space"]),
+    "tds-percent": [
+        { label: "0%", value: "0" },
+        { label: "1%", value: "1" },
+        { label: "2%", value: "2" },
+    ],
+};
+
 const BookAStand = () => {
+    const dropdowns = useDropdowns(STAND_DROPDOWNS);
     const [submitted, setSubmitted] = useState(false);
     const [isLoading, setIsLoading] = useState(false);
     const [paymentModal, setPaymentModal] = useState<{ status: 'processing' | 'success' | 'failed' } | null>(null);
@@ -1236,8 +1262,8 @@ const BookAStand = () => {
                                                                 <SelectValue placeholder="Select Here" />
                                                             </SelectTrigger>
                                                             <SelectContent>
-                                                                {BUSINESS_TYPES.map(type => (
-                                                                    <SelectItem key={type} value={type} className="text-xs">{type}</SelectItem>
+                                                                {dropdowns["exhibitor-business-type"].map((o) => (
+                                                                    <SelectItem key={o.value} value={o.value} className="text-xs">{o.label}</SelectItem>
                                                                 ))}
                                                             </SelectContent>
                                                         </Select>
@@ -1249,8 +1275,8 @@ const BookAStand = () => {
                                                                 <SelectValue placeholder="Select Here" />
                                                             </SelectTrigger>
                                                             <SelectContent>
-                                                                {PRIMARY_CATEGORIES.map(s => (
-                                                                    <SelectItem key={s} value={s} className="text-xs">{s}</SelectItem>
+                                                                {dropdowns["exhibitor-primary-category"].map((o) => (
+                                                                    <SelectItem key={o.value} value={o.value} className="text-xs">{o.label}</SelectItem>
                                                                 ))}
                                                             </SelectContent>
                                                         </Select>
@@ -1314,8 +1340,8 @@ const BookAStand = () => {
                                                                 <SelectValue placeholder="Select Here" />
                                                             </SelectTrigger>
                                                             <SelectContent>
-                                                                {NATURE_OF_BUSINESS.map(n => (
-                                                                    <SelectItem key={n} value={n} className="text-xs">{n}</SelectItem>
+                                                                {dropdowns["exhibitor-nature-of-business"].map((o) => (
+                                                                    <SelectItem key={o.value} value={o.value} className="text-xs">{o.label}</SelectItem>
                                                                 ))}
                                                             </SelectContent>
                                                         </Select>
@@ -1346,8 +1372,8 @@ const BookAStand = () => {
                                                                     <SelectValue placeholder="Select Primary Category" />
                                                                 </SelectTrigger>
                                                                 <SelectContent>
-                                                                    {PRIMARY_CATEGORIES.map(cat => (
-                                                                        <SelectItem key={cat} value={cat} className="text-xs">{cat}</SelectItem>
+                                                                    {dropdowns["exhibitor-primary-category"].map((o) => (
+                                                                        <SelectItem key={o.value} value={o.value} className="text-xs">{o.label}</SelectItem>
                                                                     ))}
                                                                 </SelectContent>
                                                             </Select>
@@ -1364,8 +1390,8 @@ const BookAStand = () => {
                                                                     <SelectValue placeholder={formData.primaryCategory ? "Select Sub-Category" : "Select Primary Category first"} />
                                                                 </SelectTrigger>
                                                                 <SelectContent>
-                                                                    {(SUB_CATEGORIES[formData.primaryCategory] || []).map(sub => (
-                                                                        <SelectItem key={sub} value={sub} className="text-xs">{sub}</SelectItem>
+                                                                    {childrenOf(dropdowns["exhibitor-sub-category"], formData.primaryCategory).map((o) => (
+                                                                        <SelectItem key={o.value} value={o.value} className="text-xs">{o.label}</SelectItem>
                                                                     ))}
                                                                 </SelectContent>
                                                             </Select>
@@ -1378,13 +1404,9 @@ const BookAStand = () => {
                                                                     <SelectValue placeholder="How did you hear about us?" />
                                                                 </SelectTrigger>
                                                                 <SelectContent>
-                                                                    <SelectItem value="Direct Website" className="text-xs">Direct Website</SelectItem>
-                                                                    <SelectItem value="Email Marketing" className="text-xs">Email Marketing</SelectItem>
-                                                                    <SelectItem value="Social Media" className="text-xs">Social Media</SelectItem>
-                                                                    <SelectItem value="Search Engine" className="text-xs">Search Engine</SelectItem>
-                                                                    <SelectItem value="Telecalling" className="text-xs">Telecalling</SelectItem>
-                                                                    <SelectItem value="Referral" className="text-xs">Referral</SelectItem>
-                                                                    <SelectItem value="Others" className="text-xs">Others</SelectItem>
+                                                                    {dropdowns["exhibitor-referred-by"].map((o) => (
+                                                                        <SelectItem key={o.value} value={o.value} className="text-xs">{o.label}</SelectItem>
+                                                                    ))}
                                                                 </SelectContent>
                                                             </Select>
                                                         </div>
@@ -1397,10 +1419,9 @@ const BookAStand = () => {
                                                                         <SelectValue placeholder="Select Platform" />
                                                                     </SelectTrigger>
                                                                     <SelectContent>
-                                                                        <SelectItem value="Instagram" className="text-xs">Instagram</SelectItem>
-                                                                        <SelectItem value="Facebook" className="text-xs">Facebook</SelectItem>
-                                                                        <SelectItem value="X" className="text-xs">X (Twitter)</SelectItem>
-                                                                        <SelectItem value="LinkedIn" className="text-xs">LinkedIn</SelectItem>
+                                                                        {dropdowns["social-media-platform"].map((o) => (
+                                                                            <SelectItem key={o.value} value={o.value} className="text-xs">{o.label}</SelectItem>
+                                                                        ))}
                                                                     </SelectContent>
                                                                 </Select>
                                                             </div>
@@ -1548,10 +1569,9 @@ const BookAStand = () => {
                                                                     <SelectValue placeholder="Select Here" />
                                                                 </SelectTrigger>
                                                                 <SelectContent>
-                                                                    <SelectItem value="Mr.">Mr.</SelectItem>
-                                                                    <SelectItem value="Ms.">Ms.</SelectItem>
-                                                                    <SelectItem value="Mrs.">Mrs.</SelectItem>
-                                                                    <SelectItem value="Dr.">Dr.</SelectItem>
+                                                                    {dropdowns["salutation"].map((o) => (
+                                                                        <SelectItem key={o.value} value={o.value}>{o.label}</SelectItem>
+                                                                    ))}
                                                                 </SelectContent>
                                                             </Select>
                                                         </div>
@@ -1703,8 +1723,9 @@ const BookAStand = () => {
                                                                     <SelectValue placeholder="Select Category" />
                                                                 </SelectTrigger>
                                                                 <SelectContent>
-                                                                    <SelectItem value="Shell Space" className="text-xs">Shell Space </SelectItem>
-                                                                    <SelectItem value="Raw Space" className="text-xs">Raw Space </SelectItem>
+                                                                    {dropdowns["exhibitor-stall-type"].map((o) => (
+                                                                        <SelectItem key={o.value} value={o.value} className="text-xs">{o.label}</SelectItem>
+                                                                    ))}
                                                                 </SelectContent>
                                                             </Select>
                                                         </div>
@@ -1854,9 +1875,9 @@ const BookAStand = () => {
                                                                     <span className="text-[10px] text-gray-600 font-medium">TDS</span>
                                                                     <select value={formData.chosenTdsPercent} onChange={(e) => setFormData(prev => ({ ...prev, chosenTdsPercent: Number(e.target.value) }))}
                                                                         className="text-[11px] font-medium text-gray-600 bg-transparent outline-none cursor-pointer">
-                                                                        <option value={0}>0%</option>
-                                                                        <option value={1}>1%</option>
-                                                                        <option value={2}>2%</option>
+                                                                        {dropdowns["tds-percent"].map((o) => (
+                                                                            <option key={o.value} value={o.value}>{o.label}</option>
+                                                                        ))}
                                                                     </select>
                                                                 </div>
                                                             </div>

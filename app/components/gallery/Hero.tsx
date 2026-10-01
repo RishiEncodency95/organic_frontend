@@ -162,7 +162,7 @@ const Hero = ({ initialData }: { initialData?: any }) => {
 
       <SectionContainer className="relative z-10">
         <motion.div 
-          className="max-w-3xl mx-auto text-center flex flex-col items-center relative left-0 md:-left-20 lg:-left-32 xl:-left-40 p-4 rounded-2xl bg-white/75 backdrop-blur-xs border border-white/50 shadow-sm md:bg-transparent md:p-0 md:backdrop-blur-none md:border-none md:shadow-none"
+          className="max-w-3xl mx-auto text-center flex flex-col items-center relative left-0 md:-left-20 lg:-left-32 xl:-left-44 2xl:-left-56 p-4 rounded-2xl bg-white/75 backdrop-blur-xs border border-white/50 shadow-sm md:bg-transparent md:p-0 md:backdrop-blur-none md:border-none md:shadow-none"
           variants={containerVariants}
           initial="hidden"
           animate="visible"

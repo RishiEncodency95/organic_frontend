@@ -2,6 +2,7 @@ import React from "react";
 import type { Metadata } from "next";
 import { OG_IMAGE, OG_IMAGE_ALT } from "@/lib/seo";
 import { seoApi } from "@/lib/api";
+import { getSectionData } from "@/lib/serverData";
 import AdminSchema from "@/components/seo/AdminSchema";
 import HeroSection from "../components/buyer-seller-meet/HeroSection";
 import FeatureStrip from "../components/buyer-seller-meet/FeatureStrip";
@@ -90,11 +91,12 @@ export default async function BuyerSellerMeetPage() {
   }
 
   const schemaContent = seoData?.schemaMarkup || null;
+  const heroData = await getSectionData("/website/buyer-seller-meet/hero");
 
   return (
     <main className="min-h-screen bg-[#f8fafc]">
       <AdminSchema schema={schemaContent} />
-      <HeroSection />
+      <HeroSection initialData={heroData} />
       <FeatureStrip />
       <AboutSection />
       <WhoCanParticipate />

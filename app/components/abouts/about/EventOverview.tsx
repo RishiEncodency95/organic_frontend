@@ -1,7 +1,7 @@
 import React from 'react';
 import Image from 'next/image';
 import leafogImg from '@/app/assets/icons/leafog.png';
-import { HeartPulse, Sprout, User, Monitor, Plane, Leaf } from 'lucide-react';
+import { Apple, Leaf, Tractor, Sprout, Milk, Flower2, Pill, Package } from 'lucide-react';
 import SectionContainer from '@/app/components/layout/SectionContainer';
 
 const eventOverviewData = {
@@ -27,12 +27,14 @@ const eventOverviewData = {
   ],
   sectorsTitle: "KEY SECTORS",
   sectors: [
-    { label: "Healthcare & Medical Industry", color: "#3b82f6", icon: HeartPulse },
-    { label: "AYUSH & Traditional Medicine", color: "#22c55e", icon: Sprout },
-    { label: "Wellness, Fitness & Lifestyle", color: "#f59e0b", icon: User },
-    { label: "Digital Health, AI & MedTech", color: "#8b5cf6", icon: Monitor },
-    { label: "Medical Tourism in India", color: "#06b6d4", icon: Plane },
-    { label: "Nutrition, Organic & Sustainable Living", color: "#10b981", icon: Leaf },
+    { label: "Organic Food & Beverages", color: "#ef4444", icon: Apple },
+    { label: "AYUSH, Ayurveda & Herbal", color: "#22c55e", icon: Leaf },
+    { label: "Organic Natural Farming", color: "#65a30d", icon: Tractor },
+    { label: "Organic Inputs, Seeds & Bio-Inputs", color: "#10b981", icon: Sprout },
+    { label: "Dairy, Livestock & Allied", color: "#3b82f6", icon: Milk },
+    { label: "Natural Beauty & Personal Care", color: "#ec4899", icon: Flower2 },
+    { label: "Nutraceuticals & Functional Nutrition", color: "#8b5cf6", icon: Pill },
+    { label: "Sustainable Packaging & Processing", color: "#f59e0b", icon: Package },
   ]
 };
 
@@ -84,7 +86,7 @@ const EventOverview = () => {
               {eventOverviewData.sectorsTitle}
             </p>
 
-            <div className="grid grid-cols-2 sm:grid-cols-3 gap-4">
+            <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
               {eventOverviewData.sectors.map((sector, i) => {
                 const IconComp = sector.icon;
                 return (

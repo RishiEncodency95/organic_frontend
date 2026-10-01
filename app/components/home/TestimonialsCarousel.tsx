@@ -28,7 +28,7 @@ const getInitials = (name: string) => {
 };
 
 // ─── Top Initials Circle ───
-const InitialsCircle = ({ name, color, logo }: { name: string; color: string; logo?: string }) => (
+const InitialsCircle = ({ name, color, logo, logoAlt }: { name: string; color: string; logo?: string; logoAlt?: string }) => (
   <div
     className="w-10 h-10 md:w-14 md:h-14 rounded-full border-[2px] md:border-[3px] border-white flex items-center justify-center font-poppins font-bold text-[12px] md:text-base shadow-md bg-white uppercase tracking-wider overflow-hidden"
     style={{
@@ -38,7 +38,7 @@ const InitialsCircle = ({ name, color, logo }: { name: string; color: string; lo
     }}
   >
     {logo ? (
-      <img src={logo} alt={name} className="w-full h-full object-cover" />
+      <img src={logo} alt={logoAlt?.trim() || name} className="w-full h-full object-cover" />
     ) : (
       getInitials(name)
     )}
@@ -94,6 +94,7 @@ const TestimonialCard = ({ item, expandedCardId, setExpandedCardId }: { item: an
           name={item.company1}
           color={item.color || '#1b5e20'}
           logo={item.logo}
+          logoAlt={item.logoAlt}
         />
       </div>
 

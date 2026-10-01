@@ -100,9 +100,10 @@ const AboutPage = async () => {
   }
 
   const schemaContent = seoData?.schemaMarkup || null;
-  const [aboutHero, homeAbout] = await Promise.all([
+  const [aboutHero, homeAbout, fourPillars] = await Promise.all([
     getSectionData("/website/abouts/about/about-hero"),
     getSectionData("/website/abouts/about/home-about"),
+    getSectionData("/website/abouts/about/four-pillars"),
   ]);
 
   return (
@@ -118,7 +119,7 @@ const AboutPage = async () => {
 
           <AboutOrganizer />
           <VisionMission />
-          <FourPillars />
+          <FourPillars initialData={fourPillars} />
           <AboutVenue />
           <AboutFaq />
         </Suspense>

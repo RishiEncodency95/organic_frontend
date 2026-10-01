@@ -4,13 +4,23 @@ import ParticipationForm from "../../../../components/participate/msme/apply/Par
 import ParticipationSidebar from "../../../../components/participate/msme/apply/ParticipationSidebar";
 import ApplyFooter from "../../../../components/participate/msme/apply/ApplyFooter";
 import { settingsApi } from "@/lib/api";
+import type { Metadata } from "next";
+import AdminSchema from "@/components/seo/AdminSchema";
+import { adminSeoMetadata, getAdminSeo } from "@/lib/adminSeo";
 
-export const metadata = {
-  title: "Apply for PMS Support | Participation Details | Bharat Organic Expo",
-  description: "Provide your participation details for PMS Support at the Bharat Organic Expo 2027.",
-};
+export const revalidate = 60;
+
+const SEO_PAGE_KEY = "participate/msme/apply/participation-details";
+
+export async function generateMetadata(): Promise<Metadata> {
+  return adminSeoMetadata(SEO_PAGE_KEY, {
+    title: "Apply for PMS Support | Participation Details | Bharat Organic Expo",
+    description: "Provide your participation details for PMS Support at the Bharat Organic Expo 2027.",
+  });
+}
 
 export default async function ParticipationDetailsPage() {
+  const seoData = await getAdminSeo(SEO_PAGE_KEY);
   const settings = await settingsApi.getSettings().catch(() => ({} as any));
   const pageConfig = settings?.msmeApplyParticipationDetailsPage || {};
   const sections = pageConfig.sections || [];
@@ -20,6 +30,7 @@ export default async function ParticipationDetailsPage() {
 
   return (
     <div className="min-h-screen bg-[#f9faf9] font-sans text-neutral-800 flex flex-col">
+      <AdminSchema schema={seoData?.schemaMarkup || null} />
       <main className="flex-1 w-full pb-10">
         <ApplicationHero section={heroSec} />
         

@@ -252,6 +252,23 @@ export function normalizeOgImageUrl(image?: string | null) {
   return absoluteUrl(image);
 }
 
+/**
+ * Reads the admin "Open Graph Tags (HTML/Text)" field into { "og:title": "...", ... }.
+ * The admin saves that pasted HTML but does not refresh the separate ogTitle/ogDescription/ogImage
+ * fields, so the pasted tags are the up-to-date source.
+ */
+export function parseOgTags(html?: string | null): Record<string, string> {
+  const tags: Record<string, string> = {};
+  if (!html) return tags;
+  for (const [tag] of html.matchAll(/<meta\b[^>]*>/gi)) {
+    const attr = (name: string) => tag.match(new RegExp(`\\b${name}\\s*=\\s*(?:"([^"]*)"|'([^']*)')`, "i"));
+    const key = attr("property") || attr("name");
+    const value = attr("content");
+    if (key && value) tags[(key[1] ?? key[2]).trim()] = (value[1] ?? value[2]).trim();
+  }
+  return tags;
+}
+
 export function getSeoRoute(path: string) {
   return seoRoutes.find((route) => route.path === path) ?? null;
 }
@@ -314,79 +331,5 @@ export function createPageMetadata(path: string): Metadata {
       description: route.description,
       images: [ogImageUrl],
     },
-  };
-}
-
-export function organizationJsonLd() {
-  return {
-    "@context": "https://schema.org",
-    "@type": "Organization",
-    name: SITE_NAME,
-    url: SITE_URL,
-    logo: absoluteUrl("/partners/navbarlogo1.png"),
-    contactPoint: [
-      {
-        "@type": "ContactPoint",
-        telephone: "+91-9220147229",
-        contactType: "customer support",
-        areaServed: "IN",
-        availableLanguage: ["English", "Hindi"],
-      },
-    ],
-  };
-}
-
-export function websiteJsonLd() {
-  return {
-    "@context": "https://schema.org",
-    "@type": "WebSite",
-    name: SITE_NAME,
-    url: SITE_URL,
-    inLanguage: "en-IN",
-    potentialAction: {
-      "@type": "SearchAction",
-      target: `${SITE_URL}/blog?search={search_term_string}`,
-      "query-input": "required name=search_term_string",
-    },
-  };
-}
-
-function humanizeSegment(segment: string) {
-  return decodeURIComponent(segment)
-    .replace(/[-_]+/g, " ")
-    .replace(/\b\w/g, (character) => character.toUpperCase());
-}
-
-export function breadcrumbJsonLd(path: string, finalName?: string) {
-  const cleanPath = path.split("?")[0].split("#")[0];
-  const segments = cleanPath.split("/").filter(Boolean);
-
-  const items = [
-    {
-      "@type": "ListItem",
-      position: 1,
-      name: "Home",
-      item: absoluteUrl("/"),
-    },
-  ];
-
-  let cumulative = "";
-  segments.forEach((segment, index) => {
-    cumulative += `/${segment}`;
-    const isLast = index === segments.length - 1;
-    const route = getSeoRoute(cumulative);
-    const name = isLast && finalName ? finalName : route?.label ?? humanizeSegment(segment);
-    items.push({
-      "@type": "ListItem",
-      position: items.length + 1,
-      name,
-      item: absoluteUrl(cumulative),
-    });
-  });
-
-  return {
-    "@context": "https://schema.org",
-    "@type": "BreadcrumbList",
-    itemListElement: items,
   };
 }

@@ -210,14 +210,6 @@ const AwardsHero = ({ initialData }: AwardsHeroProps) => {
           0% { transform: translateX(0) skewX(-20deg); }
           100% { transform: translateX(450%) skewX(-20deg); }
         }
-        @keyframes bgZoom {
-          0%   { transform: scale(1.08); }
-          100% { transform: scale(1.0); }
-        }
-        .hero-bg-img {
-          animation: bgZoom 8s ease-out forwards;
-          transform-origin: center center;
-        }
         .blue-btn-hero {
           background: linear-gradient(135deg, #1b5e20 0%, #2e7d32 30%, #0e3b1c 60%, #1b5e20 100%);
           background-size: 200% 200%;
@@ -241,8 +233,9 @@ const AwardsHero = ({ initialData }: AwardsHeroProps) => {
         <div className="absolute inset-0 z-0 overflow-hidden">
           <img
             src={heroData.image || bannerImg.src}
-            alt="Bharat Organic Excellence Awards 2027 Banner"
-            className="hero-bg-img w-full h-full object-left md:object-center object-cover"
+            alt={heroData.imageAlt || "Bharat Organic Excellence Awards 2027 Banner"}
+            fetchPriority="high"
+            className="w-full h-full object-left md:object-center object-cover"
           />
         </div>
 

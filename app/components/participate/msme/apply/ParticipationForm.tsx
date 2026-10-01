@@ -4,13 +4,27 @@ import { useRouter } from "next/navigation";
 import { FileText, ChevronDown, CheckCircle2, User, ArrowLeft, ArrowRight, CheckCircle } from "lucide-react";
 import { verifyApi, msmeApi, msmeStorage } from "@/lib/api";
 import Swal from "sweetalert2";
+import { useDropdowns } from "@/lib/dropdowns";
 
 const STALL_TYPES = ["Shell Scheme", "Bare Space", "Country Pavilion", "Other"];
 // Indian mobile numbers are 10 digits and always start with 6-9.
 const MOBILE_RE = /^[6-9][0-9]{9}$/;
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[A-Za-z]{2,}$/;
 
+// Admin-managed (Dropdown Manager); these are the fallback stall sizes and edition.
+const STALL_SIZE_DROPDOWNS = {
+  "msme-stall-size": [
+    { label: "9 sqm", value: "9" },
+    { label: "12 sqm", value: "12" },
+    { label: "15 sqm", value: "15" },
+    { label: "18 sqm", value: "18" },
+  ],
+};
+const EDITION_DROPDOWNS = { "expo-edition": [{ label: "Bharat Organic Expo 2027", value: "2027" }] };
+
 export default function ParticipationForm() {
+  const dropdowns = useDropdowns(STALL_SIZE_DROPDOWNS);
+  const editions = useDropdowns(EDITION_DROPDOWNS);
   const router = useRouter();
 
   const [stallType, setStallType] = useState(STALL_TYPES[0]);
@@ -273,7 +287,9 @@ export default function ParticipationForm() {
                 Expo Edition <span className="text-red-500">*</span>
               </label>
               <select disabled className="w-full h-[36px] px-3 bg-[#fafbfa] border border-[#e5e7eb] rounded-md text-[13px] font-semibold text-gray-800 appearance-none focus:outline-none">
-                <option>Bharat Organic Expo 2027</option>
+                {editions["expo-edition"].map((o) => (
+                  <option key={o.value}>{o.label}</option>
+                ))}
               </select>
               <ChevronDown size={16} className="absolute right-3 top-[25px] text-gray-400 pointer-events-none" />
             </div>
@@ -390,10 +406,9 @@ export default function ParticipationForm() {
                 onChange={(e) => setStallSize(Number(e.target.value))}
                 className="w-full h-[36px] px-3 bg-[#fafbfa] border border-[#e5e7eb] rounded-md text-[13px] font-semibold text-gray-800 appearance-none focus:outline-none cursor-pointer"
               >
-                <option value={9}>9 sqm</option>
-                <option value={12}>12 sqm</option>
-                <option value={15}>15 sqm</option>
-                <option value={18}>18 sqm</option>
+                {dropdowns["msme-stall-size"].map((o) => (
+                  <option key={o.value} value={o.value}>{o.label}</option>
+                ))}
               </select>
               <ChevronDown size={16} className="absolute right-3 top-[25px] text-gray-400 pointer-events-none" />
             </div>

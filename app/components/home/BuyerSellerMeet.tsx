@@ -83,7 +83,6 @@ const sectionData = {
     ],
     buttons: {
       primary: { text: "Register Now", link: "/registration/buyer-registration" },
-      secondary: { text: "View Schedule", link: "/schedule" }
     }
   },
   rightSection: {
@@ -182,13 +181,6 @@ const BuyerSellerMeet = () => {
                   <CalendarCheck className="w-3.5 h-3.5 md:w-5 md:h-5" />
                   {sectionData.leftSection.buttons.primary.text}
                   <ArrowRight className="w-3.5 h-3.5 md:w-5 md:h-5 ml-0.5 md:ml-1" />
-                </Link>
-                <Link
-                  href={sectionData.leftSection.buttons.secondary.link}
-                  className="bg-white hover:bg-gray-50 border border-gray-300 text-[#1a1a1a] px-3 py-1.5 md:px-6 md:py-2 rounded-md font-semibold text-[10px] md:text-[12px] lg:text-[14px] tracking-widest uppercase transition-colors flex items-center gap-1.5 md:gap-2 shadow-sm min-h-[36px] md:min-h-[44px] font-poppins"
-                >
-                  <CalendarDays className="w-3.5 h-3.5 md:w-5 md:h-5 text-[#3b8c2a]" />
-                  {sectionData.leftSection.buttons.secondary.text}
                 </Link>
               </div>
 

@@ -118,7 +118,16 @@ const BUYER_SELLER_MEET_DATA = [
   },
 ];
 
-const BuyerSellerMeetSection = () => {
+const pickText = (value: unknown, fallback: string) =>
+  typeof value === "string" && value.trim() ? value.trim() : fallback;
+
+const BuyerSellerMeetSection = ({ sectionData }: { sectionData?: any }) => {
+  // Date & venue are editable from the admin (Why Visit page -> BuyerSellerMeetSection).
+  // Ignore stale ISO values left by the old datetime picker.
+  const rawDate = typeof sectionData?.date === "string" && !sectionData.date.includes("T") ? sectionData.date : "";
+  const eventDate = pickText(rawDate, BUYER_SELLER_MEET_DATA[0].bottomStrip.date);
+  const eventVenue = pickText(sectionData?.location, BUYER_SELLER_MEET_DATA[0].bottomStrip.venue);
+
   return (
     <section className="py-6 sm:py-7 bg-white font-inter relative overflow-hidden min-h-[550px] sm:min-h-[585px] max-h-[600px] flex items-center">
       {/* Background Image */}
@@ -246,12 +255,12 @@ const BuyerSellerMeetSection = () => {
                 <div className="flex flex-wrap items-center gap-3 sm:gap-5 font-poppins font-semibold text-xs">
                   <div className="flex items-center gap-1.5">
                     <Calendar className="w-3.5 h-3.5 text-[#a3e635]" />
-                    <span>{section.bottomStrip.date}</span>
+                    <span>{eventDate}</span>
                   </div>
                   <div className="hidden sm:block w-px h-3.5 bg-white/20" />
                   <div className="flex items-center gap-1.5">
                     <MapPin className="w-3.5 h-3.5 text-[#a3e635]" />
-                    <span>{section.bottomStrip.venue}</span>
+                    <span>{eventVenue}</span>
                   </div>
                 </div>
 

@@ -5,9 +5,9 @@ import { createPortal } from "react-dom";
 import { ArrowRight } from "lucide-react";
 import UploadCvModal, { CandidateAnalysisData } from "@/app/components/careers/uploade_cv/page";
 import { lockScroll, unlockScroll } from "@/lib/scrollLock";
-import { EligibilityModal, CandidateProfileData, defaultCandidateData } from "./submit-resume/page";
-import { ApplicationFormModal } from "./application-form/page";
-import { ReviewSubmitModal } from "./review-submit/page";
+import { EligibilityModal, CandidateProfileData, defaultCandidateData } from "./submit-resume/SubmitResume";
+import { ApplicationFormModal } from "./application-form/ApplicationForm";
+import { ReviewSubmitModal } from "./review-submit/ReviewSubmit";
 
 export default function JobCardButtons({ job }: { job: any }) {
   const [isOpen, setIsOpen] = useState(false);

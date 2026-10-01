@@ -155,7 +155,7 @@ export default function NeedHelpSection() {
                           <p className="text-[18px] font-semibold uppercase text-[#082809] mt-4">
                             {m.title}
                           </p>
-                          <p className="mt-0.5 text-[14px] font-semibold sm:break-normal break-all">
+                          <p className={`mt-0.5 w-full font-semibold [overflow-wrap:anywhere] ${m.title === "VISIT WEBSITE" ? "text-[12px]" : "text-[14px]"}`}>
                             {m.detail}
                           </p>
                           <div className="mt-auto flex flex-col items-center">

@@ -1,6 +1,6 @@
 import React from "react";
 import type { Metadata } from "next";
-import { OG_IMAGE, OG_IMAGE_ALT } from "@/lib/seo";
+import { OG_IMAGE, OG_IMAGE_ALT, parseOgTags } from "@/lib/seo";
 import HeroSection from "@/app/components/participate/why-visit/HeroSection";
 import WhyVisitMatters from "@/app/components/participate/why-visit/WhyVisitMatters";
 import IndustrySegments from "@/app/components/participate/why-visit/IndustrySegments";
@@ -52,6 +52,7 @@ export async function generateMetadata(): Promise<Metadata> {
   const description =
     seoData?.metaDescription ||
     "Source better, connect directly, and grow your business at Bharat Organic Expo 2027. Meet 200+ exhibitors, 8,000+ visitors, and explore 6 major industry segments.";
+  const og = parseOgTags(seoData?.openGraphTags);
 
   return {
     metadataBase: new URL(defaultUrl),
@@ -66,8 +67,8 @@ export async function generateMetadata(): Promise<Metadata> {
       canonical: canonicalUrl,
     },
     openGraph: {
-      title: seoData?.ogTitle || title,
-      description: seoData?.ogDescription || description,
+      title: og["og:title"] || seoData?.ogTitle || title,
+      description: og["og:description"] || seoData?.ogDescription || description,
       url: canonicalUrl,
       siteName: "Bharat Organic Expo 2027",
       images: [
@@ -209,7 +210,7 @@ export default async function WhyVisitPage() {
         {heroSec?.enabled !== false && <HeroSection sectionData={heroSec} />}
         {mattersSec?.enabled !== false && <WhyVisitMatters sectionData={mattersSec} />}
         {industrySec?.enabled !== false && <IndustrySegments sectionData={segmentsSec} />}
-        {buyerSellerSec?.enabled !== false && <BuyerSellerMeetSection />}
+        {buyerSellerSec?.enabled !== false && <BuyerSellerMeetSection sectionData={buyerSellerSec} />}
         {awardsSec?.enabled !== false && <AwardsHealthCamp sectionData={awardsSec} />}
         {helpSec?.enabled !== false && <NeedHelpSupport />}
         {whoSec?.enabled !== false && <WhoShouldVisit />}

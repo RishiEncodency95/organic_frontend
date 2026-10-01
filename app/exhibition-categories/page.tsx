@@ -1,57 +1,27 @@
-"use client";
-import React, { useState, useEffect } from "react";
-import ExhibitionHero from "@/app/components/exhibition-categories/ExhibitionHero";
-import ExhibitionSectors from "@/app/components/exhibition-categories/ExhibitionSectors";
-import CategoryDetailsShowcase from "@/app/components/exhibition-categories/CategoryDetailsShowcase";
-import AyushDetailsShowcase from "@/app/components/exhibition-categories/AyushDetailsShowcase";
-import OrganicFarmingShowcase from "@/app/components/exhibition-categories/OrganicFarmingShowcase";
-import OrganicInputsShowcase from "@/app/components/exhibition-categories/OrganicInputsShowcase";
-import DairyLivestockShowcase from "@/app/components/exhibition-categories/DairyLivestockShowcase";
-import NaturalBeautyShowcase from "@/app/components/exhibition-categories/NaturalBeautyShowcase";
-import NutraceuticalsShowcase from "@/app/components/exhibition-categories/NutraceuticalsShowcase";
-import SustainablePackagingShowcase from "@/app/components/exhibition-categories/SustainablePackagingShowcase";
-import AgriTechShowcase from "@/app/components/exhibition-categories/AgriTechShowcase";
-import CertificationTradeShowcase from "@/app/components/exhibition-categories/CertificationTradeShowcase";
+import type { Metadata } from "next";
+import AdminSchema from "@/components/seo/AdminSchema";
+import { adminSeoMetadata, getAdminSeo } from "@/lib/adminSeo";
+import ExhibitionCategoriesContent from "@/app/components/exhibition-categories/ExhibitionCategoriesContent";
 
-export default function ExhibitionCategoriesPage() {
-  const [activeCategory, setActiveCategory] = useState("organic-food-beverages");
+export const revalidate = 60;
 
-  useEffect(() => {
-    const handleHashChange = () => {
-      const hash = window.location.hash.replace("#", "");
-      if (hash) {
-        setActiveCategory(hash);
-      }
-    };
-    
-    // Initial check
-    handleHashChange();
-    
-    window.addEventListener("hashchange", handleHashChange);
-    return () => window.removeEventListener("hashchange", handleHashChange);
-  }, []);
+const SEO_PAGE_KEY = "exhibition-categories";
+
+export async function generateMetadata(): Promise<Metadata> {
+  return adminSeoMetadata(SEO_PAGE_KEY, {
+    title: "Exhibition Categories | Bharat Organic Expo 2027",
+    description:
+      "Explore the exhibition categories at Bharat Organic Expo 2027, from organic food and AYUSH to organic inputs, dairy, natural beauty, packaging and agritech.",
+  });
+}
+
+export default async function ExhibitionCategoriesPage() {
+  const seoData = await getAdminSeo(SEO_PAGE_KEY);
 
   return (
-    <main className="min-h-screen">
-      <ExhibitionHero />
-      <ExhibitionSectors />
-      
-      {activeCategory === "organic-food-beverages" && <CategoryDetailsShowcase />}
-      {activeCategory === "ayush-ayurveda-herbal" && <AyushDetailsShowcase />}
-      {activeCategory === "organic-natural-farming" && <OrganicFarmingShowcase />}
-      {activeCategory === "organic-inputs" && <OrganicInputsShowcase />}
-      {activeCategory === "dairy-livestock" && <DairyLivestockShowcase />}
-      {activeCategory === "natural-beauty-personal-care" && <NaturalBeautyShowcase />}
-      {activeCategory === "nutraceuticals-functional-nutrition" && <NutraceuticalsShowcase />}
-      {activeCategory === "sustainable-packaging-processing" && <SustainablePackagingShowcase />}
-      {activeCategory === "agritech-greentech-innovation" && <AgriTechShowcase />}
-      {activeCategory === "certification-export-trade" && <CertificationTradeShowcase />}
-      
-      {!["organic-food-beverages", "ayush-ayurveda-herbal", "organic-natural-farming", "organic-inputs", "dairy-livestock", "natural-beauty-personal-care", "nutraceuticals-functional-nutrition", "sustainable-packaging-processing", "agritech-greentech-innovation", "certification-export-trade"].includes(activeCategory) && (
-        <div className="w-full py-20 text-center text-gray-500 font-medium">
-          Detailed showcase for this category is coming soon.
-        </div>
-      )}
-    </main>
+    <>
+      <AdminSchema schema={seoData?.schemaMarkup || null} />
+      <ExhibitionCategoriesContent />
+    </>
   );
 }

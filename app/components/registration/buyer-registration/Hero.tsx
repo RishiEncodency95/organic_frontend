@@ -57,57 +57,69 @@ export default function BuyerRegistrationHero() {
       );
 
       // Badge
-      tl.fromTo(
-        badgeRef.current,
-        { opacity: 0, y: -16, scale: 0.9 },
-        { opacity: 1, y: 0, scale: 1, duration: 0.65 },
-        0.1
-      );
+      if (badgeRef.current) {
+        tl.fromTo(
+          badgeRef.current,
+          { opacity: 0, y: -16, scale: 0.9 },
+          { opacity: 1, y: 0, scale: 1, duration: 0.65 },
+          0.1
+        );
+      }
 
       // Heading lines — masked 3D reveal
-      tl.fromTo(
-        line1Ref.current,
-        { yPercent: 110, rotationX: 60, opacity: 0 },
-        { yPercent: 0, rotationX: 0, opacity: 1, duration: 0.9, ease: "expo.out" },
-        0.2
-      ).fromTo(
-        line2Ref.current,
-        { yPercent: 110, rotationX: 60, opacity: 0 },
-        { yPercent: 0, rotationX: 0, opacity: 1, duration: 0.9, ease: "expo.out" },
-        0.35
-      );
+      if (line1Ref.current && line2Ref.current) {
+        tl.fromTo(
+          line1Ref.current,
+          { yPercent: 110, rotationX: 60, opacity: 0 },
+          { yPercent: 0, rotationX: 0, opacity: 1, duration: 0.9, ease: "expo.out" },
+          0.2
+        ).fromTo(
+          line2Ref.current,
+          { yPercent: 110, rotationX: 60, opacity: 0 },
+          { yPercent: 0, rotationX: 0, opacity: 1, duration: 0.9, ease: "expo.out" },
+          0.35
+        );
+      }
 
       // Subtitle blur-fade
-      tl.fromTo(
-        subtitleRef.current,
-        { opacity: 0, y: 20, filter: "blur(8px)" },
-        { opacity: 1, y: 0, filter: "blur(0px)", duration: 0.85 },
-        0.6
-      );
+      if (subtitleRef.current) {
+        tl.fromTo(
+          subtitleRef.current,
+          { opacity: 0, y: 20, filter: "blur(8px)" },
+          { opacity: 1, y: 0, filter: "blur(0px)", duration: 0.85 },
+          0.6
+        );
+      }
 
       // Meta row
-      tl.fromTo(
-        metaRef.current,
-        { opacity: 0, y: 16 },
-        { opacity: 1, y: 0, duration: 0.7 },
-        0.8
-      );
+      if (metaRef.current) {
+        tl.fromTo(
+          metaRef.current,
+          { opacity: 0, y: 16 },
+          { opacity: 1, y: 0, duration: 0.7 },
+          0.8
+        );
+      }
 
       // Pills stagger
-      tl.fromTo(
-        pillsRef.current ? Array.from(pillsRef.current.children) : [],
-        { opacity: 0, y: 14, scale: 0.9 },
-        { opacity: 1, y: 0, scale: 1, duration: 0.5, stagger: 0.1, ease: "back.out(1.7)" },
-        0.95
-      );
+      if (pillsRef.current && pillsRef.current.children.length > 0) {
+        tl.fromTo(
+          Array.from(pillsRef.current.children),
+          { opacity: 0, y: 14, scale: 0.9 },
+          { opacity: 1, y: 0, scale: 1, duration: 0.5, stagger: 0.1, ease: "back.out(1.7)" },
+          0.95
+        );
+      }
 
       // CTA button
-      tl.fromTo(
-        ctaRef.current ? Array.from(ctaRef.current.children) : [],
-        { opacity: 0, y: 20, scale: 0.92 },
-        { opacity: 1, y: 0, scale: 1, duration: 0.6, stagger: 0.15, ease: "back.out(1.7)" },
-        1.05
-      );
+      if (ctaRef.current && ctaRef.current.children.length > 0) {
+        tl.fromTo(
+          Array.from(ctaRef.current.children),
+          { opacity: 0, y: 20, scale: 0.92 },
+          { opacity: 1, y: 0, scale: 1, duration: 0.6, stagger: 0.15, ease: "back.out(1.7)" },
+          1.05
+        );
+      }
     }, sectionRef);
 
     return () => ctx.revert();

@@ -4,6 +4,7 @@ import { ArrowRight, Mail, Phone, Globe, MapPin, Printer } from "lucide-react";
 import leafsImg from "@/app/assets/icons/leafs.png";
 import printog from "@/app/assets/icons/printog.png";
 import SectionContainer from "@/app/components/layout/SectionContainer";
+import { toOptions, useDropdowns } from "@/lib/dropdowns";
 
 export const WHY_PARTNER_PRINTING_DATA = [
   {
@@ -33,7 +34,14 @@ export const WHY_PARTNER_PRINTING_DATA = [
   }
 ];
 
+// Admin-managed (Dropdown Manager); these lists are the fallback.
+const PARTNER_DROPDOWNS = {
+  "partner-state": toOptions(["Delhi", "Maharashtra", "Karnataka", "Tamil Nadu", "Gujarat", "Uttar Pradesh", "Haryana", "Telangana", "West Bengal", "Other"]),
+  "partner-preferred-category": toOptions(["Printing & Branding Partner", "Hotel & Stay Partner", "Travel Partner", "Logistics Partner", "Stall Design Partner", "Manpower Supply Partner"]),
+};
+
 export default function WhyPartnerPrinting() {
+  const dropdowns = useDropdowns(PARTNER_DROPDOWNS);
   const [stateVal, setStateVal] = useState("");
   const [categoryVal, setCategoryVal] = useState("Printing & Branding Partner");
   const [agreed, setAgreed] = useState(false);
@@ -139,7 +147,7 @@ export default function WhyPartnerPrinting() {
                     <select required value={stateVal} onChange={(e) => setStateVal(e.target.value)}
                       className={`w-full px-4 py-2 border border-gray-200 rounded-md bg-white text-sm focus:outline-none focus:ring-1 focus:ring-[#113217] focus:border-[#113217] appearance-none ${!stateVal ? 'text-gray-500' : 'text-gray-900'}`}>
                       <option value="" disabled>Select state</option>
-                      {data.statesList.map(st => <option key={st} value={st} className="text-gray-900">{st}</option>)}
+                      {dropdowns["partner-state"].map((o) => <option key={o.value} value={o.value} className="text-gray-900">{o.label}</option>)}
                     </select>
                     <div className="absolute inset-y-0 right-0 flex items-center px-2 pointer-events-none text-gray-500">
                       <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7"/></svg>
@@ -152,12 +160,9 @@ export default function WhyPartnerPrinting() {
                   <div className="relative">
                     <select required value={categoryVal} onChange={(e) => setCategoryVal(e.target.value)}
                       className="w-full px-4 py-2 border border-gray-200 rounded-md bg-white text-sm text-gray-900 focus:outline-none focus:ring-1 focus:ring-[#113217] focus:border-[#113217] appearance-none">
-                      <option value="Printing & Branding Partner">Printing & Branding Partner</option>
-                      <option value="Hotel & Stay Partner">Hotel & Stay Partner</option>
-                      <option value="Travel Partner">Travel Partner</option>
-                      <option value="Logistics Partner">Logistics Partner</option>
-                      <option value="Stall Design Partner">Stall Design Partner</option>
-                      <option value="Manpower Supply Partner">Manpower Supply Partner</option>
+                      {dropdowns["partner-preferred-category"].map((o) => (
+                        <option key={o.value} value={o.value}>{o.label}</option>
+                      ))}
                     </select>
                     <div className="absolute inset-y-0 right-0 flex items-center px-2 pointer-events-none text-gray-500">
                       <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7"/></svg>

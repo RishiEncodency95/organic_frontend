@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { OG_IMAGE, OG_IMAGE_ALT } from "@/lib/seo";
 import { seoApi } from "@/lib/api";
+import { getSectionData } from "@/lib/serverData";
 import AdminSchema from "@/components/seo/AdminSchema";
 import MsmePmsBanner from "@/app/components/participate/msme/MsmePmsBanner";
 import FeatureStrip from "@/app/components/participate/msme/FeatureStrip";
@@ -101,11 +102,19 @@ const MsmePage = async () => {
   }
 
   const schemaContent = seoData?.schemaMarkup || null;
+  const [settings, directorMessage] = await Promise.all([
+    getSectionData("/settings?website=Organicexpo"),
+    getSectionData("/website/participate/msme/official-message"),
+  ]);
+  const msmeSections = settings?.msmePage?.sections;
+  const bannerSection = Array.isArray(msmeSections)
+    ? msmeSections.find((s: any) => s.key === "msme-pms-banner")
+    : undefined;
 
   return (
     <div className="min-h-screen bg-white font-sans text-neutral-800 overflow-x-clip">
       <AdminSchema schema={schemaContent} />
-      <MsmePmsBanner />
+      <MsmePmsBanner initialSection={bannerSection} />
       <FeatureStrip />
       <OfficialRecognitionBanner />
       <MsmePmsScheme />
@@ -115,7 +124,7 @@ const MsmePage = async () => {
       <Whatsnextbanner />
       <NeedHelpSection />
       {/* <Reasontovisitbanner /> */}
-      <OfficialMessageBanner />
+      <OfficialMessageBanner initialData={directorMessage} />
       <Pmsdocumentsbanner />
       <Whyparticipatesection />
       <Faqbanner />

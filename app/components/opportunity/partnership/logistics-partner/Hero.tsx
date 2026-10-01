@@ -50,10 +50,9 @@ export default function Hero() {
           </p>
 
           {/* Description */}
-          <p className="text-[#131730] text-sm md:text-[15px] font-bold leading-relaxed max-w-2xl mb-5">
-            {data.descriptionLine1}<br className="hidden md:block"/>
-            {data.descriptionLine2}<br className="hidden md:block"/>
-            {data.descriptionLine3}
+          {/* Width tracks the viewport on desktop so the text stays left of the photo's curve */}
+          <p className="text-[#131730] text-sm md:text-[15px] font-bold leading-relaxed max-w-2xl lg:max-w-[34vw] mb-5">
+            {data.descriptionLine1} {data.descriptionLine2} {data.descriptionLine3}
           </p>
 
           {/* Metadata */}
