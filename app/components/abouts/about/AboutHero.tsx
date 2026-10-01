@@ -66,8 +66,22 @@ const aboutHeroData = {
 const pickImage = (data: any): string | null =>
   data && typeof data.image === "string" && data.image.trim() ? data.image.trim() : null;
 
+// The admin's single "H1 Title" field; older saves only have the two-part title, so join it.
+const pickTitle = (data: any): string | null => {
+  if (!data) return null;
+  if (typeof data.title === "string" && data.title.trim()) return data.title.trim();
+  const legacy = [data.titlePart1, data.titlePart2]
+    .filter((x: unknown) => typeof x === "string" && x.trim())
+    .join(" ")
+    .trim();
+  return legacy || null;
+};
+
 const AboutHero = ({ initialData }: { initialData?: any }) => {
   const [bgImage, setBgImage] = useState<string | typeof aboutBanner>(pickImage(initialData) || aboutBanner);
+  const [title, setTitle] = useState<string>(
+    pickTitle(initialData) || `${aboutHeroData.titlePart1} ${aboutHeroData.titlePart2}`
+  );
 
   useEffect(() => {
     // The page already fetched this on the server; only fetch here if that failed.
@@ -76,8 +90,11 @@ const AboutHero = ({ initialData }: { initialData?: any }) => {
     fetch(`${API_URL}/website/abouts/about/about-hero`, { cache: "no-store" })
       .then((res) => (res.ok ? res.json() : null))
       .then((json) => {
-        const image = pickImage(json?.data || json);
+        const data = json?.data || json;
+        const image = pickImage(data);
+        const fetchedTitle = pickTitle(data);
         if (active && image) setBgImage(image);
+        if (active && fetchedTitle) setTitle(fetchedTitle);
       })
       .catch(() => {});
     return () => {
@@ -163,17 +180,28 @@ const AboutHero = ({ initialData }: { initialData?: any }) => {
           </div>
 
           {/* Title */}
-          <h1
-            className="font-black leading-[1.05] mb-2 md:mb-4 text-left font-poppins"
-            style={{ textShadow: "1px 1px 2px rgba(0,0,0,0.3)" }}
-          >
-            <div className="text-[#1b5e20] text-[28px] sm:text-[36px] md:text-[46px] lg:text-[56px] tracking-tight block font-semibold">
-              {aboutHeroData.titlePart1}
-            </div>
-            <div className="text-[#ea580c] text-[32px] sm:text-[42px] md:text-[52px] lg:text-[62px] tracking-tight block font-semibold">
-              {aboutHeroData.titlePart2}
-            </div>
-          </h1>
+          {/* Last two words get the orange accent line, like the original two-part title */}
+          {(() => {
+            const words = title.split(/\s+/).filter(Boolean);
+            const accentCount = words.length > 2 ? 2 : words.length > 1 ? 1 : 0;
+            const lead = words.slice(0, words.length - accentCount).join(" ");
+            const accent = words.slice(words.length - accentCount).join(" ");
+            return (
+              <h1
+                className="font-black leading-[1.05] mb-2 md:mb-4 text-left font-poppins"
+                style={{ textShadow: "1px 1px 2px rgba(0,0,0,0.3)" }}
+              >
+                <span className="text-[#1b5e20] text-[28px] sm:text-[36px] md:text-[46px] lg:text-[56px] tracking-tight block font-semibold">
+                  {lead}
+                </span>
+                {accent && (
+                  <span className="text-[#ea580c] text-[32px] sm:text-[42px] md:text-[52px] lg:text-[62px] tracking-tight block font-semibold">
+                    {accent}
+                  </span>
+                )}
+              </h1>
+            );
+          })()}
 
           {/* Subtitle */}
           <div className="flex items-center gap-2.5">
