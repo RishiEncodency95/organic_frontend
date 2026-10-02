@@ -3,6 +3,7 @@
 import React, { useEffect, useState } from "react";
 import dynamic from "next/dynamic";
 import { MessageCircleMore, X } from "lucide-react";
+import { readChatSession } from "./chatSession";
 
 // The panel (form, chat, streaming) is only downloaded the first time someone opens it,
 // so the chatbot adds almost nothing to page load.
@@ -14,6 +15,7 @@ const ChatLauncher: React.FC = () => {
     const [open, setOpen] = useState(false);
     const [opened, setOpened] = useState(false);
     const [teaser, setTeaser] = useState(false);
+    const [panelKey, setPanelKey] = useState(0);
 
     // A small "Namaste" bubble, once per browser session, a few seconds after the page loads
     useEffect(() => {
@@ -41,6 +43,8 @@ const ChatLauncher: React.FC = () => {
 
     const toggle = () => {
         dismissTeaser();
+        // Previous visitor's chat timed out (30 min idle / browser restarted) — start fresh
+        if (!open && opened && readChatSession().status === "expired") setPanelKey((k) => k + 1);
         setOpened(true);
         setOpen((v) => !v);
     };
@@ -48,7 +52,7 @@ const ChatLauncher: React.FC = () => {
     return (
         <>
             {/* Stays mounted after the first open so the conversation survives closing the panel */}
-            {opened && <ChatPanel open={open} onClose={() => setOpen(false)} />}
+            {opened && <ChatPanel key={panelKey} open={open} onClose={() => setOpen(false)} />}
 
             {/* Same height as the WhatsApp/Call buttons on the left, clear of the mobile bottom nav */}
             <div
