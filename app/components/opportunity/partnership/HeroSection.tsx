@@ -90,9 +90,54 @@ const AnimatedCounter = ({ value }: { value: string }) => {
   );
 };
 
-export default function HeroSection() {
+// H1 is a single admin field shown on three lines: the last sentence on the orange italic
+// line, the last word before it on line 2, and everything else on line 1
+// ("Let's Grow" / "Organic." / "Together.").
+const splitHeroTitle = (title: string) => {
+  const sentences = (title.match(/[^.!?]+[.!?]*/g) || [title]).map((x) => x.trim()).filter(Boolean);
+  let head: string[];
+  let line3: string;
+  if (sentences.length > 1) {
+    line3 = sentences[sentences.length - 1];
+    head = sentences.slice(0, -1).join(" ").split(/\s+/);
+  } else {
+    const words = title.trim().split(/\s+/);
+    line3 = words.length > 1 ? words[words.length - 1] : "";
+    head = words.length > 1 ? words.slice(0, -1) : words;
+  }
+  return {
+    titleLine1: head.length > 1 ? head.slice(0, -1).join(" ") : "",
+    titleLine2: head[head.length - 1] || "",
+    titleLine3: line3,
+  };
+};
+
+// Admin values override the defaults above; an empty field keeps the default.
+const toHeroData = (d: any) => {
+  const base = HERO_PARTNERSHIP_DATA[0];
+  const legacyTitle = [d?.titleLine1, d?.titleLine2, d?.titleLine3]
+    .filter((x: unknown) => typeof x === "string" && x.trim())
+    .join(" ");
+  const title =
+    (typeof d?.title === "string" && d.title.trim()) ||
+    legacyTitle ||
+    [base.titleLine1, base.titleLine2, base.titleLine3].join(" ");
+  return {
+    ...base,
+    ...splitHeroTitle(title),
+    badgeText: d?.badgeText || base.badgeText,
+    subtitle: d?.subtitle || base.subtitle,
+    dates: d?.dates || base.dates,
+    location: d?.location || base.location,
+    stats: (Array.isArray(d?.stats) && d.stats.length > 0 ? d.stats : base.stats) as typeof base.stats,
+    image: typeof d?.image === "string" && d.image.trim() ? d.image.trim() : bgImg.src,
+    imageAlt: d?.imageAlt || "Partnership and collaboration at Bharat Organic Expo 2027",
+  };
+};
+
+export default function HeroSection({ initialData }: { initialData?: any }) {
   const sectionRef = useRef<HTMLElement>(null);
-  const badgeRef = useRef<HTMLHeadingElement>(null);
+  const badgeRef = useRef<HTMLDivElement>(null);
   const line1Ref = useRef<HTMLSpanElement>(null);
   const line2Ref = useRef<HTMLSpanElement>(null);
   const line3Ref = useRef<HTMLSpanElement>(null);
@@ -105,7 +150,7 @@ export default function HeroSection() {
   itemRefs.current = [];
   dividerRefs.current = [];
 
-  const data = HERO_PARTNERSHIP_DATA[0];
+  const data = toHeroData(initialData);
 
   useEffect(() => {
     const ctx = gsap.context(() => {
@@ -177,8 +222,8 @@ export default function HeroSection() {
         {/* Background Image */}
         <div className="absolute inset-0 z-0 overflow-hidden">
           <img 
-            src={bgImg.src} 
-            alt="Partnership BG" 
+            src={data.image}
+            alt={data.imageAlt}
             className="part-bg-img w-full h-full object-cover" 
             style={{ objectPosition: "center 20%" }}
           />
@@ -195,13 +240,13 @@ export default function HeroSection() {
         <SectionContainer className="relative z-10">
           <div className="max-w-xl bg-white/80 md:bg-transparent p-4 md:p-0 md:pl-6 lg:pl-10 rounded-xl md:rounded-none backdrop-blur-sm md:backdrop-blur-none translate-y-1 lg:translate-y-2">
 
-            <h4
+            <div
               ref={badgeRef}
               style={{ opacity: 0 }}
-              className="text-[13px] md:text-[15px] lg:text-[16px] font-bold text-[#c2410c] tracking-[0.15em] uppercase mb-2"
+              className="font-poppins text-[13px] md:text-[15px] lg:text-[16px] font-bold text-[#c2410c] tracking-[0.15em] uppercase mb-2"
             >
               {data.badgeText}
-            </h4>
+            </div>
 
             <h1 className="text-4xl md:text-[58px] lg:text-[66px] font-black text-[#1b5e20] leading-[1.05] mb-3 font-poppins tracking-tight">
               <span className="block overflow-hidden">
@@ -261,12 +306,12 @@ export default function HeroSection() {
                       className="flex flex-row items-center justify-center gap-2 sm:gap-2.5 group flex-1 py-1 px-1.5 bg-white/5 md:bg-transparent rounded-xl border border-white/10 md:border-none"
                     >
                       <div className="w-7 h-7 md:w-8 md:h-8 rounded-full bg-white/10 flex items-center justify-center shrink-0 border border-white/15">
-                        <span className="text-[#facc15]">{ICON_MAP[stat.iconKey]}</span>
+                        <span className="text-[#facc15]">{ICON_MAP[stat.iconKey] || ICON_MAP.Users}</span>
                       </div>
                       <div className="flex flex-col text-left justify-center">
-                        <h4 className="text-[14px] sm:text-[15px] md:text-[16px] font-semibold text-white leading-none font-inter mb-0.5">
+                        <div className="text-[14px] sm:text-[15px] md:text-[16px] font-semibold text-white leading-none font-inter mb-0.5">
                           {stat.value === "B2B" ? "B2B" : <AnimatedCounter value={stat.value} />}
-                        </h4>
+                        </div>
                         <p className="text-[9px] sm:text-[9.5px] md:text-[10px] font-semibold text-[#facc15] uppercase tracking-wider leading-none font-inter">
                           {stat.label}
                         </p>

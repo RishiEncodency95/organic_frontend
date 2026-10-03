@@ -4,15 +4,32 @@ import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import bannerImg from "../../assets/blog/banner.webp";
 
-const blogHeroData = {
+// Shown until the admin saves the hero (and for any field left empty).
+const DEFAULT_BLOG_HERO = {
   tagline: "BHARAT ORGANIC EXPO",
-  titlePart1: "BLOGS &",
-  titlePart2: "NEWS",
+  title: "BLOGS & NEWS",
   subtitle: "Insights. Innovation. Impact.",
-  description: "Stay updated with the latest trends, expert perspectives, innovations and success stories shaping India's organic food, agriculture and sustainable products industry."
+  description: "Stay updated with the latest trends, expert perspectives, innovations and success stories shaping India's organic food, agriculture and sustainable products industry.",
+  imageAlt: "Bharat Organic Expo Blog Banner",
 };
 
-const BlogHero = () => {
+const BlogHero = ({ data }: { data?: any }) => {
+  // H1 is a single admin field: the last word goes on the orange line, the rest green.
+  // Older saves only have the two-part title, so that's joined first.
+  const legacyTitle = [data?.titlePart1, data?.titlePart2]
+    .filter((x: unknown) => typeof x === "string" && x.trim())
+    .join(" ");
+  const titleWords = (data?.title?.trim() || legacyTitle || DEFAULT_BLOG_HERO.title).split(/\s+/);
+  const blogHeroData = {
+    tagline: data?.tagline?.trim() || DEFAULT_BLOG_HERO.tagline,
+    titlePart1: titleWords.length > 1 ? titleWords.slice(0, -1).join(" ") : "",
+    titlePart2: titleWords[titleWords.length - 1],
+    subtitle: data?.subtitle?.trim() || DEFAULT_BLOG_HERO.subtitle,
+    description: data?.description?.trim() || DEFAULT_BLOG_HERO.description,
+    image: typeof data?.image === "string" && data.image.trim() ? data.image.trim() : bannerImg.src,
+    imageAlt: data?.imageAlt?.trim() || DEFAULT_BLOG_HERO.imageAlt,
+  };
+
   const [mounted, setMounted] = useState(false);
   useEffect(() => {
     const t = setTimeout(() => setMounted(true), 60);
@@ -23,8 +40,9 @@ const BlogHero = () => {
     <section className="relative w-full overflow-hidden bg-white min-h-[380px] sm:min-h-[420px] md:min-h-[450px] lg:min-h-[470px] flex items-center pt-3 md:pt-5 pb-4 md:pb-6 font-inter border-b-4 border-[#ea580c]">
       {/* Background Image */}
       <Image
-        src={bannerImg.src}
-        alt={`${blogHeroData.tagline} Blog Banner`}
+        key={blogHeroData.image}
+        src={blogHeroData.image}
+        alt={blogHeroData.imageAlt}
         fill
         priority
         className="object-cover z-0"
@@ -49,9 +67,11 @@ const BlogHero = () => {
               }`}
             style={{ textShadow: "1px 1px 2px rgba(0,0,0,0.4)" }}
           >
-            <div className="text-[#1b5e20] text-[40px] md:text-[52px] lg:text-[62px] tracking-tight block" style={{ fontWeight: 600 }}>
-              {blogHeroData.titlePart1}
-            </div>
+            {blogHeroData.titlePart1 && (
+              <div className="text-[#1b5e20] text-[40px] md:text-[52px] lg:text-[62px] tracking-tight block" style={{ fontWeight: 600 }}>
+                {blogHeroData.titlePart1}
+              </div>
+            )}
             <div className="text-[#ea580c] text-[46px] md:text-[60px] lg:text-[72px] tracking-tight block" style={{ fontWeight: 600 }}>
               {blogHeroData.titlePart2}
             </div>

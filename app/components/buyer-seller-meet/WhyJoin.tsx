@@ -30,7 +30,7 @@ export default function WhyJoin() {
                 <p className="text-[12px] md:text-sm font-bold text-[#1b5e20] uppercase tracking-wider mb-2 text-center sm:text-left whitespace-nowrap">
                   {data.buyerHeading}
                 </p>
-                <h3 className="text-xl font-bold text-gray-900 mb-3 font-poppins text-center sm:text-left">{data.buyerTitle}</h3>
+                <h2 className="text-xl font-bold text-gray-900 mb-3 font-poppins text-center sm:text-left">{data.buyerTitle}</h2>
                 <ul className="space-y-3">
                   {data.buyerPoints.map((p, i) => (
                     <li key={i} className="flex items-center gap-3">
@@ -53,7 +53,7 @@ export default function WhyJoin() {
                   <p className="text-[12px] md:text-sm font-bold text-[#1b5e20] uppercase tracking-wider mb-2 text-center sm:text-left whitespace-nowrap">
                     {data.exhibitorHeading}
                   </p>
-                  <h3 className="text-xl font-bold text-gray-900 mb-3 font-poppins text-center sm:text-left">{data.exhibitorTitle}</h3>
+                  <h2 className="text-xl font-bold text-gray-900 mb-3 font-poppins text-center sm:text-left">{data.exhibitorTitle}</h2>
                   <ul className="space-y-3">
                     {data.exhibitorPoints.map((p, i) => (
                       <li key={i} className="flex items-center gap-3">

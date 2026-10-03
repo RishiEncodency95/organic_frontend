@@ -1058,9 +1058,9 @@ export default function BharatOrganicAwards({ initialHeroData }: AwardsNominatio
                 <React.Fragment key={label}>
                   <div className="group flex flex-1 flex-col items-center py-1 text-center">
                     <Icon className="mb-1 h-4 w-4 stroke-[1.75] text-white md:h-5 md:w-5" />
-                    <h4 className="mb-0.5 font-inter text-[11px] font-semibold leading-none text-white sm:text-[13px] md:text-sm">
+                    <div className="mb-0.5 font-inter text-[11px] font-semibold leading-none text-white sm:text-[13px] md:text-sm">
                       <StatCounter value={value} />
-                    </h4>
+                    </div>
                     <p className="mt-0.5 font-inter text-[8px] font-bold uppercase leading-tight tracking-widest text-[#facc15] md:text-[9px]">
                       {label}
                     </p>

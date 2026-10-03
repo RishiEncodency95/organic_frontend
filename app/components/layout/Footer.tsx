@@ -201,9 +201,9 @@ export default function Footer({ initialFooterData }: { initialFooterData?: any 
 
           {/* Quick Links */}
           <div className="lg:border-r lg:border-white/10 lg:pr-8">
-            <h3 className="font-poppins font-semibold text-[#F3B71B] uppercase text-[13px] tracking-wider mb-1 ml-1 sm:ml-3">
+            <h2 className="font-poppins font-semibold text-[#F3B71B] uppercase text-[13px] tracking-wider mb-1 ml-1 sm:ml-3">
               QUICK LINKS
-            </h3>
+            </h2>
             <Image src={uuogImg} alt="divider" width={101} height={14} loading="lazy" sizes="101px" className="h-3.5 w-auto -mt-1.5 mb-2.5 object-contain" />
 
             <ul className="grid grid-cols-2 sm:grid-cols-1 lg:grid-cols-1 gap-x-3 gap-y-2 text-[13px] sm:text-[14px] text-gray-200 font-medium">
@@ -225,9 +225,9 @@ export default function Footer({ initialFooterData }: { initialFooterData?: any 
 
           {/* Conference Highlights */}
           <div className="lg:border-r lg:border-white/10 lg:pr-4">
-            <h3 className="font-poppins font-semibold text-[#F3B71B] uppercase text-[13px] tracking-wider mb-1">
+            <h2 className="font-poppins font-semibold text-[#F3B71B] uppercase text-[13px] tracking-wider mb-1">
               CONFERENCE HIGHLIGHTS
-            </h3>
+            </h2>
             <Image src={uuogImg} alt="divider" width={101} height={14} loading="lazy" sizes="101px" className="h-3.5 w-auto -mt-1.5 mb-2.5 object-contain" />
 
             <div className="flex flex-col gap-3">
@@ -237,7 +237,7 @@ export default function Footer({ initialFooterData }: { initialFooterData?: any 
                     <Image src={item.icon} alt={item.title} width={20} height={20} loading="lazy" sizes="20px" className="w-5 h-5 object-contain" />
                   </div>
                   <div className="pt-0.5">
-                    <h4 className="text-[12px] font-semibold text-white leading-none mb-1 font-poppins">{item.title}</h4>
+                    <h3 className="text-[12px] font-semibold text-white leading-none mb-1 font-poppins">{item.title}</h3>
                     <p className="text-[10px] text-gray-300 font-medium leading-tight pr-2">{item.desc}</p>
                   </div>
                 </div>
@@ -247,9 +247,9 @@ export default function Footer({ initialFooterData }: { initialFooterData?: any 
 
           {/* Get In Touch */}
           <div className="lg:border-r lg:border-white/10 lg:pr-4">
-            <h3 className="font-poppins font-semibold text-[#F3B71B] uppercase text-[13px] tracking-wider mb-1 ml-1 sm:ml-3">
+            <h2 className="font-poppins font-semibold text-[#F3B71B] uppercase text-[13px] tracking-wider mb-1 ml-1 sm:ml-3">
               GET IN TOUCH
-            </h3>
+            </h2>
             <Image src={uuogImg} alt="divider" width={101} height={14} loading="lazy" sizes="101px" className="h-3.5 w-auto -mt-1.5 mb-2.5 object-contain" />
 
             <div className="text-[12px] text-gray-200 font-medium space-y-1.5 mb-4 break-all md:whitespace-nowrap">
@@ -278,7 +278,7 @@ export default function Footer({ initialFooterData }: { initialFooterData?: any 
               </p>
             </div>
 
-            <h4 className="font-poppins font-semibold text-gray-400 uppercase mb-1 text-[11px] tracking-widest">ADDRESS:</h4>
+            <h3 className="font-poppins font-semibold text-gray-400 uppercase mb-1 text-[11px] tracking-widest">ADDRESS:</h3>
             <p className="text-[12px] text-gray-200 font-medium mb-3 leading-relaxed whitespace-pre-line">
               {contactAddress}
             </p>
@@ -291,7 +291,7 @@ export default function Footer({ initialFooterData }: { initialFooterData?: any 
               VIEW ON GOOGLE MAPS
             </a>
 
-            <h4 className="font-poppins font-semibold text-gray-400 uppercase mb-1.5 text-[11px] tracking-widest">CONFERENCE HELPLINE</h4>
+            <h3 className="font-poppins font-semibold text-gray-400 uppercase mb-1.5 text-[11px] tracking-widest">CONFERENCE HELPLINE</h3>
             <a
               href={`tel:${conferenceHelpline.replace(/\s+/g, "")}`}
               className="flex items-center gap-2 text-white font-semibold text-[14px] font-poppins hover:opacity-90 transition-opacity"
@@ -306,9 +306,9 @@ export default function Footer({ initialFooterData }: { initialFooterData?: any 
           {/* Organised By & Connect */}
           <div className="flex flex-col items-center sm:items-start text-center sm:text-left">
             {/* Same width as the logo box below (w-56) so the heading is centred over it */}
-            <h3 className="w-56 text-center font-poppins font-semibold text-[#F3B71B] uppercase text-[13px] tracking-wider mb-1">
+            <h2 className="w-56 text-center font-poppins font-semibold text-[#F3B71B] uppercase text-[13px] tracking-wider mb-1">
               Organised by:
-            </h3>
+            </h2>
 
             {/* Namo Logo with Sparkles */}
             <div className="relative inline-block w-56 my-2 bg-white rounded-md p-2 shadow-sm">
@@ -343,7 +343,7 @@ export default function Footer({ initialFooterData }: { initialFooterData?: any 
               />
             </div>
 
-            <h4 className="font-poppins font-semibold text-[#F3B71B] uppercase mb-2 text-[12px] tracking-wider">CONNECT WITH US</h4>
+            <h3 className="font-poppins font-semibold text-[#F3B71B] uppercase mb-2 text-[12px] tracking-wider">CONNECT WITH US</h3>
             <div className="flex items-center justify-center sm:justify-start gap-2.5 mt-1">
               {socialList.map(({ Icon, label, url }, idx) => (
                 <a

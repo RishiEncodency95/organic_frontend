@@ -202,7 +202,7 @@ function LeafHeading({ title }: { title: string }) {
     return (
         <div className="flex items-center gap-2.5">
             <LeafIcon className="h-[30px] w-[30px] shrink-0" />
-            <h3 className="text-[22px] font-semibold leading-none text-[#00563f]">{title}</h3>
+            <h2 className="text-[22px] font-semibold leading-none text-[#00563f]">{title}</h2>
         </div>
     );
 }

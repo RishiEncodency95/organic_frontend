@@ -88,16 +88,34 @@ const AnimatedCounter = ({ value }: { value: string }) => {
   );
 };
 
-export default function HeroSection() {
-  const data = HERO_EPROMOTION_DATA[0];
+// Admin values override the defaults above; an empty field keeps the default.
+const toHeroData = (d: any) => {
+  const base = HERO_EPROMOTION_DATA[0];
+  return {
+    ...base,
+    titleLine1: d?.titleLine1 || base.titleLine1,
+    titleHighlight: d?.titleHighlight ?? base.titleHighlight,
+    badgeText: d?.badgeText || base.badgeText,
+    descriptionBold: d?.descriptionBold || base.descriptionBold,
+    descriptionText: d ? d.descriptionText || "" : base.descriptionText,
+    stats: (Array.isArray(d?.stats) && d.stats.length > 0 ? d.stats : base.stats) as typeof base.stats,
+    image: typeof d?.image === "string" && d.image.trim() ? d.image.trim() : bgImg.src,
+    imageAlt: d?.imageAlt || "E-Promotion opportunities at Bharat Organic Expo 2027",
+  };
+};
+
+export default function HeroSection({ initialData }: { initialData?: any }) {
+  const data = toHeroData(initialData);
 
   return (
     <section className="relative w-full min-h-[380px] sm:min-h-[420px] md:min-h-[450px] lg:min-h-[470px] flex items-center bg-[#f4f7f6] overflow-hidden font-inter pt-3 md:pt-5 pb-4 md:pb-6">
       {/* Background Image */}
       <div 
         className="absolute inset-0 z-0"
+        role="img"
+        aria-label={data.imageAlt}
         style={{
-          backgroundImage: `url(${bgImg.src})`,
+          backgroundImage: `url(${data.image})`,
           backgroundPosition: "center top",
           backgroundSize: "cover",
           backgroundRepeat: "no-repeat",
@@ -140,7 +158,7 @@ export default function HeroSection() {
                 )}
                 
                 <div className="mb-1">
-                  {ICON_MAP[stat.iconKey]}
+                  {ICON_MAP[stat.iconKey] || ICON_MAP.Users}
                 </div>
                 <span className="text-xs sm:text-sm md:text-base lg:text-[17px] font-semibold text-[#d97706] font-poppins leading-none mb-0.5">
                   <AnimatedCounter value={stat.number} />

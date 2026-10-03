@@ -36,9 +36,9 @@ const BlogExperts = () => {
                 alt={e.name}
                 className="w-12 h-12 rounded-full object-cover mb-3 ring-2 ring-[#e8f2eb]"
               />
-              <h4 className="font-poppins font-semibold text-[14px] sm:text-[15px] text-[#1b5e20] leading-snug">
+              <h3 className="font-poppins font-semibold text-[14px] sm:text-[15px] text-[#1b5e20] leading-snug">
                 {e.name}
-              </h4>
+              </h3>
               <p className="text-[11px] sm:text-[12px] text-gray-500 mb-2 font-medium font-inter">{e.role}</p>
               <p className="text-[12px] text-gray-600 italic leading-relaxed flex-1 font-inter">"{e.quote}"</p>
               <a href="#" className="group mt-3 text-[11px] sm:text-[12px] font-semibold text-[#3b8c2a] uppercase tracking-wider flex items-center gap-1 font-poppins">

@@ -378,9 +378,9 @@ const RefundPolicy: React.FC = () => {
 
             {/* Item 1 */}
             <div className="flex flex-col items-center text-center group flex-1">
-              <h4 className="text-sm md:text-[16px] font-semibold text-white leading-none font-inter whitespace-nowrap">
+              <h3 className="text-sm md:text-[16px] font-semibold text-white leading-none font-inter whitespace-nowrap">
                 Bharat Organic Expo 2027
-              </h4>
+              </h3>
               <p className="text-[10px] md:text-[14px] font-semibold text-[#f5c842] uppercase tracking-widest leading-tight mt-1 font-inter">
                 Premier Exhibition & Conference
               </p>
@@ -390,9 +390,9 @@ const RefundPolicy: React.FC = () => {
 
             {/* Item 2 */}
             <div className="flex flex-col items-center text-center group flex-1">
-              <h4 className="text-sm md:text-[16px] font-semibold text-white leading-none font-inter whitespace-nowrap">
+              <h3 className="text-sm md:text-[16px] font-semibold text-white leading-none font-inter whitespace-nowrap">
                 Namo Gange Wellness Pvt. Ltd.
-              </h4>
+              </h3>
               <p className="text-[10px] md:text-[14px] font-semibold text-[#f5c842] uppercase tracking-widest leading-tight mt-1 font-inter">
                 Organised By
               </p>
@@ -402,9 +402,9 @@ const RefundPolicy: React.FC = () => {
 
             {/* Item 3 */}
             <div className="flex flex-col items-center text-center group flex-1">
-              <h4 className="text-sm md:text-[16px] font-semibold text-white leading-none font-inter whitespace-nowrap">
+              <h3 className="text-sm md:text-[16px] font-semibold text-white leading-none font-inter whitespace-nowrap">
                 Council of AYUSH (ICOA)
-              </h4>
+              </h3>
               <p className="text-[10px] md:text-[14px] font-semibold text-[#f5c842] uppercase tracking-widest leading-tight mt-1 font-inter">
                 In Association (Buyer-Seller)
               </p>
@@ -414,9 +414,9 @@ const RefundPolicy: React.FC = () => {
 
             {/* Item 4 */}
             <div className="flex flex-col items-center text-center group flex-1">
-              <h4 className="text-sm md:text-[16px] font-semibold text-white leading-none font-inter whitespace-nowrap">
+              <h3 className="text-sm md:text-[16px] font-semibold text-white leading-none font-inter whitespace-nowrap">
                 Namo Gange Trust
-              </h4>
+              </h3>
               <p className="text-[10px] md:text-[14px] font-semibold text-[#f5c842] uppercase tracking-widest leading-tight mt-1 font-inter">
                 In Association (Conferences)
               </p>

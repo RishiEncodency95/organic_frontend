@@ -3,6 +3,7 @@ import type { Metadata } from "next";
 import { OG_IMAGE, OG_IMAGE_ALT } from "@/lib/seo";
 import { seoApi } from "@/lib/api";
 import AdminSchema from "@/components/seo/AdminSchema";
+import { getSectionData } from "@/lib/serverData";
 import HeroSection from "../components/opportunity/partnership/HeroSection";
 import PartnershipOpportunities from "../components/opportunity/partnership/PartnershipOpportunities";
 import WhyPartner from "../components/opportunity/partnership/WhyPartner";
@@ -75,6 +76,7 @@ export async function generateMetadata(): Promise<Metadata> {
 }
 
 export default async function PartnershipPage() {
+  const heroData = await getSectionData("/website/opportunities/partnership/hero");
   const isLocal = process.env.NODE_ENV !== "production";
   let seoData: any = null;
   try {
@@ -89,7 +91,7 @@ export default async function PartnershipPage() {
   return (
     <main className="w-full bg-[#fbfcf8]">
       <AdminSchema schema={schemaContent} />
-      <HeroSection />
+      <HeroSection initialData={heroData} />
       <PartnershipOpportunities />
       <WhyPartner />
       <EnquiryForm />

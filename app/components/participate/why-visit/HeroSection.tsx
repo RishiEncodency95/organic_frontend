@@ -118,9 +118,18 @@ const HERO_SECTION_DATA = [
 export default function HeroSection({ sectionData }: { sectionData?: any }) {
   const fallback = HERO_SECTION_DATA[0];
   const tagline = sectionData?.eyebrow || fallback.tagline;
-  const headlineLine1 = sectionData?.titlePrimary || fallback.headlineLine1;
-  const headlineLine2 = sectionData?.titleSecondary || fallback.headlineLine2;
-  const headlineLine3 = sectionData?.titleHighlight || fallback.headlineLine3;
+  // H1 is a single admin field: each sentence on its own line, the last one in green.
+  // Older saves only have the three parts, so those are joined first.
+  const fullTitle =
+    (typeof sectionData?.title === "string" && sectionData.title.trim()) ||
+    [sectionData?.titlePrimary, sectionData?.titleSecondary, sectionData?.titleHighlight]
+      .filter((x: unknown) => typeof x === "string" && x.trim())
+      .join(" ") ||
+    [fallback.headlineLine1, fallback.headlineLine2, fallback.headlineLine3].join(" ");
+  const sentences = (fullTitle.match(/[^.!?]+[.!?]*/g) || [fullTitle]).map((x: string) => x.trim()).filter(Boolean);
+  const headlineLine3 = sentences[sentences.length - 1] || "";
+  const headlineLine1 = sentences.length > 1 ? sentences[0] : "";
+  const headlineLine2 = sentences.slice(1, -1).join(" ");
   const description = sectionData?.description || fallback.description;
   const rawBg = sectionData?.image || sectionData?.bgImage;
   const bgImg = rawBg && typeof rawBg === "string" && rawBg.trim() !== "" ? rawBg : visitBanner.src;
@@ -442,9 +451,9 @@ export default function HeroSection({ sectionData }: { sectionData?: any }) {
                         <IconComponent className="w-3.5 h-3.5 md:w-4 md:h-4 text-[#facc15] stroke-[2]" />
                       </div>
                       <div className="flex flex-col text-left justify-center">
-                        <h4 className="text-[14px] sm:text-[15px] md:text-[16px] font-semibold text-white leading-none font-inter mb-0.5">
+                        <div className="text-[14px] sm:text-[15px] md:text-[16px] font-semibold text-white leading-none font-inter mb-0.5">
                           <StatCounter value={item.val} />
-                        </h4>
+                        </div>
                         <p className="text-[9px] sm:text-[9.5px] md:text-[10px] font-semibold text-[#facc15] uppercase tracking-wider leading-none font-inter">
                           {item.label}
                         </p>
