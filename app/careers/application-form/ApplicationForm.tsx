@@ -185,7 +185,9 @@ function SelectField({
           onChange={(e) => onChange(e.target.value)}
           className="min-w-0 flex-1 appearance-none bg-transparent pr-[20px] text-[13px] text-[#29445f] outline-none disabled:cursor-not-allowed font-medium"
         >
-          {options.map((item) => (
+          {/* Callers may append the candidate's own value (e.g. "3 Years"), which can repeat
+              a preset option; duplicates and blanks are dropped so each option (and key) is unique. */}
+          {Array.from(new Set(options.filter(Boolean))).map((item) => (
             <option key={item} value={item}>
               {item}
             </option>
