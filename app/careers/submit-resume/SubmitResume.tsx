@@ -1,6 +1,6 @@
 "use client";
 
-import { createContext, useContext, useRef, useState } from "react";
+import { createContext, useContext, useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
@@ -28,6 +28,7 @@ import {
   X,
 } from "lucide-react";
 import PhoneVerifyModal from "../PhoneVerifyModal";
+import { API_URL } from "@/lib/api";
 
 /* =========================================================
    CHANGE ONLY SCORE
@@ -475,9 +476,51 @@ function useGoToCareers() {
   };
 }
 
+/* =========================================================
+   RESULT MESSAGES (admin Career Settings → Result Messages)
+   ========================================================= */
+
+type ResultMessage = { active: boolean; title: string; subtitle: string; web: string };
+export type ResultMessages = {
+  eligible?: ResultMessage;
+  partial?: ResultMessage;
+  notEligible?: ResultMessage;
+  supportEmail?: string;
+  supportPhone?: string;
+};
+
+// Fetched once per page load and shared by every result popup.
+let resultMessagesRequest: Promise<ResultMessages | null> | null = null;
+const loadResultMessages = () => {
+  if (!resultMessagesRequest) {
+    resultMessagesRequest = fetch(`${API_URL}/careers/result-messages`)
+      .then((res) => (res.ok ? res.json() : null))
+      .then((json) => (json?.data as ResultMessages) ?? null)
+      .catch(() => null)
+      .then((data) => {
+        if (!data) resultMessagesRequest = null; // retry on the next popup
+        return data;
+      });
+  }
+  return resultMessagesRequest;
+};
+
+function useResultMessages() {
+  const [messages, setMessages] = useState<ResultMessages | null>(null);
+  useEffect(() => {
+    let active = true;
+    loadResultMessages().then((data) => active && setMessages(data));
+    return () => {
+      active = false;
+    };
+  }, []);
+  return messages;
+}
+
 export function getMatchData(
   candidate: CandidateProfileData = defaultCandidateData,
-  overrideScore?: number
+  overrideScore?: number,
+  resultMessages?: ResultMessages | null
 ): MatchContextType {
   const score = typeof overrideScore === "number" ? overrideScore : candidate.score;
   const level: MatchLevel =
@@ -503,6 +546,29 @@ export function getMatchData(
   } else {
     config.title = `Thank You, ${firstName}!`;
     config.subtitle = `This position may not be the right fit for you at this time.`;
+  }
+
+  // Admin-written heading / sub-heading / message for this result, with {{variables}} filled.
+  // A message switched off (or not loaded) keeps the built-in text above.
+  const message = resultMessages?.[level === "high" ? "eligible" : level === "moderate" ? "partial" : "notEligible"];
+  if (message?.active) {
+    const vars: Record<string, string> = {
+      candidate_name: cleanFullName,
+      first_name: firstName,
+      job_title: candidate.jobDetails?.title || "this position",
+      company_name: "Bharat Organic Expo",
+      current_ctc: "",
+      expected_ctc: "",
+      total_experience: "",
+      current_location: "",
+      application_link: typeof window !== "undefined" ? `${window.location.origin}/careers` : "",
+      support_email: resultMessages?.supportEmail || "",
+      support_phone: resultMessages?.supportPhone || "",
+    };
+    const fill = (text: string) => text.replace(/\{\{\s*(\w+)\s*\}\}/g, (_, key: string) => vars[key] ?? "");
+    if (message.title?.trim()) config.title = fill(message.title);
+    config.subtitle = fill(message.subtitle || "");
+    if (message.web?.trim()) config.description = fill(message.web);
   }
 
   if (candidate.summary) {
@@ -2024,7 +2090,8 @@ export function EligibilityPopupContent({
     onCandidateChange?.({ ...merged, ...patch });
   };
 
-  const matchData = { ...getMatchData(merged, score), updateCandidate, onClose };
+  const resultMessages = useResultMessages();
+  const matchData = { ...getMatchData(merged, score, resultMessages), updateCandidate, onClose };
 
   return (
     <MatchContext.Provider value={matchData}>
