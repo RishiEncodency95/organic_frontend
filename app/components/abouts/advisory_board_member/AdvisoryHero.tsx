@@ -42,11 +42,25 @@ const DEFAULT_DATA: AdvisoryHeroData = {
     ],
 };
 
+// The H1 is a single admin field; its last two words are always the orange line
+// (only the last word for a two-word title), the rest is green.
+const splitTitle = (title: string) => {
+    const words = title.split(/\s+/).filter(Boolean);
+    const accentCount = words.length > 2 ? 2 : words.length > 1 ? 1 : 0;
+    return {
+        titlePart1: words.slice(0, words.length - accentCount).join(" "),
+        titlePart2: words.slice(words.length - accentCount).join(" "),
+    };
+};
+
 const toAdvisoryHeroData = (d: any): AdvisoryHeroData => {
     const hasSubtitle = typeof d?.subtitlePart1 === "string" || typeof d?.subtitlePart2 === "string";
+    const savedTitle = [d?.titlePart1, d?.titlePart2]
+        .filter((x: unknown) => typeof x === "string" && x.trim())
+        .join(" ")
+        .trim();
     return {
-        titlePart1: d?.titlePart1 || DEFAULT_DATA.titlePart1,
-        titlePart2: d?.titlePart2 || DEFAULT_DATA.titlePart2,
+        ...splitTitle(savedTitle || `${DEFAULT_DATA.titlePart1} ${DEFAULT_DATA.titlePart2}`),
         subtitlePart1: hasSubtitle ? d.subtitlePart1 || "" : DEFAULT_DATA.subtitlePart1,
         subtitlePart2: hasSubtitle ? d.subtitlePart2 || "" : DEFAULT_DATA.subtitlePart2,
         description: d?.description || DEFAULT_DATA.description,

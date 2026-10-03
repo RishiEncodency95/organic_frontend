@@ -91,7 +91,7 @@ export default async function WhyExhibitPage() {
       settingsApi.get(),
       websiteApi.getExpoCategories(),
       seoApi.getByPage("why-exhibit", isLocal ? "local" : "live"),
-      websiteApi.getTestimonialsCarousel(),
+      websiteApi.getWhyExhibitTestimonials(),
     ]);
     if (settingsRes.status === "fulfilled") settingsData = settingsRes.value;
     if (expoRes.status === "fulfilled") expoCategoriesData = expoRes.value?.data || expoRes.value;
@@ -161,6 +161,8 @@ export default async function WhyExhibitPage() {
             quote: t.quote || t.message || "",
             color: t.color || "#1b5e20",
             initials: t.initials || initials,
+            image: t.logo || "",
+            imageAlt: t.logoAlt || nameStr,
           };
         })
       : testimonialsSec?.items,

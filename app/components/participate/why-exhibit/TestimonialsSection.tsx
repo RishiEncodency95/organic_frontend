@@ -64,7 +64,21 @@ const TESTIMONIALS_DATA = [
 
 const CHAR_LIMIT = 155;
 
-const TestimonialCard = ({ item, index, expandedId, setExpandedId }: { item: typeof TESTIMONIALS_DATA[0]; index: number; expandedId: number | null; setExpandedId: (id: number | null) => void }) => {
+type TestimonialItem = (typeof TESTIMONIALS_DATA)[number] & { image?: string; imageAlt?: string };
+
+// Shows the uploaded photo when there is one, otherwise the first + last name initials.
+const Avatar = ({ item, className, style }: { item: TestimonialItem; className: string; style?: React.CSSProperties }) =>
+  item.image ? (
+    <div className={`${className} overflow-hidden bg-white`} style={style}>
+      <img src={item.image} alt={item.imageAlt || item.companyName1} className="w-full h-full object-cover" loading="lazy" />
+    </div>
+  ) : (
+    <div className={className} style={{ ...style, background: item.color }}>
+      {item.initials}
+    </div>
+  );
+
+const TestimonialCard = ({ item, index, expandedId, setExpandedId }: { item: TestimonialItem; index: number; expandedId: number | null; setExpandedId: (id: number | null) => void }) => {
   const isExpanded = expandedId === index;
   const isLong = item.quote.length > CHAR_LIMIT;
 
@@ -72,12 +86,11 @@ const TestimonialCard = ({ item, index, expandedId, setExpandedId }: { item: typ
     <div className="relative flex flex-col w-[260px] md:w-[270px] flex-shrink-0 font-inter" style={{ paddingTop: "32px" }}>
       {/* Avatar */}
       <div className="absolute top-0 left-1/2 z-20 flex items-center justify-center" style={{ transform: "translateX(-50%)" }}>
-        <div
+        <Avatar
+          item={item}
           className="w-16 h-16 rounded-full border-[3px] border-white flex items-center justify-center font-black text-white text-lg font-poppins"
-          style={{ background: item.color, boxShadow: "0 4px 18px rgba(0,0,0,0.15), 0 0 0 2px #e2e8f0" }}
-        >
-          {item.initials}
-        </div>
+          style={{ boxShadow: "0 4px 18px rgba(0,0,0,0.15), 0 0 0 2px #e2e8f0" }}
+        />
       </div>
 
       {/* Card */}
@@ -108,9 +121,10 @@ const TestimonialCard = ({ item, index, expandedId, setExpandedId }: { item: typ
                 <p className="text-slate-800 text-[13px] font-medium leading-relaxed font-inter">{item.quote}</p>
               </div>
               <div className="flex items-center gap-2.5 px-4 py-3 border-t border-slate-100 flex-shrink-0" style={{ background: "#fafafa" }}>
-                <div className="w-8 h-8 rounded-full flex items-center justify-center font-black text-white text-[11px] flex-shrink-0 font-poppins" style={{ background: item.color }}>
-                  {item.initials}
-                </div>
+                <Avatar
+                  item={item}
+                  className="w-8 h-8 rounded-full flex items-center justify-center font-black text-white text-[11px] flex-shrink-0 font-poppins"
+                />
                 <div className="min-w-0 flex-1">
                   <div className="font-semibold text-[13px] leading-tight text-[#1b5e20] font-poppins">{item.companyName1}</div>
                   {item.companyName2 && <div className="font-semibold text-[11px] leading-tight text-[#4B1426] mt-0.5 font-inter">{item.companyName2}</div>}
@@ -159,7 +173,7 @@ const TestimonialCard = ({ item, index, expandedId, setExpandedId }: { item: typ
 const TestimonialsSection = ({ sectionData }: { sectionData?: any }) => {
   const [expandedId, setExpandedId] = useState<number | null>(null);
   const title = sectionData?.title || "What Our Exhibitors Say";
-  const items = Array.isArray(sectionData?.items) && sectionData.items.length > 0
+  const items: TestimonialItem[] = Array.isArray(sectionData?.items) && sectionData.items.length > 0
     ? sectionData.items.map((it: any, idx: number) => {
         const fallback = TESTIMONIALS_DATA[idx % TESTIMONIALS_DATA.length];
         const nameStr = it.companyName1 || it.company1 || it.name || fallback.companyName1;
@@ -173,6 +187,8 @@ const TestimonialsSection = ({ sectionData }: { sectionData?: any }) => {
           quote: it.quote || it.message || fallback.quote,
           initials: it.initials || autoInitials,
           color: it.color || fallback.color,
+          image: it.image || "",
+          imageAlt: it.imageAlt || "",
         };
       })
     : TESTIMONIALS_DATA;

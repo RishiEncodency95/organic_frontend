@@ -511,6 +511,7 @@ export const websiteApi = {
     getBeyondExhibition: async () => apiCall('/website/home/beyond-exhibition'),
     getSponsorsAndAttend: async () => apiCall('/website/home/sponsors-attend'),
     getTestimonialsCarousel: async () => apiCall('/website/home/testimonials-carousel'),
+    getWhyExhibitTestimonials: async () => apiCall('/website/participate/why-exhibit/testimonials'),
     getWhyVisitMatters: async () => apiCall('/website/participate/why-visit/matters'),
     getWhyVisitSegments: async () => apiCall('/website/participate/why-visit/segments'),
 };
