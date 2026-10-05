@@ -9,6 +9,13 @@ import { readChatSession } from "./chatSession";
 // so the chatbot adds almost nothing to page load.
 const ChatPanel = dynamic(() => import("./ChatPanel"), { ssr: false });
 
+// Animated launcher icon (Lottie). Loaded in the browser only; until it is ready, or if the
+// file is missing, the plain chat icon is shown instead.
+const DotLottieReact = dynamic(() => import("@lottiefiles/dotlottie-react").then((m) => m.DotLottieReact), {
+    ssr: false,
+});
+const LAUNCHER_LOTTIE = "/chatbot.lottie";
+
 const TEASER_KEY = "organicMitraTeaserSeen";
 
 const ChatLauncher: React.FC = () => {
@@ -16,6 +23,7 @@ const ChatLauncher: React.FC = () => {
     const [opened, setOpened] = useState(false);
     const [teaser, setTeaser] = useState(false);
     const [panelKey, setPanelKey] = useState(0);
+    const [lottieState, setLottieState] = useState<"loading" | "ready" | "failed">("loading");
 
     // A small "Namaste" bubble, once per browser session, a few seconds after the page loads
     useEffect(() => {
@@ -85,27 +93,39 @@ const ChatLauncher: React.FC = () => {
                     aria-expanded={open}
                     className="group relative block shrink-0"
                 >
-                    {/* Hover label */}
+                    {/* "Help" label, always shown next to the robot while the chat is closed */}
                     {!open && (
-                        <span className="pointer-events-none absolute right-full top-1/2 -translate-y-1/2 mr-3 px-3 py-1.5 rounded-lg bg-[#14532d] text-white text-[13px] font-semibold font-poppins whitespace-nowrap shadow-lg opacity-0 translate-x-1 transition-all duration-200 group-hover:opacity-100 group-hover:translate-x-0 group-focus-visible:opacity-100 group-focus-visible:translate-x-0">
+                        <span className="pointer-events-none absolute right-full top-1/2 -translate-y-1/2 -mr-1 px-3 py-1.5 rounded-lg bg-[#14532d] text-white text-[13px] font-semibold font-poppins whitespace-nowrap shadow-lg transition-transform duration-200 group-hover:-translate-x-1">
                             Help
                             <span className="absolute left-full top-1/2 -translate-y-1/2 border-[6px] border-transparent border-l-[#14532d]" aria-hidden="true" />
                         </span>
                     )}
 
-                    <div className="relative w-10 h-10 lg:w-12 lg:h-12 bg-gradient-to-br from-[#14532d] to-[#3b8c2a] rounded-full flex items-center justify-center shadow-lg hover:shadow-2xl transition-all duration-300 hover:scale-110">
-                        {open ? (
+                    {open ? (
+                        <div className="relative w-10 h-10 lg:w-12 lg:h-12 bg-gradient-to-br from-[#14532d] to-[#3b8c2a] rounded-full flex items-center justify-center shadow-lg hover:shadow-2xl transition-all duration-300 hover:scale-110">
                             <X className="w-5 h-5 lg:w-6 lg:h-6 text-white relative z-10" strokeWidth={2.5} />
-                        ) : (
-                            <MessageCircleMore className="w-5 h-5 lg:w-6 lg:h-6 text-white relative z-10" strokeWidth={2.5} />
-                        )}
-
-                        {/* Pulse Effect */}
-                        {!open && <div className="absolute inset-0 rounded-full bg-[#3b8c2a] opacity-75 animate-ping" />}
-
-                        {/* Shine Effect */}
-                        <div className="absolute inset-0 rounded-full bg-gradient-to-tr from-transparent via-white/20 to-transparent animate-pulse" />
-                    </div>
+                        </div>
+                    ) : (
+                        <div className="relative w-24 h-24 lg:w-28 lg:h-28 flex items-center justify-center transition-transform duration-300 hover:scale-110">
+                            {lottieState !== "failed" && (
+                                <DotLottieReact
+                                    src={LAUNCHER_LOTTIE}
+                                    loop
+                                    autoplay
+                                    className={`absolute inset-0 w-full h-full transition-opacity duration-300 ${lottieState === "ready" ? "opacity-100" : "opacity-0"}`}
+                                    dotLottieRefCallback={(player) => {
+                                        player?.addEventListener("load", () => setLottieState("ready"));
+                                        player?.addEventListener("loadError", () => setLottieState("failed"));
+                                    }}
+                                />
+                            )}
+                            {lottieState !== "ready" && (
+                                <div className="relative w-10 h-10 lg:w-12 lg:h-12 bg-gradient-to-br from-[#14532d] to-[#3b8c2a] rounded-full flex items-center justify-center shadow-lg">
+                                    <MessageCircleMore className="w-5 h-5 lg:w-6 lg:h-6 text-white relative z-10" strokeWidth={2.5} />
+                                </div>
+                            )}
+                        </div>
+                    )}
                 </button>
             </div>
         </>

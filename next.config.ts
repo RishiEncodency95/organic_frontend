@@ -40,6 +40,11 @@ const nextConfig: NextConfig = {
             key: "Content-Security-Policy",
             value: "frame-ancestors 'self' http://localhost:3001;",
           },
+          {
+            // HSTS: browsers always open the site (and its subdomains) over HTTPS for a year.
+            key: "Strict-Transport-Security",
+            value: "max-age=31536000; includeSubDomains",
+          },
         ],
       },
     ];
