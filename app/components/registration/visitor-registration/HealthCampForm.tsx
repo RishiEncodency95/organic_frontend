@@ -1,8 +1,7 @@
 "use client";
 import React, { useState, useEffect } from "react";
-import RegistrationSuccess from "./RegistrationSuccess";
-import { ShieldCheck, HeartPulse, Loader2, CheckCircle, Activity, Calendar, Heart } from "lucide-react";
-import { crmApi, visitorApi } from "../../../../lib/api";
+import { CheckCircle2, ShieldCheck, HeartPulse, Loader2, CheckCircle, Activity, Calendar, Heart } from "lucide-react";
+import { crmApi, verifyApi, visitorApi } from "../../../../lib/api";
 import Swal from 'sweetalert2';
 import { toOptions, useDropdowns } from "@/lib/dropdowns";
 
@@ -33,7 +32,6 @@ const VISITOR_DROPDOWNS = {
 export default function HealthCampForm() {
   const dropdowns = useDropdowns(VISITOR_DROPDOWNS);
   const [submitted, setSubmitted] = useState(false);
-  const [registrationNo, setRegistrationNo] = useState("");
   const [loading, setLoading] = useState(false);
 
   const [countries, setCountries] = useState<any[]>([]);
@@ -113,7 +111,7 @@ export default function HealthCampForm() {
     let finalValue = type === 'checkbox' ? checked : value;
 
     // Numeric field validations (no chars, spaces allowed)
-    if (name === 'mobileNo' || name === 'alternateNo' || name === 'whatsappNumber' || name === 'mobileNumber' || name === 'alternateNumber') {
+    if (name === 'mobile' || name === 'mobileNo' || name === 'alternateNo' || name === 'whatsappNumber' || name === 'mobileNumber' || name === 'alternateNumber') {
       finalValue = String(finalValue).replace(/\D/g, '').slice(0, 10);
     }
     if (name === 'pinCode' || name === 'companyPincode') {
@@ -137,14 +135,72 @@ export default function HealthCampForm() {
     }));
   };
 
+  // WhatsApp OTP for the mobile number
+  const [otpSent, setOtpSent] = useState(false);
+  const [otpVerified, setOtpVerified] = useState(false);
+  const [mobileOtp, setMobileOtp] = useState('');
+  const [otpBusy, setOtpBusy] = useState(false);
+  const [resendTimer, setResendTimer] = useState(0);
+
+  useEffect(() => {
+    if (resendTimer <= 0) return;
+    const id = setTimeout(() => setResendTimer((t) => t - 1), 1000);
+    return () => clearTimeout(id);
+  }, [resendTimer]);
+
+  const handleRequestOtp = async () => {
+    if (!/^[6-9]\d{9}$/.test(formData.mobile)) {
+      Swal.fire({ scrollbarPadding: false, icon: 'warning', title: 'Invalid Number', text: 'Please enter a valid 10-digit mobile number.' });
+      return;
+    }
+    setOtpBusy(true);
+    try {
+      const res = await verifyApi.sendPhoneOtp(formData.mobile, 'HEALTH_CAMP', formData.firstName);
+      if (res?.success) {
+        setOtpSent(true);
+        setMobileOtp('');
+        setResendTimer(30);
+        Swal.fire({ scrollbarPadding: false, icon: 'success', title: 'OTP Sent', text: 'OTP sent to your WhatsApp number.', timer: 2000, showConfirmButton: false });
+      } else {
+        Swal.fire({ scrollbarPadding: false, icon: 'error', title: 'Error', text: res?.message || 'Failed to send OTP.' });
+      }
+    } catch {
+      Swal.fire({ scrollbarPadding: false, icon: 'error', title: 'Error', text: 'Failed to send OTP.' });
+    }
+    setOtpBusy(false);
+  };
+
+  const handleVerifyOtp = async () => {
+    if (mobileOtp.length !== 6) {
+      Swal.fire({ scrollbarPadding: false, icon: 'warning', title: 'Invalid OTP', text: 'Please enter a valid 6-digit OTP.' });
+      return;
+    }
+    setOtpBusy(true);
+    try {
+      const res = await verifyApi.verifyPhoneOtp(formData.mobile, mobileOtp);
+      if (res?.success) {
+        setOtpVerified(true);
+        Swal.fire({ scrollbarPadding: false, icon: 'success', title: 'Verified', text: 'Verified successfully!', timer: 2000, showConfirmButton: false });
+      } else {
+        Swal.fire({ scrollbarPadding: false, icon: 'error', title: 'Invalid OTP', text: res?.message || 'Verification failed.' });
+      }
+    } catch {
+      Swal.fire({ scrollbarPadding: false, icon: 'error', title: 'Error', text: 'Verification failed.' });
+    }
+    setOtpBusy(false);
+  };
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    if (!otpVerified) {
+      Swal.fire({ scrollbarPadding: false, icon: 'warning', title: 'Verification Required', text: 'Please verify your WhatsApp number with OTP.' });
+      return;
+    }
     setLoading(true);
     try {
       const res = await visitorApi.submitHealthCamp(formData);
       if (res) {
         setSubmitted(true);
-        setRegistrationNo((res as { registrationNo?: string })?.registrationNo || "");
       } else {
         Swal.fire({ scrollbarPadding: false, icon: 'error', title: 'Submission Failed', text: 'Failed to submit registration.' });
       }
@@ -162,12 +218,15 @@ export default function HealthCampForm() {
 
   if (submitted) {
     return (
-      <RegistrationSuccess
-        title="Registration Successful!"
-        name={formData.firstName}
-        message="Your registration for the Free Health Camp at Bharat Organic Expo 2027 has been received."
-        registrationNo={registrationNo}
-      />
+      <div className="flex flex-col items-center justify-center py-16 text-center">
+        <div className="w-20 h-20 rounded-full bg-[#fff1f2] flex items-center justify-center mb-6 shadow-lg">
+          <CheckCircle2 size={40} className="text-[#e11d48]" />
+        </div>
+        <h3 className="text-2xl font-bold text-[#1a3352] mb-2 font-poppins">Registration Successful!</h3>
+        <p className="text-gray-500 text-sm max-w-sm leading-relaxed">
+          Thank you for registering for the Free Health Camp. A confirmation will be sent to your email.
+        </p>
+      </div>
     );
   }
 
@@ -197,7 +256,36 @@ export default function HealthCampForm() {
           <div><label className={labelClasses}>First Name <span className="text-red-600">*</span></label><input required name="firstName" value={formData.firstName} onChange={handleChange} className={inputClasses} placeholder="First Name" /></div>
           <div><label className={labelClasses}>Last Name <span className="text-red-600">*</span></label><input required name="lastName" value={formData.lastName} onChange={handleChange} className={inputClasses} placeholder="Last Name" /></div>
           <div><label className={labelClasses}>Email Address <span className="text-red-600">*</span></label><input required type="email" name="email" value={formData.email} onChange={handleChange} className={inputClasses} placeholder="Email" /></div>
-          <div><label className={labelClasses}>Mobile Number <span className="text-red-600">*</span></label><input required type="tel" name="mobile" value={formData.mobile} onChange={handleChange} className={inputClasses} placeholder="Mobile No." /></div>
+          <div className="space-y-1">
+            <div className="flex justify-between items-end">
+              <label className={`${labelClasses} mb-0`}>WhatsApp Number <span className="text-red-600">*</span></label>
+              {otpSent && !otpVerified && (
+                <button type="button" onClick={handleRequestOtp} disabled={resendTimer > 0 || otpBusy} className="text-[#4d7f1d] text-[10px] font-bold uppercase disabled:opacity-50 hover:underline">
+                  {resendTimer > 0 ? `Resend (${resendTimer}s)` : 'Resend'}
+                </button>
+              )}
+            </div>
+            <div className="flex gap-2">
+              <input required type="tel" name="mobile" value={formData.mobile} onChange={handleChange} className={inputClasses} disabled={otpVerified || otpSent} placeholder="Mobile No." />
+              {!otpVerified && !otpSent && (
+                <button type="button" onClick={handleRequestOtp} disabled={!formData.mobile || otpBusy} className={`bg-[#4d7f1d] text-white px-3 rounded-[2px] transition hover:bg-[#3b6315] h-7 ${buttonTextClasses} disabled:opacity-50`}>
+                  {otpBusy ? <Loader2 className="animate-spin" size={14} /> : 'OTP'}
+                </button>
+              )}
+              {otpSent && !otpVerified && (
+                <>
+                  <input type="text" inputMode="numeric" autoComplete="one-time-code" maxLength={6} value={mobileOtp} onChange={(e) => setMobileOtp(e.target.value.replace(/\D/g, ''))} className={`${inputClasses.replace('w-full', '')} w-[80px] text-center tracking-widest`} placeholder="OTP" />
+                  <button type="button" onClick={handleVerifyOtp} disabled={otpBusy} className={`bg-[#4d7f1d] text-white px-3 rounded-[2px] transition hover:bg-[#3b6315] h-7 ${buttonTextClasses} disabled:opacity-50`}>
+                    {otpBusy ? <Loader2 className="animate-spin" size={14} /> : 'Verify'}
+                  </button>
+                  <button type="button" onClick={() => { setOtpSent(false); setMobileOtp(''); setResendTimer(0); }} className="text-[10px] font-bold uppercase text-slate-500 hover:underline">
+                    Change
+                  </button>
+                </>
+              )}
+              {otpVerified && <CheckCircle size={18} className="text-[#4d7f1d] self-center shrink-0" />}
+            </div>
+          </div>
           <div><label className={labelClasses}>Alternate No.</label><input type="tel" name="alternateNo" value={formData.alternateNo} onChange={handleChange} className={inputClasses} placeholder="Optional" /></div>
           <div><label className={labelClasses}>Date of Birth <span className="text-red-600">*</span></label><input required type="date" name="dateOfBirth" value={formData.dateOfBirth} onChange={handleChange} className={inputClasses} /></div>
           <div>
