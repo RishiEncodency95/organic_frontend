@@ -4,6 +4,7 @@ import React, { useEffect, useState } from "react";
 import dynamic from "next/dynamic";
 import { MessageCircleMore, X } from "lucide-react";
 import { readChatSession } from "./chatSession";
+import { useChatConfig } from "./chatConfig";
 
 // The panel (form, chat, streaming) is only downloaded the first time someone opens it,
 // so the chatbot adds almost nothing to page load.
@@ -24,6 +25,8 @@ const ChatLauncher: React.FC = () => {
     const [teaser, setTeaser] = useState(false);
     const [panelKey, setPanelKey] = useState(0);
     const [lottieState, setLottieState] = useState<"loading" | "ready" | "failed">("loading");
+    // Switched off / renamed from the admin panel's Chatbot Manager (Settings → published)
+    const config = useChatConfig();
 
     // A small "Namaste" bubble, once per browser session, a few seconds after the page loads
     useEffect(() => {
@@ -56,6 +59,8 @@ const ChatLauncher: React.FC = () => {
         setOpened(true);
         setOpen((v) => !v);
     };
+
+    if (config && !config.enabled) return null;
 
     return (
         <>
@@ -96,7 +101,7 @@ const ChatLauncher: React.FC = () => {
                     {/* "Help" label, always shown next to the robot while the chat is closed */}
                     {!open && (
                         <span className="pointer-events-none absolute right-full top-1/2 -translate-y-1/2 -mr-1 px-3 py-1.5 rounded-lg bg-[#14532d] text-white text-[13px] font-semibold font-poppins whitespace-nowrap shadow-lg transition-transform duration-200 group-hover:-translate-x-1">
-                            Help
+                            {config?.launcher?.trim() || "Help"}
                             <span className="absolute left-full top-1/2 -translate-y-1/2 border-[6px] border-transparent border-l-[#14532d]" aria-hidden="true" />
                         </span>
                     )}

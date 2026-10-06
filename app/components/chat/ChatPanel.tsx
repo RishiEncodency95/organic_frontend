@@ -8,9 +8,12 @@ import { ArrowLeft, ArrowRight, ArrowUpRight, Check, CheckCheck, ChevronDown, Fi
 import { API_URL, verifyApi } from "@/lib/api";
 import { SITE_CONFIG } from "@/app/constants/siteConfig";
 import { clearChatSession, newSessionId, readChatSession, saveChatSession } from "./chatSession";
+import { useChatConfig } from "./chatConfig";
 
 const CHAT_URL = process.env.NEXT_PUBLIC_CHAT_API_URL || `${API_URL}/chat`;
 const FALLBACK = "Maaf kijiye, abhi reply nahi de pa raha. Kripya +91 96549 00525 par call ya WhatsApp karein.";
+/** Questions a visitor can ask before name + mobile (WhatsApp OTP) are asked for */
+const FREE_QUESTIONS = 3;
 
 /** A quick reply: `step` continues a scripted flow on this page, `ask` sends the question to the assistant */
 type ChatOption = { label: string; ask?: string; step?: string; /** passed to the step instead of the label */ choice?: string };
@@ -399,6 +402,15 @@ const TEXT = {
             phone: { label: "Mobile Number", placeholder: "10-digit mobile number" },
         },
         continue: "Continue",
+        sendOtp: "Send OTP on WhatsApp",
+        otpLabel: "WhatsApp OTP",
+        otpPh: "6-digit OTP",
+        otpSent: (to: string) => `OTP sent on WhatsApp to +91 ${to}`,
+        verifyContinue: "Verify & Continue",
+        change: "Change",
+        resend: "Resend OTP",
+        resendIn: (s: number) => `Resend OTP in ${s}s`,
+        otpError: "Please enter the 6-digit OTP.",
         wait: "Please wait...",
         safe: "Your details are safe with us.",
         genericError: "Something went wrong. Please try again.",
@@ -460,6 +472,15 @@ const TEXT = {
             phone: { label: "मोबाइल नंबर", placeholder: "10 अंकों का मोबाइल नंबर" },
         },
         continue: "आगे बढ़ें",
+        sendOtp: "WhatsApp पर OTP भेजें",
+        otpLabel: "WhatsApp OTP",
+        otpPh: "6 अंकों का OTP",
+        otpSent: (to: string) => `+91 ${to} पर WhatsApp से OTP भेजा गया`,
+        verifyContinue: "वेरिफ़ाई करें और आगे बढ़ें",
+        change: "बदलें",
+        resend: "OTP दोबारा भेजें",
+        resendIn: (s: number) => `${s} सेकंड में OTP दोबारा भेजें`,
+        otpError: "कृपया 6 अंकों का OTP लिखें।",
         wait: "कृपया प्रतीक्षा करें...",
         safe: "आपका विवरण हमारे पास सुरक्षित है।",
         genericError: "कुछ गड़बड़ हो गई। कृपया दोबारा कोशिश करें।",
@@ -566,6 +587,10 @@ const LEAD_FIELDS = [
     },
 ] as const;
 
+/** Must match CHAT_LEAD_OTP_PROFILE in the backend's chat controller */
+const LEAD_OTP_PROFILE = "CHAT_LEAD";
+const OTP_RESEND_SECONDS = 30;
+
 type LeadForm = { name: string; phone: string };
 type LeadErrors = Partial<Record<keyof LeadForm, string>>;
 
@@ -630,6 +655,15 @@ const QUOTE_TEXT = {
         callbackSent: "Callback requested",
         callbackNote: "Callback requests are handled during working hours.",
         stallOptions: "Stall Options",
+        sendOtp: "Send OTP on WhatsApp",
+        otp: "WhatsApp OTP",
+        otpPh: "6-digit OTP",
+        otpSent: (to: string) => `OTP sent on WhatsApp to +91 ${to}`,
+        verifySubmit: "Verify & Submit",
+        resend: "Resend OTP",
+        resendIn: (s: number) => `Resend OTP in ${s}s`,
+        otpError: "Please enter the 6-digit OTP.",
+        verified: "Verified",
     },
     hi: {
         title: "कोटेशन अनुरोध",
@@ -658,6 +692,15 @@ const QUOTE_TEXT = {
         callbackSent: "कॉलबैक अनुरोध भेजा गया",
         callbackNote: "कॉलबैक अनुरोध कामकाजी समय में संभाले जाते हैं।",
         stallOptions: "स्टॉल विकल्प",
+        sendOtp: "WhatsApp पर OTP भेजें",
+        otp: "WhatsApp OTP",
+        otpPh: "6 अंकों का OTP",
+        otpSent: (to: string) => `+91 ${to} पर WhatsApp से OTP भेजा गया`,
+        verifySubmit: "वेरिफ़ाई करें और भेजें",
+        resend: "OTP दोबारा भेजें",
+        resendIn: (s: number) => `${s} सेकंड में OTP दोबारा भेजें`,
+        otpError: "कृपया 6 अंकों का OTP लिखें।",
+        verified: "वेरिफ़ाइड",
     },
 } as const;
 
@@ -668,37 +711,95 @@ type QuoteFormProps = {
     stall: string;
     sent: boolean;
     defaultName: string;
+    /** Number this chat already verified with the WhatsApp OTP; any other number is asked to verify */
+    verifiedPhone: string;
     onSubmit: (details: QuoteDetails) => Promise<string | null>;
     onChange: () => void;
     onBack: () => void;
 };
 
-const QuoteForm: React.FC<QuoteFormProps> = ({ lang, kind = "quote", stall, sent, defaultName, onSubmit, onChange, onBack }) => {
+const QuoteForm: React.FC<QuoteFormProps> = ({ lang, kind = "quote", stall, sent, defaultName, verifiedPhone, onSubmit, onChange, onBack }) => {
     const q = QUOTE_TEXT[lang];
     const callback = kind === "callback";
-    const [form, setForm] = useState<QuoteDetails>({ name: defaultName, phone: "", company: "", email: "", time: "" });
+    const [form, setForm] = useState<QuoteDetails>({ name: defaultName, phone: verifiedPhone, company: "", email: "", time: "" });
     const [agree, setAgree] = useState(false);
     const [errors, setErrors] = useState<QuoteErrors>({});
     const [formError, setFormError] = useState("");
     const [submitting, setSubmitting] = useState(false);
+    // WhatsApp OTP: the number it was sent to ("" until sent), the code, resend countdown, and the number it verified
+    const [otpSentTo, setOtpSentTo] = useState("");
+    const [otp, setOtp] = useState("");
+    const [timer, setTimer] = useState(0);
+    const [otpVerifiedFor, setOtpVerifiedFor] = useState("");
+
+    useEffect(() => {
+        if (!timer) return;
+        const id = window.setTimeout(() => setTimer((s) => s - 1), 1000);
+        return () => window.clearTimeout(id);
+    }, [timer]);
+
+    const phoneVerified = !!form.phone && (form.phone === verifiedPhone || form.phone === otpVerifiedFor);
 
     const set = (key: keyof QuoteDetails, value: string) => {
         setForm((prev) => ({ ...prev, [key]: value }));
         if (errors[key]) setErrors((prev) => ({ ...prev, [key]: undefined }));
     };
 
-    const submit = async (e: React.FormEvent) => {
-        e.preventDefault();
+    const resetOtp = () => {
+        setOtpSentTo("");
+        setOtp("");
+        setTimer(0);
+    };
+
+    const validate = () => {
         const next: QuoteErrors = { ...validateLead({ name: form.name, phone: form.phone }) };
         if (form.email.trim() && !EMAIL_PATTERN.test(form.email.trim())) next.email = q.emailError;
         if (!agree) next.agree = q.agreeError;
         setErrors(next);
         setFormError("");
-        if (Object.keys(next).length) return;
+        return !Object.keys(next).length;
+    };
+
+    const sendOtp = async () => {
+        if (!validate()) return;
         setSubmitting(true);
-        const error = await onSubmit({ ...form, name: form.name.trim(), company: form.company.trim(), email: form.email.trim() });
-        setSubmitting(false);
-        if (error) setFormError(error);
+        try {
+            const res = await verifyApi.sendPhoneOtp(form.phone, LEAD_OTP_PROFILE, form.name.trim());
+            if (!res?.success) throw new Error(res?.msg || res?.message || "");
+            setOtpSentTo(form.phone);
+            setOtp("");
+            setTimer(OTP_RESEND_SECONDS);
+        } catch (err) {
+            setFormError((err as Error).message || "Could not send the OTP. Please try again.");
+        } finally {
+            setSubmitting(false);
+        }
+    };
+
+    const submit = async (e: React.FormEvent) => {
+        e.preventDefault();
+        // A new number gets a WhatsApp OTP first; the request goes out once it is verified
+        if (!phoneVerified && otpSentTo !== form.phone) return sendOtp();
+        if (!validate()) return;
+        if (!phoneVerified && otp.length !== 6) {
+            setFormError(q.otpError);
+            return;
+        }
+        setSubmitting(true);
+        try {
+            if (!phoneVerified) {
+                const res = await verifyApi.verifyPhoneOtp(form.phone, otp);
+                if (!res?.success) throw new Error(res?.msg || res?.message || "");
+                setOtpVerifiedFor(form.phone);
+                resetOtp();
+            }
+            const error = await onSubmit({ ...form, name: form.name.trim(), company: form.company.trim(), email: form.email.trim() });
+            if (error) setFormError(error);
+        } catch (err) {
+            setFormError((err as Error).message || "Verification failed. Please try again.");
+        } finally {
+            setSubmitting(false);
+        }
     };
 
     const input = (error?: string) =>
@@ -776,14 +877,69 @@ const QuoteForm: React.FC<QuoteFormProps> = ({ lang, kind = "quote", stall, sent
                                     set("phone", cleanMobile(e.clipboardData.getData("text")));
                                 }}
                                 maxLength={10}
+                                readOnly={!!otpSentTo}
                                 placeholder={q.phonePh}
                                 aria-invalid={!!errors.phone}
-                                className={`${input(errors.phone)} !pl-10 !pr-2`}
+                                className={`${input(errors.phone)} !pl-10 ${phoneVerified && !otpSentTo ? "!pr-8" : "!pr-2"} ${otpSentTo ? "bg-slate-50" : ""}`}
                             />
+                            {/* Only an icon inside: the field is half the form wide, so text here would cover the number */}
+                            {phoneVerified && !otpSentTo && (
+                                <span
+                                    title={q.verified}
+                                    className="absolute right-2 top-1/2 -translate-y-1/2 grid h-[18px] w-[18px] place-items-center rounded-full bg-[#3b8c2a] text-white"
+                                >
+                                    <Check className="w-3 h-3" strokeWidth={3} aria-hidden="true" />
+                                    <span className="sr-only">{q.verified}</span>
+                                </span>
+                            )}
                         </span>
+                        {otpSentTo && (
+                            <button
+                                type="button"
+                                onClick={() => {
+                                    resetOtp();
+                                    setFormError("");
+                                }}
+                                className="self-end text-[11.5px] font-semibold text-[#14532d] underline underline-offset-2 hover:text-[#3b8c2a]"
+                            >
+                                {q.change}
+                            </button>
+                        )}
                         {fieldError("phone")}
                     </label>
                 </div>
+
+                {otpSentTo && (
+                    <label className="flex flex-col gap-1">
+                        <span className={label}>
+                            {q.otp} <span className="text-red-500">*</span>
+                        </span>
+                        <span className="text-[11.5px] text-[#14532d]">{q.otpSent(otpSentTo)}</span>
+                        <input
+                            type="text"
+                            inputMode="numeric"
+                            autoComplete="one-time-code"
+                            autoFocus
+                            maxLength={6}
+                            value={otp}
+                            onChange={(e) => {
+                                setOtp(e.target.value.replace(/\D/g, "").slice(0, 6));
+                                if (formError) setFormError("");
+                            }}
+                            placeholder={q.otpPh}
+                            className={`${input()} tracking-[0.3em] placeholder:tracking-normal`}
+                        />
+                        <span className="text-right text-[11.5px]">
+                            {timer > 0 ? (
+                                <span className="text-slate-500">{q.resendIn(timer)}</span>
+                            ) : (
+                                <button type="button" onClick={sendOtp} className="font-semibold text-[#14532d] hover:text-[#3b8c2a]">
+                                    {q.resend}
+                                </button>
+                            )}
+                        </span>
+                    </label>
+                )}
 
                 {callback ? (
                     <label className="flex flex-col gap-1">
@@ -868,6 +1024,8 @@ const QuoteForm: React.FC<QuoteFormProps> = ({ lang, kind = "quote", stall, sent
                             <span className="w-4 h-4 rounded-full border-2 border-white/40 border-t-white animate-spin" aria-hidden="true" />
                             {q.sending}
                         </>
+                    ) : !phoneVerified ? (
+                        otpSentTo ? q.verifySubmit : q.sendOtp
                     ) : (
                         <>
                             {callback ? q.callbackSubmit : q.submit}
@@ -1418,9 +1576,27 @@ const ChatPanel: React.FC<Props> = ({ open, onClose }) => {
     // Resume this browser's chat only while it is still active (see chatSession.ts)
     const [initial] = useState(readChatSession);
     const [sessionId, setSessionId] = useState(() => (initial.status === "active" ? initial.sessionId : newSessionId()));
-    const [visitorName, setVisitorName] = useState<string | null>(initial.status === "active" ? initial.name : null);
+    // null until the mobile number is verified — the chat is then saved as "Visitor <ip>"
+    const [visitorName, setVisitorName] = useState<string | null>(initial.status === "active" ? initial.name || null : null);
+    // AI questions sent without details (the details form comes after FREE_QUESTIONS)
+    const [freeAsked, setFreeAsked] = useState(0);
+    // Name, greetings and on/off published from the admin panel's Chatbot Manager
+    const config = useChatConfig();
+    // Mobile number this chat verified with the WhatsApp OTP
+    const [verifiedPhone, setVerifiedPhone] = useState(initial.status === "active" ? initial.phone : "");
     const [lang, setLangState] = useState<Lang>(readLang);
-    const t = TEXT[lang];
+    const config0 = TEXT[lang];
+    const published = config?.messages?.[lang];
+    const botName = config?.name?.trim() || "Organic Mitra";
+    const t = {
+        ...config0,
+        subtitle: config?.subtitle?.trim() || config0.subtitle,
+        typing: config0.typing.replace("Organic Mitra", botName),
+        greeting: published?.welcomeGreeting || published?.welcomeMessage
+            ? [published?.welcomeGreeting, published?.welcomeMessage].filter(Boolean).join("\n")
+            : config0.greeting,
+        endedBye: published?.closingGreeting || config0.endedBye,
+    };
 
     // Welcome screen first; the details form only appears once the visitor picks a topic or asks something
     const [askDetails, setAskDetails] = useState(false);
@@ -1429,6 +1605,11 @@ const ChatPanel: React.FC<Props> = ({ open, onClose }) => {
     const [fieldErrors, setFieldErrors] = useState<LeadErrors>({});
     const [formError, setFormError] = useState("");
     const [submitting, setSubmitting] = useState(false);
+    // WhatsApp OTP for the details form: the number it was sent to ("" until sent), the code typed, resend countdown
+    const [otpSentTo, setOtpSentTo] = useState("");
+    const [otp, setOtp] = useState("");
+    const [otpTimer, setOtpTimer] = useState(0);
+    const [otpVerified, setOtpVerified] = useState(false);
 
     const [messages, setMessages] = useState<Message[]>([]);
     const [input, setInput] = useState("");
@@ -1540,11 +1721,26 @@ const ChatPanel: React.FC<Props> = ({ open, onClose }) => {
             return next;
         });
 
+    useEffect(() => {
+        if (!otpTimer) return;
+        const id = window.setTimeout(() => setOtpTimer((s) => s - 1), 1000);
+        return () => window.clearTimeout(id);
+    }, [otpTimer]);
+
+    const resetOtp = () => {
+        setOtpSentTo("");
+        setOtp("");
+        setOtpTimer(0);
+        setOtpVerified(false);
+    };
+
     /** Forget the current visitor and go back to the welcome screen for the next person. */
     const startNewChat = (notice = "") => {
         clearChatSession();
         setSessionId(newSessionId());
         setVisitorName(null);
+        setVerifiedPhone("");
+        setFreeAsked(0);
         setMessages([]);
         setInput("");
         setPending(null);
@@ -1556,14 +1752,37 @@ const ChatPanel: React.FC<Props> = ({ open, onClose }) => {
         setForm({ name: "", phone: "" });
         setFieldErrors({});
         setFormError(notice);
+        resetOtp();
+    };
+
+    /**
+     * Saves clicks, scripted replies and feedback for the admin panel — under the visitor's IP until
+     * the mobile number is verified. Fire-and-forget: the chat never waits for or breaks on it.
+     */
+    const track = (messages: { role: "user" | "assistant"; content: string }[], feedbackValue?: "yes" | "no") => {
+        const toSave = messages.filter((m) => m.content.trim()).map((m) => ({ role: m.role, content: m.content.trim().slice(0, 2000) }));
+        if (!toSave.length && !feedbackValue) return;
+        fetch(`${CHAT_URL}/track`, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            keepalive: true,
+            body: JSON.stringify({
+                sessionId,
+                pageUrl: window.location.href,
+                ...(toSave.length ? { messages: toSave.slice(0, 10) } : {}),
+                ...(feedbackValue ? { feedback: feedbackValue } : {}),
+            }),
+        }).catch(() => {});
     };
 
     const sendMessage = async (text: string, topic = "", name = visitorName) => {
         const message = text.trim().slice(0, 1000);
         if (!message || loading) return;
 
-        // Contact details are asked once, right before the first question goes out
-        if (!name) {
+        // Visitors chat freely at first; name + mobile (OTP) are asked before question FREE_QUESTIONS + 1
+        if (!name && freeAsked >= FREE_QUESTIONS) {
+            // Saved now, so the question is not lost if the visitor leaves at the details form
+            track([{ role: "user", content: message }]);
             setPending({ message, topic: topic || message });
             setInput("");
             setFormError("");
@@ -1572,12 +1791,13 @@ const ChatPanel: React.FC<Props> = ({ open, onClose }) => {
         }
 
         // Panel left open for 30+ minutes (or browser restarted) — treat it as a new visitor
-        if (readChatSession().status !== "active") {
+        if (readChatSession().status === "expired") {
             startNewChat(TEXT[lang].expired);
             setPending({ message, topic: topic || message });
             return;
         }
-        saveChatSession(sessionId, name);
+        saveChatSession(sessionId, name || "");
+        if (!name) setFreeAsked((n) => n + 1);
 
         setInput("");
         setLoading(true);
@@ -1645,6 +1865,7 @@ const ChatPanel: React.FC<Props> = ({ open, onClose }) => {
     const runStep = (step: string, choice = "", silent = false) => {
         const flow = FLOW[step]?.(lang, choice);
         if (!flow || loading) return;
+        track([...(silent ? [] : [{ role: "user" as const, content: flow.say }]), ...flow.replies.map((r) => ({ role: r.role, content: r.content }))]);
         setFlowAt({ step, choice });
         if (!silent) setMessages((prev) => [...prev, { role: "user", content: flow.say }]);
         setLoading(true);
@@ -1707,8 +1928,9 @@ const ChatPanel: React.FC<Props> = ({ open, onClose }) => {
             }, 700);
             return null;
         }
-        saveChatSession(sessionId, details.name);
+        saveChatSession(sessionId, details.name, details.phone);
         setVisitorName(details.name);
+        setVerifiedPhone(details.phone);
         setFlowAt(null);
         setMessages((prev) => [
             ...prev.map((m, i) => (i === index && m.quote ? { ...m, quote: { ...m.quote, sent: true } } : m)),
@@ -1757,6 +1979,11 @@ const ChatPanel: React.FC<Props> = ({ open, onClose }) => {
         if (loading) return;
         const bt = BOOKING_TEXT[lang];
         setFlowAt({ step: "booking", choice: choice.stall });
+        track([
+            { role: "user", content: bt.say },
+            { role: "assistant", content: bt.ready },
+            { role: "assistant", content: bt.next },
+        ]);
         setMessages((prev) => [...prev, { role: "user", content: bt.say }]);
         setLoading(true);
         window.setTimeout(() => {
@@ -1774,17 +2001,52 @@ const ChatPanel: React.FC<Props> = ({ open, onClose }) => {
         setMessages((prev) => [...prev, { role: "assistant", content: t.menuPrompt, menu: true }]);
     };
 
-    const submitLead = async (e: React.FormEvent) => {
-        e.preventDefault();
+    /** Sends the WhatsApp OTP for the details form; the form then asks for the code */
+    const sendLeadOtp = async () => {
         setFormError("");
         const errors = validateLead(form);
         setFieldErrors(errors);
         if (Object.keys(errors).length) return;
+
+        setSubmitting(true);
+        try {
+            const res = await verifyApi.sendPhoneOtp(form.phone, LEAD_OTP_PROFILE, form.name.trim());
+            if (!res?.success) throw new Error(res?.msg || res?.message || "");
+            setOtpSentTo(form.phone);
+            setOtp("");
+            setOtpVerified(false);
+            setOtpTimer(OTP_RESEND_SECONDS);
+        } catch (err) {
+            setFormError((err as Error).message || t.genericError);
+        } finally {
+            setSubmitting(false);
+        }
+    };
+
+    const submitLead = async (e: React.FormEvent) => {
+        e.preventDefault();
+        // Step 1: send the OTP; step 2 (below): verify it, then start the chat
+        if (!otpSentTo || otpSentTo !== form.phone) return sendLeadOtp();
+        setFormError("");
+        const errors = validateLead(form);
+        setFieldErrors(errors);
+        if (Object.keys(errors).length) return;
+        if (otp.length !== 6) {
+            setFormError(t.otpError);
+            return;
+        }
         const name = form.name.trim();
         const phone = form.phone;
 
         setSubmitting(true);
         try {
+            // An OTP can be verified only once — on a retry after a failed /lead call, skip straight to it
+            if (!otpVerified) {
+                const verified = await verifyApi.verifyPhoneOtp(phone, otp);
+                if (!verified?.success) throw new Error(verified?.msg || verified?.message || "");
+                setOtpVerified(true);
+            }
+
             const res = await fetch(`${CHAT_URL}/lead`, {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
@@ -1794,9 +2056,11 @@ const ChatPanel: React.FC<Props> = ({ open, onClose }) => {
                 const json = await res.json().catch(() => null);
                 throw new Error(json?.errors?.[0]?.split(": ").pop() || json?.message || "");
             }
-            saveChatSession(sessionId, name);
+            saveChatSession(sessionId, name, phone);
             setVisitorName(name);
+            setVerifiedPhone(phone);
             setAskDetails(false);
+            resetOtp();
             const question = pending;
             setPending(null);
             if (question) sendMessage(question.message, question.topic, name);
@@ -1812,6 +2076,7 @@ const ChatPanel: React.FC<Props> = ({ open, onClose }) => {
         setPending(null);
         setFormError("");
         setFieldErrors({});
+        resetOtp();
     };
 
     const last = messages[messages.length - 1];
@@ -1890,7 +2155,7 @@ const ChatPanel: React.FC<Props> = ({ open, onClose }) => {
                     </div>
 
                     <div className="flex-1 min-w-0">
-                        <p className="font-poppins font-semibold text-[15.5px] leading-tight whitespace-nowrap">Organic Mitra</p>
+                        <p className="font-poppins font-semibold text-[15.5px] leading-tight whitespace-nowrap">{botName}</p>
                         <p className="mt-0.5 flex items-center gap-1.5 text-[11px] leading-snug text-white/85">
                             <span className="truncate">{t.subtitle}</span>
                         </p>
@@ -1996,6 +2261,7 @@ const ChatPanel: React.FC<Props> = ({ open, onClose }) => {
                                                 value={form[f.key]}
                                                 aria-invalid={!!error}
                                                 aria-describedby={error ? `lead-${f.key}-error` : undefined}
+                                                readOnly={isPhone && !!otpSentTo}
                                                 onChange={(e) => {
                                                     const value = isPhone ? cleanMobile(e.target.value) : cleanName(e.target.value);
                                                     setForm((prev) => ({ ...prev, [f.key]: value }));
@@ -2016,14 +2282,26 @@ const ChatPanel: React.FC<Props> = ({ open, onClose }) => {
                                                         : "border-[#dfe8db] focus:border-[#3b8c2a] focus:ring-[#3b8c2a]/15"
                                                 }`}
                                             />
-                                            {isPhone && (
-                                                <span
-                                                    className={`absolute right-3 top-1/2 -translate-y-1/2 text-[11px] font-semibold ${form.phone.length === 10 ? "text-[#3b8c2a]" : "text-slate-400"}`}
-                                                    aria-hidden="true"
-                                                >
-                                                    {form.phone.length}/10
-                                                </span>
-                                            )}
+                                            {isPhone &&
+                                                (otpSentTo ? (
+                                                    <button
+                                                        type="button"
+                                                        onClick={() => {
+                                                            resetOtp();
+                                                            setFormError("");
+                                                        }}
+                                                        className="absolute right-3 top-1/2 -translate-y-1/2 text-[11.5px] font-semibold text-[#1b5e20] hover:text-[#3b8c2a] underline underline-offset-2"
+                                                    >
+                                                        {t.change}
+                                                    </button>
+                                                ) : (
+                                                    <span
+                                                        className={`absolute right-3 top-1/2 -translate-y-1/2 text-[11px] font-semibold ${form.phone.length === 10 ? "text-[#3b8c2a]" : "text-slate-400"}`}
+                                                        aria-hidden="true"
+                                                    >
+                                                        {form.phone.length}/10
+                                                    </span>
+                                                ))}
                                         </span>
                                         {error && (
                                             <span id={`lead-${f.key}-error`} role="alert" className="text-[11.5px] text-red-600">
@@ -2033,6 +2311,43 @@ const ChatPanel: React.FC<Props> = ({ open, onClose }) => {
                                     </label>
                                 );
                             })}
+
+                            {otpSentTo && (
+                                <label className="flex flex-col gap-1">
+                                    <span className="text-[10.5px] font-bold uppercase tracking-wider text-[#0b2912]">
+                                        {t.otpLabel} <span className="text-[#f58220]">*</span>
+                                    </span>
+                                    <span className="text-[11.5px] text-[#1b5e20]">{t.otpSent(otpSentTo)}</span>
+                                    <input
+                                        type="text"
+                                        inputMode="numeric"
+                                        autoComplete="one-time-code"
+                                        autoFocus
+                                        maxLength={6}
+                                        value={otp}
+                                        onChange={(e) => {
+                                            setOtp(e.target.value.replace(/\D/g, "").slice(0, 6));
+                                            if (formError) setFormError("");
+                                        }}
+                                        placeholder={t.otpPh}
+                                        className="w-full px-3 py-2.5 rounded-xl bg-[#f7faf5] border border-[#dfe8db] text-[15px] tracking-[0.3em] text-slate-800 placeholder:tracking-normal placeholder:text-[14px] placeholder:text-slate-400 outline-none transition focus:bg-white focus:border-[#3b8c2a] focus:ring-4 focus:ring-[#3b8c2a]/15"
+                                    />
+                                    <span className="text-right text-[11.5px]">
+                                        {otpTimer > 0 ? (
+                                            <span className="text-slate-500">{t.resendIn(otpTimer)}</span>
+                                        ) : (
+                                            <button
+                                                type="button"
+                                                onClick={sendLeadOtp}
+                                                disabled={submitting}
+                                                className="font-semibold text-[#1b5e20] hover:text-[#3b8c2a] disabled:opacity-50"
+                                            >
+                                                {t.resend}
+                                            </button>
+                                        )}
+                                    </span>
+                                </label>
+                            )}
 
                             {formError && (
                                 <p role="alert" className="text-[12.5px] text-red-600 bg-red-50 border border-red-100 rounded-lg px-3 py-2">
@@ -2053,7 +2368,7 @@ const ChatPanel: React.FC<Props> = ({ open, onClose }) => {
                                     </>
                                 ) : (
                                     <>
-                                        {t.continue}
+                                        {otpSentTo ? t.verifyContinue : t.sendOtp}
                                         <svg className="w-4 h-4 transition-transform group-hover:translate-x-0.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
                                             <path d="M5 12h14M13 6l6 6-6 6" />
                                         </svg>
@@ -2099,7 +2414,10 @@ const ChatPanel: React.FC<Props> = ({ open, onClose }) => {
                                 <button
                                     key={value}
                                     type="button"
-                                    onClick={() => setFeedback(value)}
+                                    onClick={() => {
+                                        setFeedback(value);
+                                        track([], value);
+                                    }}
                                     aria-pressed={feedback === value}
                                     className={`inline-flex items-center justify-center gap-2 rounded-xl border px-3 py-2.5 text-[14px] font-medium transition ${
                                         feedback === value
@@ -2140,7 +2458,7 @@ const ChatPanel: React.FC<Props> = ({ open, onClose }) => {
                     </div>
 
                     <p className="mt-auto pt-4 border-t border-[#dfe6d8] text-center text-[11.5px] text-slate-500">
-                        Organic Mitra • {t.subtitle}
+                        {botName} • {t.subtitle}
                     </p>
                 </div>
             ) : (
@@ -2446,6 +2764,7 @@ const ChatPanel: React.FC<Props> = ({ open, onClose }) => {
                                                 stall={m.callback.stall}
                                                 sent={!!m.callback.sent}
                                                 defaultName={visitorName || ""}
+                                                verifiedPhone={verifiedPhone}
                                                 onSubmit={(details) => submitQuote(i, m.callback!.stall, details, "callback")}
                                                 onChange={() => runStep("stall-sizes", "", true)}
                                                 onBack={() => runStep("stall", "", true)}
@@ -2468,6 +2787,7 @@ const ChatPanel: React.FC<Props> = ({ open, onClose }) => {
                                             stall={m.quote.stall}
                                             sent={!!m.quote.sent}
                                             defaultName={visitorName || ""}
+                                            verifiedPhone={verifiedPhone}
                                             onSubmit={(details) => submitQuote(i, m.quote!.stall, details)}
                                             onChange={() => runStep("stall-sizes", "", true)}
                                             onBack={() => runStep("stall", "", true)}
