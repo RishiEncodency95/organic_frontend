@@ -1,10 +1,10 @@
 "use client";
 
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useState } from "react";
 import dynamic from "next/dynamic";
 import { MessageCircleMore, X } from "lucide-react";
 import { readChatSession } from "./chatSession";
-import { chatSounds } from "./chatSounds";
+import { useChatConfig } from "./chatConfig";
 
 // The panel (form, chat, streaming) is only downloaded the first time someone opens it,
 // so the chatbot adds almost nothing to page load.
@@ -22,39 +22,29 @@ const TEASER_KEY = "organicMitraTeaserSeen";
 const ChatLauncher: React.FC = () => {
     const [open, setOpen] = useState(false);
     const [opened, setOpened] = useState(false);
-    // "Namaste" teaser bubble switched off (the robot's "May I help you?" bubble replaces it)
-    // const [teaser, setTeaser] = useState(false);
+    const [teaser, setTeaser] = useState(false);
     const [panelKey, setPanelKey] = useState(0);
-
-    // Chime when the chat opens / closes (not on the first page render)
-    const firstRender = useRef(true);
-    useEffect(() => {
-        if (firstRender.current) {
-            firstRender.current = false;
-            return;
-        }
-        if (open) chatSounds.open();
-        else chatSounds.close();
-    }, [open]);
     const [lottieState, setLottieState] = useState<"loading" | "ready" | "failed">("loading");
+    // Switched off / renamed from the admin panel's Chatbot Manager (Settings → published)
+    const config = useChatConfig();
 
     // A small "Namaste" bubble, once per browser session, a few seconds after the page loads
-    // useEffect(() => {
-    //     try {
-    //         if (window.sessionStorage.getItem(TEASER_KEY)) return;
-    //     } catch {
-    //         return;
-    //     }
-    //     const show = setTimeout(() => setTeaser(true), 5000);
-    //     const hide = setTimeout(() => setTeaser(false), 17000);
-    //     return () => {
-    //         clearTimeout(show);
-    //         clearTimeout(hide);
-    //     };
-    // }, []);
+    useEffect(() => {
+        try {
+            if (window.sessionStorage.getItem(TEASER_KEY)) return;
+        } catch {
+            return;
+        }
+        const show = setTimeout(() => setTeaser(true), 5000);
+        const hide = setTimeout(() => setTeaser(false), 17000);
+        return () => {
+            clearTimeout(show);
+            clearTimeout(hide);
+        };
+    }, []);
 
     const dismissTeaser = () => {
-        // setTeaser(false);
+        setTeaser(false);
         try {
             window.sessionStorage.setItem(TEASER_KEY, "1");
         } catch {
@@ -70,6 +60,8 @@ const ChatLauncher: React.FC = () => {
         setOpen((v) => !v);
     };
 
+    if (config && !config.enabled) return null;
+
     return (
         <>
             {/* Stays mounted after the first open so the conversation survives closing the panel */}
@@ -79,7 +71,6 @@ const ChatLauncher: React.FC = () => {
             <div
                 className={`fixed right-4 sm:right-6 bottom-[84px] sm:bottom-20 lg:bottom-8 z-[100] flex items-end gap-3 ${open ? "max-[480px]:hidden" : ""}`}
             >
-                {/* "Namaste" teaser bubble — switched off
                 {teaser && !open && (
                     <div className="relative mb-2 hidden sm:block bg-white rounded-2xl rounded-br-sm shadow-xl border border-[#3b8c2a]/15 pl-4 pr-8 py-3 max-w-[230px] animate-[mitra-pop_0.35s_ease-out]">
                         <button
@@ -98,7 +89,6 @@ const ChatLauncher: React.FC = () => {
                         </button>
                     </div>
                 )}
-                */}
 
                 {/* Same look as the WhatsApp / Call buttons on the left */}
                 <button
@@ -108,17 +98,11 @@ const ChatLauncher: React.FC = () => {
                     aria-expanded={open}
                     className="group relative block shrink-0"
                 >
-                    {/* "May I help you?" speech bubble above the robot while the chat is closed.
-                        Right-aligned with the robot so it never runs off the screen edge. */}
+                    {/* "Help" label, always shown next to the robot while the chat is closed */}
                     {!open && (
-                        <span className="pointer-events-none absolute bottom-full mb-1.5 right-0 z-10">
-                            <span className="relative block animate-[mitra-float_3.2s_ease-in-out_infinite] rounded-2xl bg-white px-3 py-1.5 font-poppins text-[12.5px] font-semibold text-[#14532d] whitespace-nowrap shadow-[0_8px_20px_-8px_rgba(11,41,18,0.45)] ring-1 ring-[#3b8c2a]/25">
-                                May I help you? <span aria-hidden="true">👋</span>
-                                <span
-                                    className="absolute -bottom-[5px] right-9 lg:right-11 w-2.5 h-2.5 rotate-45 bg-white border-r border-b border-[#3b8c2a]/25"
-                                    aria-hidden="true"
-                                />
-                            </span>
+                        <span className="pointer-events-none absolute right-full top-1/2 -translate-y-1/2 -mr-1 px-3 py-1.5 rounded-lg bg-[#14532d] text-white text-[13px] font-semibold font-poppins whitespace-nowrap shadow-lg transition-transform duration-200 group-hover:-translate-x-1">
+                            {config?.launcher?.trim() || "Help"}
+                            <span className="absolute left-full top-1/2 -translate-y-1/2 border-[6px] border-transparent border-l-[#14532d]" aria-hidden="true" />
                         </span>
                     )}
 

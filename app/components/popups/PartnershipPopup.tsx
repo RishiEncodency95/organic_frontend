@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { CheckCircle, ShieldCheck, Zap, Handshake, Users, Award } from "lucide-react";
+import { verifyApi } from "@/lib/api";
 
 import pop1 from "../../assets/icons/icon1.png";
 import leaf2 from "../../assets/icons/bleaf.webp";
@@ -88,6 +89,64 @@ export default function PartnershipPopup({ isOpen, onClose, initialService }: Pa
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
 
+  // WhatsApp OTP for the mobile number
+  const [otpSent, setOtpSent] = useState(false);
+  const [otpVerified, setOtpVerified] = useState(false);
+  const [otp, setOtp] = useState("");
+  const [otpBusy, setOtpBusy] = useState(false);
+  const [otpError, setOtpError] = useState("");
+  const [resendTimer, setResendTimer] = useState(0);
+
+  useEffect(() => {
+    if (resendTimer <= 0) return;
+    const id = setTimeout(() => setResendTimer((t) => t - 1), 1000);
+    return () => clearTimeout(id);
+  }, [resendTimer]);
+
+  const resetOtp = () => {
+    setOtpSent(false);
+    setOtpVerified(false);
+    setOtp("");
+    setOtpError("");
+    setResendTimer(0);
+  };
+
+  const sendOtp = async () => {
+    if (!/^[6-9]\d{9}$/.test(formData.mobile)) {
+      setOtpError("Enter a valid 10-digit mobile number.");
+      return;
+    }
+    setOtpBusy(true);
+    setOtpError("");
+    try {
+      const res = await verifyApi.sendPhoneOtp(formData.mobile, "PARTNERSHIP", formData.fullName);
+      if (!res?.success) throw new Error(res?.message || "");
+      setOtpSent(true);
+      setOtp("");
+      setResendTimer(30);
+    } catch (err) {
+      setOtpError((err as Error).message || "Failed to send OTP.");
+    }
+    setOtpBusy(false);
+  };
+
+  const verifyOtp = async () => {
+    if (otp.length !== 6) {
+      setOtpError("Enter the 6-digit OTP.");
+      return;
+    }
+    setOtpBusy(true);
+    setOtpError("");
+    try {
+      const res = await verifyApi.verifyPhoneOtp(formData.mobile, otp);
+      if (!res?.success) throw new Error(res?.message || "");
+      setOtpVerified(true);
+    } catch (err) {
+      setOtpError((err as Error).message || "Verification failed.");
+    }
+    setOtpBusy(false);
+  };
+
   const [whatsappNumber, setWhatsappNumber] = useState("9654900525");
   const [whatsappMessage, setWhatsappMessage] = useState("Hello! I would like to know more about the Bharat Organic Expo 2027 Sponsorship Opportunities.");
 
@@ -106,6 +165,7 @@ export default function PartnershipPopup({ isOpen, onClose, initialService }: Pa
       setSelectedServices([]);
       setIsSubmitted(false);
       setFormData({ fullName: "", companyName: "", mobile: "", email: "", stallSize: "", message: "" });
+      resetOtp();
     }
   }, [initialService, isOpen]);
 
@@ -114,12 +174,16 @@ export default function PartnershipPopup({ isOpen, onClose, initialService }: Pa
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
     if (name === "message") setCharCount(value.length);
-    setFormData(p => ({ ...p, [name]: value }));
+    setFormData(p => ({ ...p, [name]: name === "mobile" ? value.replace(/\D/g, "").slice(0, 10) : value }));
   };
 
   const handleSubmit = async () => {
     if (!formData.fullName || !formData.companyName || !formData.mobile || !formData.email) {
       alert("Please fill all required fields");
+      return;
+    }
+    if (!otpVerified) {
+      alert("Please verify your mobile number with the WhatsApp OTP.");
       return;
     }
 
@@ -262,8 +326,33 @@ export default function PartnershipPopup({ isOpen, onClose, initialService }: Pa
                         </label>
                         <div className="relative">
                           <span className="absolute left-2.5 top-1/2 -translate-y-1/2 text-gray-400"><svg viewBox="0 0 20 20" className="w-3.5 h-3.5" fill="none" stroke="currentColor" strokeWidth="1.5"><rect x="5" y="2" width="10" height="16" rx="2" /><circle cx="10" cy="15" r="0.7" fill="currentColor" /></svg></span>
-                          <input type="tel" name="mobile" placeholder="Mobile Number" value={formData.mobile} onChange={handleChange} className="w-full pl-7 pr-3 py-2 border border-gray-200 rounded-lg text-[11.5px] bg-gray-50/50 focus:outline-none focus:border-[#2d6a2d] focus:bg-white transition-all placeholder:text-gray-500" />
+                          <input type="tel" name="mobile" placeholder="Mobile Number" value={formData.mobile} onChange={handleChange} readOnly={otpSent || otpVerified} maxLength={10} className="w-full pl-7 pr-12 py-2 border border-gray-200 rounded-lg text-[11.5px] bg-gray-50/50 focus:outline-none focus:border-[#2d6a2d] focus:bg-white transition-all placeholder:text-gray-500" />
+                          {otpVerified ? (
+                            <CheckCircle className="absolute right-2.5 top-1/2 -translate-y-1/2 w-4 h-4 text-[#2d6a2d]" />
+                          ) : !otpSent ? (
+                            <button type="button" onClick={sendOtp} disabled={otpBusy || formData.mobile.length !== 10} className="absolute right-1.5 top-1/2 -translate-y-1/2 px-2 py-1 rounded-md bg-[#2d6a2d] text-white text-[9px] font-bold uppercase disabled:opacity-50">
+                              {otpBusy ? "..." : "OTP"}
+                            </button>
+                          ) : (
+                            <button type="button" onClick={resetOtp} className="absolute right-2 top-1/2 -translate-y-1/2 text-[9px] font-bold uppercase text-gray-500 hover:underline">
+                              Change
+                            </button>
+                          )}
                         </div>
+                        {otpSent && !otpVerified && (
+                          <div className="mt-1.5 flex gap-1.5">
+                            <input type="text" inputMode="numeric" autoComplete="one-time-code" maxLength={6} value={otp} onChange={(e) => setOtp(e.target.value.replace(/\D/g, ""))} placeholder="WhatsApp OTP" className="min-w-0 flex-1 px-2.5 py-1.5 border border-gray-200 rounded-lg text-[11.5px] tracking-widest focus:outline-none focus:border-[#2d6a2d]" />
+                            <button type="button" onClick={verifyOtp} disabled={otpBusy} className="px-2.5 rounded-lg bg-[#2d6a2d] text-white text-[9px] font-bold uppercase disabled:opacity-50">
+                              {otpBusy ? "..." : "Verify"}
+                            </button>
+                          </div>
+                        )}
+                        {otpSent && !otpVerified && (
+                          <button type="button" onClick={sendOtp} disabled={resendTimer > 0 || otpBusy} className="mt-1 text-[9.5px] font-semibold text-[#2d6a2d] disabled:text-gray-400">
+                            {resendTimer > 0 ? `Resend OTP in ${resendTimer}s` : "Resend OTP"}
+                          </button>
+                        )}
+                        {otpError && <p className="mt-1 text-[10px] text-red-600">{otpError}</p>}
                       </div>
 
                       <div>
