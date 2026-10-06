@@ -145,57 +145,57 @@ const Topbar = ({ phone, email }: { phone?: string; email?: string }) => {
                             </button>
 
                             {activeDropdown === "registration" && (
-                                    <div className="absolute top-[calc(100%-2px)] right-0 pt-4 w-[260px] z-50">
-                                        <div className="absolute top-[10px] right-10 w-4 h-4 bg-white border-t border-l border-slate-100 rotate-45 z-10" />
-                                        <div
-                                            className="relative origin-top-right animate-in fade-in zoom-in-95 bg-white rounded-2xl shadow-[0_15px_45px_rgba(0,0,0,0.15)] border border-slate-100 p-1 overflow-hidden z-20"
-                                        >
-                                            <div className="grid grid-cols-2">
-                                                {[
-                                                    { to: "/registration/book-a-stand", icon: Store, label: "BOOK A\nSTALL", color: "orange" },
-                                                    { to: "/registration/visitor-registration", icon: UserPlus, label: "REGISTER AS\nVISITOR", color: "green" },
-                                                    { to: deligate, icon: Globe, label: "DELEGATE\nREGISTRATION", color: "orange" },
-                                                    { to: "/registration/buyer-registration", icon: Users, label: "REGISTER AS\nBUYER", color: "green" },
-                                                    { to: "/sponsership", icon: Award, label: "SPONSORSHIP\nOPPORTUNITIES", color: "orange" },
-                                                    { to: "tel:+919654900525", icon: Phone, label: "TALK TO EXPO\nADVISOR", color: "green" },
-                                                ].map((item, idx) => {
-                                                    const commonProps = {
-                                                        onClick: () => setActiveDropdown(null),
-                                                        className: cn(
-                                                            "flex items-center gap-1.5 px-2 py-2 hover:bg-slate-50 text-left transition-all group relative z-20 border-b border-slate-100",
-                                                            idx % 2 === 0 ? "border-r" : ""
-                                                        )
-                                                    };
+                                <div className="absolute top-[calc(100%-2px)] right-0 pt-4 w-[260px] z-50">
+                                    <div className="absolute top-[10px] right-10 w-4 h-4 bg-white border-t border-l border-slate-100 rotate-45 z-10" />
+                                    <div
+                                        className="relative origin-top-right animate-in fade-in zoom-in-95 bg-white rounded-2xl shadow-[0_15px_45px_rgba(0,0,0,0.15)] border border-slate-100 p-1 overflow-hidden z-20"
+                                    >
+                                        <div className="grid grid-cols-2">
+                                            {[
+                                                { to: "/registration/book-a-stand", icon: Store, label: "BOOK A\nSTALL", color: "orange" },
+                                                { to: "/registration/visitor-registration", icon: UserPlus, label: "REGISTER AS\nVISITOR", color: "green" },
+                                                { to: deligate, icon: Globe, label: "DELEGATE\nREGISTRATION", color: "orange" },
+                                                { to: "/registration/buyer-registration", icon: Users, label: "REGISTER AS\nBUYER", color: "green" },
+                                                { to: "/sponsership", icon: Award, label: "SPONSORSHIP\nOPPORTUNITIES", color: "orange" },
+                                                { to: "tel:+919654900525", icon: Phone, label: "TALK TO EXPO\nADVISOR", color: "green" },
+                                            ].map((item, idx) => {
+                                                const commonProps = {
+                                                    onClick: () => setActiveDropdown(null),
+                                                    className: cn(
+                                                        "flex items-center gap-1.5 px-2 py-2 hover:bg-slate-50 text-left transition-all group relative z-20 border-b border-slate-100",
+                                                        idx % 2 === 0 ? "border-r" : ""
+                                                    )
+                                                };
 
-                                                    const Content = (
-                                                        <>
-                                                            <div className={cn(
-                                                                "w-6 h-6 flex-shrink-0 rounded-lg flex items-center justify-center transition-all duration-300 shadow-sm",
-                                                                item.color === "orange"
-                                                                    ? "bg-[#f59e0b]/5 text-[#f59e0b] group-hover:bg-[#f59e0b] group-hover:text-white"
-                                                                    : "bg-[#3b8c2a]/5 text-[#3b8c2a] group-hover:bg-[#3b8c2a] group-hover:text-white"
-                                                            )}>
-                                                                <item.icon className="w-3 h-3" />
-                                                            </div>
-                                                            <span style={{ fontFamily: "var(--font-poppins-next), sans-serif" }} className={cn(
-                                                                "text-[9.5px] font-semibold text-slate-800 uppercase tracking-wider transition-colors leading-tight whitespace-pre-line",
-                                                                item.color === "orange" ? "group-hover:text-[#f59e0b]" : "group-hover:text-[#3b8c2a]"
-                                                            )}>
-                                                                {item.label}
-                                                            </span>
-                                                        </>
-                                                    );
+                                                const Content = (
+                                                    <>
+                                                        <div className={cn(
+                                                            "w-6 h-6 flex-shrink-0 rounded-lg flex items-center justify-center transition-all duration-300 shadow-sm",
+                                                            item.color === "orange"
+                                                                ? "bg-[#f59e0b]/5 text-[#f59e0b] group-hover:bg-[#f59e0b] group-hover:text-white"
+                                                                : "bg-[#3b8c2a]/5 text-[#3b8c2a] group-hover:bg-[#3b8c2a] group-hover:text-white"
+                                                        )}>
+                                                            <item.icon className="w-3 h-3" />
+                                                        </div>
+                                                        <span style={{ fontFamily: "var(--font-poppins-next), sans-serif" }} className={cn(
+                                                            "text-[9.5px] font-semibold text-slate-800 uppercase tracking-wider transition-colors leading-tight whitespace-pre-line",
+                                                            item.color === "orange" ? "group-hover:text-[#f59e0b]" : "group-hover:text-[#3b8c2a]"
+                                                        )}>
+                                                            {item.label}
+                                                        </span>
+                                                    </>
+                                                );
 
-                                                    return item.to.startsWith("tel:") ? (
-                                                        <a key={item.to} href={item.to} {...commonProps}>{Content}</a>
-                                                    ) : (
-                                                        <Link key={item.to} href={item.to} target="_blank" rel="noopener noreferrer" {...commonProps}>{Content}</Link>
-                                                    );
-                                                })}
-                                            </div>
+                                                return item.to.startsWith("tel:") ? (
+                                                    <a key={item.to} href={item.to} {...commonProps}>{Content}</a>
+                                                ) : (
+                                                    <Link key={item.to} href={item.to} target="_blank" rel="noopener noreferrer" {...commonProps}>{Content}</Link>
+                                                );
+                                            })}
                                         </div>
                                     </div>
-                                )}
+                                </div>
+                            )}
                         </div>
 
                         {/* User Login Dropdown */}
@@ -215,9 +215,9 @@ const Topbar = ({ phone, email }: { phone?: string; email?: string }) => {
                                     <div className="grid grid-cols-2">
                                         {[
                                             { to: "https://admin.bharatorganicexpo.com", icon: UserPlus, label: "USER\nLOGIN", color: "orange", external: true },
-                                            { to: "/exhibitor-login", icon: Store, label: "EXHIBITOR\nLOGIN", color: "green", external: false },
-                                            { to: "/buyer-login", icon: Briefcase, label: "BUYER\nLOGIN", color: "orange", external: false },
-                                            { to: "/delegates-login", icon: Users, label: "DELEGATES\nLOGIN", color: "green", external: false },
+                                            { to: "https://ihwe.in/exhibitor-login", icon: Store, label: "EXHIBITOR\nLOGIN", color: "green", external: true },
+                                            { to: "https://ihwe.in/buyer-login", icon: Briefcase, label: "BUYER\nLOGIN", color: "orange", external: true },
+                                            { to: "https://arogya.namogange.org/login", icon: Users, label: "DELEGATES\nLOGIN", color: "green", external: true },
                                         ].map((item, idx) => {
                                             const commonProps = {
                                                 className: cn(
