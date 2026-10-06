@@ -1,6 +1,7 @@
 "use client";
 
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useLayoutEffect, useRef, useState } from "react";
+import gsap from "gsap";
 import Image from "next/image";
 import Link from "next/link";
 import { ArrowLeft, ArrowRight, ArrowUpRight, Check, CheckCheck, ChevronDown, FileText, LayoutGrid, ChevronRight, Handshake, Headset, HeartHandshake, Info, List, LogOut, MessageCircleMore, Minus, Presentation, Send, Settings, Store, ThumbsDown, ThumbsUp, Users, X, type LucideIcon } from "lucide-react";
@@ -522,8 +523,8 @@ const MessageText: React.FC<{ text: string }> = ({ text }) => (
 // ─── Small UI pieces ─────────────────────────────────────────────────────────
 
 const BotAvatar: React.FC = () => (
-    <div className="w-10 h-10 shrink-0 rounded-full bg-white shadow-sm ring-2 ring-[#F2B40E]/60 flex items-center justify-center" aria-hidden="true">
-        <Image src="/android-chrome-192x192.png" alt="" width={32} height={32} className="w-7 h-7 object-contain" />
+    <div className="w-8 h-8 shrink-0 rounded-full bg-white shadow-sm ring-2 ring-[#F2B40E]/50 flex items-center justify-center" aria-hidden="true">
+        <Image src="/android-chrome-192x192.png" alt="" width={28} height={28} className="w-[22px] h-[22px] object-contain" />
     </div>
 );
 
@@ -1197,7 +1198,7 @@ const VerifyCard: React.FC<VerifyCardProps> = ({ lang, done, onVerified }) => {
         "w-full h-10 rounded-lg bg-white border border-[#dfe6d8] px-3 text-[13.5px] text-slate-800 placeholder:text-slate-400 outline-none transition focus:border-[#3b8c2a] focus:ring-4 focus:ring-[#3b8c2a]/15 disabled:bg-slate-50";
 
     return (
-        <form onSubmit={verify} noValidate className="ml-[50px] bg-white rounded-2xl border border-[#3b8c2a]/10 shadow-sm px-3.5 pt-3 pb-3 flex flex-col gap-2.5">
+        <form onSubmit={verify} noValidate className="ml-[42px] bg-white rounded-2xl border border-[#3b8c2a]/10 shadow-sm px-3.5 pt-3 pb-3 flex flex-col gap-2.5">
             <fieldset disabled={done || busy} className="flex flex-col gap-2.5 min-w-0">
                 <label className="flex flex-col gap-1.5">
                     <span className="text-[13px] font-medium text-slate-800">{isPhone ? v.phoneLabel : v.emailLabel}</span>
@@ -1321,7 +1322,7 @@ const VerifyCard: React.FC<VerifyCardProps> = ({ lang, done, onVerified }) => {
 const HistoryList: React.FC<{ lang: Lang; items: HistoryItem[] }> = ({ lang, items }) => {
     const t = TEXT[lang];
     return (
-        <ul className="ml-[50px] flex flex-col gap-2">
+        <ul className="ml-[42px] flex flex-col gap-2">
             {items.map((item, idx) => (
                 <li key={idx} className="bg-white rounded-2xl border border-[#3b8c2a]/10 shadow-sm px-3.5 py-2.5">
                     <p className="text-[11.5px] text-slate-500">
@@ -1386,7 +1387,7 @@ const StallSummary: React.FC<{ lang: Lang; choice: StallChoice }> = ({ lang, cho
     const { total } = priceBreakdown(rate?.ratePerSqm || 0, choice.sqm, sides);
 
     return (
-        <div className="ml-[50px] bg-white rounded-2xl border border-[#3b8c2a]/10 shadow-sm px-3.5 pt-3 pb-3" aria-live="polite">
+        <div className="ml-[42px] bg-white rounded-2xl border border-[#3b8c2a]/10 shadow-sm px-3.5 pt-3 pb-3" aria-live="polite">
             <p className="font-poppins font-semibold text-[16px] text-[#14532d]">{bt.title}</p>
             <dl className="mt-1.5 text-[13.5px]">
                 {[
@@ -1442,6 +1443,52 @@ const ChatPanel: React.FC<Props> = ({ open, onClose }) => {
 
     const scrollRef = useRef<HTMLDivElement>(null);
     const inputRef = useRef<HTMLInputElement>(null);
+    const panelRef = useRef<HTMLDivElement>(null);
+    const animatedOnce = useRef(false);
+
+    // Opening: the panel springs up from the launcher (bottom-right), then the header, greeting,
+    // topic cards and input slide in one after another. Closing: a quick fade + drop.
+    useLayoutEffect(() => {
+        const panel = panelRef.current;
+        if (!panel) return;
+        const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+        const parts = panel.querySelectorAll<HTMLElement>("[data-chat-anim]");
+        const ctx = gsap.context(() => {
+            gsap.killTweensOf([panel, ...parts]);
+            if (open) {
+                if (reduce) {
+                    gsap.set(panel, { autoAlpha: 1, y: 0, scale: 1 });
+                    gsap.set(parts, { autoAlpha: 1, y: 0, scale: 1 });
+                    return;
+                }
+                gsap.timeline()
+                    .fromTo(
+                        panel,
+                        { autoAlpha: 0, y: 40, scale: 0.86, transformOrigin: "100% 100%" },
+                        { autoAlpha: 1, y: 0, scale: 1, duration: 0.55, ease: "back.out(1.5)" }
+                    )
+                    .fromTo(
+                        parts,
+                        { autoAlpha: 0, y: 14, scale: 0.97 },
+                        { autoAlpha: 1, y: 0, scale: 1, duration: 0.4, ease: "power3.out", stagger: 0.045, clearProps: "transform" },
+                        "-=0.32"
+                    );
+            } else if (animatedOnce.current) {
+                gsap.to(panel, {
+                    autoAlpha: 0,
+                    y: 24,
+                    scale: 0.92,
+                    transformOrigin: "100% 100%",
+                    duration: reduce ? 0 : 0.24,
+                    ease: "power2.in",
+                });
+            } else {
+                gsap.set(panel, { autoAlpha: 0 });
+            }
+        }, panel);
+        animatedOnce.current = true;
+        return () => ctx.kill();
+    }, [open]);
 
     const showForm = !ended && !visitorName && askDetails;
     const showWelcome = !showForm && messages.length === 0;
@@ -1780,32 +1827,35 @@ const ChatPanel: React.FC<Props> = ({ open, onClose }) => {
 
     const topicCards = (
         <>
-            <div className="relative grid grid-cols-2 gap-2.5 pt-1">
+            <div className="relative grid grid-cols-2 gap-2 pt-0.5">
                 {TOPICS.map((topic) => (
                     <button
                         key={topic.id}
+                        data-chat-anim
                         type="button"
                         onClick={() => pickTopic(topic)}
                         disabled={loading}
-                        className="group flex flex-col items-center justify-center gap-2 min-h-[96px] rounded-2xl bg-white/90 border border-[#e3e9dc] px-2 py-3 text-center shadow-[0_2px_10px_-6px_rgba(11,41,18,0.25)] transition hover:border-[#3b8c2a] hover:-translate-y-0.5 hover:shadow-[0_8px_20px_-10px_rgba(11,41,18,0.45)] disabled:pointer-events-none"
+                        className="group flex items-center gap-2.5 min-h-[56px] rounded-xl bg-white border border-[#e3e9dc] px-2.5 py-2 text-left shadow-[0_1px_2px_rgba(11,41,18,0.06)] transition-all duration-200 hover:border-[#3b8c2a]/60 hover:-translate-y-0.5 hover:shadow-[0_10px_22px_-12px_rgba(11,41,18,0.45)] disabled:pointer-events-none"
                     >
-                        <topic.icon className="w-8 h-8 text-[#1b5e20] transition-transform group-hover:scale-110" strokeWidth={1.6} aria-hidden="true" />
-                        <span className="font-poppins font-medium text-[13.5px] leading-tight text-[#14532d]">{topic.label[lang]}</span>
+                        <span className="w-8 h-8 shrink-0 rounded-lg bg-[#eaf4e5] text-[#1b5e20] flex items-center justify-center transition-colors group-hover:bg-[#14532d] group-hover:text-white">
+                            <topic.icon className="w-[17px] h-[17px]" strokeWidth={1.9} aria-hidden="true" />
+                        </span>
+                        <span className="font-poppins font-medium text-[12px] leading-tight text-[#14532d]">{topic.label[lang]}</span>
                     </button>
                 ))}
             </div>
 
-            <div className="relative flex items-center gap-3 pt-1">
+            <div data-chat-anim className="relative flex items-center gap-3 pt-0.5">
                 <span className="flex-1 h-px bg-[#dfe6d8]" aria-hidden="true" />
                 <button
                     type="button"
                     onClick={() => pickTopic(TALK_TO_TEAM)}
                     disabled={loading}
-                    className="group inline-flex items-center gap-2 rounded-full bg-[#eef3ea] hover:bg-[#e0ebd9] border border-[#dfe6d8] px-4 py-2 font-poppins font-medium text-[14px] text-[#14532d] transition"
+                    className="group inline-flex items-center gap-1.5 rounded-full bg-white hover:bg-[#14532d] border border-[#cfe0c8] hover:border-[#14532d] px-3.5 py-1.5 font-poppins font-medium text-[12.5px] text-[#14532d] hover:text-white shadow-[0_1px_2px_rgba(11,41,18,0.06)] transition-colors"
                 >
-                    <Headset className="w-5 h-5" strokeWidth={1.8} aria-hidden="true" />
+                    <Headset className="w-4 h-4" strokeWidth={1.9} aria-hidden="true" />
                     {TALK_TO_TEAM.label[lang]}
-                    <ChevronRight className="w-4 h-4 transition-transform group-hover:translate-x-0.5" aria-hidden="true" />
+                    <ChevronRight className="w-3.5 h-3.5 transition-transform group-hover:translate-x-0.5" aria-hidden="true" />
                 </button>
                 <span className="flex-1 h-px bg-[#dfe6d8]" aria-hidden="true" />
             </div>
@@ -1820,40 +1870,46 @@ const ChatPanel: React.FC<Props> = ({ open, onClose }) => {
             aria-hidden={!open}
             inert={!open}
             lang={lang}
-            className={`fixed z-[110] right-4 sm:right-6 inset-y-0 my-auto w-[440px] h-[660px] max-h-[calc(100svh-32px)] max-[480px]:inset-x-0 max-[480px]:top-auto max-[480px]:bottom-0 max-[480px]:my-0 max-[480px]:w-full max-[480px]:h-[90svh] max-[480px]:max-h-none flex flex-col bg-[#F3F8F1] rounded-[22px] max-[480px]:rounded-b-none shadow-[0_28px_70px_-15px_rgba(11,41,18,0.55)] ring-1 ring-black/5 overflow-clip font-inter text-[14px] leading-[1.55] origin-right transition-all duration-300 ease-out ${
-                open ? "opacity-100 translate-x-0 scale-100" : "opacity-0 translate-x-4 scale-95 pointer-events-none invisible"
+            ref={panelRef}
+            style={{ visibility: "hidden", opacity: 0 }}
+            className={`fixed z-[110] right-4 sm:right-6 inset-y-0 my-auto w-[380px] h-[580px] max-h-[calc(100svh-32px)] max-[480px]:inset-x-0 max-[480px]:top-auto max-[480px]:bottom-0 max-[480px]:my-0 max-[480px]:w-full max-[480px]:h-[88svh] max-[480px]:max-h-none flex flex-col bg-gradient-to-b from-[#F6FAF4] to-[#EEF5EB] rounded-[20px] max-[480px]:rounded-b-none shadow-[0_30px_80px_-20px_rgba(11,41,18,0.55),0_0_0_1px_rgba(20,83,45,0.08)] overflow-clip font-inter text-[13.5px] leading-[1.55] ${
+                open ? "" : "pointer-events-none"
             }`}
         >
             {/* ── Header ── */}
-            <div className="relative shrink-0 overflow-clip bg-gradient-to-br from-[#1f6b2a] to-[#14532d] text-white">
-                <svg className="absolute -right-6 -bottom-10 w-36 h-36 text-white/[0.06]" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+            <div data-chat-anim className="relative shrink-0 overflow-clip bg-gradient-to-br from-[#1f6b2a] via-[#185f2b] to-[#0f4424] text-white">
+                <svg className="absolute -right-6 -bottom-10 w-32 h-32 text-white/[0.06]" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
                     <path d={LEAF_PATH} />
                 </svg>
+                <span className="absolute inset-x-0 bottom-0 h-[3px] bg-gradient-to-r from-[#F2B40E] via-[#f58220] to-[#F2B40E] opacity-80" aria-hidden="true" />
 
-                <div className="relative flex items-center gap-2.5 pl-4 pr-3 py-3.5">
-                    <div className="w-[56px] h-[56px] shrink-0 rounded-full bg-white ring-[3px] ring-white/25 flex items-center justify-center shadow-md">
-                        <Image src="/android-chrome-192x192.png" alt="Bharat Organic Expo logo" width={44} height={44} className="w-10 h-10 object-contain" />
+                <div className="relative flex items-center gap-2.5 pl-3.5 pr-2.5 py-3">
+                    <div className="relative w-[42px] h-[42px] shrink-0 rounded-full bg-white ring-2 ring-white/30 flex items-center justify-center shadow-md">
+                        <Image src="/android-chrome-192x192.png" alt="Bharat Organic Expo logo" width={36} height={36} className="w-[30px] h-[30px] object-contain" />
+                        <span className="absolute -bottom-0.5 -right-0.5 w-3 h-3 rounded-full bg-[#4ade80] ring-2 ring-[#185f2b]" aria-hidden="true" />
                     </div>
 
                     <div className="flex-1 min-w-0">
-                        <p className="font-poppins font-semibold text-[19px] leading-tight whitespace-nowrap">Organic Mitra</p>
-                        <p className="mt-0.5 text-[12px] leading-snug text-white/90">{t.subtitle}</p>
+                        <p className="font-poppins font-semibold text-[15.5px] leading-tight whitespace-nowrap">Organic Mitra</p>
+                        <p className="mt-0.5 flex items-center gap-1.5 text-[11px] leading-snug text-white/85">
+                            <span className="truncate">{t.subtitle}</span>
+                        </p>
                     </div>
 
                     {/* Language switch */}
-                    <div className="shrink-0 flex items-center text-[12px]" role="group" aria-label="Language">
-                        {(["en", "hi"] as const).map((l, i) => (
-                            <React.Fragment key={l}>
-                                {i > 0 && <span className="mx-1.5 h-3 w-px bg-white/50" aria-hidden="true" />}
-                                <button
-                                    type="button"
-                                    onClick={() => setLang(l)}
-                                    aria-pressed={lang === l}
-                                    className={`transition-colors ${lang === l ? "text-white font-semibold" : "text-white/65 hover:text-white"}`}
-                                >
-                                    {l === "en" ? "English" : "हिंदी"}
-                                </button>
-                            </React.Fragment>
+                    <div className="shrink-0 flex items-center rounded-full bg-white/10 p-0.5 text-[10.5px]" role="group" aria-label="Language">
+                        {(["en", "hi"] as const).map((l) => (
+                            <button
+                                key={l}
+                                type="button"
+                                onClick={() => setLang(l)}
+                                aria-pressed={lang === l}
+                                className={`rounded-full px-2 py-0.5 font-semibold transition-colors ${
+                                    lang === l ? "bg-white text-[#14532d] shadow-sm" : "text-white/75 hover:text-white"
+                                }`}
+                            >
+                                {l === "en" ? "EN" : "हिं"}
+                            </button>
                         ))}
                     </div>
 
@@ -1864,17 +1920,17 @@ const ChatPanel: React.FC<Props> = ({ open, onClose }) => {
                             onClick={onClose}
                             aria-label={t.minimize}
                             title={t.minimize}
-                            className="w-8 h-8 shrink-0 rounded-full bg-white/10 hover:bg-white/20 text-white flex items-center justify-center transition-colors"
+                            className="w-7 h-7 shrink-0 rounded-full bg-white/10 hover:bg-white/20 text-white flex items-center justify-center transition-colors"
                         >
-                            <Minus className="w-5 h-5" strokeWidth={2.5} />
+                            <Minus className="w-4 h-4" strokeWidth={2.5} />
                         </button>
                         <button
                             type="button"
                             onClick={onClose}
                             aria-label="Close chat"
-                            className="w-8 h-8 shrink-0 rounded-full bg-white/10 hover:bg-white/20 text-white flex items-center justify-center transition-colors"
+                            className="w-7 h-7 shrink-0 rounded-full bg-white/10 hover:bg-white/20 text-white flex items-center justify-center transition-colors"
                         >
-                            <X className="w-5 h-5" strokeWidth={2.5} />
+                            <X className="w-4 h-4" strokeWidth={2.5} />
                         </button>
                     </div>
                 </div>
@@ -2091,7 +2147,7 @@ const ChatPanel: React.FC<Props> = ({ open, onClose }) => {
                 <>
                     <div
                         ref={scrollRef}
-                        className="relative flex-1 overflow-y-auto overflow-x-hidden overscroll-contain px-4 pt-4 pb-3 flex flex-col gap-3"
+                        className="relative flex-1 overflow-y-auto overflow-x-hidden overscroll-contain px-3.5 pt-3.5 pb-3 flex flex-col gap-2.5"
                         data-lenis-prevent
                         aria-live="polite"
                     >
@@ -2105,9 +2161,9 @@ const ChatPanel: React.FC<Props> = ({ open, onClose }) => {
                             </svg>
                         </div>
 
-                        <div className="relative flex items-start gap-2.5">
+                        <div data-chat-anim className="relative flex items-start gap-2.5">
                             <BotAvatar />
-                            <div className="max-w-[80%] bg-white rounded-2xl rounded-tl-md shadow-sm border border-[#3b8c2a]/10 px-4 py-2.5 text-[14px] text-slate-800">
+                            <div className="max-w-[82%] bg-white rounded-2xl rounded-tl-md shadow-[0_1px_2px_rgba(11,41,18,0.06)] border border-[#3b8c2a]/10 px-3.5 py-2 text-[13.5px] text-slate-800">
                                 {(returning ? t.welcomeBack : visitorName && !showWelcome ? t.greetingName(visitorName) : t.greeting).split("\n").map((line, i) =>
                                     i === 0 ? (
                                         <p key={i} className="font-semibold text-[#0b2912]">
@@ -2121,7 +2177,7 @@ const ChatPanel: React.FC<Props> = ({ open, onClose }) => {
                         </div>
 
                         {showWelcomeBack ? (
-                            <div className="relative ml-[50px] grid grid-cols-2 gap-2">
+                            <div className="relative ml-[42px] grid grid-cols-2 gap-2">
                                 {[
                                     [t.viewPrevious, "history"],
                                     [t.askNew, "new-question"],
@@ -2152,7 +2208,7 @@ const ChatPanel: React.FC<Props> = ({ open, onClose }) => {
                             ) : (
                                 <div key={i} className="relative flex flex-col gap-2.5">
                                     {m.receipt && (
-                                        <div className="ml-[50px] bg-white rounded-2xl border border-[#3b8c2a]/10 shadow-sm px-4 pt-3.5 pb-3">
+                                        <div className="ml-[42px] bg-white rounded-2xl border border-[#3b8c2a]/10 shadow-sm px-4 pt-3.5 pb-3">
                                             <div className="flex items-start gap-3">
                                                 <span className="w-10 h-10 shrink-0 rounded-full bg-[#1f8a3a] text-white flex items-center justify-center shadow-sm" aria-hidden="true">
                                                     <Check className="w-6 h-6" strokeWidth={3} />
@@ -2225,7 +2281,7 @@ const ChatPanel: React.FC<Props> = ({ open, onClose }) => {
                                         </div>
                                     )}
                                     {m.options && (
-                                        <div className={`ml-[50px] grid gap-2 ${m.columns === 3 ? "grid-cols-3" : "grid-cols-2"}`}>
+                                        <div className={`ml-[42px] grid gap-2 ${m.columns === 3 ? "grid-cols-3" : "grid-cols-2"}`}>
                                             {m.options.map((o) => (
                                                 <button
                                                     key={o.label}
@@ -2240,13 +2296,13 @@ const ChatPanel: React.FC<Props> = ({ open, onClose }) => {
                                         </div>
                                     )}
                                     {m.note && (
-                                        <p className="ml-[50px] -mt-0.5 flex items-start gap-1.5 text-[11px] leading-snug text-slate-500">
+                                        <p className="ml-[42px] -mt-0.5 flex items-start gap-1.5 text-[11px] leading-snug text-slate-500">
                                             <Info className="w-3.5 h-3.5 shrink-0 mt-px" aria-hidden="true" />
                                             {m.note}
                                         </p>
                                     )}
                                     {m.nav && i === messages.length - 1 && !loading && (
-                                        <div className="ml-[50px] -mt-1 flex flex-wrap items-center gap-x-3 gap-y-1 text-[13px] font-medium text-[#14532d]">
+                                        <div className="ml-[42px] -mt-1 flex flex-wrap items-center gap-x-3 gap-y-1 text-[13px] font-medium text-[#14532d]">
                                             {m.nav.map((n, j) => (
                                                 <React.Fragment key={n.step}>
                                                     {j > 0 && <span className="h-3.5 w-px bg-slate-300" aria-hidden="true" />}
@@ -2357,7 +2413,7 @@ const ChatPanel: React.FC<Props> = ({ open, onClose }) => {
                                     )}
                                     {m.history && <HistoryList lang={lang} items={m.history} />}
                                     {m.sales && (
-                                        <div className="ml-[50px] grid grid-cols-2 gap-2">
+                                        <div className="ml-[42px] grid grid-cols-2 gap-2">
                                             <a
                                                 href={`https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(t.salesWhatsappText(m.sales.stall))}`}
                                                 target="_blank"
@@ -2426,7 +2482,7 @@ const ChatPanel: React.FC<Props> = ({ open, onClose }) => {
                             <button
                                 type="button"
                                 onClick={showMainMenu}
-                                className="relative self-start ml-[50px] -mt-1 inline-flex items-center gap-1.5 text-[13px] font-medium text-[#14532d] underline underline-offset-2 hover:text-[#3b8c2a]"
+                                className="relative self-start ml-[42px] -mt-1 inline-flex items-center gap-1.5 text-[13px] font-medium text-[#14532d] underline underline-offset-2 hover:text-[#3b8c2a]"
                             >
                                 <ArrowLeft className="w-4 h-4" aria-hidden="true" />
                                 {t.mainMenu}
@@ -2450,9 +2506,10 @@ const ChatPanel: React.FC<Props> = ({ open, onClose }) => {
                             e.preventDefault();
                             sendMessage(input);
                         }}
-                        className="shrink-0 px-3 pt-2.5 pb-2"
+                        data-chat-anim
+                        className="shrink-0 px-3 pt-2 pb-2 border-t border-[#e3e9dc]/70 bg-white/60 backdrop-blur-sm"
                     >
-                        <div className="flex items-center gap-2 bg-white rounded-full border border-[#e3e9dc] shadow-[0_4px_16px_-8px_rgba(11,41,18,0.3)] pl-5 pr-1.5 py-1.5 transition focus-within:border-[#3b8c2a] focus-within:ring-4 focus-within:ring-[#3b8c2a]/15">
+                        <div className="flex items-center gap-2 bg-white rounded-full border border-[#e3e9dc] shadow-[0_4px_14px_-8px_rgba(11,41,18,0.3)] pl-4 pr-1 py-1 transition focus-within:border-[#3b8c2a] focus-within:ring-4 focus-within:ring-[#3b8c2a]/15">
                             <input
                                 ref={inputRef}
                                 value={input}
@@ -2461,15 +2518,15 @@ const ChatPanel: React.FC<Props> = ({ open, onClose }) => {
                                 maxLength={1000}
                                 placeholder={loading ? t.typing : placeholder}
                                 aria-label="Type your message"
-                                className="flex-1 min-w-0 bg-transparent text-[14px] text-slate-800 placeholder:text-slate-400 outline-none disabled:cursor-not-allowed"
+                                className="flex-1 min-w-0 bg-transparent text-[13.5px] text-slate-800 placeholder:text-slate-400 outline-none disabled:cursor-not-allowed"
                             />
                             <button
                                 type="submit"
                                 disabled={loading || !input.trim()}
                                 aria-label="Send message"
-                                className="w-10 h-10 shrink-0 rounded-full bg-[#14532d] text-white flex items-center justify-center shadow-md transition hover:bg-[#1b5e20] active:scale-95 disabled:cursor-not-allowed"
+                                className="w-9 h-9 shrink-0 rounded-full bg-gradient-to-br from-[#1f6b2a] to-[#14532d] text-white flex items-center justify-center shadow-md transition hover:brightness-110 active:scale-95 disabled:cursor-not-allowed disabled:opacity-60"
                             >
-                                <Send className="w-[18px] h-[18px] -ml-0.5" strokeWidth={2.2} aria-hidden="true" />
+                                <Send className="w-4 h-4 -ml-0.5" strokeWidth={2.2} aria-hidden="true" />
                             </button>
                         </div>
                         {showFollowUp ? (

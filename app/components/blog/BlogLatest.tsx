@@ -54,9 +54,9 @@ const BlogLatest = () => {
                 </span>
               </div>
               <div className="p-3.5">
-                <h4 className="font-poppins font-semibold text-[15px] sm:text-[16px] text-[#1b5e20] leading-snug line-clamp-2 group-hover:text-[#3b8c2a] transition-colors">
+                <h3 className="font-poppins font-semibold text-[15px] sm:text-[16px] text-[#1b5e20] leading-snug line-clamp-2 group-hover:text-[#3b8c2a] transition-colors">
                   {u.title}
-                </h4>
+                </h3>
                 <p className="font-inter text-[13px] text-black leading-relaxed line-clamp-2 mt-1">{u.desc}</p>
                 <div className="flex items-center gap-3 mt-3 text-[11px] text-gray-500 font-medium font-inter pt-2 border-t border-gray-100">
                   <span className="flex items-center gap-1">

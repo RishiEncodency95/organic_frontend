@@ -37,9 +37,9 @@ const BlogVideos = () => {
                   {v.duration}
                 </span>
               </div>
-              <h4 className="font-poppins font-semibold text-[13px] sm:text-[14px] text-[#1b5e20] mt-2 line-clamp-2 group-hover:text-[#3b8c2a] transition-colors leading-snug">
+              <h3 className="font-poppins font-semibold text-[13px] sm:text-[14px] text-[#1b5e20] mt-2 line-clamp-2 group-hover:text-[#3b8c2a] transition-colors leading-snug">
                 {v.title}
-              </h4>
+              </h3>
             </a>
           </Reveal>
         ))}

@@ -6,6 +6,7 @@ import NominateSidebar from "../../components/abouts/nominate/NominateSidebar";
 import SectionContainer from "@/app/components/layout/SectionContainer";
 import AdminSchema from "@/components/seo/AdminSchema";
 import { adminSeoMetadata, getAdminSeo } from "@/lib/adminSeo";
+import { getSectionData } from "@/lib/serverData";
 
 export const revalidate = 60;
 
@@ -19,14 +20,17 @@ export async function generateMetadata(): Promise<Metadata> {
 }
 
 export default async function NominateAdvisoryBoardPage() {
-    const seoData = await getAdminSeo(SEO_PAGE_KEY);
+    const [seoData, heroData] = await Promise.all([
+        getAdminSeo(SEO_PAGE_KEY),
+        getSectionData("/website/nominatehero"),
+    ]);
 
     return (
         <main className="min-h-screen bg-[#f9fafb]">
             <AdminSchema schema={seoData?.schemaMarkup || null} />
 
             {/* Hero Section */}
-            <NominateHero />
+            <NominateHero data={heroData} />
 
             {/* Main Content Section */}
             <section className="w-full py-3 md:py-6">

@@ -67,7 +67,33 @@ const Sparkle = ({ style, color = "#ffdd00", shadow = "#ffa500" }: { style?: Rea
   </span>
 );
 
-const ExhibitorsHero = () => {
+// Admin values override the defaults above; an empty field keeps the default.
+const pick = (value: unknown, fallback: string) =>
+  typeof value === "string" && value.trim() ? value.trim() : fallback;
+
+const ExhibitorsHero = ({ data }: { data?: any }) => {
+  const base = EXHIBITORS_HERO_DATA[0];
+  // H1 is a single admin field: word 1 dark + word 2 green on line 1, the rest on line 2.
+  const titleWords = pick(data?.title, `${base.mainCount.trim()} ${base.countHighlight} ${base.titleSub}`).split(/\s+/);
+  const heroes = [
+    {
+      ...base,
+      tagline: pick(data?.eyebrow, base.tagline),
+      mainCount: titleWords.length > 1 ? `${titleWords[0]} ` : "",
+      countHighlight: titleWords.length > 1 ? titleWords[1] : titleWords[0],
+      titleSub: titleWords.slice(2).join(" "),
+      description: pick(data?.description, base.description),
+      eventDate: pick(data?.date, base.eventDate),
+      eventLocation: pick(data?.location, base.eventLocation),
+      bgImage: pick(data?.image, base.bgImage),
+      bgImageAlt: pick(data?.imageAlt, "Bharat Organic Expo exhibitors"),
+      buttons: [
+        { ...base.buttons[0], label: pick(data?.buttonLabel, base.buttons[0].label), href: pick(data?.buttonHref, base.buttons[0].href) },
+        { ...base.buttons[1], label: pick(data?.secondaryButtonLabel, base.buttons[1].label), href: pick(data?.secondaryButtonHref, base.buttons[1].href) },
+      ],
+    },
+  ];
+
   return (
     <>
       <style>{`
@@ -99,11 +125,13 @@ const ExhibitorsHero = () => {
         }
       `}</style>
 
-      {EXHIBITORS_HERO_DATA.map((hero) => (
+      {heroes.map((hero) => (
         <section key={hero.id} className="relative w-full min-h-[380px] sm:min-h-[420px] md:min-h-[450px] lg:min-h-[470px] flex items-center overflow-hidden font-inter pt-3 md:pt-5 pb-4 md:pb-6 border-b-4 border-[#ea580c]">
           {/* Background Image */}
           <div
             className="absolute inset-0 z-0"
+            role="img"
+            aria-label={hero.bgImageAlt}
             style={{
               backgroundImage: `url(${hero.bgImage})`,
               backgroundPosition: "center top",

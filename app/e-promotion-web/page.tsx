@@ -3,6 +3,7 @@ import type { Metadata } from "next";
 import { OG_IMAGE, OG_IMAGE_ALT } from "@/lib/seo";
 import { seoApi } from "@/lib/api";
 import AdminSchema from "@/components/seo/AdminSchema";
+import { getSectionData } from "@/lib/serverData";
 import HeroSection from "../components/opportunity/epromotion-opportunity/HeroSection";
 import EPromoteBand from "../components/opportunity/epromotion-opportunity/EPromoteBand";
 import WhyEPromote from "../components/opportunity/epromotion-opportunity/WhyEPromote";
@@ -85,11 +86,12 @@ export default async function EPromotionWebPage() {
   }
 
   const schemaContent = seoData?.schemaMarkup || null;
+  const heroData = await getSectionData("/website/opportunities/epromotion/hero");
 
   return (
     <main className="w-full bg-[#f9f9f9]">
       <AdminSchema schema={schemaContent} />
-      <HeroSection />
+      <HeroSection initialData={heroData} />
       <EPromoteBand />
       <WhyEPromote />
       <EPromotionOpportunities />

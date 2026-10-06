@@ -299,9 +299,9 @@ export default function StatsBand({ sectionData }: { sectionData?: any }) {
                       <IconComponent className="w-3.5 h-3.5 md:w-4 md:h-4 text-[#facc15] stroke-[2]" />
                     </div>
                     <div className="flex flex-col text-left justify-center">
-                      <h4 className="text-[14px] sm:text-[15px] md:text-[16px] font-semibold text-white leading-none font-inter mb-0.5">
+                      <div className="text-[14px] sm:text-[15px] md:text-[16px] font-semibold text-white leading-none font-inter mb-0.5">
                         <StatCounter value={item.val} />
-                      </h4>
+                      </div>
                       <p className="text-[9px] sm:text-[9.5px] md:text-[10px] font-semibold text-[#facc15] uppercase tracking-wider leading-none font-inter">
                         {item.label}
                       </p>

@@ -153,7 +153,7 @@ const AdvisoryHero = ({ initialData }: { initialData?: any }) => {
                                         <IconComponent size={20} className="text-[#2e7d32]" />
                                     </div>
                                     <div>
-                                        <h4 className="text-[#1b5e20] font-bold text-[11px] md:text-[12px] leading-tight mb-1">{feature.title}</h4>
+                                        <div className="font-poppins text-[#1b5e20] font-bold text-[11px] md:text-[12px] leading-tight mb-1">{feature.title}</div>
                                         <p className="text-[#555] text-[10px] md:text-[11px] leading-tight font-medium">{feature.subtitle}</p>
                                     </div>
                                 </div>

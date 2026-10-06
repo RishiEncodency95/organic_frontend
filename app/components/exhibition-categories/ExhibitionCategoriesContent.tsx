@@ -13,7 +13,7 @@ import SustainablePackagingShowcase from "@/app/components/exhibition-categories
 import AgriTechShowcase from "@/app/components/exhibition-categories/AgriTechShowcase";
 import CertificationTradeShowcase from "@/app/components/exhibition-categories/CertificationTradeShowcase";
 
-export default function ExhibitionCategoriesContent() {
+export default function ExhibitionCategoriesContent({ heroData }: { heroData?: any }) {
   const [activeCategory, setActiveCategory] = useState("organic-food-beverages");
 
   useEffect(() => {
@@ -33,7 +33,7 @@ export default function ExhibitionCategoriesContent() {
 
   return (
     <main className="min-h-screen">
-      <ExhibitionHero />
+      <ExhibitionHero data={heroData} />
       <ExhibitionSectors />
       
       {activeCategory === "organic-food-beverages" && <CategoryDetailsShowcase />}

@@ -144,10 +144,10 @@ export default function AgriTechShowcase() {
 
           {/* Left Text Block */}
           <div className="lg:w-[60%] flex flex-col relative z-20">
-            <h1 className="text-[18px] lg:text-[56px] font-semibold uppercase leading-[0.9] tracking-[-0.02em] font-poppins mb-3">
+            <h2 className="text-[18px] lg:text-[56px] font-semibold uppercase leading-[0.9] tracking-[-0.02em] font-poppins mb-3">
               <span className="text-[#113d20]">AGRITECH, GREENTECH &</span><br />
               <span className="text-[#e44c20]">INNOVATION SOLUTIONS</span>
-            </h1>
+            </h2>
 
             {/* Subtitle with diamond lines */}
             <div className="flex items-center gap-4 my-2">
@@ -214,9 +214,9 @@ export default function AgriTechShowcase() {
 
                   {/* Card Content */}
                   <div className="p-3 flex flex-col flex-grow">
-                    <h4 className="text-[16px] font-semibold text-[#3b8c2a] leading-[1.3] mb-3 whitespace-pre-line min-h-[34px]">
+                    <h3 className="text-[16px] font-semibold text-[#3b8c2a] leading-[1.3] mb-3 whitespace-pre-line min-h-[34px]">
                       {prod.title}
-                    </h4>
+                    </h3>
                     <ul className="text-[14px] font-medium text-gray-800 flex flex-col gap-1.5 flex-grow">
                       {prod.items.map((item, i) => (
                         <li key={i} className="flex items-start gap-1.5 leading-[1.5]">

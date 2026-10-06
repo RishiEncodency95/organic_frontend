@@ -17,11 +17,12 @@ interface ExhibitorsSectionProps {
         title?: string;
         subtitle?: string;
     };
+    heroData?: any;
 }
 
 const PAGE_SIZE = 48;
 
-const ExhibitorsSection = ({ exhibitors, header }: ExhibitorsSectionProps) => {
+const ExhibitorsSection = ({ exhibitors, header, heroData }: ExhibitorsSectionProps) => {
     const [liveExhibitors, setLiveExhibitors] = useState<ApiExhibitor[]>(exhibitors || []);
     const [headerData, setHeaderData] = useState({
         title: header?.title || "Our Previous Exhibitors",
@@ -130,7 +131,7 @@ const ExhibitorsSection = ({ exhibitors, header }: ExhibitorsSectionProps) => {
 
     return (
         <React.Fragment>
-            <ExhibitorsHero />
+            <ExhibitorsHero data={heroData} />
             <AboutStrip />
             
             {/* Section Header */}

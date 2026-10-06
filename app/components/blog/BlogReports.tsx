@@ -33,9 +33,9 @@ const BlogReports = () => {
                   <FileText className="w-4 h-4" />
                 </span>
                 <div className="min-w-0">
-                  <h4 className="font-poppins font-semibold text-[14px] text-[#1b5e20] truncate group-hover:text-[#3b8c2a] transition-colors">
+                  <h3 className="font-poppins font-semibold text-[14px] text-[#1b5e20] truncate group-hover:text-[#3b8c2a] transition-colors">
                     {r.title}
-                  </h4>
+                  </h3>
                   <p className="text-[12px] text-gray-500 font-medium font-inter">{r.meta}</p>
                 </div>
               </div>

@@ -7,6 +7,7 @@ import WhyPartnerTravel from "../../components/opportunity/partnership/travel-pa
 import type { Metadata } from "next";
 import AdminSchema from "@/components/seo/AdminSchema";
 import { adminSeoMetadata, getAdminSeo } from "@/lib/adminSeo";
+import { getSectionData } from "@/lib/serverData";
 
 export const revalidate = 60;
 
@@ -20,11 +21,14 @@ export async function generateMetadata(): Promise<Metadata> {
 }
 
 export default async function TravelPartnerPage() {
-  const seoData = await getAdminSeo(SEO_PAGE_KEY);
+  const [seoData, heroData] = await Promise.all([
+    getAdminSeo(SEO_PAGE_KEY),
+    getSectionData("/website/opportunities/partnership/sub-hero/travel-partner"),
+  ]);
   return (
     <main className="w-full bg-white">
       <AdminSchema schema={seoData?.schemaMarkup || null} />
-      <Hero />
+      <Hero initialData={heroData} />
       <FeatureStrip />
       <KeyBenefits />
       <Deliverables />

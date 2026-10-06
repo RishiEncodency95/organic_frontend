@@ -7,6 +7,7 @@ import { motion } from 'framer-motion';
 import { CheckCircle2, FileDown, ArrowRight, Leaf, Store, Info } from 'lucide-react';
 import SectionContainer from '../layout/SectionContainer';
 import { SERVER_URL, API_URL } from '@/lib/api';
+import { toViewablePdfUrl } from "@/lib/pdfLink";
 import { isCloudinaryImage, cloudinaryImageLoader } from '@/lib/cloudinaryImage';
 import meetingImg from "../../assets/home/bs_meet.webp";
 
@@ -262,7 +263,7 @@ const WhyParticipate = () => {
                 href={
                   data.buttons.brochure.link?.startsWith("/uploads")
                     ? `${SERVER_URL}${data.buttons.brochure.link}`
-                    : data.buttons.brochure.link || "#"
+                    : toViewablePdfUrl(data.buttons.brochure.link || "#")
                 }
                 target="_blank"
                 rel="noopener noreferrer"

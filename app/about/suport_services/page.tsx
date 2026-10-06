@@ -33,9 +33,9 @@ export default async function SupportServicesPage() {
           <div className="flex flex-col items-center text-center mb-12">
             <div className="flex items-center gap-3 mb-2">
               <div className="w-8 h-[2px] bg-[#e85d1c]"></div>
-              <h3 className="text-[12px] md:text-[14px] font-bold text-[#e85d1c] tracking-[0.15em] uppercase">
+              <div className="font-poppins text-[12px] md:text-[14px] font-bold text-[#e85d1c] tracking-[0.15em] uppercase">
                 {hero.sectionTag || "HOW CAN WE HELP YOU?"}
-              </h3>
+              </div>
               <div className="w-8 h-[2px] bg-[#e85d1c]"></div>
             </div>
 
@@ -57,7 +57,7 @@ export default async function SupportServicesPage() {
                     <div className="w-12 h-12 bg-white rounded-full shadow-sm flex items-center justify-center text-[#e85d1c] mb-6 group-hover:text-[#3b8c2a] transition-colors">
                       <IconComponent size={24} />
                     </div>
-                    <h3 className="text-[18px] md:text-[20px] font-bold text-[#113d29] mb-3">{card.title}</h3>
+                    <h2 className="text-[18px] md:text-[20px] font-bold text-[#113d29] mb-3">{card.title}</h2>
                     <p className="text-[16px] md:text-[18px] text-gray-600 leading-[1.6] mb-8 flex-1">
                       {card.description}
                     </p>
@@ -73,7 +73,7 @@ export default async function SupportServicesPage() {
                   <div className="w-12 h-12 bg-white rounded-full shadow-sm flex items-center justify-center text-[#e85d1c] mb-6 group-hover:text-[#3b8c2a] transition-colors">
                     <Headphones size={24} />
                   </div>
-                  <h3 className="text-[18px] md:text-[20px] font-bold text-[#113d29] mb-3">Exhibitor Support</h3>
+                  <h2 className="text-[18px] md:text-[20px] font-bold text-[#113d29] mb-3">Exhibitor Support</h2>
                   <p className="text-[16px] md:text-[18px] text-gray-600 leading-[1.6] mb-8 flex-1">
                     Assistance with booth setup, logistics, and technical requirements to ensure a smooth exhibiting experience.
                   </p>
@@ -86,7 +86,7 @@ export default async function SupportServicesPage() {
                   <div className="w-12 h-12 bg-white rounded-full shadow-sm flex items-center justify-center text-[#e85d1c] mb-6 group-hover:text-[#3b8c2a] transition-colors">
                     <Ticket size={24} />
                   </div>
-                  <h3 className="text-[18px] md:text-[20px] font-bold text-[#113d29] mb-3">Visitor Information</h3>
+                  <h2 className="text-[18px] md:text-[20px] font-bold text-[#113d29] mb-3">Visitor Information</h2>
                   <p className="text-[16px] md:text-[18px] text-gray-600 leading-[1.6] mb-8 flex-1">
                     Help with registration, travel accommodations, visa assistance, and navigating the venue.
                   </p>
@@ -99,7 +99,7 @@ export default async function SupportServicesPage() {
                   <div className="w-12 h-12 bg-white rounded-full shadow-sm flex items-center justify-center text-[#e85d1c] mb-6 group-hover:text-[#3b8c2a] transition-colors">
                     <Megaphone size={24} />
                   </div>
-                  <h3 className="text-[18px] md:text-[20px] font-bold text-[#113d29] mb-3">Media & Press</h3>
+                  <h2 className="text-[18px] md:text-[20px] font-bold text-[#113d29] mb-3">Media & Press</h2>
                   <p className="text-[16px] md:text-[18px] text-gray-600 leading-[1.6] mb-8 flex-1">
                     Resources, press kits, and accreditation details for media professionals and journalists.
                   </p>

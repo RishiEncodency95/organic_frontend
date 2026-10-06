@@ -104,9 +104,9 @@ export default function WhySponsor() {
                       <IconComponent className="w-3.5 h-3.5 md:w-4 md:h-4 text-[#facc15] stroke-[2]" />
                     </div>
                     <div className="flex flex-col text-left">
-                      <h4 className="text-[11px] sm:text-[12.5px] md:text-[13px] font-semibold text-white leading-tight font-inter">
+                      <div className="text-[11px] sm:text-[12.5px] md:text-[13px] font-semibold text-white leading-tight font-inter">
                         {item.title}
-                      </h4>
+                      </div>
                       <p className="text-[8px] md:text-[8.5px] font-bold text-[#facc15] uppercase tracking-wider leading-tight font-inter">
                         {item.subtitle}
                       </p>

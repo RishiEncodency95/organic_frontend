@@ -152,9 +152,9 @@ const NeedHelpSupport = () => {
                     className="w-12 h-12 sm:w-14 sm:h-14 object-contain shrink-0"
                   />
                   <div>
-                    <h4 className="font-poppins font-semibold text-sm sm:text-base text-[#1b5e20] uppercase tracking-wider mb-0.5">
+                    <h3 className="font-poppins font-semibold text-sm sm:text-base text-[#1b5e20] uppercase tracking-wider mb-0.5">
                       {data.commitment.title}
-                    </h4>
+                    </h3>
                     <p className="font-inter text-xs sm:text-sm text-gray-800 font-semibold leading-snug">
                       {data.commitment.line1}
                       <br />
@@ -192,9 +192,9 @@ const NeedHelpSupport = () => {
                           alt={col.title}
                           className="w-11 h-11 sm:w-12 sm:h-12 object-contain mb-2 shrink-0"
                         />
-                        <h5 className="font-poppins font-semibold text-[13px] sm:text-sm text-[#001810] uppercase tracking-wider mb-1">
+                        <h4 className="font-poppins font-semibold text-[13px] sm:text-sm text-[#001810] uppercase tracking-wider mb-1">
                           {col.title}
-                        </h5>
+                        </h4>
                         {col.contactHref ? (
                           <a
                             href={col.contactHref}
@@ -231,10 +231,10 @@ const NeedHelpSupport = () => {
               {/* LEFT: WHY REACH OUT TO US? */}
               <div className="lg:col-span-6 bg-white border border-slate-200 rounded-2xl p-5 shadow-xs flex flex-col sm:flex-row justify-between items-center gap-4">
                 <div className="w-full sm:w-8/12">
-                  <h4 className="font-poppins font-semibold text-sm sm:text-base text-[#1b5e20] uppercase tracking-wider mb-3 flex items-center gap-1.5">
+                  <h3 className="font-poppins font-semibold text-sm sm:text-base text-[#1b5e20] uppercase tracking-wider mb-3 flex items-center gap-1.5">
                     <span>WHY REACH OUT TO US?</span>
                     <span className="text-[#1b5e20] font-extrabold">&lt;&lt;</span>
-                  </h4>
+                  </h3>
 
                   <ul className="space-y-2">
                     {data.whyReachOut.map((item, idx) => (
@@ -265,9 +265,9 @@ const NeedHelpSupport = () => {
                     <Users className="w-6 h-6" />
                   </div>
                   <div>
-                    <h4 className="font-poppins font-semibold text-sm sm:text-base text-[#1b5e20] uppercase tracking-wide mb-0.5">
+                    <h3 className="font-poppins font-semibold text-sm sm:text-base text-[#1b5e20] uppercase tracking-wide mb-0.5">
                       {data.relationshipManagers.title}
-                    </h4>
+                    </h3>
                     <p className="font-inter text-[13px] text-black font-medium leading-relaxed">
                       {data.relationshipManagers.descLine1}
                       <br className="hidden sm:block" />
@@ -281,9 +281,9 @@ const NeedHelpSupport = () => {
                   {data.relationshipManagers.stats.map((st, idx) => (
                     <div key={st.id} className={`text-center px-1 pt-1.5 sm:pt-0 flex flex-col items-center ${idx !== 0 ? "sm:pl-2" : ""}`}>
                       <img src={st.img.src} alt={st.line1} className="w-10 h-10 object-contain mb-1" />
-                      <h6 className="font-poppins font-semibold text-[11px] text-[#1b5e20] uppercase tracking-wider mb-0.5">
+                      <h4 className="font-poppins font-semibold text-[11px] text-[#1b5e20] uppercase tracking-wider mb-0.5">
                         {st.line1}
-                      </h6>
+                      </h4>
                       <p className="font-poppins font-semibold text-[11px] text-[#1b5e20] uppercase tracking-wider">
                         {st.line2}
                       </p>
@@ -302,9 +302,9 @@ const NeedHelpSupport = () => {
                   <Leaf className="w-6 h-6 fill-[#1b5e20]" />
                 </div>
                 <div>
-                  <h4 className="font-poppins font-semibold text-xs sm:text-sm tracking-wider uppercase mb-0.5">
+                  <h3 className="font-poppins font-semibold text-xs sm:text-sm tracking-wider uppercase mb-0.5">
                     {data.bottomGreenBanner.title}
-                  </h4>
+                  </h3>
                   <p className="font-inter text-xs text-emerald-100 font-medium leading-tight">
                     {data.bottomGreenBanner.desc}
                     <span className="font-semibold text-lime-300">
@@ -321,9 +321,9 @@ const NeedHelpSupport = () => {
                     <FileText className="w-5 h-5" />
                   </div>
                   <div>
-                    <h5 className="font-poppins font-semibold text-xs sm:text-sm text-[#1b5e20] uppercase tracking-wide mb-0.5">
+                    <h4 className="font-poppins font-semibold text-xs sm:text-sm text-[#1b5e20] uppercase tracking-wide mb-0.5">
                       {data.bottomLightBanner.title}
-                    </h5>
+                    </h4>
                     <p className="font-inter text-xs text-gray-600 font-medium leading-tight">
                       {data.bottomLightBanner.desc}
                     </p>

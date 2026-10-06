@@ -141,9 +141,9 @@ export default function AwardsStats({ initialData }: AwardsStatsProps) {
                     className="flex flex-col items-center text-center group flex-1 py-1"
                   >
                     <IconComponent className="w-4 h-4 md:w-5 md:h-5 mb-1 text-white stroke-[1.75]" />
-                    <h4 className="text-[11px] sm:text-[13px] md:text-sm font-semibold text-white leading-none font-inter mb-0.5">
+                    <div className="text-[11px] sm:text-[13px] md:text-sm font-semibold text-white leading-none font-inter mb-0.5">
                       {title}
-                    </h4>
+                    </div>
                     <p className="text-[8px] md:text-[9px] font-bold text-[#facc15] uppercase tracking-widest leading-tight mt-0.5 font-inter">
                       {subtitle}
                     </p>

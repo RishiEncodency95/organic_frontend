@@ -27,6 +27,7 @@ interface HeroData {
   descriptionBold: string;
   descriptionText: string;
   image: string;
+  imageAlt: string;
   stats: Stat[];
 }
 
@@ -37,6 +38,7 @@ const DEFAULT_DATA: HeroData = {
   descriptionBold: "Align your brand with India's Premier Organic Expo",
   descriptionText: "and connect with the right audience, build credibility and drive real impact.",
   image: "",
+  imageAlt: "Sponsorship opportunities at Bharat Organic Expo 2027",
   stats: [
     { iconKey: "Users", number: "8,000+", label: "BUSINESS\nVISITORS" },
     { iconKey: "Store", number: "200+", label: "EXHIBITORS" },
@@ -111,6 +113,7 @@ const toHeroData = (d: any): HeroData => ({
   descriptionBold: d?.descriptionBold || DEFAULT_DATA.descriptionBold,
   descriptionText: d?.descriptionText || "",
   image: typeof d?.image === "string" ? d.image.trim() : "",
+  imageAlt: d?.imageAlt || DEFAULT_DATA.imageAlt,
   stats: Array.isArray(d?.stats) && d.stats.length > 0 ? d.stats : DEFAULT_DATA.stats,
 });
 
@@ -140,6 +143,8 @@ export default function HeroSection({ initialData }: { initialData?: any }) {
       {/* Background Image */}
       <div
         className="absolute inset-0 z-0"
+        role="img"
+        aria-label={data.imageAlt}
         style={{
           backgroundImage: `url(${bgUrl})`,
           backgroundPosition: "center top",

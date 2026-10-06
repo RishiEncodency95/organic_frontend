@@ -1,6 +1,7 @@
 import { Metadata } from "next";
 import { adminSeoMetadata, getAdminSeo } from "@/lib/adminSeo";
 import AdminSchema from "@/components/seo/AdminSchema";
+import { getSectionData } from "@/lib/serverData";
 import BlogHero from "@/app/components/blog/BlogHero";
 import AboutStrip from "@/app/components/abouts/about/AboutStrip";
 import BlogFeatured from "@/app/components/blog/BlogFeatured";
@@ -23,13 +24,16 @@ export async function generateMetadata(): Promise<Metadata> {
 }
 
 const BlogPage = async () => {
-    const seoData = await getAdminSeo("blog");
+    const [seoData, heroData] = await Promise.all([
+        getAdminSeo("blog"),
+        getSectionData("/website/bloghero"),
+    ]);
     const schemaContent = seoData?.schemaMarkup || null;
 
     return (
         <div className="min-h-screen bg-white font-sans text-neutral-800 overflow-x-clip">
             <AdminSchema schema={schemaContent} />
-            <BlogHero />
+            <BlogHero data={heroData} />
             <AboutStrip />
 
             <main className="w-full px-6 lg:px-14 py-2 md:py-4 grid lg:grid-cols-[1fr_320px] gap-2 lg:gap-4">

@@ -130,7 +130,7 @@ const ContactHero = ({ initialSection }: { initialSection?: any }) => {
                   <IconComponent size={20} className="text-[#032e1c]" />
                 </div>
                 <div className="flex flex-col">
-                  <h4 className="font-[600] text-[#032e1c] text-sm mb-1">{info.title}</h4>
+                  <h2 className="font-[600] text-[#032e1c] text-sm mb-1">{info.title}</h2>
                   <div
                     className="text-black text-[11px] xl:text-xs font-medium leading-tight [&_p]:m-0"
                     dangerouslySetInnerHTML={{ __html: info.description }}

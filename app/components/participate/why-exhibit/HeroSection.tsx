@@ -175,14 +175,28 @@ const Sparkle = ({ style, color = "#ffdd00", shadow = "#ffa500" }: { style?: Rea
   </span>
 );
 
+// The H1 is a single admin field. First two words = green line, the rest = maroon line;
+// older saves stored the two parts separately, so they're joined and re-split the same way.
+const splitHeroTitle = (...parts: unknown[]) => {
+  const words = parts
+    .filter((x) => typeof x === "string" && x.trim())
+    .join(" ")
+    .split(/\s+/)
+    .filter(Boolean);
+  return words.length
+    ? { titlePrefix: words.slice(0, 2).join(" "), titleHighlight: words.slice(2).join(" ") }
+    : null;
+};
+
 const HeroSection = ({ sectionData }: { sectionData?: any }) => {
   const [hero, setHero] = useState(() => {
     if (!sectionData) return DEFAULT_HERO_DATA;
     return {
       ...DEFAULT_HERO_DATA,
       tagline: sectionData.eyebrow || sectionData.tagline || DEFAULT_HERO_DATA.tagline,
-      titlePrefix: sectionData.titlePrimary || sectionData.titlePrefix || DEFAULT_HERO_DATA.titlePrefix,
-      titleHighlight: sectionData.titleSecondary || sectionData.titleHighlight || DEFAULT_HERO_DATA.titleHighlight,
+      ...(splitHeroTitle(sectionData.title) ||
+        splitHeroTitle(sectionData.titlePrimary || sectionData.titlePrefix, sectionData.titleSecondary || sectionData.titleHighlight) ||
+        { titlePrefix: DEFAULT_HERO_DATA.titlePrefix, titleHighlight: DEFAULT_HERO_DATA.titleHighlight }),
       description: sectionData.description || DEFAULT_HERO_DATA.description,
       bgImage: sectionData.bgImage || "",
       highlights:
@@ -216,8 +230,9 @@ const HeroSection = ({ sectionData }: { sectionData?: any }) => {
       setHero((prev) => ({
         ...prev,
         tagline: sectionData.eyebrow || sectionData.tagline || prev.tagline,
-        titlePrefix: sectionData.titlePrimary || sectionData.titlePrefix || prev.titlePrefix,
-        titleHighlight: sectionData.titleSecondary || sectionData.titleHighlight || prev.titleHighlight,
+        ...(splitHeroTitle(sectionData.title) ||
+          splitHeroTitle(sectionData.titlePrimary || sectionData.titlePrefix, sectionData.titleSecondary || sectionData.titleHighlight) ||
+          { titlePrefix: prev.titlePrefix, titleHighlight: prev.titleHighlight }),
         description: sectionData.description || prev.description,
         bgImage: sectionData.bgImage || "",
         highlights:
@@ -261,8 +276,8 @@ const HeroSection = ({ sectionData }: { sectionData?: any }) => {
           setHero((prev) => ({
             ...prev,
             tagline: d.tagline || prev.tagline,
-            titlePrefix: d.titlePrefix || prev.titlePrefix,
-            titleHighlight: d.titleHighlight || prev.titleHighlight,
+            ...(splitHeroTitle(d.titlePrefix, d.titleHighlight) ||
+              { titlePrefix: prev.titlePrefix, titleHighlight: prev.titleHighlight }),
             description: d.description || prev.description,
             bgImage: d.bgImage || "",
             highlights:
@@ -445,9 +460,9 @@ const HeroSection = ({ sectionData }: { sectionData?: any }) => {
               <div className="flex items-center lg:items-start gap-2">
                 <Calendar className="text-[#4B1426] shrink-0" size={20} strokeWidth={1.5} />
                 <div className="flex flex-col text-left">
-                  <h3 className="text-base md:text-lg font-bold text-[#4B1426] leading-none m-0 p-0">
+                  <div className="font-poppins text-base md:text-lg font-bold text-[#4B1426] leading-none m-0 p-0">
                     {hero.eventCard.dateRange}
-                  </h3>
+                  </div>
                   <span className="text-[9px] font-semibold text-[#4B1426] uppercase tracking-wide mt-0.5 m-0 p-0">
                     {hero.eventCard.monthYear}
                   </span>
@@ -458,9 +473,9 @@ const HeroSection = ({ sectionData }: { sectionData?: any }) => {
               <div className="flex items-center lg:items-start gap-2">
                 <MapPin className="text-[#4B1426] shrink-0" size={20} strokeWidth={1.5} />
                 <div className="flex flex-col text-left">
-                  <h3 className="text-[10px] font-bold text-[#1b5e20] leading-tight uppercase m-0 p-0">
+                  <div className="font-poppins text-[10px] font-bold text-[#1b5e20] leading-tight uppercase m-0 p-0">
                     {hero.eventCard.locationTitle}
-                  </h3>
+                  </div>
                   <span className="text-[9px] font-semibold text-[#1b5e20] uppercase tracking-tight m-0 p-0">
                     {hero.eventCard.locationSub}
                   </span>

@@ -237,7 +237,7 @@ const PMSFinancialAssistanceBanner: FC = () => {
                 </div>
 
                 {/* Heading with image next to "May You Get?" */}
-                <h1
+                <h2
                   id="pms-banner-heading"
                   className="md:pl-0 max-w-3xl text-center  text-[34px] font-semibold leading-[1.08] tracking-tight sm:text-[52px] md:text-[60px]"
                 >
@@ -250,7 +250,7 @@ const PMSFinancialAssistanceBanner: FC = () => {
                       className="hidden h-8 w-auto object-contain sm:h-10 md:h-10 md:inline"
                     />
                   </span>
-                </h1>
+                </h2>
 
                 <div className="md:pl-12">
                   {/* Supporting copy */}

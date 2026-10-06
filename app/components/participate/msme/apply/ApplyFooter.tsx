@@ -70,9 +70,9 @@ export default function ApplyFooter({
             <Headphones size={28} strokeWidth={2} />
           </div>
           <div>
-            <h4 className="text-[15px] font-semibold text-[#176b27] mb-1">
+            <h3 className="text-[15px] font-semibold text-[#176b27] mb-1">
               {data.helpBanner.title}
-            </h4>
+            </h3>
             <p className="text-[14px] font-medium text-gray-600 leading-snug">
               {data.helpBanner.description}
             </p>
