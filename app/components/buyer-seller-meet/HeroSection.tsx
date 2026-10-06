@@ -1,12 +1,19 @@
 "use client";
-import React, { useRef, useEffect } from "react";
+import React, { useRef, useEffect, useState } from "react";
 import Link from "next/link";
+import dynamic from "next/dynamic";
 import { CalendarDays, MapPin, ArrowRight } from "lucide-react";
 import bgImage from "../../assets/banner/b2b2og.webp";
 import leafImg from "../../assets/icons/leafs.png";
 import gsap from "gsap";
 import SectionContainer from "@/app/components/layout/SectionContainer";
 import { HERO_DATA } from "@/app/data/buyerSellerMeetData";
+
+// Loaded only when someone clicks "Buyer Enquiry"
+const BuyerEnquiryPopup = dynamic(() => import("./BuyerEnquiryPopup"), { ssr: false });
+
+// Other sections on the page (e.g. Quick Links) open the same popup by dispatching this event.
+export const BUYER_ENQUIRY_EVENT = "open-buyer-enquiry";
 
 const Sparkle = ({ style, color = "#F2B40E", shadow }: { style?: React.CSSProperties; color?: string; shadow?: string }) => (
   <span
@@ -59,6 +66,13 @@ export default function HeroSection({ initialData }: { initialData?: any }) {
   const subtitleRef = useRef<HTMLParagraphElement>(null);
   const metaRef = useRef<HTMLDivElement>(null);
   const btnsRef = useRef<HTMLDivElement>(null);
+  const [enquiryOpen, setEnquiryOpen] = useState(false);
+
+  useEffect(() => {
+    const open = () => setEnquiryOpen(true);
+    window.addEventListener(BUYER_ENQUIRY_EVENT, open);
+    return () => window.removeEventListener(BUYER_ENQUIRY_EVENT, open);
+  }, []);
 
   useEffect(() => {
     if (!sectionRef.current) return;
@@ -253,10 +267,10 @@ export default function HeroSection({ initialData }: { initialData?: any }) {
                     <Sparkle color="#f97316" shadow="#c2410c" style={{ top: "-12px", left: "10%", animationDelay: "0s" }} />
                     <Sparkle color="#f97316" shadow="#c2410c" style={{ top: "-15px", left: "50%", animationDelay: "0.4s" }} />
                     <Sparkle color="#f97316" shadow="#c2410c" style={{ top: "-10px", right: "10%", animationDelay: "0.8s" }} />
-                    <Link
-                      href={data.exhibitorButtonHref}
-                      target="_blank"
-                      rel="noopener noreferrer"
+                    <button
+                      type="button"
+                      onClick={() => setEnquiryOpen(true)}
+                      aria-haspopup="dialog"
                       className="group relative inline-flex items-center justify-center gap-2 px-4 py-2 rounded-lg font-semibold text-[10px] uppercase tracking-widest text-white transition-all active:scale-95 shadow-2xl z-10 w-fit sm:w-auto overflow-hidden"
                       style={{
                         background: "linear-gradient(135deg, #ea580c, #c2410c)",
@@ -264,8 +278,8 @@ export default function HeroSection({ initialData }: { initialData?: any }) {
                       }}
                     >
                       <span className="absolute inset-0 bg-white/10 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-500 skew-x-12" />
-                      {data.exhibitorButtonLabel} <ArrowRight size={14} className="group-hover:translate-x-1 transition-transform" />
-                    </Link>
+                      Buyer Enquiry <ArrowRight size={14} className="group-hover:translate-x-1 transition-transform" />
+                    </button>
                   </div>
                 </div>
               </div>
@@ -273,6 +287,13 @@ export default function HeroSection({ initialData }: { initialData?: any }) {
           ))}
         </SectionContainer>
       </section>
+
+      {enquiryOpen && (
+        <BuyerEnquiryPopup
+          registerHref={hero.buyerButtonHref}
+          onClose={() => setEnquiryOpen(false)}
+        />
+      )}
     </>
   );
 }

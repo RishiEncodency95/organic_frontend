@@ -1,6 +1,7 @@
 "use client";
 import React, { useState, useEffect } from "react";
-import { Users, Plus, Trash2, CheckCircle2, Globe2, Loader2, CheckCircle, X, ChevronsUpDown, ShieldCheck } from "lucide-react";
+import RegistrationSuccess from "./RegistrationSuccess";
+import { Users, Plus, Trash2, Globe2, Loader2, CheckCircle, X, ChevronsUpDown, ShieldCheck } from "lucide-react";
 import { crmApi, verifyApi, visitorApi, ihweSettingsApi } from "../../../../lib/api";
 import Swal from 'sweetalert2';
 import { toOptions, useDropdowns } from "@/lib/dropdowns";
@@ -48,6 +49,7 @@ export default function GroupVisitorForm() {
   const dropdowns = useDropdowns(VISITOR_DROPDOWNS);
   const [step, setStep] = useState(1);
   const [submitted, setSubmitted] = useState(false);
+  const [registrationNo, setRegistrationNo] = useState("");
   const [loading, setLoading] = useState(false);
 
   const [countries, setCountries] = useState<any[]>([]);
@@ -210,6 +212,7 @@ export default function GroupVisitorForm() {
       const res = await visitorApi.submitGroup({ company, persons });
       if (res) {
         setSubmitted(true);
+        setRegistrationNo((res as { registrationNo?: string })?.registrationNo || "");
       } else {
         Swal.fire({ scrollbarPadding: false, icon: 'error', title: 'Submission Failed', text: 'Failed to submit registration.' });
       }
@@ -227,15 +230,12 @@ export default function GroupVisitorForm() {
 
   if (submitted) {
     return (
-      <div className="flex flex-col items-center justify-center py-16 text-center">
-        <div className="w-20 h-20 rounded-full bg-[#f0f9ff] flex items-center justify-center mb-6 shadow-lg">
-          <CheckCircle2 size={40} className="text-[#4d7f1d]" />
-        </div>
-        <h3 className="text-2xl font-bold text-[#1a3352] mb-2 font-poppins">Group Registration Successful!</h3>
-        <p className="text-gray-500 text-sm max-w-sm leading-relaxed">
-          Thank you for registering your group for Bharat Organic Expo. All members' details have been submitted successfully.
-        </p>
-      </div>
+      <RegistrationSuccess
+        title="Group Registration Successful!"
+        name={persons[0]?.firstName}
+        message="Your group registration for Bharat Organic Expo 2027 has been received with all members' details."
+        registrationNo={registrationNo}
+      />
     );
   }
 
