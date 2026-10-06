@@ -1,6 +1,7 @@
 "use client";
 import React, { useState, useEffect } from "react";
-import { CheckCircle2, ShieldCheck, Store, Loader2, CheckCircle, X, ChevronsUpDown } from "lucide-react";
+import RegistrationSuccess from "./RegistrationSuccess";
+import { ShieldCheck, Store, Loader2, CheckCircle, X, ChevronsUpDown } from "lucide-react";
 import { crmApi, verifyApi, visitorApi, ihweSettingsApi } from "../../../../lib/api";
 import Swal from 'sweetalert2';
 import { toOptions, useDropdowns } from "@/lib/dropdowns";
@@ -86,6 +87,7 @@ const INTEREST_CORPORATE = ["Business Networking", "Product Sourcing", "Distribu
 export default function CorporateForm() {
   const dropdowns = useDropdowns(VISITOR_DROPDOWNS);
   const [submitted, setSubmitted] = useState(false);
+  const [registrationNo, setRegistrationNo] = useState("");
   const [isVerifying, setIsVerifying] = useState({ email: false, mobile: false });
   const [otpSent, setOtpSent] = useState({ email: false, mobile: false });
   const [otpVerified, setOtpVerified] = useState({ email: false, mobile: false });
@@ -262,6 +264,7 @@ export default function CorporateForm() {
       const res = await visitorApi.submitCorporate(formData);
       if (res) {
         setSubmitted(true);
+        setRegistrationNo((res as { registrationNo?: string })?.registrationNo || "");
       } else {
         Swal.fire({ scrollbarPadding: false, icon: 'error', title: 'Submission Failed', text: 'Failed to submit registration.' });
       }
@@ -279,15 +282,12 @@ export default function CorporateForm() {
 
   if (submitted) {
     return (
-      <div className="flex flex-col items-center justify-center py-16 text-center">
-        <div className="w-20 h-20 rounded-full bg-[#eef6e2] flex items-center justify-center mb-6 shadow-lg">
-          <CheckCircle2 size={40} className="text-[#4d7f1d]" />
-        </div>
-        <h3 className="text-2xl font-bold text-[#1a3352] mb-2 font-poppins">Registration Successful!</h3>
-        <p className="text-gray-500 text-sm max-w-sm leading-relaxed">
-          Thank you for registering as a Corporate Visitor at Bharat Organic Expo. A confirmation will be sent to your email.
-        </p>
-      </div>
+      <RegistrationSuccess
+        title="Registration Successful!"
+        name={formData.firstName}
+        message="Your registration as a Corporate Visitor at Bharat Organic Expo 2027 has been received."
+        registrationNo={registrationNo}
+      />
     );
   }
 

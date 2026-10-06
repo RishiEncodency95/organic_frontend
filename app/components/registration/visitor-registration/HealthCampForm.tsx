@@ -1,6 +1,7 @@
 "use client";
 import React, { useState, useEffect } from "react";
-import { CheckCircle2, ShieldCheck, HeartPulse, Loader2, CheckCircle, Activity, Calendar, Heart } from "lucide-react";
+import RegistrationSuccess from "./RegistrationSuccess";
+import { ShieldCheck, HeartPulse, Loader2, CheckCircle, Activity, Calendar, Heart } from "lucide-react";
 import { crmApi, visitorApi } from "../../../../lib/api";
 import Swal from 'sweetalert2';
 import { toOptions, useDropdowns } from "@/lib/dropdowns";
@@ -32,6 +33,7 @@ const VISITOR_DROPDOWNS = {
 export default function HealthCampForm() {
   const dropdowns = useDropdowns(VISITOR_DROPDOWNS);
   const [submitted, setSubmitted] = useState(false);
+  const [registrationNo, setRegistrationNo] = useState("");
   const [loading, setLoading] = useState(false);
 
   const [countries, setCountries] = useState<any[]>([]);
@@ -142,6 +144,7 @@ export default function HealthCampForm() {
       const res = await visitorApi.submitHealthCamp(formData);
       if (res) {
         setSubmitted(true);
+        setRegistrationNo((res as { registrationNo?: string })?.registrationNo || "");
       } else {
         Swal.fire({ scrollbarPadding: false, icon: 'error', title: 'Submission Failed', text: 'Failed to submit registration.' });
       }
@@ -159,15 +162,12 @@ export default function HealthCampForm() {
 
   if (submitted) {
     return (
-      <div className="flex flex-col items-center justify-center py-16 text-center">
-        <div className="w-20 h-20 rounded-full bg-[#fff1f2] flex items-center justify-center mb-6 shadow-lg">
-          <CheckCircle2 size={40} className="text-[#e11d48]" />
-        </div>
-        <h3 className="text-2xl font-bold text-[#1a3352] mb-2 font-poppins">Registration Successful!</h3>
-        <p className="text-gray-500 text-sm max-w-sm leading-relaxed">
-          Thank you for registering for the Free Health Camp. A confirmation will be sent to your email.
-        </p>
-      </div>
+      <RegistrationSuccess
+        title="Registration Successful!"
+        name={formData.firstName}
+        message="Your registration for the Free Health Camp at Bharat Organic Expo 2027 has been received."
+        registrationNo={registrationNo}
+      />
     );
   }
 

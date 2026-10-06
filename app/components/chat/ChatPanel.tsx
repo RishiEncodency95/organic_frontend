@@ -8,6 +8,7 @@ import { ArrowLeft, ArrowRight, ArrowUpRight, Check, CheckCheck, ChevronDown, Fi
 import { API_URL, verifyApi } from "@/lib/api";
 import { SITE_CONFIG } from "@/app/constants/siteConfig";
 import { clearChatSession, newSessionId, readChatSession, saveChatSession } from "./chatSession";
+import { chatSounds } from "./chatSounds";
 
 const CHAT_URL = process.env.NEXT_PUBLIC_CHAT_API_URL || `${API_URL}/chat`;
 const FALLBACK = "Maaf kijiye, abhi reply nahi de pa raha. Kripya +91 96549 00525 par call ya WhatsApp karein.";
@@ -1579,6 +1580,7 @@ const ChatPanel: React.FC<Props> = ({ open, onClose }) => {
         }
         saveChatSession(sessionId, name);
 
+        chatSounds.send();
         setInput("");
         setLoading(true);
         setMessages((prev) => [...prev, { role: "user", content: topic || message }, { role: "assistant", content: "" }]);
@@ -1625,6 +1627,7 @@ const ChatPanel: React.FC<Props> = ({ open, onClose }) => {
                         continue;
                     }
                     if (data.delta) {
+                        if (!gotText) chatSounds.receive();
                         gotText = true;
                         setLastReply((t) => t + data.delta);
                     } else if (data.error) {

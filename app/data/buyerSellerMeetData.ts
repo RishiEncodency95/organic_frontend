@@ -42,7 +42,8 @@ export const ABOUT_DATA = [
     ],
     links: [
       { label: "Register as Buyer", icon: "User", href: "/registration/buyer-registration", target: "_blank" },
-      { label: "Participate as Exhibitor", icon: "Briefcase", href: "/participate_as_exhibiture", target: "_blank" },
+      // Opens the Buyer Enquiry popup (see HeroSection / BUYER_ENQUIRY_EVENT)
+      { label: "Buyer Enquiry", icon: "MessageSquareText", href: "#buyer-enquiry" },
       { label: "How it Works", icon: "HelpCircle", href: "#how-it-works" },
       { label: "Who Can Participate", icon: "Users", href: "#who-can-participate" },
       { label: "Contact Us", icon: "Phone", href: "/contact", target: "_blank" },

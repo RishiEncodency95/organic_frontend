@@ -149,11 +149,24 @@ export const stallRateApi = {
     getRate: async (eventId: string, currency: string, stallType: string) => apiCall(`/stall-rates/find?eventId=${eventId}&currency=${currency}&stallType=${stallType}`)
 };
 
-export const exhibitorRegistrationApi = { 
-    submit: async (data: any) => apiCall('/exhibitor-registration', {
-        method: 'POST',
-        body: JSON.stringify(data)
-    })
+export const exhibitorRegistrationApi = {
+    // Saved booking (with _id) on success; { message } with the server's reason otherwise.
+    submit: async (data: any) => {
+        try {
+            const response = await fetch(`${API_URL}/exhibitor-registration`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(data),
+            });
+            const json = await response.json().catch(() => null);
+            if (!response.ok || json?.success === false) {
+                return { message: json?.message || 'Failed to initiate registration. Please try again.' };
+            }
+            return json?.data ?? json;
+        } catch {
+            return { message: 'Cannot reach the server. Please try again.' };
+        }
+    }
 };
 
 export const eventApi = { 
@@ -366,18 +379,35 @@ export const adminApi = {
     getEmployees: async () => apiCall('/admin/employees')
 };
 
+// Visitor registration forms. Returns the saved registration, or null when it was NOT saved
+// (ihweApiCall returns [] on errors, which the forms treated as success).
+const submitVisitor = async (endpoint: string, payload: any) => {
+    try {
+        const response = await fetch(`${API_URL}${endpoint}`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(payload),
+        });
+        const json = await response.json().catch(() => null);
+        if (!response.ok || json?.success === false) return null;
+        return json?.data ?? json ?? null;
+    } catch {
+        return null;
+    }
+};
+
 export const visitorApi = {
-    submitCorporate: async (data: any) => ihweApiCall('/corporate-visitors', { method: 'POST', body: JSON.stringify({ ...data, mobile: data.mobile || data.mobileNo }) }),
-    submitInternational: async (data: any) => ihweApiCall('/international-visitors', { method: 'POST', body: JSON.stringify({ ...data, mobile: data.mobile || data.mobileNo }) }),
-    submitGeneral: async (data: any) => ihweApiCall('/general-visitors', { method: 'POST', body: JSON.stringify({ ...data, mobile: data.mobile || data.mobileNo }) }),
+    submitCorporate: async (data: any) => submitVisitor('/corporate-visitors', { ...data, mobile: data.mobile || data.mobileNo }),
+    submitInternational: async (data: any) => submitVisitor('/international-visitors', { ...data, mobile: data.mobile || data.mobileNo }),
+    submitGeneral: async (data: any) => submitVisitor('/general-visitors', { ...data, mobile: data.mobile || data.mobileNo }),
     submitGroup: async (data: any) => {
         const payload = { ...data };
         if (payload.persons && Array.isArray(payload.persons)) {
             payload.persons = payload.persons.map((p: any) => ({ ...p, mobile: p.mobile || p.mobileNo }));
         }
-        return ihweApiCall('/group-visitors', { method: 'POST', body: JSON.stringify(payload) });
+        return submitVisitor('/group-visitors', payload);
     },
-    submitHealthCamp: async (data: any) => ihweApiCall('/health-camp-visitors', { method: 'POST', body: JSON.stringify({ ...data, mobile: data.mobile || data.mobileNo }) })
+    submitHealthCamp: async (data: any) => submitVisitor('/health-camp-visitors', { ...data, mobile: data.mobile || data.mobileNo })
 };
 
 export const buyerApi = {
