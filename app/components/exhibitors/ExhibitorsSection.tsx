@@ -10,6 +10,7 @@ import ExhibitorsCta from "./ExhibitorsCta";
 import ExhibitorsPagination from "./ExhibitorsPagination";
 import { ApiExhibitor, fallbackExhibitors, BACKEND_URL } from "./data";
 import { Reveal } from "../shared/Reveal";
+import { makeSectionGate } from "@/lib/sectionGate";
 
 interface ExhibitorsSectionProps {
     exhibitors: ApiExhibitor[];
@@ -18,11 +19,14 @@ interface ExhibitorsSectionProps {
         subtitle?: string;
     };
     heroData?: any;
+    /** exhibitorsPage section keys switched off in admin */
+    disabledSections?: string[];
 }
 
 const PAGE_SIZE = 48;
 
-const ExhibitorsSection = ({ exhibitors, header, heroData }: ExhibitorsSectionProps) => {
+const ExhibitorsSection = ({ exhibitors, header, heroData, disabledSections = [] }: ExhibitorsSectionProps) => {
+    const show = makeSectionGate(disabledSections);
     const [liveExhibitors, setLiveExhibitors] = useState<ApiExhibitor[]>(exhibitors || []);
     const [headerData, setHeaderData] = useState({
         title: header?.title || "Our Previous Exhibitors",
@@ -131,9 +135,10 @@ const ExhibitorsSection = ({ exhibitors, header, heroData }: ExhibitorsSectionPr
 
     return (
         <React.Fragment>
-            <ExhibitorsHero data={heroData} />
+            {show("exhibitors-hero") && <ExhibitorsHero data={heroData} />}
             <AboutStrip />
             
+            {show("exhibitors-list") && (<>
             {/* Section Header */}
             <SectionContainer className="pt-6 pb-3 text-center font-inter">
                 <Reveal>
@@ -170,8 +175,9 @@ const ExhibitorsSection = ({ exhibitors, header, heroData }: ExhibitorsSectionPr
                     )}
                 </div>
             </SectionContainer>
-            
-            <ExhibitorsCta />
+            </>)}
+
+            {show("exhibitors-bottom-stats") && <ExhibitorsCta />}
         </React.Fragment>
     );
 };

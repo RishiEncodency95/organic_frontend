@@ -47,6 +47,13 @@ const nextConfig: NextConfig = {
           },
         ],
       },
+      {
+        // Lottie player runtime (see lib/dotLottie.ts): let browsers reuse it across visits.
+        source: "/dotlottie-player.wasm",
+        headers: [
+          { key: "Cache-Control", value: "public, max-age=86400, stale-while-revalidate=604800" },
+        ],
+      },
     ];
   },
   async rewrites() {

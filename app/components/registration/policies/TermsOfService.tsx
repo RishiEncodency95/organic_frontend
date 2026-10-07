@@ -183,9 +183,11 @@ const splitHeroTitle = (title: string): [string, string] => {
   return [words.slice(0, -1).join(" "), words[words.length - 1]];
 };
 
-const TermsOfService = ({ heroData }: { heroData?: any }) => {
+// `disabledSections`: termsAndConditionsPage section keys switched off in admin.
+const TermsOfService = ({ heroData, disabledSections = [] }: { heroData?: any; disabledSections?: string[] }) => {
+  const showBlocks = !disabledSections.includes("terms-page-blocks");
   const hero = {
-    enabled: heroData?.enabled !== false,
+    enabled: heroData?.enabled !== false && !disabledSections.includes("terms-page-hero"),
     eyebrow: pickText(heroData?.eyebrow, "POLICY GUIDE"),
     title: pickText(heroData?.title, "TERMS & CONDITIONS"),
     subtitle: pickText(heroData?.subtitle, "Bharat Organic Expo 2027"),
@@ -432,6 +434,7 @@ const TermsOfService = ({ heroData }: { heroData?: any }) => {
       </div>
 
       {/* Main Content */}
+      {showBlocks && (
       <section className="py-3 w-full">
         <div className="w-full px-6 md:px-14">
           <>
@@ -525,6 +528,7 @@ const TermsOfService = ({ heroData }: { heroData?: any }) => {
           </>
         </div>
       </section>
+      )}
     </div>
   );
 };
