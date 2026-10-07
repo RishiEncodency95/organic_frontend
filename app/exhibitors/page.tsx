@@ -5,6 +5,7 @@ import { ApiExhibitor, fallbackExhibitors, BACKEND_URL } from "@/app/components/
 import { seoApi } from "@/lib/api";
 import AdminSchema from "@/components/seo/AdminSchema";
 import { getSectionData } from "@/lib/serverData";
+import { getDisabledSectionKeys } from "@/lib/sectionVisibility";
 
 export const revalidate = 60;
 
@@ -139,16 +140,17 @@ const ExhibitorsPage = async () => {
 
     const schemaContent = seoData?.schemaMarkup || null;
 
-    const [exhibitors, header, heroData] = await Promise.all([
+    const [exhibitors, header, heroData, disabledSections] = await Promise.all([
         getExhibitors(),
         getExhibitorsHeader(),
         getSectionData("/website/exhibitors/hero"),
+        getDisabledSectionKeys("exhibitorsPage"),
     ]);
 
     return (
         <div className="min-h-screen bg-white font-sans text-neutral-800 overflow-x-clip">
             <AdminSchema schema={schemaContent} />
-            <ExhibitorsSection exhibitors={exhibitors} header={header} heroData={heroData} />
+            <ExhibitorsSection exhibitors={exhibitors} header={header} heroData={heroData} disabledSections={disabledSections} />
         </div>
     );
 };

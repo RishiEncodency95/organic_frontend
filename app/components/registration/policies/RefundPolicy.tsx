@@ -126,7 +126,10 @@ const parseContent = (htmlContent: string) => {
   return { preamble, terms };
 };
 
-const RefundPolicy: React.FC = () => {
+// `disabledSections`: refundPolicyPage section keys switched off in admin.
+const RefundPolicy = ({ disabledSections = [] }: { disabledSections?: string[] }) => {
+  const showHero = !disabledSections.includes("refund-page-hero");
+  const showBlocks = !disabledSections.includes("refund-page-blocks");
   const policySections = [
     {
       id: "01",
@@ -302,6 +305,7 @@ const RefundPolicy: React.FC = () => {
       ` }} />
 
       {/* Hero Section */}
+      {showHero && (
       <section className="relative w-full flex flex-col items-center">
         <div className="w-full relative h-[280px] sm:h-[350px] md:h-[400px] lg:h-[470px] bg-[#eef5f0] overflow-hidden">
           {/* Background Layer */}
@@ -364,6 +368,7 @@ const RefundPolicy: React.FC = () => {
           </div>
         </div>
       </section>
+      )}
 
       {/* Info Strip (Like StatsBand) */}
       <div className="relative z-20 -mt-6 md:-mt-8 w-full max-w-[1440px] mx-auto px-6 md:px-14">
@@ -427,6 +432,7 @@ const RefundPolicy: React.FC = () => {
       </div>
 
       {/* Main Content */}
+      {showBlocks && (
       <section className="py-3 w-full">
         <div className="w-full px-6 md:px-14">
             <>
@@ -517,6 +523,7 @@ const RefundPolicy: React.FC = () => {
           </div>
         </div>
       </section>
+      )}
     </div>
   );
 };

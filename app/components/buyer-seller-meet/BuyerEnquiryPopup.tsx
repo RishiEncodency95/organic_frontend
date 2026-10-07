@@ -4,7 +4,7 @@ import React, { useEffect, useLayoutEffect, useRef, useState } from "react";
 import { createPortal } from "react-dom";
 import Link from "next/link";
 import gsap from "gsap";
-import { DotLottieReact } from "@lottiefiles/dotlottie-react";
+import { DotLottieReact } from "@/lib/dotLottie";
 import { BadgeCheck, ChevronDown, ChevronRight, Loader2, Mail, Phone, X } from "lucide-react";
 import leafImg from "../../assets/icons/vv.png";
 import leafRightImg from "../../assets/icons/vv1.png";

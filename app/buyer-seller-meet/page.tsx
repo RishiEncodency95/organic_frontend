@@ -14,6 +14,7 @@ import HowItWorks from "../components/buyer-seller-meet/HowItWorks";
 import ConnectWith from "../components/buyer-seller-meet/ConnectWith";
 import CtaBanner from "../components/buyer-seller-meet/CtaBanner";
 
+import { getSectionGate } from "@/lib/sectionVisibility";
 export const revalidate = 60;
 
 export async function generateMetadata(): Promise<Metadata> {
@@ -93,18 +94,20 @@ export default async function BuyerSellerMeetPage() {
   const schemaContent = seoData?.schemaMarkup || null;
   const heroData = await getSectionData("/website/buyer-seller-meet/hero");
 
+  const show = await getSectionGate("buyerSellerMeetPage");
+
   return (
     <main className="min-h-screen bg-[#f8fafc]">
       <AdminSchema schema={schemaContent} />
-      <HeroSection initialData={heroData} />
-      <FeatureStrip />
-      <AboutSection />
-      <WhoCanParticipate />
-      <WhatToSource />
-      <WhyJoin />
-      <HowItWorks />
-      <ConnectWith />
-      <CtaBanner />
+      {show("buyer-seller-meet-hero") && <HeroSection initialData={heroData} />}
+      {show("buyer-seller-feature-strip") && <FeatureStrip />}
+      {show("buyer-seller-about") && <AboutSection />}
+      {show("who-can-participate") && <WhoCanParticipate />}
+      {show("what-to-source") && <WhatToSource />}
+      {show("why-join-meet") && <WhyJoin />}
+      {show("how-it-works-meet") && <HowItWorks />}
+      {show("connect-with-section") && <ConnectWith />}
+      {show("buyer-seller-cta") && <CtaBanner />}
     </main>
   );
 }

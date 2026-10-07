@@ -9,6 +9,7 @@ import AboutStrip from "@/app/components/abouts/about/AboutStrip";
 import ChairmanMessage from "@/app/components/abouts/advisory_board_member/ChairmanMessage";
 import AdvisoryBoardGrid from "@/app/components/abouts/advisory_board_member/AdvisoryBoardGrid";
 import WhyJoinAdvisory from "@/app/components/abouts/advisory_board_member/WhyJoinAdvisory";
+import { getSectionGate } from "@/lib/sectionVisibility";
 // import AdvisoryPartners from "@/app/components/abouts/advisory_board_member/AdvisoryPartners";
 
 export const revalidate = 60;
@@ -91,14 +92,18 @@ const AdvisoryBoardMemberPage = async () => {
   const advisoryHero = await getSectionData("/website/advisoryhero");
 
 
+  const show = await getSectionGate("advisoryPage");
+
   return (
     <div className="bg-[#ffffff] min-h-screen">
       <AdminSchema schema={schemaContent} />
-      <AdvisoryHero initialData={advisoryHero} />
+      {show("advisory-hero") && <AdvisoryHero initialData={advisoryHero} />}
       <AboutStrip />
-      <ChairmanMessage />
-      <AdvisoryBoardGrid />
-      <WhyJoinAdvisory />
+      {show("chairman-message") && <ChairmanMessage />}
+      {show("advisory-grid") && <AdvisoryBoardGrid />}
+      {(show("why-join-advisory") || show("nominate-banner")) && (
+        <WhyJoinAdvisory showWhyJoin={show("why-join-advisory")} showNominateBanner={show("nominate-banner")} />
+      )}
       {/* <AdvisoryPartners /> */}
     </div>
   );

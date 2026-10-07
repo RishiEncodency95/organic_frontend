@@ -97,12 +97,20 @@ export const metadata: Metadata = {
 import StoreProvider from "./store/StoreProvider";
 import Script from "next/script";
 import { getSectionData } from "@/lib/serverData";
+import { getHiddenPageKeys } from "@/lib/pageVisibility";
 import { OG_IMAGE, OG_IMAGE_ALT } from "@/lib/seo";
 
 async function getTopbarSection() {
   const settings = await getSectionData<any>("/settings");
   const sections: any[] = settings?.landingPage?.sections || [];
   return sections.find((s) => s.key === "topbar") || null;
+}
+
+// Home → "Header Navigation" section switched off in admin hides the navbar site-wide.
+async function isNavbarEnabled() {
+  const settings = await getSectionData<any>("/settings");
+  const sections: any[] = settings?.landingPage?.sections || [];
+  return sections.find((s) => s.key === "navbar")?.enabled !== false;
 }
 
 // Footer used to fetch this itself client-side (a "use client" useEffect),
@@ -122,10 +130,12 @@ export default async function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const [seoData, topbar, footerData] = await Promise.all([
+  const [seoData, topbar, footerData, hiddenPageKeys, showNavbar] = await Promise.all([
     getAdvancedSeoSettings(),
     getTopbarSection(),
     getFooterSection(),
+    getHiddenPageKeys(),
+    isNavbarEnabled(),
   ]);
   const headerScripts = seoData?.headerScripts || "";
   const footerScripts = seoData?.footerScripts || "";
@@ -154,8 +164,8 @@ export default async function RootLayout({
       </head>
       <body suppressHydrationWarning className="min-h-full flex flex-col font-inter text-[16px] md:text-[18px] leading-[1.6] overflow-x-clip w-full">
         <SmoothScroll>
-          <Topbar phone={topbar?.phoneNumber} email={topbar?.contactEmail} />
-          <Navbar />
+          {topbar?.enabled !== false && <Topbar phone={topbar?.phoneNumber} email={topbar?.contactEmail} />}
+          {showNavbar && <Navbar initialHiddenPageKeys={hiddenPageKeys} />}
           <main className="flex-grow min-h-[calc(100svh-7rem)] overflow-x-clip w-full">
             {children}
           </main>

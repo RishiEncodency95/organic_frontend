@@ -686,9 +686,11 @@ const AWARDS_DROPDOWNS = {
 --------------------------------------------------------- */
 interface AwardsNominationClientProps {
   initialHeroData?: any;
+  /** awardsNominationPage section keys switched off in admin */
+  disabledSections?: string[];
 }
 
-export default function BharatOrganicAwards({ initialHeroData }: AwardsNominationClientProps = {}) {
+export default function BharatOrganicAwards({ initialHeroData, disabledSections = [] }: AwardsNominationClientProps = {}) {
   const [heroData, setHeroData] = useState<any>(initialHeroData || null);
   const [stepsData, setStepsData] = useState<any>(null);
   const [form, setForm] = useState<FormState>(INITIAL_FORM);
@@ -862,7 +864,7 @@ export default function BharatOrganicAwards({ initialHeroData }: AwardsNominatio
   }
 
   // Dynamic Hero values
-  const heroEnabled = heroData?.enabled !== false;
+  const heroEnabled = heroData?.enabled !== false && !disabledSections.includes("awards-nomination-hero");
   const bgImgSrc = heroData?.image || heroData?.bgImage || nominationBg.src;
   const eyebrow = heroData?.eyebrow || ""; // eyebrow hidden by default
 
@@ -1088,7 +1090,7 @@ export default function BharatOrganicAwards({ initialHeroData }: AwardsNominatio
             }))
           : DEFAULT_PROCESS_STEPS.map((s, idx) => ({ ...s, iconKey: s.icon, idx }));
         const sectionTitle = stepsData?.title || "THE AWARD PROCESS";
-        const sectionEnabled = stepsData?.enabled !== false;
+        const sectionEnabled = stepsData?.enabled !== false && !disabledSections.includes("awards-nomination-steps");
         if (!sectionEnabled) return null;
         return (
           <section className="w-full px-4 py-2 md:px-14 md:py-4 my-4">

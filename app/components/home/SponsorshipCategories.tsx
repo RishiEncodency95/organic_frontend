@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { motion } from 'framer-motion';
@@ -10,7 +10,8 @@ import {
   Star, Download, MessageCircle, PhoneCall,
   ChevronDown, Target, Globe, ShieldCheck, Loader2
 } from 'lucide-react';
-import { verifyApi, sponsorshipEnquiryApi } from '../../../lib/api';
+import { verifyApi, sponsorshipEnquiryApi, settingsApi } from '../../../lib/api';
+import { toViewablePdfUrl } from '../../../lib/pdfLink';
 import Swal from 'sweetalert2';
 import { toOptions, useDropdowns } from '../../../lib/dropdowns';
 
@@ -86,8 +87,60 @@ const SPONSORSHIP_DROPDOWNS = {
   'sponsorship-category': toOptions(sectionData.categories.map((c) => c.title)),
 };
 
+// Admin → Pages & CMS → Home → "SponsorshipCategories" (landingPage section key below).
+// Empty admin fields keep the built-in text above.
+const CMS_SECTION_KEY = 'sponsorship-categories';
+type CmsSection = Record<string, unknown> & { key?: string; name?: string; enabled?: boolean };
+const text = (value: unknown, fallback: string) =>
+  typeof value === 'string' && value.trim() ? value.trim() : fallback;
+
 const SponsorshipCategories = () => {
   const dropdowns = useDropdowns(SPONSORSHIP_DROPDOWNS);
+  const [cms, setCms] = useState<CmsSection | null>(null);
+
+  useEffect(() => {
+    let alive = true;
+    settingsApi.get().then((settings: { landingPage?: { sections?: CmsSection[] } } | null) => {
+      const sections = settings?.landingPage?.sections || [];
+      const section = sections.find((s) => s?.key === CMS_SECTION_KEY || s?.name === 'SponsorshipCategories');
+      if (alive) setCms(section || null);
+    }).catch(() => {});
+    return () => { alive = false; };
+  }, []);
+
+  const content = useMemo(() => {
+    const d = sectionData.promoBox;
+    const b = d.buttons;
+    return {
+      enabled: cms?.enabled !== false,
+      headerTitle: text(cms?.headerTitle, sectionData.headerTitle),
+      formTitle: text(cms?.formTitle, sectionData.form.title),
+      promo: {
+        ...d,
+        bannerTitle: text(cms?.bannerTitle, d.bannerTitle),
+        bannerSubtitle: text(cms?.bannerSubtitle, d.bannerSubtitle),
+        bannerFeature: text(cms?.bannerFeature, d.bannerFeature),
+        image: text(cms?.image, d.image),
+        imageAlt: text(cms?.imageAlt, d.imageAlt),
+        badgeLine1: text(cms?.badgeLine1, d.badgeLine1),
+        badgeLine2: text(cms?.badgeLine2, d.badgeLine2),
+        titlePrefix: text(cms?.titlePrefix, d.titlePrefix),
+        titleHighlight: text(cms?.titleHighlight, d.titleHighlight),
+        description: text(cms?.description, d.description),
+        buttons: {
+          // Uploaded brochures are stored as /api/files/pdf?url=… (opens inline in a new tab);
+          // a raw Cloudinary PDF link is routed through that same endpoint.
+          brochureLink: toViewablePdfUrl(text(cms?.buttonHref, b.brochureLink)),
+          brochureText: text(cms?.buttonLabel, b.brochureText),
+          contactLink: text(cms?.secondaryButtonHref, b.contactLink),
+          contactText: text(cms?.secondaryButtonLabel, b.contactText),
+          phoneLink: text(cms?.tertiaryButtonHref, b.phoneLink),
+          phoneText: text(cms?.tertiaryButtonLabel, b.phoneText),
+        },
+      },
+    };
+  }, [cms]);
+  const promo = content.promo;
   const [formData, setFormData] = useState({ fullName: '', companyName: '', email: '', phone: '', category: '', message: '' });
   const [isVerifying, setIsVerifying] = useState({ email: false, phone: false });
   const [otpSent, setOtpSent] = useState({ email: false, phone: false });
@@ -179,6 +232,8 @@ const SponsorshipCategories = () => {
     }
   };
 
+  if (!content.enabled) return null;
+
   return (
     <section className="w-full bg-[#EFF7EE] font-inter relative px-2 lg:px-14 py-2 md:py-4 lg:py-6 overflow-hidden border-b border-gray-100">
       <style>{`
@@ -194,7 +249,7 @@ const SponsorshipCategories = () => {
           <div className="h-[2px] w-8 md:w-12 bg-[#3b8c2a]/60"></div>
           <Leaf className="w-3.5 h-3.5 md:w-4 md:h-4 text-[#3b8c2a]" />
           <h2 className="text-[14px] md:text-[20px] font-semibold text-[#0b2912] uppercase tracking-widest font-poppins text-center leading-tight">
-            {sectionData.headerTitle}
+            {content.headerTitle}
           </h2>
           <Leaf className="w-3.5 h-3.5 md:w-4 md:h-4 text-[#3b8c2a] scale-x-[-1]" />
           <div className="h-[2px] w-8 md:w-12 bg-[#3b8c2a]/60"></div>
@@ -270,8 +325,8 @@ const SponsorshipCategories = () => {
                   <Calendar className="w-4 h-4 md:w-5 md:h-5 text-[#0b2912]" strokeWidth={2.5} />
                 </div>
                 <div className='flex flex-col gap-0 md:gap-1 min-w-0'>
-                  <h3 className="text-[12px] md:text-[14px] font-semibold text-[#0b2912] uppercase leading-tight truncate">{sectionData.promoBox.bannerTitle}</h3>
-                  <p className="text-[11px] md:text-[14px] text-gray-600 font-medium leading-tight truncate">{sectionData.promoBox.bannerSubtitle}</p>
+                  <h3 className="text-[12px] md:text-[14px] font-semibold text-[#0b2912] uppercase leading-tight truncate">{promo.bannerTitle}</h3>
+                  <p className="text-[11px] md:text-[14px] text-gray-600 font-medium leading-tight truncate">{promo.bannerSubtitle}</p>
                 </div>
               </div>
               <div className="hidden sm:block w-[1px] h-10 bg-gray-300"></div>
@@ -280,7 +335,7 @@ const SponsorshipCategories = () => {
                   <Star className="w-3.5 h-3.5 md:w-4 md:h-4 text-[#3b8c2a]" />
                 </div>
                 <p className="text-[11.5px] md:text-[14px] text-gray-700 font-medium leading-tight md:leading-snug">
-                  {sectionData.promoBox.bannerFeature}
+                  {promo.bannerFeature}
                 </p>
               </div>
             </div>
@@ -290,13 +345,13 @@ const SponsorshipCategories = () => {
               {/* Background Image on Right */}
               <div className="absolute top-0 right-0 bottom-0 w-[50%] z-0">
                 <Image
-                  src={sectionData.promoBox.image}
+                  src={promo.image}
                   fill
                   sizes="(max-width: 1024px) 50vw, 28vw"
                   quality={60}
                   loading="lazy"
                   className="object-cover"
-                  alt={sectionData.promoBox.imageAlt}
+                  alt={promo.imageAlt}
                 />
                 {/* Bottom decorative wave line on the image */}
                 <div className="absolute bottom-0 left-0 right-0 h-[40%] bg-gradient-to-t from-black/70 to-transparent pointer-events-none"></div>
@@ -320,7 +375,7 @@ const SponsorshipCategories = () => {
               <div className="absolute bottom-3 right-3 md:bottom-4 md:right-5 border border-white/30 rounded-full px-2 py-1 md:px-4 md:py-1.5 flex items-center gap-1.5 md:gap-2 bg-black/40 backdrop-blur-md z-20">
                 <Leaf className="w-3.5 h-3.5 md:w-5 md:h-5 text-[#F2B40E]" strokeWidth={1.5} />
                 <span className="text-[8px] md:text-[11px] font-bold text-white uppercase leading-tight tracking-wider text-center">
-                  {sectionData.promoBox.badgeLine1}<br />{sectionData.promoBox.badgeLine2}
+                  {promo.badgeLine1}<br />{promo.badgeLine2}
                 </span>
               </div>
 
@@ -328,17 +383,17 @@ const SponsorshipCategories = () => {
               <div className="relative z-20 p-3 md:p-5 lg:p-6 w-full lg:w-[55%] flex flex-col justify-between pointer-events-auto font-inter">
                 <div>
                   <h3 className="text-[15px] md:text-[24px] lg:text-[26px] font-semibold text-white uppercase leading-[1.2] mb-1 md:mb-2 tracking-tight font-poppins">
-                    {sectionData.promoBox.titlePrefix} <br />
-                    <span className="text-[#F2B40E]">{sectionData.promoBox.titleHighlight}</span>
+                    {promo.titlePrefix} <br />
+                    <span className="text-[#F2B40E]">{promo.titleHighlight}</span>
                   </h3>
                   <p className="text-[11px] md:text-[14px] text-gray-200 font-normal leading-tight md:leading-[1.6] max-w-[65%] sm:max-w-[360px] mb-2 md:mb-4">
-                    {sectionData.promoBox.description}
+                    {promo.description}
                   </p>
                 </div>
 
                 {/* Stats 2x2 Grid */}
                 <div className="grid grid-cols-2 gap-y-1 gap-x-1.5 md:gap-y-2 md:gap-x-2 mb-2 md:mb-4 mt-1 w-[65%] sm:w-full">
-                  {sectionData.promoBox.stats.map((stat, idx) => (
+                  {promo.stats.map((stat, idx) => (
                     <div key={idx} className="flex w-full items-center gap-1.5 md:gap-2.5 bg-white/5 border border-white/10 rounded-md md:rounded-lg px-1.5 py-1.5 md:px-3 md:py-2 hover:bg-white/10 transition-colors">
                       <div className="w-5 h-5 md:w-8 md:h-8 rounded-full border border-[#F2B40E] flex items-center justify-center shrink-0">
                         <stat.icon className="w-3 h-3 md:w-4 md:h-4 text-[#F2B40E]" strokeWidth={2} />
@@ -359,24 +414,24 @@ const SponsorshipCategories = () => {
                     <Sparkle color="#ff9800" shadow="#4B1426" style={{ top: "-12px", left: "45%", animationDelay: "0.5s" }} />
                     <Sparkle color="#ffc107" shadow="#4B1426" style={{ top: "-10px", right: "5%", animationDelay: "1s" }} />
                     <a
-                      href={sectionData.promoBox.buttons.brochureLink}
+                      href={promo.buttons.brochureLink}
                       target="_blank"
                       rel="noopener noreferrer"
                       className="group relative w-full flex items-center justify-center gap-1 px-2.5 py-1.5 bg-[#4B1426] hover:bg-[#360e1b] border border-white/20 rounded-full text-white transition-colors shadow-md overflow-hidden"
                     >
                       <span className="absolute inset-0 bg-white/15 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-500 skew-x-12" />
                       <Download className="w-3 h-3 shrink-0 relative z-10 text-white" />
-                      <span className="text-[9px] xl:text-[11px] font-bold uppercase tracking-wider whitespace-nowrap overflow-hidden text-ellipsis relative z-10 text-white">{sectionData.promoBox.buttons.brochureText}</span>
+                      <span className="text-[9px] xl:text-[11px] font-bold uppercase tracking-wider whitespace-nowrap overflow-hidden text-ellipsis relative z-10 text-white">{promo.buttons.brochureText}</span>
                     </a>
                   </div>
 
-                  <Link href={sectionData.promoBox.buttons.contactLink} target="_blank" rel="noopener noreferrer" className="flex items-center justify-center gap-1 px-2.5 py-1.5 bg-[#166534] hover:bg-[#14532d] border border-[#166534] rounded-full text-white transition-colors shadow-lg flex-1 min-w-0">
+                  <Link href={promo.buttons.contactLink} target="_blank" rel="noopener noreferrer" className="flex items-center justify-center gap-1 px-2.5 py-1.5 bg-[#166534] hover:bg-[#14532d] border border-[#166534] rounded-full text-white transition-colors shadow-lg flex-1 min-w-0">
                     <MessageCircle className="w-3 h-3 shrink-0" />
-                    <span className="text-[8.5px] xl:text-[10px] font-bold uppercase tracking-wider whitespace-nowrap overflow-hidden text-ellipsis">{sectionData.promoBox.buttons.contactText}</span>
+                    <span className="text-[8.5px] xl:text-[10px] font-bold uppercase tracking-wider whitespace-nowrap overflow-hidden text-ellipsis">{promo.buttons.contactText}</span>
                   </Link>
-                  <a href={sectionData.promoBox.buttons.phoneLink} className="flex items-center justify-center gap-1 px-2.5 py-1.5 border border-[#166534]/80 hover:border-[#166534] rounded-full text-white hover:bg-[#166534]/10 transition-colors flex-1 min-w-0">
+                  <a href={promo.buttons.phoneLink} className="flex items-center justify-center gap-1 px-2.5 py-1.5 border border-[#166534]/80 hover:border-[#166534] rounded-full text-white hover:bg-[#166534]/10 transition-colors flex-1 min-w-0">
                     <PhoneCall className="w-3 h-3 shrink-0" />
-                    <span className="text-[8.5px] xl:text-[10px] font-bold uppercase tracking-wider whitespace-nowrap overflow-hidden text-ellipsis">{sectionData.promoBox.buttons.phoneText}</span>
+                    <span className="text-[8.5px] xl:text-[10px] font-bold uppercase tracking-wider whitespace-nowrap overflow-hidden text-ellipsis">{promo.buttons.phoneText}</span>
                   </a>
                 </div>
               </div>
@@ -385,7 +440,7 @@ const SponsorshipCategories = () => {
 
           {/* RIGHT: CONTACT FORM */}
           <div className="w-full lg:w-[400px] bg-white rounded-xl shadow-md border border-gray-200 p-3 md:p-4 shrink-0">
-            <h3 className="text-[14px] md:text-[18px] font-semibold text-[#0b2912] uppercase text-center mb-1">{sectionData.form.title}</h3>
+            <h3 className="text-[14px] md:text-[18px] font-semibold text-[#0b2912] uppercase text-center mb-1">{content.formTitle}</h3>
             <div className="w-8 md:w-12 h-1 bg-[#3b8c2a] mx-auto mb-3 md:mb-4"></div>
 
             <form className="flex flex-col gap-2 md:gap-3" onSubmit={handleSubmit}>

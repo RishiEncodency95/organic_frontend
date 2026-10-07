@@ -2,7 +2,7 @@
 
 import React, { useLayoutEffect, useRef } from "react";
 import gsap from "gsap";
-import { DotLottieReact } from "@lottiefiles/dotlottie-react";
+import { DotLottieReact } from "@/lib/dotLottie";
 
 /**
  * Success screen shown after a visitor registration form is saved — same look as the

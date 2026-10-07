@@ -1,4 +1,5 @@
 import { MetadataRoute } from 'next';
+import { getHiddenPageKeys, isLinkHidden } from '@/lib/pageVisibility';
 
 const BASE_URL = 'https://bharatorganicexpo.com';
 const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000/api';
@@ -53,6 +54,12 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     console.warn('[sitemap] Could not fetch blog posts from API, using static pages only.');
   }
 
-  return [...staticPages, ...blogEntries];
+  // Leave out pages unpublished from admin (Pages & CMS → Published toggle).
+  const hiddenKeys = new Set(await getHiddenPageKeys(3600));
+  const visibleStaticPages = staticPages.filter(
+    (entry) => !isLinkHidden(hiddenKeys, entry.url.slice(BASE_URL.length) || '/')
+  );
+
+  return [...visibleStaticPages, ...blogEntries];
 }
 

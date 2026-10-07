@@ -50,6 +50,7 @@ import SectionContainer from "@/app/components/layout/SectionContainer";
 import BookAStandHero from "@/app/components/registration/book-a-stand/BookAStandHero";
 import BookAStandBanner from "@/app/components/registration/book-a-stand/BookAStandBanner";
 import { childrenOf, toOptions, useDropdowns } from "@/lib/dropdowns";
+import { makeSectionGate } from "@/lib/sectionGate";
 
 const loadScript = (src: string) => {
     return new Promise((resolve) => {
@@ -229,7 +230,13 @@ const STAND_DROPDOWNS = {
     ],
 };
 
-const BookAStand = () => {
+// `disabledSections`: bookAStandPage section keys switched off in admin. Only the display
+// sections are gated; the form-config sections (form fields, contact details, legal
+// agreements) drive the booking form itself and are not hidden.
+const BookAStand = ({ disabledSections = [] }: { disabledSections?: string[] }) => {
+    const show = makeSectionGate(disabledSections);
+    const showPremier = show("book-stand-premier-edition");
+    const showCategories = show("book-stand-categories");
     const dropdowns = useDropdowns(STAND_DROPDOWNS);
     const [submitted, setSubmitted] = useState(false);
     const [isLoading, setIsLoading] = useState(false);
@@ -1011,14 +1018,16 @@ const BookAStand = () => {
                 onClose={() => { setPaymentModal(null); setIsLoading(false); }}
             />
             {/* -- HERO SECTION - Registration Standard 16:5 -- */}
-            <BookAStandHero />
+            {show("book-stand-hero") && <BookAStandHero />}
             {/* bannar section  */}
-            <BookAStandBanner />
+            {show("book-stand-banner") && <BookAStandBanner />}
             {/* button section */}
+            {(showPremier || showCategories) && (
             <SectionContainer>
                 <section className="bg-white border border-gray-100 my-3 py-6 rounded-xl shadow-sm p-4 md:p-8 flex flex-col lg:flex-row gap-8 lg:gap-10">
 
                     {/* Left Side */}
+                    {showPremier && (
                     <div className="flex-1 flex flex-col justify-between">
                         <div>
                             <p className="text-gray-900 text-xl font-medium mb-1">Premier Edition of</p>
@@ -1039,12 +1048,16 @@ const BookAStand = () => {
                             </p>
                         </div>
                     </div>
+                    )}
 
                     {/* Divider */}
+                    {showPremier && showCategories && (<>
                     <div className="hidden lg:block w-px bg-gray-200 self-stretch" />
                     <div className="block lg:hidden h-px w-full bg-gray-200 my-2" />
+                    </>)}
 
                     {/* Right Side */}
+                    {showCategories && (
                     <div className="flex-1">
                         <h3 className="text-gray-900 text-xl font-medium mb-1">Choose Exhibitor Category</h3>
                         <div className="w-8 h-[3px] bg-[#4a8f2f] rounded mb-5" />
@@ -1103,9 +1116,11 @@ const BookAStand = () => {
 
                         </div>
                     </div>
+                    )}
 
                 </section>
             </SectionContainer>
+            )}
             {/* -- MAIN CONTENT -- */}
             <section className="pt-4 pb-12 relative overflow-hidden">
 
@@ -2027,10 +2042,10 @@ const BookAStand = () => {
     );
 };
 
-export default function BookAStandPage() {
+export default function BookAStandPage({ disabledSections = [] }: { disabledSections?: string[] }) {
     return (
         <Suspense fallback={<div className="min-h-screen flex items-center justify-center bg-[#f7faf5] text-[#3b8c2a] font-bold">Loading...</div>}>
-            <BookAStand />
+            <BookAStand disabledSections={disabledSections} />
         </Suspense>
     );
 }

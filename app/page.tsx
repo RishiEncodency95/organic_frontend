@@ -8,6 +8,7 @@ import LazyHomeSections from "./components/home/LazyHomeSections";
 import { seoApi } from "../lib/api";
 import { getHomePageData } from "../lib/homeData";
 import AdminSchema from "@/components/seo/AdminSchema";
+import { getDisabledSectionKeys, makeSectionGate } from "@/lib/sectionVisibility";
 
 export const revalidate = 60;
 
@@ -78,6 +79,7 @@ export async function generateMetadata(): Promise<Metadata> {
 const Index = async () => {
   const isLocal = process.env.NODE_ENV !== "production";
   const homeDataPromise = getHomePageData();
+  const disabledSectionsPromise = getDisabledSectionKeys("landingPage");
   let seoData: any = null;
   try {
     const res = await seoApi.getByPage("home", isLocal ? "local" : "live");
@@ -86,7 +88,8 @@ const Index = async () => {
     // fallback
   }
 
-  const homeData = await homeDataPromise;
+  const [homeData, disabledSections] = await Promise.all([homeDataPromise, disabledSectionsPromise]);
+  const show = makeSectionGate(disabledSections);
 
   const schemaContent = seoData?.schemaMarkup || null;
 
@@ -95,10 +98,12 @@ const Index = async () => {
     <>
       <AdminSchema schema={schemaContent} />
       <HomeApiPrimer responses={homeData.apiResponses} />
-      <HeroSection initialSlides={homeData.apiResponses["/website/home/home-hero"]} />
-      <AudienceStrip />
-      <IntroductionSection initialData={homeData.apiResponses["/website/home/introduction-section"]} />
-      <LazyHomeSections />
+      {show("hero") && <HeroSection initialSlides={homeData.apiResponses["/website/home/home-hero"]} />}
+      {show("audience-strip") && <AudienceStrip />}
+      {show("introduction-section") && (
+        <IntroductionSection initialData={homeData.apiResponses["/website/home/introduction-section"]} />
+      )}
+      <LazyHomeSections disabledSections={disabledSections} />
     </>
   );
 };
