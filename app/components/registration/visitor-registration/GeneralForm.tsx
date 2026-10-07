@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from "react";
 import RegistrationSuccess from "./RegistrationSuccess";
 import { User, Loader2, CheckCircle, X, ChevronsUpDown, ShieldCheck } from "lucide-react";
-import { crmApi, verifyApi, visitorApi, ihweSettingsApi } from "../../../../lib/api";
+import { crmApi, verifyApi, visitorApi, ihweSettingsApi, getActiveEventDetails } from "../../../../lib/api";
 import Swal from 'sweetalert2';
 import { toOptions, useDropdowns } from "@/lib/dropdowns";
 
@@ -91,7 +91,6 @@ export default function GeneralForm() {
   const [states, setStates] = useState<any[]>([]);
   const [cities, setCities] = useState<any[]>([]);
 
-  const defaultEventName = process.env.NEXT_PUBLIC_EVENT_NAME || "BOE2026";
   const [requireOtp, setRequireOtp] = useState(true);
 
   useEffect(() => {
@@ -100,12 +99,16 @@ export default function GeneralForm() {
         setRequireOtp(res.requireOtpForVisitorRegistration);
       }
     }).catch((err: any) => console.error(err));
+
+    getActiveEventDetails().then((res) => {
+      setFormData(prev => ({ ...prev, eventName: res.paymentFilterName }));
+    });
   }, []);
 
 
 
   const [formData, setFormData] = useState({
-    registrationFor: defaultEventName,
+    registrationFor: "",
     firstName: "",
     lastName: "",
     gender: "",
@@ -154,9 +157,9 @@ export default function GeneralForm() {
     }
   }, [formData.state, states]);
 
-    const handleChange = (e: any) => {
+  const handleChange = (e: any) => {
     let { name, value, type, checked } = e.target;
-    
+
     // Checkbox handling
     let finalValue = type === 'checkbox' ? checked : value;
 
@@ -202,8 +205,8 @@ export default function GeneralForm() {
     setIsVerifying(prev => ({ ...prev, [type]: true }));
     try {
       const res = type === 'email'
-        ? await verifyApi.sendEmailOtp(value, 'VISITOR', formData.firstName)
-        : await verifyApi.sendPhoneOtp(value, 'VISITOR', formData.firstName);
+        ? await verifyApi.sendEmailOtp(value, 'VISITOR', formData.firstName, formData.registrationFor)
+        : await verifyApi.sendPhoneOtp(value, 'VISITOR', formData.firstName, formData.registrationFor);
 
       if (res && res.success) {
         setOtpSent(prev => ({ ...prev, [type]: true }));

@@ -38,10 +38,8 @@ export default function HealthCampForm() {
   const [states, setStates] = useState<any[]>([]);
   const [cities, setCities] = useState<any[]>([]);
 
-  const defaultEventName = process.env.NEXT_PUBLIC_EVENT_NAME || "BOE2026";
-
   const [formData, setFormData] = useState({
-    registrationFor: defaultEventName,
+    registrationFor: "",
     firstName: "",
     lastName: "",
     email: "",
@@ -77,6 +75,12 @@ export default function HealthCampForm() {
   });
 
   useEffect(() => {
+    getActiveEventDetails().then((res) => {
+      setFormData(prev => ({ ...prev, registrationFor: res.paymentFilterName }));
+    });
+  }, []);
+
+  useEffect(() => {
     crmApi.getCountries()
       .then(data => setCountries(data || []))
       .catch(err => console.error(err));
@@ -104,9 +108,9 @@ export default function HealthCampForm() {
     }
   }, [formData.state, states]);
 
-    const handleChange = (e: any) => {
+  const handleChange = (e: any) => {
     let { name, value, type, checked } = e.target;
-    
+
     // Checkbox handling
     let finalValue = type === 'checkbox' ? checked : value;
 
@@ -250,7 +254,7 @@ export default function HealthCampForm() {
           <div>
             <label className={labelClasses}>Event Name <span className="text-red-600">*</span></label>
             <select required name="registrationFor" value={formData.registrationFor} onChange={handleChange} className={inputClasses} disabled>
-              <option value={defaultEventName}>{defaultEventName}</option>
+              <option value={formData.registrationFor}>{formData.registrationFor}</option>
             </select>
           </div>
           <div><label className={labelClasses}>First Name <span className="text-red-600">*</span></label><input required name="firstName" value={formData.firstName} onChange={handleChange} className={inputClasses} placeholder="First Name" /></div>

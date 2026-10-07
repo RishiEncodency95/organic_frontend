@@ -36,7 +36,7 @@ import { Checkbox } from "@/app/components/ui/checkbox";
 
 
 
-import { verifyApi, buyerApi, crmApi, policyApi, ihweEventApi } from "@/lib/api";
+import { verifyApi, buyerApi, crmApi, policyApi, getActiveEventDetails } from "@/lib/api";
 import Swal from "sweetalert2";
 const toast = { error: (msg: any) => Swal.fire({ icon: "error", text: msg }), success: (msg: any) => Swal.fire({ icon: "success", text: msg }) };
 import { useEffect as useEffectDropdown } from "react";
@@ -209,7 +209,7 @@ const loadRazorpayScript = () => {
 const InternationalBuyerRegistration = () => {
   const [config, setConfig] = useState<any>(null);
   const [submitted, setSubmitted] = useState(false);
-  const [eventName, setEventName] = useState("BOE 2027");
+  const [eventName, setEventName] = useState("BOE - 2027");
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [heroData, setHeroData] = useState<any>(null);
   const [countries, setCountries] = useState<any[]>([]);
@@ -248,6 +248,7 @@ const InternationalBuyerRegistration = () => {
   const passPackages = useMemo(() => config?.packages?.filter((p: any) => p.category === 'Pass') || [], [config]);
 
   const initialFormState = {
+    eventName: "",
     brandName: "",
     legalEntityType: "",
     countryOfRegistration: "",
@@ -369,14 +370,9 @@ const InternationalBuyerRegistration = () => {
     };
     fetchData();
 
-    const ihweEvent = async () => {
-      ihweEventApi.getActive().then((res: any) => {
-        if (res && res.success && res.data && res.data.name?.toLowerCase().includes('bharat organic')) {
-          setFormData(prev => ({ ...prev, eventName: res.data.name }));
-        }
-      }).catch((err: any) => console.error(err));
-    }
-    ihweEvent();
+    getActiveEventDetails().then((res) => {
+      setFormData(prev => ({ ...prev, eventName: res.name }));
+    });
   }, []);
 
   useEffect(() => {
@@ -490,8 +486,8 @@ const InternationalBuyerRegistration = () => {
     setIsVerifying(prev => ({ ...prev, [type]: true }));
     try {
       const res = type === 'email'
-        ? await verifyApi.sendEmailOtp(identifier, 'INTERNATIONAL_BUYER', formData.primaryContact.fullName)
-        : await verifyApi.sendPhoneOtp(identifier, 'INTERNATIONAL_BUYER', formData.primaryContact.fullName);
+        ? await verifyApi.sendEmailOtp(identifier, 'INTERNATIONAL_BUYER', formData.primaryContact.fullName, formData?.eventName)
+        : await verifyApi.sendPhoneOtp(identifier, 'INTERNATIONAL_BUYER', formData.primaryContact.fullName, formData?.eventName);
       if (res.success) {
         toast.success(`OTP sent to your ${type === 'email' ? 'Email' : 'Mobile'}.`);
         if (type === 'email') { setEmailOtpSent(true); setEmailResendTimer(30); }
@@ -534,7 +530,7 @@ const InternationalBuyerRegistration = () => {
       key: process.env.NEXT_PUBLIC_RAZORPAY_KEY_ID || "rzp_test_RTd9y3ngRanKxq",
       amount: gatewayPrice * 100,
       currency: "USD",
-      name: "BOE 2027",
+      name: "BOE - 2027",
       description: `${tempSelectedPackage.name} Registration`,
       handler: async (response: any) => {
         setFormData(prev => ({ ...prev, registrationCategory: tempSelectedPackage.name, registrationFee: `$${tempSelectedPackage.price}`, transactionId: response.razorpay_payment_id }));

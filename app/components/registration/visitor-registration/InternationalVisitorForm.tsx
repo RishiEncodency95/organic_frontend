@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from "react";
 import RegistrationSuccess from "./RegistrationSuccess";
 import { ShieldCheck, Globe2, Loader2, CheckCircle, X, ChevronsUpDown, Upload } from "lucide-react";
-import { crmApi, verifyApi, visitorApi, ihweSettingsApi } from "../../../../lib/api";
+import { crmApi, verifyApi, visitorApi, ihweSettingsApi, getActiveEventDetails } from "../../../../lib/api";
 import Swal from 'sweetalert2';
 import { toOptions, useDropdowns } from "@/lib/dropdowns";
 
@@ -111,7 +111,6 @@ export default function InternationalVisitorForm() {
   const [states, setStates] = useState<any[]>([]);
   const [cities, setCities] = useState<any[]>([]);
 
-  const defaultEventName = process.env.NEXT_PUBLIC_EVENT_NAME || "BOE2026";
   const [requireOtp, setRequireOtp] = useState(true);
   const [resendTimers, setResendTimers] = useState({ email: 0, mobile: 0 });
 
@@ -121,12 +120,16 @@ export default function InternationalVisitorForm() {
         setRequireOtp(res.requireOtpForVisitorRegistration);
       }
     }).catch((err: any) => console.error(err));
+
+    getActiveEventDetails().then((res) => {
+      setFormData(prev => ({ ...prev, registrationFor: res.paymentFilterName }));
+    });
   }, []);
 
 
 
   const [formData, setFormData] = useState({
-    registrationFor: defaultEventName,
+    registrationFor: "",
     firstName: "", lastName: "", gender: "", dob: "",
     nationality: "", passportNo: "", occupation: "",
     email: "", personalEmail: "", mobileNo: "", whatsappNo: "", indiaContactNo: "",
@@ -217,8 +220,8 @@ export default function InternationalVisitorForm() {
     setIsVerifying(prev => ({ ...prev, [type]: true }));
     try {
       const res = type === 'email'
-        ? await verifyApi.sendEmailOtp(value, 'VISITOR', formData.firstName)
-        : await verifyApi.sendPhoneOtp(value, 'VISITOR', formData.firstName);
+        ? await verifyApi.sendEmailOtp(value, 'VISITOR', formData.firstName, formData.registrationFor)
+        : await verifyApi.sendPhoneOtp(value, 'VISITOR', formData.firstName, formData.registrationFor);
 
       if (res && res.success) {
         setOtpSent(prev => ({ ...prev, [type]: true }));
@@ -328,7 +331,7 @@ export default function InternationalVisitorForm() {
           <div>
             <label className={labelClasses}>Register For <span className="text-red-600">*</span></label>
             <select required name="registrationFor" value={formData.registrationFor} onChange={handleChange} className={inputClasses}>
-              <option value={defaultEventName}>{defaultEventName}</option>
+              <option value={formData.registrationFor}>{formData.registrationFor}</option>
             </select>
           </div>
           <div><label className={labelClasses}>First Name <span className="text-red-600">*</span></label><input required name="firstName" value={formData.firstName} onChange={handleChange} className={inputClasses} placeholder="First Name" /></div>

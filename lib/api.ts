@@ -199,7 +199,8 @@ export const publicApi = {
 };
 
 export const verifyApi = {
-    sendEmailOtp: async (email: string, profile: string = 'SPEAKER', name: string = '', eventName: string = process.env.NEXT_PUBLIC_EVENT_NAME || 'BOE2026') => {
+    sendEmailOtp: async (email: string, profile: string = 'SPEAKER', name: string = '', eventName: string) => {
+        if(!eventName) eventName = (await getActiveEventDetails()).paymentFilterName || 'BOE2026';
         const response = await fetch(`${ihwe_API_URL}/verify/send-email-otp`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
@@ -223,7 +224,8 @@ export const verifyApi = {
         }
         return await response.json();
     },
-    sendPhoneOtp: async (phone: string, profile: string = 'CONTACT', name: string = '', eventName: string = process.env.NEXT_PUBLIC_EVENT_NAME || 'BOE2026') => {
+    sendPhoneOtp: async (phone: string, profile: string = 'CONTACT', name: string = '', eventName: string = '') => {
+        if (!eventName) eventName = (await getActiveEventDetails()).paymentFilterName || 'BOE2026';
         const response = await fetch(`${ihwe_API_URL}/verify/send-phone-otp`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
@@ -407,17 +409,30 @@ const getBoeEventName = async () => {
     return "BOE 2027";
 };
 
+export const getActiveEventDetails = async () => {
+    try {
+        const res = await ihweEventApi.getActive();
+        if (Array.isArray(res) && res.length > 0) return res[0];
+        if (res && typeof res === 'object') return res;
+    } catch (err) {}
+    return { paymentFilterName: 'BOE2026' };
+};
+
 export const visitorApi = {
     submitCorporate: async (data: any) => {
-        const eventName = data.eventName || await getBoeEventName();
-        return ihweApiCall('/corporate-visitors', { method: 'POST', body: JSON.stringify({ ...data, mobile: data.mobile || data.mobileNo, domainName: 'boe', eventName }) });
+        const activeEvent = await getActiveEventDetails();
+        const eventName = activeEvent.paymentFilterName || data.eventName;
+        const registrationFor = activeEvent.paymentFilterName || data.registrationFor;
+        return ihweApiCall('/corporate-visitors', { method: 'POST', body: JSON.stringify({ ...data, mobile: data.mobile || data.mobileNo, domainName: 'boe', eventName, registrationFor }) });
     },
     submitInternational: async (data: any) => {
-        const eventName = data.eventName || await getBoeEventName();
+        const activeEvent = await getActiveEventDetails();
+        const eventName = activeEvent.paymentFilterName || data.eventName;
         return ihweApiCall('/international-visitors', { method: 'POST', body: JSON.stringify({ ...data, mobile: data.mobile || data.mobileNo, domainName: 'boe', eventName }) });
     },
     submitGeneral: async (data: any) => {
-        const eventName = data.eventName || await getBoeEventName();
+        const activeEvent = await getActiveEventDetails();
+        const eventName = activeEvent.paymentFilterName || data.eventName;
         return ihweApiCall('/general-visitors', { method: 'POST', body: JSON.stringify({ ...data, mobile: data.mobile || data.mobileNo, domainName: 'boe', eventName }) });
     },
     submitGroup: async (data: any) => {
@@ -425,13 +440,15 @@ export const visitorApi = {
         if (payload.persons && Array.isArray(payload.persons)) {
             payload.persons = payload.persons.map((p: any) => ({ ...p, mobile: p.mobile || p.mobileNo, domainName: 'boe', eventName: payload.eventName || "BOE" }));
         }
-        const eventName = payload.eventName || await getBoeEventName();
+        const activeEvent = await getActiveEventDetails();
+        const eventName = activeEvent.paymentFilterName || data.eventName;
         payload.eventName = eventName;
         payload.domainName = 'boe';
         return submitVisitor('/group-visitors', payload);
     },
     submitHealthCamp: async (data: any) => {
-        const eventName = data.eventName || await getBoeEventName();
+        const activeEvent = await getActiveEventDetails();
+        const eventName = activeEvent.paymentFilterName || data.eventName;
         return ihweApiCall('/health-camp-visitors', { method: 'POST', body: JSON.stringify({ ...data, mobile: data.mobile || data.mobileNo, domainName: 'boe', eventName }) });
     }
 };
@@ -450,11 +467,13 @@ export const buyerApi = {
         
         let eventNameStr = "";
         if (isFormData) {
-            eventNameStr = payload.get("eventName") || await getBoeEventName();
+            const activeEvent = await getActiveEventDetails();
+            eventNameStr = activeEvent.paymentFilterName || (payload.get("eventName") as string);
             if (!payload.has("eventName")) payload.append("eventName", eventNameStr);
             if (!payload.has("domainName")) payload.append("domainName", "boe");
         } else {
-            eventNameStr = payload.eventName || await getBoeEventName();
+            const activeEvent = await getActiveEventDetails();
+            eventNameStr = activeEvent.paymentFilterName || payload.eventName;
             payload.eventName = eventNameStr;
             payload.domainName = "boe";
         }
@@ -480,11 +499,13 @@ export const buyerApi = {
         
         let eventNameStr = "";
         if (isFormData) {
-            eventNameStr = payload.get("eventName") || await getBoeEventName();
+            const activeEvent = await getActiveEventDetails();
+            eventNameStr = activeEvent.paymentFilterName || (payload.get("eventName") as string);
             if (!payload.has("eventName")) payload.append("eventName", eventNameStr);
             if (!payload.has("domainName")) payload.append("domainName", "boe");
         } else {
-            eventNameStr = payload.eventName || await getBoeEventName();
+            const activeEvent = await getActiveEventDetails();
+            eventNameStr = activeEvent.paymentFilterName || payload.eventName;
             payload.eventName = eventNameStr;
             payload.domainName = "boe";
         }

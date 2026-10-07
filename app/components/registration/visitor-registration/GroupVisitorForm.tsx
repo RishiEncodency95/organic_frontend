@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from "react";
 import RegistrationSuccess from "./RegistrationSuccess";
 import { Users, Plus, Trash2, Globe2, Loader2, CheckCircle, X, ChevronsUpDown, ShieldCheck } from "lucide-react";
-import { crmApi, verifyApi, visitorApi, ihweSettingsApi } from "../../../../lib/api";
+import { crmApi, verifyApi, visitorApi, ihweSettingsApi, getActiveEventDetails } from "../../../../lib/api";
 import Swal from 'sweetalert2';
 import { toOptions, useDropdowns } from "@/lib/dropdowns";
 
@@ -56,7 +56,6 @@ export default function GroupVisitorForm() {
   const [states, setStates] = useState<any[]>([]);
   const [cities, setCities] = useState<any[]>([]);
 
-  const defaultEventName = process.env.NEXT_PUBLIC_EVENT_NAME || "BOE2026";
   const [requireOtp, setRequireOtp] = useState(true);
 
   useEffect(() => {
@@ -65,10 +64,14 @@ export default function GroupVisitorForm() {
         setRequireOtp(res.requireOtpForVisitorRegistration);
       }
     }).catch((err: any) => console.error(err));
+
+    getActiveEventDetails().then((res) => {
+      setCompany(prev => ({ ...prev, registrationFor: res.paymentFilterName }));
+    });
   }, []);
 
 
-  const [company, setCompany] = useState({ ...defaultCompany, registrationFor: defaultEventName });
+  const [company, setCompany] = useState({ ...defaultCompany });
   const [persons, setPersons] = useState<Person[]>(Array.from({ length: MIN_PERSONS }, emptyPerson));
 
   useEffect(() => {
@@ -103,7 +106,7 @@ export default function GroupVisitorForm() {
     let { name, value, type, checked } = e.target;
     if (name === "country") { setCompany(prev => ({ ...prev, country: value, state: "", city: "" })); setStates([]); setCities([]); return; }
     if (name === "state") { setCompany(prev => ({ ...prev, state: value, city: "" })); setCities([]); return; }
-    
+
     let finalValue = type === "checkbox" ? checked : value;
 
     if (name === 'pinCode' || name === 'companyPincode') {
@@ -158,8 +161,8 @@ export default function GroupVisitorForm() {
     setIsVerifying(prev => ({ ...prev, [type]: true }));
     try {
       const res = type === 'email'
-        ? await verifyApi.sendEmailOtp(value, 'VISITOR', persons[0].firstName)
-        : await verifyApi.sendPhoneOtp(value, 'VISITOR', persons[0].firstName);
+        ? await verifyApi.sendEmailOtp(value, 'VISITOR', persons[0].firstName, company.registrationFor)
+        : await verifyApi.sendPhoneOtp(value, 'VISITOR', persons[0].firstName, company.registrationFor);
 
       if (res && res.success) {
         setOtpSent(prev => ({ ...prev, [type]: true }));

@@ -6,7 +6,7 @@ import leafs from '@/app/assets/icons/leafs.png';
 import footerright from '@/app/assets/icons/footerright.webp';
 import SectionContainer from '@/app/components/layout/SectionContainer';
 import Swal from 'sweetalert2';
-import { verifyApi, contactEnquiryApi } from '@/lib/api';
+import { verifyApi, contactEnquiryApi, getActiveEventDetails } from '@/lib/api';
 
 const ContactForm = () => {
   const [formData, setFormData] = useState({
@@ -53,7 +53,7 @@ const ContactForm = () => {
 
     try {
       setSendingOtp(true);
-      const eventName = process.env.NEXT_PUBLIC_EVENT_NAME || "BOE2026";
+      const eventName = (await getActiveEventDetails()).paymentFilterName;
       const res = await verifyApi.sendPhoneOtp(formData.phone, 'CONTACT_ENQUIRY', formData.name, eventName);
       if (res.success) {
         setOtpSent(true);
@@ -108,7 +108,7 @@ const ContactForm = () => {
         alternatePhone: formData.alternatePhone,
         subject: formData.subject,
         service: formData.subject,
-        eventName: process.env.NEXT_PUBLIC_EVENT_NAME || "BOE2026",
+        eventName: (await getActiveEventDetails()).paymentFilterName,
         message: `${formData.message}`
       };
       const res = await contactEnquiryApi.submitEnquiry(payload);

@@ -1,7 +1,7 @@
 "use client";
 import React, { useState, useRef, useEffect } from "react";
 import { CheckCircle2, CheckCircle, ShieldCheck, User, Globe, Store, Factory, Laptop, HeartPulse, Leaf, Hotel, Briefcase, ChevronsUpDown, Loader2, X, AlertTriangle } from "lucide-react";
-import { verifyApi, buyerApi, settingsApi, crmApi, ihweEventApi } from "@/lib/api";
+import { verifyApi, buyerApi, settingsApi, crmApi, getActiveEventDetails } from "@/lib/api";
 import Swal from "sweetalert2";
 import Link from "next/link";
 
@@ -202,7 +202,7 @@ const MultiSelectDropdown = ({ options, selected, onChange, placeholder = "Selec
 
 export default function DomesticBuyerForm() {
   const [submitted, setSubmitted] = useState(false);
-  const [eventName, setEventName] = useState("BOE 2027");
+  const [eventName, setEventName] = useState("BOE - 2027");
   const [mockConfig, setMockConfig] = useState<any>(defaultMockConfig);
   const [isVerifying, setIsVerifying] = useState({ email: false, mobile: false });
   const [otpSent, setOtpSent] = useState({ email: false, mobile: false });
@@ -218,7 +218,7 @@ export default function DomesticBuyerForm() {
 
   const [formData, setFormData] = useState({
     websiteName: "Organicexpo",
-    eventName: process.env.NEXT_PUBLIC_EVENT_NAME || "BOE2026",
+    eventName: "",
     fullName: "",
     designation: "",
     companyName: "",
@@ -397,11 +397,9 @@ export default function DomesticBuyerForm() {
         setRequireOtp(res.data.requireOtpForVisitorRegistration);
       }
     }).catch((err: any) => console.error(err));
-    ihweEventApi.getActive().then((res: any) => {
-      if (res && res.success && res.data && res.data.name?.toLowerCase().includes('bharat organic')) {
-        setFormData(prev => ({ ...prev, eventName: res.data.name }));
-      }
-    }).catch((err: any) => console.error(err));
+    getActiveEventDetails().then((res) => {
+      setFormData(prev => ({ ...prev, eventName: res.paymentFilterName }));
+    });
   }, []);
   const handleChange = (e: any) => {
     let { name, value } = e.target;
@@ -432,8 +430,8 @@ export default function DomesticBuyerForm() {
     setIsVerifying(prev => ({ ...prev, [type]: true }));
     try {
       const res = type === 'email'
-        ? await verifyApi.sendEmailOtp(value, 'BUYER')
-        : await verifyApi.sendPhoneOtp(value, 'BUYER', formData.fullName);
+        ? await verifyApi.sendEmailOtp(value, 'BUYER', formData.fullName, formData.eventName)
+        : await verifyApi.sendPhoneOtp(value, 'BUYER', formData.fullName, formData.eventName);
 
       if (res && res.success) {
         setOtpSent(prev => ({ ...prev, [type]: true }));
@@ -529,7 +527,7 @@ export default function DomesticBuyerForm() {
       key: process.env.NEXT_PUBLIC_RAZORPAY_KEY_ID || "rzp_test_RTd9y3ngRanKxq",
       amount: gatewayPrice * 100,
       currency: "INR",
-      name: "BOE 2027",
+      name: "BOE - 2027",
       description: `${pkg.name} Registration`,
       handler: async function (response: any) {
         setFormData(prev => ({ ...prev, registrationCategory: pkg.name, registrationFee: `₹${pkg.price}`, transactionId: response.razorpay_payment_id }));
