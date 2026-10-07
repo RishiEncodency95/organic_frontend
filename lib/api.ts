@@ -396,18 +396,44 @@ const submitVisitor = async (endpoint: string, payload: any) => {
     }
 };
 
+const getBoeEventName = async () => {
+    try {
+        const evRes = await ihweEventApi.getAll();
+        if (evRes.success && Array.isArray(evRes.data)) {
+            const activeBOE = evRes.data.find((e: any) => e.isActive === true && e.shortName && e.shortName.includes('BOE'));
+            if (activeBOE) return activeBOE.name;
+        }
+    } catch (err) {}
+    return "BOE 2027";
+};
+
 export const visitorApi = {
-    submitCorporate: async (data: any) => submitVisitor('/corporate-visitors', { ...data, mobile: data.mobile || data.mobileNo }),
-    submitInternational: async (data: any) => submitVisitor('/international-visitors', { ...data, mobile: data.mobile || data.mobileNo }),
-    submitGeneral: async (data: any) => submitVisitor('/general-visitors', { ...data, mobile: data.mobile || data.mobileNo }),
+    submitCorporate: async (data: any) => {
+        const eventName = data.eventName || await getBoeEventName();
+        return ihweApiCall('/corporate-visitors', { method: 'POST', body: JSON.stringify({ ...data, mobile: data.mobile || data.mobileNo, domainName: 'boe', eventName }) });
+    },
+    submitInternational: async (data: any) => {
+        const eventName = data.eventName || await getBoeEventName();
+        return ihweApiCall('/international-visitors', { method: 'POST', body: JSON.stringify({ ...data, mobile: data.mobile || data.mobileNo, domainName: 'boe', eventName }) });
+    },
+    submitGeneral: async (data: any) => {
+        const eventName = data.eventName || await getBoeEventName();
+        return ihweApiCall('/general-visitors', { method: 'POST', body: JSON.stringify({ ...data, mobile: data.mobile || data.mobileNo, domainName: 'boe', eventName }) });
+    },
     submitGroup: async (data: any) => {
         const payload = { ...data };
         if (payload.persons && Array.isArray(payload.persons)) {
-            payload.persons = payload.persons.map((p: any) => ({ ...p, mobile: p.mobile || p.mobileNo }));
+            payload.persons = payload.persons.map((p: any) => ({ ...p, mobile: p.mobile || p.mobileNo, domainName: 'boe', eventName: payload.eventName || "BOE" }));
         }
+        const eventName = payload.eventName || await getBoeEventName();
+        payload.eventName = eventName;
+        payload.domainName = 'boe';
         return submitVisitor('/group-visitors', payload);
     },
-    submitHealthCamp: async (data: any) => submitVisitor('/health-camp-visitors', { ...data, mobile: data.mobile || data.mobileNo })
+    submitHealthCamp: async (data: any) => {
+        const eventName = data.eventName || await getBoeEventName();
+        return ihweApiCall('/health-camp-visitors', { method: 'POST', body: JSON.stringify({ ...data, mobile: data.mobile || data.mobileNo, domainName: 'boe', eventName }) });
+    }
 };
 
 export const buyerApi = {
@@ -421,6 +447,18 @@ export const buyerApi = {
     },
     submitInternationalBuyer: async (payload: any) => {
         const isFormData = payload instanceof FormData;
+        
+        let eventNameStr = "";
+        if (isFormData) {
+            eventNameStr = payload.get("eventName") || await getBoeEventName();
+            if (!payload.has("eventName")) payload.append("eventName", eventNameStr);
+            if (!payload.has("domainName")) payload.append("domainName", "boe");
+        } else {
+            eventNameStr = payload.eventName || await getBoeEventName();
+            payload.eventName = eventNameStr;
+            payload.domainName = "boe";
+        }
+
         const response = await fetch(`${ihwe_API_URL}/international-buyer/register`, {
             method: 'POST',
             headers: isFormData ? {} : { 'Content-Type': 'application/json' },
@@ -435,14 +473,22 @@ export const buyerApi = {
             console.error("API Error Response:", text);
             return json || { success: false, message: text };
         }
-        if (!response.ok) {
-            const text = await response.text();
-            try { return JSON.parse(text); } catch(e) { return { success: false, message: "HTTP " + response.status + ": " + text.substring(0, 50) }; }
-        }
         return await response.json();
     },
     submitBuyer: async (payload: any) => {
         const isFormData = payload instanceof FormData;
+        
+        let eventNameStr = "";
+        if (isFormData) {
+            eventNameStr = payload.get("eventName") || await getBoeEventName();
+            if (!payload.has("eventName")) payload.append("eventName", eventNameStr);
+            if (!payload.has("domainName")) payload.append("domainName", "boe");
+        } else {
+            eventNameStr = payload.eventName || await getBoeEventName();
+            payload.eventName = eventNameStr;
+            payload.domainName = "boe";
+        }
+
         const response = await fetch(`${ihwe_API_URL}/buyer-registration`, {
             method: 'POST',
             headers: isFormData ? {} : { 'Content-Type': 'application/json' },
@@ -456,10 +502,6 @@ export const buyerApi = {
             } catch(e) {}
             console.error("API Error Response:", text);
             return json || { success: false, message: text };
-        }
-        if (!response.ok) {
-            const text = await response.text();
-            try { return JSON.parse(text); } catch(e) { return { success: false, message: "HTTP " + response.status + ": " + text.substring(0, 50) }; }
         }
         return await response.json();
     }
