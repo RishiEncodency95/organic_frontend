@@ -9,6 +9,7 @@ import { BadgeCheck, ChevronDown, ChevronRight, Loader2, Mail, Phone, X } from "
 import leafImg from "../../assets/icons/vv.png";
 import leafRightImg from "../../assets/icons/vv1.png";
 import { API_URL, verifyApi } from "@/lib/api";
+import { labelsOf, toOptions, useDropdowns } from "@/lib/dropdowns";
 import { SITE_CONFIG } from "@/app/constants/siteConfig";
 
 const COUNTRIES = [
@@ -26,6 +27,13 @@ const ENQUIRY_ABOUT = [
   "Buyer Registration Process", "Participation Fees", "Eligibility Criteria", "B2B Meeting Scheduling",
   "Hosted Buyer Programme", "Travel & Accommodation", "Other",
 ];
+
+// Admin-managed (Dropdown Manager → Enquiries); the lists above are the fallbacks
+const ENQUIRY_DROPDOWNS = {
+  "buyer-enquiry-country": toOptions(COUNTRIES),
+  "buyer-enquiry-type": toOptions(BUYER_TYPES),
+  "buyer-enquiry-topic": toOptions(ENQUIRY_ABOUT),
+};
 
 type Form = {
   name: string;
@@ -96,6 +104,7 @@ const Select = ({
 
 export default function BuyerEnquiryPopup({ onClose, registerHref }: { onClose: () => void; registerHref: string }) {
   const [form, setForm] = useState<Form>(EMPTY);
+  const dropdowns = useDropdowns(ENQUIRY_DROPDOWNS);
   const [errors, setErrors] = useState<Errors>({});
   const [submitting, setSubmitting] = useState(false);
   const [serverError, setServerError] = useState("");
@@ -458,17 +467,17 @@ export default function BuyerEnquiryPopup({ onClose, registerHref }: { onClose: 
                 </div>
                 <div data-bq-anim>
                   <span className={label}>Country</span>
-                  <Select value={form.country} onChange={(v) => set("country", v)} options={COUNTRIES} placeholder="Select country" ariaLabel="Country" />
+                  <Select value={form.country} onChange={(v) => set("country", v)} options={labelsOf(dropdowns["buyer-enquiry-country"])} placeholder="Select country" ariaLabel="Country" />
                 </div>
                 <div data-bq-anim>
                   <span className={label}>Buyer Type</span>
-                  <Select value={form.buyerType} onChange={(v) => set("buyerType", v)} options={BUYER_TYPES} placeholder="Select buyer type" ariaLabel="Buyer type" />
+                  <Select value={form.buyerType} onChange={(v) => set("buyerType", v)} options={labelsOf(dropdowns["buyer-enquiry-type"])} placeholder="Select buyer type" ariaLabel="Buyer type" />
                 </div>
               </div>
 
               <div data-bq-anim className="mt-2.5">
                 <span className={label}>Enquiry About {req}</span>
-                <Select value={form.about} onChange={(v) => set("about", v)} options={ENQUIRY_ABOUT} error={errors.about} ariaLabel="Enquiry about" />
+                <Select value={form.about} onChange={(v) => set("about", v)} options={labelsOf(dropdowns["buyer-enquiry-topic"])} error={errors.about} ariaLabel="Enquiry about" />
                 <FieldError msg={errors.about} />
               </div>
 

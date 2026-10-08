@@ -1,6 +1,7 @@
 
 import { useState, useEffect, useMemo, useRef } from "react";
 import Link from "next/link";
+import { labelsOf, toOptions, useDropdowns } from "@/lib/dropdowns";
 import { motion, AnimatePresence } from "framer-motion";
 import {
   User,
@@ -206,8 +207,22 @@ const loadRazorpayScript = () => {
   });
 };
 
+// Admin-managed option lists (Dropdown Manager → Buyer Registration); these are the fallbacks
+const INTL_BUYER_DROPDOWNS = {
+  "buyer-legal-entity-type": toOptions(["Private Limited", "Public Limited", "LLC", "LLP", "Partnership", "Proprietorship", "Government Organization", "Trade Association", "Embassy / Delegation", "Other"]),
+  "buyer-intl-stall-type": toOptions(["Shell Scheme", "Bare Space", "Premium Pavilion", "International Pavilion", "Country Pavilion", "Startup Pavilion"]),
+  "buyer-intl-stall-size": toOptions(["9 sqm", "18 sqm", "27 sqm", "36 sqm", "54 sqm", "Custom Size"]),
+  "buyer-intl-stall-location": toOptions(["One Side Open", "Two Side Open", "Three Side Open"]),
+  "buyer-intl-sponsorship-type": toOptions(["Title Sponsor", "Powered By Sponsor", "Associate Sponsor", "Session Sponsor", "Delegate Bag Sponsor", "Lanyard Sponsor", "Registration Desk Sponsor", "Knowledge Session Sponsor", "International Buyer Lounge Sponsor"]),
+  "buyer-intl-certification": toOptions(["ISO", "CE", "FDA", "GMP", "WHO-GMP", "AYUSH Certified", "Organic Certification", "Other"]),
+  "buyer-intl-looking-for": toOptions(["Distributors", "Importers", "Hospital Buyers", "Government Buyers", "Franchise Partners", "Investors", "OEM Partners", "Strategic Collaborations"]),
+  "buyer-payment-mode": toOptions(["Bank Transfer", "International Wire Transfer", "Credit Card", "Online Payment Gateway"]),
+};
+
 const InternationalBuyerRegistration = () => {
   const [config, setConfig] = useState<any>(null);
+  const dropdowns = useDropdowns(INTL_BUYER_DROPDOWNS);
+  const optionList = (key: keyof typeof INTL_BUYER_DROPDOWNS) => labelsOf(dropdowns[key]);
   const [submitted, setSubmitted] = useState(false);
   const [eventName, setEventName] = useState("BOE 2027");
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -626,7 +641,7 @@ const InternationalBuyerRegistration = () => {
               <label className={labelClasses}>Legal Entity Type <span className="text-red-600">*</span></label>
               <select value={formData.legalEntityType} onChange={(e) => { const v = e.target.value; handleSelectChange('legalEntityType', v) }} className={inputClasses}>
                 <option value="">Select type</option>
-                {(config?.companyTypes || ['Private Limited', 'Public Limited', 'LLC', 'LLP', 'Partnership', 'Proprietorship', 'Government Organization', 'Trade Association', 'Embassy / Delegation', 'Other']).map((t: any, i: number) => <option key={`${t}-${i}`} value={t}>{t}</option>)}
+                {optionList("buyer-legal-entity-type").map((t: any, i: number) => <option key={`${t}-${i}`} value={t}>{t}</option>)}
               </select>
             </div>
             <div><label className={labelClasses}>Country of Registration <span className="text-red-600">*</span></label><input name="countryOfRegistration" value={formData.countryOfRegistration} onChange={handleInputChange} className={inputClasses} placeholder="Country name" /></div>
@@ -768,7 +783,7 @@ const InternationalBuyerRegistration = () => {
               <select value={formData.stallRequirement.preferredStallType} onChange={(e) => { const v = e.target.value; handleSelectChange('stallRequirement.preferredStallType', v) }} className={inputClasses}>
                 <option value="">Select type</option>
 
-                {['Shell Scheme', 'Bare Space', 'Premium Pavilion', 'International Pavilion', 'Country Pavilion', 'Startup Pavilion'].map(o => <option key={o} value={o}>{o}</option>)}
+                {optionList("buyer-intl-stall-type").map(o => <option key={o} value={o}>{o}</option>)}
 
               </select>
             </div>
@@ -777,7 +792,7 @@ const InternationalBuyerRegistration = () => {
               <select value={formData.stallRequirement.stallSize} onChange={(e) => { const v = e.target.value; handleSelectChange('stallRequirement.stallSize', v) }} className={inputClasses}>
                 <option value="">Select size</option>
 
-                {['9 sqm', '18 sqm', '27 sqm', '36 sqm', '54 sqm', 'Custom Size'].map(s => <option key={s} value={s}>{s}</option>)}
+                {optionList("buyer-intl-stall-size").map(s => <option key={s} value={s}>{s}</option>)}
 
               </select>
             </div>
@@ -794,9 +809,7 @@ const InternationalBuyerRegistration = () => {
               <select value={formData.stallRequirement.preferredStallLocation} onChange={(e) => { const v = e.target.value; handleSelectChange('stallRequirement.preferredStallLocation', v) }} className={inputClasses}>
                 <option value="">Select...</option>
 
-                <option value="One Side Open">One Side Open</option>
-                <option value="Two Side Open">Two Side Open</option>
-                <option value="Three Side Open">Three Side Open</option>
+                {optionList("buyer-intl-stall-location").map(o => <option key={o} value={o}>{o}</option>)}
 
               </select>
             </div>
@@ -826,7 +839,7 @@ const InternationalBuyerRegistration = () => {
               <select value={formData.sponsorship.preferredType} onChange={(e) => handleSelectChange('sponsorship.preferredType', e.target.value)} disabled={formData.sponsorship.interested === 'No'} className={inputClasses}>
                 <option value="">Select type</option>
 
-                {['Title Sponsor', 'Powered By Sponsor', 'Associate Sponsor', 'Session Sponsor', 'Delegate Bag Sponsor', 'Lanyard Sponsor', 'Registration Desk Sponsor', 'Knowledge Session Sponsor', 'International Buyer Lounge Sponsor'].map(s => <option key={s} value={s}>{s}</option>)}
+                {optionList("buyer-intl-sponsorship-type").map(s => <option key={s} value={s}>{s}</option>)}
 
               </select>
             </div>
@@ -844,7 +857,7 @@ const InternationalBuyerRegistration = () => {
             <div>
               <label className={labelClasses}>Certifications</label>
               <MultiSelectDropdown
-                options={['ISO', 'CE', 'FDA', 'GMP', 'WHO-GMP', 'AYUSH Certified', 'Organic Certification', 'Other']}
+                options={optionList("buyer-intl-certification")}
                 selected={formData.businessProfile.certifications}
                 onChange={val => handleMultiSelectChange('businessProfile.certifications', val)}
                 placeholder="Select certifications"
@@ -860,7 +873,7 @@ const InternationalBuyerRegistration = () => {
             <div>
               <label className={labelClasses}>Looking For</label>
               <MultiSelectDropdown
-                options={["Distributors", "Importers", "Hospital Buyers", "Government Buyers", "Franchise Partners", "Investors", "OEM Partners", "Strategic Collaborations"]}
+                options={optionList("buyer-intl-looking-for")}
                 selected={formData.b2bInterest.lookingFor}
                 onChange={val => handleMultiSelectChange('b2bInterest.lookingFor', val)}
                 placeholder="Select interests..."
@@ -928,10 +941,7 @@ const InternationalBuyerRegistration = () => {
               <select value={formData.billingDetails.paymentMode} onChange={(e) => { const v = e.target.value; handleSelectChange('billingDetails.paymentMode', v) }} className={inputClasses}>
                 <option value="">Select Mode</option>
 
-                <option value="Bank Transfer">Bank Transfer</option>
-                <option value="International Wire Transfer">International Wire Transfer</option>
-                <option value="Credit Card">Credit Card</option>
-                <option value="Online Payment Gateway">Online Payment Gateway</option>
+                {optionList("buyer-payment-mode").map(o => <option key={o} value={o}>{o}</option>)}
 
               </select>
             </div>
