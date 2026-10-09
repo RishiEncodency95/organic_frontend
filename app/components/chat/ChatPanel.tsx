@@ -1,14 +1,14 @@
 "use client";
 
-import React, { useEffect, useLayoutEffect, useRef, useState } from "react";
+import React, { createContext, useContext, useEffect, useLayoutEffect, useRef, useState } from "react";
 import gsap from "gsap";
 import Image from "next/image";
 import Link from "next/link";
 import { ArrowLeft, ArrowRight, ArrowUpRight, Check, CheckCheck, ChevronDown, FileText, LayoutGrid, ChevronRight, Handshake, Headset, HeartHandshake, Info, List, LogOut, MessageCircleMore, Minus, Presentation, Send, Settings, Store, ThumbsDown, ThumbsUp, Users, X, type LucideIcon } from "lucide-react";
 import { API_URL, verifyApi } from "@/lib/api";
 import { SITE_CONFIG } from "@/app/constants/siteConfig";
-import { clearChatSession, newSessionId, readChatSession, saveChatSession } from "./chatSession";
-import { useChatConfig } from "./chatConfig";
+import { clearChatSession, newSessionId, readChatSession, saveChatSession, saveFreeAsked } from "./chatSession";
+import { useChatConfig, type ChatButton, type ChatFormField, type ChatFormSettings } from "./chatConfig";
 
 const CHAT_URL = process.env.NEXT_PUBLIC_CHAT_API_URL || `${API_URL}/chat`;
 const FALLBACK = "Maaf kijiye, abhi reply nahi de pa raha. Kripya +91 96549 00525 par call ya WhatsApp karein.";
@@ -543,11 +543,44 @@ const MessageText: React.FC<{ text: string }> = ({ text }) => (
 
 // ─── Small UI pieces ─────────────────────────────────────────────────────────
 
-const BotAvatar: React.FC = () => (
-    <div className="w-8 h-8 shrink-0 rounded-full bg-white shadow-sm ring-2 ring-[#F2B40E]/50 flex items-center justify-center" aria-hidden="true">
-        <Image src="/android-chrome-192x192.png" alt="" width={28} height={28} className="w-[22px] h-[22px] object-contain" />
-    </div>
-);
+/** Avatar uploaded in the Chatbot Manager ("" = the default logo) */
+const AvatarContext = createContext("");
+
+const BotAvatar: React.FC = () => {
+    const avatar = useContext(AvatarContext);
+    return (
+        <div className="w-8 h-8 shrink-0 rounded-full bg-white shadow-sm ring-2 ring-[#F2B40E]/50 flex items-center justify-center overflow-hidden" aria-hidden="true">
+            <Image src={avatar || "/android-chrome-192x192.png"} alt="" width={28} height={28} unoptimized={!!avatar} className={avatar ? "w-full h-full object-cover" : "w-[22px] h-[22px] object-contain"} />
+        </div>
+    );
+};
+
+// ─── Manager "Buttons & Flows" on the website ────────────────────────────────
+
+const BUTTON_ICONS: [RegExp, LucideIcon][] = [
+    [/stall|book|exhibit/i, Store],
+    [/visit|regist/i, Users],
+    [/msme|pms/i, Settings],
+    [/buyer|seller/i, Handshake],
+    [/conference|award|seminar/i, Presentation],
+    [/sponsor|partner/i, HeartHandshake],
+    [/team|talk|contact|sales|help/i, Headset],
+];
+const iconFor = (label: string) => BUTTON_ICONS.find(([re]) => re.test(label))?.[1] ?? LayoutGrid;
+
+/** A "next option" of a button: the built-in flows where one exists, else the AI answers it */
+const optionFor = (label: string): ChatOption => {
+    if (/stall\s*size/i.test(label)) return { label, step: "stall-sizes" };
+    if (/quotation|quote/i.test(label)) return { label, step: "stall-quote", choice: "" };
+    if (/call\s*back/i.test(label)) return { label, step: "sales-callback", choice: "" };
+    if (/talk to|contact (the )?(sales|team)/i.test(label)) return { label, step: "sales", choice: "" };
+    return { label, ask: label };
+};
+
+const linkHref = (target: string) => (/^https?:\/\//i.test(target) || target.startsWith("/") ? target : `https://${target}`);
+
+/** Forms an "Open Form" button can open */
+const FORM_PAGES: Record<string, string> = { "Visitor Registration": "/registration/visitor-registration" };
 
 const iconProps = {
     className: "w-4 h-4",
@@ -664,6 +697,8 @@ const QUOTE_TEXT = {
         resendIn: (s: number) => `Resend OTP in ${s}s`,
         otpError: "Please enter the 6-digit OTP.",
         verified: "Verified",
+        required: "This field is required.",
+        notChosen: "not chosen yet",
     },
     hi: {
         title: "कोटेशन अनुरोध",
@@ -701,6 +736,8 @@ const QUOTE_TEXT = {
         resendIn: (s: number) => `${s} सेकंड में OTP दोबारा भेजें`,
         otpError: "कृपया 6 अंकों का OTP लिखें।",
         verified: "वेरिफ़ाइड",
+        required: "यह जानकारी ज़रूरी है।",
+        notChosen: "अभी नहीं चुना",
     },
 } as const;
 
@@ -716,11 +753,25 @@ type QuoteFormProps = {
     onSubmit: (details: QuoteDetails) => Promise<string | null>;
     onChange: () => void;
     onBack: () => void;
+    /** The form as set up in the Chatbot Manager (fields, labels); built-in when not published */
+    settings?: ChatFormSettings;
 };
 
-const QuoteForm: React.FC<QuoteFormProps> = ({ lang, kind = "quote", stall, sent, defaultName, verifiedPhone, onSubmit, onChange, onBack }) => {
+/** "Email (Optional)" → "Email" when the Manager made the field required */
+const requiredLabel = (text: string, required: boolean) => (required ? text.replace(/\s*\((Optional|वैकल्पिक)\)/, "") : text);
+const shown = (f?: ChatFormField) => f?.show !== false;
+
+const QuoteForm: React.FC<QuoteFormProps> = ({ lang, kind = "quote", stall, sent, defaultName, verifiedPhone, onSubmit, onChange, onBack, settings }) => {
     const q = QUOTE_TEXT[lang];
     const callback = kind === "callback";
+    const fields = {
+        company: { show: shown(settings?.company), required: !!settings?.company?.required },
+        email: { show: shown(settings?.email), required: !!settings?.email?.required },
+        time: { show: shown(settings?.time), required: !!settings?.time?.required },
+    };
+    // The Manager's texts are written in English
+    const consentText = lang === "en" && settings?.consent ? settings.consent : q.agree;
+    const submitText = lang === "en" && settings?.submitLabel ? settings.submitLabel : callback ? q.callbackSubmit : q.submit;
     const [form, setForm] = useState<QuoteDetails>({ name: defaultName, phone: verifiedPhone, company: "", email: "", time: "" });
     const [agree, setAgree] = useState(false);
     const [errors, setErrors] = useState<QuoteErrors>({});
@@ -754,6 +805,9 @@ const QuoteForm: React.FC<QuoteFormProps> = ({ lang, kind = "quote", stall, sent
     const validate = () => {
         const next: QuoteErrors = { ...validateLead({ name: form.name, phone: form.phone }) };
         if (form.email.trim() && !EMAIL_PATTERN.test(form.email.trim())) next.email = q.emailError;
+        if (!callback && fields.email.show && fields.email.required && !form.email.trim()) next.email = q.required;
+        if (!callback && fields.company.show && fields.company.required && !form.company.trim()) next.company = q.required;
+        if (callback && fields.time.show && fields.time.required && !form.time) next.time = q.required;
         if (!agree) next.agree = q.agreeError;
         setErrors(next);
         setFormError("");
@@ -830,7 +884,7 @@ const QuoteForm: React.FC<QuoteFormProps> = ({ lang, kind = "quote", stall, sent
                     </span>
                 ) : (
                     <span className="rounded-full bg-[#e8f3e2] px-2.5 py-1 text-[11.5px] font-medium text-[#14532d]">
-                        {q.selected} {stall}
+                        {q.selected} {stall || q.notChosen}
                     </span>
                 )}
                 {!sent && !callback && (
@@ -942,8 +996,11 @@ const QuoteForm: React.FC<QuoteFormProps> = ({ lang, kind = "quote", stall, sent
                 )}
 
                 {callback ? (
+                    fields.time.show && (
                     <label className="flex flex-col gap-1">
-                        <span className={label}>{q.time}</span>
+                        <span className={label}>
+                            {requiredLabel(q.time, fields.time.required)} {fields.time.required && <span className="text-red-500">*</span>}
+                        </span>
                         <span className="relative">
                             <select
                                 value={form.time}
@@ -958,23 +1015,34 @@ const QuoteForm: React.FC<QuoteFormProps> = ({ lang, kind = "quote", stall, sent
                             </select>
                             <ChevronDown className="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-600" aria-hidden="true" />
                         </span>
+                        {fieldError("time")}
                     </label>
+                    )
                 ) : (
                 <>
+                {fields.company.show && (
                 <label className="flex flex-col gap-1">
-                    <span className={label}>{q.company}</span>
+                    <span className={label}>
+                        {q.company} {fields.company.required && <span className="text-red-500">*</span>}
+                    </span>
                     <input
                         value={form.company}
                         onChange={(e) => set("company", e.target.value.replace(/^\s+/, ""))}
                         autoComplete="organization"
                         maxLength={100}
                         placeholder={q.companyPh}
-                        className={input()}
+                        aria-invalid={!!errors.company}
+                        className={input(errors.company)}
                     />
+                    {fieldError("company")}
                 </label>
+                )}
 
+                {fields.email.show && (
                 <label className="flex flex-col gap-1">
-                    <span className={label}>{q.email}</span>
+                    <span className={label}>
+                        {requiredLabel(q.email, fields.email.required)} {fields.email.required && <span className="text-red-500">*</span>}
+                    </span>
                     <input
                         type="email"
                         value={form.email}
@@ -987,6 +1055,7 @@ const QuoteForm: React.FC<QuoteFormProps> = ({ lang, kind = "quote", stall, sent
                     />
                     {fieldError("email")}
                 </label>
+                )}
                 </>
                 )}
 
@@ -1000,7 +1069,7 @@ const QuoteForm: React.FC<QuoteFormProps> = ({ lang, kind = "quote", stall, sent
                         }}
                         className="mt-0.5 w-4 h-4 shrink-0 accent-[#14532d]"
                     />
-                    {q.agree}
+                    {consentText}
                 </label>
                 {fieldError("agree")}
 
@@ -1028,7 +1097,7 @@ const QuoteForm: React.FC<QuoteFormProps> = ({ lang, kind = "quote", stall, sent
                         otpSentTo ? q.verifySubmit : q.sendOtp
                     ) : (
                         <>
-                            {callback ? q.callbackSubmit : q.submit}
+                            {submitText}
                             {!callback && <ArrowRight className="w-5 h-5" aria-hidden="true" />}
                         </>
                     )}
@@ -1579,7 +1648,7 @@ const ChatPanel: React.FC<Props> = ({ open, onClose }) => {
     // null until the mobile number is verified — the chat is then saved as "Visitor <ip>"
     const [visitorName, setVisitorName] = useState<string | null>(initial.status === "active" ? initial.name || null : null);
     // AI questions sent without details (the details form comes after FREE_QUESTIONS)
-    const [freeAsked, setFreeAsked] = useState(0);
+    const [freeAsked, setFreeAsked] = useState(initial.status === "active" ? initial.freeAsked : 0);
     // Name, greetings and on/off published from the admin panel's Chatbot Manager
     const config = useChatConfig();
     // Mobile number this chat verified with the WhatsApp OTP
@@ -1621,6 +1690,8 @@ const ChatPanel: React.FC<Props> = ({ open, onClose }) => {
     // After "Start a New Chat": "Welcome back" with previous enquiry / new question instead of the topic cards
     const [returning, setReturning] = useState(false);
     const [feedback, setFeedback] = useState<"yes" | "no" | null>(null);
+    // The callback form's confirmation (Forms & Routing), shown on the "Chat ended" screen
+    const [endedNote, setEndedNote] = useState("");
 
     const scrollRef = useRef<HTMLDivElement>(null);
     const inputRef = useRef<HTMLInputElement>(null);
@@ -1746,6 +1817,7 @@ const ChatPanel: React.FC<Props> = ({ open, onClose }) => {
         setPending(null);
         setFlowAt(null);
         setEnded(false);
+        setEndedNote("");
         setFeedback(null);
         setReturning(false);
         setAskDetails(!!notice);
@@ -1797,12 +1869,18 @@ const ChatPanel: React.FC<Props> = ({ open, onClose }) => {
             return;
         }
         saveChatSession(sessionId, name || "");
-        if (!name) setFreeAsked((n) => n + 1);
+        if (!name) {
+            setFreeAsked(freeAsked + 1);
+            saveFreeAsked(sessionId, freeAsked + 1);
+        }
 
         setInput("");
         setLoading(true);
         setMessages((prev) => [...prev, { role: "user", content: topic || message }, { role: "assistant", content: "" }]);
 
+        // A free question is used up only when the AI answers it (the server counts the same way)
+        let answered = false;
+        let countHandled = false;
         try {
             const res = await fetch(CHAT_URL, {
                 method: "POST",
@@ -1812,8 +1890,20 @@ const ChatPanel: React.FC<Props> = ({ open, onClose }) => {
 
             if (!res.ok || !res.body) {
                 const json = await res.json().catch(() => null);
+                // The free questions are used up (the server counts them too): ask for the details first
+                if (res.status === 403 && json?.code === "DETAILS_REQUIRED") {
+                    setMessages((prev) => prev.slice(0, -2));
+                    countHandled = true;
+                    setFreeAsked(FREE_QUESTIONS);
+                    saveFreeAsked(sessionId, FREE_QUESTIONS);
+                    setPending({ message, topic: topic || message });
+                    setFormError("");
+                    setAskDetails(true);
+                    return;
+                }
                 // The server lost this visitor's details (e.g. new device) — ask for them again
                 if (res.status === 400 && /details|mobile number first/i.test(json?.message || "")) {
+                    countHandled = true;
                     startNewChat(TEXT[lang].expired);
                     setPending({ message, topic: topic || message });
                     return;
@@ -1846,6 +1936,7 @@ const ChatPanel: React.FC<Props> = ({ open, onClose }) => {
                     }
                     if (data.delta) {
                         gotText = true;
+                        answered = true;
                         setLastReply((t) => t + data.delta);
                     } else if (data.error) {
                         setLastReply((t) => (t ? `${t}\n\n${data.error}` : data.error!));
@@ -1858,11 +1949,21 @@ const ChatPanel: React.FC<Props> = ({ open, onClose }) => {
             setLastReply((t) => t || FALLBACK);
         } finally {
             setLoading(false);
+            // No answer (error, network, AI down): give the free question back
+            if (!name && !answered && !countHandled) {
+                setFreeAsked(freeAsked);
+                saveFreeAsked(sessionId, freeAsked);
+            }
         }
     };
 
     /** Scripted answer from FLOW: no contact details needed; a short "typing" pause so it reads like a reply */
-    const runStep = (step: string, choice = "", silent = false) => {
+    const quoteOff = config?.forms?.quote?.active === false;
+    const callbackOff = config?.forms?.callback?.active === false;
+
+    const runStep = (requested: string, choice = "", silent = false) => {
+        // A form switched off in the Manager's Forms & Routing hands over to the sales options instead
+        const step = (requested === "stall-quote" && quoteOff) || (requested === "sales-callback" && callbackOff) ? "sales" : requested;
         const flow = FLOW[step]?.(lang, choice);
         if (!flow || loading) return;
         track([...(silent ? [] : [{ role: "user" as const, content: flow.say }]), ...flow.replies.map((r) => ({ role: r.role, content: r.content }))]);
@@ -1883,6 +1984,41 @@ const ChatPanel: React.FC<Props> = ({ open, onClose }) => {
         }
         setFlowAt(null);
         sendMessage(topic.ask[lang], topic.label[lang]);
+    };
+
+    /** Scripted reply from a Manager button: the visitor's bubble, then the replies after a short pause */
+    const scripted = (say: string, replies: Message[]) => {
+        track([{ role: "user", content: say }, ...replies.map((r) => ({ role: r.role, content: r.content }))]);
+        setFlowAt(null);
+        setMessages((prev) => [...prev, { role: "user", content: say }]);
+        setLoading(true);
+        window.setTimeout(() => {
+            setMessages((prev) => [...prev, ...replies]);
+            setLoading(false);
+        }, 700);
+    };
+
+    /** A main-menu button published from the Manager's Buttons & Flows */
+    const runButton = (b: ChatButton) => {
+        if (loading) return;
+        const say = lang === "hi" && b.hindi ? b.hindi : b.label;
+        const reply = b.reply || say;
+        const salesReply: Message = { role: "assistant", content: reply, sales: { stall: "" } };
+        switch (b.action) {
+            case "Show Options":
+                return scripted(say, [{ role: "assistant", content: reply, options: b.options.map(optionFor) }]);
+            case "Open Link":
+                return scripted(say, [{ role: "assistant", content: reply, ...(b.target ? { link: { label: lang === "hi" ? "खोलें" : "Open", href: linkHref(b.target) } } : {}) }]);
+            case "Talk to Team":
+                return scripted(say, [salesReply]);
+            case "Open Form":
+                if (b.target === "Quotation Request") return scripted(say, [quoteOff ? salesReply : { role: "assistant", content: reply, quote: { stall: "" } }]);
+                if (b.target === "Callback Request") return scripted(say, [callbackOff ? salesReply : { role: "assistant", content: reply, callback: { stall: "" } }]);
+                if (FORM_PAGES[b.target]) return scripted(say, [{ role: "assistant", content: reply, link: { label: b.target, href: FORM_PAGES[b.target] } }]);
+                return scripted(say, [salesReply]);
+            default:
+                return scripted(say, [{ role: "assistant", content: reply }]);
+        }
     };
 
     const pickOption = (option: ChatOption) => {
@@ -1920,6 +2056,7 @@ const ChatPanel: React.FC<Props> = ({ open, onClose }) => {
             // The sales team takes it from here — close this conversation; the next visitor starts fresh
             clearChatSession();
             setFlowAt(null);
+            setEndedNote(lang === "en" ? config?.forms?.callback?.confirmation || "" : "");
             setMessages((prev) => prev.map((m, i) => (i === index && m.callback ? { ...m, callback: { ...m.callback, sent: true } } : m)));
             setLoading(true);
             window.setTimeout(() => {
@@ -1940,7 +2077,7 @@ const ChatPanel: React.FC<Props> = ({ open, onClose }) => {
         window.setTimeout(() => {
             setMessages((prev) => [
                 ...prev,
-                { role: "assistant", content: t.quoteThanks },
+                { role: "assistant", content: (lang === "en" && config?.forms?.quote?.confirmation) || t.quoteThanks },
                 { role: "assistant", content: "", receipt: { stall } },
                 { role: "assistant", content: t.anythingElse, followUp: { stall } },
             ]);
@@ -2090,10 +2227,31 @@ const ChatPanel: React.FC<Props> = ({ open, onClose }) => {
           : (flowAt && FLOW[flowAt.step]?.(lang, flowAt.choice).placeholder) || (returning ? FLOW.history(lang, "").placeholder : t.placeholder);
     const inChat = messages.length > 0 || !!visitorName;
 
+    // Published Buttons & Flows replace the built-in topic cards
+    const menuButtons = config?.buttons?.length ? config.buttons : null;
+
     const topicCards = (
         <>
             <div className="relative grid grid-cols-2 gap-2 pt-0.5">
-                {TOPICS.map((topic) => (
+                {menuButtons?.map((b) => {
+                    const Icon = iconFor(b.label);
+                    return (
+                        <button
+                            key={b.label}
+                            data-chat-anim
+                            type="button"
+                            onClick={() => runButton(b)}
+                            disabled={loading}
+                            className="group flex items-center gap-2.5 min-h-[56px] rounded-xl bg-white border border-[#e3e9dc] px-2.5 py-2 text-left shadow-[0_1px_2px_rgba(11,41,18,0.06)] transition-all duration-200 hover:border-[#3b8c2a]/60 hover:-translate-y-0.5 hover:shadow-[0_10px_22px_-12px_rgba(11,41,18,0.45)] disabled:pointer-events-none"
+                        >
+                            <span className="w-8 h-8 shrink-0 rounded-lg bg-[#eaf4e5] text-[#1b5e20] flex items-center justify-center transition-colors group-hover:bg-[#14532d] group-hover:text-white">
+                                <Icon className="w-[17px] h-[17px]" strokeWidth={1.9} aria-hidden="true" />
+                            </span>
+                            <span className="font-poppins font-medium text-[12px] leading-tight text-[#14532d]">{lang === "hi" && b.hindi ? b.hindi : b.label}</span>
+                        </button>
+                    );
+                })}
+                {!menuButtons && TOPICS.map((topic) => (
                     <button
                         key={topic.id}
                         data-chat-anim
@@ -2128,6 +2286,7 @@ const ChatPanel: React.FC<Props> = ({ open, onClose }) => {
     );
 
     return (
+        <AvatarContext.Provider value={config?.avatar || ""}>
         <div
             role="dialog"
             aria-modal="false"
@@ -2397,6 +2556,7 @@ const ChatPanel: React.FC<Props> = ({ open, onClose }) => {
                     <div className="mt-4 flex items-start gap-2.5">
                         <BotAvatar />
                         <div className="max-w-[85%] bg-white rounded-2xl rounded-tl-md shadow-sm border border-[#3b8c2a]/10 px-4 py-3 text-[15px] text-[#14532d]">
+                            {endedNote && <p className="mb-1.5 font-medium">{endedNote}</p>}
                             <p>{t.endedThanks}</p>
                             <p className="mt-1 font-semibold">{t.endedBye}</p>
                         </div>
@@ -2743,6 +2903,7 @@ const ChatPanel: React.FC<Props> = ({ open, onClose }) => {
                                                 </svg>
                                                 {t.whatsapp}
                                             </a>
+                                            {!callbackOff && (
                                             <button
                                                 type="button"
                                                 onClick={() => runStep("sales-callback", m.sales!.stall)}
@@ -2754,6 +2915,7 @@ const ChatPanel: React.FC<Props> = ({ open, onClose }) => {
                                                 </svg>
                                                 {t.requestCallback}
                                             </button>
+                                            )}
                                         </div>
                                     )}
                                     {m.callback && (
@@ -2765,6 +2927,7 @@ const ChatPanel: React.FC<Props> = ({ open, onClose }) => {
                                                 sent={!!m.callback.sent}
                                                 defaultName={visitorName || ""}
                                                 verifiedPhone={verifiedPhone}
+                                                settings={config?.forms?.callback}
                                                 onSubmit={(details) => submitQuote(i, m.callback!.stall, details, "callback")}
                                                 onChange={() => runStep("stall-sizes", "", true)}
                                                 onBack={() => runStep("stall", "", true)}
@@ -2788,6 +2951,7 @@ const ChatPanel: React.FC<Props> = ({ open, onClose }) => {
                                             sent={!!m.quote.sent}
                                             defaultName={visitorName || ""}
                                             verifiedPhone={verifiedPhone}
+                                            settings={config?.forms?.quote}
                                             onSubmit={(details) => submitQuote(i, m.quote!.stall, details)}
                                             onChange={() => runStep("stall-sizes", "", true)}
                                             onBack={() => runStep("stall", "", true)}
@@ -2872,6 +3036,7 @@ const ChatPanel: React.FC<Props> = ({ open, onClose }) => {
                 </>
             )}
         </div>
+        </AvatarContext.Provider>
     );
 };
 
