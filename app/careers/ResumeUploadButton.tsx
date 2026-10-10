@@ -2,6 +2,7 @@
 
 import { ArrowRight } from "lucide-react";
 import { useState, useEffect } from "react";
+import { trackCareer } from "@/lib/careerTracking";
 import { createPortal } from "react-dom";
 import UploadCvModal, { CandidateAnalysisData } from "@/app/components/careers/uploade_cv/UploadCvModal";
 import { EligibilityModal, CandidateProfileData, defaultCandidateData } from "./submit-resume/SubmitResume";
@@ -34,7 +35,14 @@ export default function ResumeUploadButton({ variant = "solid" }: Props) {
 
   return (
     <>
-      <button type="button" onClick={() => setIsOpen(true)} className={className}>
+      <button
+        type="button"
+        onClick={() => {
+          trackCareer("apply_click");
+          setIsOpen(true);
+        }}
+        className={className}
+      >
         Submit Your Resume <ArrowRight className="h-[18px] w-[18px]" />
       </button>
 

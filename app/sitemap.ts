@@ -30,16 +30,23 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   let blogEntries: MetadataRoute.Sitemap = [];
 
   try {
-    // Fetch published blog posts from backend API
-    const res = await fetch(`${API_URL}/blogs?status=published&limit=500`, {
-      next: { revalidate: 3600 }, // Cache for 1 hour
-    });
-
-    if (res.ok) {
+    // Live blog posts from the backend, page by page (the API returns at most 100 per page).
+    // Cached for an hour; saving a blog in the admin panel refreshes it at once (/api/revalidate).
+    type Post = { slug: string; updatedAt?: string; publishDate?: string };
+    const posts: Post[] = [];
+    for (let page = 1; page <= 50; page++) {
+      const res = await fetch(`${API_URL}/blogs?status=published&limit=100&page=${page}`, {
+        next: { revalidate: 3600 },
+      });
+      if (!res.ok) break;
       const data = await res.json();
-      const posts: Array<{ slug: string; updatedAt?: string; publishDate?: string }> =
-        data?.data?.posts || data?.data?.blogs || data?.data || data?.posts || data?.blogs || [];
+      const batch: Post[] = data?.data?.posts || data?.data?.blogs || data?.posts || data?.blogs || [];
+      posts.push(...batch);
+      const totalPages = Number(data?.data?.totalPages) || 1;
+      if (page >= totalPages || batch.length === 0) break;
+    }
 
+    {
       blogEntries = posts
         .filter((post) => post.slug)
         .map((post) => ({

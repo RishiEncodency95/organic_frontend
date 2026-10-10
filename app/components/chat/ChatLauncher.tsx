@@ -56,7 +56,8 @@ const ChatLauncher: React.FC = () => {
                     {!open && lottieState !== "loading" && (
                         <span className="pointer-events-none absolute bottom-full right-0 -mb-1 px-3 py-1.5 rounded-xl bg-white border border-[#3b8c2a]/30 text-[#14532d] text-[12px] lg:text-[13px] font-semibold font-poppins whitespace-nowrap shadow-lg transition-transform duration-200 group-hover:-translate-y-1 animate-[mitra-pop_0.35s_ease-out]">
                             {config?.launcher?.trim() || "May I help you?"}
-                            <span className="absolute -bottom-[5px] right-11 lg:right-[52px] w-2.5 h-2.5 rotate-45 bg-white border-r border-b border-[#3b8c2a]/30" aria-hidden="true" />
+                            {/* Points at the middle of the robot (64px on phones, 96px tablets, 112px laptops) */}
+                            <span className="absolute -bottom-[5px] right-[27px] sm:right-11 lg:right-[52px] w-2.5 h-2.5 rotate-45 bg-white border-r border-b border-[#3b8c2a]/30" aria-hidden="true" />
                         </span>
                     )}
 
@@ -65,7 +66,7 @@ const ChatLauncher: React.FC = () => {
                             <X className="w-5 h-5 lg:w-6 lg:h-6 text-white relative z-10" strokeWidth={2.5} />
                         </div>
                     ) : (
-                        <div className="relative w-24 h-24 lg:w-28 lg:h-28 flex items-center justify-center transition-transform duration-300 hover:scale-110">
+                        <div className="relative w-16 h-16 sm:w-24 sm:h-24 lg:w-28 lg:h-28 flex items-center justify-center transition-transform duration-300 hover:scale-110">
                             {lottieState !== "failed" && (
                                 <DotLottieReact
                                     src={LAUNCHER_LOTTIE}

@@ -1,6 +1,10 @@
+// On the server (build / SSR) the backend is the API host without /api, so a missing
+// NEXT_PUBLIC_SERVER_URL still reaches the right backend
 export const SERVER_URL =
   process.env.NEXT_PUBLIC_SERVER_URL ||
-  (typeof window !== 'undefined' ? window.location.origin : 'http://localhost:4001');
+  (typeof window !== 'undefined'
+    ? window.location.origin
+    : process.env.NEXT_PUBLIC_API_URL?.replace(/\/api\/?$/, '') || 'http://localhost:4001');
 
 export const API_URL =
   process.env.NEXT_PUBLIC_API_URL ||

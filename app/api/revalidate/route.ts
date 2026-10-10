@@ -16,5 +16,7 @@ export async function POST(request: NextRequest) {
 
   // Every page reads the shared settings document, so refresh the whole site.
   revalidatePath("/", "layout");
+  // The sitemap is a route of its own (it lists the blog posts)
+  revalidatePath("/sitemap.xml");
   return NextResponse.json({ success: true, revalidated: true, now: Date.now() });
 }

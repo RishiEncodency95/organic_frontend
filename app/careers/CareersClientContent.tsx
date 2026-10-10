@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import { trackCareer } from "@/lib/careerTracking";
 import Link from "next/link";
 import Image from "next/image";
 import {
@@ -232,6 +233,11 @@ export default function CareersClientContent({ sections }: { sections?: any[] })
   const [isAmanModalOpen, setIsAmanModalOpen] = useState(false);
   const [showAllJobs, setShowAllJobs] = useState(false);
   const [fetchedJobs, setFetchedJobs] = useState<JobOpening[]>([]);
+
+  // One careers page view for the admin Careers Dashboard
+  useEffect(() => {
+    trackCareer("page_view");
+  }, []);
 
   useEffect(() => {
     fetch("/api/careers/jobs")

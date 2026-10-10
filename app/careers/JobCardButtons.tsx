@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import { trackCareer } from "@/lib/careerTracking";
 import { createPortal } from "react-dom";
 import { ArrowRight } from "lucide-react";
 import UploadCvModal, { CandidateAnalysisData } from "@/app/components/careers/uploade_cv/UploadCvModal";
@@ -29,13 +30,19 @@ export default function JobCardButtons({ job }: { job: any }) {
     <>
       <div className="mt-auto grid grid-cols-2 gap-3 pt-[clamp(10px,1vh,14px)]">
         <button
-          onClick={() => setIsOpen(true)}
+          onClick={() => {
+            trackCareer("apply_click", job?._id || job?.id);
+            setIsOpen(true);
+          }}
           className="inline-flex py-1 items-center justify-center gap-2 rounded-[4px] bg-[#05753e] px-3 text-[13px] font-semibold text-white transition hover:bg-[#046334]"
         >
           Apply Now <ArrowRight className="h-[18px] w-[18px]" />
         </button>
         <button
-          onClick={() => setIsOpen(true)}
+          onClick={() => {
+            trackCareer("job_view", job?._id || job?.id);
+            setIsOpen(true);
+          }}
           className="inline-flex py-1 items-center justify-center rounded-[4px] border border-[#0b7a47] bg-white px-3 text-[13px] font-semibold text-[#05683a] transition hover:bg-[#f2faf5]"
         >
           View Details
