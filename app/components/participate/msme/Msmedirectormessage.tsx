@@ -121,7 +121,7 @@ function VideoPoster({
   thumbnailAlt: string;
 }) {
   if (thumbnail) {
-    return <img src={thumbnail} alt={thumbnailAlt} decoding="async" className={className} />;
+    return <Image width={0} height={0} sizes="100vw" src={thumbnail} alt={thumbnailAlt} decoding="async" className={[className, "w-auto h-auto"].filter(Boolean).join(" ")} />;
   }
   if (video.kind === "youtube") {
     const quality = video.id === DEFAULT_YOUTUBE_ID ? "maxresdefault" : "hqdefault";

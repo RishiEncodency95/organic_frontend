@@ -10,6 +10,9 @@ const nextConfig: NextConfig = {
     root: path.resolve(__dirname),
   },
   images: {
+    // Local development serves uploads from localhost (blocked by default since Next 16);
+    // production images come from public hosts, so this stays off there
+    dangerouslyAllowLocalIP: process.env.NODE_ENV !== "production",
     formats: ["image/avif", "image/webp"],
     deviceSizes: [360, 480, 640, 750, 828, 1080, 1200, 1600, 1920],
     remotePatterns: [

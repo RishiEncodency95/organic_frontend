@@ -479,8 +479,7 @@ function PersonalInformation({
             } bg-[#f0f4f2] transition-all hover:opacity-95`}
           >
             {photoSrc ? (
-              // eslint-disable-next-line @next/next/no-img-element
-              <img
+              <Image width={0} height={0} sizes="100vw"
                 src={photoSrc}
                 alt={fullName}
                 className="h-full w-full object-cover object-center"

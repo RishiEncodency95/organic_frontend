@@ -2,6 +2,7 @@ import React from "react";
 import { ArrowRight } from "lucide-react";
 import cogIcon from "../../../assets/icons/cog.png";
 import SectionContainer from "@/app/components/layout/SectionContainer";
+import Image from "next/image";
 
 export const CONTACT_CTA_DATA = [
   {
@@ -29,7 +30,7 @@ export default function ContactCTA() {
           
           <div className="flex items-center gap-6 relative z-10 w-full md:w-auto">
             {/* Cog Icon */}
-            <img src={cogIcon.src} alt="Cog" className="w-12 md:w-14 h-12 md:h-14 shrink-0 object-contain" />
+            <Image width={0} height={0} sizes="100vw" src={cogIcon.src} alt="Cog" className="w-12 md:w-14 h-12 md:h-14 shrink-0 object-contain" />
             
             <div className="text-left flex-1">
               <h3 className="text-[#a3e635] text-base md:text-lg font-semibold uppercase tracking-wide font-poppins mb-1.5">

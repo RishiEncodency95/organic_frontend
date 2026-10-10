@@ -12,6 +12,7 @@ import leafLeft from '@/app/assets/icons/leafs.png';
 import SectionContainer from '@/app/components/layout/SectionContainer';
 import { SITE_CONFIG } from '@/app/constants/siteConfig';
 import { API_URL } from '@/lib/api';
+import Image from "next/image";
 
 if (typeof window !== 'undefined') {
   gsap.registerPlugin(ScrollTrigger);
@@ -192,7 +193,7 @@ const Counters: React.FC<CountersProps> = ({ dbCounters = EMPTY_COUNTERS }) => {
     <section ref={sectionRef} className="w-full font-inter relative z-10 -mt-6 mb-8 perspective-1000">
       {/* Decorative Left Leaf */}
       {leafLeft && (
-        <img 
+        <Image width={0} height={0} sizes="100vw" 
           src={getImgSrc(leafLeft)} 
           alt="" 
           className="absolute -left-12 -top-10 md:-top-16 lg:-top-24 h-48 md:h-72 lg:h-[400px] w-auto opacity-100 pointer-events-none -z-10 object-contain"
@@ -210,7 +211,7 @@ const Counters: React.FC<CountersProps> = ({ dbCounters = EMPTY_COUNTERS }) => {
             return (
               <React.Fragment key={stat._id || index}>
                 <div className="stat-item flex flex-row items-center group gap-3 w-1/2 md:w-1/3 lg:w-auto px-2 py-1 justify-center lg:justify-start" style={{ willChange: 'transform, opacity, filter' }}>
-                  <img src={getImgSrc(iconSrc)} alt="" className="w-12 h-12 lg:w-12 lg:h-16 object-contain group-hover:scale-110 transition-transform duration-300 shrink-0" />
+                  <Image width={0} height={0} sizes="100vw" src={getImgSrc(iconSrc)} alt="" className="w-12 h-12 lg:w-12 lg:h-16 object-contain group-hover:scale-110 transition-transform duration-300 shrink-0" />
                   <div className="text-left flex flex-col justify-center">
                     <h3 className="text-xl md:text-2xl font-semibold text-[#1b5e20] mb-0.5 tracking-tight leading-none">
                       <CountUp endValue={val} suffix={suffix} />

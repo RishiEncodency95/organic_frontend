@@ -4,6 +4,7 @@ import React from "react";
 import Link from "next/link";
 import { CalendarDays, MapPin, ArrowRight } from "lucide-react";
 import bannerImg from "../../assets/conference/banner.webp";
+import Image from "next/image";
 
 // Array of objects simulating API data structure
 const HERO_DATA = [
@@ -110,7 +111,7 @@ const ParticipateHero = () => {
         <React.Fragment key={hero.id}>
           {/* Background Banner Image */}
           <div className="absolute inset-0 z-0 w-full overflow-hidden pointer-events-none">
-            <img
+            <Image loading="eager" width={0} height={0} sizes="100vw"
               src={hero.bgImage}
               alt="Bharat Organic Expo Buyer-Seller Meet 2027"
               className="w-full h-full object-cover object-right md:object-right lg:object-center"

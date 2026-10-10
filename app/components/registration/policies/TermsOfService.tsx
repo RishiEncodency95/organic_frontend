@@ -31,6 +31,7 @@ import {
 import termBanner from "@/app/assets/registration/terms-and-conditions.webp";
 import team1Icon from "@/app/assets/registration/team1.webp";
 import doc22Icon from "@/app/assets/registration/doc22.webp";
+import Image from "next/image";
 
 // Sparkle component
 const Sparkle = ({ style, color = "#fcd34d", shadow = "#b45309" }: { style?: React.CSSProperties, color?: string, shadow?: string }) => (
@@ -310,7 +311,7 @@ const TermsOfService = ({ heroData, disabledSections = [] }: { heroData?: any; d
         <div className="w-full relative h-[280px] sm:h-[350px] md:h-[400px] lg:h-[470px] bg-[#eef5f0] overflow-hidden">
           {/* Background Layer */}
           <div className="absolute inset-0 w-full h-full z-0">
-            <img decoding="async" src={hero.image}
+            <Image width={0} height={0} sizes="100vw" decoding="async" src={hero.image}
               alt={hero.imageAlt}
               className="w-full h-full object-cover object-center"
             />

@@ -14,6 +14,7 @@ import rohitImg from "../../../assets/about/advisory_board_member/rohit.webp";
 
 import SectionContainer from "@/app/components/layout/SectionContainer";
 import { SERVER_URL as BACKEND_URL } from "@/lib/api";
+import Image from "next/image";
 
 const initialBoardMembers = [
     {
@@ -210,7 +211,7 @@ const AdvisoryBoardGrid = () => {
                                     >
                                         {/* Portrait */}
                                         <div className="relative w-full aspect-[4/3.5] overflow-hidden bg-gray-50 border-b border-gray-100">
-                                            <img
+                                            <Image width={0} height={0} sizes="100vw"
                                                 src={member.image}
                                                 alt={member.name}
                                                 className="w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-500"

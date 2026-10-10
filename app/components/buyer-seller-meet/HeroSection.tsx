@@ -8,6 +8,7 @@ import leafImg from "../../assets/icons/leafs.png";
 import gsap from "gsap";
 import SectionContainer from "@/app/components/layout/SectionContainer";
 import { HERO_DATA } from "@/app/data/buyerSellerMeetData";
+import Image from "next/image";
 
 // Loaded only when someone clicks "Buyer Enquiry"
 const BuyerEnquiryPopup = dynamic(() => import("./BuyerEnquiryPopup"), { ssr: false });
@@ -173,7 +174,7 @@ export default function HeroSection({ initialData }: { initialData?: any }) {
       >
         {/* Background Image with Ken Burns zoom */}
         <div className="absolute inset-0 z-0 overflow-hidden">
-          <img
+          <Image loading="eager" width={0} height={0} sizes="100vw"
             src={hero.image}
             alt={hero.imageAlt}
             fetchPriority="high"
@@ -190,7 +191,7 @@ export default function HeroSection({ initialData }: { initialData?: any }) {
           className="absolute -left-5 lg:left-0 top-[5%] lg:top-[10%] z-10 hidden sm:block w-32 md:w-40 lg:w-[200px] pointer-events-none"
           style={{ opacity: 1 }}
         >
-          <img
+          <Image loading="eager" width={0} height={0} sizes="100vw"
             src={leafImg.src}
             alt="Organic Leaf"
             className="w-full h-auto object-contain"

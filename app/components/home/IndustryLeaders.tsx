@@ -5,6 +5,7 @@ import { Leaf, Globe, Users, Handshake, Mic, Calendar, ArrowRight, MapPin, Calen
 import { motion } from 'framer-motion';
 import Link from 'next/link';
 import industryImg from "../../assets/home/industry.webp";
+import Image from "next/image";
 
 const IndustryLeaders = () => {
   return (
@@ -40,7 +41,7 @@ const IndustryLeaders = () => {
         >
           {/* Main Image */}
           <div className="relative w-full h-[400px] lg:h-auto lg:flex-1 rounded-[30px] overflow-hidden shadow-[0_20px_50px_rgba(0,0,0,0.15)] bg-white border-[6px] border-white">
-            <img
+            <Image width={0} height={0} sizes="100vw"
               src={industryImg.src}
               alt="Industry Leaders"
               className="w-full h-full object-cover"

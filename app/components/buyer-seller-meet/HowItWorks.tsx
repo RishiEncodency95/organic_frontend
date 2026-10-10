@@ -8,6 +8,7 @@ import h4og from "../../assets/icons/h4og.png";
 import h5og from "../../assets/icons/h5og.png";
 import SectionContainer from "@/app/components/layout/SectionContainer";
 import { HOW_IT_WORKS_DATA } from "@/app/data/buyerSellerMeetData";
+import Image from "next/image";
 
 const IMG_MAP: Record<string, string> = {
   h1og: h1og.src,
@@ -36,7 +37,7 @@ export default function HowItWorks() {
                 <React.Fragment key={i}>
                   <div className="flex flex-col items-center w-full lg:w-[18%] text-center">
                     <div className="mb-4">
-                      <img src={IMG_MAP[step.img] || step.img} alt={step.title} className="w-16 h-16 object-contain mx-auto" />
+                      <Image width={0} height={0} sizes="100vw" src={IMG_MAP[step.img] || step.img} alt={step.title} className="w-16 h-16 object-contain mx-auto" />
                     </div>
                     <h3 className="text-[13px] font-semibold text-[#ea580c] uppercase mb-2 font-poppins">
                       {step.title}

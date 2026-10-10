@@ -4,6 +4,7 @@ import React, { useEffect, useState } from "react";
 import { MapPin, ArrowRight, Award, Medal, Calendar } from "lucide-react";
 import bannerImg from "../../assets/awards/banner2.webp";
 import SectionContainer from "@/app/components/layout/SectionContainer";
+import Image from "next/image";
 
 const Sparkle = ({ style, color = "#F2B40E", shadow }: { style?: React.CSSProperties; color?: string; shadow?: string }) => (
   <span
@@ -231,7 +232,7 @@ const AwardsHero = ({ initialData }: AwardsHeroProps) => {
       <section className="relative flex items-center pt-3 md:pt-5 pb-4 md:pb-6 overflow-hidden h-[68vh] md:h-[72vh] lg:h-[78vh] min-h-[400px] bg-[#fcfcf0] font-inter border-b-4 border-[#ea580c]">
         {/* Background Image */}
         <div className="absolute inset-0 z-0 overflow-hidden">
-          <img
+          <Image loading="eager" width={0} height={0} sizes="100vw"
             src={heroData.image || bannerImg.src}
             alt={heroData.imageAlt || "Bharat Organic Excellence Awards 2027 Banner"}
             fetchPriority="high"

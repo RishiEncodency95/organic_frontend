@@ -11,6 +11,7 @@ import leafRightImg from "../../assets/icons/vv1.png";
 import { API_URL, verifyApi } from "@/lib/api";
 import { labelsOf, toOptions, useDropdowns } from "@/lib/dropdowns";
 import { SITE_CONFIG } from "@/app/constants/siteConfig";
+import Image from "next/image";
 
 const COUNTRIES = [
   "India", "United Arab Emirates", "Saudi Arabia", "Qatar", "Oman", "Kuwait", "Bahrain", "Nepal", "Bangladesh",
@@ -322,14 +323,14 @@ export default function BuyerEnquiryPopup({ onClose, registerHref }: { onClose: 
         <div ref={flipRef} className="relative [transform-style:preserve-3d]">
           {/* ───────── Front: the form ───────── */}
           <div className="relative [backface-visibility:hidden] max-h-[94svh] overflow-y-auto overflow-x-hidden overscroll-contain [scrollbar-width:none] [&::-webkit-scrollbar]:hidden rounded-[16px] bg-white shadow-[0_40px_90px_-25px_rgba(6,40,16,0.65)] ring-1 ring-black/5" data-lenis-prevent>
-            <img
+            <Image width={0} height={0} sizes="100vw"
               data-bq-leaf
               src={leafImg.src}
               alt=""
               aria-hidden="true"
               className="pointer-events-none absolute left-0 top-0 w-[78px] sm:w-[96px] h-auto drop-shadow-sm"
             />
-            <img
+            <Image width={0} height={0} sizes="100vw"
               data-bq-leaf
               src={leafRightImg.src}
               alt=""

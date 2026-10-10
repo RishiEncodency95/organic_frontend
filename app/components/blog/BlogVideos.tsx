@@ -7,6 +7,7 @@ import { Reveal } from "./BlogReveal";
 import videoImg1 from "../../assets/blog/video_insight_1.webp";
 import videoImg2 from "../../assets/blog/video_insight_2.webp";
 import videoImg3 from "../../assets/blog/video_insight_3.webp";
+import Image from "next/image";
 
 const blogVideosData = {
   title: "Video Insights",
@@ -27,7 +28,7 @@ const BlogVideos = () => {
           <Reveal key={v.title} delay={i * 100} direction={["left", "zoom", "right"][i % 3] as "left" | "zoom" | "right"}>
             <a href="#" className="group block">
               <div className="relative overflow-hidden rounded-xl aspect-[2/3] shadow-sm bg-gray-100">
-                <img src={v.img} alt={v.title} className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-[1.03]" />
+                <Image width={0} height={0} sizes="100vw" src={v.img} alt={v.title} className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-[1.03]" />
                 <div className="absolute inset-0 bg-black/20 group-hover:bg-black/40 transition-colors duration-300 flex items-center justify-center">
                   <span className="w-9 h-9 rounded-full bg-white/90 flex items-center justify-center shadow-lg transition-transform duration-300 group-hover:scale-125">
                     <Play className="w-4 h-4 text-[#2b5825] ml-0.5" fill="currentColor" />

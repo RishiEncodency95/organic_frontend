@@ -7,6 +7,7 @@ import {
   IdCard, Plug, Contact, Wifi, Briefcase, Mic, ShoppingBag, Trophy, Coffee, MapPin,
   Globe, Mail, Share2, Building2, Newspaper, FileText, Presentation, Megaphone
 } from "lucide-react";
+import Image from "next/image";
 
 const ICON_MAP: Record<string, any> = {
   IdCard: <IdCard size={18} strokeWidth={1.5} />,
@@ -69,10 +70,10 @@ export default function BottomOpportunities() {
     <section className="py-4 bg-[#fcfcf0] font-inter border-t border-gray-200/50 relative overflow-hidden">
       {/* Background Decorations */}
       <div className="absolute -left-5 lg:left-0 top-[10%] lg:top-[20%] w-24 md:w-32 lg:w-[150px] pointer-events-none z-0 opacity-100 hidden md:block">
-        <img src={leafImg.src} alt="Leaf Decoration" className="w-full h-auto object-contain" />
+        <Image width={0} height={0} sizes="100vw" src={leafImg.src} alt="Leaf Decoration" className="w-full h-auto object-contain" />
       </div>
       <div className="absolute right-0 bottom-0 pointer-events-none z-0 w-32 md:w-48 lg:w-64 opacity-100 hidden md:block">
-        <img src={footerRightImg.src} alt="Leaf Decoration" className="w-full h-auto object-contain" />
+        <Image width={0} height={0} sizes="100vw" src={footerRightImg.src} alt="Leaf Decoration" className="w-full h-auto object-contain" />
       </div>
 
       <SectionContainer className="relative z-10">
@@ -96,7 +97,7 @@ export default function BottomOpportunities() {
               ))}
             </div>
             
-            <img src={nleafIcon.src} alt="Leaves" className="mx-auto mt-2 w-48 md:w-60 lg:w-[260px] max-w-[120%] object-contain relative z-10 -mb-5 md:-mb-6" />
+            <Image width={0} height={0} sizes="100vw" src={nleafIcon.src} alt="Leaves" className="mx-auto mt-2 w-48 md:w-60 lg:w-[260px] max-w-[120%] object-contain relative z-10 -mb-5 md:-mb-6 h-auto" />
           </div>
 
           {/* Right Box */}

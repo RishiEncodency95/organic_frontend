@@ -40,6 +40,7 @@ import thumb30 from '@/app/assets/reels/reel_thumb_30.webp';
 import thumb31 from '@/app/assets/reels/reel_thumb_31.webp';
 import thumb32 from '@/app/assets/reels/reel_thumb_32.webp';
 import SectionContainer from '@/app/components/layout/SectionContainer';
+import Image from "next/image";
 
 if (typeof window !== 'undefined') {
   gsap.registerPlugin(ScrollTrigger);
@@ -475,7 +476,7 @@ const VideoHighlights: React.FC<VideoHighlightsProps> = ({ dbVideos = EMPTY_VIDE
       <section ref={sectionRef} className="w-full pb-12 pt-0 -mt-2 relative z-10 font-inter perspective-1000">
         <SectionContainer>
           {rightLeaf && (
-            <img
+            <Image width={0} height={0} sizes="100vw"
               src={getImgSrc(rightLeaf)}
               alt=""
               className="absolute -right-8 top-0 md:-top-4 lg:-top-6 h-48 md:h-72 lg:h-[400px] w-auto opacity-100 pointer-events-none z-0 object-contain"
@@ -522,7 +523,7 @@ const VideoHighlights: React.FC<VideoHighlightsProps> = ({ dbVideos = EMPTY_VIDE
                             }}
                           />
                         ) : (
-                          <img
+                          <Image width={0} height={0} sizes="100vw"
                             src={videoThumbnail}
                             alt={videoTitle}
                             loading="lazy"

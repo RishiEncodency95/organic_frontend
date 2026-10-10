@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import UploadCvComponent from "@/app/components/careers/uploade_cv/page";
+import UploadCvComponent from "@/app/components/careers/uploade_cv/UploadCvModal";
 
 const defaultJob = {
   title: "Sales Manager – Domestic Exhibition Sales & Sponsorships",

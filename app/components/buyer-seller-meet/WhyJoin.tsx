@@ -7,13 +7,14 @@ import a2ogImg from "../../assets/image/a2og.png";
 import leafsImg from "../../assets/icons/leafs.png";
 import SectionContainer from "@/app/components/layout/SectionContainer";
 import { WHY_JOIN_DATA } from "@/app/data/buyerSellerMeetData";
+import Image from "next/image";
 
 export default function WhyJoin() {
   return (
     <section className="pt-2 pb-8 bg-white font-inter relative overflow-hidden">
       {/* Decorative Left Image */}
       <div className="absolute left-0 top-[5%] pointer-events-none opacity-100 w-20 md:w-28 lg:w-40 z-0">
-        <img src={leafsImg.src} alt="Leaf Decoration" className="w-full h-auto object-contain -translate-x-1/4" />
+        <Image width={0} height={0} sizes="100vw" src={leafsImg.src} alt="Leaf Decoration" className="w-full h-auto object-contain -translate-x-1/4" />
       </div>
 
       <SectionContainer className="relative z-10">
@@ -25,7 +26,7 @@ export default function WhyJoin() {
               className="w-full md:w-[40%] bg-[#f8fbf8] rounded-xl flex items-center px-8 py-5"
               style={{ boxShadow: "rgba(0, 0, 0, 0.02) 0px 1px 3px 0px, rgba(27, 31, 35, 0.15) 0px 0px 0px 1px" }}
             >
-              <img src={a1ogImg.src} alt="Buyer" className="hidden sm:block w-32 h-auto object-contain flex-shrink-0 mr-8" />
+              <Image width={0} height={0} sizes="100vw" src={a1ogImg.src} alt="Buyer" className="hidden sm:block w-32 h-auto object-contain flex-shrink-0 mr-8" />
               <div>
                 <p className="text-[12px] md:text-sm font-bold text-[#1b5e20] uppercase tracking-wider mb-2 text-center sm:text-left whitespace-nowrap">
                   {data.buyerHeading}
@@ -48,7 +49,7 @@ export default function WhyJoin() {
               style={{ boxShadow: "rgba(0, 0, 0, 0.02) 0px 1px 3px 0px, rgba(27, 31, 35, 0.15) 0px 0px 0px 1px" }}
             >
               <div className="px-8 py-5 flex items-center flex-1">
-                <img src={a2ogImg.src} alt="Exhibitor Icon" className="hidden sm:block w-32 h-auto object-contain flex-shrink-0 mr-8" />
+                <Image width={0} height={0} sizes="100vw" src={a2ogImg.src} alt="Exhibitor Icon" className="hidden sm:block w-32 h-auto object-contain flex-shrink-0 mr-8" />
                 <div>
                   <p className="text-[12px] md:text-sm font-bold text-[#1b5e20] uppercase tracking-wider mb-2 text-center sm:text-left whitespace-nowrap">
                     {data.exhibitorHeading}
@@ -67,7 +68,7 @@ export default function WhyJoin() {
             </div>
             
             {/* External Exhibitor Image */}
-            <img src={a3ogImg.src} alt="Exhibitor" className="hidden lg:block w-48 h-64 object-cover object-center shrink-0 self-center rounded-xl" />
+            <Image width={0} height={0} sizes="100vw" src={a3ogImg.src} alt="Exhibitor" className="hidden lg:block w-48 h-64 object-cover object-center shrink-0 self-center rounded-xl" />
 
           </div>
         ))}

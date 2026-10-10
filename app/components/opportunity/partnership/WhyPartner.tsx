@@ -11,6 +11,7 @@ import e5og from "@/app/assets/icons/e5og.png";
 
 import pleafImg from "@/app/assets/icons/pleaf.webp";
 import footerRightImg from "@/app/assets/icons/footerright.webp";
+import Image from "next/image";
 
 const ICON_MAP: Record<string, any> = {
   Shield,
@@ -53,15 +54,15 @@ export default function WhyPartner() {
   return (
     <section className="relative pt-4 pb-4 bg-[#fbfcf8] font-inter overflow-hidden">
       {/* Decorative Background Elements */}
-      <img 
+      <Image width={0} height={0} sizes="100vw" 
         src={pleafImg.src} 
         alt="Leaf Decoration" 
-        className="absolute left-0 top-1/2 -translate-y-1/2 w-28 md:w-40 object-contain pointer-events-none z-0 opacity-100" 
+        className="absolute left-0 top-1/2 -translate-y-1/2 w-28 md:w-40 object-contain pointer-events-none z-0 opacity-100 h-auto" 
       />
-      <img 
+      <Image width={0} height={0} sizes="100vw" 
         src={footerRightImg.src} 
         alt="Right Decoration" 
-        className="absolute right-0 bottom-0 w-32 md:w-48 object-contain pointer-events-none z-0 opacity-80" 
+        className="absolute right-0 bottom-0 w-32 md:w-48 object-contain pointer-events-none z-0 opacity-80 h-auto" 
       />
       
       <SectionContainer className="relative z-10">
@@ -129,7 +130,7 @@ export default function WhyPartner() {
                       <div className="hidden lg:block absolute right-0 top-1/2 -translate-y-1/2 w-[1px] h-16 bg-gray-200"></div>
                     )}
                     
-                    <img src={ICON_MAP[benefit.iconKey].src} alt="Benefit" className="w-[70px] h-[70px] object-contain mb-4 transition-transform hover:scale-105 duration-200" />
+                    <Image width={0} height={0} sizes="100vw" src={ICON_MAP[benefit.iconKey].src} alt="Benefit" className="w-[70px] h-[70px] object-contain mb-4 transition-transform hover:scale-105 duration-200" />
                     
                     <p className="text-[10px] md:text-[11px] font-bold text-gray-950 uppercase tracking-wide whitespace-pre-line leading-tight font-inter">
                       {benefit.label}

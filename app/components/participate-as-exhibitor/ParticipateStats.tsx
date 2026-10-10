@@ -11,13 +11,13 @@ const StatCounter = ({ value }: { value: string }) => {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: "-50px" });
 
-  if (!/^[\d,]+/.test(value)) return <span>{value}</span>;
-
-  const numericValue = parseInt(value.replace(/,/g, "")) || 0;
-  const suffix = value.replace(/[0-9,]/g, "");
+  // Hooks run on every render, whatever the value; only the output depends on it
+  const isNumber = !!value && /^[\d,]+/.test(value);
+  const numericValue = isNumber ? parseInt(value.replace(/,/g, "")) || 0 : 0;
+  const suffix = isNumber ? value.replace(/[0-9,]/g, "") : "";
 
   useEffect(() => {
-    if (isInView) {
+    if (isNumber && isInView) {
       const controls = animate(0, numericValue, {
         duration: 2.2,
         ease: "easeOut",
@@ -27,7 +27,9 @@ const StatCounter = ({ value }: { value: string }) => {
       });
       return () => controls.stop();
     }
-  }, [isInView, numericValue]);
+  }, [isNumber, isInView, numericValue]);
+
+  if (!isNumber) return <span>{value || ""}</span>;
 
   return (
     <span ref={ref}>

@@ -5,6 +5,7 @@ import intBg from "../../../assets/image/dom1og.webp";
 import domIcon from "../../../assets/icons/domog.png";
 import intIcon from "../../../assets/icons/dom2og.png";
 import { ArrowRight } from "lucide-react";
+import Image from "next/image";
 
 const Sparkle = ({
   style,
@@ -63,7 +64,7 @@ export default function CategorySelect({ buyerType, onChange }: CategorySelectPr
           style={{ boxShadow: "rgba(0, 0, 0, 0.02) 0px 1px 3px 0px, rgba(27, 31, 35, 0.15) 0px 0px 0px 1px" }}
         >
           {/* BG accent */}
-          <img src={domBg.src} alt="" className="absolute inset-0 w-full h-full object-cover z-0 pointer-events-none" />
+          <Image width={0} height={0} sizes="100vw" src={domBg.src} alt="" className="absolute inset-0 w-full h-full object-cover z-0 pointer-events-none" />
 
           {/* Icon circle */}
           <div className="relative shrink-0 z-10">
@@ -72,7 +73,7 @@ export default function CategorySelect({ buyerType, onChange }: CategorySelectPr
                 buyerType === "domestic" ? "shadow-xl scale-105" : "shadow-md"
               }`}
             >
-              <img src={domIcon.src} alt="Domestic Icon" className="w-full h-full object-contain" />
+              <Image width={0} height={0} sizes="100vw" src={domIcon.src} alt="Domestic Icon" className="w-full h-full object-contain" />
             </div>
           </div>
 
@@ -114,7 +115,7 @@ export default function CategorySelect({ buyerType, onChange }: CategorySelectPr
           style={{ boxShadow: "rgba(0, 0, 0, 0.02) 0px 1px 3px 0px, rgba(27, 31, 35, 0.15) 0px 0px 0px 1px" }}
         >
           {/* BG accent */}
-          <img src={intBg.src} alt="" className="absolute inset-0 w-full h-full object-cover z-0 pointer-events-none" />
+          <Image width={0} height={0} sizes="100vw" src={intBg.src} alt="" className="absolute inset-0 w-full h-full object-cover z-0 pointer-events-none" />
 
           {/* Icon circle */}
           <div className="relative shrink-0 z-10">
@@ -123,7 +124,7 @@ export default function CategorySelect({ buyerType, onChange }: CategorySelectPr
                 buyerType === "international" ? "shadow-xl scale-105" : "shadow-md"
               }`}
             >
-              <img src={intIcon.src} alt="International Icon" className="w-full h-full object-contain" />
+              <Image width={0} height={0} sizes="100vw" src={intIcon.src} alt="International Icon" className="w-full h-full object-contain" />
             </div>
           </div>
 

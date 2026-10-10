@@ -69,7 +69,7 @@ const IndustriesSection = ({ sectionData }: { sectionData?: any }) => {
     <section className="pt-4 pb-8 bg-white relative overflow-hidden font-inter">
       <React.Fragment key={section.id}>
         {/* Decorative Leaf Image on Far Left of Section */}
-        <img
+        <Image width={0} height={0} sizes="100vw"
           loading="lazy"
           decoding="async"
           src={section.decorativeLeaf}
@@ -108,7 +108,7 @@ const IndustriesSection = ({ sectionData }: { sectionData?: any }) => {
                   {/* Top Half: Image */}
                   <div className="relative w-full h-[140px] lg:h-[180px] shrink-0 overflow-hidden rounded-t-[15px] bg-gray-200">
                     {typeof item.image === "string" ? (
-                      <img
+                      <Image width={0} height={0} sizes="100vw"
                         loading="lazy"
                         decoding="async"
                         src={item.image}

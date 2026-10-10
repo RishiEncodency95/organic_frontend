@@ -7,6 +7,7 @@ import footerright from '@/app/assets/icons/footerright.webp';
 import SectionContainer from '@/app/components/layout/SectionContainer';
 import Swal from 'sweetalert2';
 import { verifyApi, contactEnquiryApi } from '@/lib/api';
+import Image from "next/image";
 
 const ContactForm = () => {
   const [formData, setFormData] = useState({
@@ -160,17 +161,17 @@ const ContactForm = () => {
     <section className="w-full bg-[#fbfcf7] pb-16 font-inter relative z-10 -mt-8 md:-mt-12 overflow-hidden">
 
       {/* Decorative Left Image */}
-      <img
+      <Image width={0} height={0} sizes="100vw"
         src={(leafs as any)?.src || (leafs as any)}
         alt="leaf decoration"
-        className="absolute left-0 top-1/2 -translate-y-1/2 w-32 md:w-48 opacity-100 pointer-events-none -translate-x-1/4 z-0"
+        className="absolute left-0 top-1/2 -translate-y-1/2 w-32 md:w-48 opacity-100 pointer-events-none -translate-x-1/4 z-0 h-auto"
       />
 
       {/* Decorative Right Image */}
-      <img
+      <Image width={0} height={0} sizes="100vw"
         src={(footerright as any)?.src || (footerright as any)}
         alt="right decoration"
-        className="absolute right-0 top-0 mt-4 w-32 md:w-48 opacity-100 pointer-events-none z-20"
+        className="absolute right-0 top-0 mt-4 w-32 md:w-48 opacity-100 pointer-events-none z-20 h-auto"
       />
 
       <SectionContainer className="relative z-10">
@@ -422,7 +423,7 @@ const ContactForm = () => {
             </div>
 
             {/* Decorative Leaf */}
-            <img src={(cleaf as any)?.src || (cleaf as any)} alt="decoration" className="absolute -bottom-8 right-0 w-20 md:w-28 pointer-events-none opacity-80" />
+            <Image width={0} height={0} sizes="100vw" src={(cleaf as any)?.src || (cleaf as any)} alt="decoration" className="absolute -bottom-8 right-0 w-20 md:w-28 pointer-events-none opacity-80 h-auto" />
           </div>
 
         </div>

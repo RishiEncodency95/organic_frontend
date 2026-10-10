@@ -148,7 +148,7 @@ const AwardsGrandAwards = ({ initialData }: AwardsGrandAwardsProps) => {
                             i < awardsList.length - 1 ? "hover:border-[#f97316]" : ""
                           }`}
                         >
-                          <img
+                          <Image width={0} height={0} sizes="100vw"
                             src={imgSrc}
                             alt={label}
                             className="h-[50px] w-[50px] object-contain transition-transform duration-300 group-hover:scale-105"

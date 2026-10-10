@@ -6,6 +6,7 @@ import { verifyApi } from "@/lib/api";
 import pop1 from "../../assets/icons/icon1.png";
 import leaf2 from "../../assets/icons/bleaf.webp";
 import why1 from "../../assets/icons/icon2.png";
+import Image from "next/image";
 
 const Sparkle = ({ style, color = '#fff176' }: { style?: React.CSSProperties, color?: string }) => (
   <span
@@ -284,7 +285,7 @@ export default function PartnershipPopup({ isOpen, onClose, initialService }: Pa
                 transition={{ delay: 0.3 }}
               >
                 <div className="w-12 h-12 bg-white rounded-full flex items-center justify-center border-2 border-[#2d6a2d] p-1 shadow-sm flex-shrink-0">
-                  <img loading="lazy" decoding="async" src={pop1.src} alt="Support" className="w-full h-full object-contain" />
+                  <Image width={0} height={0} sizes="100vw" loading="lazy" decoding="async" src={pop1.src} alt="Support" className="w-full h-full object-contain" />
                 </div>
                 <div>
                   <h2 className="text-[19px] font-bold text-[#1b5e20] leading-tight tracking-tight font-poppins uppercase">Sponsorship Enquiry</h2>
@@ -486,7 +487,7 @@ export default function PartnershipPopup({ isOpen, onClose, initialService }: Pa
               >
                 <div className="flex justify-center mb-3">
                   <div className="w-14 h-14 bg-white rounded-full flex items-center justify-center shadow-md border-2 border-[#2d6a2d] p-0.5 relative">
-                    <img loading="lazy" decoding="async" src={why1.src} alt="Why Us" className="w-full h-full object-contain" />
+                    <Image width={0} height={0} sizes="100vw" loading="lazy" decoding="async" src={why1.src} alt="Why Us" className="w-full h-full object-contain" />
                   </div>
                 </div>
 
@@ -525,7 +526,7 @@ export default function PartnershipPopup({ isOpen, onClose, initialService }: Pa
                 animate={{ opacity: 1, scale: 1, rotate: -12 }}
                 transition={{ delay: 1.2, duration: 1 }}
               >
-                <img loading="lazy" decoding="async" src={leaf2.src} alt="decoration" className="w-full h-full object-contain" />
+                <Image width={0} height={0} sizes="100vw" loading="lazy" decoding="async" src={leaf2.src} alt="decoration" className="w-full h-full object-contain" />
               </motion.div>
             </div>
           </motion.div>

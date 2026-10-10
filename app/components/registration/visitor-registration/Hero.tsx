@@ -5,6 +5,7 @@ import bgImage from "../../../assets/banner/visitor_reg.webp";
 import footerLogo from "../../../assets/logos/footerlogo.png";
 import gsap from "gsap";
 import SectionContainer from "../../layout/SectionContainer";
+import Image from "next/image";
 
 const Sparkle = ({
   style,
@@ -149,7 +150,7 @@ export default function VisitorRegistrationHero() {
         className="relative flex items-center pt-3 md:pt-5 pb-4 md:pb-6 overflow-hidden h-[380px] sm:h-[420px] md:h-[450px] lg:h-[470px] bg-[#fcfcf0] font-inter border-b-4 border-[#ea580c]"
       >
         <div className="absolute inset-0 z-0 overflow-hidden">
-          <img
+          <Image loading="eager" width={0} height={0} sizes="100vw"
             src={bgImage.src}
             alt="Register as a Visitor – Bharat Organic Expo"
             className="visitor-hero-bg w-full h-full object-cover object-left"

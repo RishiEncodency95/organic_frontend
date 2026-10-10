@@ -15,6 +15,7 @@ import ebotog from "../../../assets/icons/ebotog.webp";
 import leafright from "../../../assets/icons/leafright.png";
 import sleaf from "../../../assets/icons/sleaf.png";
 import p1Img from "../../../assets/icons/P1.png";
+import Image from "next/image";
 
 const ICON_MAP: Record<string, any> = {
   z1og,
@@ -147,10 +148,10 @@ export default function EPromotionOpportunities() {
               className="bg-white rounded-2xl overflow-hidden flex flex-col h-full transition-shadow duration-300 relative"
               style={{ boxShadow: "rgba(0, 0, 0, 0.02) 0px 1px 3px 0px, rgba(27, 31, 35, 0.15) 0px 0px 0px 1px" }}
             >
-              <img src={leafright.src} alt="" className="absolute top-0 right-0 w-[90px] h-[90px] object-contain pointer-events-none" />
+              <Image width={0} height={0} sizes="100vw" src={leafright.src} alt="" className="absolute top-0 right-0 w-[90px] h-[90px] object-contain pointer-events-none" />
               <div className="p-6 flex-1 flex flex-col items-center text-center">
                 {/* Icon Image */}
-                <img src={ICON_MAP[opp.iconKey].src} alt={opp.title} className="w-[70px] h-[70px] object-contain mb-5" />
+                <Image width={0} height={0} sizes="100vw" src={ICON_MAP[opp.iconKey].src} alt={opp.title} className="w-[70px] h-[70px] object-contain mb-5" />
                 
                 {/* Title */}
                 <h3 className="text-[14px] md:text-[15px] font-semibold text-[#0a2b16] uppercase font-poppins mb-3 min-h-[40px] flex items-center justify-center tracking-wide leading-snug whitespace-pre-line">
@@ -190,12 +191,12 @@ export default function EPromotionOpportunities() {
 
     {/* Custom Packages Footer */}
     <section className="pt-4 pb-0 bg-white font-inter relative">
-      <img src={sleaf.src} alt="Leaf" className="absolute left-0 top-1/2 -translate-y-1/2 w-16 md:w-24 opacity-100 pointer-events-none z-0" />
-      <img src={p1Img.src} alt="Right Decor" className="absolute right-0 top-[60%] -translate-y-1/2 w-16 md:w-24 opacity-100 pointer-events-none z-0" />
+      <Image width={0} height={0} sizes="100vw" src={sleaf.src} alt="Leaf" className="absolute left-0 top-1/2 -translate-y-1/2 w-16 md:w-24 opacity-100 pointer-events-none z-0 h-auto" />
+      <Image width={0} height={0} sizes="100vw" src={p1Img.src} alt="Right Decor" className="absolute right-0 top-[60%] -translate-y-1/2 w-16 md:w-24 opacity-100 pointer-events-none z-0 h-auto" />
       <SectionContainer className="relative z-10">
         <div className="relative bg-transparent rounded-xl overflow-hidden p-4 md:p-6 lg:px-10 lg:py-5 flex flex-col md:flex-row items-center justify-between gap-6">
           <div className="flex flex-col md:flex-row items-center gap-5 relative z-10 w-full md:w-auto text-center md:text-left">
-            <img src={ebotog.src} alt="Custom Packages" className="w-[60px] h-[60px] md:w-[70px] md:h-[70px] shrink-0 object-contain" />
+            <Image width={0} height={0} sizes="100vw" src={ebotog.src} alt="Custom Packages" className="w-[60px] h-[60px] md:w-[70px] md:h-[70px] shrink-0 object-contain" />
             <div>
               <h3 className="text-sm md:text-base font-semibold text-[#1b5e20] uppercase font-poppins tracking-wide mb-1">
                 {data.customHeading}

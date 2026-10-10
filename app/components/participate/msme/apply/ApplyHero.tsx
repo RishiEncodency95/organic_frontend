@@ -78,7 +78,7 @@ export default function ApplyHero({ section }: { section?: any }) {
       <div className="relative w-full h-full overflow-hidden">
         {/* Plant Background Image */}
         <div className="absolute right-0 top-0 w-full  h-full opacity-90">
-          <Image
+          <Image loading="eager"
             src={bgImage}
             alt="Hands holding plant"
             className="w-full h-full object-cover object-[center_35%]"

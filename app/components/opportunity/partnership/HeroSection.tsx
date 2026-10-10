@@ -5,6 +5,7 @@ import bgImg from "../../../assets/banner/partog.webp";
 import leafImg from "../../../assets/icons/leafs.png";
 import gsap from "gsap";
 import SectionContainer from "@/app/components/layout/SectionContainer";
+import Image from "next/image";
 
 const ICON_MAP: Record<string, React.ReactNode> = {
   Users: <Users className="w-3.5 h-3.5 md:w-4 md:h-4 text-[#facc15] stroke-[2]" />,
@@ -221,7 +222,7 @@ export default function HeroSection({ initialData }: { initialData?: any }) {
       >
         {/* Background Image */}
         <div className="absolute inset-0 z-0 overflow-hidden">
-          <img 
+          <Image loading="eager" width={0} height={0} sizes="100vw" 
             src={data.image}
             alt={data.imageAlt}
             className="part-bg-img w-full h-full object-cover" 
@@ -230,10 +231,10 @@ export default function HeroSection({ initialData }: { initialData?: any }) {
         </div>
 
         {/* Left Corner Decorative Leaf Image */}
-        <img 
+        <Image loading="eager" width={0} height={0} sizes="100vw" 
           src={leafImg.src} 
           alt="Leaf Decoration" 
-          className="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-1/4 w-28 sm:w-36 md:w-48 lg:w-56 object-contain pointer-events-none z-10 opacity-90" 
+          className="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-1/4 w-28 sm:w-36 md:w-48 lg:w-56 object-contain pointer-events-none z-10 opacity-90 h-auto" 
         />
 
         {/* Content Container */}

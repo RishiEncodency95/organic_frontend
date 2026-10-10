@@ -51,6 +51,7 @@ import BookAStandHero from "@/app/components/registration/book-a-stand/BookAStan
 import BookAStandBanner from "@/app/components/registration/book-a-stand/BookAStandBanner";
 import { childrenOf, toOptions, useDropdowns } from "@/lib/dropdowns";
 import { makeSectionGate } from "@/lib/sectionGate";
+import Image from "next/image";
 
 const loadScript = (src: string) => {
     return new Promise((resolve) => {
@@ -1849,7 +1850,7 @@ const BookAStand = ({ disabledSections = [] }: { disabledSections?: string[] }) 
                                                         </div>
 
                                                         <div className="w-[25%] flex justify-end items-end">
-                                                            <img loading="lazy" decoding="async" src={DiscountImg.src} alt="Discount Offers" className="w-full h-[160px] object-contain" />
+                                                            <Image width={0} height={0} sizes="100vw" loading="lazy" decoding="async" src={DiscountImg.src} alt="Discount Offers" className="w-full h-[160px] object-contain" />
                                                         </div>
                                                     </div>
 

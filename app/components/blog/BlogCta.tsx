@@ -6,6 +6,7 @@ import { Leaf, Calendar, MapPin } from "lucide-react";
 import { Reveal } from "./BlogReveal";
 import ctaLeft from "../../assets/blog/cta_left.webp";
 import ctaRight from "../../assets/blog/cta_right_tight.webp";
+import Image from "next/image";
 
 const blogCtaData = {
   title: "Exhibit. Attend. Connect. Grow.",
@@ -43,10 +44,10 @@ const BlogCta = () => {
   return (
     <section className="relative overflow-hidden bg-[#fbf7e9] py-6 font-inter">
       <div className="hidden md:block absolute left-0 bottom-0 z-0 w-40 lg:w-48 xl:w-56">
-        <img src={ctaLeft.src} alt="" aria-hidden="true" className="w-full h-auto object-contain" />
+        <Image width={0} height={0} sizes="100vw" src={ctaLeft.src} alt="" aria-hidden="true" className="w-full h-auto object-contain" />
       </div>
       <div className="hidden md:block absolute right-0 bottom-0 z-0 w-40 lg:w-48 xl:w-56">
-        <img src={ctaRight.src} alt="" aria-hidden="true" className="w-full h-auto object-contain" />
+        <Image width={0} height={0} sizes="100vw" src={ctaRight.src} alt="" aria-hidden="true" className="w-full h-auto object-contain" />
       </div>
       <div className="relative z-10 container mx-auto max-w-[1400px] px-6 md:px-40 lg:px-52 xl:px-60">
         <div className="flex flex-col items-center text-center gap-6 lg:flex-row lg:items-center lg:justify-between lg:text-left">

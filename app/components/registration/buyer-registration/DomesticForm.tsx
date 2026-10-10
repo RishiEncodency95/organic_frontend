@@ -4,6 +4,7 @@ import { CheckCircle2, CheckCircle, ShieldCheck, User, Globe, Store, Factory, La
 import { verifyApi, buyerApi, settingsApi, crmApi, ihweEventApi } from "@/lib/api";
 import Swal from "sweetalert2";
 import Link from "next/link";
+import Image from "next/image";
 
 // Mock Data
 const defaultMockConfig = {
@@ -942,7 +943,7 @@ export default function DomesticBuyerForm() {
 
                       <div className="relative z-10 flex flex-col items-center justify-center h-full px-4 pt-6 pb-6 gap-3">
                         <div className="flex flex-col items-center gap-1">
-                          <img loading="lazy" decoding="async" src="/assets/registration/icoa.webp"
+                          <Image width={0} height={0} sizes="100vw" loading="lazy" decoding="async" src="/assets/registration/icoa.webp"
                             alt="ICOA"
                             className="w-48 h-auto object-contain"
                             style={{

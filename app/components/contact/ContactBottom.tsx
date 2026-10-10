@@ -4,6 +4,7 @@ import { Navigation, ArrowRight } from 'lucide-react';
 import beIcon from '@/app/assets/icons/be.png';
 import SectionContainer from '@/app/components/layout/SectionContainer';
 import { API_URL } from '@/lib/api';
+import Image from "next/image";
 
 const DEFAULT_MAP_EMBED =
   "https://maps.google.com/maps?q=12/29,%20Site%20II%20Industrial%20Area,%20Loni%20Rd,%20Mohan%20Nagar,%20Ghaziabad,%20Uttar%20Pradesh%20201007,%20India&t=&z=15&ie=UTF8&iwloc=&output=embed";
@@ -118,7 +119,7 @@ const ContactBottom = ({ initialSection }: { initialSection?: any }) => {
             {/* Top row with icon and text */}
             <div className="flex items-start gap-6 mb-8 relative z-10">
               {/* Icon Image */}
-              <img src={(beIcon as any).src ?? (beIcon as unknown as string)} alt="Subscribe" className="w-20 h-20 shrink-0 object-contain" />
+              <Image width={0} height={0} sizes="100vw" src={(beIcon as any).src ?? (beIcon as unknown as string)} alt="Subscribe" className="w-20 h-20 shrink-0 object-contain" />
 
               <div className="text-white pt-2">
                 <h3 className="font-inter font-bold text-2xl mb-2">Stay Updated!</h3>

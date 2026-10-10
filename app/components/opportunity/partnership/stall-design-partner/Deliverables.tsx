@@ -7,6 +7,7 @@ import {
 } from "lucide-react";
 import footerRightImg from "@/app/assets/icons/footerright.webp";
 import SectionContainer from "@/app/components/layout/SectionContainer";
+import Image from "next/image";
 
 const ICON_MAP: Record<string, React.ReactNode> = {
   Globe: <Globe className="w-5 h-5" />,
@@ -112,10 +113,10 @@ export default function Deliverables() {
 
   return (
     <section className="pt-10 pb-4 bg-white font-inter relative overflow-hidden">
-      <img 
+      <Image width={0} height={0} sizes="100vw" 
         src={footerRightImg.src} 
         alt="Right Decoration" 
-        className="absolute top-10 -right-3 md:top-20 md:-right-5 w-24 md:w-36 object-contain pointer-events-none z-20 opacity-80" 
+        className="absolute top-10 -right-3 md:top-20 md:-right-5 w-24 md:w-36 object-contain pointer-events-none z-20 opacity-80 h-auto" 
       />
       <SectionContainer className="relative z-10">
         <div 

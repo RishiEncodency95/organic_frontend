@@ -5,6 +5,7 @@ import { ArrowRight } from "lucide-react";
 import SectionHeading from "./BlogSectionHeading";
 import { Reveal } from "./BlogReveal";
 import expertImg from "../../assets/blog/expert.webp";
+import Image from "next/image";
 
 const expertPhoto = expertImg.src;
 
@@ -31,7 +32,7 @@ const BlogExperts = () => {
               className="bg-white rounded-xl p-4 transition-all duration-300 hover:-translate-y-1 h-full flex flex-col font-inter"
               style={{ boxShadow: "rgba(0, 0, 0, 0.02) 0px 1px 3px 0px, rgba(27, 31, 35, 0.15) 0px 0px 0px 1px" }}
             >
-              <img
+              <Image width={0} height={0} sizes="100vw"
                 src={e.img}
                 alt={e.name}
                 className="w-12 h-12 rounded-full object-cover mb-3 ring-2 ring-[#e8f2eb]"

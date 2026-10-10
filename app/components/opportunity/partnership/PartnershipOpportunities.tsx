@@ -137,12 +137,12 @@ export default function PartnershipOpportunities() {
     <section className="pt-10 pb-6 bg-white font-inter relative overflow-hidden">
       {/* Decorative Left */}
       <div className="absolute left-0 top-[10%] pointer-events-none w-32 md:w-56 lg:w-72 z-0 opacity-100">
-        <img src={leafsImg.src} alt="Leaf Decoration" className="w-full h-auto object-contain -translate-x-1/4" />
+        <Image width={0} height={0} sizes="100vw" src={leafsImg.src} alt="Leaf Decoration" className="w-full h-auto object-contain -translate-x-1/4" />
       </div>
 
       {/* Decorative Right */}
       <div className="absolute right-0 bottom-[50%] pointer-events-none w-36 md:w-60 lg:w-80 z-0 opacity-80">
-        <img src={footerRightImg.src} alt="Decoration" className="w-full h-auto object-contain translate-x-1/4" />
+        <Image width={0} height={0} sizes="100vw" src={footerRightImg.src} alt="Decoration" className="w-full h-auto object-contain translate-x-1/4" />
       </div>
 
       <SectionContainer className="mt-8 relative z-10">

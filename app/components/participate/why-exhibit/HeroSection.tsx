@@ -53,6 +53,7 @@ import x2 from "@/app/assets/icons/x2.png";
 import x3 from "@/app/assets/icons/x3.png";
 import x4 from "@/app/assets/icons/x4.png";
 import SectionContainer from "@/app/components/layout/SectionContainer";
+import Image from "next/image";
 
 const getImgSrc = (src: any): string => (typeof src === "string" ? src : src?.src || "");
 
@@ -333,7 +334,7 @@ const HeroSection = ({ sectionData }: { sectionData?: any }) => {
     <section className="relative w-full min-h-[380px] sm:min-h-[420px] md:min-h-[450px] lg:min-h-[470px] flex items-center overflow-hidden font-inter pt-3 md:pt-5 pb-4 md:pb-6 border-b-4 border-[#ea580c]">
       {/* BG Image */}
       <div className="absolute inset-0 z-0 w-full overflow-hidden pointer-events-none">
-        <img
+        <Image width={0} height={0} sizes="100vw"
           loading="lazy"
           decoding="async"
           src={bgUrl}
@@ -382,7 +383,7 @@ const HeroSection = ({ sectionData }: { sectionData?: any }) => {
                   <React.Fragment key={item.id || i}>
                     <div className="flex items-center gap-1.5">
                       {displayImg ? (
-                        <img
+                        <Image width={0} height={0} sizes="100vw"
                           loading="lazy"
                           decoding="async"
                           src={displayImg}
@@ -394,7 +395,7 @@ const HeroSection = ({ sectionData }: { sectionData?: any }) => {
                           <IconComponent className="w-4 h-4 md:w-5 md:h-5 text-[#1b5e20]" />
                         </div>
                       ) : (
-                        <img
+                        <Image width={0} height={0} sizes="100vw"
                           loading="lazy"
                           decoding="async"
                           src={getImgSrc(fallbackImg)}

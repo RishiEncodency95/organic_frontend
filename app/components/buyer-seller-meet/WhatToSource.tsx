@@ -10,6 +10,7 @@ import footerRightImg from "../../assets/icons/footerright.png";
 
 import SectionContainer from "@/app/components/layout/SectionContainer";
 import { WHAT_TO_SOURCE_DATA } from "@/app/data/buyerSellerMeetData";
+import Image from "next/image";
 
 const IMG_MAP: Record<string, string> = {
   img1: img1.src,
@@ -25,7 +26,7 @@ export default function WhatToSource() {
     <section className="pt-8 pb-8 bg-white font-inter relative overflow-hidden">
       {/* Decorative Right Image */}
       <div className="absolute right-0 top-6 pointer-events-none z-0 w-48 md:w-64 lg:w-80 opacity-60">
-        <img src={footerRightImg.src} alt="Leaf Decoration" className="w-full h-auto object-contain translate-x-1/4" />
+        <Image width={0} height={0} sizes="100vw" src={footerRightImg.src} alt="Leaf Decoration" className="w-full h-auto object-contain translate-x-1/4" />
       </div>
 
       <SectionContainer className="relative z-10">
@@ -48,7 +49,7 @@ export default function WhatToSource() {
                   style={{ boxShadow: "rgba(0, 0, 0, 0.02) 0px 1px 3px 0px, rgba(27, 31, 35, 0.15) 0px 0px 0px 1px" }}
                 >
                   <div className="h-40 overflow-hidden relative">
-                    <img src={IMG_MAP[card.img] || card.img} alt={card.title} className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" />
+                    <Image width={0} height={0} sizes="100vw" src={IMG_MAP[card.img] || card.img} alt={card.title} className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" />
                     <div className="absolute inset-0 bg-black/20" />
                   </div>
                   <div className="p-4 relative">

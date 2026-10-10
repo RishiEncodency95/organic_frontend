@@ -4,6 +4,7 @@ import React from "react";
 import Link from "next/link";
 import { CheckCircle2, ArrowRight } from "lucide-react";
 import whyParticipateImg from "../../assets/conference/why_participate.webp";
+import Image from "next/image";
 
 const whyBuyers = [
   "Meet decision-makers from across the industry",
@@ -37,7 +38,7 @@ const ParticipateWhyParticipate = () => {
           {/* Center: Image */}
           <div className="lg:col-span-4 flex justify-center items-center">
             <div className="w-full max-w-[380px] lg:max-w-none">
-              <img
+              <Image width={0} height={0} sizes="100vw"
                 src={whyParticipateImg.src}
                 alt="Why Buyers and Exhibitors Participate - Bharat Organic Expo 2027"
                 className="h-auto w-full object-contain"

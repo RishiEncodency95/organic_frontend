@@ -8,6 +8,7 @@ import {
   Sparkles, CalendarDays, MapPin, Globe, Trophy
 } from 'lucide-react';
 import { motion } from 'framer-motion';
+import Image from "next/image";
 
 const sectors = [
   {
@@ -115,7 +116,7 @@ const ExploreSectors = () => {
             >
               {/* Unique Leaf Shaped Image Container */}
               <div className="relative h-[115px] md:h-[135px] w-full overflow-hidden shrink-0 rounded-tl-[35px] rounded-br-[35px] rounded-tr-[12px] rounded-bl-[12px] shadow-inner">
-                <img loading="lazy" decoding="async" src={sector.img} alt={sector.title} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" />
+                <Image width={0} height={0} sizes="100vw" loading="lazy" decoding="async" src={sector.img} alt={sector.title} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" />
                 <div className="absolute inset-0 bg-[#0b2912]/20 group-hover:bg-[#3b8c2a]/10 transition-colors duration-500"></div>
 
                 {/* Floating Icon inside Image */}

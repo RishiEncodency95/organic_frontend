@@ -30,6 +30,7 @@ import v2 from "@/app/assets/icons/v2.png";
 import v3 from "@/app/assets/icons/v3.png";
 import v4 from "@/app/assets/icons/v4.png";
 import SectionContainer from "@/app/components/layout/SectionContainer";
+import Image from "next/image";
 
 const NEED_HELP_SUPPORT_DATA = [
   {
@@ -146,7 +147,7 @@ const NeedHelpSupport = () => {
 
                 {/* OUR COMMITMENT BOX */}
                 <div className="bg-[#eef6ed] border border-[#1b5e20]/20 rounded-2xl p-3 sm:p-3.5 inline-flex items-center justify-start gap-3 sm:gap-4 shadow-xs w-fit max-w-full">
-                  <img
+                  <Image width={0} height={0} sizes="100vw"
                     src={callog.src}
                     alt="Our Commitment Support"
                     className="w-12 h-12 sm:w-14 sm:h-14 object-contain shrink-0"
@@ -169,7 +170,7 @@ const NeedHelpSupport = () => {
                 <div className="relative bg-white border border-[#023911] rounded-2xl p-4 sm:p-5 lg:p-6 shadow-xs -top-3 lg:-top-6">
                   {/* Top Right Overlapping Leaf Accent */}
                   <div className="absolute -top-6 -right-4 sm:-top-8 sm:-right-6 pointer-events-none z-20">
-                    <img
+                    <Image width={0} height={0} sizes="100vw"
                       src={leafright.src}
                       alt="Decorative Leaf Accent"
                       className="w-16 sm:w-20 md:w-24 lg:w-28 h-auto object-contain opacity-95"
@@ -187,7 +188,7 @@ const NeedHelpSupport = () => {
                   <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 sm:gap-2 divide-y sm:divide-y-0 sm:divide-x divide-slate-200 pt-3 sm:pt-2">
                     {data.waysToConnect.map((col, idx) => (
                       <div key={col.id} className={`text-center px-1 pt-2 sm:pt-0 flex flex-col items-center ${idx !== 0 ? "sm:pl-2" : ""}`}>
-                        <img
+                        <Image width={0} height={0} sizes="100vw"
                           src={col.img.src}
                           alt={col.title}
                           className="w-11 h-11 sm:w-12 sm:h-12 object-contain mb-2 shrink-0"
@@ -250,7 +251,7 @@ const NeedHelpSupport = () => {
 
                 {/* POG Image Illustration */}
                 <div className="w-full sm:w-4/12 flex items-center justify-center p-2">
-                  <img
+                  <Image width={0} height={0} sizes="100vw"
                     src={pog.src}
                     alt="Why Reach Out Support"
                     className="w-28 sm:w-36 md:w-40 h-auto max-h-44 object-contain"
@@ -280,7 +281,7 @@ const NeedHelpSupport = () => {
                 <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 divide-y sm:divide-y-0 sm:divide-x divide-slate-200 pt-3 border-t border-slate-200/80">
                   {data.relationshipManagers.stats.map((st, idx) => (
                     <div key={st.id} className={`text-center px-1 pt-1.5 sm:pt-0 flex flex-col items-center ${idx !== 0 ? "sm:pl-2" : ""}`}>
-                      <img src={st.img.src} alt={st.line1} className="w-10 h-10 object-contain mb-1" />
+                      <Image width={0} height={0} sizes="100vw" src={st.img.src} alt={st.line1} className="w-10 h-10 object-contain mb-1" />
                       <h4 className="font-poppins font-semibold text-[11px] text-[#1b5e20] uppercase tracking-wider mb-0.5">
                         {st.line1}
                       </h4>

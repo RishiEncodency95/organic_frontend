@@ -7,6 +7,7 @@ import SectionHeading from "./BlogSectionHeading";
 import { Reveal } from "./BlogReveal";
 import latestImg1 from "../../assets/blog/latest_1.webp";
 import latestImg2 from "../../assets/blog/latest_2.webp";
+import Image from "next/image";
 
 const blogLatestData = {
   title: "Latest from Bharat Organic Expo",
@@ -48,7 +49,7 @@ const BlogLatest = () => {
               style={{ boxShadow: "rgba(0, 0, 0, 0.02) 0px 1px 3px 0px, rgba(27, 31, 35, 0.15) 0px 0px 0px 1px" }}
             >
               <div className="relative overflow-hidden h-[160px] bg-gray-100">
-                <img src={u.img} alt={u.title} className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-[1.03]" />
+                <Image width={0} height={0} sizes="100vw" src={u.img} alt={u.title} className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-[1.03]" />
                 <span className="absolute top-2 left-2 bg-[#1b5e20] text-white text-[9px] font-bold uppercase tracking-wider px-2 py-1 rounded font-poppins">
                   {u.tag}
                 </span>

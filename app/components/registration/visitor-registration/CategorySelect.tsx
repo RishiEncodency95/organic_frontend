@@ -5,6 +5,7 @@ import intBg from "../../../assets/image/dom1og.webp";
 import domIcon from "../../../assets/icons/domog.png";
 import intIcon from "../../../assets/icons/dom2og.png";
 import { ArrowRight, Users, Globe2, Building2 } from "lucide-react";
+import Image from "next/image";
 
 const Sparkle = ({
   style,
@@ -58,7 +59,7 @@ export default function CategorySelect({ visitorType, onChange }: CategorySelect
             }`}
           style={{ boxShadow: "rgba(0, 0, 0, 0.02) 0px 1px 3px 0px, rgba(27, 31, 35, 0.15) 0px 0px 0px 1px" }}
         >
-          <img src={domBg.src} alt="" className="absolute inset-0 w-full h-full object-cover z-0 pointer-events-none opacity-50" />
+          <Image width={0} height={0} sizes="100vw" src={domBg.src} alt="" className="absolute inset-0 w-full h-full object-cover z-0 pointer-events-none opacity-50" />
           <div className="relative shrink-0 z-10">
             <div className={`w-16 h-16 md:w-20 md:h-20 rounded-full bg-white flex items-center justify-center transition-all duration-300 ${visitorType === "domestic" ? "shadow-xl scale-105" : "shadow-md"}`}>
               <Building2 className="w-8 h-8 md:w-10 md:h-10 text-[#4d7f1d]" />
@@ -86,7 +87,7 @@ export default function CategorySelect({ visitorType, onChange }: CategorySelect
             }`}
           style={{ boxShadow: "rgba(0, 0, 0, 0.02) 0px 1px 3px 0px, rgba(27, 31, 35, 0.15) 0px 0px 0px 1px" }}
         >
-          <img src={intBg.src} alt="" className="absolute inset-0 w-full h-full object-cover z-0 pointer-events-none opacity-50" />
+          <Image width={0} height={0} sizes="100vw" src={intBg.src} alt="" className="absolute inset-0 w-full h-full object-cover z-0 pointer-events-none opacity-50" />
           <div className="relative shrink-0 z-10">
             <div className={`w-16 h-16 md:w-20 md:h-20 rounded-full bg-white flex items-center justify-center transition-all duration-300 ${visitorType === "international" ? "shadow-xl scale-105" : "shadow-md"}`}>
               <Globe2 className="w-8 h-8 md:w-10 md:h-10 text-[#4d7f1d]" />

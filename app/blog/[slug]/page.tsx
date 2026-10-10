@@ -387,7 +387,7 @@ export default async function BlogDetail({
 
             {/* Featured Image */}
             <div className="w-full aspect-[3/1] relative rounded-xl overflow-hidden mb-4 shadow-sm bg-neutral-100">
-              <img
+              <Image width={0} height={0} sizes="100vw"
                 src={displayImage}
                 alt={displayImageAlt}
                 className="w-full h-full object-cover"

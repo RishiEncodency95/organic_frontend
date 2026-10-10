@@ -11,6 +11,7 @@ import e3og from "../../../assets/icons/e3og.png";
 import e4og from "../../../assets/icons/e4og.png";
 import e5og from "../../../assets/icons/e5og.png";
 import footerRightImg from "../../../assets/icons/footerright.png";
+import Image from "next/image";
 
 const ICON_MAP: Record<string, any> = {
   e1og,
@@ -92,8 +93,8 @@ export default function WhyEPromote() {
   return (
     <section ref={sectionRef} className="relative pt-8 pb-8 bg-white font-inter overflow-hidden">
       {/* Decorative Background Elements */}
-      <img ref={leftDecorRef} src={leafIcon.src} alt="Leaf Decoration" className="absolute left-0 top-1/2 -translate-y-1/2 w-28 md:w-40 object-contain pointer-events-none z-0" style={{ opacity: 0 }} />
-      <img ref={rightDecorRef} src={footerRightImg.src} alt="Right Decoration" className="absolute right-0 bottom-0 w-32 md:w-48 object-contain pointer-events-none z-0" style={{ opacity: 0 }} />
+      <Image width={0} height={0} sizes="100vw" ref={leftDecorRef} src={leafIcon.src} alt="Leaf Decoration" className="absolute left-0 top-1/2 -translate-y-1/2 w-28 md:w-40 object-contain pointer-events-none z-0 h-auto" style={{ opacity: 0 }} />
+      <Image width={0} height={0} sizes="100vw" ref={rightDecorRef} src={footerRightImg.src} alt="Right Decoration" className="absolute right-0 bottom-0 w-32 md:w-48 object-contain pointer-events-none z-0 h-auto" style={{ opacity: 0 }} />
       
       <SectionContainer className="relative z-10">
         <div className="flex flex-col lg:flex-row gap-8 lg:gap-16 items-center">
@@ -113,7 +114,7 @@ export default function WhyEPromote() {
             </div>
             
             <div className="w-36 sm:w-[180px] shrink-0 mx-auto mt-2 sm:mt-0">
-              <img ref={illustrationRef} src={epogImg.src} alt="E-Promotion Illustration" className="w-full h-auto object-contain scale-100 md:scale-125 origin-center" style={{ opacity: 0 }} />
+              <Image width={0} height={0} sizes="100vw" ref={illustrationRef} src={epogImg.src} alt="E-Promotion Illustration" className="w-full h-auto object-contain scale-100 md:scale-125 origin-center" style={{ opacity: 0 }} />
             </div>
           </div>
           
@@ -136,7 +137,7 @@ export default function WhyEPromote() {
                     <div className="hidden lg:block absolute right-0 top-1/2 -translate-y-1/2 w-[1px] h-16 bg-gray-200"></div>
                   )}
                   
-                  <img src={ICON_MAP[benefit.iconKey].src} alt="Benefit" className="w-[70px] h-[70px] object-contain mb-3" />
+                  <Image width={0} height={0} sizes="100vw" src={ICON_MAP[benefit.iconKey].src} alt="Benefit" className="w-[70px] h-[70px] object-contain mb-3" />
                   
                   <p className="text-[10px] md:text-[11px] font-bold text-gray-900 uppercase tracking-wide whitespace-pre-line leading-tight font-inter">
                     {benefit.label}

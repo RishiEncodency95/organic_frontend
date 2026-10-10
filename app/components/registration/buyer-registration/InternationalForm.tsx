@@ -41,6 +41,7 @@ import { verifyApi, buyerApi, crmApi, policyApi, ihweEventApi } from "@/lib/api"
 import Swal from "sweetalert2";
 const toast = { error: (msg: any) => Swal.fire({ icon: "error", text: msg }), success: (msg: any) => Swal.fire({ icon: "success", text: msg }) };
 import { useEffect as useEffectDropdown } from "react";
+import Image from "next/image";
 
 
 
@@ -1111,7 +1112,7 @@ const InternationalBuyerRegistration = () => {
 
                           {/* Top — Logo + org name */}
                           <div className="flex flex-col items-center gap-1">
-                            <img loading="lazy" decoding="async" src="/assets/registration/icoa.webp"
+                            <Image width={0} height={0} sizes="100vw" loading="lazy" decoding="async" src="/assets/registration/icoa.webp"
                               alt="ICOA"
                               className="w-48 h-auto object-contain"
                               style={{

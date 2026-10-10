@@ -5,6 +5,7 @@ import leafsImg from "@/app/assets/icons/leafs.png";
 import mogImg from "@/app/assets/icons/manog.png";
 import SectionContainer from "@/app/components/layout/SectionContainer";
 import { toOptions, useDropdowns } from "@/lib/dropdowns";
+import Image from "next/image";
 
 export const WHY_PARTNER_MANPOWER_DATA = [
   {
@@ -50,10 +51,10 @@ export default function WhyPartnerManpowerSupply() {
 
   return (
     <section className="pt-4 pb-4 bg-white font-inter relative overflow-hidden">
-      <img 
+      <Image width={0} height={0} sizes="100vw" 
         src={leafsImg.src} 
         alt="Left Decoration" 
-        className="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-1/4 w-32 md:w-48 object-contain pointer-events-none z-10 opacity-100" 
+        className="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-1/4 w-32 md:w-48 object-contain pointer-events-none z-10 opacity-100 h-auto" 
       />
 
       <SectionContainer className="relative z-10">
@@ -79,10 +80,10 @@ export default function WhyPartnerManpowerSupply() {
               </ul>
             </div>
 
-            <img 
+            <Image width={0} height={0} sizes="100vw" 
               src={mogImg.src} 
               alt="Manpower Decoration" 
-              className="w-full object-contain pointer-events-none mt-1" 
+              className="w-full object-contain pointer-events-none mt-1 h-auto" 
             />
           </div>
 

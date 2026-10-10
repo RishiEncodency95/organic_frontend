@@ -7,6 +7,7 @@ import { useDropdowns } from "@/lib/dropdowns";
 import hogImg from "@/app/assets/icons/hog.png";
 import rightRightImg from "@/app/assets/icons/leafright.png";
 import SectionContainer from "@/app/components/layout/SectionContainer";
+import Image from "next/image";
 
 export const ENQUIRY_FORM_DATA = [
   {
@@ -157,7 +158,7 @@ export default function EnquiryForm() {
           
           {/* Left Green Box */}
           <div className="bg-[#113217] py-8 px-10 flex flex-col justify-center items-center text-center relative overflow-hidden">
-            <img src={hogImg.src} alt="Partnership Icon" className="w-20 h-20 object-contain mb-6 relative z-10" />
+            <Image width={0} height={0} sizes="100vw" src={hogImg.src} alt="Partnership Icon" className="w-20 h-20 object-contain mb-6 relative z-10" />
             
             <h3 className="text-xl md:text-2xl font-semibold text-white mb-3 font-poppins relative z-10 uppercase leading-[1.1] whitespace-pre-line">
               {data.leftTitle}
@@ -180,10 +181,10 @@ export default function EnquiryForm() {
 
           {/* Right Form Box */}
           <div className="lg:col-span-2 bg-white py-8 px-10 relative overflow-hidden flex flex-col justify-center">
-            <img 
+            <Image width={0} height={0} sizes="100vw" 
               src={rightRightImg.src} 
               alt="Right Corner Leaf" 
-              className="absolute right-0 top-0 w-24 md:w-32 object-contain pointer-events-none z-0" 
+              className="absolute right-0 top-0 w-24 md:w-32 object-contain pointer-events-none z-0 h-auto" 
             />
             <div className="mb-6 relative z-10">
               <h3 className="text-xl md:text-2xl font-semibold text-[#1b5e20] font-poppins uppercase leading-[1.1] mb-1">

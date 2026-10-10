@@ -13,7 +13,7 @@ export default function ApplicationHero({ section }: { section?: any }) {
       {/* Background Section with Curved Bottom */}
       <div className="relative w-full h-full overflow-hidden">
         <div className="absolute right-0 top-0 w-full  h-full opacity-90">
-          <Image
+          <Image loading="eager"
             src={bgImage}
             alt="Hands holding plant"
             className="w-full h-full object-cover object-[center_35%]"

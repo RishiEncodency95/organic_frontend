@@ -6,6 +6,7 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import gallbottImg from '@/app/assets/icons/1og.png';
 import leafRightImg from '@/app/assets/icons/leafright.webp';
 import SectionContainer from '@/app/components/layout/SectionContainer';
+import Image from "next/image";
 
 if (typeof window !== 'undefined') {
   gsap.registerPlugin(ScrollTrigger);
@@ -86,19 +87,19 @@ const JoinUsBanner = () => {
             
             {/* Decorative Left Image - overflows outside banner */}
             <div className="absolute left-2 -top-4 xl:-top-6 pointer-events-none z-20 hidden md:block">
-              <img 
+              <Image width={0} height={0} sizes="100vw" 
                 src={getImgSrc(gallbottImg)} 
                 alt="Decorative Elements" 
-                className="h-20 xl:h-28 object-contain opacity-95"
+                className="h-20 xl:h-28 object-contain opacity-95 w-auto"
               />
             </div>
 
             {/* Decorative Right Image (Leaves) */}
             <div className="banner-leaf absolute right-0 top-0 bottom-0 pointer-events-none z-0 overflow-hidden rounded-r-2xl opacity-20">
-              <img 
+              <Image width={0} height={0} sizes="100vw" 
                 src={getImgSrc(leafRightImg)} 
                 alt="Leaves background" 
-                className="h-full object-cover mix-blend-overlay"
+                className="h-full object-cover mix-blend-overlay w-auto"
               />
             </div>
 

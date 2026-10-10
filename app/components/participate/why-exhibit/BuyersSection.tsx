@@ -7,6 +7,7 @@ import SectionContainer from "@/app/components/layout/SectionContainer";
 import img1 from "@/app/assets/image/1og.webp";
 import img2 from "@/app/assets/image/2og.webp";
 import img3 from "@/app/assets/image/3og.webp";
+import Image from "next/image";
 
 const getImgSrc = (src: any): string => (typeof src === "string" ? src : src?.src || src);
 
@@ -132,7 +133,7 @@ const BuyersSection = ({ sectionData }: { sectionData?: any }) => {
                   key={item.id}
                   className="flex-1 overflow-hidden border-[3px] border-white shadow-xl transform -skew-x-12 rounded-[20px] relative group"
                 >
-                  <img
+                  <Image width={0} height={0} sizes="100vw"
                     loading="lazy"
                     decoding="async"
                     src={item.img}

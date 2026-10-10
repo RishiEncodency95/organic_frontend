@@ -27,6 +27,7 @@ import t3 from "@/app/assets/icons/t3.png";
 import t4 from "@/app/assets/icons/t4.png";
 import t5 from "@/app/assets/icons/t5.png";
 import tleaf from "@/app/assets/icons/tleaf.webp";
+import Image from "next/image";
 
 const AWARDS_HEALTH_CAMP_DATA = [
   {
@@ -107,7 +108,7 @@ const AwardsHealthCamp = ({ sectionData }: { sectionData?: any }) => {
   return (
     <section className="py-2.5 sm:py-3.5 bg-white font-inter relative overflow-hidden flex items-center min-h-[380px] sm:min-h-[420px]">
       {/* Top Left Leaf Decor Asset */}
-      <img
+      <Image width={0} height={0} sizes="100vw"
         src={tleaf.src}
         alt=""
         className="absolute top-0 left-0 w-32 sm:w-44 md:w-56 lg:w-64 h-auto object-contain pointer-events-none z-0 opacity-80"
@@ -148,7 +149,7 @@ const AwardsHealthCamp = ({ sectionData }: { sectionData?: any }) => {
               </div>
 
               {/* Right Side Award2 Trophy Image */}
-              <img
+              <Image width={0} height={0} sizes="100vw"
                 src={data.mainImage}
                 alt={data.header.title}
                 className="w-52 sm:w-[300px] md:w-[420px] lg:w-[500px] xl:w-[540px] h-[400px] object-cover shrink-0 self-center sm:self-auto translate-y-4 sm:translate-y-6 lg:translate-y-8"
@@ -166,7 +167,7 @@ const AwardsHealthCamp = ({ sectionData }: { sectionData?: any }) => {
                         idx !== 0 ? "lg:pl-3" : ""
                       }`}
                     >
-                      <img
+                      <Image width={0} height={0} sizes="100vw"
                         src={card.image}
                         alt=""
                         className="w-11 h-11 sm:w-13 sm:h-13 object-contain mb-2 mx-auto shrink-0"
