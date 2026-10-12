@@ -210,7 +210,7 @@ const AdvisoryBoardGrid = () => {
                                         style={{ boxShadow: "rgba(0, 0, 0, 0.04) 0px 4px 12px" }}
                                     >
                                         {/* Portrait */}
-                                        <div className="relative w-full aspect-[4/3.5] overflow-hidden bg-gray-50 border-b border-gray-100">
+                                        <div className="relative w-full aspect-[4/3] overflow-hidden bg-gray-50 border-b border-gray-100">
                                             <Image width={0} height={0} sizes="100vw"
                                                 src={member.image}
                                                 alt={member.name}
@@ -228,21 +228,22 @@ const AdvisoryBoardGrid = () => {
                                         </div>
 
                                         {/* Content */}
-                                        <div className="flex flex-col p-4 flex-grow text-left">
-                                            <h3 className="font-poppins font-semibold text-[#23471d] text-[17px] leading-snug mb-1.5 line-clamp-2">
+                                        <div className="flex flex-col px-4 py-3 flex-grow text-left">
+                                            <h3 className="font-poppins font-semibold text-[#23471d] text-[17px] leading-snug mb-1 line-clamp-2">
                                                 {member.name}
                                             </h3>
 
-                                            <p className="text-[#4B1426] font-medium text-[13px] leading-relaxed mb-4 flex-grow font-inter line-clamp-4">
+                                            <p className="text-[#4B1426] font-medium text-[13px] leading-snug mb-2 flex-grow font-inter line-clamp-3">
                                                 {member.organization || "\u00A0"}
                                             </p>
 
-                                            <div className="flex items-center justify-between pt-3 border-t border-gray-100 mt-auto">
+                                            <div className="flex items-center justify-between pt-2 border-t border-gray-100 mt-auto">
                                                 <span className="flex items-center gap-1.5 text-gray-500 text-[12px] font-medium font-inter">
                                                     <MapPin size={14} className="text-[#d26019]" />
                                                     {member.location}
                                                 </span>
 
+                                                {/* "View Profile" hidden for now
                                                 <button
                                                     type="button"
                                                     className="flex items-center gap-1 text-[#23471d] text-[12.5px] font-semibold hover:text-[#d26019] transition-colors"
@@ -250,6 +251,7 @@ const AdvisoryBoardGrid = () => {
                                                     View Profile
                                                     <ArrowUpRight size={14} className="group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
                                                 </button>
+                                                */}
                                             </div>
                                         </div>
                                     </article>

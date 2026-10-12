@@ -37,7 +37,9 @@ import { Checkbox } from "@/app/components/ui/checkbox";
 
 
 
-import { verifyApi, buyerApi, crmApi, policyApi, ihweEventApi } from "@/lib/api";
+import { verifyApi, buyerApi, policyApi, ihweEventApi } from "@/lib/api";
+import { check, errorList, showErrors, useLocations } from "@/lib/registration";
+import { CityField } from "../shared/LocationFields";
 import Swal from "sweetalert2";
 const toast = { error: (msg: any) => Swal.fire({ icon: "error", text: msg }), success: (msg: any) => Swal.fire({ icon: "success", text: msg }) };
 import { useEffect as useEffectDropdown } from "react";
@@ -228,9 +230,6 @@ const InternationalBuyerRegistration = () => {
   const [eventName, setEventName] = useState("BOE 2027");
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [heroData, setHeroData] = useState<any>(null);
-  const [countries, setCountries] = useState<any[]>([]);
-  const [states, setStates] = useState<any[]>([]);
-  const [cities, setCities] = useState<any[]>([]);
 
   const [emailOtpSent, setEmailOtpSent] = useState(false);
   const [emailOtpVerified, setEmailOtpVerified] = useState(false);
@@ -242,7 +241,6 @@ const InternationalBuyerRegistration = () => {
   const [emailResendTimer, setEmailResendTimer] = useState(0);
   const [mobileResendTimer, setMobileResendTimer] = useState(0);
   const [errors, setErrors] = useState<Record<string, string>>({});
-  const [loadingLocations, setLoadingLocations] = useState({ states: false, cities: false });
   const [newSocialLink, setNewSocialLink] = useState("");
 
   const [showTermsModal, setShowTermsModal] = useState(false);
@@ -362,7 +360,7 @@ const InternationalBuyerRegistration = () => {
       try {
         const [hData, cRes, configRes, paymentRes, refundRes, privacyRes, rulesRes] = await Promise.all([
           Promise.resolve(null),
-          crmApi.getCountries(),
+          Promise.resolve(null),
           buyerApi.getInternationalConfig(),
           policyApi.getByPage('terms-of-service').catch(() => null),
           policyApi.getByPage('refund-policy').catch(() => null),
@@ -370,7 +368,6 @@ const InternationalBuyerRegistration = () => {
           policyApi.getByPage('international-participation-rules').catch(() => null)
         ]);
 
-        if (cRes) setCountries(cRes);
         if (configRes?.success) setConfig(configRes.data);
 
         const extractContent = (res: any) => (res?.content ? res : res?.data?.content ? res.data : null);
@@ -405,33 +402,8 @@ const InternationalBuyerRegistration = () => {
   }, [showTermsModal, showPaymentConfirmModal]);
 
 
-  useEffect(() => {
-    const fetchStates = async () => {
-      if (!formData.country) return;
-      const selectedCountry = countries.find(c => c.name === formData.country);
-      if (selectedCountry) {
-        setLoadingLocations(prev => ({ ...prev, states: true }));
-        try { setStates(await crmApi.getStates(selectedCountry.countryCode)); }
-        catch (err) { console.error(err); }
-        finally { setLoadingLocations(prev => ({ ...prev, states: false })); }
-      }
-    };
-    fetchStates();
-  }, [formData.country, countries]);
-
-  useEffect(() => {
-    const fetchCities = async () => {
-      if (!formData.stateProvince) return;
-      const selectedState = states.find(s => s.name === formData.stateProvince);
-      if (selectedState) {
-        setLoadingLocations(prev => ({ ...prev, cities: true }));
-        try { setCities(await crmApi.getCities(selectedState.stateCode)); }
-        catch (err) { console.error(err); }
-        finally { setLoadingLocations(prev => ({ ...prev, cities: false })); }
-      }
-    };
-    fetchCities();
-  }, [formData.stateProvince, states]);
+  // Countries (A–Z), states and cities from the website's backend
+  const loc = useLocations(formData.country, formData.stateProvince);
 
   useEffect(() => {
     let eTimer: any;
@@ -455,6 +427,8 @@ const InternationalBuyerRegistration = () => {
     if (name === 'yearOfEstablishment') {
       value = value.replace(/\D/g, '').slice(0, 4);
     }
+    if (name === 'primaryContact.fullName') value = value.replace(/[^\p{L}\p{M} .'-]/gu, '').replace(/^\s+/, '');
+    if (name === 'postalCode') value = value.replace(/[^A-Za-z0-9 -]/g, '').slice(0, 10);
 
     if (name.includes('.')) {
       const [parent, child] = name.split('.');
@@ -478,6 +452,8 @@ const InternationalBuyerRegistration = () => {
   };
 
   const handleSelectChange = (name: string, value: string) => {
+    if (name === 'country') { setFormData(prev => ({ ...prev, country: value, stateProvince: "", city: "" })); return; }
+    if (name === 'stateProvince') { setFormData(prev => ({ ...prev, stateProvince: value, city: "" })); return; }
     if (name.includes('.')) {
       const [parent, child] = name.split('.');
       setFormData(prev => ({ ...prev, [parent]: { ...(prev[parent as keyof typeof prev] as any), [child]: value } }));
@@ -502,7 +478,8 @@ const InternationalBuyerRegistration = () => {
 
   const requestOtp = async (type: 'email' | 'mobile') => {
     const identifier = type === 'email' ? formData.primaryContact.emailId : formData.primaryContact.mobileNumber;
-    if (!identifier) { toast.error(`Please enter a valid ${type} first.`); return; }
+    const problem = type === 'email' ? check.email(identifier, 'Official email') : mobileProblem(identifier);
+    if (problem) { showErrors([problem]); return; }
     setIsVerifying(prev => ({ ...prev, [type]: true }));
     try {
       const res = type === 'email'
@@ -535,12 +512,37 @@ const InternationalBuyerRegistration = () => {
   };
 
   const handlePackageSelection = (pkg: any) => {
-    if (!emailOtpVerified || !mobileOtpVerified) { toast.error("Please verify Email and Mobile OTP first."); return; }
+    const year = Number(formData.yearOfEstablishment);
+    const thisYear = new Date().getFullYear();
+    const errors = errorList(
+      check.required(formData.brandName, "Company / brand name"),
+      check.required(formData.legalEntityType, "Legal entity type"),
+      check.required(formData.countryOfRegistration, "Country of registration"),
+      !!formData.yearOfEstablishment && (formData.yearOfEstablishment.length !== 4 || year < 1900 || year > thisYear) && `Year of establishment must be between 1900 and ${thisYear}.`,
+      !(formData.natureOfBusiness as string[])?.length && "Please choose the nature of business.",
+      check.required(formData.address, "Registered address"),
+      check.required(formData.country, "Country"),
+      check.postal(formData.postalCode, formData.country),
+      check.website(formData.website, "Company website"),
+      check.website(formData.linkedInPage, "LinkedIn page"),
+      check.name(formData.primaryContact.fullName, "Full name"),
+      check.email(formData.primaryContact.emailId, "Official email"),
+      mobileProblem(formData.primaryContact.mobileNumber),
+      !!formData.primaryContact.whatsappNumber && mobileProblem(formData.primaryContact.whatsappNumber, "WhatsApp number"),
+      (!emailOtpVerified || !mobileOtpVerified) && "Please verify the email and mobile number with OTP.",
+    );
+    if (!showErrors(errors)) return;
     setTempSelectedPackage(pkg);
     setPolicyConsents({ infoAccurate: false, paymentTerms: false, refundPolicy: false, privacyPolicy: false, participationRules: false });
     setActivePolicyTab('info');
     setShowTermsModal(true);
   };
+
+  /** International number with its country code, digits only: 8–15 digits */
+  function mobileProblem(value: string, label = "Mobile number") {
+    if (!value) return `${label} is required.`;
+    return /^[1-9]\d{7,14}$/.test(value) ? "" : `${label} must include the country code, e.g. 447911123456 (8–15 digits).`;
+  }
 
   const initiateRazorpayPayment = async () => {
     const razorpayLoaded = await loadRazorpayScript();
@@ -555,27 +557,36 @@ const InternationalBuyerRegistration = () => {
       handler: async (response: any) => {
         setFormData(prev => ({ ...prev, registrationCategory: tempSelectedPackage.name, registrationFee: `$${tempSelectedPackage.price}`, transactionId: response.razorpay_payment_id }));
         setShowTermsModal(false); setShowPaymentConfirmModal(false);
-        await submitFinal(response.razorpay_payment_id);
+        await submitFinal(response.razorpay_payment_id, "Completed");
       },
       prefill: { name: formData.primaryContact.fullName, email: formData.primaryContact.emailId, contact: formData.primaryContact.mobileNumber },
       theme: { color: "#4d7f1d" },
       modal: {
         confirm_close: true,
         ondismiss: function () {
-          Swal.fire({ icon: 'warning', title: 'Cancelled', text: 'Payment cancelled.', scrollbarPadding: false });
+          Swal.fire({ icon: 'warning', title: 'Payment Cancelled', text: 'Your registration is not complete until the payment is done. Choose a pass again to pay.', scrollbarPadding: false });
         }
       }
     };
     const razorpay = new (window as any).Razorpay(options);
+    // Razorpay can report a failure for every retry inside its window: save the attempt once
+    let failureSaved = false;
     razorpay.on('payment.failed', async function (response: any) {
-      Swal.fire({ icon: 'error', title: 'Failed', text: 'Payment failed.', scrollbarPadding: false });
+      Swal.fire({
+        icon: 'error',
+        title: 'Payment Failed',
+        text: `${response?.error?.description || 'Your payment did not go through.'} Your registration is NOT complete — please try again. Any amount deducted is refunded automatically by your bank.`,
+        scrollbarPadding: false,
+      });
       setShowTermsModal(false); setShowPaymentConfirmModal(false);
-      await submitFinal(response.error?.metadata?.payment_id || "FAILED");
+      if (failureSaved) return;
+      failureSaved = true;
+      await submitFinal(response.error?.metadata?.payment_id || "FAILED", "Failed");
     });
     razorpay.open();
   };
 
-  const submitFinal = async (transactionId: string) => {
+  const submitFinal = async (transactionId: string, status: "Completed" | "Failed" = "Completed") => {
     setIsSubmitting(true);
     try {
       const payload = {
@@ -584,7 +595,7 @@ const InternationalBuyerRegistration = () => {
         registrationCategory: tempSelectedPackage.name,
         registrationFee: `${tempSelectedPackage.price}`,
         transactionId,
-        paymentStatus: transactionId === "N/A" ? "Free" : "Completed",
+        paymentStatus: transactionId === "N/A" ? "Free" : status,
         eventName: eventName,
         domainName: "bharatorganic"
       };
@@ -594,6 +605,8 @@ const InternationalBuyerRegistration = () => {
       // Since there are no files in this form, JSON is perfect.
 
       const res = await buyerApi.submitInternationalBuyer(payload);
+      // A failed payment is saved for follow-up, but the registration is not complete
+      if (res.success && status === "Failed") return;
       if (res.success) { setSubmitted(true); window.scrollTo({ top: 0, behavior: "smooth" }); }
       else toast.error(res.message || "Submission failed.");
     } catch (error) { toast.error("Submission error."); }
@@ -622,7 +635,7 @@ const InternationalBuyerRegistration = () => {
 
   return (
     <>
-      <form className="w-full space-y-2 animate-in fade-in duration-500">
+      <form noValidate onSubmit={(e) => e.preventDefault()} className="w-full space-y-2 animate-in fade-in duration-500">
         <div className="flex items-center gap-3 mb-6">
           <div className="w-10 h-10 rounded-full bg-[#4d7f1d] flex items-center justify-center shrink-0 shadow-md">
             <User size={18} className="text-white" />
@@ -660,9 +673,9 @@ const InternationalBuyerRegistration = () => {
           <h3 className={sectionTitleClasses}>Section 2 – Registered Office Details</h3>
           <div className="grid grid-cols-1 md:grid-cols-5 lg:grid-cols-5 gap-4">
             <div><label className={labelClasses}>Full Registered Address <span className="text-red-600">*</span></label><input name="address" value={formData.address} onChange={handleInputChange} className={inputClasses} placeholder="Full address" /></div>
-            <div><label className={labelClasses}>Country <span className="text-red-600">*</span></label><select value={formData.country} onChange={(e) => { const v = e.target.value; handleSelectChange('country', v) }} className={inputClasses}><option value="">Select Country</option>{countries.map(c => <option key={c._id} value={c.name}>{c.name}</option>)}</select></div>
-            <div><label className={labelClasses}>State / Province</label><select value={formData.stateProvince} onChange={(e) => handleSelectChange('stateProvince', e.target.value)} disabled={!formData.country} className={inputClasses}><option value="">Select State</option>{states.map(s => <option key={s._id} value={s.name}>{s.name}</option>)}</select></div>
-            <div><label className={labelClasses}>City</label><select value={formData.city} onChange={(e) => handleSelectChange('city', e.target.value)} disabled={!formData.stateProvince} className={inputClasses}><option value="">Select City</option>{cities.map(c => <option key={c._id} value={c.name}>{c.name}</option>)}</select></div>
+            <div><label className={labelClasses}>Country <span className="text-red-600">*</span></label><select value={formData.country} onChange={(e) => { const v = e.target.value; handleSelectChange('country', v) }} className={inputClasses}><option value="">Select Country</option>{loc.countries.map(c => <option key={c.countryCode} value={c.name}>{c.name}</option>)}</select></div>
+            <div><label className={labelClasses}>State / Province</label><select value={formData.stateProvince} onChange={(e) => handleSelectChange('stateProvince', e.target.value)} disabled={!formData.country} className={inputClasses}><option value="">Select State</option>{loc.states.map(s => <option key={s.stateCode} value={s.name}>{s.name}</option>)}</select></div>
+            <div><label className={labelClasses}>City</label><CityField key={formData.stateProvince} value={formData.city} onChange={(city) => handleSelectChange('city', city)} cities={loc.cities} ready={loc.citiesReady} stateChosen={!!formData.stateProvince} className={inputClasses} /></div>
             <div><label className={labelClasses}>Postal Code</label><input name="postalCode" value={formData.postalCode} onChange={handleInputChange} className={inputClasses} placeholder="PIN/Postal" /></div>
             <div><label className={labelClasses}>Company Website</label><input name="website" value={formData.website} onChange={handleInputChange} className={inputClasses} placeholder="https://..." /></div>
             <div><label className={labelClasses}>LinkedIn Company Page</label><input name="linkedInPage" value={formData.linkedInPage} onChange={handleInputChange} className={inputClasses} placeholder="https://linkedin.com/company/..." /></div>
@@ -703,7 +716,7 @@ const InternationalBuyerRegistration = () => {
           <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-5 gap-4">
             <div><label className={labelClasses}>Full Name <span className="text-red-600">*</span></label><input name="primaryContact.fullName" value={formData.primaryContact.fullName} onChange={handleInputChange} className={inputClasses} placeholder="Full name" /></div>
             <div><label className={labelClasses}>Designation</label><input name="primaryContact.designation" value={formData.primaryContact.designation} onChange={handleInputChange} className={inputClasses} placeholder="e.g. CEO, Manager" /></div>
-            <div><label className={labelClasses}>WhatsApp Number</label><input type="tel" name="primaryContact.whatsappNumber" value={formData.primaryContact.whatsappNumber} onChange={handleInputChange} className={inputClasses} placeholder="WhatsApp with country code" /></div>
+            <div><label className={labelClasses}>WhatsApp Number</label><input type="tel" name="primaryContact.whatsappNumber" value={formData.primaryContact.whatsappNumber} onChange={handleInputChange} className={inputClasses} placeholder="Country code + number" /></div>
             <div className="lg:col-span-2">
               <label className={labelClasses}>Official Email ID <span className="text-red-600">*</span></label>
               <div className="flex gap-2">
@@ -731,7 +744,7 @@ const InternationalBuyerRegistration = () => {
             <div className="lg:col-span-2">
               <label className={labelClasses}>Mobile Number <span className="text-red-600">*</span> (with Country Code)</label>
               <div className="flex gap-2">
-                <input type="tel" name="primaryContact.mobileNumber" value={formData.primaryContact.mobileNumber} onChange={handleInputChange} className={inputClasses} disabled={mobileOtpVerified || mobileOtpSent} placeholder="+91 9XXXXXXXXX" />
+                <input type="tel" name="primaryContact.mobileNumber" value={formData.primaryContact.mobileNumber} onChange={handleInputChange} className={inputClasses} disabled={mobileOtpVerified || mobileOtpSent} placeholder="Country code + number, e.g. 447911123456" />
                 {!mobileOtpVerified && !mobileOtpSent && <button type="button" onClick={() => requestOtp('mobile')} disabled={!formData.primaryContact.mobileNumber || isVerifying.mobile} className="bg-[#4d7f1d] text-white px-3 rounded text-[10px] uppercase font-bold transition hover:bg-[#3b6315] h-7 disabled:opacity-50 shrink-0">{isVerifying.mobile ? <Loader2 className="animate-spin" size={14} /> : 'OTP'}</button>}
                 {mobileOtpSent && !mobileOtpVerified && <button type="button" onClick={() => verifyOtp('mobile')} disabled={!mobileOtpValue || isVerifying.mobile} className="bg-[#23471d] text-white px-3 rounded text-[10px] uppercase font-bold transition hover:bg-[#1a3516] h-7 shrink-0">{isVerifying.mobile ? <Loader2 className="animate-spin" size={14} /> : 'VERIFY'}</button>}
                 {mobileOtpVerified && <CheckCircle size={16} className="text-emerald-500 self-center shrink-0" />}

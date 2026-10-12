@@ -1,8 +1,10 @@
 "use client";
 import React, { useState, useEffect } from "react";
 import { CheckCircle2, ShieldCheck, HeartPulse, Loader2, CheckCircle, Activity, Calendar, Heart } from "lucide-react";
-import { crmApi, verifyApi, visitorApi } from "../../../../lib/api";
+import { verifyApi, visitorApi } from "../../../../lib/api";
 import Swal from 'sweetalert2';
+import { check, errorList, EVENT_NAME, isIndia, showErrors, useLocations } from "@/lib/registration";
+import { CityField } from "../shared/LocationFields";
 import { toOptions, useDropdowns } from "@/lib/dropdowns";
 
 const HEALTH_SERVICES = [
@@ -34,11 +36,8 @@ export default function HealthCampForm() {
   const [submitted, setSubmitted] = useState(false);
   const [loading, setLoading] = useState(false);
 
-  const [countries, setCountries] = useState<any[]>([]);
-  const [states, setStates] = useState<any[]>([]);
-  const [cities, setCities] = useState<any[]>([]);
 
-  const defaultEventName = process.env.NEXT_PUBLIC_EVENT_NAME || "BOE2026";
+  const defaultEventName = EVENT_NAME;
 
   const [formData, setFormData] = useState({
     registrationFor: defaultEventName,
@@ -76,33 +75,9 @@ export default function HealthCampForm() {
     subscribeNewsletter: true
   });
 
-  useEffect(() => {
-    crmApi.getCountries()
-      .then(data => setCountries(data || []))
-      .catch(err => console.error(err));
-  }, []);
 
-  useEffect(() => {
-    if (formData.country) {
-      const countryObj = countries.find((c: any) => c.name === formData.country);
-      if (countryObj) {
-        crmApi.getStates(countryObj.countryCode)
-          .then(data => setStates(data || []))
-          .catch(err => console.error(err));
-      }
-    }
-  }, [formData.country, countries]);
-
-  useEffect(() => {
-    if (formData.state) {
-      const stateObj = states.find((s: any) => s.name === formData.state);
-      if (stateObj) {
-        crmApi.getCities(stateObj.stateCode)
-          .then(data => setCities(data || []))
-          .catch(err => console.error(err));
-      }
-    }
-  }, [formData.state, states]);
+  // Country (A–Z), states and cities from the website's backend
+  const loc = useLocations(formData.country, formData.state);
 
     const handleChange = (e: any) => {
     let { name, value, type, checked } = e.target;
@@ -115,8 +90,13 @@ export default function HealthCampForm() {
       finalValue = String(finalValue).replace(/\D/g, '').slice(0, 10);
     }
     if (name === 'pinCode' || name === 'companyPincode') {
-      finalValue = String(finalValue).replace(/\D/g, '').slice(0, 6);
+      // India: 6-digit pincode; elsewhere a postal / ZIP code
+      finalValue = isIndia(formData.country) ? String(finalValue).replace(/\D/g, '').slice(0, 6) : String(finalValue).replace(/[^A-Za-z0-9 -]/g, '').slice(0, 10);
     }
+    if (name === 'firstName' || name === 'lastName') finalValue = String(finalValue).replace(/[^\p{L}\p{M} .'-]/gu, '').replace(/^\s+/, '');
+    // A new country / state clears what depended on it
+    if (name === 'country') { setFormData((prev) => ({ ...prev, country: finalValue, state: '', city: '', companyPincode: '' })); return; }
+    if (name === 'state') { setFormData((prev) => ({ ...prev, state: finalValue, city: '' })); return; }
     if (name === 'yearOfEstablishment' || name === 'yearsInBusiness' || name === 'numberOfOutlets') {
       finalValue = String(finalValue).replace(/\D/g, '');
       if (name === 'yearOfEstablishment') finalValue = finalValue.slice(0, 4);
@@ -190,8 +170,34 @@ export default function HealthCampForm() {
     setOtpBusy(false);
   };
 
+  // Every problem at once, in one popup (the form has noValidate so the browser does not stop at the first)
+  const today = new Date().toISOString().slice(0, 10);
+  const validate = () => errorList(
+    check.name(formData.firstName, "First name"),
+    check.name(formData.lastName, "Last name"),
+    check.email(formData.email),
+    check.indianMobile(formData.mobile, "WhatsApp number"),
+    check.indianMobile(formData.alternateNo, "Alternate number", false),
+    !!formData.alternateNo && formData.alternateNo === formData.mobile && "Alternate number must be different from the WhatsApp number.",
+    check.required(formData.dateOfBirth, "Date of birth"),
+    check.dob(formData.dateOfBirth, 0),
+    check.required(formData.gender, "Gender"),
+    check.required(formData.country, "Country"),
+    check.required(formData.state, "State"),
+    check.required(formData.city, "City"),
+    formData.existingMedicalConditions === "yes" && check.required((formData as any).existingMedicalConditions_text, "Details of the medical conditions"),
+    formData.isTakingMedications === "yes" && check.required(formData.medicationNames, "Names of the medications"),
+    formData.hasAllergies === "yes" && check.required(formData.allergyDetails, "Allergy details"),
+    formData.isExperiencingSymptoms === "yes" && check.required(formData.symptomDetails, "Symptom details"),
+    !Object.values(formData.healthCheckupServices).some(Boolean) && "Please choose at least one health check-up service.",
+    check.required(formData.preferredDate, "Preferred date"),
+    !!formData.preferredDate && formData.preferredDate < today && "Preferred date cannot be in the past.",
+    check.required(formData.preferredTimeSlot, "Preferred time slot"),
+  );
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    if (!showErrors(validate())) return;
     if (!otpVerified) {
       Swal.fire({ scrollbarPadding: false, icon: 'warning', title: 'Verification Required', text: 'Please verify your WhatsApp number with OTP.' });
       return;
@@ -199,10 +205,11 @@ export default function HealthCampForm() {
     setLoading(true);
     try {
       const res = await visitorApi.submitHealthCamp(formData);
-      if (res) {
+      if (res.ok) {
         setSubmitted(true);
       } else {
-        Swal.fire({ scrollbarPadding: false, icon: 'error', title: 'Submission Failed', text: 'Failed to submit registration.' });
+        // The server's reason, e.g. "This mobile number is already registered"
+        Swal.fire({ scrollbarPadding: false, icon: 'error', title: 'Registration Failed', text: res.message });
       }
     } catch (error) {
       Swal.fire({ scrollbarPadding: false, icon: 'error', title: 'Error', text: 'Something went wrong.' });
@@ -231,7 +238,7 @@ export default function HealthCampForm() {
   }
 
   return (
-    <form onSubmit={handleSubmit} className="w-full space-y-2 animate-in fade-in duration-500">
+    <form onSubmit={handleSubmit} noValidate className="w-full space-y-2 animate-in fade-in duration-500">
       <div className="flex items-center gap-3 mb-6">
         <div className="w-10 h-10 rounded-full bg-[#e11d48] flex items-center justify-center shrink-0 shadow-md">
           <HeartPulse size={18} className="text-white" />
@@ -300,22 +307,19 @@ export default function HealthCampForm() {
             <label className={labelClasses}>Country <span className="text-red-600">*</span></label>
             <select required name="country" value={formData.country} onChange={handleChange} className={inputClasses}>
               <option value="">Select Country</option>
-              {countries.length > 0 ? countries.map((c: any) => <option key={c.countryCode} value={c.name}>{c.name}</option>) : <option value="India">India</option>}
+              {loc.countries.map((c) => <option key={c.countryCode} value={c.name}>{c.name}</option>)}
             </select>
           </div>
           <div>
             <label className={labelClasses}>State <span className="text-red-600">*</span></label>
             <select required name="state" value={formData.state} onChange={handleChange} className={inputClasses} disabled={!formData.country}>
               <option value="">Select State</option>
-              {states.map((s: any) => <option key={s.stateCode} value={s.name}>{s.name}</option>)}
+              {loc.states.map((s) => <option key={s.stateCode} value={s.name}>{s.name}</option>)}
             </select>
           </div>
           <div>
             <label className={labelClasses}>City <span className="text-red-600">*</span></label>
-            <select required name="city" value={formData.city} onChange={handleChange} className={inputClasses} disabled={!formData.state}>
-              <option value="">Select City</option>
-              {cities.map((c: any) => <option key={c.name} value={c.name}>{c.name}</option>)}
-            </select>
+            <CityField key={formData.state} value={formData.city} onChange={(city) => setFormData((prev) => ({ ...prev, city }))} cities={loc.cities} ready={loc.citiesReady} stateChosen={!!formData.state} className={inputClasses} required />
           </div>
         </div>
       </div>

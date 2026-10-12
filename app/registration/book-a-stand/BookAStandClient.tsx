@@ -253,6 +253,9 @@ const BookAStand = ({ disabledSections = [] }: { disabledSections?: string[] }) 
     const [countries, setCountries] = useState<any[]>([]);
     const [states, setStates] = useState<any[]>([]);
     const [cities, setCities] = useState<any[]>([]);
+    // State whose cities have loaded, and whether the visitor types the city ("Other" / no cities listed)
+    const [citiesLoadedFor, setCitiesLoadedFor] = useState('');
+    const [cityTyping, setCityTyping] = useState(false);
     const [eventHighlights, setEventHighlights] = useState<any>(null);
     const [settings, setSettings] = useState<any>(null);
     const [counters, setCounters] = useState<any[]>([]);
@@ -344,6 +347,7 @@ const BookAStand = ({ disabledSections = [] }: { disabledSections?: string[] }) 
             if (selectedState && selectedState.stateCode) {
                 crmApi.getCities(selectedState.stateCode).then(cityRes => {
                     setCities(Array.isArray(cityRes) ? cityRes : ((cityRes as any).data || []));
+                    setCitiesLoadedFor(formData.state);
                 }).catch(err => console.error("Error fetching cities:", err));
             }
         } else {
@@ -597,6 +601,14 @@ const BookAStand = ({ disabledSections = [] }: { disabledSections?: string[] }) 
 
         if (name === 'state') {
             setFormData(prev => ({ ...prev, state: value, city: '' }));
+            setCityTyping(false);
+            return;
+        }
+
+        // "Other" in the city list: the visitor types the city instead
+        if (name === 'city' && value === 'Other') {
+            setCityTyping(true);
+            setFormData(prev => ({ ...prev, city: '' }));
             return;
         }
 
@@ -779,8 +791,20 @@ const BookAStand = ({ disabledSections = [] }: { disabledSections?: string[] }) 
             return;
         }
 
+        // Address details the browser cannot check: a city for every state, and the pincode format
+        const addressErrors = [
+            !formData.city.trim() && 'City is required. If your city is not listed, choose "Other" and type it.',
+            exhibitorType === 'domestic'
+                ? !/^[1-9]\d{5}$/.test(formData.pincode) && 'Pincode must be 6 digits and cannot start with 0.'
+                : !/^[A-Za-z0-9][A-Za-z0-9 -]{1,8}[A-Za-z0-9]$/.test(formData.pincode) && 'Please enter a valid postal / ZIP code.',
+        ].filter(Boolean) as string[];
+        if (addressErrors.length) {
+            Swal.fire({ icon: 'warning', title: 'Please check the address', html: addressErrors.join('<br/>') });
+            return;
+        }
+
         if (!formData.participation.stallNo) {
-            Swal.fire('Error', 'Please select a stall first', 'error');
+            Swal.fire('Error', events.length ? 'Please select a stall first' : 'Stall booking is not open yet. Please contact our sales team to book a stall.', 'error');
             return;
         }
 
@@ -1337,16 +1361,33 @@ const BookAStand = ({ disabledSections = [] }: { disabledSections?: string[] }) 
                                                     </div>
                                                     <div>
                                                         <label className={labelClasses}>CITY <span className="text-red-500">*</span></label>
-                                                        <Select onValueChange={(v) => handleSelectChange('city', v)} value={formData.city} disabled={!formData.state}>
-                                                            <SelectTrigger className={inputClasses}>
-                                                                <SelectValue placeholder="Select Here" />
-                                                            </SelectTrigger>
-                                                            <SelectContent>
-                                                                {filteredCities.map(c => (
-                                                                    <SelectItem key={c._id} value={c.name} className="text-xs">{c.name}</SelectItem>
-                                                                ))}
-                                                            </SelectContent>
-                                                        </Select>
+                                                        {formData.state && citiesLoadedFor === formData.state && (cityTyping || filteredCities.length === 0) ? (
+                                                            <div className="flex gap-1">
+                                                                <input
+                                                                    required
+                                                                    name="city"
+                                                                    value={formData.city}
+                                                                    onChange={(e) => setFormData(prev => ({ ...prev, city: e.target.value.replace(/[^\p{L}\p{M} .'-]/gu, '').replace(/^\s+/, '') }))}
+                                                                    maxLength={60}
+                                                                    placeholder="Type your city"
+                                                                    className={inputClasses}
+                                                                />
+                                                                {filteredCities.length > 0 && (
+                                                                    <button type="button" onClick={() => { setCityTyping(false); setFormData(prev => ({ ...prev, city: '' })); }} className="shrink-0 rounded-[2px] border border-slate-300 px-2 text-[10px] font-bold uppercase text-slate-600 hover:bg-slate-50">List</button>
+                                                                )}
+                                                            </div>
+                                                        ) : (
+                                                            <Select onValueChange={(v) => handleSelectChange('city', v)} value={formData.city} disabled={!formData.state}>
+                                                                <SelectTrigger className={inputClasses}>
+                                                                    <SelectValue placeholder={formData.state && citiesLoadedFor !== formData.state ? "Loading cities..." : "Select Here"} />
+                                                                </SelectTrigger>
+                                                                <SelectContent>
+                                                                    {filteredCities.map(c => (
+                                                                        <SelectItem key={c._id} value={c.name} className="text-xs">{c.name === 'Other' ? 'Other (type your city)' : c.name}</SelectItem>
+                                                                    ))}
+                                                                </SelectContent>
+                                                            </Select>
+                                                        )}
                                                     </div>
 
                                                     {/* <div>
@@ -1364,7 +1405,7 @@ const BookAStand = ({ disabledSections = [] }: { disabledSections?: string[] }) 
                                                     </div> */}
                                                     <div>
                                                         <label className={labelClasses}>PINCODE/Postal Code <span className="text-red-500">*</span></label>
-                                                        <input required name="pincode" value={formData.pincode} onChange={(e) => setFormData(prev => ({ ...prev, pincode: e.target.value.replace(/\D/g, '') }))} placeholder="Write Here.." className={inputClasses} inputMode="numeric" />
+                                                        <input required name="pincode" value={formData.pincode} onChange={(e) => setFormData(prev => ({ ...prev, pincode: exhibitorType === 'domestic' ? e.target.value.replace(/\D/g, '').slice(0, 6) : e.target.value.replace(/[^A-Za-z0-9 -]/g, '').slice(0, 10) }))} placeholder={exhibitorType === 'domestic' ? "6-digit Pincode" : "Postal / ZIP Code"} className={inputClasses} inputMode={exhibitorType === 'domestic' ? "numeric" : "text"} />
                                                     </div>
                                                     <div>
                                                         <label className={labelClasses}>LANDLINE NO.</label>
@@ -1715,7 +1756,9 @@ const BookAStand = ({ disabledSections = [] }: { disabledSections?: string[] }) 
                                                                             <SelectItem key={s._id || s.id} value={String(s._id || s.id)} className="text-xs">Stall {s.stallNumber || s.stallName || s.name || s.id}</SelectItem>
                                                                         ))
                                                                     ) : (
-                                                                        <div className="text-xs p-2 text-slate-500 text-center">No stalls available</div>
+                                                                        <div className="text-xs p-2 text-slate-500 text-center">
+                                                                            {events.length ? "No stalls available right now. Please contact our sales team." : "Stall booking is not open yet. Please contact our sales team."}
+                                                                        </div>
                                                                     )}
                                                                 </SelectContent>
                                                             </Select>
@@ -1849,9 +1892,11 @@ const BookAStand = ({ disabledSections = [] }: { disabledSections?: string[] }) 
                                                             </label>
                                                         </div>
 
+                                                        {/* Discount Offers image — hidden for now
                                                         <div className="w-[25%] flex justify-end items-end">
                                                             <Image width={0} height={0} sizes="100vw" loading="lazy" decoding="async" src={DiscountImg.src} alt="Discount Offers" className="w-full h-[160px] object-contain" />
                                                         </div>
+                                                        */}
                                                     </div>
 
                                                     {/* Right: Summary Card */}

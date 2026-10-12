@@ -5,7 +5,7 @@ import gsap from "gsap";
 import Image from "next/image";
 import Link from "next/link";
 import { ArrowLeft, ArrowRight, ArrowUpRight, Check, CheckCheck, ChevronDown, FileText, LayoutGrid, ChevronRight, Handshake, Headset, HeartHandshake, Info, List, LogOut, MessageCircleMore, Minus, Presentation, Send, Settings, Store, ThumbsDown, ThumbsUp, Users, X, type LucideIcon } from "lucide-react";
-import { API_URL, verifyApi } from "@/lib/api";
+import { API_URL, ownVerifyApi, verifyApi } from "@/lib/api";
 import { SITE_CONFIG } from "@/app/constants/siteConfig";
 import { clearChatSession, newSessionId, readChatSession, saveChatSession, saveFreeAsked } from "./chatSession";
 import { useChatConfig, type ChatButton, type ChatFormField, type ChatFormSettings } from "./chatConfig";
@@ -56,6 +56,8 @@ type Message = {
     receipt?: { stall: string };
     /** Follow-up buttons after a quotation request: brochure, main menu, WhatsApp, end chat */
     followUp?: { stall: string };
+    /** A centred "Earlier chat · 9 Oct" / "Today" line between conversations (no bubble) */
+    divider?: string;
 };
 
 type OpenSides = 1 | 2 | 3;
@@ -350,6 +352,12 @@ const TEXT = {
         subtitle: "Bharat Organic Expo Assistant",
         greeting: "Namo Gange Namaskar! 🙏\nHow can I help you today?",
         greetingName: (name: string) => `Namo Gange Namaskar, ${name}! 🙏\nHow can I help you today?`,
+        askName: (bot: string) => `Namo Gange Namaskar! 🙏\nI'm ${bot}, your expo assistant. May I know your name?`,
+        namePh: "Type your name...",
+        nameError: "Please type just your name (letters only), e.g. Rohit Kumar.",
+        welcomeBackName: (name: string) => `Welcome back, ${name}! 🙏\nYour earlier chat is above. How can I help you today?`,
+        earlierChat: (date: string) => `Earlier chat · ${date}`,
+        today: "Today",
         welcomeBack: "Namo Gange Namaskar! 🙏\nWelcome back! How can I help you today?",
         viewPrevious: "View my previous enquiry",
         askNew: "Ask a new question",
@@ -420,6 +428,12 @@ const TEXT = {
         subtitle: "भारत ऑर्गेनिक एक्सपो सहायक",
         greeting: "नमो गंगे नमस्कार! 🙏\nमैं आपकी क्या मदद कर सकता हूँ?",
         greetingName: (name: string) => `नमो गंगे नमस्कार, ${name}! 🙏\nमैं आपकी क्या मदद कर सकता हूँ?`,
+        askName: (bot: string) => `नमो गंगे नमस्कार! 🙏\nमैं ${bot} हूँ, आपका एक्सपो सहायक। क्या मैं आपका नाम जान सकता हूँ?`,
+        namePh: "अपना नाम लिखें...",
+        nameError: "कृपया सिर्फ़ अपना नाम लिखें (केवल अक्षर), जैसे रोहित कुमार।",
+        welcomeBackName: (name: string) => `फिर से स्वागत है, ${name}! 🙏\nआपकी पिछली चैट ऊपर है। मैं आपकी क्या मदद कर सकता हूँ?`,
+        earlierChat: (date: string) => `पिछली चैट · ${date}`,
+        today: "आज",
         welcomeBack: "नमो गंगे नमस्कार! 🙏\nफिर से स्वागत है! मैं आपकी क्या मदद कर सकता हूँ?",
         viewPrevious: "मेरी पिछली पूछताछ देखें",
         askNew: "नया सवाल पूछें",
@@ -651,6 +665,25 @@ const validateLead = ({ name, phone }: LeadForm): LeadErrors => {
     else if (phone.length !== 10) errors.phone = "Mobile number must be exactly 10 digits.";
     else if (!/^[6-9]/.test(phone)) errors.phone = "Mobile number must start with 6, 7, 8 or 9.";
     return errors;
+};
+
+/** "my name is rohit kumar" / "Mera naam Rohit hai" / "rohit" → "Rohit Kumar" / "Rohit"; "" when it is not a name */
+const NAME_PREFIX = /^(?:(?:hi|hello|hey|namaste|namaskar)[\s,!.]*)?(?:my name is|my name's|i am|i'm|im|this is|it's|its|mera naam|mera name|main|mai|me)\s+/i;
+const NAME_SUFFIX = /\s+(?:hai|hu|hoon|hun|here|h)[.!]*$/i;
+const parseName = (raw: string) => {
+    const n = cleanName(raw.trim().replace(NAME_PREFIX, "").replace(NAME_SUFFIX, ""))
+        .trim()
+        .replace(/[.'-]+$/, "");
+    if (n.length < 2 || n.length > 40 || !NAME_PATTERN.test(n) || n.split(/\s+/).length > 4) return "";
+    return n
+        .split(" ")
+        .map((w) => (w ? w[0].toLocaleUpperCase() + w.slice(1) : w))
+        .join(" ");
+};
+
+const shortDate = (iso: string | undefined, lang: Lang) => {
+    const d = iso ? new Date(iso) : null;
+    return d && !Number.isNaN(d.getTime()) ? d.toLocaleDateString(lang === "hi" ? "hi-IN" : "en-IN", { day: "numeric", month: "short" }) : "";
 };
 
 // ─── Quotation request (inside the chat) ─────────────────────────────────────
@@ -1377,8 +1410,8 @@ const VerifyCard: React.FC<VerifyCardProps> = ({ lang, done, onVerified }) => {
         setError("");
         try {
             const res = isPhone
-                ? await verifyApi.sendPhoneOtp(value, HISTORY_OTP_PROFILE)
-                : await verifyApi.sendEmailOtp(value.trim().toLowerCase(), HISTORY_OTP_PROFILE);
+                ? await ownVerifyApi.sendPhoneOtp(value, HISTORY_OTP_PROFILE)
+                : await ownVerifyApi.sendEmailOtp(value.trim().toLowerCase(), HISTORY_OTP_PROFILE);
             if (!res?.success) throw new Error(res?.msg || res?.message || "");
             setSentTo(isPhone ? `+91 ${value}` : value.trim());
             setOtp("");
@@ -1401,7 +1434,7 @@ const VerifyCard: React.FC<VerifyCardProps> = ({ lang, done, onVerified }) => {
         setError("");
         try {
             const t = target();
-            const res = "phone" in t ? await verifyApi.verifyPhoneOtp(t.phone, otp) : await verifyApi.verifyEmailOtp(t.email, otp);
+            const res = "phone" in t ? await ownVerifyApi.verifyPhoneOtp(t.phone, otp) : await ownVerifyApi.verifyEmailOtp(t.email, otp);
             if (!res?.success) throw new Error(res?.msg || res?.message || "");
             const loadError = await onVerified(t);
             if (loadError) throw new Error(loadError);
@@ -1692,6 +1725,13 @@ const ChatPanel: React.FC<Props> = ({ open, onClose }) => {
     const [feedback, setFeedback] = useState<"yes" | "no" | null>(null);
     // The callback form's confirmation (Forms & Routing), shown on the "Chat ended" screen
     const [endedNote, setEndedNote] = useState("");
+    // The chat asks the visitor's name first (typed in the message box); then it is saved under that name
+    const askingName = !visitorName && !ended;
+    // This panel started by asking the name, so the first bubble keeps that question
+    const [nameStep, setNameStep] = useState(() => !(initial.status === "active" && initial.name));
+    const [nameError, setNameError] = useState("");
+    // An earlier conversation was loaded (or tried) for this visitor
+    const [restored, setRestored] = useState(false);
 
     const scrollRef = useRef<HTMLDivElement>(null);
     const inputRef = useRef<HTMLInputElement>(null);
@@ -1820,10 +1860,14 @@ const ChatPanel: React.FC<Props> = ({ open, onClose }) => {
         setEndedNote("");
         setFeedback(null);
         setReturning(false);
-        setAskDetails(!!notice);
+        // The chat asks for the name again; `notice` (e.g. session expired) is shown above the box
+        setAskDetails(false);
+        setNameStep(true);
+        setNameError(notice);
+        setRestored(false);
         setForm({ name: "", phone: "" });
         setFieldErrors({});
-        setFormError(notice);
+        setFormError("");
         resetOtp();
     };
 
@@ -1847,9 +1891,15 @@ const ChatPanel: React.FC<Props> = ({ open, onClose }) => {
         }).catch(() => {});
     };
 
-    const sendMessage = async (text: string, topic = "", name = visitorName) => {
+    const sendMessage = async (text: string, topic = "", name = visitorName, sid = sessionId) => {
         const message = text.trim().slice(0, 1000);
         if (!message || loading) return;
+        // No name yet: the chat asks for it first and sends this question right after
+        if (!name) {
+            setPending({ message, topic: topic || message });
+            setInput("");
+            return;
+        }
 
         // Visitors chat freely at first; name + mobile (OTP) are asked before question FREE_QUESTIONS + 1
         if (!name && freeAsked >= FREE_QUESTIONS) {
@@ -1868,10 +1918,10 @@ const ChatPanel: React.FC<Props> = ({ open, onClose }) => {
             setPending({ message, topic: topic || message });
             return;
         }
-        saveChatSession(sessionId, name || "");
+        saveChatSession(sid, name || "");
         if (!name) {
             setFreeAsked(freeAsked + 1);
-            saveFreeAsked(sessionId, freeAsked + 1);
+            saveFreeAsked(sid, freeAsked + 1);
         }
 
         setInput("");
@@ -1885,7 +1935,7 @@ const ChatPanel: React.FC<Props> = ({ open, onClose }) => {
             const res = await fetch(CHAT_URL, {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ sessionId, message, pageUrl: window.location.href }),
+                body: JSON.stringify({ sessionId: sid, message, pageUrl: window.location.href }),
             });
 
             if (!res.ok || !res.body) {
@@ -1956,6 +2006,86 @@ const ChatPanel: React.FC<Props> = ({ open, onClose }) => {
             }
         }
     };
+
+    /**
+     * Saves the visitor's name (POST /chat/start) and greets them by name. If the same IP chatted
+     * under the same name before, that chat continues and its messages are shown above a "Today"
+     * line. `typed` = the name was just typed (shown as the visitor's bubble); otherwise this is a
+     * page reload of a named chat, which brings its messages back.
+     */
+    const startWithName = async (name: string, typed: boolean) => {
+        setLoading(true);
+        setNameError("");
+        if (typed) {
+            setInput("");
+            setMessages((prev) => [...prev, { role: "user", content: name }]);
+        }
+        let next: { sid: string; question: { message: string; topic: string } | null } | null = null;
+        try {
+            const res = await fetch(`${CHAT_URL}/start`, {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ sessionId, name, pageUrl: window.location.href }),
+            });
+            const json = await res.json().catch(() => null);
+            if (!res.ok) throw new Error(json?.errors?.[0]?.split(": ").pop() || json?.message || "");
+            const data = json?.data as { sessionId?: string; messages?: { role: "user" | "assistant"; content: string; createdAt?: string }[] };
+            const sid = data?.sessionId || sessionId;
+            const earlier = (data?.messages || []).filter((m) => m.content?.trim());
+
+            setSessionId(sid);
+            saveChatSession(sid, name);
+            setVisitorName(name);
+            setAskDetails(false);
+
+            const welcome: Message = { role: "assistant", content: earlier.length ? t.welcomeBackName(name) : t.greetingName(name), menu: true };
+            setMessages((prev) => {
+                const nameBubble = typed ? prev.slice(-1) : [];
+                if (!earlier.length) return [...nameBubble, welcome];
+                return [
+                    { role: "assistant", content: "", divider: t.earlierChat(shortDate(earlier[0].createdAt, lang)) },
+                    ...earlier.map((m) => ({ role: m.role, content: m.content })),
+                    { role: "assistant", content: "", divider: t.today },
+                    ...nameBubble,
+                    welcome,
+                ];
+            });
+            next = { sid, question: pending };
+            setPending(null);
+        } catch (err) {
+            if (typed) {
+                setMessages((prev) => prev.slice(0, -1));
+                setInput(name);
+                setNameError((err as Error).message || t.genericError);
+            }
+        } finally {
+            setLoading(false);
+        }
+        // A question asked before the name was given goes out now, in the (maybe resumed) chat
+        if (next?.question) sendMessage(next.question.message, next.question.topic, name, next.sid);
+    };
+
+    const submitName = () => {
+        if (loading) return;
+        setRestored(true);
+        const name = parseName(input);
+        if (!name) {
+            setNameError(t.nameError);
+            return;
+        }
+        startWithName(name, true);
+    };
+
+    // A page reload of a named chat: bring its messages back once the panel opens
+    useEffect(() => {
+        if (!open || !visitorName || restored || messages.length) return;
+        const id = window.setTimeout(() => {
+            setRestored(true);
+            startWithName(visitorName, false);
+        }, 0);
+        return () => window.clearTimeout(id);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [open, visitorName, restored]);
 
     /** Scripted answer from FLOW: no contact details needed; a short "typing" pause so it reads like a reply */
     const quoteOff = config?.forms?.quote?.active === false;
@@ -2642,7 +2772,7 @@ const ChatPanel: React.FC<Props> = ({ open, onClose }) => {
                         <div data-chat-anim className="relative flex items-start gap-2.5">
                             <BotAvatar />
                             <div className="max-w-[82%] bg-white rounded-2xl rounded-tl-md shadow-[0_1px_2px_rgba(11,41,18,0.06)] border border-[#3b8c2a]/10 px-3.5 py-2 text-[13.5px] text-slate-800">
-                                {(returning ? t.welcomeBack : visitorName && !showWelcome ? t.greetingName(visitorName) : t.greeting).split("\n").map((line, i) =>
+                                {(nameStep ? t.askName(botName) : returning ? t.welcomeBack : visitorName && !showWelcome ? t.greetingName(visitorName) : t.greeting).split("\n").map((line, i) =>
                                     i === 0 ? (
                                         <p key={i} className="font-semibold text-[#0b2912]">
                                             {line}
@@ -2654,7 +2784,7 @@ const ChatPanel: React.FC<Props> = ({ open, onClose }) => {
                             </div>
                         </div>
 
-                        {showWelcomeBack ? (
+                        {askingName ? null : showWelcomeBack ? (
                             <div className="relative ml-[42px] grid grid-cols-2 gap-2">
                                 {[
                                     [t.viewPrevious, "history"],
@@ -2676,7 +2806,13 @@ const ChatPanel: React.FC<Props> = ({ open, onClose }) => {
                         )}
 
                         {messages.map((m, i) =>
-                            m.role === "assistant" && !m.content && !m.receipt ? null : m.role === "user" ? (
+                            m.divider ? (
+                                <div key={i} className="relative flex items-center gap-3 py-1 text-[11.5px] font-medium text-slate-500">
+                                    <span className="flex-1 h-px bg-[#dfe6d8]" aria-hidden="true" />
+                                    {m.divider}
+                                    <span className="flex-1 h-px bg-[#dfe6d8]" aria-hidden="true" />
+                                </div>
+                            ) : m.role === "assistant" && !m.content && !m.receipt ? null : m.role === "user" ? (
                                 <div key={i} className="relative self-end flex items-end gap-1 max-w-[85%]">
                                     <div className="bg-[#14532d] text-white rounded-2xl rounded-tr-md shadow-sm px-4 py-2.5 whitespace-pre-wrap break-words">
                                         {m.content}
@@ -2988,7 +3124,8 @@ const ChatPanel: React.FC<Props> = ({ open, onClose }) => {
                     <form
                         onSubmit={(e) => {
                             e.preventDefault();
-                            sendMessage(input);
+                            if (askingName) submitName();
+                            else sendMessage(input);
                         }}
                         data-chat-anim
                         className="shrink-0 px-3 pt-2 pb-2 border-t border-[#e3e9dc]/70 bg-white/60 backdrop-blur-sm"
@@ -2997,10 +3134,15 @@ const ChatPanel: React.FC<Props> = ({ open, onClose }) => {
                             <input
                                 ref={inputRef}
                                 value={input}
-                                onChange={(e) => setInput(e.target.value)}
+                                onChange={(e) => {
+                                    setInput(e.target.value);
+                                    if (nameError) setNameError("");
+                                }}
                                 disabled={loading}
-                                maxLength={1000}
-                                placeholder={loading ? t.typing : placeholder}
+                                maxLength={askingName ? 60 : 1000}
+                                autoComplete={askingName ? "name" : "off"}
+                                aria-invalid={askingName && !!nameError}
+                                placeholder={loading ? t.typing : askingName ? t.namePh : placeholder}
                                 aria-label="Type your message"
                                 className="flex-1 min-w-0 bg-transparent text-[13.5px] text-slate-800 placeholder:text-slate-400 outline-none disabled:cursor-not-allowed"
                             />
@@ -3013,7 +3155,11 @@ const ChatPanel: React.FC<Props> = ({ open, onClose }) => {
                                 <Send className="w-4 h-4 -ml-0.5" strokeWidth={2.2} aria-hidden="true" />
                             </button>
                         </div>
-                        {showFollowUp ? (
+                        {askingName && nameError ? (
+                            <p role="alert" className="mt-1.5 px-2 text-[11.5px] text-red-600">
+                                {nameError}
+                            </p>
+                        ) : showFollowUp ? (
                             <p className="mt-1.5 px-2 text-[11px] text-slate-500">{t.footerShort}</p>
                         ) : inChat ? (
                             <div className="mt-1.5 px-2 flex items-center justify-between text-[11px] text-slate-500">

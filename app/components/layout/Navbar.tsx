@@ -51,7 +51,8 @@ const navLinks = [
     {
         label: "Opportunities",
         dropdown: [
-            { label: "Sponsorship", path: "/sponsership", icon: FileCheck, description: "Get your complimentary visitor pass today" },
+            // Hidden from the Opportunities dropdown on request; still linked from Register Now
+            // { label: "Sponsorship", path: "/sponsership", icon: FileCheck, description: "Get your complimentary visitor pass today" },
             { label: "E-Promotion Opportunity", path: "/e-promotion-web", icon: ShoppingBag, description: "Explore opportunities as a domestic or international buyer" },
             { label: "Partnership / Collaboration", path: "/partnership", icon: Sparkles, description: "Experience the latest in health & wellness" },
         ],

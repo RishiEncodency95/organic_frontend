@@ -116,6 +116,10 @@ export default function Footer({ initialFooterData }: { initialFooterData?: any 
   const phoneNumber = footerData?.phoneNumber || "+91 96549 00525";
   const contactEmail = footerData?.contactEmail || "info@namogangewellness.com";
   const contactAddress = footerData?.contactAddress || "12/29, Site II Industrial Area, Loni Rd, Mohan Nagar, Ghaziabad, Uttar Pradesh 201007, India";
+  // Opens the same address that is shown above it (the admin can change it)
+  const mapHref =
+    footerData?.mapUrl ||
+    `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(String(contactAddress).replace(/\s+/g, " ").trim())}`;
   const conferenceHelpline = footerData?.conferenceHelpline || footerData?.altPhoneNumber || "+91 98183 53841";
   const websiteUrl = footerData?.websiteUrl || "www.bharatorganicexpo.com";
   const websiteHref = websiteUrl.startsWith("http://") || websiteUrl.startsWith("https://")
@@ -283,7 +287,7 @@ export default function Footer({ initialFooterData }: { initialFooterData?: any 
               {contactAddress}
             </p>
             <a
-              href="https://www.google.com/maps/search/?api=1&query=12/29,+Site+II+Industrial+Area,+Loni+Rd,+Mohan+Nagar,+Ghaziabad,+Uttar+Pradesh+201007,+India"
+              href={mapHref}
               target="_blank"
               rel="noopener noreferrer"
               className="inline-block border border-white/40 text-gray-200 text-[10px] font-semibold px-3 py-1 rounded-md mb-4 uppercase tracking-wider hover:bg-white hover:text-[#001810] transition-colors font-poppins bg-white/5"

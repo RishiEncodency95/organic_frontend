@@ -2,8 +2,10 @@
 import React, { useState, useEffect } from "react";
 import RegistrationSuccess from "./RegistrationSuccess";
 import { Users, Plus, Trash2, Globe2, Loader2, CheckCircle, X, ChevronsUpDown, ShieldCheck } from "lucide-react";
-import { crmApi, verifyApi, visitorApi, ihweSettingsApi } from "../../../../lib/api";
+import { verifyApi, visitorApi, ihweSettingsApi } from "../../../../lib/api";
 import Swal from 'sweetalert2';
+import { check, errorList, EVENT_NAME, isIndia, sameName, showErrors, useLocations } from "@/lib/registration";
+import { CityField } from "../shared/LocationFields";
 import { toOptions, useDropdowns } from "@/lib/dropdowns";
 
 const MIN_PERSONS = 5;
@@ -52,11 +54,8 @@ export default function GroupVisitorForm() {
   const [registrationNo, setRegistrationNo] = useState("");
   const [loading, setLoading] = useState(false);
 
-  const [countries, setCountries] = useState<any[]>([]);
-  const [states, setStates] = useState<any[]>([]);
-  const [cities, setCities] = useState<any[]>([]);
 
-  const defaultEventName = process.env.NEXT_PUBLIC_EVENT_NAME || "BOE2026";
+  const defaultEventName = EVENT_NAME;
   const [requireOtp, setRequireOtp] = useState(true);
 
   useEffect(() => {
@@ -71,43 +70,19 @@ export default function GroupVisitorForm() {
   const [company, setCompany] = useState({ ...defaultCompany, registrationFor: defaultEventName });
   const [persons, setPersons] = useState<Person[]>(Array.from({ length: MIN_PERSONS }, emptyPerson));
 
-  useEffect(() => {
-    crmApi.getCountries()
-      .then(data => setCountries(data || []))
-      .catch(err => console.error(err));
-  }, []);
-
-  useEffect(() => {
-    if (company.country) {
-      const countryObj = countries.find((c: any) => c.name === company.country);
-      if (countryObj) {
-        crmApi.getStates(countryObj.countryCode)
-          .then(data => setStates(data || []))
-          .catch(err => console.error(err));
-      }
-    }
-  }, [company.country, countries]);
-
-  useEffect(() => {
-    if (company.state) {
-      const stateObj = states.find((s: any) => s.name === company.state);
-      if (stateObj) {
-        crmApi.getCities(stateObj.stateCode)
-          .then(data => setCities(data || []))
-          .catch(err => console.error(err));
-      }
-    }
-  }, [company.state, states]);
+  // Countries (A–Z), states and cities from the website's backend
+  const loc = useLocations(company.country, company.state);
 
   const handleCompanyChange = (e: any) => {
     let { name, value, type, checked } = e.target;
-    if (name === "country") { setCompany(prev => ({ ...prev, country: value, state: "", city: "" })); setStates([]); setCities([]); return; }
-    if (name === "state") { setCompany(prev => ({ ...prev, state: value, city: "" })); setCities([]); return; }
+    if (name === "country") { setCompany(prev => ({ ...prev, country: value, state: "", city: "", companyPincode: "" })); return; }
+    if (name === "state") { setCompany(prev => ({ ...prev, state: value, city: "" })); return; }
     
     let finalValue = type === "checkbox" ? checked : value;
 
     if (name === 'pinCode' || name === 'companyPincode') {
-      finalValue = String(finalValue).replace(/\D/g, '').slice(0, 6);
+      // India: 6-digit pincode; elsewhere a postal / ZIP code
+      finalValue = isIndia(company.country) ? String(finalValue).replace(/\D/g, '').slice(0, 6) : String(finalValue).replace(/[^A-Za-z0-9 -]/g, '').slice(0, 10);
     }
     if (name === 'mobileNo' || name === 'alternateNo' || name === 'whatsappNumber') {
       finalValue = String(finalValue).replace(/\D/g, '').slice(0, 10);
@@ -121,6 +96,8 @@ export default function GroupVisitorForm() {
     if (field === 'mobileNo') {
       finalValue = String(finalValue).replace(/\D/g, '').slice(0, 10);
     }
+    if (field === 'firstName' || field === 'lastName') finalValue = finalValue.replace(/[^\p{L}\p{M} .'-]/gu, '').replace(/^\s+/, '');
+    if (field === 'email') finalValue = finalValue.trim();
     setPersons(prev => prev.map((p, i) => i === index ? { ...p, [field]: finalValue } : p));
   };
 
@@ -153,7 +130,8 @@ export default function GroupVisitorForm() {
 
   const handleRequestOtp = async (type: 'email' | 'mobile') => {
     const value = type === 'email' ? persons[0].email : persons[0].mobileNo;
-    if (!value) return;
+    const problem = type === 'email' ? check.email(value, 'Person 1 email') : check.indianMobile(value, 'Person 1 WhatsApp number');
+    if (problem) { showErrors([problem]); return; }
 
     setIsVerifying(prev => ({ ...prev, [type]: true }));
     try {
@@ -163,6 +141,8 @@ export default function GroupVisitorForm() {
 
       if (res && res.success) {
         setOtpSent(prev => ({ ...prev, [type]: true }));
+        // The Resend link counts down from 30s
+        setResendTimers(prev => ({ ...prev, [type]: 30 }));
         Swal.fire({ scrollbarPadding: false, icon: 'success', title: 'OTP Sent', text: `OTP sent to your ${type}.`, timer: 2000, showConfirmButton: false });
       } else {
         Swal.fire({ scrollbarPadding: false, icon: 'error', title: 'Error', text: res?.message || 'Failed to send OTP.' });
@@ -198,11 +178,50 @@ export default function GroupVisitorForm() {
     setIsVerifying(prev => ({ ...prev, [type]: false }));
   };
 
+  // Step 1 (checked before "Next Step"): the company
+  const validateCompany = () => errorList(
+    check.required(company.companyName, "Company name"),
+    check.required(company.companyWebsite, "Company website"),
+    check.website(company.companyWebsite, "Company website"),
+    check.required(company.industry, "Industry / sector"),
+    check.required(company.companySize, "Company size"),
+    check.required(company.country, "Country"),
+    check.required(company.state, "State"),
+    check.required(company.city, "City"),
+    check.postal(company.companyPincode, company.country, true),
+  );
+
+  // Steps 2–3: every member, no member twice (same name, email or number), and the declarations
+  const validateMembers = () => {
+    const errors: (string | false)[] = [];
+    persons.forEach((p, i) => {
+      const who = `Person ${i + 1}`;
+      errors.push(
+        check.name(p.firstName, `${who} first name`),
+        check.name(p.lastName, `${who} last name`),
+        check.required(p.designation, `${who} designation`),
+        check.required(p.gender, `${who} gender`),
+        check.email(p.email, `${who} email`),
+        check.indianMobile(p.mobileNo, `${who} WhatsApp number`),
+      );
+      persons.slice(0, i).forEach((q, j) => {
+        const other = `Person ${j + 1}`;
+        if (p.firstName && q.firstName && sameName(`${p.firstName} ${p.lastName}`, `${q.firstName} ${q.lastName}`)) errors.push(`${who} has the same name as ${other}. Each member must be a different person.`);
+        if (p.email && q.email && p.email.toLowerCase() === q.email.toLowerCase()) errors.push(`${who} has the same email as ${other}.`);
+        if (p.mobileNo && p.mobileNo === q.mobileNo) errors.push(`${who} has the same WhatsApp number as ${other}.`);
+      });
+    });
+    errors.push(
+      !company.purposeOfVisit.length && "Please choose at least one purpose of visit.",
+      !company.areaOfInterest.length && "Please choose at least one area of interest.",
+      (!company.confirmInfo || !company.agreeTerms || !company.acceptPrivacy || !company.agreeRules) && "Please accept all four declarations.",
+    );
+    return errorList(...errors);
+  };
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!company.confirmInfo || !company.agreeTerms || !company.acceptPrivacy || !company.agreeRules) {
-      alert("Please accept all declarations."); return;
-    }
+    if (!showErrors([...validateCompany(), ...validateMembers()])) return;
     if (requireOtp && (!otpVerified.email || !otpVerified.mobile)) {
       Swal.fire({ scrollbarPadding: false, icon: 'warning', title: 'Verification Required', text: 'Please verify the Primary Contact (Person 1) Email and Mobile number.' });
       return;
@@ -210,11 +229,12 @@ export default function GroupVisitorForm() {
     setLoading(true);
     try {
       const res = await visitorApi.submitGroup({ company, persons });
-      if (res) {
+      if (res.ok) {
         setSubmitted(true);
-        setRegistrationNo((res as { registrationNo?: string })?.registrationNo || "");
+        setRegistrationNo(res.data?.registrationNo || "");
       } else {
-        Swal.fire({ scrollbarPadding: false, icon: 'error', title: 'Submission Failed', text: 'Failed to submit registration.' });
+        // The server's reason, e.g. "This mobile number is already registered"
+        Swal.fire({ scrollbarPadding: false, icon: 'error', title: 'Registration Failed', text: res.message });
       }
     } catch (error) {
       Swal.fire({ scrollbarPadding: false, icon: 'error', title: 'Error', text: 'Something went wrong.' });
@@ -240,7 +260,7 @@ export default function GroupVisitorForm() {
   }
 
   return (
-    <form onSubmit={handleSubmit} className="w-full space-y-2 animate-in fade-in duration-500">
+    <form onSubmit={handleSubmit} noValidate className="w-full space-y-2 animate-in fade-in duration-500">
       <div className="flex items-center gap-3 mb-6">
         <div className="w-10 h-10 rounded-full bg-[#4d7f1d] flex items-center justify-center shrink-0 shadow-md">
           <Users size={18} className="text-white" />
@@ -258,7 +278,7 @@ export default function GroupVisitorForm() {
         </div>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-x-3 gap-y-3">
           <div className="md:col-span-2"><label className={labelClasses}>Company Name <span className="text-red-600">*</span></label><input required name="companyName" value={company.companyName} onChange={handleCompanyChange} className={inputClasses} placeholder="Enter Company Name.." /></div>
-          <div className="md:col-span-2"><label className={labelClasses}>Company Website <span className="text-red-600">*</span></label><input required name="companyWebsite" value={company.companyWebsite} onChange={handleCompanyChange} className={inputClasses} placeholder="Enter Company Website.." /></div>
+          <div className="md:col-span-2"><label className={labelClasses}>Company Website <span className="text-red-600">*</span></label><input required inputMode="url" name="companyWebsite" value={company.companyWebsite} onChange={handleCompanyChange} className={inputClasses} placeholder="Enter Company Website.." /></div>
 
           <div>
             <label className={labelClasses}>Industry / Sector <span className="text-red-600">*</span></label>
@@ -279,30 +299,27 @@ export default function GroupVisitorForm() {
             <label className={labelClasses}>Country <span className="text-red-600">*</span></label>
             <select required name="country" value={company.country} onChange={handleCompanyChange} className={inputClasses}>
               <option value="">Select Country</option>
-              {countries.length > 0 ? countries.map((c: any) => <option key={c.countryCode} value={c.name}>{c.name}</option>) : <option value="India">India</option>}
+              {loc.countries.map((c) => <option key={c.countryCode} value={c.name}>{c.name}</option>)}
             </select>
           </div>
           <div>
             <label className={labelClasses}>State <span className="text-red-600">*</span></label>
             <select required name="state" value={company.state} onChange={handleCompanyChange} className={inputClasses} disabled={!company.country}>
               <option value="">Select State</option>
-              {states.map((s: any) => <option key={s.stateCode} value={s.name}>{s.name}</option>)}
+              {loc.states.map((s) => <option key={s.stateCode} value={s.name}>{s.name}</option>)}
             </select>
           </div>
           <div>
             <label className={labelClasses}>City <span className="text-red-600">*</span></label>
-            <select required name="city" value={company.city} onChange={handleCompanyChange} className={inputClasses} disabled={!company.state}>
-              <option value="">Select City</option>
-              {cities.map((c: any) => <option key={c.name} value={c.name}>{c.name}</option>)}
-            </select>
+            <CityField key={company.state} value={company.city} onChange={(city) => setCompany((prev) => ({ ...prev, city }))} cities={loc.cities} ready={loc.citiesReady} stateChosen={!!company.state} className={inputClasses} required />
           </div>
-          <div><label className={labelClasses}>Pincode <span className="text-red-600">*</span></label><input required name="companyPincode" value={company.companyPincode} onChange={handleCompanyChange} className={inputClasses} placeholder="Enter Pincode" /></div>
+          <div><label className={labelClasses}>{isIndia(company.country) ? "Pincode" : "Postal / ZIP Code"} <span className="text-red-600">*</span></label><input required inputMode={isIndia(company.country) ? "numeric" : "text"} name="companyPincode" value={company.companyPincode} onChange={handleCompanyChange} className={inputClasses} placeholder={isIndia(company.country) ? "6-digit Pincode" : "Postal / ZIP Code"} /></div>
         </div>
       </div>
 
       {step === 1 && (
         <div className="pt-6 mt-4 flex justify-center">
-          <button type="button" onClick={() => setStep(2)} className="bg-[#4d7f1d] hover:bg-[#3b6315] text-white px-10 py-3 rounded-[4px] text-[13px] font-bold uppercase tracking-widest transition-all shadow-md flex items-center justify-center gap-2 font-inter w-full sm:w-auto">
+          <button type="button" onClick={() => showErrors(validateCompany()) && setStep(2)} className="bg-[#4d7f1d] hover:bg-[#3b6315] text-white px-10 py-3 rounded-[4px] text-[13px] font-bold uppercase tracking-widest transition-all shadow-md flex items-center justify-center gap-2 font-inter w-full sm:w-auto">
             Next Step
           </button>
         </div>

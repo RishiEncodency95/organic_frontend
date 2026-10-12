@@ -13,6 +13,7 @@ import {
 import { verifyApi, sponsorshipEnquiryApi, settingsApi } from '../../../lib/api';
 import { toViewablePdfUrl } from '../../../lib/pdfLink';
 import Swal from 'sweetalert2';
+import { check, errorList, showErrors } from '../../../lib/registration';
 import { toOptions, useDropdowns } from '../../../lib/dropdowns';
 
 const Sparkle = ({ style, color = "#ffc107", shadow = "#4B1426" }: { style?: React.CSSProperties; color?: string; shadow?: string }) => (
@@ -147,13 +148,18 @@ const SponsorshipCategories = () => {
   const [otpVerified, setOtpVerified] = useState({ email: false, phone: false });
   const [otpValues, setOtpValues] = useState({ email: '', phone: '' });
   const [loading, setLoading] = useState(false);
+  // Seconds until "Resend OTP" can be used again
+  const [timers, setTimers] = useState({ email: 0, phone: 0 });
+  useEffect(() => {
+    if (timers.email <= 0 && timers.phone <= 0) return;
+    const id = setTimeout(() => setTimers((t) => ({ email: Math.max(0, t.email - 1), phone: Math.max(0, t.phone - 1) })), 1000);
+    return () => clearTimeout(id);
+  }, [timers]);
 
   const handleSendOtp = async (type: 'email' | 'phone') => {
     const value = type === 'email' ? formData.email : formData.phone;
-    if (!value) {
-      Swal.fire({ scrollbarPadding: false, title: "Error", text: `Please enter your ${type} first.`, icon: "error" });
-      return;
-    }
+    const problem = type === 'email' ? check.email(value) : check.indianMobile(value, 'WhatsApp number');
+    if (problem) { showErrors([problem]); return; }
     setIsVerifying(prev => ({ ...prev, [type]: true }));
     try {
       const res = type === 'email'
@@ -161,6 +167,7 @@ const SponsorshipCategories = () => {
         : await verifyApi.sendPhoneOtp(value, 'SPONSOR', formData.fullName);
       if (res?.success) {
         setOtpSent(prev => ({ ...prev, [type]: true }));
+        setTimers(prev => ({ ...prev, [type]: 30 }));
         Swal.fire({ scrollbarPadding: false, title: "OTP Sent", text: `An OTP has been sent to your ${type}.`, icon: "success", timer: 2000, showConfirmButton: false });
       } else {
         Swal.fire({ scrollbarPadding: false, title: "Error", text: res?.message || "Failed to send OTP.", icon: "error" });
@@ -200,10 +207,14 @@ const SponsorshipCategories = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!formData.fullName || !formData.companyName || !formData.email || !formData.phone || !formData.category) {
-      Swal.fire({ scrollbarPadding: false, title: "Error", text: "Please fill all required fields.", icon: "error" });
-      return;
-    }
+    const errors = errorList(
+      check.name(formData.fullName, "Full name"),
+      check.required(formData.companyName, "Company name"),
+      check.email(formData.email),
+      check.indianMobile(formData.phone, "WhatsApp number"),
+      check.required(formData.category, "Sponsorship category"),
+    );
+    if (!showErrors(errors)) return;
     if (!otpVerified.email || !otpVerified.phone) {
       Swal.fire({ scrollbarPadding: false, title: "Error", text: "Please verify both Email and WhatsApp number to submit.", icon: "error" });
       return;
@@ -443,14 +454,14 @@ const SponsorshipCategories = () => {
             <h3 className="text-[14px] md:text-[18px] font-semibold text-[#0b2912] uppercase text-center mb-1">{content.formTitle}</h3>
             <div className="w-8 md:w-12 h-1 bg-[#3b8c2a] mx-auto mb-3 md:mb-4"></div>
 
-            <form className="flex flex-col gap-2 md:gap-3" onSubmit={handleSubmit}>
+            <form noValidate className="flex flex-col gap-2 md:gap-3" onSubmit={handleSubmit}>
               <div className="grid grid-cols-2 gap-2 md:gap-3">
                 <input
                   type="text"
                   placeholder="Full Name*"
                   aria-label="Full Name"
                   value={formData.fullName}
-                  onChange={(e) => setFormData({ ...formData, fullName: e.target.value })}
+                  onChange={(e) => setFormData({ ...formData, fullName: e.target.value.replace(/[^\p{L}\p{M} .'-]/gu, '').replace(/^\s+/, '') })}
                   className="w-full text-[13px] md:text-[14px] px-3 py-2.5 rounded-md border border-gray-300 focus:outline-none focus:border-[#3b8c2a] focus:ring-1 focus:ring-[#3b8c2a]/30 text-black placeholder:text-black"
                 />
                 <input
@@ -469,8 +480,8 @@ const SponsorshipCategories = () => {
                   placeholder="Email Address*"
                   aria-label="Email Address"
                   value={formData.email}
-                  onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                  disabled={otpVerified.email}
+                  onChange={(e) => setFormData({ ...formData, email: e.target.value.trim() })}
+                  disabled={otpVerified.email || otpSent.email}
                   className="w-full text-[13px] md:text-[14px] px-3 py-2.5 rounded-md border border-gray-300 focus:outline-none focus:border-[#3b8c2a] focus:ring-1 focus:ring-[#3b8c2a]/30 pr-20 text-black placeholder:text-black disabled:bg-gray-100"
                 />
                 {!otpVerified.email && !otpSent.email && (
@@ -484,6 +495,7 @@ const SponsorshipCategories = () => {
               </div>
 
               {otpSent.email && !otpVerified.email && (
+                <>
                 <div className="relative animate-in slide-in-from-top-2">
                   <input
                     type="text"
@@ -496,6 +508,15 @@ const SponsorshipCategories = () => {
                     {isVerifying.email ? <Loader2 className="w-3 h-3 animate-spin" /> : 'Verify'}
                   </button>
                 </div>
+                <span className="mt-1 flex justify-between text-[11px]">
+                    <button type="button" onClick={() => { setOtpSent(prev => ({ ...prev, email: false })); setOtpValues(prev => ({ ...prev, email: '' })); setTimers(prev => ({ ...prev, email: 0 })); }} className="font-semibold text-gray-600 underline">Change Email</button>
+                    {timers.email > 0 ? (
+                      <span className="text-gray-500">Resend OTP in {timers.email}s</span>
+                    ) : (
+                      <button type="button" onClick={() => handleSendOtp('email')} disabled={isVerifying.email} className="font-semibold text-[#3b8c2a] underline disabled:opacity-50">Resend OTP</button>
+                    )}
+                  </span>
+                </>
               )}
 
               <div className="relative">
@@ -504,8 +525,10 @@ const SponsorshipCategories = () => {
                   placeholder="WhatsApp Number*"
                   aria-label="WhatsApp Number"
                   value={formData.phone}
-                  onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
-                  disabled={otpVerified.phone}
+                  inputMode="numeric"
+                  maxLength={10}
+                  onChange={(e) => setFormData({ ...formData, phone: e.target.value.replace(/\D/g, '').slice(0, 10) })}
+                  disabled={otpVerified.phone || otpSent.phone}
                   className="w-full text-[13px] md:text-[14px] px-3 py-2.5 rounded-md border border-gray-300 focus:outline-none focus:border-[#3b8c2a] focus:ring-1 focus:ring-[#3b8c2a]/30 pr-20 text-black placeholder:text-black disabled:bg-gray-100"
                 />
                 {!otpVerified.phone && !otpSent.phone && (
@@ -519,6 +542,7 @@ const SponsorshipCategories = () => {
               </div>
 
               {otpSent.phone && !otpVerified.phone && (
+                <>
                 <div className="relative animate-in slide-in-from-top-2">
                   <input
                     type="text"
@@ -531,6 +555,15 @@ const SponsorshipCategories = () => {
                     {isVerifying.phone ? <Loader2 className="w-3 h-3 animate-spin" /> : 'Verify'}
                   </button>
                 </div>
+                <span className="mt-1 flex justify-between text-[11px]">
+                    <button type="button" onClick={() => { setOtpSent(prev => ({ ...prev, phone: false })); setOtpValues(prev => ({ ...prev, phone: '' })); setTimers(prev => ({ ...prev, phone: 0 })); }} className="font-semibold text-gray-600 underline">Change WhatsApp</button>
+                    {timers.phone > 0 ? (
+                      <span className="text-gray-500">Resend OTP in {timers.phone}s</span>
+                    ) : (
+                      <button type="button" onClick={() => handleSendOtp('phone')} disabled={isVerifying.phone} className="font-semibold text-[#3b8c2a] underline disabled:opacity-50">Resend OTP</button>
+                    )}
+                  </span>
+                </>
               )}
 
               <div className="relative">

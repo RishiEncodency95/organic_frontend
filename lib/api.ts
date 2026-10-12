@@ -10,6 +10,41 @@ export const API_URL =
   process.env.NEXT_PUBLIC_API_URL ||
   (typeof window !== 'undefined' ? '/api' : 'http://localhost:4001/api');
 
+/** The event every registration is for (NEXT_PUBLIC_EVENT_NAME still said BOE2026, so it is not read) */
+export const EVENT_NAME = "BOE2027";
+
+/** Success with the saved record, or failure with the server's reason (never a silent []) */
+export type SubmitResult = { ok: true; data: { registrationNo?: string; _id?: string; [key: string]: unknown } } | { ok: false; message: string };
+
+type ErrorBody = { errors?: unknown[]; message?: string; msg?: string; error?: string } | null;
+
+/** First readable message from an API error body ({ message } / { errors: [...] } / text) */
+export const apiMessage = (body: unknown, fallback = "Something went wrong. Please try again.") => {
+    const json = (body && typeof body === "object" ? body : null) as ErrorBody;
+    const first = Array.isArray(json?.errors) ? (json.errors[0] as string | { message?: string; msg?: string } | undefined) : undefined;
+    const fromErrors = typeof first === "string" ? first.split(": ").pop() : first?.message || first?.msg;
+    return String(fromErrors || json?.message || json?.msg || json?.error || fallback);
+};
+
+/** POST that tells success from failure — the forms used to treat an error ([]) as success */
+export const postResult = async (url: string, payload: unknown): Promise<SubmitResult> => {
+    try {
+        const isForm = typeof FormData !== "undefined" && payload instanceof FormData;
+        const response = await fetch(url, {
+            method: "POST",
+            headers: isForm ? undefined : { "Content-Type": "application/json" },
+            body: isForm ? (payload as FormData) : JSON.stringify(payload),
+        });
+        const json = await response.json().catch(() => null);
+        if (!response.ok || json?.success === false) {
+            return { ok: false, message: apiMessage(json, `Registration failed (error ${response.status}). Please try again.`) };
+        }
+        return { ok: true, data: json?.data ?? json };
+    } catch {
+        return { ok: false, message: "Could not reach the server. Please check your internet connection and try again." };
+    }
+};
+
 const CLIENT_CACHE_TTL_MS = 5 * 60 * 1000;
 
 type ClientCacheEntry = {
@@ -38,6 +73,11 @@ const ihwe_API_URL =
   process.env.NEXT_PUBLIC_IHWE_API_URL ||
   (typeof window !== 'undefined' ? '/api' : 'http://localhost:5001/api');
   
+// Where email / WhatsApp OTPs are sent and verified. Defaults to the same server as the
+// registration forms; NEXT_PUBLIC_OTP_API_URL can point only the OTPs elsewhere (e.g. IHWE,
+// whose mail and WhatsApp delivery work) without moving the registrations.
+const OTP_API_URL = process.env.NEXT_PUBLIC_OTP_API_URL || ihwe_API_URL;
+
 const apiCall = async (endpoint: string, options: RequestInit = {}) => {
     const method = (options.method || 'GET').toUpperCase();
     const isCacheableClientGet = typeof window !== 'undefined' && method === 'GET';
@@ -143,9 +183,10 @@ const ihweApiCall = async (endpoint: string, options: RequestInit = {}) => {
     }
 };
 
+// Always fresh (a stall booked a minute ago must not still show as free); apiCall caches GETs for 5 minutes
 export const stallApi = { 
-    getStallsByEvent: async (eventId: string) => apiCall(`/stalls/available?eventId=${eventId}`),
-    getByEvent: async (eventId: string) => apiCall(`/stalls/available?eventId=${eventId}`)
+    getStallsByEvent: async (eventId: string) => apiCall(`/stalls/available?eventId=${eventId}&_=${Date.now()}`),
+    getByEvent: async (eventId: string) => apiCall(`/stalls/available?eventId=${eventId}&_=${Date.now()}`)
 };
 
 export const stallRateApi = { 
@@ -202,9 +243,10 @@ export const publicApi = {
     getStaff: async () => apiCall('/public/staff')
 };
 
-export const verifyApi = {
-    sendEmailOtp: async (email: string, profile: string = 'SPEAKER', name: string = '', eventName: string = process.env.NEXT_PUBLIC_EVENT_NAME || 'BOE2026') => {
-        const response = await fetch(`${ihwe_API_URL}/verify/send-email-otp`, {
+/** OTP send / verify calls against the given server */
+const makeVerifyApi = (base: string) => ({
+    sendEmailOtp: async (email: string, profile: string = 'SPEAKER', name: string = '', eventName: string = EVENT_NAME) => {
+        const response = await fetch(`${base}/verify/send-email-otp`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ email, profile, name: name || null, eventName })
@@ -216,7 +258,7 @@ export const verifyApi = {
         return await response.json();
     },
     verifyEmailOtp: async (email: string, otp: string) => {
-        const response = await fetch(`${ihwe_API_URL}/verify/verify-email-otp`, {
+        const response = await fetch(`${base}/verify/verify-email-otp`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ email, otp })
@@ -227,8 +269,8 @@ export const verifyApi = {
         }
         return await response.json();
     },
-    sendPhoneOtp: async (phone: string, profile: string = 'CONTACT', name: string = '', eventName: string = process.env.NEXT_PUBLIC_EVENT_NAME || 'BOE2026') => {
-        const response = await fetch(`${ihwe_API_URL}/verify/send-phone-otp`, {
+    sendPhoneOtp: async (phone: string, profile: string = 'CONTACT', name: string = '', eventName: string = EVENT_NAME) => {
+        const response = await fetch(`${base}/verify/send-phone-otp`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ phone, profile, name: name || null, eventName })
@@ -240,7 +282,7 @@ export const verifyApi = {
         return await response.json();
     },
     verifyPhoneOtp: async (phone: string, otp: string) => {
-        const response = await fetch(`${ihwe_API_URL}/verify/verify-phone-otp`, {
+        const response = await fetch(`${base}/verify/verify-phone-otp`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ phone, otp })
@@ -251,7 +293,12 @@ export const verifyApi = {
         }
         return await response.json();
     }
-};
+});
+
+export const verifyApi = makeVerifyApi(OTP_API_URL);
+// OTPs whose verified record this backend itself must check (e.g. chatbot history), so they
+// are always sent and verified here, never on IHWE.
+export const ownVerifyApi = makeVerifyApi(API_URL);
 
 export const heroBackgroundApi = {
     getByPage: async (pageName: string) => apiCall(`/hero-backgrounds/page/${encodeURIComponent(pageName)}`)
@@ -363,10 +410,25 @@ export const msmeApi = {
     },
 };
 
-export const crmApi = { 
-    getCountries: async () => ihweApiCall('/crm-countries'),
-    getStates: async (countryCode: string) => ihweApiCall(`/crm-states?countryCode=${countryCode}`),
-    getCities: async (stateCode: string) => ihweApiCall(`/crm-cities?stateCode=${stateCode}`)
+/** A list from the website's own backend; [] on any error */
+const getList = async (path: string): Promise<any[]> => {
+    try {
+        const res = await fetch(`${API_URL}${path}`);
+        const json = await res.json().catch(() => null);
+        const data = json?.data ?? json;
+        return Array.isArray(data) ? data : [];
+    } catch {
+        return [];
+    }
+};
+
+// Country / state / city lists come from this website's backend (country-state-city data, A–Z,
+// plus cities the admin adds and an "Other" option) — not the IHWE CRM, whose lists were
+// unsorted, missed cities and mixed in localities.
+export const crmApi = {
+    getCountries: async () => getList('/crm-countries'),
+    getStates: async (countryCode: string) => getList(`/crm-states?countryCode=${encodeURIComponent(countryCode)}`),
+    getCities: async (stateCode: string) => getList(`/crm-cities?stateCode=${encodeURIComponent(stateCode)}`)
 };
 
 export const eventHighlightsApi = { 
@@ -383,23 +445,6 @@ export const adminApi = {
     getEmployees: async () => apiCall('/admin/employees')
 };
 
-// Visitor registration forms. Returns the saved registration, or null when it was NOT saved
-// (ihweApiCall returns [] on errors, which the forms treated as success).
-const submitVisitor = async (endpoint: string, payload: any) => {
-    try {
-        const response = await fetch(`${API_URL}${endpoint}`, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(payload),
-        });
-        const json = await response.json().catch(() => null);
-        if (!response.ok || json?.success === false) return null;
-        return json?.data ?? json ?? null;
-    } catch {
-        return null;
-    }
-};
-
 const getBoeEventName = async () => {
     try {
         const evRes = await ihweEventApi.getAll();
@@ -411,33 +456,28 @@ const getBoeEventName = async () => {
     return "BOE 2027";
 };
 
+// Each returns { ok, data } or { ok: false, message } with the server's reason, so a rejected
+// registration is never shown as successful.
+const visitorPost = async (endpoint: string, data: any) => {
+    const eventName = data.eventName || await getBoeEventName();
+    return postResult(`${ihwe_API_URL}${endpoint}`, { ...data, mobile: data.mobile || data.mobileNo, domainName: 'boe', eventName });
+};
+
 export const visitorApi = {
-    submitCorporate: async (data: any) => {
-        const eventName = data.eventName || await getBoeEventName();
-        return ihweApiCall('/corporate-visitors', { method: 'POST', body: JSON.stringify({ ...data, mobile: data.mobile || data.mobileNo, domainName: 'boe', eventName }) });
-    },
-    submitInternational: async (data: any) => {
-        const eventName = data.eventName || await getBoeEventName();
-        return ihweApiCall('/international-visitors', { method: 'POST', body: JSON.stringify({ ...data, mobile: data.mobile || data.mobileNo, domainName: 'boe', eventName }) });
-    },
-    submitGeneral: async (data: any) => {
-        const eventName = data.eventName || await getBoeEventName();
-        return ihweApiCall('/general-visitors', { method: 'POST', body: JSON.stringify({ ...data, mobile: data.mobile || data.mobileNo, domainName: 'boe', eventName }) });
-    },
+    submitCorporate: async (data: any) => visitorPost('/corporate-visitors', data),
+    submitInternational: async (data: any) => visitorPost('/international-visitors', data),
+    submitGeneral: async (data: any) => visitorPost('/general-visitors', data),
     submitGroup: async (data: any) => {
         const payload = { ...data };
-        if (payload.persons && Array.isArray(payload.persons)) {
-            payload.persons = payload.persons.map((p: any) => ({ ...p, mobile: p.mobile || p.mobileNo, domainName: 'boe', eventName: payload.eventName || "BOE" }));
-        }
         const eventName = payload.eventName || await getBoeEventName();
+        if (payload.persons && Array.isArray(payload.persons)) {
+            payload.persons = payload.persons.map((p: any) => ({ ...p, mobile: p.mobile || p.mobileNo, domainName: 'boe', eventName }));
+        }
         payload.eventName = eventName;
         payload.domainName = 'boe';
-        return submitVisitor('/group-visitors', payload);
+        return postResult(`${ihwe_API_URL}/group-visitors`, payload);
     },
-    submitHealthCamp: async (data: any) => {
-        const eventName = data.eventName || await getBoeEventName();
-        return ihweApiCall('/health-camp-visitors', { method: 'POST', body: JSON.stringify({ ...data, mobile: data.mobile || data.mobileNo, domainName: 'boe', eventName }) });
-    }
+    submitHealthCamp: async (data: any) => visitorPost('/health-camp-visitors', data)
 };
 
 export const buyerApi = {
@@ -558,6 +598,11 @@ export const partnershipEnquiryApi = {
         }
         return await response.json();
     }
+};
+
+// Advisory Board nomination form (/about/nominate_advisory_board) → Admin → Advisory Nominations
+export const advisoryNominationApi = {
+    submit: (payload: unknown) => postResult(`${API_URL}/advisory-nominations`, payload),
 };
 
 export const sponsorshipEnquiryApi = {

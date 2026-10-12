@@ -2,8 +2,10 @@
 import React, { useState, useEffect } from "react";
 import RegistrationSuccess from "./RegistrationSuccess";
 import { ShieldCheck, Globe2, Loader2, CheckCircle, X, ChevronsUpDown, Upload } from "lucide-react";
-import { crmApi, verifyApi, visitorApi, ihweSettingsApi } from "../../../../lib/api";
+import { verifyApi, visitorApi, ihweSettingsApi } from "../../../../lib/api";
 import Swal from 'sweetalert2';
+import { check, errorList, EVENT_NAME, isIndia, showErrors, useLocations } from "@/lib/registration";
+import { CityField, DialCodeSelect } from "../shared/LocationFields";
 import { toOptions, useDropdowns } from "@/lib/dropdowns";
 
 // Admin-managed (Dropdown Manager); these are the fallback options.
@@ -107,11 +109,8 @@ export default function InternationalVisitorForm() {
   const [registrationNo, setRegistrationNo] = useState("");
   const [loading, setLoading] = useState(false);
 
-  const [countries, setCountries] = useState<any[]>([]);
-  const [states, setStates] = useState<any[]>([]);
-  const [cities, setCities] = useState<any[]>([]);
 
-  const defaultEventName = process.env.NEXT_PUBLIC_EVENT_NAME || "BOE2026";
+  const defaultEventName = EVENT_NAME;
   const [requireOtp, setRequireOtp] = useState(true);
   const [resendTimers, setResendTimers] = useState({ email: 0, mobile: 0 });
 
@@ -130,6 +129,8 @@ export default function InternationalVisitorForm() {
     firstName: "", lastName: "", gender: "", dob: "",
     nationality: "", passportNo: "", occupation: "",
     email: "", personalEmail: "", mobileNo: "", whatsappNo: "", indiaContactNo: "",
+    // Country calling codes (digits, e.g. "44") for the mobile and WhatsApp numbers
+    mobileCode: "", whatsappCode: "",
     designation: "", companyName: "", companyWebsite: "",
     industry: "", otherIndustry: "", companySize: "",
     address: "", country: "", state: "", city: "", companyPincode: "",
@@ -148,54 +149,42 @@ export default function InternationalVisitorForm() {
 
   const [files, setFiles] = useState<Record<string, File | null>>({});
 
-  useEffect(() => {
-    crmApi.getCountries()
-      .then(data => setCountries(data || []))
-      .catch(err => console.error(err));
-  }, []);
-
-  useEffect(() => {
-    if (formData.country) {
-      const countryObj = countries.find((c: any) => c.name === formData.country);
-      if (countryObj) {
-        crmApi.getStates(countryObj.countryCode)
-          .then(data => setStates(data || []))
-          .catch(err => console.error(err));
-      }
-    }
-  }, [formData.country, countries]);
-
-  useEffect(() => {
-    if (formData.state) {
-      const stateObj = states.find((s: any) => s.name === formData.state);
-      if (stateObj) {
-        crmApi.getCities(stateObj.stateCode)
-          .then(data => setCities(data || []))
-          .catch(err => console.error(err));
-      }
-    }
-  }, [formData.state, states]);
+  // Countries (A–Z), states and cities from the website's backend
+  const loc = useLocations(formData.country, formData.state);
 
   const handleChange = (e: any) => {
     let { name, value, type, checked } = e.target;
+    // A new country / state clears what depended on it; nationality / country fill an empty calling code
     if (name === 'country') {
-      setFormData(prev => ({ ...prev, state: "", city: "" }));
-      setStates([]); setCities([]);
+      const code = loc.phoneCodeOf(value);
+      setFormData(prev => ({ ...prev, country: value, state: "", city: "", companyPincode: "", mobileCode: prev.mobileCode || code, whatsappCode: prev.whatsappCode || code }));
+      return;
+    }
+    if (name === 'nationality') {
+      const code = loc.phoneCodeOf(value);
+      setFormData(prev => ({ ...prev, nationality: value, mobileCode: prev.mobileCode || code, whatsappCode: prev.whatsappCode || code }));
+      return;
     }
     if (name === 'state') {
-      setFormData(prev => ({ ...prev, city: "" }));
-      setCities([]);
+      setFormData(prev => ({ ...prev, state: value, city: "" }));
+      return;
     }
 
     let finalValue = type === 'checkbox' ? checked : value;
 
     // Numeric field validations (no chars, spaces allowed)
-    if (name === 'mobileNo' || name === 'alternateNo' || name === 'whatsappNo' || name === 'indiaContactNo' || name === 'mobileNumber' || name === 'alternateNumber') {
+    // International numbers: digits only, the country code is chosen separately
+    if (name === 'mobileNo' || name === 'whatsappNo') {
+      finalValue = String(finalValue).replace(/\D/g, '').slice(0, 14);
+    }
+    if (name === 'indiaContactNo') {
       finalValue = String(finalValue).replace(/\D/g, '').slice(0, 10);
     }
     if (name === 'pinCode' || name === 'companyPincode') {
-      finalValue = String(finalValue).replace(/\D/g, '').slice(0, 6);
+      finalValue = String(finalValue).replace(/[^A-Za-z0-9 -]/g, '').slice(0, 10);
     }
+    if (name === 'passportNo') finalValue = String(finalValue).replace(/[^A-Za-z0-9]/g, '').toUpperCase().slice(0, 12);
+    if (name === 'firstName' || name === 'lastName') finalValue = String(finalValue).replace(/[^\p{L}\p{M} .'-]/gu, '').replace(/^\s+/, '');
 
     setFormData((prev) => ({ ...prev, [name]: finalValue }));
   };
@@ -210,9 +199,13 @@ export default function InternationalVisitorForm() {
   const [emailOtp, setEmailOtp] = useState('');
   const [mobileOtp, setMobileOtp] = useState('');
 
+  /** "+44 7911123456" style number sent for the WhatsApp OTP and saved with the registration */
+  const fullMobile = `+${formData.mobileCode}${formData.mobileNo}`;
+
   const handleRequestOtp = async (type: 'email' | 'mobile') => {
-    const value = type === 'email' ? formData.email : formData.mobileNo;
-    if (!value) return;
+    const value = type === 'email' ? formData.email : fullMobile;
+    const problem = type === 'email' ? check.email(formData.email, 'Official email') : check.intlNumber(formData.mobileCode, formData.mobileNo);
+    if (problem) { showErrors([problem]); return; }
 
     setIsVerifying(prev => ({ ...prev, [type]: true }));
     try {
@@ -222,6 +215,8 @@ export default function InternationalVisitorForm() {
 
       if (res && res.success) {
         setOtpSent(prev => ({ ...prev, [type]: true }));
+        // The Resend link counts down from 30s
+        setResendTimers(prev => ({ ...prev, [type]: 30 }));
         Swal.fire({ scrollbarPadding: false, icon: 'success', title: 'OTP Sent', text: `OTP sent to your ${type}.`, timer: 2000, showConfirmButton: false });
       } else {
         Swal.fire({ scrollbarPadding: false, icon: 'error', title: 'Error', text: res?.message || 'Failed to send OTP.' });
@@ -234,7 +229,7 @@ export default function InternationalVisitorForm() {
 
   const handleVerifyOtp = async (type: 'email' | 'mobile') => {
     const otpValue = type === 'email' ? emailOtp : mobileOtp;
-    const value = type === 'email' ? formData.email : formData.mobileNo;
+    const value = type === 'email' ? formData.email : fullMobile;
     if (!otpValue || otpValue.length !== 6) {
       Swal.fire({ scrollbarPadding: false, icon: 'warning', title: 'Invalid OTP', text: 'Please enter a valid 6-digit OTP.' });
       return;
@@ -257,23 +252,54 @@ export default function InternationalVisitorForm() {
     setIsVerifying(prev => ({ ...prev, [type]: false }));
   };
 
+  // Steps 1–2 (checked before "Next Step") and step 3; every problem in one popup
+  const validateDetails = () => errorList(
+    check.name(formData.firstName, "First name"),
+    check.name(formData.lastName, "Last name"),
+    check.required(formData.gender, "Gender"),
+    check.dob(formData.dob),
+    check.required(formData.nationality, "Nationality"),
+    check.passport(formData.passportNo),
+    check.required(formData.designation, "Designation"),
+    check.website(formData.companyWebsite, "Company website"),
+    formData.industry === "others" && check.required(formData.otherIndustry, "Industry"),
+    check.intlNumber(formData.mobileCode, formData.mobileNo),
+    check.intlNumber(formData.whatsappCode, formData.whatsappNo, "WhatsApp number", false),
+    check.indianMobile(formData.indiaContactNo, "India contact number", false),
+    check.email(formData.email, "Official email"),
+    check.email(formData.personalEmail, "Personal email", false),
+    check.required(formData.country, "Country"),
+    isIndia(formData.country) && "International visitors must choose their country outside India.",
+    loc.states.length > 0 && check.required(formData.state, "State / province"),
+    loc.states.length > 0 && !!formData.state && check.required(formData.city, "City"),
+    check.postal(formData.companyPincode, formData.country),
+  );
+  const validatePlanning = () => errorList(
+    !formData.purposeOfVisit.length && "Please choose at least one purpose of visit.",
+    !formData.areaOfInterest.length && "Please choose at least one interested sector.",
+    (!formData.confirmInfo || !formData.agreeTerms || !formData.acceptPrivacy || !formData.agreeRules) && "Please accept all four declarations.",
+  );
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!formData.confirmInfo || !formData.agreeTerms || !formData.acceptPrivacy || !formData.agreeRules) {
-      alert("Please accept all declarations."); return;
-    }
+    if (!showErrors([...validateDetails(), ...validatePlanning()])) return;
     if (requireOtp && (!otpVerified.email || !otpVerified.mobile)) {
       Swal.fire({ scrollbarPadding: false, icon: 'warning', title: 'Verification Required', text: 'Please verify both Email and Mobile number.' });
       return;
     }
     setLoading(true);
     try {
-      const res = await visitorApi.submitInternational(formData);
-      if (res) {
+      const res = await visitorApi.submitInternational({
+        ...formData,
+        mobileNo: fullMobile,
+        whatsappNo: formData.whatsappNo ? `+${formData.whatsappCode}${formData.whatsappNo}` : "",
+      });
+      if (res.ok) {
         setSubmitted(true);
-        setRegistrationNo((res as { registrationNo?: string })?.registrationNo || "");
+        setRegistrationNo(res.data?.registrationNo || "");
       } else {
-        Swal.fire({ scrollbarPadding: false, icon: 'error', title: 'Submission Failed', text: 'Failed to submit registration.' });
+        // The server's reason, e.g. "This mobile number is already registered"
+        Swal.fire({ scrollbarPadding: false, icon: 'error', title: 'Registration Failed', text: res.message });
       }
     } catch (error) {
       Swal.fire({ scrollbarPadding: false, icon: 'error', title: 'Error', text: 'Something went wrong.' });
@@ -308,7 +334,7 @@ export default function InternationalVisitorForm() {
   }
 
   return (
-    <form onSubmit={handleSubmit} className="w-full space-y-2 animate-in fade-in duration-500">
+    <form onSubmit={handleSubmit} noValidate className="w-full space-y-2 animate-in fade-in duration-500">
       <div className="flex items-center gap-3 mb-6">
         <div className="w-10 h-10 rounded-full bg-[#4d7f1d] flex items-center justify-center shrink-0 shadow-md">
           <Globe2 size={18} className="text-white" />
@@ -346,7 +372,7 @@ export default function InternationalVisitorForm() {
             <label className={labelClasses}>Nationality <span className="text-red-600">*</span></label>
             <select required name="nationality" value={formData.nationality} onChange={handleChange} className={inputClasses}>
               <option value="">Select Country</option>
-              {countries.map(c => <option key={c._id || c.name} value={c.name}>{c.name}</option>)}
+              {loc.countries.map(c => <option key={c.countryCode} value={c.name}>{c.name}</option>)}
             </select>
           </div>
           <div><label className={labelClasses}>Passport Number</label><input name="passportNo" value={formData.passportNo} onChange={handleChange} className={inputClasses} placeholder="Passport / ID No." /></div>
@@ -354,7 +380,7 @@ export default function InternationalVisitorForm() {
           <div><label className={labelClasses}>Designation <span className="text-red-600">*</span></label><input required name="designation" value={formData.designation} onChange={handleChange} className={inputClasses} placeholder="Your Designation" /></div>
 
           <div className="md:col-span-2"><label className={labelClasses}>Organisation / Company Name</label><input name="companyName" value={formData.companyName} onChange={handleChange} className={inputClasses} placeholder="Company Name (if applicable)" /></div>
-          <div><label className={labelClasses}>Company Website</label><input name="companyWebsite" value={formData.companyWebsite} onChange={handleChange} className={inputClasses} placeholder="www.company.com" /></div>
+          <div><label className={labelClasses}>Company Website</label><input inputMode="url" name="companyWebsite" value={formData.companyWebsite} onChange={handleChange} className={inputClasses} placeholder="www.company.com" /></div>
 
           <div>
             <label className={labelClasses}>Industry / Sector</label>
@@ -393,7 +419,8 @@ export default function InternationalVisitorForm() {
               )}
             </div>
             <div className="flex gap-2 h-7">
-              <input required type="tel" name="mobileNo" value={formData.mobileNo} onChange={handleChange} className={`${inputClasses} h-full`} disabled={otpVerified.mobile || otpSent.mobile} placeholder="+1 234 567 8900" />
+              <DialCodeSelect value={formData.mobileCode} onChange={(code) => setFormData(prev => ({ ...prev, mobileCode: code }))} countries={loc.countries} disabled={otpVerified.mobile || otpSent.mobile} label="Mobile country code" className={`${inputClasses.replace('w-full', '')} h-full w-[84px] shrink-0 px-1`} />
+              <input required type="tel" inputMode="numeric" name="mobileNo" value={formData.mobileNo} onChange={handleChange} className={`${inputClasses} h-full`} disabled={otpVerified.mobile || otpSent.mobile} placeholder="Number" />
               {requireOtp && !otpVerified.mobile && !otpSent.mobile && (
                 <button type="button" onClick={() => handleRequestOtp('mobile')} disabled={!formData.mobileNo || isVerifying.mobile} className={`bg-[#4d7f1d] text-white px-3 rounded text-[10px] uppercase font-bold transition hover:bg-[#3b6315] h-full disabled:opacity-50`}>
                   {isVerifying.mobile ? <Loader2 className="animate-spin" size={14} /> : 'OTP'}
@@ -410,8 +437,14 @@ export default function InternationalVisitorForm() {
               {requireOtp && otpVerified.mobile && <CheckCircle size={18} className="text-[#4d7f1d] self-center shrink-0 ml-2" />}
             </div>
           </div>
-          <div><label className={labelClasses}>WhatsApp Number</label><input type="tel" name="whatsappNo" value={formData.whatsappNo} onChange={handleChange} className={inputClasses} placeholder="+1 234 567 8900" /></div>
-          <div><label className={labelClasses}>India Contact Number</label><input type="tel" name="indiaContactNo" value={formData.indiaContactNo} onChange={handleChange} className={inputClasses} placeholder="+91 123 456 7890" /></div>
+          <div>
+            <label className={labelClasses}>WhatsApp Number</label>
+            <div className="flex gap-2 h-7">
+              <DialCodeSelect value={formData.whatsappCode} onChange={(code) => setFormData(prev => ({ ...prev, whatsappCode: code }))} countries={loc.countries} label="WhatsApp country code" className={`${inputClasses.replace('w-full', '')} h-full w-[84px] shrink-0 px-1`} />
+              <input type="tel" inputMode="numeric" name="whatsappNo" value={formData.whatsappNo} onChange={handleChange} className={`${inputClasses} h-full`} placeholder="Number" />
+            </div>
+          </div>
+          <div><label className={labelClasses}>India Contact Number</label><input type="tel" inputMode="numeric" name="indiaContactNo" value={formData.indiaContactNo} onChange={handleChange} className={inputClasses} placeholder="10-digit Indian number" /></div>
 
           <div className="space-y-1">
             <div className="flex justify-between items-end">
@@ -448,22 +481,19 @@ export default function InternationalVisitorForm() {
             <label className={labelClasses}>Country <span className="text-red-600">*</span></label>
             <select required name="country" value={formData.country} onChange={handleChange} className={inputClasses}>
               <option value="">Select Country</option>
-              {countries.filter(c => c.name?.toLowerCase() !== 'india').map((c: any) => <option key={c.countryCode} value={c.name}>{c.name}</option>)}
+              {loc.countries.filter(c => !isIndia(c.name)).map((c) => <option key={c.countryCode} value={c.name}>{c.name}</option>)}
             </select>
           </div>
           <div>
             <label className={labelClasses}>State / Province</label>
             <select name="state" value={formData.state} onChange={handleChange} className={inputClasses} disabled={!formData.country}>
               <option value="">Select State</option>
-              {states.map((s: any) => <option key={s.stateCode} value={s.name}>{s.name}</option>)}
+              {loc.states.map((s) => <option key={s.stateCode} value={s.name}>{s.name}</option>)}
             </select>
           </div>
           <div>
             <label className={labelClasses}>City</label>
-            <select name="city" value={formData.city} onChange={handleChange} className={inputClasses} disabled={!formData.state}>
-              <option value="">Select City</option>
-              {cities.map((c: any) => <option key={c.name} value={c.name}>{c.name}</option>)}
-            </select>
+            <CityField key={formData.state} value={formData.city} onChange={(city) => setFormData((prev) => ({ ...prev, city }))} cities={loc.cities} ready={loc.citiesReady} stateChosen={!!formData.state} className={inputClasses} />
           </div>
           <div><label className={labelClasses}>Postal Code</label><input name="companyPincode" value={formData.companyPincode} onChange={handleChange} className={inputClasses} placeholder="Postal / ZIP Code" /></div>
         </div>
@@ -471,7 +501,7 @@ export default function InternationalVisitorForm() {
 
       {step === 1 && (
         <div className="pt-6 mt-4 flex justify-center">
-          <button type="button" onClick={() => setStep(2)} className="bg-[#4d7f1d] hover:bg-[#3b6315] text-white px-10 py-3 rounded-[4px] text-[13px] font-bold uppercase tracking-widest transition-all shadow-md flex items-center justify-center gap-2 font-inter w-full sm:w-auto">
+          <button type="button" onClick={() => showErrors(validateDetails()) && setStep(2)} className="bg-[#4d7f1d] hover:bg-[#3b6315] text-white px-10 py-3 rounded-[4px] text-[13px] font-bold uppercase tracking-widest transition-all shadow-md flex items-center justify-center gap-2 font-inter w-full sm:w-auto">
             Next Step
           </button>
         </div>
