@@ -1,22 +1,33 @@
 "use client";
 
-import React, { useState } from "react";
-import { ArrowRight, Newspaper, Sprout, Apple, Package, Recycle, Lightbulb, FileText, BookOpen, Mail } from "lucide-react";
+import React, { useEffect, useState } from "react";
+import {
+  Apple, Award, BookOpen, CalendarDays, FileText, Globe, Heart, Leaf, Lightbulb, Mail, Megaphone,
+  Newspaper, Package, Recycle, Sprout, TrendingUp, UsersRound, type LucideIcon,
+} from "lucide-react";
 import { Reveal } from "./BlogReveal";
+import Link from "next/link";
+import { API_URL } from "@/lib/api";
+import { ALL_ARTICLES_PATH } from "./BlogFeatured";
+
+/* Icon and colour keys chosen in the admin (Blog & Awareness → Manage Categories) */
+const ICONS: Record<string, LucideIcon> = {
+  newspaper: Newspaper, sprout: Sprout, apple: Apple, package: Package, recycle: Recycle,
+  lightbulb: Lightbulb, "file-text": FileText, "book-open": BookOpen, leaf: Leaf, heart: Heart,
+  users: UsersRound, megaphone: Megaphone, calendar: CalendarDays, globe: Globe, award: Award,
+  "trending-up": TrendingUp,
+};
+const COLORS: Record<string, string> = {
+  sky: "text-sky-100 bg-sky-800", green: "text-green-100 bg-green-800", emerald: "text-emerald-100 bg-emerald-800",
+  orange: "text-orange-100 bg-orange-800", teal: "text-teal-100 bg-teal-800", amber: "text-amber-100 bg-amber-800",
+  rose: "text-rose-100 bg-rose-800", cyan: "text-cyan-100 bg-cyan-800", lime: "text-lime-100 bg-lime-800",
+  indigo: "text-indigo-100 bg-indigo-800", violet: "text-violet-100 bg-violet-800", slate: "text-slate-100 bg-slate-700",
+};
+
+type BlogCategory = { _id: string; name: string; icon: string; color: string; postCount: number };
 
 const blogSidebarData = {
   categoriesTitle: "Explore Categories",
-  viewAllCategoriesText: "View all categories",
-  categories: [
-    { icon: Newspaper, label: "Expo News", count: 26, color: "text-sky-100 bg-sky-800" },
-    { icon: Sprout, label: "Organic Farming", count: 24, color: "text-green-100 bg-green-800" },
-    { icon: Apple, label: "Organic Food", count: 22, color: "text-emerald-100 bg-emerald-800" },
-    { icon: Package, label: "Natural Products", count: 21, color: "text-orange-100 bg-orange-800" },
-    { icon: Recycle, label: "Sustainability", count: 19, color: "text-teal-100 bg-teal-800" },
-    { icon: Lightbulb, label: "Industry Insights", count: 17, color: "text-amber-100 bg-amber-800" },
-    { icon: FileText, label: "Policy & Regulations", count: 10, color: "text-rose-100 bg-rose-800" },
-    { icon: BookOpen, label: "Success Stories", count: 9, color: "text-cyan-100 bg-cyan-800" },
-  ],
   newsletter: {
     title: "Stay Ahead.",
     description: "Get the latest organic industry news, sustainability insights and Bharat Organic Expo updates in your inbox.",
@@ -30,6 +41,19 @@ const blogSidebarData = {
 const BlogSidebar = () => {
   const [email, setEmail] = useState("");
   const [subscribed, setSubscribed] = useState(false);
+  // null while loading; the published categories from the admin, in their order
+  const [categories, setCategories] = useState<BlogCategory[] | null>(null);
+
+  useEffect(() => {
+    let active = true;
+    fetch(`${API_URL}/blog-categories`, { cache: "no-store" })
+      .then((res) => (res.ok ? res.json() : null))
+      .then((json) => active && setCategories(Array.isArray(json?.data) ? json.data : []))
+      .catch(() => active && setCategories([]));
+    return () => {
+      active = false;
+    };
+  }, []);
 
   const handleSubscribe = (e: React.FormEvent) => {
     e.preventDefault();
@@ -41,40 +65,49 @@ const BlogSidebar = () => {
 
   return (
     <aside className="space-y-5 lg:sticky lg:top-24 self-start font-inter">
-      <Reveal>
+      {/* Not wrapped in Reveal: its loading placeholder shows from the first paint */}
+      {categories?.length !== 0 && (
         <div
           className="bg-white rounded-xl p-5 font-inter"
           style={{ boxShadow: "rgba(0, 0, 0, 0.02) 0px 1px 3px 0px, rgba(27, 31, 35, 0.15) 0px 0px 0px 1px" }}
         >
-          <h3 className="font-poppins font-semibold text-[17px] sm:text-[18px] text-[#1b5e20] mb-3 tracking-tight">
+          <h3 className="font-poppins font-semibold text-[15px] sm:text-[16px] text-[#1b5e20] mb-3 tracking-tight whitespace-nowrap">
             {blogSidebarData.categoriesTitle}
           </h3>
-          <ul className="space-y-0.5">
-            {blogSidebarData.categories.map((c, i) => (
-              <Reveal key={c.label} delay={i * 45} direction={i % 2 === 0 ? "left" : "right"}>
-                <li>
-                  <a
-                    href="#"
-                    className="group flex items-center justify-between py-1.5 px-2 -mx-2 rounded-lg hover:bg-[#f4fcf6] transition-colors duration-250 font-inter"
-                  >
-                    <span className="flex items-center gap-2.5 text-[13px] font-medium text-gray-700 group-hover:text-[#1b5e20] transition-colors">
-                      <span className={`w-7 h-7 rounded-full flex items-center justify-center ${c.color} transition-transform duration-300 group-hover:scale-110 group-hover:rotate-6`}>
-                        <c.icon className="w-3.5 h-3.5" />
-                      </span>
-                      {c.label}
+          {/* Ten rows (40px each + 2px gaps) are visible; more categories scroll inside the card */}
+          <ul className="space-y-0.5 max-h-[418px] overflow-y-auto overscroll-contain px-2 -mx-2 [scrollbar-width:thin] [scrollbar-color:#cfe3d3_transparent] [&::-webkit-scrollbar]:w-[5px] [&::-webkit-scrollbar-thumb]:rounded-full [&::-webkit-scrollbar-thumb]:bg-[#cfe3d3]">
+            {categories === null
+              ? Array.from({ length: 6 }, (_, i) => (
+                  <li key={i} className="flex items-center justify-between py-1.5" aria-hidden="true">
+                    <span className="flex items-center gap-2.5">
+                      <span className="w-7 h-7 rounded-full bg-gray-100 animate-pulse" />
+                      <span className="h-3 w-28 rounded bg-gray-100 animate-pulse" />
                     </span>
-                    <span className="text-xs text-gray-500 font-medium font-inter">{c.count}</span>
-                  </a>
-                </li>
-              </Reveal>
-            ))}
+                    <span className="h-3 w-5 rounded bg-gray-100 animate-pulse" />
+                  </li>
+                ))
+              : categories.map((c) => {
+                  const Icon = ICONS[c.icon] ?? Newspaper;
+                  return (
+                    <li key={c._id}>
+                    <Link
+                      href={`${ALL_ARTICLES_PATH}?category=${encodeURIComponent(c.name)}`}
+                      className="group flex items-center justify-between py-1.5 px-2 -mx-2 rounded-lg hover:bg-[#f4fcf6] transition-colors duration-250 font-inter"
+                    >
+                      <span className="flex min-w-0 items-center gap-2.5 text-[13px] font-medium text-gray-700 group-hover:text-[#1b5e20] transition-colors">
+                        <span className={`w-7 h-7 shrink-0 rounded-full flex items-center justify-center ${COLORS[c.color] ?? COLORS.green} transition-transform duration-300 group-hover:scale-110 group-hover:rotate-6`}>
+                          <Icon className="w-3.5 h-3.5" />
+                        </span>
+                        <span className="truncate">{c.name}</span>
+                      </span>
+                      <span className="ml-3 shrink-0 text-xs text-gray-500 font-medium font-inter">{c.postCount}</span>
+                    </Link>
+                    </li>
+                  );
+                })}
           </ul>
-          <a href="#" className="group mt-3 flex items-center gap-1 text-[12px] font-semibold uppercase tracking-wider text-[#3b8c2a] font-poppins">
-            {blogSidebarData.viewAllCategoriesText}
-            <ArrowRight className="w-3.5 h-3.5 transition-transform duration-300 group-hover:translate-x-1" />
-          </a>
         </div>
-      </Reveal>
+      )}
 
       <Reveal delay={100}>
         <div className="relative overflow-hidden bg-gradient-to-br from-[#0b2912] to-[#154726] rounded-xl p-5 text-white shadow-lg font-inter">

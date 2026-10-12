@@ -61,7 +61,7 @@ const NEED_HELP_SUPPORT_DATA = [
         img: g2,
         title: "CALL US",
         contact: "+91-9654900525",
-        contactHref: null,
+        contactHref: "tel:+919654900525",
         descLine1: "Mon – Sat",
         descLine2: "10:00 AM – 6:00 PM",
       },
@@ -70,7 +70,8 @@ const NEED_HELP_SUPPORT_DATA = [
         img: g3,
         title: "WHATSAPP",
         contact: "+91-9654900525",
-        contactHref: null,
+        // Opens a WhatsApp chat (app on phones, WhatsApp Web on desktop) with a ready message
+        contactHref: `https://wa.me/919654900525?text=${encodeURIComponent("Hello Bharat Organic Expo team, I need some help.")}`,
         descLine1: "Quick responses during working hours.",
         descLine2: null,
       },

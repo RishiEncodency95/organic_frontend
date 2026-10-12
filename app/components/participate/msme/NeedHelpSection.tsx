@@ -45,9 +45,16 @@ const NEED_HELP_SECTION_DATA = [
     commitmentDescLine1: "Transparent guidance. Timely support.",
     commitmentDescLine2: "Stronger together for a sustainable future.",
     connectMethods: [
-      { id: 1, icon: email, title: "EMAIL US", detail: "info@namogange\nwellness.com", sub: "We typically reply\n within 24 hours." },
-      { id: 2, icon: phone, title: "CALL US", detail: "+91 96549 00525", sub: "Mon – Sat\n10:00 AM – 6:00 PM" },
-      { id: 3, icon: whatsapp, title: "WHATSAPP", detail: "+91 96549 00525", sub: "Quick responses\n during working hours." },
+      {
+        id: 1, icon: email, title: "EMAIL US", detail: "info@namogangewellness.com", sub: "We typically reply\n within 24 hours.",
+        href: `mailto:info@namogangewellness.com?subject=${encodeURIComponent("PMS Scheme Query – Bharat Organic Expo")}`,
+      },
+      { id: 2, icon: phone, title: "CALL US", detail: "+91 96549 00525", sub: "Mon – Sat\n10:00 AM – 6:00 PM", href: "tel:+919654900525" },
+      {
+        id: 3, icon: whatsapp, title: "WHATSAPP", detail: "+91 96549 00525", sub: "Quick responses\n during working hours.",
+        // Opens a WhatsApp chat (app on phones, WhatsApp Web on desktop) with a ready message
+        href: `https://wa.me/919654900525?text=${encodeURIComponent("Hello Bharat Organic Expo team, I need help with the PMS scheme.")}`,
+      },
       { id: 4, icon: web, title: "VISIT WEBSITE", detail: "www.bharatorganicexpo.in", sub: "Explore PMS details,\n guidelines & more." },
     ],
     whyReachOutTitle: "WHY REACH OUT TO US?",
@@ -155,9 +162,29 @@ export default function NeedHelpSection() {
                           <p className="text-[18px] font-semibold uppercase text-[#082809] mt-4">
                             {m.title}
                           </p>
-                          <p className={`mt-0.5 w-full font-semibold [overflow-wrap:anywhere] ${m.title === "VISIT WEBSITE" ? "text-[12px]" : "text-[14px]"}`}>
-                            {m.detail}
-                          </p>
+                          {"href" in m && m.href ? (
+                            <a
+                              href={m.href}
+                              target={m.href.startsWith("http") ? "_blank" : undefined}
+                              rel={m.href.startsWith("http") ? "noopener noreferrer" : undefined}
+                              aria-label={`${m.title}: ${m.detail}`}
+                              className="mt-0.5 w-full font-semibold text-[14px] [overflow-wrap:anywhere] text-[#0d4a1a] underline-offset-2 transition-colors hover:text-[#2d7a2d] hover:underline"
+                            >
+                              {/* An email may wrap only right after the "@", never mid-word */}
+                              {m.detail.includes("@") ? (
+                                <>
+                                  {m.detail.split("@")[0]}@<wbr />
+                                  <span className="whitespace-nowrap">{m.detail.split("@")[1]}</span>
+                                </>
+                              ) : (
+                                m.detail
+                              )}
+                            </a>
+                          ) : (
+                            <p className={`mt-0.5 w-full font-semibold [overflow-wrap:anywhere] ${m.title === "VISIT WEBSITE" ? "text-[12px]" : "text-[14px]"}`}>
+                              {m.detail}
+                            </p>
+                          )}
                           <div className="mt-auto flex flex-col items-center">
                             <span className="mt-2 mb-4 h-[2px] w-6 bg-[#1b5e20]/50" />
                             <p className="text-[14px] font-semibold leading-snug whitespace-pre-line">
