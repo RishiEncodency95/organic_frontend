@@ -38,7 +38,9 @@ const ContactForm = () => {
   }, [resendTimer]);
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
+    const { name, value } = e.target;
+    // The alternate number takes digits only (10 at most)
+    setFormData({ ...formData, [name]: name === "alternatePhone" ? value.replace(/\D/g, "").slice(0, 10) : value });
   };
 
   const handleSendOtp = async (e: React.MouseEvent) => {
@@ -95,6 +97,15 @@ const ContactForm = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    const alt = formData.alternatePhone;
+    if (alt && !/^[6-9]\d{9}$/.test(alt)) {
+      Swal.fire({ icon: 'warning', title: 'Alternate Number', text: 'Please enter a valid 10-digit alternate number, or leave it empty.', scrollbarPadding: false });
+      return;
+    }
+    if (alt && alt === formData.phone.replace(/\D/g, "").slice(-10)) {
+      Swal.fire({ icon: 'warning', title: 'Alternate Number', text: 'The alternate number must be different from your WhatsApp number. Leave it empty if you do not have one.', scrollbarPadding: false });
+      return;
+    }
     if (!otpVerified) {
       Swal.fire({ icon: 'warning', title: 'Verification Required', text: 'Please verify your WhatsApp number before submitting.', scrollbarPadding: false });
       return;
@@ -271,7 +282,9 @@ const ContactForm = () => {
                   </div>
                   <input
                     type="tel"
-                    name="alternatePhone"
+                    name="alternatePhone" autoComplete="section-alternate tel-national"
+                    inputMode="numeric"
+                    maxLength={10}
                     value={formData.alternatePhone}
                     onChange={handleInputChange}
                     placeholder=" "

@@ -75,7 +75,8 @@ const OFFICIAL_RECOGNITION_DATA = [
     ],
     ctaBtnText: "View Official Approval",
     ctaLinkText: "Know more about PMS Scheme →",
-    ctaHref: "/participate/msme/apply/payment",
+    // The "PMS Scheme" section further down this page
+    ctaHref: "#pms-scheme",
     approvalCard: {
       badgeTitle: "MSME PMS APPROVED EVENT",
       eventNameLine1: "BHARAT",
@@ -169,11 +170,15 @@ export default function OfficialRecognitionBanner() {
                 </div>
 
                 <div className="flex flex-col sm:flex-row items-start sm:items-center gap-3">
-                  <button className="flex items-center gap-2 whitespace-nowrap shrink-0 rounded-full bg-[#0d3b15] py-3 px-4 text-[14px] font-bold text-white transition-colors hover:bg-[#0a2e11]">
+                  {/* Scrolls to the approval letter card (shown as "Coming Soon" until the letter is issued) */}
+                  <a
+                    href="#official-approval-letter"
+                    className="flex items-center gap-2 whitespace-nowrap shrink-0 rounded-full bg-[#0d3b15] py-3 px-4 text-[14px] font-bold text-white transition-colors hover:bg-[#0a2e11]"
+                  >
                     <FileText className="h-5 w-5" aria-hidden="true" />
                     {data.ctaBtnText}
                     <ChevronRight />
-                  </button>
+                  </a>
 
                   <Link
                     href={data.ctaHref}
@@ -271,7 +276,7 @@ export default function OfficialRecognitionBanner() {
               </div>
 
             {/* ---------------- Right: Certificate ---------------- */}
-            <div className="flex flex-col w-full h-full pt-4 min-h-0">
+            <div id="official-approval-letter" className="flex flex-col w-full h-full pt-4 min-h-0 scroll-mt-28">
               <div className="relative h-full min-h-full rounded-[16px] border border-[#e5e7eb] bg-gray shadow-[0_4px_20px_rgba(0,0,0,0.12)] overflow-hidden">
 
                   <div className="absolute inset-0 z-50 flex items-center justify-center bg-white/90 backdrop-blur-[2px]">

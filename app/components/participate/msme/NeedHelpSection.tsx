@@ -87,7 +87,8 @@ const NEED_HELP_SECTION_DATA = [
 
 export default function NeedHelpSection() {
   return (
-    <section className="relative pt-6 pb-0">
+    // "Talk to PMS Support Team" (final CTA) scrolls here
+    <section id="pms-support" className="relative pt-6 pb-0 scroll-mt-24">
       <Image
         src={need_help_top}
         alt="Need Help Top"

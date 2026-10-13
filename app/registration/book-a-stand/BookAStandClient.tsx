@@ -265,6 +265,13 @@ const BookAStand = ({ disabledSections = [] }: { disabledSections?: string[] }) 
     const [exhibitorType, setExhibitorType] = useState<'domestic' | 'international' | null>(null);
     const [usdToInrRate, setUsdToInrRate] = useState<number>(86);
     const searchParams = useSearchParams();
+    // "?size=12&sides=2" from the chat's "Open Stall Booking Form" button
+    const chatPreference = (() => {
+        const size = Number(searchParams.get('size'));
+        const sides = Number(searchParams.get('sides'));
+        if (!Number.isFinite(size) || size <= 0 || size > 1000) return '';
+        return `${size} sq.m stall${sides >= 1 && sides <= 3 ? `, ${sides} open side${sides === 1 ? '' : 's'}` : ''}`;
+    })();
 
     // Verification States
     const [emailVerified, setEmailVerified] = useState(false);
@@ -1086,6 +1093,12 @@ const BookAStand = ({ disabledSections = [] }: { disabledSections?: string[] }) 
                     <div className="flex-1">
                         <h3 className="text-gray-900 text-xl font-medium mb-1">Choose Exhibitor Category</h3>
                         <div className="w-8 h-[3px] bg-[#4a8f2f] rounded mb-5" />
+                        {/* Arriving from the Organic Mitra chat: the preference picked there, visible straight away */}
+                        {chatPreference && (
+                            <p role="status" className="mb-4 rounded-lg border border-[#cfe3d3] bg-[#f1f7ee] px-3 py-2 text-[13px] font-medium text-[#14532d]">
+                                Your preference from the chat: <b>{chatPreference}</b>. Choose your category to continue.
+                            </p>
+                        )}
 
                         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
 
@@ -1224,6 +1237,12 @@ const BookAStand = ({ disabledSections = [] }: { disabledSections?: string[] }) 
                                             <ShieldCheck className="text-[#a8d060]" size={22} />
                                         </div>
                                         <form onSubmit={handleSubmit} className="px-4 pt-4 pb-8 space-y-2 bg-white">
+                                            {/* Arriving from the Organic Mitra chat ("Open Stall Booking Form"): the preference picked there */}
+                                            {chatPreference && (
+                                                <p role="status" className="rounded-lg border border-[#cfe3d3] bg-[#f1f7ee] px-3 py-2 text-[13px] font-medium text-[#14532d]">
+                                                    Your preference from the chat: <b>{chatPreference}</b>. Please choose a matching stall below.
+                                                </p>
+                                            )}
 
                                             <div className="overflow-x-auto rounded-lg border border-slate-200 shadow-sm" data-aos="fade-up">
                                                 <table className="w-full text-left border-collapse">
@@ -1720,7 +1739,7 @@ const BookAStand = ({ disabledSections = [] }: { disabledSections?: string[] }) 
                                                         </div>
                                                         <div>
                                                             <label className={labelClasses}>ALTERNATE NO. <span className="text-red-500">*</span></label>
-                                                            <input required name="contact1.alternateNo" value={formData.contact1.alternateNo} onChange={handleInputChange} placeholder={exhibitorType === 'domestic' ? "10-digit number" : "Write Here.."} className={inputClasses} inputMode={exhibitorType === 'domestic' ? 'numeric' : 'text'} maxLength={exhibitorType === 'domestic' ? 10 : undefined} />
+                                                            <input required name="contact1.alternateNo" autoComplete="section-alternate tel-national" value={formData.contact1.alternateNo} onChange={handleInputChange} placeholder={exhibitorType === 'domestic' ? "10-digit number" : "Write Here.."} className={inputClasses} inputMode={exhibitorType === 'domestic' ? 'numeric' : 'text'} maxLength={exhibitorType === 'domestic' ? 10 : undefined} />
                                                         </div>
                                                     </div>
                                                 </div>

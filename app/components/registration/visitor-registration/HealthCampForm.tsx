@@ -293,7 +293,7 @@ export default function HealthCampForm() {
               {otpVerified && <CheckCircle size={18} className="text-[#4d7f1d] self-center shrink-0" />}
             </div>
           </div>
-          <div><label className={labelClasses}>Alternate No.</label><input type="tel" name="alternateNo" value={formData.alternateNo} onChange={handleChange} className={inputClasses} placeholder="Optional" /></div>
+          <div><label className={labelClasses}>Alternate No.</label><input type="tel" name="alternateNo" autoComplete="section-alternate tel-national" value={formData.alternateNo} onChange={handleChange} className={inputClasses} placeholder="Optional" /></div>
           <div><label className={labelClasses}>Date of Birth <span className="text-red-600">*</span></label><input required type="date" name="dateOfBirth" value={formData.dateOfBirth} onChange={handleChange} className={inputClasses} /></div>
           <div>
             <label className={labelClasses}>Gender <span className="text-red-600">*</span></label>

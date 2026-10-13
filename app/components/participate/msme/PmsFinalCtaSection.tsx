@@ -43,6 +43,12 @@ type Props = {
   supportHref?: string;
 };
 
+/** Udyam guidance comes from the support team: opens a WhatsApp chat with the request filled in */
+const openUdyamGuidanceChat = () => {
+  const text = "Hello Bharat Organic Expo team, I need guidance for Udyam Registration (for the PMS scheme).";
+  window.open(`https://wa.me/919654900525?text=${encodeURIComponent(text)}`, "_blank", "noopener,noreferrer");
+};
+
 /* ================================================================
    DEFAULT EDITABLE CONTENT
 ================================================================ */
@@ -498,8 +504,9 @@ export default function PmsFinalCta({
 
   onCheckEligibility,
 
-  onUdyamGuidance,
+  onUdyamGuidance = openUdyamGuidanceChat,
 
+  // The "Need Help? / Ways to Connect" section on the MSME page (call, WhatsApp, email)
   supportHref = "#pms-support",
 }: Props) {
   const c: PmsFinalCtaContent = {

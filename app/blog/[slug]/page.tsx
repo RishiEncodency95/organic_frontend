@@ -11,6 +11,7 @@ import articleImg2 from "@/app/assets/blog/latest_2.webp";
 import articleImg3 from "@/app/assets/blog/featured_article1.webp";
 import articleImg4 from "@/app/assets/blog/featured_article2.webp";
 import { API_URL } from "@/lib/api";
+import BlogArticleNewsletterForm from "@/app/components/blog/BlogArticleNewsletterForm";
 
 // Social Icons SVGs
 const FacebookIcon = () => (
@@ -568,20 +569,7 @@ export default async function BlogDetail({
                                 <p className="text-[12px] text-neutral-500 mb-4">
                                     Subscribe to our newsletter and get the latest articles, insights and expo updates.
                                 </p>
-                                <form className="space-y-2.5">
-                                    <input
-                                        type="email"
-                                        placeholder="Enter your email"
-                                        className="w-full px-3 py-2.5 rounded-md border border-gray-200 focus:outline-none focus:border-[#34A853] focus:ring-1 focus:ring-[#34A853] bg-white text-[13px]"
-                                        required
-                                    />
-                                    <button
-                                        type="submit"
-                                        className="w-full bg-[#2D6A4F] text-white font-medium py-2.5 rounded-md hover:bg-[#1B4332] transition-colors text-[13px] flex items-center justify-center gap-1.5"
-                                    >
-                                        <MessageCircle className="w-4 h-4" /> Subscribe Now
-                                    </button>
-                                </form>
+                                <BlogArticleNewsletterForm />
                                 <p className="text-[10px] text-neutral-400 mt-3 flex items-center gap-1 justify-center">
                                     <CheckCircle2 className="w-3 h-3 fill-neutral-400 text-white" /> We respect your privacy. Unsubscribe anytime.
                                 </p>

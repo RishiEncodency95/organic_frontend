@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { CheckCircle, ShieldCheck, Zap, Handshake, Users, Award } from "lucide-react";
-import { verifyApi } from "@/lib/api";
+import { API_URL, postResult, verifyApi } from "@/lib/api";
+import { emailProblem } from "@/lib/emailCheck";
 
 import pop1 from "../../assets/icons/icon1.png";
 import leaf2 from "../../assets/icons/bleaf.webp";
@@ -89,6 +90,7 @@ export default function PartnershipPopup({ isOpen, onClose, initialService }: Pa
 
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
+  const [submitError, setSubmitError] = useState("");
 
   // WhatsApp OTP for the mobile number
   const [otpSent, setOtpSent] = useState(false);
@@ -165,10 +167,19 @@ export default function PartnershipPopup({ isOpen, onClose, initialService }: Pa
     } else if (!isOpen) {
       setSelectedServices([]);
       setIsSubmitted(false);
+      setSubmitError("");
       setFormData({ fullName: "", companyName: "", mobile: "", email: "", stallSize: "", message: "" });
       resetOtp();
     }
   }, [initialService, isOpen]);
+
+  // Submit stays hidden until every required (*) field is filled
+  const requiredFilled =
+    !!formData.fullName.trim() &&
+    !!formData.companyName.trim() &&
+    formData.mobile.length === 10 &&
+    !!formData.email.trim() &&
+    (!!initialService || selectedServices.length > 0);
 
   const toggleService = (id: string) => setSelectedServices(p => p.includes(id) ? p.filter(s => s !== id) : [...p, id]);
 
@@ -178,22 +189,38 @@ export default function PartnershipPopup({ isOpen, onClose, initialService }: Pa
     setFormData(p => ({ ...p, [name]: name === "mobile" ? value.replace(/\D/g, "").slice(0, 10) : value }));
   };
 
+  /** Sends the enquiry to the backend (Admin → Partnership Enquiries, category "E-Promotion: …") */
   const handleSubmit = async () => {
-    if (!formData.fullName || !formData.companyName || !formData.mobile || !formData.email) {
-      alert("Please fill all required fields");
-      return;
-    }
-    if (!otpVerified) {
-      alert("Please verify your mobile number with the WhatsApp OTP.");
+    const name = formData.fullName.trim();
+    const interests = serviceOptions.filter((s) => selectedServices.includes(s.id)).map((s) => s.label);
+    const problem =
+      (!name && "Please enter your full name.") ||
+      (!/^\p{L}[\p{L}\p{M} .'-]{1,59}$/u.test(name) && "Full name can contain letters only.") ||
+      (!formData.companyName.trim() && "Please enter your company name.") ||
+      (!/^[6-9]\d{9}$/.test(formData.mobile) && "Please enter a valid 10-digit mobile number.") ||
+      emailProblem(formData.email, "Email") ||
+      (!initialService && interests.length === 0 && "Please choose what you are interested in.") ||
+      (!otpVerified && "Please verify your mobile number with the WhatsApp OTP.") ||
+      "";
+    if (problem) {
+      setSubmitError(problem);
       return;
     }
 
     setIsSubmitting(true);
-    // Simulate API call
-    setTimeout(() => {
-      setIsSubmitted(true);
-      setIsSubmitting(false);
-    }, 1500);
+    setSubmitError("");
+    const res = await postResult(`${API_URL}/partnership-enquiry/e-promotion`, {
+      name,
+      organization: formData.companyName.trim(),
+      phone: formData.mobile,
+      email: formData.email.trim().toLowerCase(),
+      opportunity: initialService || "",
+      interests,
+      message: formData.message.trim(),
+    });
+    setIsSubmitting(false);
+    if (res.ok) setIsSubmitted(true);
+    else setSubmitError(res.message);
   };
 
   return (
@@ -305,14 +332,14 @@ export default function PartnershipPopup({ isOpen, onClose, initialService }: Pa
                   >
                     <div className="grid grid-cols-2 gap-4 px-1">
                       <div>
-                        <label className="text-[9.5px] font-bold text-black uppercase tracking-wide block mb-1">Full Name *</label>
+                        <label className="text-[9.5px] font-bold text-black uppercase tracking-wide block mb-1">Full Name <span className="text-red-600">*</span></label>
                         <div className="relative">
                           <span className="absolute left-2.5 top-1/2 -translate-y-1/2 text-gray-400"><svg viewBox="0 0 20 20" className="w-3.5 h-3.5" fill="none" stroke="currentColor" strokeWidth="1.5"><circle cx="10" cy="6" r="3" /><path d="M3 18a7 7 0 0114 0" strokeLinecap="round" /></svg></span>
                           <input type="text" name="fullName" placeholder="Full Name" value={formData.fullName} onChange={handleChange} className="w-full pl-7 pr-3 py-2 border border-gray-200 rounded-lg text-[11.5px] bg-gray-50/50 focus:outline-none focus:border-[#2d6a2d] focus:bg-white transition-all placeholder:text-gray-500" />
                         </div>
                       </div>
                       <div>
-                        <label className="text-[9.5px] font-bold text-black uppercase tracking-wide block mb-1">Company Name *</label>
+                        <label className="text-[9.5px] font-bold text-black uppercase tracking-wide block mb-1">Company Name <span className="text-red-600">*</span></label>
                         <div className="relative">
                           <span className="absolute left-2.5 top-1/2 -translate-y-1/2 text-gray-400"><svg viewBox="0 0 20 20" className="w-3.5 h-3.5" fill="none" stroke="currentColor" strokeWidth="1.5"><rect x="2" y="6" width="16" height="12" rx="1" /><path d="M6 6V4a4 4 0 018 0v2" strokeLinecap="round" /></svg></span>
                           <input type="text" name="companyName" placeholder="Company Name" value={formData.companyName} onChange={handleChange} className="w-full pl-7 pr-3 py-2 border border-gray-200 rounded-lg text-[11.5px] bg-gray-50/50 focus:outline-none focus:border-[#2d6a2d] focus:bg-white transition-all placeholder:text-gray-500" />
@@ -323,7 +350,7 @@ export default function PartnershipPopup({ isOpen, onClose, initialService }: Pa
                     <div className="grid grid-cols-2 gap-4 px-1">
                       <div>
                         <label className="text-[9.5px] font-bold text-black uppercase tracking-wide block mb-1 flex justify-between items-center">
-                          Mobile Number *
+                          <span>Mobile Number <span className="text-red-600">*</span></span>
                         </label>
                         <div className="relative">
                           <span className="absolute left-2.5 top-1/2 -translate-y-1/2 text-gray-400"><svg viewBox="0 0 20 20" className="w-3.5 h-3.5" fill="none" stroke="currentColor" strokeWidth="1.5"><rect x="5" y="2" width="10" height="16" rx="2" /><circle cx="10" cy="15" r="0.7" fill="currentColor" /></svg></span>
@@ -358,7 +385,7 @@ export default function PartnershipPopup({ isOpen, onClose, initialService }: Pa
 
                       <div>
                         <label className="text-[9.5px] font-bold text-black uppercase tracking-wide block mb-1 flex justify-between items-center">
-                          Email Address *
+                          <span>Email Address <span className="text-red-600">*</span></span>
                         </label>
                         <div className="relative">
                           <span className="absolute left-2.5 top-1/2 -translate-y-1/2 text-gray-400"><svg viewBox="0 0 20 20" className="w-3.5 h-3.5" fill="none" stroke="currentColor" strokeWidth="1.5"><rect x="2" y="5" width="16" height="11" rx="2" /><path d="M2 7l8 5 8-5" strokeLinecap="round" /></svg></span>
@@ -368,7 +395,7 @@ export default function PartnershipPopup({ isOpen, onClose, initialService }: Pa
                     </div>
 
                     <div className="px-2">
-                      <label className="text-[10px] font-bold text-black uppercase tracking-wide block mb-2">Select Interest Area(s) *</label>
+                      <label className="text-[10px] font-bold text-black uppercase tracking-wide block mb-2">Select Interest Area(s) <span className="text-red-600">*</span></label>
                       <div className="grid grid-cols-3 sm:grid-cols-6 gap-2">
                         {serviceOptions.map(s => {
                           const checked = selectedServices.includes(s.id);
@@ -405,13 +432,19 @@ export default function PartnershipPopup({ isOpen, onClose, initialService }: Pa
                     </div>
                   </motion.div>
 
+                  {submitError && (
+                    <p className="mt-3 px-2 text-[11.5px] font-semibold text-red-600" role="alert">
+                      {submitError}
+                    </p>
+                  )}
+
                   <motion.div
-                    className="flex flex-wrap gap-2.5 mt-8 mb-4 px-2 flex-shrink-0"
+                    className={`flex flex-wrap gap-2.5 ${submitError ? "mt-3" : "mt-8"} mb-4 px-2 flex-shrink-0`}
                     initial={{ opacity: 0, y: 10 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: 0.5 }}
                   >
-                    <div className="relative group/btn flex-1 min-w-[140px]">
+                    {requiredFilled && <div className="relative group/btn flex-1 min-w-[140px]">
                       <Sparkle style={{ top: '-10px', left: '10%', animationDelay: '0.1s' }} />
                       <Sparkle style={{ top: '-8px', right: '15%', animationDelay: '0.9s' }} />
                       <Sparkle style={{ bottom: '-10px', left: '25%', animationDelay: '0.3s' }} />
@@ -425,7 +458,7 @@ export default function PartnershipPopup({ isOpen, onClose, initialService }: Pa
                         {isSubmitting ? "SUBMITTING..." : "SUBMIT"}
                         {!isSubmitting && <svg viewBox="0 0 20 20" className="w-3 h-3" fill="none" stroke="white" strokeWidth="2.5"><path d="M4 10h12M10 4l6 6-6 6" strokeLinecap="round" strokeLinejoin="round" /></svg>}
                       </button>
-                    </div>
+                    </div>}
 
                     <a
                       href={whatsappUrl}

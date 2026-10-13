@@ -335,7 +335,7 @@ export default function GeneralForm() {
             </div>
           </div>
 
-          <div><label className={labelClasses}>Alternate Number (Optional)</label><input type="tel" name="alternateNo" value={formData.alternateNo} onChange={handleChange} className={inputClasses} placeholder="Enter Alternate No." /></div>
+          <div><label className={labelClasses}>Alternate Number (Optional)</label><input type="tel" name="alternateNo" autoComplete="section-alternate tel-national" value={formData.alternateNo} onChange={handleChange} className={inputClasses} placeholder="Enter Alternate No." /></div>
 
           <div className="space-y-1">
             <div className="flex justify-between items-end">

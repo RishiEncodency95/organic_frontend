@@ -8,6 +8,7 @@ import {
 import { Reveal } from "./BlogReveal";
 import Link from "next/link";
 import { API_URL } from "@/lib/api";
+import { useNewsletterForm } from "@/lib/newsletter";
 import { ALL_ARTICLES_PATH } from "./BlogFeatured";
 
 /* Icon and colour keys chosen in the admin (Blog & Awareness → Manage Categories) */
@@ -39,8 +40,7 @@ const blogSidebarData = {
 };
 
 const BlogSidebar = () => {
-  const [email, setEmail] = useState("");
-  const [subscribed, setSubscribed] = useState(false);
+  const newsletter = useNewsletterForm("Blog Sidebar");
   // null while loading; the published categories from the admin, in their order
   const [categories, setCategories] = useState<BlogCategory[] | null>(null);
 
@@ -54,14 +54,6 @@ const BlogSidebar = () => {
       active = false;
     };
   }, []);
-
-  const handleSubscribe = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!email) return;
-    setSubscribed(true);
-    setTimeout(() => setSubscribed(false), 2500);
-    setEmail("");
-  };
 
   return (
     <aside className="space-y-5 lg:sticky lg:top-24 self-start font-inter">
@@ -127,21 +119,29 @@ const BlogSidebar = () => {
             </div>
           </div>
           <div>
-            <form onSubmit={handleSubscribe} className="space-y-2 relative z-10 font-inter">
+            <form onSubmit={newsletter.submit} noValidate className="space-y-2 relative z-10 font-inter">
               <input
                 type="email"
-                required
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
+                value={newsletter.email}
+                onChange={(e) => newsletter.setEmail(e.target.value)}
+                maxLength={254}
+                autoComplete="email"
+                aria-label="Email address"
                 placeholder={blogSidebarData.newsletter.inputPlaceholder}
                 className="w-full px-3.5 py-2.5 rounded-md text-sm text-gray-800 bg-white placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-[#F2B40E] transition-shadow duration-300 font-inter"
               />
               <button
                 type="submit"
-                className="w-full py-2.5 rounded-md bg-[#F2B40E] text-[#0b2912] text-[12px] font-bold uppercase tracking-wider hover:bg-[#ffc533] transition-all duration-300 hover:shadow-lg active:scale-95 font-poppins"
+                disabled={newsletter.busy}
+                className="w-full py-2.5 rounded-md bg-[#F2B40E] disabled:opacity-70 text-[#0b2912] text-[12px] font-bold uppercase tracking-wider hover:bg-[#ffc533] transition-all duration-300 hover:shadow-lg active:scale-95 font-poppins"
               >
-                {subscribed ? blogSidebarData.newsletter.subscribedText : blogSidebarData.newsletter.buttonText}
+                {newsletter.busy ? "Subscribing…" : newsletter.result?.ok ? blogSidebarData.newsletter.subscribedText : blogSidebarData.newsletter.buttonText}
               </button>
+              {newsletter.result && (
+                <p role="status" className={`text-[11.5px] font-medium ${newsletter.result.ok ? "text-lime-200" : "text-amber-200"}`}>
+                  {newsletter.result.message}
+                </p>
+              )}
             </form>
             <p className="text-[11px] text-white/50 mt-2 font-inter">{blogSidebarData.newsletter.footerText}</p>
           </div>

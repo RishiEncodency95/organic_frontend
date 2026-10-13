@@ -649,7 +649,7 @@ export default function DomesticBuyerForm() {
               </div>
             )}
           </div>
-          <div><label className={labelClasses}>Alternate Number <span className="text-red-600">*</span></label><input required type="tel" name="alternateNumber" value={formData.alternateNumber} onChange={handleChange} placeholder="Alternate number" className={inputClasses} /></div>
+          <div><label className={labelClasses}>Alternate Number <span className="text-red-600">*</span></label><input required type="tel" name="alternateNumber" autoComplete="section-alternate tel-national" value={formData.alternateNumber} onChange={handleChange} placeholder="Alternate number" className={inputClasses} /></div>
           <div className="space-y-1">
             <label className={labelClasses}>Email Address (OTP) <span className="text-red-600">*</span></label>
             <div className="flex gap-2 h-7">

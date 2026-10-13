@@ -115,6 +115,7 @@ export default function MsmePmsScheme() {
 
   return (
     <section
+      id="pms-scheme"
       ref={sectionRef}
       aria-labelledby="msme-pms-heading"
       className="

@@ -18,10 +18,11 @@ const whyBuyers = [
 const ParticipateWhyParticipate = () => {
   return (
     <section className="w-full bg-white pb-6 font-inter">
-      <div className="rounded-2xl border border-gray-200/80 bg-[#f5f7f4] px-2 lg:px-14 shadow-[0_2px_12px_rgba(0,0,0,0.03)]">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 lg:divide-x divide-gray-200/80 items-stretch">
+      <div className="mx-4 lg:mx-14 rounded-2xl border border-gray-200/80 bg-[#f5f7f4] px-5 py-6 lg:px-8 lg:py-8 shadow-[0_2px_12px_rgba(0,0,0,0.03)]">
+        {/* Three equal columns on desktop (4 + 4 + 4 of 12), stacked on phones */}
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-0 lg:divide-x divide-gray-200/80 items-center">
           {/* Left: Why Buyers */}
-          <div className="lg:col-span-4">
+          <div className="lg:col-span-4 lg:pr-8">
             <h3 className="text-base sm:text-lg md:text-[19px] font-extrabold text-gray-900 font-poppins uppercase tracking-tight mb-4">
               WHY BUYERS SHOULD PARTICIPATE?
             </h3>
@@ -36,8 +37,8 @@ const ParticipateWhyParticipate = () => {
           </div>
 
           {/* Center: Image */}
-          <div className="lg:col-span-4 flex justify-center items-center">
-            <div className="w-full max-w-[380px] lg:max-w-none">
+          <div className="lg:col-span-4 lg:px-8 flex justify-center items-center">
+            <div className="w-full max-w-[380px]">
               <Image width={0} height={0} sizes="100vw"
                 src={whyParticipateImg.src}
                 alt="Why Buyers and Exhibitors Participate - Bharat Organic Expo 2027"
@@ -48,7 +49,7 @@ const ParticipateWhyParticipate = () => {
           </div>
 
           {/* Right: Exhibitors */}
-          <div className="lg:col-span-4">
+          <div className="lg:col-span-4 lg:pl-8">
             <h3 className="text-base sm:text-lg md:text-[19px] font-extrabold text-gray-900 font-poppins uppercase tracking-tight mb-3">
               EXHIBITORS: CONNECT WITH RELEVANT BUYERS
             </h3>

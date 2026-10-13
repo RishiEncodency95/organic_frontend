@@ -1,10 +1,10 @@
 "use client";
-import React, { useState } from "react";
-import { ArrowRight, Mail, Phone, Globe, MapPin } from "lucide-react";
+import React from "react";
+import { Mail, Phone, Globe, MapPin } from "lucide-react";
 import leafsImg from "@/app/assets/icons/leafs.png";
 import hotelog from "@/app/assets/icons/hotelog.png";
 import SectionContainer from "@/app/components/layout/SectionContainer";
-import { toOptions, useDropdowns } from "@/lib/dropdowns";
+import PartnerRegistrationForm, { VENUE_MAP_URL } from "../PartnerRegistrationForm";
 import Image from "next/image";
 
 export const WHY_PARTNER_HOTEL_DATA = [
@@ -35,17 +35,8 @@ export const WHY_PARTNER_HOTEL_DATA = [
   }
 ];
 
-// Admin-managed (Dropdown Manager); these lists are the fallback.
-const PARTNER_DROPDOWNS = {
-  "partner-state": toOptions(["Delhi", "Maharashtra", "Karnataka", "Tamil Nadu", "Gujarat", "Uttar Pradesh", "Haryana", "Telangana", "West Bengal", "Other"]),
-  "partner-preferred-category": toOptions(["Hotel & Stay Partner", "Travel Partner", "Logistics Partner", "Stall Design Partner", "Manpower Supply Partner", "Printing & Branding Partner"]),
-};
 
 export default function WhyPartnerHotel() {
-  const dropdowns = useDropdowns(PARTNER_DROPDOWNS);
-  const [stateVal, setStateVal] = useState("");
-  const [categoryVal, setCategoryVal] = useState("Hotel & Stay Partner");
-  const [agreed, setAgreed] = useState(false);
 
   const data = WHY_PARTNER_HOTEL_DATA[0];
 
@@ -107,100 +98,7 @@ export default function WhyPartnerHotel() {
               </p>
             </div>
 
-            <form className="relative z-10">
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-x-4 gap-y-5">
-                
-                <div className="flex flex-col gap-1.5">
-                  <label className="text-xs font-bold text-gray-900">Full Name <span className="text-red-500">*</span></label>
-                  <input type="text" placeholder="Enter full name" required className="w-full px-4 py-2 border border-gray-200 rounded-md bg-white text-sm text-gray-900 focus:outline-none focus:ring-1 focus:ring-[#113217] focus:border-[#113217]" />
-                </div>
-                
-                <div className="flex flex-col gap-1.5">
-                  <label className="text-xs font-bold text-gray-900">Designation <span className="text-red-500">*</span></label>
-                  <input type="text" placeholder="Enter designation" required className="w-full px-4 py-2 border border-gray-200 rounded-md bg-white text-sm text-gray-900 focus:outline-none focus:ring-1 focus:ring-[#113217] focus:border-[#113217]" />
-                </div>
-
-                <div className="flex flex-col gap-1.5">
-                  <label className="text-xs font-bold text-gray-900">Email Address <span className="text-red-500">*</span></label>
-                  <input type="email" placeholder="Enter email address" required className="w-full px-4 py-2 border border-gray-200 rounded-md bg-white text-sm text-gray-900 focus:outline-none focus:ring-1 focus:ring-[#113217] focus:border-[#113217]" />
-                </div>
-
-                <div className="flex flex-col gap-1.5">
-                  <label className="text-xs font-bold text-gray-900">Mobile Number <span className="text-red-500">*</span></label>
-                  <input type="tel" placeholder="Enter mobile number" required className="w-full px-4 py-2 border border-gray-200 rounded-md bg-white text-sm text-gray-900 focus:outline-none focus:ring-1 focus:ring-[#113217] focus:border-[#113217]" />
-                </div>
-
-                <div className="flex flex-col gap-1.5">
-                  <label className="text-xs font-bold text-gray-900">Organization / Company Name <span className="text-red-500">*</span></label>
-                  <input type="text" placeholder="Enter organization name" required className="w-full px-4 py-2 border border-gray-200 rounded-md bg-white text-sm text-gray-900 focus:outline-none focus:ring-1 focus:ring-[#113217] focus:border-[#113217]" />
-                </div>
-
-                <div className="flex flex-col gap-1.5">
-                  <label className="text-xs font-bold text-gray-900">Website (if any)</label>
-                  <input type="url" placeholder="Enter website" className="w-full px-4 py-2 border border-gray-200 rounded-md bg-white text-sm text-gray-900 focus:outline-none focus:ring-1 focus:ring-[#113217] focus:border-[#113217]" />
-                </div>
-
-                <div className="flex flex-col gap-1.5">
-                  <label className="text-xs font-bold text-gray-900">City <span className="text-red-500">*</span></label>
-                  <input type="text" placeholder="Enter city" required className="w-full px-4 py-2 border border-gray-200 rounded-md bg-white text-sm text-gray-900 focus:outline-none focus:ring-1 focus:ring-[#113217] focus:border-[#113217]" />
-                </div>
-
-                <div className="flex flex-col gap-1.5">
-                  <label className="text-xs font-bold text-gray-900">State <span className="text-red-500">*</span></label>
-                  <div className="relative">
-                    <select required value={stateVal} onChange={(e) => setStateVal(e.target.value)}
-                      className={`w-full px-4 py-2 border border-gray-200 rounded-md bg-white text-sm focus:outline-none focus:ring-1 focus:ring-[#113217] focus:border-[#113217] appearance-none ${!stateVal ? 'text-gray-500' : 'text-gray-900'}`}>
-                      <option value="" disabled>Select state</option>
-                      {dropdowns["partner-state"].map((o) => <option key={o.value} value={o.value} className="text-gray-900">{o.label}</option>)}
-                    </select>
-                    <div className="absolute inset-y-0 right-0 flex items-center px-2 pointer-events-none text-gray-500">
-                      <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7"/></svg>
-                    </div>
-                  </div>
-                </div>
-
-                <div className="flex flex-col gap-1.5">
-                  <label className="text-xs font-bold text-gray-900">Preferred Partner Category <span className="text-red-500">*</span></label>
-                  <div className="relative">
-                    <select required value={categoryVal} onChange={(e) => setCategoryVal(e.target.value)}
-                      className="w-full px-4 py-2 border border-gray-200 rounded-md bg-white text-sm text-gray-900 focus:outline-none focus:ring-1 focus:ring-[#113217] focus:border-[#113217] appearance-none">
-                      {dropdowns["partner-preferred-category"].map((o) => (
-                        <option key={o.value} value={o.value}>{o.label}</option>
-                      ))}
-                    </select>
-                    <div className="absolute inset-y-0 right-0 flex items-center px-2 pointer-events-none text-gray-500">
-                      <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7"/></svg>
-                    </div>
-                  </div>
-                </div>
-
-              </div>
-              
-              <div className="mt-5 flex flex-col gap-1.5">
-                <label className="text-xs font-bold text-gray-900">Tell Us About Your Organization <span className="text-red-500">*</span></label>
-                <textarea rows={2} placeholder="Briefly describe your organization and how you would like to partner with us." required
-                  className="w-full px-4 py-2 border border-gray-200 rounded-md bg-white text-sm text-gray-900 focus:outline-none focus:ring-1 focus:ring-[#113217] focus:border-[#113217] resize-none">
-                </textarea>
-              </div>
-
-              <div className="mt-6 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-                <label className="flex items-center gap-2 cursor-pointer group">
-                  <div className="relative flex items-center justify-center w-4 h-4">
-                    <input type="checkbox" className="peer sr-only" checked={agreed} onChange={(e) => setAgreed(e.target.checked)} required />
-                    <div className="w-4 h-4 border border-gray-300 rounded bg-white peer-checked:bg-[#113217] peer-checked:border-[#113217] transition-colors"></div>
-                    <svg className="absolute w-3 h-3 text-white opacity-0 peer-checked:opacity-100 transition-opacity pointer-events-none" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="3">
-                      <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7"/>
-                    </svg>
-                  </div>
-                  <span className="text-xs font-bold text-gray-800 select-none group-hover:text-[#113217] transition-colors">
-                    I agree to the <span className="text-[#1b5e20] hover:underline">Terms & Conditions</span> and <span className="text-[#1b5e20] hover:underline">Privacy Policy</span>.
-                  </span>
-                </label>
-                <button type="submit" className="bg-[#113217] hover:bg-[#0b2912] text-white px-6 py-2.5 rounded-md font-semibold text-xs tracking-wide uppercase transition-colors flex items-center justify-center gap-2">
-                  SUBMIT REGISTRATION <ArrowRight size={14} />
-                </button>
-              </div>
-            </form>
+            <PartnerRegistrationForm defaultCategory="Hotel & Stay Partner" />
           </div>
         </div>
 
@@ -225,13 +123,13 @@ export default function WhyPartnerHotel() {
             <a href={data.contactWebsiteUrl} target="_blank" rel="noopener noreferrer" className="text-xs lg:text-[13px] font-bold text-blue-600 hover:underline transition-colors whitespace-nowrap">{data.contactWebsite}</a>
           </div>
           <div className="hidden lg:block border-l border-gray-300 h-6 shrink-0" />
-          <div className="flex items-center gap-2.5">
+          <a href={VENUE_MAP_URL} target="_blank" rel="noopener noreferrer" title="Open in Google Maps" className="flex items-center gap-2.5 group">
             <MapPin size={24} className="text-[#d6a549] shrink-0" />
-            <div className="text-[10px] lg:text-[11px] font-bold text-gray-900 leading-tight">
+            <div className="text-[10px] lg:text-[11px] font-bold text-gray-900 leading-tight group-hover:text-[#113217] group-hover:underline">
               <div className="whitespace-nowrap">{data.contactLocationLine1}</div>
               <div className="whitespace-nowrap">{data.contactLocationLine2}</div>
             </div>
-          </div>
+          </a>
         </div>
       </SectionContainer>
     </section>

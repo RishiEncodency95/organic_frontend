@@ -55,9 +55,11 @@ type Message = {
     /** "Request Received" confirmation card for this stall size */
     receipt?: { stall: string };
     /** Follow-up buttons after a quotation request: brochure, main menu, WhatsApp, end chat */
-    followUp?: { stall: string };
+    followUp?: { stall: string; company?: string; email?: string; time?: string };
     /** A centred "Earlier chat · 9 Oct" / "Today" line between conversations (no bubble) */
     divider?: string;
+    /** The visitor typed this themselves (not a button of the scripted flow) */
+    typed?: boolean;
 };
 
 type OpenSides = 1 | 2 | 3;
@@ -1926,7 +1928,7 @@ const ChatPanel: React.FC<Props> = ({ open, onClose }) => {
 
         setInput("");
         setLoading(true);
-        setMessages((prev) => [...prev, { role: "user", content: topic || message }, { role: "assistant", content: "" }]);
+        setMessages((prev) => [...prev, { role: "user", content: topic || message, typed: !topic }, { role: "assistant", content: "" }]);
 
         // A free question is used up only when the AI answers it (the server counts the same way)
         let answered = false;
@@ -2209,7 +2211,7 @@ const ChatPanel: React.FC<Props> = ({ open, onClose }) => {
                 ...prev,
                 { role: "assistant", content: (lang === "en" && config?.forms?.quote?.confirmation) || t.quoteThanks },
                 { role: "assistant", content: "", receipt: { stall } },
-                { role: "assistant", content: t.anythingElse, followUp: { stall } },
+                { role: "assistant", content: t.anythingElse, followUp: { stall, company: details.company, email: details.email, time: details.time } },
             ]);
             setLoading(false);
         }, 700);
@@ -2242,6 +2244,36 @@ const ChatPanel: React.FC<Props> = ({ open, onClose }) => {
         setMessages((prev) => prev.map((m, i) => (i === index && m.price ? { ...m, price: { ...m.price, sides } } : m)));
 
     /** "Proceed to Booking" on the price card: sum up the choice in the chat, then link to the booking form */
+    /**
+     * The message "Chat on WhatsApp" opens with: the opening line plus everything the visitor
+     * already told the chat (name, mobile, stall choice, quotation details and their own
+     * questions), so the sales team does not have to ask again.
+     */
+    const whatsappMessage = (intro: string, extra: { company?: string; email?: string; time?: string } = {}) => {
+        const picked = [...messages].reverse().find((m) => m.booking || m.summary || m.price);
+        const choice = picked?.booking || picked?.summary || picked?.price;
+        // Only what the visitor typed themselves — the bubbles made by menu buttons are left out
+        const asked = messages
+            .filter((m) => m.role === "user" && m.typed && m.content)
+            .map((m) => m.content.replace(/\s+/g, " ").trim())
+            .filter((q, i, all) => q.length > 3 && all.indexOf(q) === i)
+            .slice(-4);
+        const lines = [
+            intro,
+            "",
+            visitorName ? `Name: ${visitorName}` : "",
+            verifiedPhone ? `Mobile: +91 ${verifiedPhone}` : "",
+            extra.company ? `Company: ${extra.company}` : "",
+            extra.email ? `Email: ${extra.email}` : "",
+            choice ? `Stall: ${choice.stall}${choice.sides ? `, ${choice.sides} open side${choice.sides === 1 ? "" : "s"}` : ""}` : "",
+            extra.time ? `Preferred time: ${extra.time}` : "",
+            asked.length ? `My questions:\n${asked.map((q) => `- ${q.slice(0, 180)}`).join("\n")}` : "",
+        ].filter((l, i) => l || i === 1);
+        // Nothing beyond the opening line → no dangling blank line
+        const text = lines.length > 2 ? lines.join("\n") : intro;
+        return `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(text.slice(0, 1200))}`;
+    };
+
     const proceedToBooking = (choice: StallChoice) => {
         if (loading) return;
         const bt = BOOKING_TEXT[lang];
@@ -2877,7 +2909,7 @@ const ChatPanel: React.FC<Props> = ({ open, onClose }) => {
                                                     </button>
                                                 ))}
                                                 <a
-                                                    href={`https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(t.whatsappText(m.followUp.stall))}`}
+                                                    href={whatsappMessage(t.whatsappText(m.followUp.stall), m.followUp)}
                                                     target="_blank"
                                                     rel="noopener noreferrer"
                                                     className={FOLLOW_UP_PILL}
@@ -2944,16 +2976,16 @@ const ChatPanel: React.FC<Props> = ({ open, onClose }) => {
                                     {m.summary && <StallSummary lang={lang} choice={m.summary} />}
                                     {m.booking && (
                                         <div className="flex flex-col gap-2">
-                                            {/* Continues in the chat: WhatsApp / callback request with the sales team */}
-                                            <button
-                                                type="button"
-                                                onClick={() => runStep("sales", m.booking!.stall)}
-                                                disabled={loading}
-                                                className="flex items-center justify-center gap-2 rounded-full bg-[#14532d] hover:bg-[#1b5e20] px-4 py-2.5 font-poppins font-medium text-[14px] text-white shadow-sm transition disabled:pointer-events-none"
+                                            {/* Opens the Book a Stand form in a new tab with the chosen size and open sides */}
+                                            <a
+                                                href={`/registration/book-a-stand?size=${m.booking.sqm}&sides=${m.booking.sides ?? 1}`}
+                                                target="_blank"
+                                                rel="noopener noreferrer"
+                                                className="flex items-center justify-center gap-2 rounded-full bg-[#14532d] hover:bg-[#1b5e20] px-4 py-2.5 font-poppins font-medium text-[14px] text-white shadow-sm transition"
                                             >
                                                 {BOOKING_TEXT[lang].open}
                                                 <ArrowUpRight className="w-[18px] h-[18px]" aria-hidden="true" />
-                                            </button>
+                                            </a>
                                             <p className="text-center text-[11.5px] leading-snug text-slate-500">{BOOKING_TEXT[lang].carry}</p>
                                             <p className="-mt-1 flex items-start justify-center gap-1.5 text-[11.5px] leading-snug text-slate-500">
                                                 <Info className="w-3.5 h-3.5 shrink-0 mt-px" aria-hidden="true" />
@@ -3029,7 +3061,7 @@ const ChatPanel: React.FC<Props> = ({ open, onClose }) => {
                                     {m.sales && (
                                         <div className="ml-[42px] grid grid-cols-2 gap-2">
                                             <a
-                                                href={`https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(t.salesWhatsappText(m.sales.stall))}`}
+                                                href={whatsappMessage(t.salesWhatsappText(m.sales.stall))}
                                                 target="_blank"
                                                 rel="noopener noreferrer"
                                                 className="inline-flex items-center justify-center gap-2 rounded-full border border-[#14532d] bg-white px-2 py-2 text-[13px] font-medium leading-tight text-[#0b2912] transition hover:bg-[#f1f7ee]"
