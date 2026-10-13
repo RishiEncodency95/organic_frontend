@@ -23,7 +23,7 @@ export default async function AllArticlesPage({
 
   return (
     <div className="min-h-screen bg-white font-sans text-neutral-800 overflow-x-clip">
-      <BlogHero data={heroData} />
+      <BlogHero data={heroData} titleAs="div" />
       <AboutStrip />
       <BlogAllArticles key={initialCategory} initialCategory={initialCategory} />
     </div>

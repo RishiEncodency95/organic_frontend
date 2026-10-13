@@ -66,6 +66,8 @@ const nextConfig: NextConfig = {
       { source: "/participate_as_exhibiture", destination: "/participate-as-exhibitor", permanent: true },
       { source: "/about/suport_services", destination: "/about/support-services", permanent: true },
       { source: "/careers/uploade_cv", destination: "/careers/upload-cv", permanent: true },
+      // One address per page: the admin SEO record and CMS use /participate/why-visit
+      { source: "/why-visit", destination: "/participate/why-visit", permanent: true },
     ];
   },
   async rewrites() {

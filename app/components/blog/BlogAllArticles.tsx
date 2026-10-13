@@ -75,7 +75,7 @@ export default function BlogAllArticles({ initialCategory = "" }: { initialCateg
   return (
     <section className="w-full px-6 lg:px-14 py-4 md:py-6">
       <div className="flex flex-wrap items-center justify-between gap-3 mb-2">
-        <SectionHeading>{category ? category : "All Articles"}</SectionHeading>
+        <SectionHeading as="h1">{category ? category : "All Articles"}</SectionHeading>
         <Link
           href="/blog"
           className="group inline-flex items-center gap-1.5 text-[12px] md:text-[13px] font-bold uppercase tracking-wider text-[#3b8c2a] hover:text-[#2d7a2d] transition-colors mb-3"
