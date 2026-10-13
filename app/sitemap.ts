@@ -14,7 +14,7 @@ const staticPages: MetadataRoute.Sitemap = [
   { url: `${BASE_URL}/contact`, lastModified: new Date(), changeFrequency: 'monthly', priority: 0.8 },
   { url: `${BASE_URL}/buyer-seller-meet`, lastModified: new Date(), changeFrequency: 'monthly', priority: 0.8 },
   { url: `${BASE_URL}/why-exhibit`, lastModified: new Date(), changeFrequency: 'monthly', priority: 0.8 },
-  { url: `${BASE_URL}/why-visit`, lastModified: new Date(), changeFrequency: 'monthly', priority: 0.8 },
+  { url: `${BASE_URL}/participate/why-visit`, lastModified: new Date(), changeFrequency: 'monthly', priority: 0.8 },
   { url: `${BASE_URL}/exhibitors`, lastModified: new Date(), changeFrequency: 'weekly', priority: 0.8 },
   { url: `${BASE_URL}/participate-as-exhibitor`, lastModified: new Date(), changeFrequency: 'monthly', priority: 0.8 },
   { url: `${BASE_URL}/awards`, lastModified: new Date(), changeFrequency: 'monthly', priority: 0.7 },

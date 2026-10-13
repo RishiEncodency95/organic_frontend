@@ -11,6 +11,7 @@ import articleImg2 from "@/app/assets/blog/latest_2.webp";
 import articleImg3 from "@/app/assets/blog/featured_article1.webp";
 import articleImg4 from "@/app/assets/blog/featured_article2.webp";
 import { API_URL } from "@/lib/api";
+import { notFound } from "next/navigation";
 import BlogArticleNewsletterForm from "@/app/components/blog/BlogArticleNewsletterForm";
 
 // Social Icons SVGs
@@ -158,9 +159,11 @@ export async function generateMetadata({
   params: Promise<{ slug: string }>;
 }): Promise<Metadata> {
   const { slug } = await params;
+  let postMissing = false;
 
   try {
     const res = await fetch(`${API_URL}/blogs/${slug}`, { cache: "no-store" });
+    postMissing = res.status === 404;
     if (res.ok) {
       const json = await res.json();
       const post = json?.data || json;
@@ -221,6 +224,9 @@ export async function generateMetadata({
       }
     }
   } catch {}
+
+  // Decided here, before any HTML is sent, so the response really is a 404 (see BlogDetail)
+  if (postMissing) notFound();
 
   return {
     title: "India's Organic Market: Growth, Opportunities & Future Outlook | Bharat Organic Expo",
@@ -295,6 +301,7 @@ export default async function BlogDetail({
 }) {
   const { slug } = await params;
   let dynamicPost: any = null;
+  let postMissing = false;
 
   try {
     const res = await fetch(`${API_URL}/blogs/${slug}?view=true`, { cache: "no-store" });
@@ -302,9 +309,13 @@ export default async function BlogDetail({
       const json = await res.json();
       dynamicPost = json?.data || json;
     }
+    postMissing = res.status === 404;
   } catch (err) {
     console.warn("Failed to fetch blog post:", err);
   }
+
+  // No such post: a real 404 page, not the sample article below (that stays only for when the API is unreachable).
+  if (postMissing) notFound();
 
   const isDynamic = Boolean(dynamicPost && dynamicPost.title);
 

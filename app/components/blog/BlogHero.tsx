@@ -13,7 +13,8 @@ const DEFAULT_BLOG_HERO = {
   imageAlt: "Bharat Organic Expo Blog Banner",
 };
 
-const BlogHero = ({ data }: { data?: any }) => {
+// `titleAs="div"` on the "view all" pages: there the list's own heading is the page's h1.
+const BlogHero = ({ data, titleAs: TitleTag = "h1" }: { data?: any; titleAs?: "h1" | "div" }) => {
   // H1 is a single admin field: the last word goes on the orange line, the rest green.
   // Older saves only have the two-part title, so that's joined first.
   const legacyTitle = [data?.titlePart1, data?.titlePart2]
@@ -62,7 +63,7 @@ const BlogHero = ({ data }: { data?: any }) => {
           </div>
 
           {/* Title */}
-          <h1
+          <TitleTag
             className={`font-black leading-[1.05] mb-4 text-left font-poppins transition-all delay-100 duration-700 ease-out ${mounted ? "translate-y-0 opacity-100" : "translate-y-6 opacity-0"
               }`}
             style={{ textShadow: "1px 1px 2px rgba(0,0,0,0.4)" }}
@@ -75,7 +76,7 @@ const BlogHero = ({ data }: { data?: any }) => {
             <div className="text-[#ea580c] text-[46px] md:text-[60px] lg:text-[72px] tracking-tight block" style={{ fontWeight: 600 }}>
               {blogHeroData.titlePart2}
             </div>
-          </h1>
+          </TitleTag>
 
           {/* Subtitle */}
           <div className={`flex items-center gap-3 transition-all delay-300 duration-700 ease-out ${mounted ? "translate-y-0 opacity-100" : "translate-y-6 opacity-0"

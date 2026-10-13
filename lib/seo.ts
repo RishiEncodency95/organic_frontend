@@ -81,7 +81,7 @@ export const seoRoutes: RouteSeo[] = [
     changeFrequency: "monthly",
   },
   {
-    path: "/why-visit",
+    path: "/participate/why-visit",
     label: "Why Visit",
     title: "Why Visit - Bharat Organic Expo 2027",
     description:

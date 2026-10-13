@@ -18,7 +18,7 @@ export default async function AllUpdatesPage() {
   const heroData = await getSectionData("/website/bloghero");
   return (
     <div className="min-h-screen bg-white font-sans text-neutral-800 overflow-x-clip">
-      <BlogHero data={heroData} />
+      <BlogHero data={heroData} titleAs="div" />
       <AboutStrip />
       <BlogAllUpdates />
     </div>

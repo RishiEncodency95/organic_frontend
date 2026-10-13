@@ -11,7 +11,7 @@ export const revalidate = 60;
 const SEO_PAGE_KEY = "about/suport_services";
 
 // Where each card's button goes when the admin has not set a link for it.
-const DEFAULT_CARD_LINKS = ["/why-exhibit", "/why-visit", "/contact"];
+const DEFAULT_CARD_LINKS = ["/why-exhibit", "/participate/why-visit", "/contact"];
 
 export async function generateMetadata(): Promise<Metadata> {
   return adminSeoMetadata(SEO_PAGE_KEY, {
