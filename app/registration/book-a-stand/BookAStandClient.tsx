@@ -48,6 +48,8 @@ import BookAStandHero from "@/app/components/registration/book-a-stand/BookAStan
 import BookAStandBanner from "@/app/components/registration/book-a-stand/BookAStandBanner";
 import { childrenOf, toOptions, useDropdowns } from "@/lib/dropdowns";
 import { makeSectionGate } from "@/lib/sectionGate";
+import { addressLock, check, clean, usePincodeAutofill } from "@/lib/registration";
+import { PincodeHint } from "@/app/components/registration/shared/LocationFields";
 import Image from "next/image";
 
 const loadScript = (src: string) => {
@@ -373,6 +375,16 @@ const BookAStand = ({ disabledSections = [] }: { disabledSections?: string[] }) 
         }
     }, [selectedEventId, events]);
 
+    // A complete pincode fills in the state, city and country; for international exhibitors the
+    // postal code fills in the state and city once the country is chosen (all stay editable)
+    const postalCountry = exhibitorType === 'domestic' ? 'IN' : (countries.find(c => c.name === formData.country)?.countryCode || '');
+    const pinLookup = usePincodeAutofill(formData.pincode, postalCountry, (place) => {
+        setCityTyping(!place.cityListed && !!place.city);
+        setFormData(prev => ({ ...prev, country: exhibitorType === 'domestic' ? place.country : prev.country, state: place.state, city: place.city }));
+    });
+
+    const addrLock = addressLock(pinLookup);
+
     const filteredStates = useMemo(() => {
         if (!formData.country || countries.length === 0) return [];
         const selectedCountry = countries.find(c =>
@@ -544,14 +556,13 @@ const BookAStand = ({ disabledSections = [] }: { disabledSections?: string[] }) 
             setPhoneVerified(false);
             setVerificationError(null);
         }
-        const isNameOrDesignation = name.includes('firstName') || name.includes('lastName') || name.includes('designation');
         let newValue = value;
-        if (isNameOrDesignation) {
-            newValue = value.replace(/[0-9]/g, '');
-        }
+        // Names take letters only; a designation also takes the punctuation job titles use
+        if (name.includes('firstName') || name.includes('lastName')) newValue = clean.name(value);
+        else if (name.includes('designation')) newValue = clean.title(value);
 
         if (name === 'landlineNo') {
-            newValue = value.replace(/\D/g, '');
+            newValue = value.replace(/\D/g, '').slice(0, 15);
         }
 
         const isMobileField = name === 'contact1.mobile' || name === 'contact2.mobile' ||
@@ -567,6 +578,8 @@ const BookAStand = ({ disabledSections = [] }: { disabledSections?: string[] }) 
             }
             return;
         }
+        // International numbers: digits with an optional +, spaces or hyphens
+        if (isMobileField) newValue = clean.phone(newValue);
 
         if (name.includes('.')) {
             const [parent, child] = name.split('.');
@@ -792,6 +805,30 @@ const BookAStand = ({ disabledSections = [] }: { disabledSections?: string[] }) 
         ].filter(Boolean) as string[];
         if (addressErrors.length) {
             Swal.fire({ icon: 'warning', title: 'Please check the address', html: addressErrors.join('<br/>') });
+            return;
+        }
+
+        // Formats the browser's own "required" check cannot judge: tax / identity numbers and contacts
+        const domestic = exhibitorType === 'domestic';
+        const intlNumber = (value: string, label: string, required: boolean) =>
+            !value ? (required ? `${label} is required.` : '') : /^\+?\d[\d\s-]{6,18}$/.test(value) ? '' : `${label} is not a valid phone number.`;
+        const phone = (value: string, label: string, required: boolean) =>
+            domestic ? check.indianMobile(value, label, required) : intlNumber(value, label, required);
+        const detailErrors = [
+            domestic && formData.registrantType === 'registered' && check.gst(formData.gstNo, true),
+            domestic && formData.registrantType === 'unregistered' && check.pan(formData.panNo, true),
+            domestic && formData.registrantType === 'unregistered' && check.aadhaar(formData.aadhaarNo, true),
+            check.email(formData.contact1.email, 'Email'),
+            phone(formData.contact1.mobile, 'WhatsApp / mobile number', true),
+            phone(formData.contact1.alternateNo, 'Alternate number', false),
+            check.email(formData.contact2.email, 'Second contact email', false),
+            phone(formData.contact2.mobile, 'Second contact mobile number', false),
+            phone(formData.contact2.alternateNo, 'Second contact alternate number', false),
+            // The field is required, so a business without a site writes NA
+            !/^(na|n\/a|nil|none|-)$/i.test(formData.website.trim()) && check.website(formData.website),
+        ].filter(Boolean) as string[];
+        if (detailErrors.length) {
+            Swal.fire({ icon: 'warning', title: 'Please check the form', html: [...new Set(detailErrors)].join('<br/>') });
             return;
         }
 
@@ -1026,6 +1063,25 @@ const BookAStand = ({ disabledSections = [] }: { disabledSections?: string[] }) 
             </div>
         );
     }
+    const countryField = (
+        <div>
+            <label className={labelClasses}>COUNTRY <span className="text-red-500">*</span></label>
+            <Select onValueChange={(v) => handleSelectChange('country', v)} value={formData.country} disabled={exhibitorType === 'domestic' && addrLock.locked}>
+                <SelectTrigger className={inputClasses}>
+                    <SelectValue placeholder="Select Here" />
+                </SelectTrigger>
+                <SelectContent>
+                    {countries
+                        .filter(c => exhibitorType === 'domestic' ? c.name.toLowerCase() === 'india' : c.name.toLowerCase() !== 'india')
+                        .map(c => (
+                            <SelectItem key={c._id} value={c.name} className="text-xs">{c.name}</SelectItem>
+                        ))
+                    }
+                </SelectContent>
+            </Select>
+        </div>
+    );
+
     return (
         <div className="min-h-screen bg-[#FDFDFD] text-slate-900 font-inter">
             <PaymentProcessingModal
@@ -1335,24 +1391,15 @@ const BookAStand = ({ disabledSections = [] }: { disabledSections?: string[] }) 
                                                         <input required name="address" value={formData.address} onChange={handleInputChange} placeholder="Write Here.." className={inputClasses} />
                                                     </div>
                                                     <div>
-                                                        <label className={labelClasses}>COUNTRY <span className="text-red-500">*</span></label>
-                                                        <Select onValueChange={(v) => handleSelectChange('country', v)} value={formData.country}>
-                                                            <SelectTrigger className={inputClasses}>
-                                                                <SelectValue placeholder="Select Here" />
-                                                            </SelectTrigger>
-                                                            <SelectContent>
-                                                                {countries
-                                                                    .filter(c => exhibitorType === 'domestic' ? c.name.toLowerCase() === 'india' : c.name.toLowerCase() !== 'india')
-                                                                    .map(c => (
-                                                                        <SelectItem key={c._id} value={c.name} className="text-xs">{c.name}</SelectItem>
-                                                                    ))
-                                                                }
-                                                            </SelectContent>
-                                                        </Select>
+                                                        <label className={labelClasses}>PINCODE/Postal Code <span className="text-red-500">*</span></label>
+                                                        <input required name="pincode" value={formData.pincode} onChange={(e) => setFormData(prev => ({ ...prev, pincode: exhibitorType === 'domestic' ? e.target.value.replace(/\D/g, '').slice(0, 6) : e.target.value.replace(/[^A-Za-z0-9 -]/g, '').slice(0, 10) }))} placeholder={exhibitorType === 'domestic' ? "6-digit Pincode" : "Postal / ZIP Code"} className={inputClasses} inputMode={exhibitorType === 'domestic' ? "numeric" : "text"} />
+                                                        <PincodeHint lookup={pinLookup} idleNote={exhibitorType !== 'domestic' && formData.pincode && !formData.country ? "Select the country to fill in the state and city." : ""} />
                                                     </div>
+                                                    {/* International: the country decides the state list, so it follows the postal code */}
+                                                    {exhibitorType !== 'domestic' && countryField}
                                                     <div>
                                                         <label className={labelClasses}>{exhibitorType === 'domestic' ? 'STATE' : 'STATE/PROVINCE'} <span className="text-red-500">*</span></label>
-                                                        <Select onValueChange={(v) => handleSelectChange('state', v)} value={formData.state} disabled={!formData.country}>
+                                                        <Select onValueChange={(v) => handleSelectChange('state', v)} value={formData.state} disabled={addrLock.locked || !formData.country}>
                                                             <SelectTrigger className={inputClasses}>
                                                                 <SelectValue placeholder="Select Here" />
                                                             </SelectTrigger>
@@ -1370,6 +1417,7 @@ const BookAStand = ({ disabledSections = [] }: { disabledSections?: string[] }) 
                                                                 <input
                                                                     required
                                                                     name="city"
+                                                                    disabled={addrLock.cityLocked}
                                                                     value={formData.city}
                                                                     onChange={(e) => setFormData(prev => ({ ...prev, city: e.target.value.replace(/[^\p{L}\p{M} .'-]/gu, '').replace(/^\s+/, '') }))}
                                                                     maxLength={60}
@@ -1377,11 +1425,11 @@ const BookAStand = ({ disabledSections = [] }: { disabledSections?: string[] }) 
                                                                     className={inputClasses}
                                                                 />
                                                                 {filteredCities.length > 0 && (
-                                                                    <button type="button" onClick={() => { setCityTyping(false); setFormData(prev => ({ ...prev, city: '' })); }} className="shrink-0 rounded-[2px] border border-slate-300 px-2 text-[10px] font-bold uppercase text-slate-600 hover:bg-slate-50">List</button>
+                                                                    <button type="button" disabled={addrLock.cityLocked} onClick={() => { setCityTyping(false); setFormData(prev => ({ ...prev, city: '' })); }} className="shrink-0 rounded-[2px] border border-slate-300 px-2 text-[10px] font-bold uppercase text-slate-600 hover:bg-slate-50">List</button>
                                                                 )}
                                                             </div>
                                                         ) : (
-                                                            <Select onValueChange={(v) => handleSelectChange('city', v)} value={formData.city} disabled={!formData.state}>
+                                                            <Select onValueChange={(v) => handleSelectChange('city', v)} value={formData.city} disabled={addrLock.cityLocked || !formData.state}>
                                                                 <SelectTrigger className={inputClasses}>
                                                                     <SelectValue placeholder={formData.state && citiesLoadedFor !== formData.state ? "Loading cities..." : "Select Here"} />
                                                                 </SelectTrigger>
@@ -1393,6 +1441,8 @@ const BookAStand = ({ disabledSections = [] }: { disabledSections?: string[] }) 
                                                             </Select>
                                                         )}
                                                     </div>
+                                                    {/* Domestic: the pincode fills these in, so Country comes last */}
+                                                    {exhibitorType === 'domestic' && countryField}
 
                                                     {/* <div>
                                                         <label className={labelClasses}>NATURE OF BUSINESS <span className="text-red-500">*</span></label>
@@ -1407,10 +1457,6 @@ const BookAStand = ({ disabledSections = [] }: { disabledSections?: string[] }) 
                                                             </SelectContent>
                                                         </Select>
                                                     </div> */}
-                                                    <div>
-                                                        <label className={labelClasses}>PINCODE/Postal Code <span className="text-red-500">*</span></label>
-                                                        <input required name="pincode" value={formData.pincode} onChange={(e) => setFormData(prev => ({ ...prev, pincode: exhibitorType === 'domestic' ? e.target.value.replace(/\D/g, '').slice(0, 6) : e.target.value.replace(/[^A-Za-z0-9 -]/g, '').slice(0, 10) }))} placeholder={exhibitorType === 'domestic' ? "6-digit Pincode" : "Postal / ZIP Code"} className={inputClasses} inputMode={exhibitorType === 'domestic' ? "numeric" : "text"} />
-                                                    </div>
                                                     <div>
                                                         <label className={labelClasses}>LANDLINE NO.</label>
                                                         <input name="landlineNo" value={formData.landlineNo} onChange={handleInputChange} placeholder="Write Here.." className={inputClasses} inputMode="numeric" />
@@ -1565,7 +1611,7 @@ const BookAStand = ({ disabledSections = [] }: { disabledSections?: string[] }) 
                                                                         required
                                                                         name="gstNo"
                                                                         value={formData.gstNo}
-                                                                        onChange={(e) => setFormData(prev => ({ ...prev, gstNo: e.target.value.toUpperCase() }))}
+                                                                        onChange={(e) => setFormData(prev => ({ ...prev, gstNo: e.target.value.replace(/[^A-Za-z0-9]/g, '').toUpperCase().slice(0, 15) }))}
                                                                         placeholder="e.g. 07AABCU9603R1ZX"
                                                                         maxLength={15}
                                                                         className={inputClasses}
@@ -1584,7 +1630,7 @@ const BookAStand = ({ disabledSections = [] }: { disabledSections?: string[] }) 
                                                                         required
                                                                         name="panNo"
                                                                         value={formData.panNo}
-                                                                        onChange={(e) => setFormData(prev => ({ ...prev, panNo: e.target.value.toUpperCase() }))}
+                                                                        onChange={(e) => setFormData(prev => ({ ...prev, panNo: e.target.value.replace(/[^A-Za-z0-9]/g, '').toUpperCase().slice(0, 10) }))}
                                                                         placeholder="e.g. ABCDE1234F"
                                                                         maxLength={10}
                                                                         className={inputClasses}

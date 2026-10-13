@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Swal from "sweetalert2";
 import { API_URL, apiMessage, EVENT_NAME, postResult, type SubmitResult } from "./api";
 import { emailProblem } from "./emailCheck";
@@ -31,6 +31,10 @@ export const RULES = {
   website: /^(https?:\/\/)?([a-z0-9]([a-z0-9-]{0,61}[a-z0-9])?\.)+[a-z]{2,}(:\d+)?(\/\S*)?$/i,
   passport: /^[A-Za-z0-9]{6,12}$/,
   gst: /^\d{2}[A-Z]{5}\d{4}[A-Z][1-9A-Z]Z[0-9A-Z]$/,
+  /** PAN: five letters, four digits, one letter */
+  pan: /^[A-Z]{5}\d{4}[A-Z]$/,
+  /** Aadhaar: 12 digits, kept as text so leading zeros survive */
+  aadhaar: /^\d{12}$/,
 };
 
 /** Each check returns an error message, or "" when the value is fine. Optional fields pass when empty. */
@@ -71,6 +75,21 @@ export const check = {
     if (!v) return required ? "Passport number is required." : "";
     return RULES.passport.test(v) ? "" : "Passport number must be 6 to 12 letters or digits.";
   },
+  pan: (value: string, required = false) => {
+    const v = value.trim();
+    if (!v) return required ? "PAN number is required." : "";
+    return RULES.pan.test(v) ? "" : "PAN must be 10 characters: 5 letters, 4 digits, then 1 letter (e.g. ABCDE1234F).";
+  },
+  aadhaar: (value: string, required = false) => {
+    const v = value.trim();
+    if (!v) return required ? "Aadhaar number is required." : "";
+    return RULES.aadhaar.test(v) ? "" : "Aadhaar number must be exactly 12 digits.";
+  },
+  gst: (value: string, required = false) => {
+    const v = value.trim();
+    if (!v) return required ? "GST number is required." : "";
+    return RULES.gst.test(v) ? "" : "GST number is not valid (15 characters, e.g. 07AABCU9603R1ZX).";
+  },
   /** Date of birth: not in the future and at least `minAge` years ago */
   dob: (value: string, minAge = 10) => {
     if (!value) return "";
@@ -82,6 +101,24 @@ export const check = {
     if (d.getFullYear() < 1900) return "Date of birth is not valid.";
     return "";
   },
+};
+
+/** What a field keeps as it is typed, so letters never land in number fields and the reverse */
+export const clean = {
+  /** Person / country names: letters (any language), spaces, dots, apostrophes, hyphens */
+  name: (value: string) => value.replace(/[^\p{L}\p{M} .'-]/gu, "").replace(/^\s+/, ""),
+  /** Designation / occupation: letters plus the punctuation job titles use — "Sr. Manager (Sales & Marketing)" */
+  title: (value: string) => value.replace(/[^\p{L}\p{M} .,&/()'-]/gu, "").replace(/^\s+/, ""),
+  /** Phone number outside India: digits with an optional +, spaces or hyphens */
+  phone: (value: string) => value.replace(/[^\d+ -]/g, "").replace(/^[ -]+/, "").replace(/(?!^)\+/g, "").slice(0, 18),
+  /** Indian mobile: 10 digits. A pasted "+91 98765 43210" or "098765 43210" loses its prefix, not its last digits */
+  indianMobile: (value: string) => {
+    const digits = value.replace(/\D/g, "");
+    const local = digits.length > 10 ? digits.replace(/^(?:91|0)(?=[6-9])/, "") : digits;
+    return local.slice(0, 10);
+  },
+  /** Money amount: digits and one decimal point */
+  amount: (value: string) => value.replace(/[^\d.]/g, "").replace(/(\..*)\./g, "$1").slice(0, 12),
 };
 
 export const isIndia = (country: string) => country.trim().toLowerCase() === "india";
@@ -204,4 +241,126 @@ export function useLocations(country: string, state: string) {
     /** "91" for India; "" when unknown. Codes like "1-684" keep their digits only */
     phoneCodeOf: (name: string) => (countries.find((c) => c.name === name)?.phoneCode || "").replace(/\D/g, ""),
   };
+}
+
+// ─── Pincode / postal code → state / city / country ──────────────────────────
+
+export type PincodePlace = {
+  pincode: string;
+  country: string;
+  state: string;
+  /** "" when the place is not in the state's city list (outside India) — the visitor picks the city */
+  city: string;
+  /** false: the city is the postal district and is not in the state's city list */
+  cityListed: boolean;
+};
+export type PincodeStatus = "idle" | "loading" | "found" | "notFound" | "error";
+export type PincodeLookup = {
+  status: PincodeStatus;
+  message: string;
+  /** Found, but the place is not in the state's city list: the visitor picks the city */
+  needsCity?: boolean;
+};
+
+/**
+ * State / city / country are filled in from the pincode and stay locked. They open for the
+ * visitor when the lookup cannot fill them (unknown code, lookup unavailable), and the city
+ * alone opens when only it is missing.
+ */
+export const addressLock = (lookup: PincodeLookup) => {
+  const locked = lookup.status !== "notFound" && lookup.status !== "error";
+  return { locked, cityLocked: locked && !lookup.needsCity };
+};
+
+type PincodeResult = { status: "found"; place: PincodePlace } | { status: "notFound" | "error"; message: string };
+
+/**
+ * What a form's postal field should be looked up as: "IN" for India (and before a country is
+ * chosen, when `indiaByDefault`), the chosen country's ISO code otherwise, "" for no lookup.
+ */
+export const postalTarget = (country: string, countries: Country[], indiaByDefault = true) => {
+  if (!country) return indiaByDefault ? "IN" : "";
+  if (isIndia(country)) return "IN";
+  return countries.find((c) => c.name === country)?.countryCode || "";
+};
+
+// One request per code for the whole visit; failed lookups are not kept, so retyping retries.
+// Keys are "IN/110001" or "US/10001".
+const pincodeRequests = new Map<string, Promise<PincodeResult>>();
+const lookupPincode = (key: string) => {
+  let request = pincodeRequests.get(key);
+  if (!request) {
+    const [countryCode, code] = [key.slice(0, key.indexOf("/")), key.slice(key.indexOf("/") + 1)];
+    const india = countryCode === "IN";
+    request = (async (): Promise<PincodeResult> => {
+      try {
+        const res = await fetch(india ? `${API_URL}/pincode/${code}` : `${API_URL}/postal/${countryCode}/${encodeURIComponent(code)}`);
+        const json = await res.json().catch(() => null);
+        if (res.ok && json?.data?.state) return { status: "found", place: json.data as PincodePlace };
+        // Only the lookup's own "not found" (it carries a statusCode); a 404 without one means
+        // the server does not have this route yet, which is an error, not a wrong code
+        if (res.status === 404 && json?.statusCode === 404) {
+          return {
+            status: "notFound",
+            message: india ? "No location found for this pincode. Please check it." : "State and city could not be found for this postal code. Please select them yourself.",
+          };
+        }
+      } catch {
+        // falls through to the generic message
+      }
+      return { status: "error", message: `Could not look up this ${india ? "pincode" : "postal code"}. Please select the state and city yourself.` };
+    })();
+    pincodeRequests.set(key, request);
+    request.then((result) => result.status === "error" && pincodeRequests.delete(key));
+  }
+  return request;
+};
+
+// Postal codes outside India have no fixed length, so the lookup waits for a pause in typing
+const POSTAL_TYPING_PAUSE_MS = 700;
+
+/**
+ * Looks up a pincode / postal code as it is typed and hands the place to `onFound`, which fills
+ * the form's state / city (and country, for India); they stay editable afterwards. `target` is
+ * true or "IN" for an Indian pincode, another ISO country code for a postal code of that
+ * country, and false / "" for no lookup. A code already in the form when it opens is left
+ * alone, and an answer for an older code never overwrites a newer one.
+ */
+export function usePincodeAutofill(pincode: string, target: boolean | string, onFound: (place: PincodePlace) => void): PincodeLookup {
+  const countryCode = target === true ? "IN" : target || "";
+  const code = pincode.trim();
+  const valid = countryCode === "IN" ? RULES.pincode.test(code) : RULES.zip.test(code);
+  const key = countryCode && valid ? `${countryCode}/${code}` : "";
+  const [result, setResult] = useState<{ key: string; lookup: PincodeLookup } | null>(null);
+  const onFoundRef = useRef(onFound);
+  // The code the form opened with (a restored draft): its address is already in the form
+  const [openedWith] = useState(key);
+  useEffect(() => {
+    onFoundRef.current = onFound;
+  });
+
+  useEffect(() => {
+    if (!key || key === openedWith) return;
+    let live = true;
+    const run = () =>
+      lookupPincode(key).then((found) => {
+        if (!live) return;
+        if (found.status === "found") {
+          onFoundRef.current(found.place);
+          const where = [found.place.city, found.place.state].filter(Boolean).join(", ");
+          setResult({
+            key,
+            lookup: { status: "found", message: found.place.city ? where : `${where} — please select the city`, needsCity: !found.place.city },
+          });
+        } else setResult({ key, lookup: { status: found.status, message: found.message } });
+      });
+    const timer = setTimeout(run, key.startsWith("IN/") ? 0 : POSTAL_TYPING_PAUSE_MS);
+    return () => {
+      live = false;
+      clearTimeout(timer);
+    };
+  }, [key, openedWith]);
+
+  if (!key || key === openedWith) return { status: "idle", message: "" };
+  return result?.key === key ? result.lookup : { status: "loading", message: "Finding state and city…" };
 }

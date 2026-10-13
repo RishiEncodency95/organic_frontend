@@ -4,8 +4,8 @@ import RegistrationSuccess from "./RegistrationSuccess";
 import { ShieldCheck, Store, Loader2, CheckCircle, X, ChevronsUpDown } from "lucide-react";
 import { verifyApi, visitorApi, ihweSettingsApi } from "../../../../lib/api";
 import Swal from 'sweetalert2';
-import { check, errorList, EVENT_NAME, isIndia, showErrors, useLocations } from "@/lib/registration";
-import { CityField } from "../shared/LocationFields";
+import { check, errorList, EVENT_NAME, isIndia, showErrors, clean, postalTarget, useLocations, usePincodeAutofill, addressLock } from "@/lib/registration";
+import { CityField, PincodeHint } from "../shared/LocationFields";
 import { toOptions, useDropdowns } from "@/lib/dropdowns";
 // Admin-managed (Dropdown Manager); these are the fallback options.
 const VISITOR_DROPDOWNS = {
@@ -142,6 +142,10 @@ export default function CorporateForm() {
 
   // Country (A–Z), states and cities from the website's backend
   const loc = useLocations(formData.country, formData.state);
+  // A complete pincode / postal code fills in the state, city and country (all stay editable)
+  const pinLookup = usePincodeAutofill(formData.companyPincode, postalTarget(formData.country, loc.countries), (place) =>
+    setFormData((prev) => ({ ...prev, country: place.country || prev.country, state: place.state, city: place.city })));
+  const addrLock = addressLock(pinLookup);
 
     const handleChange = (e: any) => {
     let { name, value, type, checked } = e.target;
@@ -158,6 +162,7 @@ export default function CorporateForm() {
       finalValue = isIndia(formData.country) ? String(finalValue).replace(/\D/g, '').slice(0, 6) : String(finalValue).replace(/[^A-Za-z0-9 -]/g, '').slice(0, 10);
     }
     if (name === 'firstName' || name === 'lastName') finalValue = String(finalValue).replace(/[^\p{L}\p{M} .'-]/gu, '').replace(/^\s+/, '');
+    if (name === 'designation') finalValue = clean.title(String(finalValue));
     // A new country / state clears what depended on it
     if (name === 'country') { setFormData((prev) => ({ ...prev, country: finalValue, state: '', city: '', companyPincode: '' })); return; }
     if (name === 'state') { setFormData((prev) => ({ ...prev, state: finalValue, city: '' })); return; }
@@ -252,7 +257,7 @@ export default function CorporateForm() {
     check.required(formData.country, "Country"),
     check.required(formData.state, "State"),
     check.required(formData.city, "City"),
-    check.postal(formData.companyPincode, formData.country),
+    check.postal(formData.companyPincode, formData.country, true),
     !formData.purposeOfVisit.length && "Please choose at least one purpose of visit.",
     !formData.areaOfInterest.length && "Please choose at least one area of interest.",
   );
@@ -412,24 +417,28 @@ export default function CorporateForm() {
         </div>
 
         <div>
-          <label className={labelClasses}>Country <span className="text-red-600">*</span></label>
-          <select required name="country" value={formData.country} onChange={handleChange} className={inputClasses}>
-            <option value="">Select Country</option>
-            {loc.countries.map((c) => <option key={c.countryCode} value={c.name}>{c.name}</option>)}
-          </select>
+          <label className={labelClasses}>Pincode / Zip Code <span className="text-red-600">*</span></label>
+          <input required name="companyPincode" value={formData.companyPincode} onChange={handleChange} className={inputClasses} placeholder="Enter Pincode" inputMode={isIndia(formData.country) ? "numeric" : "text"} autoComplete="postal-code" aria-describedby="pincode-hint" />
+          <div id="pincode-hint"><PincodeHint lookup={pinLookup} /></div>
         </div>
         <div>
           <label className={labelClasses}>State <span className="text-red-600">*</span></label>
-          <select required name="state" value={formData.state} onChange={handleChange} className={inputClasses} disabled={!formData.country}>
+          <select required name="state" value={formData.state} onChange={handleChange} className={inputClasses} disabled={addrLock.locked || !formData.country}>
             <option value="">Select State</option>
             {loc.states.map((s) => <option key={s.stateCode} value={s.name}>{s.name}</option>)}
           </select>
         </div>
         <div>
           <label className={labelClasses}>City <span className="text-red-600">*</span></label>
-          <CityField key={formData.state} value={formData.city} onChange={(city) => setFormData((prev) => ({ ...prev, city }))} cities={loc.cities} ready={loc.citiesReady} stateChosen={!!formData.state} className={inputClasses} required />
+          <CityField key={formData.state} value={formData.city} onChange={(city) => setFormData((prev) => ({ ...prev, city }))} cities={loc.cities} ready={loc.citiesReady} stateChosen={!!formData.state} disabled={addrLock.cityLocked} className={inputClasses} required />
         </div>
-        <div><label className={labelClasses}>Pincode / Zip Code</label><input name="companyPincode" value={formData.companyPincode} onChange={handleChange} className={inputClasses} placeholder="Enter Pincode" /></div>
+        <div>
+          <label className={labelClasses}>Country <span className="text-red-600">*</span></label>
+          <select required name="country" value={formData.country} onChange={handleChange} className={inputClasses} disabled={addrLock.locked}>
+            <option value="">Select Country</option>
+            {loc.countries.map((c) => <option key={c.countryCode} value={c.name}>{c.name}</option>)}
+          </select>
+        </div>
       </div>
 
       <div>

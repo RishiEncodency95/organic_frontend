@@ -38,8 +38,8 @@ import { Checkbox } from "@/app/components/ui/checkbox";
 
 
 import { verifyApi, buyerApi, policyApi, ihweEventApi } from "@/lib/api";
-import { check, errorList, showErrors, useLocations } from "@/lib/registration";
-import { CityField } from "../shared/LocationFields";
+import { check, clean, errorList, postalTarget, showErrors, useLocations, usePincodeAutofill, addressLock } from "@/lib/registration";
+import { CityField, PincodeHint } from "../shared/LocationFields";
 import Swal from "sweetalert2";
 const toast = { error: (msg: any) => Swal.fire({ icon: "error", text: msg }), success: (msg: any) => Swal.fire({ icon: "success", text: msg }) };
 import { useEffect as useEffectDropdown } from "react";
@@ -404,6 +404,11 @@ const InternationalBuyerRegistration = () => {
 
   // Countries (A–Z), states and cities from the website's backend
   const loc = useLocations(formData.country, formData.stateProvince);
+  // Once the country is chosen, its postal code fills in the state and city (both stay editable).
+  // The same code exists in several countries, so nothing is looked up before that.
+  const pinLookup = usePincodeAutofill(formData.postalCode, postalTarget(formData.country, loc.countries, false), (place) =>
+    setFormData((prev) => ({ ...prev, stateProvince: place.state, city: place.city })));
+  const addrLock = addressLock(pinLookup);
 
   useEffect(() => {
     let eTimer: any;
@@ -428,6 +433,10 @@ const InternationalBuyerRegistration = () => {
       value = value.replace(/\D/g, '').slice(0, 4);
     }
     if (name === 'primaryContact.fullName') value = value.replace(/[^\p{L}\p{M} .'-]/gu, '').replace(/^\s+/, '');
+    if (name === 'secondaryContact.fullName' || name === 'billingDetails.accountsContactPerson' || name === 'countryOfRegistration') value = clean.name(value);
+    if (name.endsWith('.designation')) value = clean.title(value);
+    if (name === 'billingDetails.accountsMobileNumber') value = value.replace(/\D/g, '').slice(0, 15);
+    if (name === 'billingDetails.bookingAmountPaid') value = clean.amount(value);
     if (name === 'postalCode') value = value.replace(/[^A-Za-z0-9 -]/g, '').slice(0, 10);
 
     if (name.includes('.')) {
@@ -673,10 +682,10 @@ const InternationalBuyerRegistration = () => {
           <h3 className={sectionTitleClasses}>Section 2 – Registered Office Details</h3>
           <div className="grid grid-cols-1 md:grid-cols-5 lg:grid-cols-5 gap-4">
             <div><label className={labelClasses}>Full Registered Address <span className="text-red-600">*</span></label><input name="address" value={formData.address} onChange={handleInputChange} className={inputClasses} placeholder="Full address" /></div>
+            <div><label className={labelClasses}>Postal Code</label><input name="postalCode" value={formData.postalCode} onChange={handleInputChange} className={inputClasses} placeholder="PIN/Postal" maxLength={10} autoComplete="postal-code" /><PincodeHint lookup={pinLookup} idleNote={formData.postalCode && !formData.country ? "Select the country to fill in the state and city." : ""} /></div>
             <div><label className={labelClasses}>Country <span className="text-red-600">*</span></label><select value={formData.country} onChange={(e) => { const v = e.target.value; handleSelectChange('country', v) }} className={inputClasses}><option value="">Select Country</option>{loc.countries.map(c => <option key={c.countryCode} value={c.name}>{c.name}</option>)}</select></div>
-            <div><label className={labelClasses}>State / Province</label><select value={formData.stateProvince} onChange={(e) => handleSelectChange('stateProvince', e.target.value)} disabled={!formData.country} className={inputClasses}><option value="">Select State</option>{loc.states.map(s => <option key={s.stateCode} value={s.name}>{s.name}</option>)}</select></div>
-            <div><label className={labelClasses}>City</label><CityField key={formData.stateProvince} value={formData.city} onChange={(city) => handleSelectChange('city', city)} cities={loc.cities} ready={loc.citiesReady} stateChosen={!!formData.stateProvince} className={inputClasses} /></div>
-            <div><label className={labelClasses}>Postal Code</label><input name="postalCode" value={formData.postalCode} onChange={handleInputChange} className={inputClasses} placeholder="PIN/Postal" /></div>
+            <div><label className={labelClasses}>State / Province</label><select value={formData.stateProvince} onChange={(e) => handleSelectChange('stateProvince', e.target.value)} disabled={addrLock.locked || !formData.country} className={inputClasses}><option value="">Select State</option>{loc.states.map(s => <option key={s.stateCode} value={s.name}>{s.name}</option>)}</select></div>
+            <div><label className={labelClasses}>City</label><CityField key={formData.stateProvince} value={formData.city} onChange={(city) => handleSelectChange('city', city)} cities={loc.cities} ready={loc.citiesReady} stateChosen={!!formData.stateProvince} disabled={addrLock.cityLocked} className={inputClasses} /></div>
             <div><label className={labelClasses}>Company Website</label><input name="website" value={formData.website} onChange={handleInputChange} className={inputClasses} placeholder="https://..." /></div>
             <div><label className={labelClasses}>LinkedIn Company Page</label><input name="linkedInPage" value={formData.linkedInPage} onChange={handleInputChange} className={inputClasses} placeholder="https://linkedin.com/company/..." /></div>
             <div>

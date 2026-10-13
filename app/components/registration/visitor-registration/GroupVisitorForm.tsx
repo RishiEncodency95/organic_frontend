@@ -4,8 +4,8 @@ import RegistrationSuccess from "./RegistrationSuccess";
 import { Users, Plus, Trash2, Globe2, Loader2, CheckCircle, X, ChevronsUpDown, ShieldCheck } from "lucide-react";
 import { verifyApi, visitorApi, ihweSettingsApi } from "../../../../lib/api";
 import Swal from 'sweetalert2';
-import { check, errorList, EVENT_NAME, isIndia, sameName, showErrors, useLocations } from "@/lib/registration";
-import { CityField } from "../shared/LocationFields";
+import { check, errorList, EVENT_NAME, isIndia, sameName, showErrors, postalTarget, useLocations, usePincodeAutofill, addressLock } from "@/lib/registration";
+import { CityField, PincodeHint } from "../shared/LocationFields";
 import { toOptions, useDropdowns } from "@/lib/dropdowns";
 
 const MIN_PERSONS = 5;
@@ -72,6 +72,10 @@ export default function GroupVisitorForm() {
 
   // Countries (A–Z), states and cities from the website's backend
   const loc = useLocations(company.country, company.state);
+  // A complete pincode / postal code fills in the state, city and country (all stay editable)
+  const pinLookup = usePincodeAutofill(company.companyPincode, postalTarget(company.country, loc.countries), (place) =>
+    setCompany((prev) => ({ ...prev, country: place.country || prev.country, state: place.state, city: place.city })));
+  const addrLock = addressLock(pinLookup);
 
   const handleCompanyChange = (e: any) => {
     let { name, value, type, checked } = e.target;
@@ -296,24 +300,28 @@ export default function GroupVisitorForm() {
           </div>
 
           <div>
-            <label className={labelClasses}>Country <span className="text-red-600">*</span></label>
-            <select required name="country" value={company.country} onChange={handleCompanyChange} className={inputClasses}>
-              <option value="">Select Country</option>
-              {loc.countries.map((c) => <option key={c.countryCode} value={c.name}>{c.name}</option>)}
-            </select>
+            <label className={labelClasses}>{isIndia(company.country) ? "Pincode" : "Postal / ZIP Code"} <span className="text-red-600">*</span></label>
+            <input required inputMode={isIndia(company.country) ? "numeric" : "text"} name="companyPincode" value={company.companyPincode} onChange={handleCompanyChange} className={inputClasses} placeholder={isIndia(company.country) ? "6-digit Pincode" : "Postal / ZIP Code"} autoComplete="postal-code" aria-describedby="pincode-hint" />
+            <div id="pincode-hint"><PincodeHint lookup={pinLookup} /></div>
           </div>
           <div>
             <label className={labelClasses}>State <span className="text-red-600">*</span></label>
-            <select required name="state" value={company.state} onChange={handleCompanyChange} className={inputClasses} disabled={!company.country}>
+            <select required name="state" value={company.state} onChange={handleCompanyChange} className={inputClasses} disabled={addrLock.locked || !company.country}>
               <option value="">Select State</option>
               {loc.states.map((s) => <option key={s.stateCode} value={s.name}>{s.name}</option>)}
             </select>
           </div>
           <div>
             <label className={labelClasses}>City <span className="text-red-600">*</span></label>
-            <CityField key={company.state} value={company.city} onChange={(city) => setCompany((prev) => ({ ...prev, city }))} cities={loc.cities} ready={loc.citiesReady} stateChosen={!!company.state} className={inputClasses} required />
+            <CityField key={company.state} value={company.city} onChange={(city) => setCompany((prev) => ({ ...prev, city }))} cities={loc.cities} ready={loc.citiesReady} stateChosen={!!company.state} disabled={addrLock.cityLocked} className={inputClasses} required />
           </div>
-          <div><label className={labelClasses}>{isIndia(company.country) ? "Pincode" : "Postal / ZIP Code"} <span className="text-red-600">*</span></label><input required inputMode={isIndia(company.country) ? "numeric" : "text"} name="companyPincode" value={company.companyPincode} onChange={handleCompanyChange} className={inputClasses} placeholder={isIndia(company.country) ? "6-digit Pincode" : "Postal / ZIP Code"} /></div>
+          <div>
+            <label className={labelClasses}>Country <span className="text-red-600">*</span></label>
+            <select required name="country" value={company.country} onChange={handleCompanyChange} className={inputClasses} disabled={addrLock.locked}>
+              <option value="">Select Country</option>
+              {loc.countries.map((c) => <option key={c.countryCode} value={c.name}>{c.name}</option>)}
+            </select>
+          </div>
         </div>
       </div>
 

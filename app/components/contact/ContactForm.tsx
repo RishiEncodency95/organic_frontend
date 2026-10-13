@@ -8,6 +8,7 @@ import SectionContainer from '@/app/components/layout/SectionContainer';
 import Swal from 'sweetalert2';
 import { verifyApi, contactEnquiryApi } from '@/lib/api';
 import Image from "next/image";
+import { check, clean, errorList, showErrors } from "@/lib/registration";
 
 const ContactForm = () => {
   const [formData, setFormData] = useState({
@@ -39,14 +40,17 @@ const ContactForm = () => {
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
-    // The alternate number takes digits only (10 at most)
-    setFormData({ ...formData, [name]: name === "alternatePhone" ? value.replace(/\D/g, "").slice(0, 10) : value });
+    // Mobile numbers take digits only (10 at most); the name takes letters only
+    let next = value;
+    if (name === "phone" || name === "alternatePhone") next = clean.indianMobile(value);
+    if (name === "name") next = clean.name(value);
+    setFormData({ ...formData, [name]: next });
   };
 
   const handleSendOtp = async (e: React.MouseEvent) => {
     e.preventDefault();
-    if (!formData.phone || formData.phone.length < 10) {
-      Swal.fire({ icon: 'error', title: 'Invalid Number', text: 'Please enter a valid WhatsApp number.', scrollbarPadding: false });
+    if (check.indianMobile(formData.phone, 'WhatsApp number')) {
+      Swal.fire({ icon: 'error', title: 'Invalid Number', text: check.indianMobile(formData.phone, 'WhatsApp number'), scrollbarPadding: false });
       return;
     }
     if (!formData.name) {
@@ -97,6 +101,11 @@ const ContactForm = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    if (!showErrors(errorList(
+      check.name(formData.name, 'Name'),
+      check.email(formData.email),
+      check.indianMobile(formData.phone, 'WhatsApp number'),
+    ))) return;
     const alt = formData.alternatePhone;
     if (alt && !/^[6-9]\d{9}$/.test(alt)) {
       Swal.fire({ icon: 'warning', title: 'Alternate Number', text: 'Please enter a valid 10-digit alternate number, or leave it empty.', scrollbarPadding: false });
@@ -247,6 +256,7 @@ const ContactForm = () => {
                   <input
                     type="tel"
                     name="phone"
+                    inputMode="numeric"
                     value={formData.phone}
                     onChange={handleInputChange}
                     placeholder=" "

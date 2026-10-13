@@ -1,7 +1,8 @@
 "use client";
 
 import React, { useState } from "react";
-import { OTHER_CITY, type Country } from "@/lib/registration";
+import { Loader2 } from "lucide-react";
+import { OTHER_CITY, type Country, type PincodeLookup } from "@/lib/registration";
 
 /*
  * Fields shared by the registration forms. They take the form's own input class, so they look
@@ -19,13 +20,15 @@ type CityFieldProps = {
   className: string;
   required?: boolean;
   name?: string;
+  /** Locked while the pincode fills it in (see addressLock) */
+  disabled?: boolean;
 };
 
 /**
  * City dropdown. When the state has no cities, or the visitor picks "Other", a text box asks
  * for the city instead — so every state can be completed.
  */
-export function CityField({ value, onChange, cities, ready, stateChosen, className, required, name = "city" }: CityFieldProps) {
+export function CityField({ value, onChange, cities, ready, stateChosen, className, required, name = "city", disabled = false }: CityFieldProps) {
   const listed = cities.some((c) => c.name === value);
   const [typing, setTyping] = useState(false);
   const typeIt = ready && (cities.length === 0 || typing || (!!value && !listed));
@@ -41,6 +44,7 @@ export function CityField({ value, onChange, cities, ready, stateChosen, classNa
           maxLength={60}
           placeholder="Type your city"
           autoFocus={typing}
+          disabled={disabled}
           className={className}
         />
         {cities.length > 0 && (
@@ -51,6 +55,7 @@ export function CityField({ value, onChange, cities, ready, stateChosen, classNa
               onChange("");
             }}
             title="Choose from the list"
+            disabled={disabled}
             className="shrink-0 rounded border border-slate-300 px-2 text-[10px] font-bold uppercase text-slate-600 hover:bg-slate-50"
           >
             List
@@ -71,7 +76,7 @@ export function CityField({ value, onChange, cities, ready, stateChosen, classNa
           onChange("");
         } else onChange(e.target.value);
       }}
-      disabled={!stateChosen || !ready}
+      disabled={disabled || !stateChosen || !ready}
       className={className}
     >
       <option value="">{!stateChosen ? "Select state first" : ready ? "Select City" : "Loading cities..."}</option>
@@ -114,3 +119,18 @@ export function DialCodeSelect({
     </select>
   );
 }
+
+/** Line under the pincode field: looking up / what was filled in / why nothing was */
+export function PincodeHint({ lookup, idleNote = "" }: { lookup: PincodeLookup; idleNote?: string }) {
+  if (lookup.status === "idle") {
+    return idleNote ? <p className="mt-1 text-[10px] font-medium leading-tight text-slate-500">{idleNote}</p> : null;
+  }
+  const tone = lookup.status === "found" ? "text-green-700" : lookup.status === "loading" ? "text-slate-500" : "text-red-600";
+  return (
+    <p role="status" aria-live="polite" className={`mt-1 flex items-center gap-1 text-[10px] font-medium leading-tight ${tone}`}>
+      {lookup.status === "loading" && <Loader2 size={11} className="shrink-0 animate-spin" />}
+      {lookup.message}
+    </p>
+  );
+}
+

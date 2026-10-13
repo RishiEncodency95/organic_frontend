@@ -3,8 +3,8 @@ import React, { useState, useEffect } from "react";
 import { CheckCircle2, ShieldCheck, HeartPulse, Loader2, CheckCircle, Activity, Calendar, Heart } from "lucide-react";
 import { verifyApi, visitorApi } from "../../../../lib/api";
 import Swal from 'sweetalert2';
-import { check, errorList, EVENT_NAME, isIndia, showErrors, useLocations } from "@/lib/registration";
-import { CityField } from "../shared/LocationFields";
+import { check, errorList, EVENT_NAME, isIndia, showErrors, useLocations, usePincodeAutofill, addressLock } from "@/lib/registration";
+import { CityField, PincodeHint } from "../shared/LocationFields";
 import { toOptions, useDropdowns } from "@/lib/dropdowns";
 
 const HEALTH_SERVICES = [
@@ -78,6 +78,11 @@ export default function HealthCampForm() {
 
   // Country (A–Z), states and cities from the website's backend
   const loc = useLocations(formData.country, formData.state);
+  // Only used to fill in the state / city / country below — this form does not submit a pincode
+  const [pincode, setPincode] = useState("");
+  const pinLookup = usePincodeAutofill(pincode, !formData.country || isIndia(formData.country), (place) =>
+    setFormData((prev) => ({ ...prev, country: place.country, state: place.state, city: place.city })));
+  const addrLock = addressLock(pinLookup);
 
     const handleChange = (e: any) => {
     let { name, value, type, checked } = e.target;
@@ -304,22 +309,27 @@ export default function HealthCampForm() {
           </div>
           <div className="md:col-span-2"><label className={labelClasses}>Residence Address</label><input name="residenceAddress" value={formData.residenceAddress} onChange={handleChange} className={inputClasses} placeholder="Full Address" /></div>
           <div>
-            <label className={labelClasses}>Country <span className="text-red-600">*</span></label>
-            <select required name="country" value={formData.country} onChange={handleChange} className={inputClasses}>
-              <option value="">Select Country</option>
-              {loc.countries.map((c) => <option key={c.countryCode} value={c.name}>{c.name}</option>)}
-            </select>
+            <label className={labelClasses}>Pincode <span className="text-red-600">*</span></label>
+            <input required name="pincodeLookup" value={pincode} onChange={(e) => setPincode(e.target.value.replace(/\D/g, "").slice(0, 6))} className={inputClasses} placeholder="6-digit Pincode" inputMode="numeric" maxLength={6} autoComplete="postal-code" aria-describedby="pincode-hint" />
+            <div id="pincode-hint"><PincodeHint lookup={pinLookup} /></div>
           </div>
           <div>
             <label className={labelClasses}>State <span className="text-red-600">*</span></label>
-            <select required name="state" value={formData.state} onChange={handleChange} className={inputClasses} disabled={!formData.country}>
+            <select required name="state" value={formData.state} onChange={handleChange} className={inputClasses} disabled={addrLock.locked || !formData.country}>
               <option value="">Select State</option>
               {loc.states.map((s) => <option key={s.stateCode} value={s.name}>{s.name}</option>)}
             </select>
           </div>
           <div>
             <label className={labelClasses}>City <span className="text-red-600">*</span></label>
-            <CityField key={formData.state} value={formData.city} onChange={(city) => setFormData((prev) => ({ ...prev, city }))} cities={loc.cities} ready={loc.citiesReady} stateChosen={!!formData.state} className={inputClasses} required />
+            <CityField key={formData.state} value={formData.city} onChange={(city) => setFormData((prev) => ({ ...prev, city }))} cities={loc.cities} ready={loc.citiesReady} stateChosen={!!formData.state} disabled={addrLock.cityLocked} className={inputClasses} required />
+          </div>
+          <div>
+            <label className={labelClasses}>Country <span className="text-red-600">*</span></label>
+            <select required name="country" value={formData.country} onChange={handleChange} className={inputClasses} disabled={addrLock.locked}>
+              <option value="">Select Country</option>
+              {loc.countries.map((c) => <option key={c.countryCode} value={c.name}>{c.name}</option>)}
+            </select>
           </div>
         </div>
       </div>

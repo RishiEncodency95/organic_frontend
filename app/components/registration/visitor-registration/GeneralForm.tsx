@@ -4,8 +4,8 @@ import RegistrationSuccess from "./RegistrationSuccess";
 import { User, Loader2, CheckCircle, X, ChevronsUpDown, ShieldCheck } from "lucide-react";
 import { verifyApi, visitorApi, ihweSettingsApi } from "../../../../lib/api";
 import Swal from 'sweetalert2';
-import { check, errorList, EVENT_NAME, isIndia, showErrors, useLocations } from "@/lib/registration";
-import { CityField } from "../shared/LocationFields";
+import { check, errorList, EVENT_NAME, isIndia, showErrors, postalTarget, useLocations, usePincodeAutofill, addressLock } from "@/lib/registration";
+import { CityField, PincodeHint } from "../shared/LocationFields";
 import { toOptions, useDropdowns } from "@/lib/dropdowns";
 
 // Admin-managed (Dropdown Manager); these are the fallback options.
@@ -128,6 +128,10 @@ export default function GeneralForm() {
 
   // Country (A–Z), states and cities from the website's backend
   const loc = useLocations(formData.country, formData.state);
+  // A complete pincode / postal code fills in the state, city and country (all stay editable)
+  const pinLookup = usePincodeAutofill(formData.companyPincode, postalTarget(formData.country, loc.countries), (place) =>
+    setFormData((prev) => ({ ...prev, country: place.country || prev.country, state: place.state, city: place.city })));
+  const addrLock = addressLock(pinLookup);
 
     const handleChange = (e: any) => {
     let { name, value, type, checked } = e.target;
@@ -237,7 +241,7 @@ export default function GeneralForm() {
     check.required(formData.country, "Country"),
     check.required(formData.state, "State"),
     check.required(formData.city, "City"),
-    check.postal(formData.companyPincode, formData.country),
+    check.postal(formData.companyPincode, formData.country, true),
     !formData.purposeOfVisit.length && "Please choose at least one purpose of visit.",
     !formData.areaOfInterest.length && "Please choose at least one area of interest.",
   );
@@ -376,24 +380,28 @@ export default function GeneralForm() {
         </div>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-x-3 gap-y-3">
           <div>
-            <label className={labelClasses}>Country <span className="text-red-600">*</span></label>
-            <select required name="country" value={formData.country} onChange={handleChange} className={inputClasses}>
-              <option value="">Select Country</option>
-              {loc.countries.map((c) => <option key={c.countryCode} value={c.name}>{c.name}</option>)}
-            </select>
+            <label className={labelClasses}>Pincode / Zip Code <span className="text-red-600">*</span></label>
+            <input required name="companyPincode" value={formData.companyPincode} onChange={handleChange} className={inputClasses} placeholder="Enter Pincode" inputMode={isIndia(formData.country) ? "numeric" : "text"} autoComplete="postal-code" aria-describedby="pincode-hint" />
+            <div id="pincode-hint"><PincodeHint lookup={pinLookup} /></div>
           </div>
           <div>
             <label className={labelClasses}>State <span className="text-red-600">*</span></label>
-            <select required name="state" value={formData.state} onChange={handleChange} className={inputClasses} disabled={!formData.country}>
+            <select required name="state" value={formData.state} onChange={handleChange} className={inputClasses} disabled={addrLock.locked || !formData.country}>
               <option value="">Select State</option>
               {loc.states.map((s) => <option key={s.stateCode} value={s.name}>{s.name}</option>)}
             </select>
           </div>
           <div>
             <label className={labelClasses}>City <span className="text-red-600">*</span></label>
-            <CityField key={formData.state} value={formData.city} onChange={(city) => setFormData((prev) => ({ ...prev, city }))} cities={loc.cities} ready={loc.citiesReady} stateChosen={!!formData.state} className={inputClasses} required />
+            <CityField key={formData.state} value={formData.city} onChange={(city) => setFormData((prev) => ({ ...prev, city }))} cities={loc.cities} ready={loc.citiesReady} stateChosen={!!formData.state} disabled={addrLock.cityLocked} className={inputClasses} required />
           </div>
-          <div><label className={labelClasses}>Pincode / Zip Code</label><input name="companyPincode" value={formData.companyPincode} onChange={handleChange} className={inputClasses} placeholder="Enter Pincode" /></div>
+          <div>
+            <label className={labelClasses}>Country <span className="text-red-600">*</span></label>
+            <select required name="country" value={formData.country} onChange={handleChange} className={inputClasses} disabled={addrLock.locked}>
+              <option value="">Select Country</option>
+              {loc.countries.map((c) => <option key={c.countryCode} value={c.name}>{c.name}</option>)}
+            </select>
+          </div>
           <div className="md:col-span-2 lg:col-span-4 mt-4">
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-x-3 gap-y-3 mt-6">
               <div className="space-y-3 bg-white p-4 border border-slate-200 rounded-sm shadow-sm">

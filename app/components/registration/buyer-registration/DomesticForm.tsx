@@ -2,8 +2,8 @@
 import React, { useState, useRef, useEffect } from "react";
 import { CheckCircle2, CheckCircle, ShieldCheck, User, Globe, Store, Factory, Laptop, HeartPulse, Leaf, Hotel, Briefcase, ChevronsUpDown, Loader2, X, AlertTriangle } from "lucide-react";
 import { verifyApi, buyerApi, settingsApi, ihweEventApi } from "@/lib/api";
-import { check, errorList, EVENT_NAME, invalidFields, RULES, showErrors, useLocations } from "@/lib/registration";
-import { CityField } from "../shared/LocationFields";
+import { check, clean, errorList, EVENT_NAME, invalidFields, isIndia, RULES, showErrors, useLocations, usePincodeAutofill, addressLock } from "@/lib/registration";
+import { CityField, PincodeHint } from "../shared/LocationFields";
 import Swal from "sweetalert2";
 import Link from "next/link";
 import Image from "next/image";
@@ -294,6 +294,10 @@ export default function DomesticBuyerForm() {
 
   // Countries (A–Z), states and cities from the website's backend
   const loc = useLocations(formData.country, formData.stateProvince);
+  // A complete Indian pincode fills in the state, city and country (all stay editable)
+  const pinLookup = usePincodeAutofill(formData.pinCode, !formData.country || isIndia(formData.country), (place) =>
+    setFormData((prev) => ({ ...prev, country: place.country, stateProvince: place.state, city: place.city })));
+  const addrLock = addressLock(pinLookup);
 
   const [requireOtp, setRequireOtp] = useState(true);
 
@@ -351,6 +355,7 @@ export default function DomesticBuyerForm() {
       value = value.replace(/\D/g, '').slice(0, 6);
     }
     if (name === 'fullName') value = value.replace(/[^\p{L}\p{M} .'-]/gu, '').replace(/^\s+/, '');
+    if (name === 'designation') value = clean.title(value);
     if (name === 'panNumber') value = value.replace(/[^A-Za-z0-9]/g, '').toUpperCase().slice(0, 10);
     if (name === 'gstNumber') value = value.replace(/[^A-Za-z0-9]/g, '').toUpperCase().slice(0, 15);
     if (name === 'yearsInBusiness') value = value.replace(/\D/g, '').slice(0, 3);
@@ -687,27 +692,28 @@ export default function DomesticBuyerForm() {
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-x-3 gap-y-3 mt-4">
-          <div>
-            <label className={labelClasses}>Country <span className="text-red-600">*</span></label>
-            <select required name="country" value={formData.country} onChange={handleChange} className={inputClasses}>
-              <option value="">Select Country</option>
-              {loc.countries.map((c) => <option key={c.countryCode} value={c.name}>{c.name}</option>)}
-            </select>
+          <div className="lg:col-span-2">
+            <label className={labelClasses}>Pin Code <span className="text-red-600">*</span></label>
+            <input required name="pinCode" value={formData.pinCode} onChange={handleChange} placeholder="6-digit code" className={inputClasses} maxLength={6} inputMode="numeric" autoComplete="postal-code" aria-describedby="pincode-hint" />
+            <div id="pincode-hint"><PincodeHint lookup={pinLookup} /></div>
           </div>
           <div>
             <label className={labelClasses}>State/Province <span className="text-red-600">*</span></label>
-            <select required name="stateProvince" value={formData.stateProvince} onChange={handleChange} className={inputClasses} disabled={!formData.country}>
+            <select required name="stateProvince" value={formData.stateProvince} onChange={handleChange} className={inputClasses} disabled={addrLock.locked || !formData.country}>
               <option value="">Select State</option>
               {loc.states.map((s) => <option key={s.stateCode} value={s.name}>{s.name}</option>)}
             </select>
           </div>
           <div>
             <label className={labelClasses}>City <span className="text-red-600">*</span></label>
-            <CityField key={formData.stateProvince} value={formData.city} onChange={(city) => setFormData((prev) => ({ ...prev, city }))} cities={loc.cities} ready={loc.citiesReady} stateChosen={!!formData.stateProvince} className={inputClasses} required />
+            <CityField key={formData.stateProvince} value={formData.city} onChange={(city) => setFormData((prev) => ({ ...prev, city }))} cities={loc.cities} ready={loc.citiesReady} stateChosen={!!formData.stateProvince} disabled={addrLock.cityLocked} className={inputClasses} required />
           </div>
-          <div className="lg:col-span-2">
-            <label className={labelClasses}>Pin Code <span className="text-red-600">*</span></label>
-            <input required name="pinCode" value={formData.pinCode} onChange={handleChange} placeholder="6-digit code" className={inputClasses} maxLength={6} />
+          <div>
+            <label className={labelClasses}>Country <span className="text-red-600">*</span></label>
+            <select required name="country" value={formData.country} onChange={handleChange} className={inputClasses} disabled={addrLock.locked}>
+              <option value="">Select Country</option>
+              {loc.countries.map((c) => <option key={c.countryCode} value={c.name}>{c.name}</option>)}
+            </select>
           </div>
         </div>
       </div>
