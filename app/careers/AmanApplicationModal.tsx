@@ -31,11 +31,11 @@ const assets = {
 };
 
 const profile = {
-  name: "Vijay Sharma",
+  name: "Candidate",
   designation: "Senior Sales Executive",
-  phone: "+91 98765 43210",
-  email: "vijay.sharma@gmail.com",
-  linkedin: "linkedin.com/in/vijay-sharma",
+  phone: "",
+  email: "",
+  linkedin: "",
 };
 
 function SectionHeader({

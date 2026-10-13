@@ -59,6 +59,15 @@ const nextConfig: NextConfig = {
       },
     ];
   },
+  async redirects() {
+    // Old misspelled addresses → the correct one (permanent, so Google and old links follow).
+    return [
+      { source: "/sponsership", destination: "/sponsorship", permanent: true },
+      { source: "/participate_as_exhibiture", destination: "/participate-as-exhibitor", permanent: true },
+      { source: "/about/suport_services", destination: "/about/support-services", permanent: true },
+      { source: "/careers/uploade_cv", destination: "/careers/upload-cv", permanent: true },
+    ];
+  },
   async rewrites() {
     const backendUrl =
       process.env.NEXT_PUBLIC_SERVER_URL ||
@@ -81,6 +90,16 @@ const nextConfig: NextConfig = {
       {
         source: "/participate/why-exhibit",
         destination: "/why-exhibit",
+      },
+      // Correctly spelled addresses served by the existing page folders (the admin CMS and SEO
+      // records are keyed on the old folder names, so the folders keep them).
+      {
+        source: "/about/support-services",
+        destination: "/about/suport_services",
+      },
+      {
+        source: "/careers/upload-cv",
+        destination: "/careers/uploade_cv",
       },
     ];
   },

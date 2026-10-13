@@ -9,7 +9,7 @@ export const PAGE_PATHS: Record<string, string[]> = {
   aboutPage: ["/about"],
   advisoryPage: ["/about/advisory_board_member"],
   nominateAdvisoryPage: ["/about/nominate_advisory_board"],
-  supportServicesPage: ["/about/suport_services"],
+  supportServicesPage: ["/about/support-services", "/about/suport_services"],
   blogPage: ["/blog"],
   participateAsExhibitorPage: ["/participate-as-exhibitor", "/participate_as_exhibiture"],
   exhibitionCategoriesPage: ["/exhibition-categories"],

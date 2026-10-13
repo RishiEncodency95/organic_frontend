@@ -1,6 +1,7 @@
 import React from 'react';
 import { Headphones, Ticket, Megaphone } from 'lucide-react';
 import { Metadata } from 'next';
+import Link from 'next/link';
 import { settingsApi } from '@/lib/api';
 import AdminSchema from '@/components/seo/AdminSchema';
 import { adminSeoMetadata, getAdminSeo } from '@/lib/adminSeo';
@@ -9,10 +10,14 @@ export const revalidate = 60;
 
 const SEO_PAGE_KEY = "about/suport_services";
 
+// Where each card's button goes when the admin has not set a link for it.
+const DEFAULT_CARD_LINKS = ["/why-exhibit", "/why-visit", "/contact"];
+
 export async function generateMetadata(): Promise<Metadata> {
   return adminSeoMetadata(SEO_PAGE_KEY, {
     title: "Support Services | Bharat Organic Expo 2027",
     description: "Find the resources and help you need for a successful experience at the Bharat Organic Expo 2027. We provide Exhibitor Support, Visitor Information, and Media resources.",
+    canonicalPath: "/about/support-services",
   });
 }
 
@@ -61,9 +66,9 @@ export default async function SupportServicesPage() {
                     <p className="text-[16px] md:text-[18px] text-gray-600 leading-[1.6] mb-8 flex-1">
                       {card.description}
                     </p>
-                    <button className="text-[#e85d1c] font-bold text-[15px] md:text-[16px] tracking-wider uppercase hover:text-[#3b8c2a] transition-colors flex items-center gap-2">
+                    <Link href={card.buttonLink || card.buttonHref || card.link || DEFAULT_CARD_LINKS[idx] || "/contact"} className="text-[#e85d1c] font-bold text-[15px] md:text-[16px] tracking-wider uppercase hover:text-[#3b8c2a] transition-colors flex items-center gap-2">
                       {card.buttonLabel || "Read More"} <span>→</span>
-                    </button>
+                    </Link>
                   </div>
                 );
               })
@@ -77,9 +82,9 @@ export default async function SupportServicesPage() {
                   <p className="text-[16px] md:text-[18px] text-gray-600 leading-[1.6] mb-8 flex-1">
                     Assistance with booth setup, logistics, and technical requirements to ensure a smooth exhibiting experience.
                   </p>
-                  <button className="text-[#e85d1c] font-bold text-[15px] md:text-[16px] tracking-wider uppercase hover:text-[#3b8c2a] transition-colors flex items-center gap-2">
+                  <Link href={DEFAULT_CARD_LINKS[0]} className="text-[#e85d1c] font-bold text-[15px] md:text-[16px] tracking-wider uppercase hover:text-[#3b8c2a] transition-colors flex items-center gap-2">
                     Read More <span>→</span>
-                  </button>
+                  </Link>
                 </div>
 
                 <div className="bg-[#f8f9fa] border border-gray-200 border-b-[4px] border-b-gray-300 rounded-xl p-8 hover:-translate-y-2 hover:shadow-xl hover:border-b-[#3b8c2a] transition-all duration-300 flex flex-col h-full group">
@@ -90,9 +95,9 @@ export default async function SupportServicesPage() {
                   <p className="text-[16px] md:text-[18px] text-gray-600 leading-[1.6] mb-8 flex-1">
                     Help with registration, travel accommodations, visa assistance, and navigating the venue.
                   </p>
-                  <button className="text-[#e85d1c] font-bold text-[15px] md:text-[16px] tracking-wider uppercase hover:text-[#3b8c2a] transition-colors flex items-center gap-2">
+                  <Link href={DEFAULT_CARD_LINKS[1]} className="text-[#e85d1c] font-bold text-[15px] md:text-[16px] tracking-wider uppercase hover:text-[#3b8c2a] transition-colors flex items-center gap-2">
                     Read More <span>→</span>
-                  </button>
+                  </Link>
                 </div>
 
                 <div className="bg-[#f8f9fa] border border-gray-200 border-b-[4px] border-b-gray-300 rounded-xl p-8 hover:-translate-y-2 hover:shadow-xl hover:border-b-[#3b8c2a] transition-all duration-300 flex flex-col h-full group">
@@ -103,9 +108,9 @@ export default async function SupportServicesPage() {
                   <p className="text-[16px] md:text-[18px] text-gray-600 leading-[1.6] mb-8 flex-1">
                     Resources, press kits, and accreditation details for media professionals and journalists.
                   </p>
-                  <button className="text-[#e85d1c] font-bold text-[15px] md:text-[16px] tracking-wider uppercase hover:text-[#3b8c2a] transition-colors flex items-center gap-2">
+                  <Link href={DEFAULT_CARD_LINKS[2]} className="text-[#e85d1c] font-bold text-[15px] md:text-[16px] tracking-wider uppercase hover:text-[#3b8c2a] transition-colors flex items-center gap-2">
                     Read More <span>→</span>
-                  </button>
+                  </Link>
                 </div>
               </>
             )}

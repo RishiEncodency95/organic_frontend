@@ -169,6 +169,12 @@ export default function EnquiryForm() {
             </p>
             
             <button 
+              type="button"
+              onClick={() => {
+                const form = document.getElementById("partnership-enquiry-form");
+                form?.scrollIntoView({ behavior: "smooth", block: "center" });
+                form?.querySelector<HTMLElement>("select, input")?.focus({ preventScroll: true });
+              }}
               className="bg-[#d6a549] hover:bg-[#b88c3a] text-white px-6 py-2.5 rounded-md font-bold text-xs tracking-wider uppercase transition-colors relative z-10 flex items-center gap-2"
               style={{ boxShadow: "rgba(0, 0, 0, 0.12) 0px 1px 3px, rgba(0, 0, 0, 0.24) 0px 1px 2px" }}
             >
@@ -195,7 +201,7 @@ export default function EnquiryForm() {
               </p>
             </div>
 
-            <form className="space-y-4 relative z-10" onSubmit={handleSubmit}>
+            <form id="partnership-enquiry-form" className="space-y-4 relative z-10" onSubmit={handleSubmit}>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 {/* Full Name */}
                 <div className="relative bg-gray-50 rounded-md">

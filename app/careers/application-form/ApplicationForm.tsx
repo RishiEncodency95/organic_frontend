@@ -72,12 +72,12 @@ const job = {
 };
 
 const profile = {
-  name: "Vijay Sharma",
-  email: "vijay.sharma@gmail.com",
-  phone: "+91 98765 43210",
-  linkedin: "linkedin.com/in/vijay-sharma",
+  name: "",
+  email: "",
+  phone: "",
+  linkedin: "",
   image: assets.profile,
-  cvName: "Vijay_Sharma_CV.pdf",
+  cvName: "Your_CV.pdf",
   cvSize: "842 KB",
 };
 
@@ -1064,10 +1064,10 @@ function CVCard({ candidateData }: { candidateData?: any }) {
           <p className="mt-[1px] text-[12px] text-[#58708c]">{cvSize}</p>
 
           <div className="mt-[5px] flex gap-[13px] text-[12px] font-semibold text-[#0874ce]">
-            <button className="flex items-center gap-[4px]">
+            <Link href="/careers#current-openings" className="flex items-center gap-[4px] hover:opacity-80">
               <RefreshCw className="h-[13px] w-[13px]" />
               Upload Different CV
-            </button>
+            </Link>
           </div>
         </div>
       </div>

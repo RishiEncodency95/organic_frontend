@@ -27,9 +27,9 @@ export default function ApplicationHero({ section }: { section?: any }) {
 
             {/* Breadcrumb */}
             <div className="flex flex-wrap items-center gap-2 text-[12px] font-semibold text-gray-600 mb-6 bg-white w-max px-4 py-2 rounded-xl shadow-sm border border-gray-100">
-              <Link href="#" className="hover:text-[#176b27] transition-colors">Home</Link>
+              <Link href="/" className="hover:text-[#176b27] transition-colors">Home</Link>
               <span className="text-gray-400">&gt;</span>
-              <Link href="#" className="hover:text-[#176b27] transition-colors">PMS Scheme</Link>
+              <Link href="/participate/msme" className="hover:text-[#176b27] transition-colors">PMS Scheme</Link>
               <span className="text-gray-400">&gt;</span>
               <Link href="/participate/msme/apply" className="hover:text-[#176b27] transition-colors">Apply for PMS Support</Link>
               <span className="text-gray-400">&gt;</span>

@@ -308,6 +308,19 @@ export default async function BlogDetail({
 
   const isDynamic = Boolean(dynamicPost && dynamicPost.title);
 
+  // Sidebar categories: the admin-managed list (Blogs → Manage Categories); the static list is the fallback.
+  let sidebarCategories: { name: string; active: boolean }[] = sidebarData.categories;
+  try {
+    const res = await fetch(`${API_URL}/blog-categories`, { next: { revalidate: 60 } });
+    const list = res.ok ? (await res.json())?.data : null;
+    if (Array.isArray(list) && list.length > 0) {
+      const current = String(dynamicPost?.category || "").toLowerCase();
+      sidebarCategories = list.map((c: any) => ({ name: c.name, active: String(c.name).toLowerCase() === current }));
+    }
+  } catch {
+    // keep the fallback list
+  }
+
   const displayTitle = isDynamic ? (dynamicPost.h1Title || dynamicPost.title) : blogData.title;
   const displayCategory = isDynamic ? (dynamicPost.category || "Expo News") : blogData.category;
   const displayDate = isDynamic ? formatBlogDate(dynamicPost.scheduledDate || dynamicPost.publishDate || dynamicPost.createdAt) : blogData.meta.date;
@@ -544,9 +557,9 @@ export default async function BlogDetail({
                         <div>
                             <h3 className="text-[15px] font-bold text-[#1B4332] mb-4 pb-2">Categories</h3>
                             <div className="flex flex-wrap gap-2">
-                                {sidebarData.categories.map((cat, i) => (
+                                {sidebarCategories.map((cat, i) => (
                                     <Link
-                                        href="#"
+                                        href={`/blog/all-articles?category=${encodeURIComponent(cat.name)}`}
                                         key={i}
                                         className={`px-3 py-1.5 text-[12px] font-medium rounded-full border transition-colors ${cat.active
                                             ? "bg-[#2D6A4F] text-white border-[#2D6A4F]"

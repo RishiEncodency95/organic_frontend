@@ -194,7 +194,7 @@ ${textSnippet || "No raw text snippet available. Use attached document."}
 CRITICAL EXTRACTION & SCORING RULES:
 1. "candidateName": Read the CV content carefully and extract the candidate's actual full name. If no full name is inside the CV, use "${fallbackName}".
 2. "firstName": Candidate's first name.
-3. "email": Extract the candidate's actual email address (e.g. "vansh.full@gmail.com"). Only return null if NO email address exists in the document text.
+3. "email": Extract the candidate's actual email address (e.g. "name@example.com"). Only return null if NO email address exists in the document text.
 4. "phone": Extract the candidate's actual phone number (e.g. "+91 98765 43210"). Only return null if NO phone number exists in the document text.
 5. "linkedin": Extract the candidate's LinkedIn profile URL. Only return null if NO LinkedIn link exists in the document text.
 6. "score": Calculate a realistic match percentage score (0 to 100) based on candidate's experience vs job requirements.

@@ -156,7 +156,7 @@ const Topbar = ({ phone, email }: { phone?: string; email?: string }) => {
                                                 { to: "/registration/visitor-registration", icon: UserPlus, label: "REGISTER AS\nVISITOR", color: "green" },
                                                 { to: deligate, icon: Globe, label: "DELEGATE\nREGISTRATION", color: "orange" },
                                                 { to: "/registration/buyer-registration", icon: Users, label: "REGISTER AS\nBUYER", color: "green" },
-                                                { to: "/sponsership", icon: Award, label: "SPONSORSHIP\nOPPORTUNITIES", color: "orange" },
+                                                { to: "/sponsorship", icon: Award, label: "SPONSORSHIP\nOPPORTUNITIES", color: "orange" },
                                                 { to: "tel:+919654900525", icon: Phone, label: "TALK TO EXPO\nADVISOR", color: "green" },
                                             ].map((item, idx) => {
                                                 const commonProps = {

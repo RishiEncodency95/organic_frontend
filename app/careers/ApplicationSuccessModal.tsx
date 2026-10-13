@@ -38,7 +38,7 @@ const brandHeader = {
 
 const applicationData = {
   id: "BOE2027-000458",
-  candidateName: "Vijay Sharma",
+  candidateName: "Candidate",
   position: "Sales Manager – Domestic Exhibition Sales & Sponsorships",
   submittedOn: "14 September 2026, 04:32 PM",
   aiMatchScore: 72,

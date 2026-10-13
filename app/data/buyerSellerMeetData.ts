@@ -9,7 +9,7 @@ export const HERO_DATA = [
     buyerButtonLabel: "REGISTER AS A BUYER",
     buyerButtonHref: "/registration/buyer-registration",
     exhibitorButtonLabel: "PARTICIPATE AS AN EXHIBITOR",
-    exhibitorButtonHref: "/participate_as_exhibiture",
+    exhibitorButtonHref: "/participate-as-exhibitor",
   },
 ];
 
@@ -248,7 +248,7 @@ export const CTA_BANNER_DATA = [
     buyerButtonLabel: "REGISTER AS A BUYER",
     buyerButtonHref: "/registration/buyer-registration",
     exhibitorButtonLabel: "PARTICIPATE AS AN EXHIBITOR",
-    exhibitorButtonHref: "/participate_as_exhibiture",
+    exhibitorButtonHref: "/participate-as-exhibitor",
     helpText: "Need Help? +91 96549 00525  |  info@namogangewellness.com",
   },
 ];

@@ -140,10 +140,10 @@ export default function Deliverables() {
                   {ICON_MAP[item.iconKey]}
                 </div>
                 <div className="flex flex-col gap-1">
-                  <p className="text-[10px] md:text-[11px] font-bold text-gray-950 uppercase tracking-wide leading-tight font-inter">
+                  <p className="text-[11px] font-bold text-gray-950 uppercase tracking-wide leading-tight font-inter">
                     {item.title}
                   </p>
-                  <p className="text-[10px] md:text-[11px] font-medium text-gray-500 leading-snug font-inter">
+                  <p className="text-[11px] font-medium text-gray-500 leading-snug font-inter">
                     {item.desc}
                   </p>
                 </div>

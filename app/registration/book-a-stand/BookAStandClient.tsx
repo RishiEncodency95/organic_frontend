@@ -36,12 +36,9 @@ import {
     API_URL,
     eventApi,
     stallRateApi,
-    termsApi,
     publicApi,
     verifyApi,
     crmApi,
-    eventHighlightsApi,
-    countersApi,
     adminApi
 } from "@/lib/api";
 import Swal from 'sweetalert2';
@@ -248,7 +245,6 @@ const BookAStand = ({ disabledSections = [] }: { disabledSections?: string[] }) 
     const [availableStalls, setAvailableStalls] = useState<any[]>([]);
     const [staff, setStaff] = useState<any[]>([]);
     const [marketingStaff, setMarketingStaff] = useState<any[]>([]);
-    const [termsContent, setTermsContent] = useState<any>(null);
     const [allRates, setAllRates] = useState<any[]>([]);
     const [countries, setCountries] = useState<any[]>([]);
     const [states, setStates] = useState<any[]>([]);
@@ -256,9 +252,7 @@ const BookAStand = ({ disabledSections = [] }: { disabledSections?: string[] }) 
     // State whose cities have loaded, and whether the visitor types the city ("Other" / no cities listed)
     const [citiesLoadedFor, setCitiesLoadedFor] = useState('');
     const [cityTyping, setCityTyping] = useState(false);
-    const [eventHighlights, setEventHighlights] = useState<any>(null);
     const [settings, setSettings] = useState<any>(null);
-    const [counters, setCounters] = useState<any[]>([]);
 
     const [formData, setFormData] = useState(initialFormData);
 
@@ -303,31 +297,23 @@ const BookAStand = ({ disabledSections = [] }: { disabledSections?: string[] }) 
 
                 const eData = await eventApi.getActive();
                 const actualEvents = Array.isArray(eData) ? eData : ((eData as any).data || []);
-                console.log("[DEBUG] Active events from API:", actualEvents);
                 if (actualEvents.length > 0) {
                     setEvents(actualEvents);
                     const urlEventId = searchParams.get('eventId');
                     const initialEventId = urlEventId && actualEvents.find((e: any) => e._id === urlEventId) ? urlEventId : actualEvents[0]._id;
-                    console.log("[DEBUG] Selected event ID:", initialEventId);
                     setSelectedEventId(initialEventId);
                     setFormData(prev => ({ ...prev, eventId: initialEventId }));
                 }
                 Promise.all([
                     publicApi.getEmployees(),
                     publicApi.getStaff(),
-                    termsApi.getByPage("exhibitor-registration"),
                     crmApi.getCountries(),
-                    eventHighlightsApi.get(),
-                    settingsApi.get(),
-                    countersApi.get()
-                ]).then(([employeesRes, staffRes, termsRes, countryRes, highlightRes, settingsRes, counterRes]) => {
+                    settingsApi.get()
+                ]).then(([employeesRes, staffRes, countryRes, settingsRes]) => {
                     if (employeesRes) setMarketingStaff(Array.isArray(employeesRes) ? employeesRes : ((employeesRes as any).data || []));
                     if (staffRes) setStaff(Array.isArray(staffRes) ? staffRes : ((staffRes as any).data || []));
-                    if (termsRes) setTermsContent(termsRes);
                     if (countryRes) setCountries(Array.isArray(countryRes) ? countryRes : ((countryRes as any).data || []));
-                    if (highlightRes) setEventHighlights(highlightRes);
                     if (settingsRes) setSettings(settingsRes);
-                    if (counterRes) setCounters(counterRes);
                 });
             } catch (error) {
                 console.error("Error fetching initial data:", error);
@@ -382,7 +368,6 @@ const BookAStand = ({ disabledSections = [] }: { disabledSections?: string[] }) 
             });
             stallRateApi.getAllByEvent(selectedEventId).then((res: any) => {
                 const actualRates = Array.isArray(res) ? res : (res.data || []);
-                console.log("[DEBUG] Stall Rates for event", selectedEventId, ":", actualRates);
                 setAllRates(actualRates);
             });
         }
@@ -1016,7 +1001,7 @@ const BookAStand = ({ disabledSections = [] }: { disabledSections?: string[] }) 
                                 </div>
                                 <div className="text-left">
                                     <p className="text-[10px] text-emerald-500 font-black uppercase tracking-widest mb-1">Pre-Register Interest</p>
-                                    <p className="text-white font-medium">info@ihwe.in</p>
+                                    <p className="text-white font-medium">info@bharatorganicexpo.com</p>
                                 </div>
                             </div>
 

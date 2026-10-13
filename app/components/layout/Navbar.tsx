@@ -77,7 +77,7 @@ const registrationOptions = [
     { label: "REGISTER AS VISITOR", path: "/registration/visitor-registration", icon: UserPlus, color: "orange" },
     { label: "DELEGATE REGISTRATION", path: "https://arogya.namogange.org/", icon: Globe, color: "green", isExternal: true, pageKey: "delegateRegistrationPage" },
     { label: "REGISTER AS BUYER", path: "/registration/buyer-registration", icon: Users, color: "orange" },
-    { label: "SPONSORSHIP OPPORTUNITIES", path: "/sponsership", icon: Award, color: "green" },
+    { label: "SPONSORSHIP OPPORTUNITIES", path: "/sponsorship", icon: Award, color: "green" },
     { label: "TALK TO EXPO ADVISOR", path: "tel:+919654900525", icon: Phone, color: "orange", pageKey: "contactPage" },
 ];
 
@@ -159,6 +159,12 @@ const Navbar = ({ initialHiddenPageKeys = [] }: { initialHiddenPageKeys?: string
     useEffect(() => {
         if (mobileOpen) lockScroll();
         return () => { if (mobileOpen) unlockScroll(); };
+    }, [mobileOpen]);
+
+    // The floating Call / WhatsApp buttons would sit on top of the open menu (see globals.css)
+    useEffect(() => {
+        document.body.classList.toggle("mobile-menu-open", mobileOpen);
+        return () => document.body.classList.remove("mobile-menu-open");
     }, [mobileOpen]);
 
     return (
@@ -318,7 +324,7 @@ const Navbar = ({ initialHiddenPageKeys = [] }: { initialHiddenPageKeys?: string
 
             {/* ─── MOBILE BOTTOM TAB BAR ─── */}
             <div className="xl:hidden fixed bottom-0 left-0 right-0 z-[90] bg-white/95 backdrop-blur-xl border-t border-slate-100">
-                <div className="flex items-center justify-around px-2 pt-1 pb-3">
+                <div className="flex items-center justify-around px-1 pt-1 pb-3">
                     {visibleBottomTabs.map((tab) => {
                         const isActive = pathname === tab.path;
                         return (
@@ -327,7 +333,7 @@ const Navbar = ({ initialHiddenPageKeys = [] }: { initialHiddenPageKeys?: string
                                 href={tab.path}
                                 target={tab.isExternal ? "_blank" : undefined}
                                 rel={tab.isExternal ? "noopener noreferrer" : undefined}
-                                className="flex flex-col items-center gap-0.5 px-3 py-1.5 rounded-xl transition-all"
+                                className="flex min-w-0 flex-1 flex-col items-center gap-0.5 px-0.5 py-1.5 rounded-xl transition-all"
                             >
                                 <div className={cn(
                                     "w-8 h-8 rounded-xl flex items-center justify-center transition-all duration-200",
@@ -336,7 +342,7 @@ const Navbar = ({ initialHiddenPageKeys = [] }: { initialHiddenPageKeys?: string
                                     <tab.icon className={cn("w-4 h-4 transition-colors", isActive ? "text-white" : "text-slate-800")} />
                                 </div>
                                 <span className={cn(
-                                    "text-[9px] font-medium uppercase tracking-wider transition-colors",
+                                    "text-[9px] font-medium uppercase tracking-normal min-[420px]:tracking-wider whitespace-nowrap transition-colors",
                                     isActive ? "text-[#3b8c2a]" : "text-slate-800"
                                 )}>
                                     {tab.label}
@@ -348,7 +354,7 @@ const Navbar = ({ initialHiddenPageKeys = [] }: { initialHiddenPageKeys?: string
                     {/* Center FAB */}
                     <button
                         onClick={() => setMobileOpen(true)}
-                        className="flex flex-col items-center gap-0.5 px-3 py-1.5"
+                        className="flex min-w-0 flex-1 flex-col items-center gap-0.5 px-0.5 py-1.5"
                     >
                         <div className="w-10 h-10 rounded-xl bg-[#3b8c2a] flex items-center justify-center shadow-lg shadow-[#3b8c2a]/30 -mt-5 border-2 border-white transition-all active:scale-95">
                             <LayoutGrid className="w-5 h-5 text-white" />

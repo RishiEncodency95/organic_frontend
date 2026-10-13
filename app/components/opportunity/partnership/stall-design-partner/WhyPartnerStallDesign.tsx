@@ -122,7 +122,7 @@ export default function WhyPartnerStallDesign() {
           <div className="hidden lg:block border-l border-gray-300 h-6 shrink-0" />
           <a href={VENUE_MAP_URL} target="_blank" rel="noopener noreferrer" title="Open in Google Maps" className="flex items-center gap-2.5 group">
             <MapPin size={24} className="text-[#d6a549] shrink-0" />
-            <div className="text-[10px] lg:text-[11px] font-bold text-gray-900 leading-tight group-hover:text-[#113217] group-hover:underline">
+            <div className="text-[11px] font-bold text-gray-900 leading-tight group-hover:text-[#113217] group-hover:underline">
               <div className="whitespace-nowrap">{data.contactLocationLine1}</div>
               <div className="whitespace-nowrap">{data.contactLocationLine2}</div>
             </div>

@@ -87,7 +87,7 @@ export default function KeyBenefits() {
                 alt="" 
                 className="w-[80px] h-[80px] object-contain mb-4 transition-transform hover:scale-105 duration-200" 
               />
-              <p className="text-[10px] md:text-[11px] font-bold text-gray-950 uppercase tracking-wide whitespace-pre-line leading-tight font-inter">
+              <p className="text-[11px] font-bold text-gray-950 uppercase tracking-wide whitespace-pre-line leading-tight font-inter">
                 {item.title}
               </p>
             </div>

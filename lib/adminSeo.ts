@@ -20,14 +20,17 @@ export async function getAdminSeo(pageKey: string): Promise<any> {
 /** Page metadata from the admin SEO record, with `fallback` used only for fields the admin left empty. */
 export async function adminSeoMetadata(
     pageKey: string,
-    fallback: { title: string; description: string },
+    fallback: { title: string; description: string; canonicalPath?: string },
 ): Promise<Metadata> {
     const isLocal = process.env.NODE_ENV !== "production";
     const defaultUrl = isLocal ? "http://localhost:3002" : "https://bharatorganicexpo.com";
-    const seoData = await getAdminSeo(pageKey);
+    // Until the admin saves a record, the backend answers with a placeholder built from the URL
+    // ("About/Suport_services | …"). That one has no _id; the page's own fallback text is better.
+    const record = await getAdminSeo(pageKey);
+    const seoData = record?._id ? record : null;
 
     const rawCanonical = (seoData?.canonicalTag || seoData?.canonicalUrl || "").trim();
-    let canonicalUrl = `${defaultUrl}/${pageKey}`;
+    let canonicalUrl = `${defaultUrl}${fallback.canonicalPath || `/${pageKey}`}`;
     if (rawCanonical) {
         const match = rawCanonical.match(/href=["']([^"']+)["']/i);
         if (match && match[1]) {

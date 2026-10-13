@@ -73,14 +73,14 @@ const brandHeader = {
    ========================================================= */
 
 const profile = {
-  name: "Vijay Sharma",
-  email: "vijay.sharma@gmail.com",
-  phone: "+91 98765 43210",
-  linkedin: "linkedin.com/in/vijay-sharma",
+  name: "Candidate",
+  email: "",
+  phone: "",
+  linkedin: "",
 
   image: "/career-submit-resume-assets/profile.png",
 
-  cvName: "Vijay_Sharma_CV.pdf",
+  cvName: "Your_CV.pdf",
   cvSize: "842 KB",
 };
 
@@ -403,14 +403,14 @@ export type CandidateProfileData = {
 };
 
 export const defaultCandidateData: CandidateProfileData = {
-  candidateName: "Rohit Kumar",
-  firstName: "Rohit",
-  email: "kumarrohitji89@gmail.com",
-  phone: "+91 9568816858",
-  phones: ["+91 9568816858"],
-  verifiedPhone: "+91 9568816858",
-  linkedin: "linkedin.com/in/rohit-kumar",
-  cvName: "Rohit_Encodency.pdf",
+  candidateName: "Candidate",
+  firstName: "Candidate",
+  email: "",
+  phone: "",
+  phones: [],
+  verifiedPhone: "",
+  linkedin: "",
+  cvName: "Your_CV.pdf",
   cvSize: "424 KB",
   score: 93,
   requirementsMet: [

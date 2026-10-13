@@ -281,7 +281,7 @@ const SponsorshipCategories = () => {
             return (
               <Link
                 key={idx}
-                href="/sponsership"
+                href="/sponsorship"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="block"
