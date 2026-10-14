@@ -9,6 +9,8 @@ import { API_URL, ownVerifyApi, verifyApi } from "@/lib/api";
 import { SITE_CONFIG } from "@/app/constants/siteConfig";
 import { clearChatSession, newSessionId, readChatSession, saveChatSession, saveFreeAsked } from "./chatSession";
 import { useChatConfig, type ChatButton, type ChatFormField, type ChatFormSettings } from "./chatConfig";
+import { emailProblem } from "@/lib/emailCheck";
+import { ABUSE_REPLY, NAME_REPLY, hasAbuse, nameProblem, typedEmailProblem, typedPhoneProblem } from "./chatGuards";
 
 const CHAT_URL = process.env.NEXT_PUBLIC_CHAT_API_URL || `${API_URL}/chat`;
 const FALLBACK = "Maaf kijiye, abhi reply nahi de pa raha. Kripya +91 96549 00525 par call ya WhatsApp karein.";
@@ -354,7 +356,8 @@ const TEXT = {
         subtitle: "Bharat Organic Expo Assistant",
         greeting: "Namo Gange Namaskar! 🙏\nHow can I help you today?",
         greetingName: (name: string) => `Namo Gange Namaskar, ${name}! 🙏\nHow can I help you today?`,
-        askName: (bot: string) => `Namo Gange Namaskar! 🙏\nI'm ${bot}, your expo assistant. May I know your name?`,
+        intro: (bot: string) => `Namo Gange Namaskar! 🙏\nI'm ${bot}, your expo assistant.`,
+        askName: "May I know your name?",
         namePh: "Type your name...",
         nameError: "Please type just your name (letters only), e.g. Rohit Kumar.",
         welcomeBackName: (name: string) => `Welcome back, ${name}! 🙏\nYour earlier chat is above. How can I help you today?`,
@@ -430,7 +433,8 @@ const TEXT = {
         subtitle: "भारत ऑर्गेनिक एक्सपो सहायक",
         greeting: "नमो गंगे नमस्कार! 🙏\nमैं आपकी क्या मदद कर सकता हूँ?",
         greetingName: (name: string) => `नमो गंगे नमस्कार, ${name}! 🙏\nमैं आपकी क्या मदद कर सकता हूँ?`,
-        askName: (bot: string) => `नमो गंगे नमस्कार! 🙏\nमैं ${bot} हूँ, आपका एक्सपो सहायक। क्या मैं आपका नाम जान सकता हूँ?`,
+        intro: (bot: string) => `नमो गंगे नमस्कार! 🙏\nमैं ${bot} हूँ, आपका एक्सपो सहायक।`,
+        askName: "क्या मैं आपका नाम जान सकता हूँ?",
         namePh: "अपना नाम लिखें...",
         nameError: "कृपया सिर्फ़ अपना नाम लिखें (केवल अक्षर), जैसे रोहित कुमार।",
         welcomeBackName: (name: string) => `फिर से स्वागत है, ${name}! 🙏\nआपकी पिछली चैट ऊपर है। मैं आपकी क्या मदद कर सकता हूँ?`,
@@ -662,6 +666,7 @@ const validateLead = ({ name, phone }: LeadForm): LeadErrors => {
     if (!n) errors.name = "Please enter your name.";
     else if (n.length < 2) errors.name = "Name is too short.";
     else if (!NAME_PATTERN.test(n)) errors.name = "Name can contain letters only.";
+    else if (nameProblem(n, n)) errors.name = "Please enter your real name.";
 
     if (!phone) errors.phone = "Please enter your mobile number.";
     else if (phone.length !== 10) errors.phone = "Mobile number must be exactly 10 digits.";
@@ -711,6 +716,12 @@ const QUOTE_TEXT = {
         agree: "I agree to be contacted about this enquiry.",
         agreeError: "Please agree so our team can contact you.",
         emailError: "Please enter a valid email address.",
+        emailSendOtp: "Send OTP on Email",
+        emailOtp: "Email OTP",
+        emailOtpSent: (to: string) => `OTP sent to ${to}`,
+        emailVerify: "Verify",
+        emailVerifying: "Verifying...",
+        emailNotVerified: "Please verify your email with the OTP before submitting.",
         submit: "Submit Request",
         sending: "Submitting...",
         back: "Back to Stall Options",
@@ -750,6 +761,12 @@ const QUOTE_TEXT = {
         agree: "मैं इस पूछताछ के बारे में संपर्क किए जाने के लिए सहमत हूँ।",
         agreeError: "कृपया सहमति दें ताकि हमारी टीम आपसे संपर्क कर सके।",
         emailError: "कृपया सही ईमेल पता लिखें।",
+        emailSendOtp: "ईमेल पर OTP भेजें",
+        emailOtp: "ईमेल OTP",
+        emailOtpSent: (to: string) => `${to} पर OTP भेजा गया`,
+        emailVerify: "वेरिफ़ाई करें",
+        emailVerifying: "वेरिफ़ाई हो रहा है...",
+        emailNotVerified: "भेजने से पहले कृपया OTP से अपना ईमेल वेरिफ़ाई करें।",
         submit: "अनुरोध भेजें",
         sending: "भेजा जा रहा है...",
         back: "स्टॉल विकल्पों पर वापस",
@@ -826,6 +843,63 @@ const QuoteForm: React.FC<QuoteFormProps> = ({ lang, kind = "quote", stall, sent
 
     const phoneVerified = !!form.phone && (form.phone === verifiedPhone || form.phone === otpVerifiedFor);
 
+    // Email OTP (only when an email is given): the address it was sent to, the code, resend countdown, the address it verified
+    const [emailOtpSentTo, setEmailOtpSentTo] = useState("");
+    const [emailOtp, setEmailOtp] = useState("");
+    const [emailTimer, setEmailTimer] = useState(0);
+    const [emailVerifiedFor, setEmailVerifiedFor] = useState("");
+    const [emailBusy, setEmailBusy] = useState(false);
+    const emailValue = form.email.trim().toLowerCase();
+    const emailVerified = !!emailValue && emailValue === emailVerifiedFor;
+
+    useEffect(() => {
+        if (!emailTimer) return;
+        const id = window.setTimeout(() => setEmailTimer((sec) => sec - 1), 1000);
+        return () => window.clearTimeout(id);
+    }, [emailTimer]);
+
+    const sendEmailOtp = async () => {
+        const problem = emailProblem(emailValue, "Email");
+        if (problem) {
+            setErrors((prev) => ({ ...prev, email: problem }));
+            return;
+        }
+        setEmailBusy(true);
+        setErrors((prev) => ({ ...prev, email: undefined }));
+        try {
+            const res = await verifyApi.sendEmailOtp(emailValue, LEAD_OTP_PROFILE, form.name.trim());
+            if (!res?.success) throw new Error(res?.msg || res?.message || "");
+            setEmailOtpSentTo(emailValue);
+            setEmailOtp("");
+            setEmailTimer(OTP_RESEND_SECONDS);
+        } catch (err) {
+            setErrors((prev) => ({ ...prev, email: (err as Error).message || "Could not send the OTP. Please try again." }));
+        } finally {
+            setEmailBusy(false);
+        }
+    };
+
+    const verifyEmailOtp = async () => {
+        if (emailOtp.length !== 6) {
+            setErrors((prev) => ({ ...prev, email: q.otpError }));
+            return;
+        }
+        setEmailBusy(true);
+        try {
+            const res = await verifyApi.verifyEmailOtp(emailOtpSentTo, emailOtp);
+            if (!res?.success) throw new Error(res?.msg || res?.message || "");
+            setEmailVerifiedFor(emailOtpSentTo);
+            setEmailOtpSentTo("");
+            setEmailOtp("");
+            setEmailTimer(0);
+            setErrors((prev) => ({ ...prev, email: undefined }));
+        } catch (err) {
+            setErrors((prev) => ({ ...prev, email: (err as Error).message || "Verification failed. Please try again." }));
+        } finally {
+            setEmailBusy(false);
+        }
+    };
+
     const set = (key: keyof QuoteDetails, value: string) => {
         setForm((prev) => ({ ...prev, [key]: value }));
         if (errors[key]) setErrors((prev) => ({ ...prev, [key]: undefined }));
@@ -839,7 +913,12 @@ const QuoteForm: React.FC<QuoteFormProps> = ({ lang, kind = "quote", stall, sent
 
     const validate = () => {
         const next: QuoteErrors = { ...validateLead({ name: form.name, phone: form.phone }) };
-        if (form.email.trim() && !EMAIL_PATTERN.test(form.email.trim())) next.email = q.emailError;
+        if (form.email.trim()) {
+            const problem = !EMAIL_PATTERN.test(form.email.trim()) ? q.emailError : emailProblem(form.email, "Email");
+            if (problem) next.email = problem;
+            // An email that is given must be verified with its OTP (see the field below)
+            else if (!emailVerified) next.email = q.emailNotVerified;
+        }
         if (!callback && fields.email.show && fields.email.required && !form.email.trim()) next.email = q.required;
         if (!callback && fields.company.show && fields.company.required && !form.company.trim()) next.company = q.required;
         if (callback && fields.time.show && fields.time.required && !form.time) next.time = q.required;
@@ -1078,17 +1157,88 @@ const QuoteForm: React.FC<QuoteFormProps> = ({ lang, kind = "quote", stall, sent
                     <span className={label}>
                         {requiredLabel(q.email, fields.email.required)} {fields.email.required && <span className="text-red-500">*</span>}
                     </span>
-                    <input
-                        type="email"
-                        value={form.email}
-                        onChange={(e) => set("email", e.target.value.trim())}
-                        autoComplete="email"
-                        maxLength={100}
-                        placeholder={q.emailPh}
-                        aria-invalid={!!errors.email}
-                        className={input(errors.email)}
-                    />
+                    <span className="relative">
+                        <input
+                            type="email"
+                            value={form.email}
+                            onChange={(e) => {
+                                set("email", e.target.value.trim());
+                                // A changed address needs a new OTP
+                                if (emailOtpSentTo) {
+                                    setEmailOtpSentTo("");
+                                    setEmailOtp("");
+                                    setEmailTimer(0);
+                                }
+                            }}
+                            autoComplete="email"
+                            maxLength={100}
+                            placeholder={q.emailPh}
+                            aria-invalid={!!errors.email}
+                            className={`${input(errors.email)} ${emailVerified ? "!pr-8" : ""}`}
+                        />
+                        {emailVerified && (
+                            <span title={q.verified} className="absolute right-2 top-1/2 -translate-y-1/2 grid h-[18px] w-[18px] place-items-center rounded-full bg-[#3b8c2a] text-white">
+                                <Check className="w-3 h-3" strokeWidth={3} aria-hidden="true" />
+                                <span className="sr-only">{q.verified}</span>
+                            </span>
+                        )}
+                    </span>
                     {fieldError("email")}
+                    {!!emailValue && !emailVerified && !emailOtpSentTo && (
+                        <button
+                            type="button"
+                            onClick={sendEmailOtp}
+                            disabled={emailBusy}
+                            className="self-start rounded-md border border-[#14532d] px-2.5 py-1 text-[12px] font-semibold text-[#14532d] hover:bg-[#e8f3e2] disabled:opacity-60"
+                        >
+                            {emailBusy ? q.sending : q.emailSendOtp}
+                        </button>
+                    )}
+                    {!!emailOtpSentTo && !emailVerified && (
+                        <span className="flex flex-col gap-1">
+                            <span className="text-[11.5px] text-[#14532d]">{q.emailOtpSent(emailOtpSentTo)}</span>
+                            <span className="flex gap-2">
+                                <input
+                                    type="text"
+                                    inputMode="numeric"
+                                    autoComplete="one-time-code"
+                                    maxLength={6}
+                                    value={emailOtp}
+                                    onChange={(e) => {
+                                        setEmailOtp(e.target.value.replace(/\D/g, "").slice(0, 6));
+                                        if (errors.email) setErrors((prev) => ({ ...prev, email: undefined }));
+                                    }}
+                                    onKeyDown={(e) => {
+                                        // Enter here verifies the email; it must not submit the whole form
+                                        if (e.key === "Enter") {
+                                            e.preventDefault();
+                                            verifyEmailOtp();
+                                        }
+                                    }}
+                                    placeholder={q.otpPh}
+                                    aria-label={q.emailOtp}
+                                    className={`${input()} tracking-[0.3em] placeholder:tracking-normal`}
+                                />
+                                <button
+                                    type="button"
+                                    onClick={verifyEmailOtp}
+                                    disabled={emailBusy}
+                                    className="shrink-0 rounded-lg bg-[#14532d] px-3 text-[12.5px] font-semibold text-white hover:bg-[#1b5e20] disabled:opacity-60"
+                                >
+                                    {emailBusy ? q.emailVerifying : q.emailVerify}
+                                </button>
+                            </span>
+                            <span className="text-right text-[11.5px]">
+                                {emailTimer > 0 ? (
+                                    <span className="text-slate-500">{q.resendIn(emailTimer)}</span>
+                                ) : (
+                                    <button type="button" onClick={sendEmailOtp} disabled={emailBusy} className="font-semibold text-[#14532d] hover:text-[#3b8c2a]">
+                                        {q.resend}
+                                    </button>
+                                )}
+                            </span>
+                        </span>
+                    )}
                 </label>
                 )}
                 </>
@@ -1732,6 +1882,13 @@ const ChatPanel: React.FC<Props> = ({ open, onClose }) => {
     // This panel started by asking the name, so the first bubble keeps that question
     const [nameStep, setNameStep] = useState(() => !(initial.status === "active" && initial.name));
     const [nameError, setNameError] = useState("");
+    // "May I know your name?" follows the greeting as a second message (straight away once a name is known)
+    const [askNameShown, setAskNameShown] = useState(() => !!visitorName);
+    useEffect(() => {
+        if (!open || !nameStep || askNameShown) return;
+        const id = window.setTimeout(() => setAskNameShown(true), 1300);
+        return () => window.clearTimeout(id);
+    }, [open, nameStep, askNameShown]);
     // An earlier conversation was loaded (or tried) for this visitor
     const [restored, setRestored] = useState(false);
 
@@ -1903,6 +2060,21 @@ const ChatPanel: React.FC<Props> = ({ open, onClose }) => {
             return;
         }
 
+        // Typed by the visitor (not a menu button): abusive words, or a mobile number / email that
+        // cannot be right, get a fixed reply here and are not sent to the AI.
+        if (!topic) {
+            const blocked = hasAbuse(message) ? ABUSE_REPLY[lang] : typedPhoneProblem(message, lang) || typedEmailProblem(message, lang);
+            if (blocked) {
+                setInput("");
+                setMessages((prev) => [...prev, { role: "user", content: message, typed: true }, { role: "assistant", content: blocked }]);
+                track([
+                    { role: "user", content: message },
+                    { role: "assistant", content: blocked },
+                ]);
+                return;
+            }
+        }
+
         // Visitors chat freely at first; name + mobile (OTP) are asked before question FREE_QUESTIONS + 1
         if (!name && freeAsked >= FREE_QUESTIONS) {
             // Saved now, so the question is not lost if the visitor leaves at the details form
@@ -2071,8 +2243,10 @@ const ChatPanel: React.FC<Props> = ({ open, onClose }) => {
         if (loading) return;
         setRestored(true);
         const name = parseName(input);
-        if (!name) {
-            setNameError(t.nameError);
+        // "hello", a question, a number, abuse or keyboard mashing is not a name
+        const problem = nameProblem(input, name);
+        if (problem) {
+            setNameError(NAME_REPLY[lang][problem]);
             return;
         }
         startWithName(name, true);
@@ -2804,7 +2978,7 @@ const ChatPanel: React.FC<Props> = ({ open, onClose }) => {
                         <div data-chat-anim className="relative flex items-start gap-2.5">
                             <BotAvatar />
                             <div className="max-w-[82%] bg-white rounded-2xl rounded-tl-md shadow-[0_1px_2px_rgba(11,41,18,0.06)] border border-[#3b8c2a]/10 px-3.5 py-2 text-[13.5px] text-slate-800">
-                                {(nameStep ? t.askName(botName) : returning ? t.welcomeBack : visitorName && !showWelcome ? t.greetingName(visitorName) : t.greeting).split("\n").map((line, i) =>
+                                {(nameStep ? t.intro(botName) : returning ? t.welcomeBack : visitorName && !showWelcome ? t.greetingName(visitorName) : t.greeting).split("\n").map((line, i) =>
                                     i === 0 ? (
                                         <p key={i} className="font-semibold text-[#0b2912]">
                                             {line}
@@ -2815,6 +2989,23 @@ const ChatPanel: React.FC<Props> = ({ open, onClose }) => {
                                 )}
                             </div>
                         </div>
+
+                        {/* The name question comes as its own message, a moment after the greeting */}
+                        {nameStep && (
+                            <div className="relative ml-[42px] flex">
+                                <div className="max-w-[82%] bg-white rounded-2xl rounded-tl-md shadow-[0_1px_2px_rgba(11,41,18,0.06)] border border-[#3b8c2a]/10 px-3.5 py-2 text-[13.5px] text-slate-800">
+                                    {askNameShown ? (
+                                        <p>{t.askName}</p>
+                                    ) : (
+                                        <span className="flex items-center gap-1 py-1.5" aria-label={t.typing}>
+                                            {[0, 1, 2].map((dot) => (
+                                                <span key={dot} className="h-1.5 w-1.5 rounded-full bg-[#3b8c2a]/60 animate-bounce" style={{ animationDelay: `${dot * 0.15}s` }} />
+                                            ))}
+                                        </span>
+                                    )}
+                                </div>
+                            </div>
+                        )}
 
                         {askingName ? null : showWelcomeBack ? (
                             <div className="relative ml-[42px] grid grid-cols-2 gap-2">
