@@ -109,19 +109,19 @@ const NominateSidebar = () => {
                         <div className="w-7 h-7 rounded-full bg-[#dbe8dc] flex items-center justify-center shrink-0">
                             <Phone size={14} className="text-[#0a4d22] stroke-[2]" />
                         </div>
-                        <span className="text-[#222] text-[13px] font-bold">+91 96549 00525</span>
+                        <a href="tel:+919654900525" className="text-[#222] text-[13px] font-bold hover:text-[#0a4d22] hover:underline">+91 96549 00525</a>
                     </div>
                     <div className="flex items-center gap-3">
                         <div className="w-7 h-7 rounded-full bg-[#dbe8dc] flex items-center justify-center shrink-0">
                             <Mail size={14} className="text-[#0a4d22] stroke-[2]" />
                         </div>
-                        <span className="text-[#222] text-[13px] font-bold">info@bharatorganicexpo.com</span>
+                        <a href="mailto:info@bharatorganicexpo.com?subject=Advisory%20Board%20Nomination%20Query" className="text-[#222] text-[13px] font-bold break-all hover:text-[#0a4d22] hover:underline">info@bharatorganicexpo.com</a>
                     </div>
                     <div className="flex items-center gap-3">
                         <div className="w-7 h-7 rounded-full bg-[#dbe8dc] flex items-center justify-center shrink-0">
                             <WebGlobe size={14} className="text-[#0a4d22] stroke-[2]" />
                         </div>
-                        <span className="text-[#222] text-[13px] font-bold">www.bharatorganicexpo.com</span>
+                        <a href="https://bharatorganicexpo.com" target="_blank" rel="noopener noreferrer" className="text-[#222] text-[13px] font-bold hover:text-[#0a4d22] hover:underline">www.bharatorganicexpo.com</a>
                     </div>
                 </div>
             </div>

@@ -156,7 +156,7 @@ const Topbar = ({ phone, email }: { phone?: string; email?: string }) => {
                                                 { to: "/registration/visitor-registration", icon: UserPlus, label: "REGISTER AS\nVISITOR", color: "green" },
                                                 { to: deligate, icon: Globe, label: "DELEGATE\nREGISTRATION", color: "orange" },
                                                 { to: "/registration/buyer-registration", icon: Users, label: "REGISTER AS\nBUYER", color: "green" },
-                                                { to: "/sponsership", icon: Award, label: "SPONSORSHIP\nOPPORTUNITIES", color: "orange" },
+                                                { to: "/sponsorship", icon: Award, label: "SPONSORSHIP\nOPPORTUNITIES", color: "orange" },
                                                 { to: "tel:+919654900525", icon: Phone, label: "TALK TO EXPO\nADVISOR", color: "green" },
                                             ].map((item, idx) => {
                                                 const commonProps = {
@@ -214,7 +214,7 @@ const Topbar = ({ phone, email }: { phone?: string; email?: string }) => {
                                 <div className="relative bg-white rounded-2xl shadow-[0_15px_45px_rgba(0,0,0,0.15)] border border-slate-100 p-1 overflow-hidden z-20">
                                     <div className="grid grid-cols-2">
                                         {[
-                                            { to: "https://admin.bharatorganicexpo.com", icon: UserPlus, label: "USER\nLOGIN", color: "orange", external: true },
+                                            { to: "https://admin.ihwe.in/login", icon: UserPlus, label: "USER\nLOGIN", color: "orange", external: true },
                                             { to: "https://ihwe.in/exhibitor-login", icon: Store, label: "EXHIBITOR\nLOGIN", color: "green", external: true },
                                             { to: "https://ihwe.in/buyer-login", icon: Briefcase, label: "BUYER\nLOGIN", color: "orange", external: true },
                                             { to: "https://arogya.namogange.org/login", icon: Users, label: "DELEGATES\nLOGIN", color: "green", external: true },

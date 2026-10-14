@@ -31,6 +31,7 @@ import {
 import termBanner from "@/app/assets/registration/terms-and-conditions.webp";
 import team1Icon from "@/app/assets/registration/team1.webp";
 import doc22Icon from "@/app/assets/registration/doc22.webp";
+import Image from "next/image";
 
 // Sparkle component
 const Sparkle = ({ style, color = "#fcd34d", shadow = "#b45309" }: { style?: React.CSSProperties, color?: string, shadow?: string }) => (
@@ -183,9 +184,11 @@ const splitHeroTitle = (title: string): [string, string] => {
   return [words.slice(0, -1).join(" "), words[words.length - 1]];
 };
 
-const TermsOfService = ({ heroData }: { heroData?: any }) => {
+// `disabledSections`: termsAndConditionsPage section keys switched off in admin.
+const TermsOfService = ({ heroData, disabledSections = [] }: { heroData?: any; disabledSections?: string[] }) => {
+  const showBlocks = !disabledSections.includes("terms-page-blocks");
   const hero = {
-    enabled: heroData?.enabled !== false,
+    enabled: heroData?.enabled !== false && !disabledSections.includes("terms-page-hero"),
     eyebrow: pickText(heroData?.eyebrow, "POLICY GUIDE"),
     title: pickText(heroData?.title, "TERMS & CONDITIONS"),
     subtitle: pickText(heroData?.subtitle, "Bharat Organic Expo 2027"),
@@ -308,7 +311,7 @@ const TermsOfService = ({ heroData }: { heroData?: any }) => {
         <div className="w-full relative h-[280px] sm:h-[350px] md:h-[400px] lg:h-[470px] bg-[#eef5f0] overflow-hidden">
           {/* Background Layer */}
           <div className="absolute inset-0 w-full h-full z-0">
-            <img decoding="async" src={hero.image}
+            <Image width={0} height={0} sizes="100vw" decoding="async" src={hero.image}
               alt={hero.imageAlt}
               className="w-full h-full object-cover object-center"
             />
@@ -432,6 +435,7 @@ const TermsOfService = ({ heroData }: { heroData?: any }) => {
       </div>
 
       {/* Main Content */}
+      {showBlocks && (
       <section className="py-3 w-full">
         <div className="w-full px-6 md:px-14">
           <>
@@ -525,6 +529,7 @@ const TermsOfService = ({ heroData }: { heroData?: any }) => {
           </>
         </div>
       </section>
+      )}
     </div>
   );
 };

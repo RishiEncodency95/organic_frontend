@@ -3,6 +3,7 @@ import React, { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { MapPin, Quote } from "lucide-react";
 import SectionContainer from "@/app/components/layout/SectionContainer";
+import Image from "next/image";
 
 // Mock API response / JSON array of objects
 const TESTIMONIALS_DATA = [
@@ -70,7 +71,7 @@ type TestimonialItem = (typeof TESTIMONIALS_DATA)[number] & { image?: string; im
 const Avatar = ({ item, className, style }: { item: TestimonialItem; className: string; style?: React.CSSProperties }) =>
   item.image ? (
     <div className={`${className} overflow-hidden bg-white`} style={style}>
-      <img src={item.image} alt={item.imageAlt || item.companyName1} className="w-full h-full object-cover" loading="lazy" />
+      <Image width={0} height={0} sizes="100vw" src={item.image} alt={item.imageAlt || item.companyName1} className="w-full h-full object-cover" loading="lazy" />
     </div>
   ) : (
     <div className={className} style={{ ...style, background: item.color }}>

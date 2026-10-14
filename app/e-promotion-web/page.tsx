@@ -9,6 +9,7 @@ import EPromoteBand from "../components/opportunity/epromotion-opportunity/EProm
 import WhyEPromote from "../components/opportunity/epromotion-opportunity/WhyEPromote";
 import EPromotionOpportunities from "../components/opportunity/epromotion-opportunity/EPromotionOpportunities";
 
+import { getSectionGate } from "@/lib/sectionVisibility";
 export const revalidate = 60;
 
 export async function generateMetadata(): Promise<Metadata> {
@@ -88,13 +89,15 @@ export default async function EPromotionWebPage() {
   const schemaContent = seoData?.schemaMarkup || null;
   const heroData = await getSectionData("/website/opportunities/epromotion/hero");
 
+  const show = await getSectionGate("epromotionPage");
+
   return (
     <main className="w-full bg-[#f9f9f9]">
       <AdminSchema schema={schemaContent} />
-      <HeroSection initialData={heroData} />
-      <EPromoteBand />
-      <WhyEPromote />
-      <EPromotionOpportunities />
+      {show("epromotion-hero") && <HeroSection initialData={heroData} />}
+      {show("epromotion-band") && <EPromoteBand />}
+      {show("epromotion-why") && <WhyEPromote />}
+      {show("epromotion-opportunities") && <EPromotionOpportunities />}
     </main>
   );
 }

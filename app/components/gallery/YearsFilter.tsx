@@ -1,6 +1,6 @@
 "use client";
-import React from 'react';
-import { Search, ChevronDown } from 'lucide-react';
+import React, { useRef } from 'react';
+import { Search } from 'lucide-react';
 import SectionContainer from '@/app/components/layout/SectionContainer';
 
 const years = ['All Years', '2025', '2024', '2023', '2022', '2021', '2020'];
@@ -20,6 +20,7 @@ const YearsFilter: React.FC<YearsFilterProps> = ({
   onSearchChange,
   dbYears = [] 
 }) => {
+  const searchRef = useRef<HTMLInputElement>(null);
   const parsedYears = (dbYears || [])
     .map((y: any) => (typeof y === 'string' ? y : y?.year || ''))
     .filter(Boolean);
@@ -56,12 +57,6 @@ const YearsFilter: React.FC<YearsFilterProps> = ({
                 {year}
               </button>
             ))}
-            <button 
-              className="px-4 py-2 rounded-sm text-sm font-semibold bg-white text-black hover:text-[#1b5e20] flex items-center gap-1 transition-all"
-              style={{ boxShadow: 'rgba(0, 0, 0, 0.02) 0px 1px 3px 0px, rgba(27, 31, 35, 0.15) 0px 0px 0px 1px' }}
-            >
-              More <ChevronDown size={14} />
-            </button>
           </div>
 
           {/* Search Bar */}
@@ -69,6 +64,7 @@ const YearsFilter: React.FC<YearsFilterProps> = ({
             <div className="relative flex-1 xl:w-[300px]">
               <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" size={16} />
               <input
+                ref={searchRef}
                 type="text"
                 placeholder="Search photos..."
                 value={searchQuery}
@@ -76,7 +72,8 @@ const YearsFilter: React.FC<YearsFilterProps> = ({
                 className="w-full pl-9 pr-4 py-2 rounded-sm border border-[#1b5e20] focus:outline-none text-sm text-gray-700"
               />
             </div>
-            <button className="bg-[#1b5e20] hover:bg-[#134216] text-white px-5 py-2 rounded-sm text-sm font-semibold flex items-center gap-2 transition-colors">
+            {/* Results filter as you type; the button just puts the cursor in the box. */}
+            <button type="button" onClick={() => searchRef.current?.focus()} className="bg-[#1b5e20] hover:bg-[#134216] text-white px-5 py-2 rounded-sm text-sm font-semibold flex items-center gap-2 transition-colors">
                Search
             </button>
           </div>

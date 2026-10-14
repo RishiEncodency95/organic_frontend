@@ -366,6 +366,20 @@ export type CandidateAnalysisData = {
     fullProfile?: any;
 };
 
+/** The backend turned the upload away: this IP reached the admin's resume upload limit. */
+class UploadLimitError extends Error {
+    constructor(message: string, readonly retryAt?: string) {
+        super(message);
+    }
+}
+
+const formatRetryAt = (iso?: string) => {
+    if (!iso) return "";
+    const date = new Date(iso);
+    if (Number.isNaN(date.getTime())) return "";
+    return date.toLocaleString("en-IN", { day: "2-digit", month: "short", hour: "2-digit", minute: "2-digit", hour12: true });
+};
+
 export default function UploadCvModal({
     job,
     onClose,
@@ -377,6 +391,8 @@ export default function UploadCvModal({
 }) {
     const [file, setFile] = useState<File | null>(null);
     const [isAnalyzing, setIsAnalyzing] = useState(false);
+    // Set when this IP reached the resume upload limit; the upload stays closed until then
+    const [uploadLimit, setUploadLimit] = useState<{ message: string; retryAt?: string } | null>(null);
 
     // The modal body is a fixed DESIGN_WIDTH x DESIGN_HEIGHT canvas that gets scaled
     // down to whatever width the shell resolves to. CSS cannot divide a length by a
@@ -457,7 +473,7 @@ export default function UploadCvModal({
         : undefined;
 
     const handleAnalyzeButtonClick = () => {
-        if (isAnalyzing || !file) return;
+        if (isAnalyzing || !file || uploadLimit) return;
         void runAnalysisPipeline();
     };
 
@@ -484,6 +500,9 @@ export default function UploadCvModal({
             });
 
             const uploadJson = await uploadRes.json();
+            if (uploadRes.status === 429 && uploadJson?.code === "API_BLOCKED") {
+                throw new UploadLimitError(uploadJson.message, uploadJson.retryAt);
+            }
             if (!uploadRes.ok || !uploadJson.success) {
                 throw new Error(uploadJson.message || "Failed to upload CV");
             }
@@ -565,6 +584,11 @@ export default function UploadCvModal({
 
             if (onAnalyze) onAnalyze(candidateData);
         } catch (e) {
+            // A blocked IP must not get through by the fallbacks below
+            if (e instanceof UploadLimitError) {
+                setUploadLimit({ message: e.message, retryAt: e.retryAt });
+                return;
+            }
             console.warn("Express Backend CV Analysis failed, attempting Next.js /api/analyze-cv fallback:", e);
 
             try {
@@ -876,11 +900,21 @@ export default function UploadCvModal({
                                     </div>
                                 </div>
 
+                                {uploadLimit && (
+                                    <div role="alert" className="mt-[8px] rounded-[7px] border border-[#f1c9c2] bg-[#fdf1ef] px-[14px] py-[10px] text-[15px] leading-[1.35] text-[#9b2c1f]">
+                                        <p className="font-semibold">Upload limit reached</p>
+                                        <p>{uploadLimit.message}</p>
+                                        {formatRetryAt(uploadLimit.retryAt) && (
+                                            <p className="mt-[2px] text-[14px] text-[#b4533f]">You can upload again after {formatRetryAt(uploadLimit.retryAt)}.</p>
+                                        )}
+                                    </div>
+                                )}
+
                                 <button
                                     type="button"
-                                    disabled={!file || isAnalyzing}
+                                    disabled={!file || isAnalyzing || Boolean(uploadLimit)}
                                     onClick={handleAnalyzeButtonClick}
-                                    className={`mt-[8px] flex h-[48px] w-full items-center justify-center gap-[15px] rounded-[7px] text-[20px] font-medium text-white transition-all ${!file || isAnalyzing
+                                    className={`mt-[8px] flex h-[48px] w-full items-center justify-center gap-[15px] rounded-[7px] text-[20px] font-medium text-white transition-all ${!file || isAnalyzing || uploadLimit
                                         ? "bg-gray-400 cursor-not-allowed opacity-60 shadow-none"
                                         : "bg-[linear-gradient(180deg,#008d55,#007346)] shadow-[0_7px_13px_rgba(0,84,51,0.22)] hover:brightness-110 cursor-pointer"
                                         }`}

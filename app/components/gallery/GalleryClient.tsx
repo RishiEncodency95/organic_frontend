@@ -9,6 +9,7 @@ import Counters from '@/app/components/gallery/Counters';
 import VideoHighlights from '@/app/components/gallery/VideoHighlights';
 import JoinUsBanner from '@/app/components/gallery/JoinUsBanner';
 import { API_URL, SERVER_URL } from '@/lib/api';
+import { makeSectionGate } from '@/lib/sectionGate';
 
 const resolveImageUrl = (src: string): string => {
   if (!src) return src;
@@ -44,6 +45,8 @@ interface GalleryClientProps {
   initialMeta?: any;
   initialGallery?: any;
   initialVideos?: any;
+  /** galleryPage section keys switched off in admin */
+  disabledSections?: string[];
 }
 
 export default function GalleryClient({
@@ -51,7 +54,9 @@ export default function GalleryClient({
   initialMeta,
   initialGallery,
   initialVideos,
+  disabledSections = [],
 }: GalleryClientProps) {
+  const show = makeSectionGate(disabledSections);
   const [activeYear, setActiveYear] = useState('All Years');
   const [activeCategory, setActiveCategory] = useState('All Activities');
   const [searchQuery, setSearchQuery] = useState('');
@@ -118,28 +123,32 @@ export default function GalleryClient({
 
   return (
     <main className="min-h-screen bg-white font-inter">
-      <Hero initialData={heroData} />
-      <YearsFilter 
-        activeYear={activeYear} 
-        onYearChange={setActiveYear} 
-        searchQuery={searchQuery}
-        onSearchChange={setSearchQuery}
-        dbYears={dbYears}
-      />
-      <CategoryFilter 
-        activeCategory={activeCategory} 
-        onCategoryChange={setActiveCategory} 
-        dbCategories={dbCategories}
-      />
+      {show("gallery-hero") && <Hero initialData={heroData} />}
+      {show("gallery-years-filter") && (
+        <YearsFilter
+          activeYear={activeYear}
+          onYearChange={setActiveYear}
+          searchQuery={searchQuery}
+          onSearchChange={setSearchQuery}
+          dbYears={dbYears}
+        />
+      )}
+      {show("gallery-category-filter") && (
+        <CategoryFilter
+          activeCategory={activeCategory}
+          onCategoryChange={setActiveCategory}
+          dbCategories={dbCategories}
+        />
+      )}
       <GalleryGrid 
         activeYear={activeYear} 
         activeCategory={activeCategory} 
         searchQuery={searchQuery}
         dbGallery={dbGallery}
       />
-      <Counters />
-      <VideoHighlights dbVideos={dbVideos} />
-      <JoinUsBanner />
+      {show("gallery-counters") && <Counters />}
+      {show("gallery-video-highlights") && <VideoHighlights dbVideos={dbVideos} />}
+      {show("gallery-join-banner") && <JoinUsBanner />}
     </main>
   );
 }

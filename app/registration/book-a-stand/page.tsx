@@ -3,6 +3,7 @@ import type { Metadata } from "next";
 import AdminSchema from "@/components/seo/AdminSchema";
 import { adminSeoMetadata, getAdminSeo } from "@/lib/adminSeo";
 import BookAStandClient from "./BookAStandClient";
+import { getDisabledSectionKeys } from "@/lib/sectionVisibility";
 
 export const revalidate = 60;
 
@@ -17,12 +18,15 @@ export async function generateMetadata(): Promise<Metadata> {
 }
 
 export default async function BookAStandPage() {
-  const seoData = await getAdminSeo(SEO_PAGE_KEY);
+  const [seoData, disabledSections] = await Promise.all([
+    getAdminSeo(SEO_PAGE_KEY),
+    getDisabledSectionKeys("bookAStandPage"),
+  ]);
 
   return (
     <>
       <AdminSchema schema={seoData?.schemaMarkup || null} />
-      <BookAStandClient />
+      <BookAStandClient disabledSections={disabledSections} />
     </>
   );
 }

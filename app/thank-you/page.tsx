@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { Inter, Kaushan_Script } from "next/font/google";
@@ -37,12 +37,15 @@ const EXPO_LOGO = "/separated-assets/bharat-organic-leaf.png";
 const PARTICIPANT_AVATAR = ""; // e.g. "/assets/users/rahul.png" — empty => default avatar glyph
 
 /* Reusable participant data — card ka content yahi se change hoga */
+// Shown until the feedback form's own details are read from this browser tab (see useEffect below).
 const PARTICIPANT = {
-  name: "Rahul Sharma",
-  designation: "Director",
-  company: "NatureLand Organics",
+  name: "Valued Participant",
+  designation: "",
+  company: "Bharat Organic Expo 2027",
   avatar: PARTICIPANT_AVATAR,
 };
+/** sessionStorage key the feedback form writes the sender's name / designation / company to. */
+const FEEDBACK_PARTICIPANT_KEY = "boe_feedback_participant";
 
 const EVENT = {
   tagline: "Proud to be a Part of\nBharat Organic Expo",
@@ -336,6 +339,19 @@ const SocialTile = ({
 
 export default function ThankYouPage() {
   const [videoError, setVideoError] = useState("");
+  const [participant, setParticipant] = useState(PARTICIPANT);
+
+  // The card shows whoever just sent the feedback form (kept only for this browser tab).
+  useEffect(() => {
+    try {
+      const saved = JSON.parse(window.sessionStorage.getItem(FEEDBACK_PARTICIPANT_KEY) || "null");
+      if (saved?.name) {
+        setParticipant((prev) => ({ ...prev, name: String(saved.name), designation: String(saved.designation || ""), company: String(saved.company || "") }));
+      }
+    } catch {
+      // keep the default card
+    }
+  }, []);
 
   const onVideoChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
@@ -613,10 +629,10 @@ export default function ThankYouPage() {
                 {/* Participant Info - Avatar & Details */}
                 <div className="flex items-center gap-2.5 pl-4 my-auto z-[2]">
                   <div className="relative h-[40px] w-[40px] shrink-0 overflow-hidden rounded-full bg-[#d9d9d9]">
-                    {PARTICIPANT.avatar ? (
+                    {participant.avatar ? (
                       <Image
-                        src={PARTICIPANT.avatar}
-                        alt={PARTICIPANT.name}
+                        src={participant.avatar}
+                        alt={participant.name}
                         fill
                         sizes="40px"
                         className="object-cover"
@@ -628,13 +644,13 @@ export default function ThankYouPage() {
 
                   <div className="min-w-0">
                     <p className="text-[13px] font-bold leading-[16px] text-[#111827]">
-                      {PARTICIPANT.name}
+                      {participant.name}
                     </p>
                     <p className="text-[10px] font-medium leading-[13px] text-[#4b5563]">
-                      {PARTICIPANT.designation}
+                      {participant.designation}
                     </p>
                     <p className="text-[10px] font-medium leading-[13px] text-[#4b5563]">
-                      {PARTICIPANT.company}
+                      {participant.company}
                     </p>
                   </div>
                 </div>

@@ -33,6 +33,7 @@ import beTheRight from "../../assets/exhibitors/be_the_right.png";
 import SectionContainer from "@/app/components/layout/SectionContainer";
 import { verifyApi } from "@/lib/api";
 import { toOptions, useDropdowns, type DropdownOption } from "@/lib/dropdowns";
+import Image from "next/image";
 
 interface FormState {
   applicantType: string;
@@ -686,9 +687,11 @@ const AWARDS_DROPDOWNS = {
 --------------------------------------------------------- */
 interface AwardsNominationClientProps {
   initialHeroData?: any;
+  /** awardsNominationPage section keys switched off in admin */
+  disabledSections?: string[];
 }
 
-export default function BharatOrganicAwards({ initialHeroData }: AwardsNominationClientProps = {}) {
+export default function BharatOrganicAwards({ initialHeroData, disabledSections = [] }: AwardsNominationClientProps = {}) {
   const [heroData, setHeroData] = useState<any>(initialHeroData || null);
   const [stepsData, setStepsData] = useState<any>(null);
   const [form, setForm] = useState<FormState>(INITIAL_FORM);
@@ -862,7 +865,7 @@ export default function BharatOrganicAwards({ initialHeroData }: AwardsNominatio
   }
 
   // Dynamic Hero values
-  const heroEnabled = heroData?.enabled !== false;
+  const heroEnabled = heroData?.enabled !== false && !disabledSections.includes("awards-nomination-hero");
   const bgImgSrc = heroData?.image || heroData?.bgImage || nominationBg.src;
   const eyebrow = heroData?.eyebrow || ""; // eyebrow hidden by default
 
@@ -951,7 +954,7 @@ export default function BharatOrganicAwards({ initialHeroData }: AwardsNominatio
         <section className="relative flex h-[68vh] min-h-[400px] w-full items-center overflow-hidden bg-[#f7f5ec] pt-3 font-inter md:h-[72vh] md:pt-5 lg:h-[78vh] border-b-4 border-[#ea580c] pb-4 md:pb-6">
           {/* full-width background image */}
           <div className="absolute inset-0 z-0">
-            <img
+            <Image width={0} height={0} sizes="100vw"
               src={bgImgSrc}
               alt={heroData?.imageAlt || `${titlePrefix} ${titlePrimary} ${titleSecondary}`}
               className="h-full w-full object-cover"
@@ -1088,7 +1091,7 @@ export default function BharatOrganicAwards({ initialHeroData }: AwardsNominatio
             }))
           : DEFAULT_PROCESS_STEPS.map((s, idx) => ({ ...s, iconKey: s.icon, idx }));
         const sectionTitle = stepsData?.title || "THE AWARD PROCESS";
-        const sectionEnabled = stepsData?.enabled !== false;
+        const sectionEnabled = stepsData?.enabled !== false && !disabledSections.includes("awards-nomination-steps");
         if (!sectionEnabled) return null;
         return (
           <section className="w-full px-4 py-2 md:px-14 md:py-4 my-4">
@@ -1584,13 +1587,13 @@ export default function BharatOrganicAwards({ initialHeroData }: AwardsNominatio
       {/* ================= BOTTOM STRIP ================= */}
       <Reveal>
         <section className="relative overflow-hidden border-t border-emerald-900/10 bg-[#f2efe0]">
-          <img
+          <Image width={0} height={0} sizes="100vw"
             src={beTheLeft.src}
             alt=""
             aria-hidden="true"
             className="hidden md:block absolute left-0 bottom-0 h-44 lg:h-52 w-auto opacity-30 z-0"
           />
-          <img
+          <Image width={0} height={0} sizes="100vw"
             src={beTheRight.src}
             alt=""
             aria-hidden="true"

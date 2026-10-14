@@ -115,11 +115,11 @@ const NominationsForm = () => {
                   className="text-[#64748b] text-[14px] md:text-[15px]"
                 >
                   I agree to the{" "}
-                  <a href="#" className="text-[#3b8c2a] hover:underline font-semibold">
+                  <a href="/registration/privacy-policy" className="text-[#3b8c2a] hover:underline font-semibold">
                     Privacy Policy
                   </a>{" "}
                   &{" "}
-                  <a href="#" className="text-[#3b8c2a] hover:underline font-semibold">
+                  <a href="/registration/terms-and-conditions" className="text-[#3b8c2a] hover:underline font-semibold">
                     Terms
                   </a>
                 </label>

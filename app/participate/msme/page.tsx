@@ -19,6 +19,7 @@ import Whyparticipatesection from "@/app/components/participate/msme/Whyparticip
 import Faqbanner from "@/app/components/participate/msme/FaqBanner";
 import PmsFinalCtaSection from "@/app/components/participate/msme/PmsFinalCtaSection";
 
+import { getSectionGate } from "@/lib/sectionVisibility";
 export const revalidate = 60;
 
 export async function generateMetadata(): Promise<Metadata> {
@@ -111,24 +112,26 @@ const MsmePage = async () => {
     ? msmeSections.find((s: any) => s.key === "msme-pms-banner")
     : undefined;
 
+  const show = await getSectionGate("msmePage");
+
   return (
     <div className="min-h-screen bg-white font-sans text-neutral-800 overflow-x-clip">
       <AdminSchema schema={schemaContent} />
-      <MsmePmsBanner initialSection={bannerSection} />
-      <FeatureStrip />
-      <OfficialRecognitionBanner />
-      <MsmePmsScheme />
-      <Pmsfinancialassistancebanner />
-      <PmsSupportCoverSection />
-      <Pmssupportsection />
-      <Whatsnextbanner />
-      <NeedHelpSection />
+      {show("msme-pms-banner") && <MsmePmsBanner initialSection={bannerSection} />}
+      {show("feature-strip") && <FeatureStrip />}
+      {show("official-recognition") && <OfficialRecognitionBanner />}
+      {show("msme-pms-scheme") && <MsmePmsScheme />}
+      {show("msme-assistance-breakdown") && <Pmsfinancialassistancebanner />}
+      {show("msme-support-cover") && <PmsSupportCoverSection />}
+      {show("pms-support-section") && <Pmssupportsection />}
+      {show("whats-next-banner") && <Whatsnextbanner />}
+      {show("need-help-section") && <NeedHelpSection />}
       {/* <Reasontovisitbanner /> */}
-      <OfficialMessageBanner initialData={directorMessage} />
-      <Pmsdocumentsbanner />
-      <Whyparticipatesection />
-      <Faqbanner />
-      <PmsFinalCtaSection />
+      {show("msme-director-message") && <OfficialMessageBanner initialData={directorMessage} />}
+      {show("msme-documents") && <Pmsdocumentsbanner />}
+      {show("why-participate-section") && <Whyparticipatesection />}
+      {show("msme-faq") && <Faqbanner />}
+      {show("pms-final-cta") && <PmsFinalCtaSection />}
     </div>
   );
 };

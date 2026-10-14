@@ -7,6 +7,7 @@ import SectionContainer from "@/app/components/layout/SectionContainer";
 import AdminSchema from "@/components/seo/AdminSchema";
 import { adminSeoMetadata, getAdminSeo } from "@/lib/adminSeo";
 import { getSectionData } from "@/lib/serverData";
+import { getSectionGate } from "@/lib/sectionVisibility";
 
 export const revalidate = 60;
 
@@ -20,31 +21,35 @@ export async function generateMetadata(): Promise<Metadata> {
 }
 
 export default async function NominateAdvisoryBoardPage() {
-    const [seoData, heroData] = await Promise.all([
+    const [seoData, heroData, show] = await Promise.all([
         getAdminSeo(SEO_PAGE_KEY),
         getSectionData("/website/nominatehero"),
+        getSectionGate("nominateAdvisoryPage"),
     ]);
+    const showSidebar = show("nominate-sidebar-info");
 
     return (
         <main className="min-h-screen bg-[#f9fafb]">
             <AdminSchema schema={seoData?.schemaMarkup || null} />
 
             {/* Hero Section */}
-            <NominateHero data={heroData} />
+            {show("nominate-hero") && <NominateHero data={heroData} />}
 
             {/* Main Content Section */}
             <section className="w-full py-3 md:py-6">
                 <SectionContainer>
                     <div className="grid grid-cols-1 lg:grid-cols-12 gap-3 lg:gap-6 items-start">
                         {/* Left Column: Form */}
-                        <div className="lg:col-span-8 w-full">
+                        <div className={`${showSidebar ? "lg:col-span-8" : "lg:col-span-12"} w-full`}>
                             <NominateForm />
                         </div>
 
                         {/* Right Column: Sidebar */}
-                        <div className="lg:col-span-4 w-full sticky top-24">
-                            <NominateSidebar />
-                        </div>
+                        {showSidebar && (
+                            <div className="lg:col-span-4 w-full sticky top-24">
+                                <NominateSidebar />
+                            </div>
+                        )}
                     </div>
                 </SectionContainer>
             </section>

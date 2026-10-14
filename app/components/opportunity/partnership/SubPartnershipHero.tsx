@@ -2,6 +2,7 @@
 import React from "react";
 import { Calendar, MapPin } from "lucide-react";
 import SectionContainer from "@/app/components/layout/SectionContainer";
+import Image from "next/image";
 
 // Hero shared by the /partnership/<slug> pages (hotel, travel, stall design, ...).
 // `defaults` is each page's own text, shown until the admin saves the hero and for any
@@ -68,7 +69,7 @@ export default function SubPartnershipHero({
     <section className="relative z-10 w-full min-h-[380px] sm:min-h-[420px] md:min-h-[450px] lg:min-h-[470px] flex items-start bg-[#fcfcf0] overflow-hidden font-inter pt-10 md:pt-14 pb-4 md:pb-6 border-b-4 border-[#ea580c]">
       {/* Background Image */}
       <div className="absolute inset-0 z-0 overflow-hidden">
-        <img src={image} alt={imageAlt} className="w-full h-full object-cover object-top" />
+        <Image loading="eager" width={0} height={0} sizes="100vw" src={image} alt={imageAlt} className="w-full h-full object-cover object-top" />
       </div>
 
       <SectionContainer className="relative z-10">

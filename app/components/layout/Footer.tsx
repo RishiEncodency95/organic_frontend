@@ -28,6 +28,11 @@ const Linkedin = (props: any) => (<svg viewBox="0 0 24 24" fill="none" stroke="c
 const Youtube = (props: any) => (<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" {...props}><path d="M22.54 6.42a2.78 2.78 0 0 0-1.94-2C18.88 4 12 4 12 4s-6.88 0-8.6.46a2.78 2.78 0 0 0-1.94 2A29 29 0 0 0 1 11.75a29 29 0 0 0 .46 5.33A2.78 2.78 0 0 0 3.4 19c1.72.46 8.6.46 8.6.46s6.88 0 8.6-.46a2.78 2.78 0 0 0 1.94-2 29 29 0 0 0-.46-5.25 29 29 0 0 0-.46-5.33z" /><polygon points="9.75 15.02 15.5 11.75 9.75 8.48 9.75 15.02" /></svg>);
 
 // Sparkle component to enhance logo visibility
+// The official account is x.com/organicexpoin. An older default ("twitter.com/bharatorganic") is still
+// saved in some footer settings; that one is replaced, any other link the admin enters is kept.
+const officialTwitterUrl = (saved?: string) =>
+  !saved || /twitter\.com\/bharatorganic\/?$/i.test(saved.trim()) ? SITE_CONFIG.socialLinks.twitter : saved;
+
 const Sparkle = ({ style, color = '#F3B71B' }: { style?: React.CSSProperties; color?: string }) => (
   <span
     style={{
@@ -116,6 +121,10 @@ export default function Footer({ initialFooterData }: { initialFooterData?: any 
   const phoneNumber = footerData?.phoneNumber || "+91 96549 00525";
   const contactEmail = footerData?.contactEmail || "info@namogangewellness.com";
   const contactAddress = footerData?.contactAddress || "12/29, Site II Industrial Area, Loni Rd, Mohan Nagar, Ghaziabad, Uttar Pradesh 201007, India";
+  // Opens the same address that is shown above it (the admin can change it)
+  const mapHref =
+    footerData?.mapUrl ||
+    `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(String(contactAddress).replace(/\s+/g, " ").trim())}`;
   const conferenceHelpline = footerData?.conferenceHelpline || footerData?.altPhoneNumber || "+91 98183 53841";
   const websiteUrl = footerData?.websiteUrl || "www.bharatorganicexpo.com";
   const websiteHref = websiteUrl.startsWith("http://") || websiteUrl.startsWith("https://")
@@ -124,7 +133,7 @@ export default function Footer({ initialFooterData }: { initialFooterData?: any 
 
   const socialList = [
     { Icon: Facebook, label: "Facebook", url: footerData?.facebookUrl || SITE_CONFIG.socialLinks.facebook },
-    { Icon: Twitter, label: "Twitter", url: footerData?.twitterUrl || SITE_CONFIG.socialLinks.twitter },
+    { Icon: Twitter, label: "Twitter", url: officialTwitterUrl(footerData?.twitterUrl) },
     { Icon: Linkedin, label: "LinkedIn", url: footerData?.linkedinUrl || SITE_CONFIG.socialLinks.linkedin },
     { Icon: Instagram, label: "Instagram", url: footerData?.instagramUrl || SITE_CONFIG.socialLinks.instagram },
     { Icon: Youtube, label: "YouTube", url: footerData?.youtubeUrl || SITE_CONFIG.socialLinks.youtube },
@@ -283,7 +292,7 @@ export default function Footer({ initialFooterData }: { initialFooterData?: any 
               {contactAddress}
             </p>
             <a
-              href="https://www.google.com/maps/search/?api=1&query=12/29,+Site+II+Industrial+Area,+Loni+Rd,+Mohan+Nagar,+Ghaziabad,+Uttar+Pradesh+201007,+India"
+              href={mapHref}
               target="_blank"
               rel="noopener noreferrer"
               className="inline-block border border-white/40 text-gray-200 text-[10px] font-semibold px-3 py-1 rounded-md mb-4 uppercase tracking-wider hover:bg-white hover:text-[#001810] transition-colors font-poppins bg-white/5"

@@ -5,6 +5,7 @@ import { seoApi } from "@/lib/api";
 import AdminSchema from "@/components/seo/AdminSchema";
 import GalleryClient from "@/app/components/gallery/GalleryClient";
 import { getSectionData } from "@/lib/serverData";
+import { getDisabledSectionKeys } from "@/lib/sectionVisibility";
 
 export const revalidate = 60;
 
@@ -79,6 +80,7 @@ export default async function GalleryPage() {
     getSectionData("/website/gallery/meta"),
     getSectionData("/website/gallery/items"),
     getSectionData("/website/gallery/video-highlights/items"),
+    getDisabledSectionKeys("galleryPage"),
   ]);
   let seoData: any = null;
   try {
@@ -89,7 +91,7 @@ export default async function GalleryPage() {
   }
 
   const schemaContent = seoData?.schemaMarkup || null;
-  const [galleryHero, galleryMeta, galleryItems, galleryVideos] = await galleryDataPromise;
+  const [galleryHero, galleryMeta, galleryItems, galleryVideos, disabledSections] = await galleryDataPromise;
 
   return (
     <>
@@ -99,6 +101,7 @@ export default async function GalleryPage() {
         initialMeta={galleryMeta}
         initialGallery={galleryItems}
         initialVideos={galleryVideos}
+        disabledSections={disabledSections}
       />
     </>
   );

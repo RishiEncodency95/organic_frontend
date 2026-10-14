@@ -1,16 +1,19 @@
 "use client";
 
-import React, { useEffect, useLayoutEffect, useRef, useState } from "react";
+import React, { createContext, useContext, useEffect, useLayoutEffect, useRef, useState } from "react";
 import gsap from "gsap";
 import Image from "next/image";
 import Link from "next/link";
 import { ArrowLeft, ArrowRight, ArrowUpRight, Check, CheckCheck, ChevronDown, FileText, LayoutGrid, ChevronRight, Handshake, Headset, HeartHandshake, Info, List, LogOut, MessageCircleMore, Minus, Presentation, Send, Settings, Store, ThumbsDown, ThumbsUp, Users, X, type LucideIcon } from "lucide-react";
-import { API_URL, verifyApi } from "@/lib/api";
+import { API_URL, ownVerifyApi, verifyApi } from "@/lib/api";
 import { SITE_CONFIG } from "@/app/constants/siteConfig";
-import { clearChatSession, newSessionId, readChatSession, saveChatSession } from "./chatSession";
+import { clearChatSession, newSessionId, readChatSession, saveChatSession, saveFreeAsked } from "./chatSession";
+import { useChatConfig, type ChatButton, type ChatFormField, type ChatFormSettings } from "./chatConfig";
 
 const CHAT_URL = process.env.NEXT_PUBLIC_CHAT_API_URL || `${API_URL}/chat`;
 const FALLBACK = "Maaf kijiye, abhi reply nahi de pa raha. Kripya +91 96549 00525 par call ya WhatsApp karein.";
+/** Questions a visitor can ask before name + mobile (WhatsApp OTP) are asked for */
+const FREE_QUESTIONS = 3;
 
 /** A quick reply: `step` continues a scripted flow on this page, `ask` sends the question to the assistant */
 type ChatOption = { label: string; ask?: string; step?: string; /** passed to the step instead of the label */ choice?: string };
@@ -52,7 +55,11 @@ type Message = {
     /** "Request Received" confirmation card for this stall size */
     receipt?: { stall: string };
     /** Follow-up buttons after a quotation request: brochure, main menu, WhatsApp, end chat */
-    followUp?: { stall: string };
+    followUp?: { stall: string; company?: string; email?: string; time?: string };
+    /** A centred "Earlier chat · 9 Oct" / "Today" line between conversations (no bubble) */
+    divider?: string;
+    /** The visitor typed this themselves (not a button of the scripted flow) */
+    typed?: boolean;
 };
 
 type OpenSides = 1 | 2 | 3;
@@ -347,6 +354,12 @@ const TEXT = {
         subtitle: "Bharat Organic Expo Assistant",
         greeting: "Namo Gange Namaskar! 🙏\nHow can I help you today?",
         greetingName: (name: string) => `Namo Gange Namaskar, ${name}! 🙏\nHow can I help you today?`,
+        askName: (bot: string) => `Namo Gange Namaskar! 🙏\nI'm ${bot}, your expo assistant. May I know your name?`,
+        namePh: "Type your name...",
+        nameError: "Please type just your name (letters only), e.g. Rohit Kumar.",
+        welcomeBackName: (name: string) => `Welcome back, ${name}! 🙏\nYour earlier chat is above. How can I help you today?`,
+        earlierChat: (date: string) => `Earlier chat · ${date}`,
+        today: "Today",
         welcomeBack: "Namo Gange Namaskar! 🙏\nWelcome back! How can I help you today?",
         viewPrevious: "View my previous enquiry",
         askNew: "Ask a new question",
@@ -399,6 +412,15 @@ const TEXT = {
             phone: { label: "Mobile Number", placeholder: "10-digit mobile number" },
         },
         continue: "Continue",
+        sendOtp: "Send OTP on WhatsApp",
+        otpLabel: "WhatsApp OTP",
+        otpPh: "6-digit OTP",
+        otpSent: (to: string) => `OTP sent on WhatsApp to +91 ${to}`,
+        verifyContinue: "Verify & Continue",
+        change: "Change",
+        resend: "Resend OTP",
+        resendIn: (s: number) => `Resend OTP in ${s}s`,
+        otpError: "Please enter the 6-digit OTP.",
         wait: "Please wait...",
         safe: "Your details are safe with us.",
         genericError: "Something went wrong. Please try again.",
@@ -408,6 +430,12 @@ const TEXT = {
         subtitle: "भारत ऑर्गेनिक एक्सपो सहायक",
         greeting: "नमो गंगे नमस्कार! 🙏\nमैं आपकी क्या मदद कर सकता हूँ?",
         greetingName: (name: string) => `नमो गंगे नमस्कार, ${name}! 🙏\nमैं आपकी क्या मदद कर सकता हूँ?`,
+        askName: (bot: string) => `नमो गंगे नमस्कार! 🙏\nमैं ${bot} हूँ, आपका एक्सपो सहायक। क्या मैं आपका नाम जान सकता हूँ?`,
+        namePh: "अपना नाम लिखें...",
+        nameError: "कृपया सिर्फ़ अपना नाम लिखें (केवल अक्षर), जैसे रोहित कुमार।",
+        welcomeBackName: (name: string) => `फिर से स्वागत है, ${name}! 🙏\nआपकी पिछली चैट ऊपर है। मैं आपकी क्या मदद कर सकता हूँ?`,
+        earlierChat: (date: string) => `पिछली चैट · ${date}`,
+        today: "आज",
         welcomeBack: "नमो गंगे नमस्कार! 🙏\nफिर से स्वागत है! मैं आपकी क्या मदद कर सकता हूँ?",
         viewPrevious: "मेरी पिछली पूछताछ देखें",
         askNew: "नया सवाल पूछें",
@@ -460,6 +488,15 @@ const TEXT = {
             phone: { label: "मोबाइल नंबर", placeholder: "10 अंकों का मोबाइल नंबर" },
         },
         continue: "आगे बढ़ें",
+        sendOtp: "WhatsApp पर OTP भेजें",
+        otpLabel: "WhatsApp OTP",
+        otpPh: "6 अंकों का OTP",
+        otpSent: (to: string) => `+91 ${to} पर WhatsApp से OTP भेजा गया`,
+        verifyContinue: "वेरिफ़ाई करें और आगे बढ़ें",
+        change: "बदलें",
+        resend: "OTP दोबारा भेजें",
+        resendIn: (s: number) => `${s} सेकंड में OTP दोबारा भेजें`,
+        otpError: "कृपया 6 अंकों का OTP लिखें।",
         wait: "कृपया प्रतीक्षा करें...",
         safe: "आपका विवरण हमारे पास सुरक्षित है।",
         genericError: "कुछ गड़बड़ हो गई। कृपया दोबारा कोशिश करें।",
@@ -522,11 +559,44 @@ const MessageText: React.FC<{ text: string }> = ({ text }) => (
 
 // ─── Small UI pieces ─────────────────────────────────────────────────────────
 
-const BotAvatar: React.FC = () => (
-    <div className="w-8 h-8 shrink-0 rounded-full bg-white shadow-sm ring-2 ring-[#F2B40E]/50 flex items-center justify-center" aria-hidden="true">
-        <Image src="/android-chrome-192x192.png" alt="" width={28} height={28} className="w-[22px] h-[22px] object-contain" />
-    </div>
-);
+/** Avatar uploaded in the Chatbot Manager ("" = the default logo) */
+const AvatarContext = createContext("");
+
+const BotAvatar: React.FC = () => {
+    const avatar = useContext(AvatarContext);
+    return (
+        <div className="w-8 h-8 shrink-0 rounded-full bg-white shadow-sm ring-2 ring-[#F2B40E]/50 flex items-center justify-center overflow-hidden" aria-hidden="true">
+            <Image src={avatar || "/android-chrome-192x192.png"} alt="" width={28} height={28} unoptimized={!!avatar} className={avatar ? "w-full h-full object-cover" : "w-[22px] h-[22px] object-contain"} />
+        </div>
+    );
+};
+
+// ─── Manager "Buttons & Flows" on the website ────────────────────────────────
+
+const BUTTON_ICONS: [RegExp, LucideIcon][] = [
+    [/stall|book|exhibit/i, Store],
+    [/visit|regist/i, Users],
+    [/msme|pms/i, Settings],
+    [/buyer|seller/i, Handshake],
+    [/conference|award|seminar/i, Presentation],
+    [/sponsor|partner/i, HeartHandshake],
+    [/team|talk|contact|sales|help/i, Headset],
+];
+const iconFor = (label: string) => BUTTON_ICONS.find(([re]) => re.test(label))?.[1] ?? LayoutGrid;
+
+/** A "next option" of a button: the built-in flows where one exists, else the AI answers it */
+const optionFor = (label: string): ChatOption => {
+    if (/stall\s*size/i.test(label)) return { label, step: "stall-sizes" };
+    if (/quotation|quote/i.test(label)) return { label, step: "stall-quote", choice: "" };
+    if (/call\s*back/i.test(label)) return { label, step: "sales-callback", choice: "" };
+    if (/talk to|contact (the )?(sales|team)/i.test(label)) return { label, step: "sales", choice: "" };
+    return { label, ask: label };
+};
+
+const linkHref = (target: string) => (/^https?:\/\//i.test(target) || target.startsWith("/") ? target : `https://${target}`);
+
+/** Forms an "Open Form" button can open */
+const FORM_PAGES: Record<string, string> = { "Visitor Registration": "/registration/visitor-registration" };
 
 const iconProps = {
     className: "w-4 h-4",
@@ -566,6 +636,10 @@ const LEAD_FIELDS = [
     },
 ] as const;
 
+/** Must match CHAT_LEAD_OTP_PROFILE in the backend's chat controller */
+const LEAD_OTP_PROFILE = "CHAT_LEAD";
+const OTP_RESEND_SECONDS = 30;
+
 type LeadForm = { name: string; phone: string };
 type LeadErrors = Partial<Record<keyof LeadForm, string>>;
 
@@ -593,6 +667,25 @@ const validateLead = ({ name, phone }: LeadForm): LeadErrors => {
     else if (phone.length !== 10) errors.phone = "Mobile number must be exactly 10 digits.";
     else if (!/^[6-9]/.test(phone)) errors.phone = "Mobile number must start with 6, 7, 8 or 9.";
     return errors;
+};
+
+/** "my name is rohit kumar" / "Mera naam Rohit hai" / "rohit" → "Rohit Kumar" / "Rohit"; "" when it is not a name */
+const NAME_PREFIX = /^(?:(?:hi|hello|hey|namaste|namaskar)[\s,!.]*)?(?:my name is|my name's|i am|i'm|im|this is|it's|its|mera naam|mera name|main|mai|me)\s+/i;
+const NAME_SUFFIX = /\s+(?:hai|hu|hoon|hun|here|h)[.!]*$/i;
+const parseName = (raw: string) => {
+    const n = cleanName(raw.trim().replace(NAME_PREFIX, "").replace(NAME_SUFFIX, ""))
+        .trim()
+        .replace(/[.'-]+$/, "");
+    if (n.length < 2 || n.length > 40 || !NAME_PATTERN.test(n) || n.split(/\s+/).length > 4) return "";
+    return n
+        .split(" ")
+        .map((w) => (w ? w[0].toLocaleUpperCase() + w.slice(1) : w))
+        .join(" ");
+};
+
+const shortDate = (iso: string | undefined, lang: Lang) => {
+    const d = iso ? new Date(iso) : null;
+    return d && !Number.isNaN(d.getTime()) ? d.toLocaleDateString(lang === "hi" ? "hi-IN" : "en-IN", { day: "numeric", month: "short" }) : "";
 };
 
 // ─── Quotation request (inside the chat) ─────────────────────────────────────
@@ -630,6 +723,17 @@ const QUOTE_TEXT = {
         callbackSent: "Callback requested",
         callbackNote: "Callback requests are handled during working hours.",
         stallOptions: "Stall Options",
+        sendOtp: "Send OTP on WhatsApp",
+        otp: "WhatsApp OTP",
+        otpPh: "6-digit OTP",
+        otpSent: (to: string) => `OTP sent on WhatsApp to +91 ${to}`,
+        verifySubmit: "Verify & Submit",
+        resend: "Resend OTP",
+        resendIn: (s: number) => `Resend OTP in ${s}s`,
+        otpError: "Please enter the 6-digit OTP.",
+        verified: "Verified",
+        required: "This field is required.",
+        notChosen: "not chosen yet",
     },
     hi: {
         title: "कोटेशन अनुरोध",
@@ -658,6 +762,17 @@ const QUOTE_TEXT = {
         callbackSent: "कॉलबैक अनुरोध भेजा गया",
         callbackNote: "कॉलबैक अनुरोध कामकाजी समय में संभाले जाते हैं।",
         stallOptions: "स्टॉल विकल्प",
+        sendOtp: "WhatsApp पर OTP भेजें",
+        otp: "WhatsApp OTP",
+        otpPh: "6 अंकों का OTP",
+        otpSent: (to: string) => `+91 ${to} पर WhatsApp से OTP भेजा गया`,
+        verifySubmit: "वेरिफ़ाई करें और भेजें",
+        resend: "OTP दोबारा भेजें",
+        resendIn: (s: number) => `${s} सेकंड में OTP दोबारा भेजें`,
+        otpError: "कृपया 6 अंकों का OTP लिखें।",
+        verified: "वेरिफ़ाइड",
+        required: "यह जानकारी ज़रूरी है।",
+        notChosen: "अभी नहीं चुना",
     },
 } as const;
 
@@ -668,37 +783,112 @@ type QuoteFormProps = {
     stall: string;
     sent: boolean;
     defaultName: string;
+    /** Number this chat already verified with the WhatsApp OTP; any other number is asked to verify */
+    verifiedPhone: string;
     onSubmit: (details: QuoteDetails) => Promise<string | null>;
     onChange: () => void;
     onBack: () => void;
+    /** The form as set up in the Chatbot Manager (fields, labels); built-in when not published */
+    settings?: ChatFormSettings;
 };
 
-const QuoteForm: React.FC<QuoteFormProps> = ({ lang, kind = "quote", stall, sent, defaultName, onSubmit, onChange, onBack }) => {
+/** "Email (Optional)" → "Email" when the Manager made the field required */
+const requiredLabel = (text: string, required: boolean) => (required ? text.replace(/\s*\((Optional|वैकल्पिक)\)/, "") : text);
+const shown = (f?: ChatFormField) => f?.show !== false;
+
+const QuoteForm: React.FC<QuoteFormProps> = ({ lang, kind = "quote", stall, sent, defaultName, verifiedPhone, onSubmit, onChange, onBack, settings }) => {
     const q = QUOTE_TEXT[lang];
     const callback = kind === "callback";
-    const [form, setForm] = useState<QuoteDetails>({ name: defaultName, phone: "", company: "", email: "", time: "" });
+    const fields = {
+        company: { show: shown(settings?.company), required: !!settings?.company?.required },
+        email: { show: shown(settings?.email), required: !!settings?.email?.required },
+        time: { show: shown(settings?.time), required: !!settings?.time?.required },
+    };
+    // The Manager's texts are written in English
+    const consentText = lang === "en" && settings?.consent ? settings.consent : q.agree;
+    const submitText = lang === "en" && settings?.submitLabel ? settings.submitLabel : callback ? q.callbackSubmit : q.submit;
+    const [form, setForm] = useState<QuoteDetails>({ name: defaultName, phone: verifiedPhone, company: "", email: "", time: "" });
     const [agree, setAgree] = useState(false);
     const [errors, setErrors] = useState<QuoteErrors>({});
     const [formError, setFormError] = useState("");
     const [submitting, setSubmitting] = useState(false);
+    // WhatsApp OTP: the number it was sent to ("" until sent), the code, resend countdown, and the number it verified
+    const [otpSentTo, setOtpSentTo] = useState("");
+    const [otp, setOtp] = useState("");
+    const [timer, setTimer] = useState(0);
+    const [otpVerifiedFor, setOtpVerifiedFor] = useState("");
+
+    useEffect(() => {
+        if (!timer) return;
+        const id = window.setTimeout(() => setTimer((s) => s - 1), 1000);
+        return () => window.clearTimeout(id);
+    }, [timer]);
+
+    const phoneVerified = !!form.phone && (form.phone === verifiedPhone || form.phone === otpVerifiedFor);
 
     const set = (key: keyof QuoteDetails, value: string) => {
         setForm((prev) => ({ ...prev, [key]: value }));
         if (errors[key]) setErrors((prev) => ({ ...prev, [key]: undefined }));
     };
 
-    const submit = async (e: React.FormEvent) => {
-        e.preventDefault();
+    const resetOtp = () => {
+        setOtpSentTo("");
+        setOtp("");
+        setTimer(0);
+    };
+
+    const validate = () => {
         const next: QuoteErrors = { ...validateLead({ name: form.name, phone: form.phone }) };
         if (form.email.trim() && !EMAIL_PATTERN.test(form.email.trim())) next.email = q.emailError;
+        if (!callback && fields.email.show && fields.email.required && !form.email.trim()) next.email = q.required;
+        if (!callback && fields.company.show && fields.company.required && !form.company.trim()) next.company = q.required;
+        if (callback && fields.time.show && fields.time.required && !form.time) next.time = q.required;
         if (!agree) next.agree = q.agreeError;
         setErrors(next);
         setFormError("");
-        if (Object.keys(next).length) return;
+        return !Object.keys(next).length;
+    };
+
+    const sendOtp = async () => {
+        if (!validate()) return;
         setSubmitting(true);
-        const error = await onSubmit({ ...form, name: form.name.trim(), company: form.company.trim(), email: form.email.trim() });
-        setSubmitting(false);
-        if (error) setFormError(error);
+        try {
+            const res = await verifyApi.sendPhoneOtp(form.phone, LEAD_OTP_PROFILE, form.name.trim());
+            if (!res?.success) throw new Error(res?.msg || res?.message || "");
+            setOtpSentTo(form.phone);
+            setOtp("");
+            setTimer(OTP_RESEND_SECONDS);
+        } catch (err) {
+            setFormError((err as Error).message || "Could not send the OTP. Please try again.");
+        } finally {
+            setSubmitting(false);
+        }
+    };
+
+    const submit = async (e: React.FormEvent) => {
+        e.preventDefault();
+        // A new number gets a WhatsApp OTP first; the request goes out once it is verified
+        if (!phoneVerified && otpSentTo !== form.phone) return sendOtp();
+        if (!validate()) return;
+        if (!phoneVerified && otp.length !== 6) {
+            setFormError(q.otpError);
+            return;
+        }
+        setSubmitting(true);
+        try {
+            if (!phoneVerified) {
+                const res = await verifyApi.verifyPhoneOtp(form.phone, otp);
+                if (!res?.success) throw new Error(res?.msg || res?.message || "");
+                setOtpVerifiedFor(form.phone);
+                resetOtp();
+            }
+            const error = await onSubmit({ ...form, name: form.name.trim(), company: form.company.trim(), email: form.email.trim() });
+            if (error) setFormError(error);
+        } catch (err) {
+            setFormError((err as Error).message || "Verification failed. Please try again.");
+        } finally {
+            setSubmitting(false);
+        }
     };
 
     const input = (error?: string) =>
@@ -729,7 +919,7 @@ const QuoteForm: React.FC<QuoteFormProps> = ({ lang, kind = "quote", stall, sent
                     </span>
                 ) : (
                     <span className="rounded-full bg-[#e8f3e2] px-2.5 py-1 text-[11.5px] font-medium text-[#14532d]">
-                        {q.selected} {stall}
+                        {q.selected} {stall || q.notChosen}
                     </span>
                 )}
                 {!sent && !callback && (
@@ -776,18 +966,76 @@ const QuoteForm: React.FC<QuoteFormProps> = ({ lang, kind = "quote", stall, sent
                                     set("phone", cleanMobile(e.clipboardData.getData("text")));
                                 }}
                                 maxLength={10}
+                                readOnly={!!otpSentTo}
                                 placeholder={q.phonePh}
                                 aria-invalid={!!errors.phone}
-                                className={`${input(errors.phone)} !pl-10 !pr-2`}
+                                className={`${input(errors.phone)} !pl-10 ${phoneVerified && !otpSentTo ? "!pr-8" : "!pr-2"} ${otpSentTo ? "bg-slate-50" : ""}`}
                             />
+                            {/* Only an icon inside: the field is half the form wide, so text here would cover the number */}
+                            {phoneVerified && !otpSentTo && (
+                                <span
+                                    title={q.verified}
+                                    className="absolute right-2 top-1/2 -translate-y-1/2 grid h-[18px] w-[18px] place-items-center rounded-full bg-[#3b8c2a] text-white"
+                                >
+                                    <Check className="w-3 h-3" strokeWidth={3} aria-hidden="true" />
+                                    <span className="sr-only">{q.verified}</span>
+                                </span>
+                            )}
                         </span>
+                        {otpSentTo && (
+                            <button
+                                type="button"
+                                onClick={() => {
+                                    resetOtp();
+                                    setFormError("");
+                                }}
+                                className="self-end text-[11.5px] font-semibold text-[#14532d] underline underline-offset-2 hover:text-[#3b8c2a]"
+                            >
+                                {q.change}
+                            </button>
+                        )}
                         {fieldError("phone")}
                     </label>
                 </div>
 
-                {callback ? (
+                {otpSentTo && (
                     <label className="flex flex-col gap-1">
-                        <span className={label}>{q.time}</span>
+                        <span className={label}>
+                            {q.otp} <span className="text-red-500">*</span>
+                        </span>
+                        <span className="text-[11.5px] text-[#14532d]">{q.otpSent(otpSentTo)}</span>
+                        <input
+                            type="text"
+                            inputMode="numeric"
+                            autoComplete="one-time-code"
+                            autoFocus
+                            maxLength={6}
+                            value={otp}
+                            onChange={(e) => {
+                                setOtp(e.target.value.replace(/\D/g, "").slice(0, 6));
+                                if (formError) setFormError("");
+                            }}
+                            placeholder={q.otpPh}
+                            className={`${input()} tracking-[0.3em] placeholder:tracking-normal`}
+                        />
+                        <span className="text-right text-[11.5px]">
+                            {timer > 0 ? (
+                                <span className="text-slate-500">{q.resendIn(timer)}</span>
+                            ) : (
+                                <button type="button" onClick={sendOtp} className="font-semibold text-[#14532d] hover:text-[#3b8c2a]">
+                                    {q.resend}
+                                </button>
+                            )}
+                        </span>
+                    </label>
+                )}
+
+                {callback ? (
+                    fields.time.show && (
+                    <label className="flex flex-col gap-1">
+                        <span className={label}>
+                            {requiredLabel(q.time, fields.time.required)} {fields.time.required && <span className="text-red-500">*</span>}
+                        </span>
                         <span className="relative">
                             <select
                                 value={form.time}
@@ -802,23 +1050,34 @@ const QuoteForm: React.FC<QuoteFormProps> = ({ lang, kind = "quote", stall, sent
                             </select>
                             <ChevronDown className="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-600" aria-hidden="true" />
                         </span>
+                        {fieldError("time")}
                     </label>
+                    )
                 ) : (
                 <>
+                {fields.company.show && (
                 <label className="flex flex-col gap-1">
-                    <span className={label}>{q.company}</span>
+                    <span className={label}>
+                        {q.company} {fields.company.required && <span className="text-red-500">*</span>}
+                    </span>
                     <input
                         value={form.company}
                         onChange={(e) => set("company", e.target.value.replace(/^\s+/, ""))}
                         autoComplete="organization"
                         maxLength={100}
                         placeholder={q.companyPh}
-                        className={input()}
+                        aria-invalid={!!errors.company}
+                        className={input(errors.company)}
                     />
+                    {fieldError("company")}
                 </label>
+                )}
 
+                {fields.email.show && (
                 <label className="flex flex-col gap-1">
-                    <span className={label}>{q.email}</span>
+                    <span className={label}>
+                        {requiredLabel(q.email, fields.email.required)} {fields.email.required && <span className="text-red-500">*</span>}
+                    </span>
                     <input
                         type="email"
                         value={form.email}
@@ -831,6 +1090,7 @@ const QuoteForm: React.FC<QuoteFormProps> = ({ lang, kind = "quote", stall, sent
                     />
                     {fieldError("email")}
                 </label>
+                )}
                 </>
                 )}
 
@@ -844,7 +1104,7 @@ const QuoteForm: React.FC<QuoteFormProps> = ({ lang, kind = "quote", stall, sent
                         }}
                         className="mt-0.5 w-4 h-4 shrink-0 accent-[#14532d]"
                     />
-                    {q.agree}
+                    {consentText}
                 </label>
                 {fieldError("agree")}
 
@@ -868,9 +1128,11 @@ const QuoteForm: React.FC<QuoteFormProps> = ({ lang, kind = "quote", stall, sent
                             <span className="w-4 h-4 rounded-full border-2 border-white/40 border-t-white animate-spin" aria-hidden="true" />
                             {q.sending}
                         </>
+                    ) : !phoneVerified ? (
+                        otpSentTo ? q.verifySubmit : q.sendOtp
                     ) : (
                         <>
-                            {callback ? q.callbackSubmit : q.submit}
+                            {submitText}
                             {!callback && <ArrowRight className="w-5 h-5" aria-hidden="true" />}
                         </>
                     )}
@@ -1150,8 +1412,8 @@ const VerifyCard: React.FC<VerifyCardProps> = ({ lang, done, onVerified }) => {
         setError("");
         try {
             const res = isPhone
-                ? await verifyApi.sendPhoneOtp(value, HISTORY_OTP_PROFILE)
-                : await verifyApi.sendEmailOtp(value.trim().toLowerCase(), HISTORY_OTP_PROFILE);
+                ? await ownVerifyApi.sendPhoneOtp(value, HISTORY_OTP_PROFILE)
+                : await ownVerifyApi.sendEmailOtp(value.trim().toLowerCase(), HISTORY_OTP_PROFILE);
             if (!res?.success) throw new Error(res?.msg || res?.message || "");
             setSentTo(isPhone ? `+91 ${value}` : value.trim());
             setOtp("");
@@ -1174,7 +1436,7 @@ const VerifyCard: React.FC<VerifyCardProps> = ({ lang, done, onVerified }) => {
         setError("");
         try {
             const t = target();
-            const res = "phone" in t ? await verifyApi.verifyPhoneOtp(t.phone, otp) : await verifyApi.verifyEmailOtp(t.email, otp);
+            const res = "phone" in t ? await ownVerifyApi.verifyPhoneOtp(t.phone, otp) : await ownVerifyApi.verifyEmailOtp(t.email, otp);
             if (!res?.success) throw new Error(res?.msg || res?.message || "");
             const loadError = await onVerified(t);
             if (loadError) throw new Error(loadError);
@@ -1418,9 +1680,27 @@ const ChatPanel: React.FC<Props> = ({ open, onClose }) => {
     // Resume this browser's chat only while it is still active (see chatSession.ts)
     const [initial] = useState(readChatSession);
     const [sessionId, setSessionId] = useState(() => (initial.status === "active" ? initial.sessionId : newSessionId()));
-    const [visitorName, setVisitorName] = useState<string | null>(initial.status === "active" ? initial.name : null);
+    // null until the mobile number is verified — the chat is then saved as "Visitor <ip>"
+    const [visitorName, setVisitorName] = useState<string | null>(initial.status === "active" ? initial.name || null : null);
+    // AI questions sent without details (the details form comes after FREE_QUESTIONS)
+    const [freeAsked, setFreeAsked] = useState(initial.status === "active" ? initial.freeAsked : 0);
+    // Name, greetings and on/off published from the admin panel's Chatbot Manager
+    const config = useChatConfig();
+    // Mobile number this chat verified with the WhatsApp OTP
+    const [verifiedPhone, setVerifiedPhone] = useState(initial.status === "active" ? initial.phone : "");
     const [lang, setLangState] = useState<Lang>(readLang);
-    const t = TEXT[lang];
+    const config0 = TEXT[lang];
+    const published = config?.messages?.[lang];
+    const botName = config?.name?.trim() || "Organic Mitra";
+    const t = {
+        ...config0,
+        subtitle: config?.subtitle?.trim() || config0.subtitle,
+        typing: config0.typing.replace("Organic Mitra", botName),
+        greeting: published?.welcomeGreeting || published?.welcomeMessage
+            ? [published?.welcomeGreeting, published?.welcomeMessage].filter(Boolean).join("\n")
+            : config0.greeting,
+        endedBye: published?.closingGreeting || config0.endedBye,
+    };
 
     // Welcome screen first; the details form only appears once the visitor picks a topic or asks something
     const [askDetails, setAskDetails] = useState(false);
@@ -1429,6 +1709,11 @@ const ChatPanel: React.FC<Props> = ({ open, onClose }) => {
     const [fieldErrors, setFieldErrors] = useState<LeadErrors>({});
     const [formError, setFormError] = useState("");
     const [submitting, setSubmitting] = useState(false);
+    // WhatsApp OTP for the details form: the number it was sent to ("" until sent), the code typed, resend countdown
+    const [otpSentTo, setOtpSentTo] = useState("");
+    const [otp, setOtp] = useState("");
+    const [otpTimer, setOtpTimer] = useState(0);
+    const [otpVerified, setOtpVerified] = useState(false);
 
     const [messages, setMessages] = useState<Message[]>([]);
     const [input, setInput] = useState("");
@@ -1440,6 +1725,15 @@ const ChatPanel: React.FC<Props> = ({ open, onClose }) => {
     // After "Start a New Chat": "Welcome back" with previous enquiry / new question instead of the topic cards
     const [returning, setReturning] = useState(false);
     const [feedback, setFeedback] = useState<"yes" | "no" | null>(null);
+    // The callback form's confirmation (Forms & Routing), shown on the "Chat ended" screen
+    const [endedNote, setEndedNote] = useState("");
+    // The chat asks the visitor's name first (typed in the message box); then it is saved under that name
+    const askingName = !visitorName && !ended;
+    // This panel started by asking the name, so the first bubble keeps that question
+    const [nameStep, setNameStep] = useState(() => !(initial.status === "active" && initial.name));
+    const [nameError, setNameError] = useState("");
+    // An earlier conversation was loaded (or tried) for this visitor
+    const [restored, setRestored] = useState(false);
 
     const scrollRef = useRef<HTMLDivElement>(null);
     const inputRef = useRef<HTMLInputElement>(null);
@@ -1540,30 +1834,79 @@ const ChatPanel: React.FC<Props> = ({ open, onClose }) => {
             return next;
         });
 
+    useEffect(() => {
+        if (!otpTimer) return;
+        const id = window.setTimeout(() => setOtpTimer((s) => s - 1), 1000);
+        return () => window.clearTimeout(id);
+    }, [otpTimer]);
+
+    const resetOtp = () => {
+        setOtpSentTo("");
+        setOtp("");
+        setOtpTimer(0);
+        setOtpVerified(false);
+    };
+
     /** Forget the current visitor and go back to the welcome screen for the next person. */
     const startNewChat = (notice = "") => {
         clearChatSession();
         setSessionId(newSessionId());
         setVisitorName(null);
+        setVerifiedPhone("");
+        setFreeAsked(0);
         setMessages([]);
         setInput("");
         setPending(null);
         setFlowAt(null);
         setEnded(false);
+        setEndedNote("");
         setFeedback(null);
         setReturning(false);
-        setAskDetails(!!notice);
+        // The chat asks for the name again; `notice` (e.g. session expired) is shown above the box
+        setAskDetails(false);
+        setNameStep(true);
+        setNameError(notice);
+        setRestored(false);
         setForm({ name: "", phone: "" });
         setFieldErrors({});
-        setFormError(notice);
+        setFormError("");
+        resetOtp();
     };
 
-    const sendMessage = async (text: string, topic = "", name = visitorName) => {
+    /**
+     * Saves clicks, scripted replies and feedback for the admin panel — under the visitor's IP until
+     * the mobile number is verified. Fire-and-forget: the chat never waits for or breaks on it.
+     */
+    const track = (messages: { role: "user" | "assistant"; content: string }[], feedbackValue?: "yes" | "no") => {
+        const toSave = messages.filter((m) => m.content.trim()).map((m) => ({ role: m.role, content: m.content.trim().slice(0, 2000) }));
+        if (!toSave.length && !feedbackValue) return;
+        fetch(`${CHAT_URL}/track`, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            keepalive: true,
+            body: JSON.stringify({
+                sessionId,
+                pageUrl: window.location.href,
+                ...(toSave.length ? { messages: toSave.slice(0, 10) } : {}),
+                ...(feedbackValue ? { feedback: feedbackValue } : {}),
+            }),
+        }).catch(() => {});
+    };
+
+    const sendMessage = async (text: string, topic = "", name = visitorName, sid = sessionId) => {
         const message = text.trim().slice(0, 1000);
         if (!message || loading) return;
-
-        // Contact details are asked once, right before the first question goes out
+        // No name yet: the chat asks for it first and sends this question right after
         if (!name) {
+            setPending({ message, topic: topic || message });
+            setInput("");
+            return;
+        }
+
+        // Visitors chat freely at first; name + mobile (OTP) are asked before question FREE_QUESTIONS + 1
+        if (!name && freeAsked >= FREE_QUESTIONS) {
+            // Saved now, so the question is not lost if the visitor leaves at the details form
+            track([{ role: "user", content: message }]);
             setPending({ message, topic: topic || message });
             setInput("");
             setFormError("");
@@ -1572,28 +1915,47 @@ const ChatPanel: React.FC<Props> = ({ open, onClose }) => {
         }
 
         // Panel left open for 30+ minutes (or browser restarted) — treat it as a new visitor
-        if (readChatSession().status !== "active") {
+        if (readChatSession().status === "expired") {
             startNewChat(TEXT[lang].expired);
             setPending({ message, topic: topic || message });
             return;
         }
-        saveChatSession(sessionId, name);
+        saveChatSession(sid, name || "");
+        if (!name) {
+            setFreeAsked(freeAsked + 1);
+            saveFreeAsked(sid, freeAsked + 1);
+        }
 
         setInput("");
         setLoading(true);
-        setMessages((prev) => [...prev, { role: "user", content: topic || message }, { role: "assistant", content: "" }]);
+        setMessages((prev) => [...prev, { role: "user", content: topic || message, typed: !topic }, { role: "assistant", content: "" }]);
 
+        // A free question is used up only when the AI answers it (the server counts the same way)
+        let answered = false;
+        let countHandled = false;
         try {
             const res = await fetch(CHAT_URL, {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ sessionId, message, pageUrl: window.location.href }),
+                body: JSON.stringify({ sessionId: sid, message, pageUrl: window.location.href }),
             });
 
             if (!res.ok || !res.body) {
                 const json = await res.json().catch(() => null);
+                // The free questions are used up (the server counts them too): ask for the details first
+                if (res.status === 403 && json?.code === "DETAILS_REQUIRED") {
+                    setMessages((prev) => prev.slice(0, -2));
+                    countHandled = true;
+                    setFreeAsked(FREE_QUESTIONS);
+                    saveFreeAsked(sessionId, FREE_QUESTIONS);
+                    setPending({ message, topic: topic || message });
+                    setFormError("");
+                    setAskDetails(true);
+                    return;
+                }
                 // The server lost this visitor's details (e.g. new device) — ask for them again
                 if (res.status === 400 && /details|mobile number first/i.test(json?.message || "")) {
+                    countHandled = true;
                     startNewChat(TEXT[lang].expired);
                     setPending({ message, topic: topic || message });
                     return;
@@ -1626,6 +1988,7 @@ const ChatPanel: React.FC<Props> = ({ open, onClose }) => {
                     }
                     if (data.delta) {
                         gotText = true;
+                        answered = true;
                         setLastReply((t) => t + data.delta);
                     } else if (data.error) {
                         setLastReply((t) => (t ? `${t}\n\n${data.error}` : data.error!));
@@ -1638,13 +2001,104 @@ const ChatPanel: React.FC<Props> = ({ open, onClose }) => {
             setLastReply((t) => t || FALLBACK);
         } finally {
             setLoading(false);
+            // No answer (error, network, AI down): give the free question back
+            if (!name && !answered && !countHandled) {
+                setFreeAsked(freeAsked);
+                saveFreeAsked(sessionId, freeAsked);
+            }
         }
     };
 
+    /**
+     * Saves the visitor's name (POST /chat/start) and greets them by name. If the same IP chatted
+     * under the same name before, that chat continues and its messages are shown above a "Today"
+     * line. `typed` = the name was just typed (shown as the visitor's bubble); otherwise this is a
+     * page reload of a named chat, which brings its messages back.
+     */
+    const startWithName = async (name: string, typed: boolean) => {
+        setLoading(true);
+        setNameError("");
+        if (typed) {
+            setInput("");
+            setMessages((prev) => [...prev, { role: "user", content: name }]);
+        }
+        let next: { sid: string; question: { message: string; topic: string } | null } | null = null;
+        try {
+            const res = await fetch(`${CHAT_URL}/start`, {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ sessionId, name, pageUrl: window.location.href }),
+            });
+            const json = await res.json().catch(() => null);
+            if (!res.ok) throw new Error(json?.errors?.[0]?.split(": ").pop() || json?.message || "");
+            const data = json?.data as { sessionId?: string; messages?: { role: "user" | "assistant"; content: string; createdAt?: string }[] };
+            const sid = data?.sessionId || sessionId;
+            const earlier = (data?.messages || []).filter((m) => m.content?.trim());
+
+            setSessionId(sid);
+            saveChatSession(sid, name);
+            setVisitorName(name);
+            setAskDetails(false);
+
+            const welcome: Message = { role: "assistant", content: earlier.length ? t.welcomeBackName(name) : t.greetingName(name), menu: true };
+            setMessages((prev) => {
+                const nameBubble = typed ? prev.slice(-1) : [];
+                if (!earlier.length) return [...nameBubble, welcome];
+                return [
+                    { role: "assistant", content: "", divider: t.earlierChat(shortDate(earlier[0].createdAt, lang)) },
+                    ...earlier.map((m) => ({ role: m.role, content: m.content })),
+                    { role: "assistant", content: "", divider: t.today },
+                    ...nameBubble,
+                    welcome,
+                ];
+            });
+            next = { sid, question: pending };
+            setPending(null);
+        } catch (err) {
+            if (typed) {
+                setMessages((prev) => prev.slice(0, -1));
+                setInput(name);
+                setNameError((err as Error).message || t.genericError);
+            }
+        } finally {
+            setLoading(false);
+        }
+        // A question asked before the name was given goes out now, in the (maybe resumed) chat
+        if (next?.question) sendMessage(next.question.message, next.question.topic, name, next.sid);
+    };
+
+    const submitName = () => {
+        if (loading) return;
+        setRestored(true);
+        const name = parseName(input);
+        if (!name) {
+            setNameError(t.nameError);
+            return;
+        }
+        startWithName(name, true);
+    };
+
+    // A page reload of a named chat: bring its messages back once the panel opens
+    useEffect(() => {
+        if (!open || !visitorName || restored || messages.length) return;
+        const id = window.setTimeout(() => {
+            setRestored(true);
+            startWithName(visitorName, false);
+        }, 0);
+        return () => window.clearTimeout(id);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [open, visitorName, restored]);
+
     /** Scripted answer from FLOW: no contact details needed; a short "typing" pause so it reads like a reply */
-    const runStep = (step: string, choice = "", silent = false) => {
+    const quoteOff = config?.forms?.quote?.active === false;
+    const callbackOff = config?.forms?.callback?.active === false;
+
+    const runStep = (requested: string, choice = "", silent = false) => {
+        // A form switched off in the Manager's Forms & Routing hands over to the sales options instead
+        const step = (requested === "stall-quote" && quoteOff) || (requested === "sales-callback" && callbackOff) ? "sales" : requested;
         const flow = FLOW[step]?.(lang, choice);
         if (!flow || loading) return;
+        track([...(silent ? [] : [{ role: "user" as const, content: flow.say }]), ...flow.replies.map((r) => ({ role: r.role, content: r.content }))]);
         setFlowAt({ step, choice });
         if (!silent) setMessages((prev) => [...prev, { role: "user", content: flow.say }]);
         setLoading(true);
@@ -1662,6 +2116,41 @@ const ChatPanel: React.FC<Props> = ({ open, onClose }) => {
         }
         setFlowAt(null);
         sendMessage(topic.ask[lang], topic.label[lang]);
+    };
+
+    /** Scripted reply from a Manager button: the visitor's bubble, then the replies after a short pause */
+    const scripted = (say: string, replies: Message[]) => {
+        track([{ role: "user", content: say }, ...replies.map((r) => ({ role: r.role, content: r.content }))]);
+        setFlowAt(null);
+        setMessages((prev) => [...prev, { role: "user", content: say }]);
+        setLoading(true);
+        window.setTimeout(() => {
+            setMessages((prev) => [...prev, ...replies]);
+            setLoading(false);
+        }, 700);
+    };
+
+    /** A main-menu button published from the Manager's Buttons & Flows */
+    const runButton = (b: ChatButton) => {
+        if (loading) return;
+        const say = lang === "hi" && b.hindi ? b.hindi : b.label;
+        const reply = b.reply || say;
+        const salesReply: Message = { role: "assistant", content: reply, sales: { stall: "" } };
+        switch (b.action) {
+            case "Show Options":
+                return scripted(say, [{ role: "assistant", content: reply, options: b.options.map(optionFor) }]);
+            case "Open Link":
+                return scripted(say, [{ role: "assistant", content: reply, ...(b.target ? { link: { label: lang === "hi" ? "खोलें" : "Open", href: linkHref(b.target) } } : {}) }]);
+            case "Talk to Team":
+                return scripted(say, [salesReply]);
+            case "Open Form":
+                if (b.target === "Quotation Request") return scripted(say, [quoteOff ? salesReply : { role: "assistant", content: reply, quote: { stall: "" } }]);
+                if (b.target === "Callback Request") return scripted(say, [callbackOff ? salesReply : { role: "assistant", content: reply, callback: { stall: "" } }]);
+                if (FORM_PAGES[b.target]) return scripted(say, [{ role: "assistant", content: reply, link: { label: b.target, href: FORM_PAGES[b.target] } }]);
+                return scripted(say, [salesReply]);
+            default:
+                return scripted(say, [{ role: "assistant", content: reply }]);
+        }
     };
 
     const pickOption = (option: ChatOption) => {
@@ -1699,6 +2188,7 @@ const ChatPanel: React.FC<Props> = ({ open, onClose }) => {
             // The sales team takes it from here — close this conversation; the next visitor starts fresh
             clearChatSession();
             setFlowAt(null);
+            setEndedNote(lang === "en" ? config?.forms?.callback?.confirmation || "" : "");
             setMessages((prev) => prev.map((m, i) => (i === index && m.callback ? { ...m, callback: { ...m.callback, sent: true } } : m)));
             setLoading(true);
             window.setTimeout(() => {
@@ -1707,8 +2197,9 @@ const ChatPanel: React.FC<Props> = ({ open, onClose }) => {
             }, 700);
             return null;
         }
-        saveChatSession(sessionId, details.name);
+        saveChatSession(sessionId, details.name, details.phone);
         setVisitorName(details.name);
+        setVerifiedPhone(details.phone);
         setFlowAt(null);
         setMessages((prev) => [
             ...prev.map((m, i) => (i === index && m.quote ? { ...m, quote: { ...m.quote, sent: true } } : m)),
@@ -1718,9 +2209,9 @@ const ChatPanel: React.FC<Props> = ({ open, onClose }) => {
         window.setTimeout(() => {
             setMessages((prev) => [
                 ...prev,
-                { role: "assistant", content: t.quoteThanks },
+                { role: "assistant", content: (lang === "en" && config?.forms?.quote?.confirmation) || t.quoteThanks },
                 { role: "assistant", content: "", receipt: { stall } },
-                { role: "assistant", content: t.anythingElse, followUp: { stall } },
+                { role: "assistant", content: t.anythingElse, followUp: { stall, company: details.company, email: details.email, time: details.time } },
             ]);
             setLoading(false);
         }, 700);
@@ -1753,10 +2244,45 @@ const ChatPanel: React.FC<Props> = ({ open, onClose }) => {
         setMessages((prev) => prev.map((m, i) => (i === index && m.price ? { ...m, price: { ...m.price, sides } } : m)));
 
     /** "Proceed to Booking" on the price card: sum up the choice in the chat, then link to the booking form */
+    /**
+     * The message "Chat on WhatsApp" opens with: the opening line plus everything the visitor
+     * already told the chat (name, mobile, stall choice, quotation details and their own
+     * questions), so the sales team does not have to ask again.
+     */
+    const whatsappMessage = (intro: string, extra: { company?: string; email?: string; time?: string } = {}) => {
+        const picked = [...messages].reverse().find((m) => m.booking || m.summary || m.price);
+        const choice = picked?.booking || picked?.summary || picked?.price;
+        // Only what the visitor typed themselves — the bubbles made by menu buttons are left out
+        const asked = messages
+            .filter((m) => m.role === "user" && m.typed && m.content)
+            .map((m) => m.content.replace(/\s+/g, " ").trim())
+            .filter((q, i, all) => q.length > 3 && all.indexOf(q) === i)
+            .slice(-4);
+        const lines = [
+            intro,
+            "",
+            visitorName ? `Name: ${visitorName}` : "",
+            verifiedPhone ? `Mobile: +91 ${verifiedPhone}` : "",
+            extra.company ? `Company: ${extra.company}` : "",
+            extra.email ? `Email: ${extra.email}` : "",
+            choice ? `Stall: ${choice.stall}${choice.sides ? `, ${choice.sides} open side${choice.sides === 1 ? "" : "s"}` : ""}` : "",
+            extra.time ? `Preferred time: ${extra.time}` : "",
+            asked.length ? `My questions:\n${asked.map((q) => `- ${q.slice(0, 180)}`).join("\n")}` : "",
+        ].filter((l, i) => l || i === 1);
+        // Nothing beyond the opening line → no dangling blank line
+        const text = lines.length > 2 ? lines.join("\n") : intro;
+        return `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(text.slice(0, 1200))}`;
+    };
+
     const proceedToBooking = (choice: StallChoice) => {
         if (loading) return;
         const bt = BOOKING_TEXT[lang];
         setFlowAt({ step: "booking", choice: choice.stall });
+        track([
+            { role: "user", content: bt.say },
+            { role: "assistant", content: bt.ready },
+            { role: "assistant", content: bt.next },
+        ]);
         setMessages((prev) => [...prev, { role: "user", content: bt.say }]);
         setLoading(true);
         window.setTimeout(() => {
@@ -1774,17 +2300,52 @@ const ChatPanel: React.FC<Props> = ({ open, onClose }) => {
         setMessages((prev) => [...prev, { role: "assistant", content: t.menuPrompt, menu: true }]);
     };
 
-    const submitLead = async (e: React.FormEvent) => {
-        e.preventDefault();
+    /** Sends the WhatsApp OTP for the details form; the form then asks for the code */
+    const sendLeadOtp = async () => {
         setFormError("");
         const errors = validateLead(form);
         setFieldErrors(errors);
         if (Object.keys(errors).length) return;
+
+        setSubmitting(true);
+        try {
+            const res = await verifyApi.sendPhoneOtp(form.phone, LEAD_OTP_PROFILE, form.name.trim());
+            if (!res?.success) throw new Error(res?.msg || res?.message || "");
+            setOtpSentTo(form.phone);
+            setOtp("");
+            setOtpVerified(false);
+            setOtpTimer(OTP_RESEND_SECONDS);
+        } catch (err) {
+            setFormError((err as Error).message || t.genericError);
+        } finally {
+            setSubmitting(false);
+        }
+    };
+
+    const submitLead = async (e: React.FormEvent) => {
+        e.preventDefault();
+        // Step 1: send the OTP; step 2 (below): verify it, then start the chat
+        if (!otpSentTo || otpSentTo !== form.phone) return sendLeadOtp();
+        setFormError("");
+        const errors = validateLead(form);
+        setFieldErrors(errors);
+        if (Object.keys(errors).length) return;
+        if (otp.length !== 6) {
+            setFormError(t.otpError);
+            return;
+        }
         const name = form.name.trim();
         const phone = form.phone;
 
         setSubmitting(true);
         try {
+            // An OTP can be verified only once — on a retry after a failed /lead call, skip straight to it
+            if (!otpVerified) {
+                const verified = await verifyApi.verifyPhoneOtp(phone, otp);
+                if (!verified?.success) throw new Error(verified?.msg || verified?.message || "");
+                setOtpVerified(true);
+            }
+
             const res = await fetch(`${CHAT_URL}/lead`, {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
@@ -1794,9 +2355,11 @@ const ChatPanel: React.FC<Props> = ({ open, onClose }) => {
                 const json = await res.json().catch(() => null);
                 throw new Error(json?.errors?.[0]?.split(": ").pop() || json?.message || "");
             }
-            saveChatSession(sessionId, name);
+            saveChatSession(sessionId, name, phone);
             setVisitorName(name);
+            setVerifiedPhone(phone);
             setAskDetails(false);
+            resetOtp();
             const question = pending;
             setPending(null);
             if (question) sendMessage(question.message, question.topic, name);
@@ -1812,6 +2375,7 @@ const ChatPanel: React.FC<Props> = ({ open, onClose }) => {
         setPending(null);
         setFormError("");
         setFieldErrors({});
+        resetOtp();
     };
 
     const last = messages[messages.length - 1];
@@ -1825,10 +2389,31 @@ const ChatPanel: React.FC<Props> = ({ open, onClose }) => {
           : (flowAt && FLOW[flowAt.step]?.(lang, flowAt.choice).placeholder) || (returning ? FLOW.history(lang, "").placeholder : t.placeholder);
     const inChat = messages.length > 0 || !!visitorName;
 
+    // Published Buttons & Flows replace the built-in topic cards
+    const menuButtons = config?.buttons?.length ? config.buttons : null;
+
     const topicCards = (
         <>
             <div className="relative grid grid-cols-2 gap-2 pt-0.5">
-                {TOPICS.map((topic) => (
+                {menuButtons?.map((b) => {
+                    const Icon = iconFor(b.label);
+                    return (
+                        <button
+                            key={b.label}
+                            data-chat-anim
+                            type="button"
+                            onClick={() => runButton(b)}
+                            disabled={loading}
+                            className="group flex items-center gap-2.5 min-h-[56px] rounded-xl bg-white border border-[#e3e9dc] px-2.5 py-2 text-left shadow-[0_1px_2px_rgba(11,41,18,0.06)] transition-all duration-200 hover:border-[#3b8c2a]/60 hover:-translate-y-0.5 hover:shadow-[0_10px_22px_-12px_rgba(11,41,18,0.45)] disabled:pointer-events-none"
+                        >
+                            <span className="w-8 h-8 shrink-0 rounded-lg bg-[#eaf4e5] text-[#1b5e20] flex items-center justify-center transition-colors group-hover:bg-[#14532d] group-hover:text-white">
+                                <Icon className="w-[17px] h-[17px]" strokeWidth={1.9} aria-hidden="true" />
+                            </span>
+                            <span className="font-poppins font-medium text-[12px] leading-tight text-[#14532d]">{lang === "hi" && b.hindi ? b.hindi : b.label}</span>
+                        </button>
+                    );
+                })}
+                {!menuButtons && TOPICS.map((topic) => (
                     <button
                         key={topic.id}
                         data-chat-anim
@@ -1863,6 +2448,7 @@ const ChatPanel: React.FC<Props> = ({ open, onClose }) => {
     );
 
     return (
+        <AvatarContext.Provider value={config?.avatar || ""}>
         <div
             role="dialog"
             aria-modal="false"
@@ -1890,7 +2476,7 @@ const ChatPanel: React.FC<Props> = ({ open, onClose }) => {
                     </div>
 
                     <div className="flex-1 min-w-0">
-                        <p className="font-poppins font-semibold text-[15.5px] leading-tight whitespace-nowrap">Organic Mitra</p>
+                        <p className="font-poppins font-semibold text-[15.5px] leading-tight whitespace-nowrap">{botName}</p>
                         <p className="mt-0.5 flex items-center gap-1.5 text-[11px] leading-snug text-white/85">
                             <span className="truncate">{t.subtitle}</span>
                         </p>
@@ -1996,6 +2582,7 @@ const ChatPanel: React.FC<Props> = ({ open, onClose }) => {
                                                 value={form[f.key]}
                                                 aria-invalid={!!error}
                                                 aria-describedby={error ? `lead-${f.key}-error` : undefined}
+                                                readOnly={isPhone && !!otpSentTo}
                                                 onChange={(e) => {
                                                     const value = isPhone ? cleanMobile(e.target.value) : cleanName(e.target.value);
                                                     setForm((prev) => ({ ...prev, [f.key]: value }));
@@ -2016,14 +2603,26 @@ const ChatPanel: React.FC<Props> = ({ open, onClose }) => {
                                                         : "border-[#dfe8db] focus:border-[#3b8c2a] focus:ring-[#3b8c2a]/15"
                                                 }`}
                                             />
-                                            {isPhone && (
-                                                <span
-                                                    className={`absolute right-3 top-1/2 -translate-y-1/2 text-[11px] font-semibold ${form.phone.length === 10 ? "text-[#3b8c2a]" : "text-slate-400"}`}
-                                                    aria-hidden="true"
-                                                >
-                                                    {form.phone.length}/10
-                                                </span>
-                                            )}
+                                            {isPhone &&
+                                                (otpSentTo ? (
+                                                    <button
+                                                        type="button"
+                                                        onClick={() => {
+                                                            resetOtp();
+                                                            setFormError("");
+                                                        }}
+                                                        className="absolute right-3 top-1/2 -translate-y-1/2 text-[11.5px] font-semibold text-[#1b5e20] hover:text-[#3b8c2a] underline underline-offset-2"
+                                                    >
+                                                        {t.change}
+                                                    </button>
+                                                ) : (
+                                                    <span
+                                                        className={`absolute right-3 top-1/2 -translate-y-1/2 text-[11px] font-semibold ${form.phone.length === 10 ? "text-[#3b8c2a]" : "text-slate-400"}`}
+                                                        aria-hidden="true"
+                                                    >
+                                                        {form.phone.length}/10
+                                                    </span>
+                                                ))}
                                         </span>
                                         {error && (
                                             <span id={`lead-${f.key}-error`} role="alert" className="text-[11.5px] text-red-600">
@@ -2033,6 +2632,43 @@ const ChatPanel: React.FC<Props> = ({ open, onClose }) => {
                                     </label>
                                 );
                             })}
+
+                            {otpSentTo && (
+                                <label className="flex flex-col gap-1">
+                                    <span className="text-[10.5px] font-bold uppercase tracking-wider text-[#0b2912]">
+                                        {t.otpLabel} <span className="text-[#f58220]">*</span>
+                                    </span>
+                                    <span className="text-[11.5px] text-[#1b5e20]">{t.otpSent(otpSentTo)}</span>
+                                    <input
+                                        type="text"
+                                        inputMode="numeric"
+                                        autoComplete="one-time-code"
+                                        autoFocus
+                                        maxLength={6}
+                                        value={otp}
+                                        onChange={(e) => {
+                                            setOtp(e.target.value.replace(/\D/g, "").slice(0, 6));
+                                            if (formError) setFormError("");
+                                        }}
+                                        placeholder={t.otpPh}
+                                        className="w-full px-3 py-2.5 rounded-xl bg-[#f7faf5] border border-[#dfe8db] text-[15px] tracking-[0.3em] text-slate-800 placeholder:tracking-normal placeholder:text-[14px] placeholder:text-slate-400 outline-none transition focus:bg-white focus:border-[#3b8c2a] focus:ring-4 focus:ring-[#3b8c2a]/15"
+                                    />
+                                    <span className="text-right text-[11.5px]">
+                                        {otpTimer > 0 ? (
+                                            <span className="text-slate-500">{t.resendIn(otpTimer)}</span>
+                                        ) : (
+                                            <button
+                                                type="button"
+                                                onClick={sendLeadOtp}
+                                                disabled={submitting}
+                                                className="font-semibold text-[#1b5e20] hover:text-[#3b8c2a] disabled:opacity-50"
+                                            >
+                                                {t.resend}
+                                            </button>
+                                        )}
+                                    </span>
+                                </label>
+                            )}
 
                             {formError && (
                                 <p role="alert" className="text-[12.5px] text-red-600 bg-red-50 border border-red-100 rounded-lg px-3 py-2">
@@ -2053,7 +2689,7 @@ const ChatPanel: React.FC<Props> = ({ open, onClose }) => {
                                     </>
                                 ) : (
                                     <>
-                                        {t.continue}
+                                        {otpSentTo ? t.verifyContinue : t.sendOtp}
                                         <svg className="w-4 h-4 transition-transform group-hover:translate-x-0.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
                                             <path d="M5 12h14M13 6l6 6-6 6" />
                                         </svg>
@@ -2082,6 +2718,7 @@ const ChatPanel: React.FC<Props> = ({ open, onClose }) => {
                     <div className="mt-4 flex items-start gap-2.5">
                         <BotAvatar />
                         <div className="max-w-[85%] bg-white rounded-2xl rounded-tl-md shadow-sm border border-[#3b8c2a]/10 px-4 py-3 text-[15px] text-[#14532d]">
+                            {endedNote && <p className="mb-1.5 font-medium">{endedNote}</p>}
                             <p>{t.endedThanks}</p>
                             <p className="mt-1 font-semibold">{t.endedBye}</p>
                         </div>
@@ -2099,7 +2736,10 @@ const ChatPanel: React.FC<Props> = ({ open, onClose }) => {
                                 <button
                                     key={value}
                                     type="button"
-                                    onClick={() => setFeedback(value)}
+                                    onClick={() => {
+                                        setFeedback(value);
+                                        track([], value);
+                                    }}
                                     aria-pressed={feedback === value}
                                     className={`inline-flex items-center justify-center gap-2 rounded-xl border px-3 py-2.5 text-[14px] font-medium transition ${
                                         feedback === value
@@ -2140,7 +2780,7 @@ const ChatPanel: React.FC<Props> = ({ open, onClose }) => {
                     </div>
 
                     <p className="mt-auto pt-4 border-t border-[#dfe6d8] text-center text-[11.5px] text-slate-500">
-                        Organic Mitra • {t.subtitle}
+                        {botName} • {t.subtitle}
                     </p>
                 </div>
             ) : (
@@ -2164,7 +2804,7 @@ const ChatPanel: React.FC<Props> = ({ open, onClose }) => {
                         <div data-chat-anim className="relative flex items-start gap-2.5">
                             <BotAvatar />
                             <div className="max-w-[82%] bg-white rounded-2xl rounded-tl-md shadow-[0_1px_2px_rgba(11,41,18,0.06)] border border-[#3b8c2a]/10 px-3.5 py-2 text-[13.5px] text-slate-800">
-                                {(returning ? t.welcomeBack : visitorName && !showWelcome ? t.greetingName(visitorName) : t.greeting).split("\n").map((line, i) =>
+                                {(nameStep ? t.askName(botName) : returning ? t.welcomeBack : visitorName && !showWelcome ? t.greetingName(visitorName) : t.greeting).split("\n").map((line, i) =>
                                     i === 0 ? (
                                         <p key={i} className="font-semibold text-[#0b2912]">
                                             {line}
@@ -2176,7 +2816,7 @@ const ChatPanel: React.FC<Props> = ({ open, onClose }) => {
                             </div>
                         </div>
 
-                        {showWelcomeBack ? (
+                        {askingName ? null : showWelcomeBack ? (
                             <div className="relative ml-[42px] grid grid-cols-2 gap-2">
                                 {[
                                     [t.viewPrevious, "history"],
@@ -2198,7 +2838,13 @@ const ChatPanel: React.FC<Props> = ({ open, onClose }) => {
                         )}
 
                         {messages.map((m, i) =>
-                            m.role === "assistant" && !m.content && !m.receipt ? null : m.role === "user" ? (
+                            m.divider ? (
+                                <div key={i} className="relative flex items-center gap-3 py-1 text-[11.5px] font-medium text-slate-500">
+                                    <span className="flex-1 h-px bg-[#dfe6d8]" aria-hidden="true" />
+                                    {m.divider}
+                                    <span className="flex-1 h-px bg-[#dfe6d8]" aria-hidden="true" />
+                                </div>
+                            ) : m.role === "assistant" && !m.content && !m.receipt ? null : m.role === "user" ? (
                                 <div key={i} className="relative self-end flex items-end gap-1 max-w-[85%]">
                                     <div className="bg-[#14532d] text-white rounded-2xl rounded-tr-md shadow-sm px-4 py-2.5 whitespace-pre-wrap break-words">
                                         {m.content}
@@ -2263,7 +2909,7 @@ const ChatPanel: React.FC<Props> = ({ open, onClose }) => {
                                                     </button>
                                                 ))}
                                                 <a
-                                                    href={`https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(t.whatsappText(m.followUp.stall))}`}
+                                                    href={whatsappMessage(t.whatsappText(m.followUp.stall), m.followUp)}
                                                     target="_blank"
                                                     rel="noopener noreferrer"
                                                     className={FOLLOW_UP_PILL}
@@ -2330,16 +2976,16 @@ const ChatPanel: React.FC<Props> = ({ open, onClose }) => {
                                     {m.summary && <StallSummary lang={lang} choice={m.summary} />}
                                     {m.booking && (
                                         <div className="flex flex-col gap-2">
-                                            {/* Continues in the chat: WhatsApp / callback request with the sales team */}
-                                            <button
-                                                type="button"
-                                                onClick={() => runStep("sales", m.booking!.stall)}
-                                                disabled={loading}
-                                                className="flex items-center justify-center gap-2 rounded-full bg-[#14532d] hover:bg-[#1b5e20] px-4 py-2.5 font-poppins font-medium text-[14px] text-white shadow-sm transition disabled:pointer-events-none"
+                                            {/* Opens the Book a Stand form in a new tab with the chosen size and open sides */}
+                                            <a
+                                                href={`/registration/book-a-stand?size=${m.booking.sqm}&sides=${m.booking.sides ?? 1}`}
+                                                target="_blank"
+                                                rel="noopener noreferrer"
+                                                className="flex items-center justify-center gap-2 rounded-full bg-[#14532d] hover:bg-[#1b5e20] px-4 py-2.5 font-poppins font-medium text-[14px] text-white shadow-sm transition"
                                             >
                                                 {BOOKING_TEXT[lang].open}
                                                 <ArrowUpRight className="w-[18px] h-[18px]" aria-hidden="true" />
-                                            </button>
+                                            </a>
                                             <p className="text-center text-[11.5px] leading-snug text-slate-500">{BOOKING_TEXT[lang].carry}</p>
                                             <p className="-mt-1 flex items-start justify-center gap-1.5 text-[11.5px] leading-snug text-slate-500">
                                                 <Info className="w-3.5 h-3.5 shrink-0 mt-px" aria-hidden="true" />
@@ -2415,7 +3061,7 @@ const ChatPanel: React.FC<Props> = ({ open, onClose }) => {
                                     {m.sales && (
                                         <div className="ml-[42px] grid grid-cols-2 gap-2">
                                             <a
-                                                href={`https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(t.salesWhatsappText(m.sales.stall))}`}
+                                                href={whatsappMessage(t.salesWhatsappText(m.sales.stall))}
                                                 target="_blank"
                                                 rel="noopener noreferrer"
                                                 className="inline-flex items-center justify-center gap-2 rounded-full border border-[#14532d] bg-white px-2 py-2 text-[13px] font-medium leading-tight text-[#0b2912] transition hover:bg-[#f1f7ee]"
@@ -2425,6 +3071,7 @@ const ChatPanel: React.FC<Props> = ({ open, onClose }) => {
                                                 </svg>
                                                 {t.whatsapp}
                                             </a>
+                                            {!callbackOff && (
                                             <button
                                                 type="button"
                                                 onClick={() => runStep("sales-callback", m.sales!.stall)}
@@ -2436,6 +3083,7 @@ const ChatPanel: React.FC<Props> = ({ open, onClose }) => {
                                                 </svg>
                                                 {t.requestCallback}
                                             </button>
+                                            )}
                                         </div>
                                     )}
                                     {m.callback && (
@@ -2446,6 +3094,8 @@ const ChatPanel: React.FC<Props> = ({ open, onClose }) => {
                                                 stall={m.callback.stall}
                                                 sent={!!m.callback.sent}
                                                 defaultName={visitorName || ""}
+                                                verifiedPhone={verifiedPhone}
+                                                settings={config?.forms?.callback}
                                                 onSubmit={(details) => submitQuote(i, m.callback!.stall, details, "callback")}
                                                 onChange={() => runStep("stall-sizes", "", true)}
                                                 onBack={() => runStep("stall", "", true)}
@@ -2468,6 +3118,8 @@ const ChatPanel: React.FC<Props> = ({ open, onClose }) => {
                                             stall={m.quote.stall}
                                             sent={!!m.quote.sent}
                                             defaultName={visitorName || ""}
+                                            verifiedPhone={verifiedPhone}
+                                            settings={config?.forms?.quote}
                                             onSubmit={(details) => submitQuote(i, m.quote!.stall, details)}
                                             onChange={() => runStep("stall-sizes", "", true)}
                                             onBack={() => runStep("stall", "", true)}
@@ -2504,7 +3156,8 @@ const ChatPanel: React.FC<Props> = ({ open, onClose }) => {
                     <form
                         onSubmit={(e) => {
                             e.preventDefault();
-                            sendMessage(input);
+                            if (askingName) submitName();
+                            else sendMessage(input);
                         }}
                         data-chat-anim
                         className="shrink-0 px-3 pt-2 pb-2 border-t border-[#e3e9dc]/70 bg-white/60 backdrop-blur-sm"
@@ -2513,10 +3166,15 @@ const ChatPanel: React.FC<Props> = ({ open, onClose }) => {
                             <input
                                 ref={inputRef}
                                 value={input}
-                                onChange={(e) => setInput(e.target.value)}
+                                onChange={(e) => {
+                                    setInput(e.target.value);
+                                    if (nameError) setNameError("");
+                                }}
                                 disabled={loading}
-                                maxLength={1000}
-                                placeholder={loading ? t.typing : placeholder}
+                                maxLength={askingName ? 60 : 1000}
+                                autoComplete={askingName ? "name" : "off"}
+                                aria-invalid={askingName && !!nameError}
+                                placeholder={loading ? t.typing : askingName ? t.namePh : placeholder}
                                 aria-label="Type your message"
                                 className="flex-1 min-w-0 bg-transparent text-[13.5px] text-slate-800 placeholder:text-slate-400 outline-none disabled:cursor-not-allowed"
                             />
@@ -2529,7 +3187,11 @@ const ChatPanel: React.FC<Props> = ({ open, onClose }) => {
                                 <Send className="w-4 h-4 -ml-0.5" strokeWidth={2.2} aria-hidden="true" />
                             </button>
                         </div>
-                        {showFollowUp ? (
+                        {askingName && nameError ? (
+                            <p role="alert" className="mt-1.5 px-2 text-[11.5px] text-red-600">
+                                {nameError}
+                            </p>
+                        ) : showFollowUp ? (
                             <p className="mt-1.5 px-2 text-[11px] text-slate-500">{t.footerShort}</p>
                         ) : inChat ? (
                             <div className="mt-1.5 px-2 flex items-center justify-between text-[11px] text-slate-500">
@@ -2552,6 +3214,7 @@ const ChatPanel: React.FC<Props> = ({ open, onClose }) => {
                 </>
             )}
         </div>
+        </AvatarContext.Provider>
     );
 };
 

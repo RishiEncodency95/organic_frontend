@@ -36,12 +36,9 @@ import {
     API_URL,
     eventApi,
     stallRateApi,
-    termsApi,
     publicApi,
     verifyApi,
     crmApi,
-    eventHighlightsApi,
-    countersApi,
     adminApi
 } from "@/lib/api";
 import Swal from 'sweetalert2';
@@ -50,6 +47,10 @@ import SectionContainer from "@/app/components/layout/SectionContainer";
 import BookAStandHero from "@/app/components/registration/book-a-stand/BookAStandHero";
 import BookAStandBanner from "@/app/components/registration/book-a-stand/BookAStandBanner";
 import { childrenOf, toOptions, useDropdowns } from "@/lib/dropdowns";
+import { makeSectionGate } from "@/lib/sectionGate";
+import { addressLock, check, clean, usePincodeAutofill } from "@/lib/registration";
+import { PincodeHint } from "@/app/components/registration/shared/LocationFields";
+import Image from "next/image";
 
 const loadScript = (src: string) => {
     return new Promise((resolve) => {
@@ -229,7 +230,13 @@ const STAND_DROPDOWNS = {
     ],
 };
 
-const BookAStand = () => {
+// `disabledSections`: bookAStandPage section keys switched off in admin. Only the display
+// sections are gated; the form-config sections (form fields, contact details, legal
+// agreements) drive the booking form itself and are not hidden.
+const BookAStand = ({ disabledSections = [] }: { disabledSections?: string[] }) => {
+    const show = makeSectionGate(disabledSections);
+    const showPremier = show("book-stand-premier-edition");
+    const showCategories = show("book-stand-categories");
     const dropdowns = useDropdowns(STAND_DROPDOWNS);
     const [submitted, setSubmitted] = useState(false);
     const [isLoading, setIsLoading] = useState(false);
@@ -240,20 +247,27 @@ const BookAStand = () => {
     const [availableStalls, setAvailableStalls] = useState<any[]>([]);
     const [staff, setStaff] = useState<any[]>([]);
     const [marketingStaff, setMarketingStaff] = useState<any[]>([]);
-    const [termsContent, setTermsContent] = useState<any>(null);
     const [allRates, setAllRates] = useState<any[]>([]);
     const [countries, setCountries] = useState<any[]>([]);
     const [states, setStates] = useState<any[]>([]);
     const [cities, setCities] = useState<any[]>([]);
-    const [eventHighlights, setEventHighlights] = useState<any>(null);
+    // State whose cities have loaded, and whether the visitor types the city ("Other" / no cities listed)
+    const [citiesLoadedFor, setCitiesLoadedFor] = useState('');
+    const [cityTyping, setCityTyping] = useState(false);
     const [settings, setSettings] = useState<any>(null);
-    const [counters, setCounters] = useState<any[]>([]);
 
     const [formData, setFormData] = useState(initialFormData);
 
     const [exhibitorType, setExhibitorType] = useState<'domestic' | 'international' | null>(null);
     const [usdToInrRate, setUsdToInrRate] = useState<number>(86);
     const searchParams = useSearchParams();
+    // "?size=12&sides=2" from the chat's "Open Stall Booking Form" button
+    const chatPreference = (() => {
+        const size = Number(searchParams.get('size'));
+        const sides = Number(searchParams.get('sides'));
+        if (!Number.isFinite(size) || size <= 0 || size > 1000) return '';
+        return `${size} sq.m stall${sides >= 1 && sides <= 3 ? `, ${sides} open side${sides === 1 ? '' : 's'}` : ''}`;
+    })();
 
     // Verification States
     const [emailVerified, setEmailVerified] = useState(false);
@@ -285,31 +299,23 @@ const BookAStand = () => {
 
                 const eData = await eventApi.getActive();
                 const actualEvents = Array.isArray(eData) ? eData : ((eData as any).data || []);
-                console.log("[DEBUG] Active events from API:", actualEvents);
                 if (actualEvents.length > 0) {
                     setEvents(actualEvents);
                     const urlEventId = searchParams.get('eventId');
                     const initialEventId = urlEventId && actualEvents.find((e: any) => e._id === urlEventId) ? urlEventId : actualEvents[0]._id;
-                    console.log("[DEBUG] Selected event ID:", initialEventId);
                     setSelectedEventId(initialEventId);
                     setFormData(prev => ({ ...prev, eventId: initialEventId }));
                 }
                 Promise.all([
                     publicApi.getEmployees(),
                     publicApi.getStaff(),
-                    termsApi.getByPage("exhibitor-registration"),
                     crmApi.getCountries(),
-                    eventHighlightsApi.get(),
-                    settingsApi.get(),
-                    countersApi.get()
-                ]).then(([employeesRes, staffRes, termsRes, countryRes, highlightRes, settingsRes, counterRes]) => {
+                    settingsApi.get()
+                ]).then(([employeesRes, staffRes, countryRes, settingsRes]) => {
                     if (employeesRes) setMarketingStaff(Array.isArray(employeesRes) ? employeesRes : ((employeesRes as any).data || []));
                     if (staffRes) setStaff(Array.isArray(staffRes) ? staffRes : ((staffRes as any).data || []));
-                    if (termsRes) setTermsContent(termsRes);
                     if (countryRes) setCountries(Array.isArray(countryRes) ? countryRes : ((countryRes as any).data || []));
-                    if (highlightRes) setEventHighlights(highlightRes);
                     if (settingsRes) setSettings(settingsRes);
-                    if (counterRes) setCounters(counterRes);
                 });
             } catch (error) {
                 console.error("Error fetching initial data:", error);
@@ -336,6 +342,7 @@ const BookAStand = () => {
             if (selectedState && selectedState.stateCode) {
                 crmApi.getCities(selectedState.stateCode).then(cityRes => {
                     setCities(Array.isArray(cityRes) ? cityRes : ((cityRes as any).data || []));
+                    setCitiesLoadedFor(formData.state);
                 }).catch(err => console.error("Error fetching cities:", err));
             }
         } else {
@@ -363,11 +370,20 @@ const BookAStand = () => {
             });
             stallRateApi.getAllByEvent(selectedEventId).then((res: any) => {
                 const actualRates = Array.isArray(res) ? res : (res.data || []);
-                console.log("[DEBUG] Stall Rates for event", selectedEventId, ":", actualRates);
                 setAllRates(actualRates);
             });
         }
     }, [selectedEventId, events]);
+
+    // A complete pincode fills in the state, city and country; for international exhibitors the
+    // postal code fills in the state and city once the country is chosen (all stay editable)
+    const postalCountry = exhibitorType === 'domestic' ? 'IN' : (countries.find(c => c.name === formData.country)?.countryCode || '');
+    const pinLookup = usePincodeAutofill(formData.pincode, postalCountry, (place) => {
+        setCityTyping(!place.cityListed && !!place.city);
+        setFormData(prev => ({ ...prev, country: exhibitorType === 'domestic' ? place.country : prev.country, state: place.state, city: place.city }));
+    });
+
+    const addrLock = addressLock(pinLookup);
 
     const filteredStates = useMemo(() => {
         if (!formData.country || countries.length === 0) return [];
@@ -540,14 +556,13 @@ const BookAStand = () => {
             setPhoneVerified(false);
             setVerificationError(null);
         }
-        const isNameOrDesignation = name.includes('firstName') || name.includes('lastName') || name.includes('designation');
         let newValue = value;
-        if (isNameOrDesignation) {
-            newValue = value.replace(/[0-9]/g, '');
-        }
+        // Names take letters only; a designation also takes the punctuation job titles use
+        if (name.includes('firstName') || name.includes('lastName')) newValue = clean.name(value);
+        else if (name.includes('designation')) newValue = clean.title(value);
 
         if (name === 'landlineNo') {
-            newValue = value.replace(/\D/g, '');
+            newValue = value.replace(/\D/g, '').slice(0, 15);
         }
 
         const isMobileField = name === 'contact1.mobile' || name === 'contact2.mobile' ||
@@ -563,6 +578,8 @@ const BookAStand = () => {
             }
             return;
         }
+        // International numbers: digits with an optional +, spaces or hyphens
+        if (isMobileField) newValue = clean.phone(newValue);
 
         if (name.includes('.')) {
             const [parent, child] = name.split('.');
@@ -589,6 +606,14 @@ const BookAStand = () => {
 
         if (name === 'state') {
             setFormData(prev => ({ ...prev, state: value, city: '' }));
+            setCityTyping(false);
+            return;
+        }
+
+        // "Other" in the city list: the visitor types the city instead
+        if (name === 'city' && value === 'Other') {
+            setCityTyping(true);
+            setFormData(prev => ({ ...prev, city: '' }));
             return;
         }
 
@@ -771,8 +796,44 @@ const BookAStand = () => {
             return;
         }
 
+        // Address details the browser cannot check: a city for every state, and the pincode format
+        const addressErrors = [
+            !formData.city.trim() && 'City is required. If your city is not listed, choose "Other" and type it.',
+            exhibitorType === 'domestic'
+                ? !/^[1-9]\d{5}$/.test(formData.pincode) && 'Pincode must be 6 digits and cannot start with 0.'
+                : !/^[A-Za-z0-9][A-Za-z0-9 -]{1,8}[A-Za-z0-9]$/.test(formData.pincode) && 'Please enter a valid postal / ZIP code.',
+        ].filter(Boolean) as string[];
+        if (addressErrors.length) {
+            Swal.fire({ icon: 'warning', title: 'Please check the address', html: addressErrors.join('<br/>') });
+            return;
+        }
+
+        // Formats the browser's own "required" check cannot judge: tax / identity numbers and contacts
+        const domestic = exhibitorType === 'domestic';
+        const intlNumber = (value: string, label: string, required: boolean) =>
+            !value ? (required ? `${label} is required.` : '') : /^\+?\d[\d\s-]{6,18}$/.test(value) ? '' : `${label} is not a valid phone number.`;
+        const phone = (value: string, label: string, required: boolean) =>
+            domestic ? check.indianMobile(value, label, required) : intlNumber(value, label, required);
+        const detailErrors = [
+            domestic && formData.registrantType === 'registered' && check.gst(formData.gstNo, true),
+            domestic && formData.registrantType === 'unregistered' && check.pan(formData.panNo, true),
+            domestic && formData.registrantType === 'unregistered' && check.aadhaar(formData.aadhaarNo, true),
+            check.email(formData.contact1.email, 'Email'),
+            phone(formData.contact1.mobile, 'WhatsApp / mobile number', true),
+            phone(formData.contact1.alternateNo, 'Alternate number', false),
+            check.email(formData.contact2.email, 'Second contact email', false),
+            phone(formData.contact2.mobile, 'Second contact mobile number', false),
+            phone(formData.contact2.alternateNo, 'Second contact alternate number', false),
+            // The field is required, so a business without a site writes NA
+            !/^(na|n\/a|nil|none|-)$/i.test(formData.website.trim()) && check.website(formData.website),
+        ].filter(Boolean) as string[];
+        if (detailErrors.length) {
+            Swal.fire({ icon: 'warning', title: 'Please check the form', html: [...new Set(detailErrors)].join('<br/>') });
+            return;
+        }
+
         if (!formData.participation.stallNo) {
-            Swal.fire('Error', 'Please select a stall first', 'error');
+            Swal.fire('Error', events.length ? 'Please select a stall first' : 'Stall booking is not open yet. Please contact our sales team to book a stall.', 'error');
             return;
         }
 
@@ -977,7 +1038,7 @@ const BookAStand = () => {
                                 </div>
                                 <div className="text-left">
                                     <p className="text-[10px] text-emerald-500 font-black uppercase tracking-widest mb-1">Pre-Register Interest</p>
-                                    <p className="text-white font-medium">info@ihwe.in</p>
+                                    <p className="text-white font-medium">info@bharatorganicexpo.com</p>
                                 </div>
                             </div>
 
@@ -1002,6 +1063,25 @@ const BookAStand = () => {
             </div>
         );
     }
+    const countryField = (
+        <div>
+            <label className={labelClasses}>COUNTRY <span className="text-red-500">*</span></label>
+            <Select onValueChange={(v) => handleSelectChange('country', v)} value={formData.country} disabled={exhibitorType === 'domestic' && addrLock.locked}>
+                <SelectTrigger className={inputClasses}>
+                    <SelectValue placeholder="Select Here" />
+                </SelectTrigger>
+                <SelectContent>
+                    {countries
+                        .filter(c => exhibitorType === 'domestic' ? c.name.toLowerCase() === 'india' : c.name.toLowerCase() !== 'india')
+                        .map(c => (
+                            <SelectItem key={c._id} value={c.name} className="text-xs">{c.name}</SelectItem>
+                        ))
+                    }
+                </SelectContent>
+            </Select>
+        </div>
+    );
+
     return (
         <div className="min-h-screen bg-[#FDFDFD] text-slate-900 font-inter">
             <PaymentProcessingModal
@@ -1011,14 +1091,16 @@ const BookAStand = () => {
                 onClose={() => { setPaymentModal(null); setIsLoading(false); }}
             />
             {/* -- HERO SECTION - Registration Standard 16:5 -- */}
-            <BookAStandHero />
+            {show("book-stand-hero") && <BookAStandHero />}
             {/* bannar section  */}
-            <BookAStandBanner />
+            {show("book-stand-banner") && <BookAStandBanner />}
             {/* button section */}
+            {(showPremier || showCategories) && (
             <SectionContainer>
                 <section className="bg-white border border-gray-100 my-3 py-6 rounded-xl shadow-sm p-4 md:p-8 flex flex-col lg:flex-row gap-8 lg:gap-10">
 
                     {/* Left Side */}
+                    {showPremier && (
                     <div className="flex-1 flex flex-col justify-between">
                         <div>
                             <p className="text-gray-900 text-xl font-medium mb-1">Premier Edition of</p>
@@ -1039,15 +1121,25 @@ const BookAStand = () => {
                             </p>
                         </div>
                     </div>
+                    )}
 
                     {/* Divider */}
+                    {showPremier && showCategories && (<>
                     <div className="hidden lg:block w-px bg-gray-200 self-stretch" />
                     <div className="block lg:hidden h-px w-full bg-gray-200 my-2" />
+                    </>)}
 
                     {/* Right Side */}
+                    {showCategories && (
                     <div className="flex-1">
                         <h3 className="text-gray-900 text-xl font-medium mb-1">Choose Exhibitor Category</h3>
                         <div className="w-8 h-[3px] bg-[#4a8f2f] rounded mb-5" />
+                        {/* Arriving from the Organic Mitra chat: the preference picked there, visible straight away */}
+                        {chatPreference && (
+                            <p role="status" className="mb-4 rounded-lg border border-[#cfe3d3] bg-[#f1f7ee] px-3 py-2 text-[13px] font-medium text-[#14532d]">
+                                Your preference from the chat: <b>{chatPreference}</b>. Choose your category to continue.
+                            </p>
+                        )}
 
                         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
 
@@ -1103,9 +1195,11 @@ const BookAStand = () => {
 
                         </div>
                     </div>
+                    )}
 
                 </section>
             </SectionContainer>
+            )}
             {/* -- MAIN CONTENT -- */}
             <section className="pt-4 pb-12 relative overflow-hidden">
 
@@ -1184,6 +1278,12 @@ const BookAStand = () => {
                                             <ShieldCheck className="text-[#a8d060]" size={22} />
                                         </div>
                                         <form onSubmit={handleSubmit} className="px-4 pt-4 pb-8 space-y-2 bg-white">
+                                            {/* Arriving from the Organic Mitra chat ("Open Stall Booking Form"): the preference picked there */}
+                                            {chatPreference && (
+                                                <p role="status" className="rounded-lg border border-[#cfe3d3] bg-[#f1f7ee] px-3 py-2 text-[13px] font-medium text-[#14532d]">
+                                                    Your preference from the chat: <b>{chatPreference}</b>. Please choose a matching stall below.
+                                                </p>
+                                            )}
 
                                             <div className="overflow-x-auto rounded-lg border border-slate-200 shadow-sm" data-aos="fade-up">
                                                 <table className="w-full text-left border-collapse">
@@ -1291,24 +1391,15 @@ const BookAStand = () => {
                                                         <input required name="address" value={formData.address} onChange={handleInputChange} placeholder="Write Here.." className={inputClasses} />
                                                     </div>
                                                     <div>
-                                                        <label className={labelClasses}>COUNTRY <span className="text-red-500">*</span></label>
-                                                        <Select onValueChange={(v) => handleSelectChange('country', v)} value={formData.country}>
-                                                            <SelectTrigger className={inputClasses}>
-                                                                <SelectValue placeholder="Select Here" />
-                                                            </SelectTrigger>
-                                                            <SelectContent>
-                                                                {countries
-                                                                    .filter(c => exhibitorType === 'domestic' ? c.name.toLowerCase() === 'india' : c.name.toLowerCase() !== 'india')
-                                                                    .map(c => (
-                                                                        <SelectItem key={c._id} value={c.name} className="text-xs">{c.name}</SelectItem>
-                                                                    ))
-                                                                }
-                                                            </SelectContent>
-                                                        </Select>
+                                                        <label className={labelClasses}>PINCODE/Postal Code <span className="text-red-500">*</span></label>
+                                                        <input required name="pincode" value={formData.pincode} onChange={(e) => setFormData(prev => ({ ...prev, pincode: exhibitorType === 'domestic' ? e.target.value.replace(/\D/g, '').slice(0, 6) : e.target.value.replace(/[^A-Za-z0-9 -]/g, '').slice(0, 10) }))} placeholder={exhibitorType === 'domestic' ? "6-digit Pincode" : "Postal / ZIP Code"} className={inputClasses} inputMode={exhibitorType === 'domestic' ? "numeric" : "text"} />
+                                                        <PincodeHint lookup={pinLookup} idleNote={exhibitorType !== 'domestic' && formData.pincode && !formData.country ? "Select the country to fill in the state and city." : ""} />
                                                     </div>
+                                                    {/* International: the country decides the state list, so it follows the postal code */}
+                                                    {exhibitorType !== 'domestic' && countryField}
                                                     <div>
                                                         <label className={labelClasses}>{exhibitorType === 'domestic' ? 'STATE' : 'STATE/PROVINCE'} <span className="text-red-500">*</span></label>
-                                                        <Select onValueChange={(v) => handleSelectChange('state', v)} value={formData.state} disabled={!formData.country}>
+                                                        <Select onValueChange={(v) => handleSelectChange('state', v)} value={formData.state} disabled={addrLock.locked || !formData.country}>
                                                             <SelectTrigger className={inputClasses}>
                                                                 <SelectValue placeholder="Select Here" />
                                                             </SelectTrigger>
@@ -1321,17 +1412,37 @@ const BookAStand = () => {
                                                     </div>
                                                     <div>
                                                         <label className={labelClasses}>CITY <span className="text-red-500">*</span></label>
-                                                        <Select onValueChange={(v) => handleSelectChange('city', v)} value={formData.city} disabled={!formData.state}>
-                                                            <SelectTrigger className={inputClasses}>
-                                                                <SelectValue placeholder="Select Here" />
-                                                            </SelectTrigger>
-                                                            <SelectContent>
-                                                                {filteredCities.map(c => (
-                                                                    <SelectItem key={c._id} value={c.name} className="text-xs">{c.name}</SelectItem>
-                                                                ))}
-                                                            </SelectContent>
-                                                        </Select>
+                                                        {formData.state && citiesLoadedFor === formData.state && (cityTyping || filteredCities.length === 0) ? (
+                                                            <div className="flex gap-1">
+                                                                <input
+                                                                    required
+                                                                    name="city"
+                                                                    disabled={addrLock.cityLocked}
+                                                                    value={formData.city}
+                                                                    onChange={(e) => setFormData(prev => ({ ...prev, city: e.target.value.replace(/[^\p{L}\p{M} .'-]/gu, '').replace(/^\s+/, '') }))}
+                                                                    maxLength={60}
+                                                                    placeholder="Type your city"
+                                                                    className={inputClasses}
+                                                                />
+                                                                {filteredCities.length > 0 && (
+                                                                    <button type="button" disabled={addrLock.cityLocked} onClick={() => { setCityTyping(false); setFormData(prev => ({ ...prev, city: '' })); }} className="shrink-0 rounded-[2px] border border-slate-300 px-2 text-[10px] font-bold uppercase text-slate-600 hover:bg-slate-50">List</button>
+                                                                )}
+                                                            </div>
+                                                        ) : (
+                                                            <Select onValueChange={(v) => handleSelectChange('city', v)} value={formData.city} disabled={addrLock.cityLocked || !formData.state}>
+                                                                <SelectTrigger className={inputClasses}>
+                                                                    <SelectValue placeholder={formData.state && citiesLoadedFor !== formData.state ? "Loading cities..." : "Select Here"} />
+                                                                </SelectTrigger>
+                                                                <SelectContent>
+                                                                    {filteredCities.map(c => (
+                                                                        <SelectItem key={c._id} value={c.name} className="text-xs">{c.name === 'Other' ? 'Other (type your city)' : c.name}</SelectItem>
+                                                                    ))}
+                                                                </SelectContent>
+                                                            </Select>
+                                                        )}
                                                     </div>
+                                                    {/* Domestic: the pincode fills these in, so Country comes last */}
+                                                    {exhibitorType === 'domestic' && countryField}
 
                                                     {/* <div>
                                                         <label className={labelClasses}>NATURE OF BUSINESS <span className="text-red-500">*</span></label>
@@ -1346,10 +1457,6 @@ const BookAStand = () => {
                                                             </SelectContent>
                                                         </Select>
                                                     </div> */}
-                                                    <div>
-                                                        <label className={labelClasses}>PINCODE/Postal Code <span className="text-red-500">*</span></label>
-                                                        <input required name="pincode" value={formData.pincode} onChange={(e) => setFormData(prev => ({ ...prev, pincode: e.target.value.replace(/\D/g, '') }))} placeholder="Write Here.." className={inputClasses} inputMode="numeric" />
-                                                    </div>
                                                     <div>
                                                         <label className={labelClasses}>LANDLINE NO.</label>
                                                         <input name="landlineNo" value={formData.landlineNo} onChange={handleInputChange} placeholder="Write Here.." className={inputClasses} inputMode="numeric" />
@@ -1504,7 +1611,7 @@ const BookAStand = () => {
                                                                         required
                                                                         name="gstNo"
                                                                         value={formData.gstNo}
-                                                                        onChange={(e) => setFormData(prev => ({ ...prev, gstNo: e.target.value.toUpperCase() }))}
+                                                                        onChange={(e) => setFormData(prev => ({ ...prev, gstNo: e.target.value.replace(/[^A-Za-z0-9]/g, '').toUpperCase().slice(0, 15) }))}
                                                                         placeholder="e.g. 07AABCU9603R1ZX"
                                                                         maxLength={15}
                                                                         className={inputClasses}
@@ -1523,7 +1630,7 @@ const BookAStand = () => {
                                                                         required
                                                                         name="panNo"
                                                                         value={formData.panNo}
-                                                                        onChange={(e) => setFormData(prev => ({ ...prev, panNo: e.target.value.toUpperCase() }))}
+                                                                        onChange={(e) => setFormData(prev => ({ ...prev, panNo: e.target.value.replace(/[^A-Za-z0-9]/g, '').toUpperCase().slice(0, 10) }))}
                                                                         placeholder="e.g. ABCDE1234F"
                                                                         maxLength={10}
                                                                         className={inputClasses}
@@ -1663,7 +1770,7 @@ const BookAStand = () => {
                                                         </div>
                                                         <div>
                                                             <label className={labelClasses}>ALTERNATE NO. <span className="text-red-500">*</span></label>
-                                                            <input required name="contact1.alternateNo" value={formData.contact1.alternateNo} onChange={handleInputChange} placeholder={exhibitorType === 'domestic' ? "10-digit number" : "Write Here.."} className={inputClasses} inputMode={exhibitorType === 'domestic' ? 'numeric' : 'text'} maxLength={exhibitorType === 'domestic' ? 10 : undefined} />
+                                                            <input required name="contact1.alternateNo" autoComplete="section-alternate tel-national" value={formData.contact1.alternateNo} onChange={handleInputChange} placeholder={exhibitorType === 'domestic' ? "10-digit number" : "Write Here.."} className={inputClasses} inputMode={exhibitorType === 'domestic' ? 'numeric' : 'text'} maxLength={exhibitorType === 'domestic' ? 10 : undefined} />
                                                         </div>
                                                     </div>
                                                 </div>
@@ -1699,7 +1806,9 @@ const BookAStand = () => {
                                                                             <SelectItem key={s._id || s.id} value={String(s._id || s.id)} className="text-xs">Stall {s.stallNumber || s.stallName || s.name || s.id}</SelectItem>
                                                                         ))
                                                                     ) : (
-                                                                        <div className="text-xs p-2 text-slate-500 text-center">No stalls available</div>
+                                                                        <div className="text-xs p-2 text-slate-500 text-center">
+                                                                            {events.length ? "No stalls available right now. Please contact our sales team." : "Stall booking is not open yet. Please contact our sales team."}
+                                                                        </div>
                                                                     )}
                                                                 </SelectContent>
                                                             </Select>
@@ -1833,9 +1942,11 @@ const BookAStand = () => {
                                                             </label>
                                                         </div>
 
+                                                        {/* Discount Offers image — hidden for now
                                                         <div className="w-[25%] flex justify-end items-end">
-                                                            <img loading="lazy" decoding="async" src={DiscountImg.src} alt="Discount Offers" className="w-full h-[160px] object-contain" />
+                                                            <Image width={0} height={0} sizes="100vw" loading="lazy" decoding="async" src={DiscountImg.src} alt="Discount Offers" className="w-full h-[160px] object-contain" />
                                                         </div>
+                                                        */}
                                                     </div>
 
                                                     {/* Right: Summary Card */}
@@ -2027,10 +2138,10 @@ const BookAStand = () => {
     );
 };
 
-export default function BookAStandPage() {
+export default function BookAStandPage({ disabledSections = [] }: { disabledSections?: string[] }) {
     return (
         <Suspense fallback={<div className="min-h-screen flex items-center justify-center bg-[#f7faf5] text-[#3b8c2a] font-bold">Loading...</div>}>
-            <BookAStand />
+            <BookAStand disabledSections={disabledSections} />
         </Suspense>
     );
 }

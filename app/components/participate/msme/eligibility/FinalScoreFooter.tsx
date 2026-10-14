@@ -13,7 +13,7 @@ import {
   Download,
   Headphones,
 } from "lucide-react";
-import { useEligibility } from "./EligibilityContext";
+import { useEligibility, type UdyamExtractedData } from "./EligibilityContext";
 
 /* =========================================================
    STATUS ITEM
@@ -65,9 +65,10 @@ interface ActionButtonProps {
   icon: React.ReactNode;
   href?: string;
   target?: string;
+  onClick?: () => void;
 }
 
-const ActionButton = ({ children, primary = false, icon, href, target }: ActionButtonProps) => {
+const ActionButton = ({ children, primary = false, icon, href, target, onClick }: ActionButtonProps) => {
   const className = `h-[44px] w-full rounded-[6px] px-4 flex items-center justify-center gap-2 text-[12px] font-semibold uppercase transition-all ${primary ? `bg-[#176b27] text-white hover:bg-[#115d20]` : `bg-white border border-[#91a592] text-[#28552f] hover:bg-[#f7faf7]`}`;
 
   if (href) {
@@ -80,7 +81,7 @@ const ActionButton = ({ children, primary = false, icon, href, target }: ActionB
   }
 
   return (
-    <button type="button" className={className}>
+    <button type="button" onClick={onClick} className={className}>
       <span>{children}</span>
       {icon}
     </button>
@@ -88,11 +89,53 @@ const ActionButton = ({ children, primary = false, icon, href, target }: ActionB
 };
 
 /* =========================================================
+   ELIGIBILITY SUMMARY (print / save as PDF)
+========================================================= */
+
+const escapeHtml = (value: string) =>
+  value.replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c] as string));
+
+function printEligibilitySummary(result: UdyamExtractedData | null, checkedAt: Date | null) {
+  const win = window.open("", "_blank", "width=820,height=900");
+  if (!win) return;
+  const read = result?.documentType === "valid_udyam_certificate";
+  const fields: [string, string | null | undefined][] = [
+    ["Enterprise Name", result?.enterpriseName],
+    ["Udyam Registration Number", result?.udyamRegistrationNumber],
+    ["Enterprise Type", result?.enterpriseType],
+    ["Major Activity", result?.majorActivity],
+    ["Social Category", result?.socialCategory],
+    ["Gender", result?.gender],
+    ["Date of Udyam Registration", result?.dateOfUdyamRegistration],
+    ["State", result?.state],
+    ["District", result?.district],
+  ];
+  const rows = fields
+    .map(([label, value]) => `<tr><td class="l">${label}</td><td>${value ? escapeHtml(String(value)) : "—"}</td></tr>`)
+    .join("");
+  const status = read
+    ? "Udyam certificate details were read successfully."
+    : "No Udyam certificate has been read yet. Upload it on the eligibility page to fill in this summary.";
+  const when = (checkedAt || new Date()).toLocaleString("en-IN", { dateStyle: "medium", timeStyle: "short" });
+  win.document.write(`<!doctype html><html><head><meta charset="utf-8"><title>PMS Eligibility Summary – Bharat Organic Expo</title>
+<style>body{font-family:Arial,Helvetica,sans-serif;color:#142347;margin:32px}h1{color:#1b5e20;font-size:22px;margin:0 0 4px}p{color:#555;font-size:13px;margin:0 0 14px}
+.s{background:#f4f9f1;border:1px solid #d9e6d6;border-radius:6px;padding:10px 12px;color:#1b5e20;font-weight:bold}
+table{width:100%;border-collapse:collapse}td{border-bottom:1px solid #e3e8e3;padding:9px 8px;font-size:14px}.l{width:42%;color:#555}
+footer{margin-top:20px;font-size:11.5px;color:#777}</style></head><body>
+<h1>PMS Eligibility Summary</h1><p>Bharat Organic Expo 2027 · Generated on ${escapeHtml(when)}</p>
+<p class="s">${status}</p><table>${rows}</table>
+<footer>This is a preliminary summary only, not an approval. Final eligibility is decided as per Ministry of MSME PMS guidelines.<br>Help: +91 96549 00525 · info@namogangewellness.com</footer>
+<script>window.onload=function(){window.print()}</script></body></html>`);
+  win.document.close();
+}
+
+/* =========================================================
    MAIN COMPONENT
 ========================================================= */
 
 const FinalScoreFooter = () => {
-  const { result } = useEligibility();
+  const { result, checkedAt } = useEligibility();
+  const downloadSummary = () => printEligibilitySummary(result, checkedAt);
   const hasResult = result && result.documentType === "valid_udyam_certificate";
 
   const statusItems = [
@@ -159,7 +202,7 @@ const FinalScoreFooter = () => {
             Book Your Stall
           </ActionButton>
 
-          <ActionButton icon={<Download size={27} strokeWidth={2.2} />}>
+          <ActionButton onClick={downloadSummary} icon={<Download size={27} strokeWidth={2.2} />}>
             Download Eligibility Summary
           </ActionButton>
 
@@ -212,7 +255,7 @@ const FinalScoreFooter = () => {
           <ActionButton href="/participate/why-exhibit" icon={<ArrowRight size={20} />}>
             Book Your Stall
           </ActionButton>
-          <ActionButton icon={<Download size={20} />}>
+          <ActionButton onClick={downloadSummary} icon={<Download size={20} />}>
             Download Eligibility Summary
           </ActionButton>
           <ActionButton href="/contact" icon={<Headphones size={20} />}>

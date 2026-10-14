@@ -1,10 +1,13 @@
 import React, { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { CheckCircle, ShieldCheck, Zap, Handshake, Users, Award } from "lucide-react";
+import { API_URL, postResult, verifyApi } from "@/lib/api";
+import { emailProblem } from "@/lib/emailCheck";
 
 import pop1 from "../../assets/icons/icon1.png";
 import leaf2 from "../../assets/icons/bleaf.webp";
 import why1 from "../../assets/icons/icon2.png";
+import Image from "next/image";
 
 const Sparkle = ({ style, color = '#fff176' }: { style?: React.CSSProperties, color?: string }) => (
   <span
@@ -87,6 +90,65 @@ export default function PartnershipPopup({ isOpen, onClose, initialService }: Pa
 
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
+  const [submitError, setSubmitError] = useState("");
+
+  // WhatsApp OTP for the mobile number
+  const [otpSent, setOtpSent] = useState(false);
+  const [otpVerified, setOtpVerified] = useState(false);
+  const [otp, setOtp] = useState("");
+  const [otpBusy, setOtpBusy] = useState(false);
+  const [otpError, setOtpError] = useState("");
+  const [resendTimer, setResendTimer] = useState(0);
+
+  useEffect(() => {
+    if (resendTimer <= 0) return;
+    const id = setTimeout(() => setResendTimer((t) => t - 1), 1000);
+    return () => clearTimeout(id);
+  }, [resendTimer]);
+
+  const resetOtp = () => {
+    setOtpSent(false);
+    setOtpVerified(false);
+    setOtp("");
+    setOtpError("");
+    setResendTimer(0);
+  };
+
+  const sendOtp = async () => {
+    if (!/^[6-9]\d{9}$/.test(formData.mobile)) {
+      setOtpError("Enter a valid 10-digit mobile number.");
+      return;
+    }
+    setOtpBusy(true);
+    setOtpError("");
+    try {
+      const res = await verifyApi.sendPhoneOtp(formData.mobile, "PARTNERSHIP", formData.fullName);
+      if (!res?.success) throw new Error(res?.message || "");
+      setOtpSent(true);
+      setOtp("");
+      setResendTimer(30);
+    } catch (err) {
+      setOtpError((err as Error).message || "Failed to send OTP.");
+    }
+    setOtpBusy(false);
+  };
+
+  const verifyOtp = async () => {
+    if (otp.length !== 6) {
+      setOtpError("Enter the 6-digit OTP.");
+      return;
+    }
+    setOtpBusy(true);
+    setOtpError("");
+    try {
+      const res = await verifyApi.verifyPhoneOtp(formData.mobile, otp);
+      if (!res?.success) throw new Error(res?.message || "");
+      setOtpVerified(true);
+    } catch (err) {
+      setOtpError((err as Error).message || "Verification failed.");
+    }
+    setOtpBusy(false);
+  };
 
   const [whatsappNumber, setWhatsappNumber] = useState("9654900525");
   const [whatsappMessage, setWhatsappMessage] = useState("Hello! I would like to know more about the Bharat Organic Expo 2027 Sponsorship Opportunities.");
@@ -105,30 +167,60 @@ export default function PartnershipPopup({ isOpen, onClose, initialService }: Pa
     } else if (!isOpen) {
       setSelectedServices([]);
       setIsSubmitted(false);
+      setSubmitError("");
       setFormData({ fullName: "", companyName: "", mobile: "", email: "", stallSize: "", message: "" });
+      resetOtp();
     }
   }, [initialService, isOpen]);
+
+  // Submit stays hidden until every required (*) field is filled
+  const requiredFilled =
+    !!formData.fullName.trim() &&
+    !!formData.companyName.trim() &&
+    formData.mobile.length === 10 &&
+    !!formData.email.trim() &&
+    (!!initialService || selectedServices.length > 0);
 
   const toggleService = (id: string) => setSelectedServices(p => p.includes(id) ? p.filter(s => s !== id) : [...p, id]);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
     if (name === "message") setCharCount(value.length);
-    setFormData(p => ({ ...p, [name]: value }));
+    setFormData(p => ({ ...p, [name]: name === "mobile" ? value.replace(/\D/g, "").slice(0, 10) : value }));
   };
 
+  /** Sends the enquiry to the backend (Admin → Partnership Enquiries, category "E-Promotion: …") */
   const handleSubmit = async () => {
-    if (!formData.fullName || !formData.companyName || !formData.mobile || !formData.email) {
-      alert("Please fill all required fields");
+    const name = formData.fullName.trim();
+    const interests = serviceOptions.filter((s) => selectedServices.includes(s.id)).map((s) => s.label);
+    const problem =
+      (!name && "Please enter your full name.") ||
+      (!/^\p{L}[\p{L}\p{M} .'-]{1,59}$/u.test(name) && "Full name can contain letters only.") ||
+      (!formData.companyName.trim() && "Please enter your company name.") ||
+      (!/^[6-9]\d{9}$/.test(formData.mobile) && "Please enter a valid 10-digit mobile number.") ||
+      emailProblem(formData.email, "Email") ||
+      (!initialService && interests.length === 0 && "Please choose what you are interested in.") ||
+      (!otpVerified && "Please verify your mobile number with the WhatsApp OTP.") ||
+      "";
+    if (problem) {
+      setSubmitError(problem);
       return;
     }
 
     setIsSubmitting(true);
-    // Simulate API call
-    setTimeout(() => {
-      setIsSubmitted(true);
-      setIsSubmitting(false);
-    }, 1500);
+    setSubmitError("");
+    const res = await postResult(`${API_URL}/partnership-enquiry/e-promotion`, {
+      name,
+      organization: formData.companyName.trim(),
+      phone: formData.mobile,
+      email: formData.email.trim().toLowerCase(),
+      opportunity: initialService || "",
+      interests,
+      message: formData.message.trim(),
+    });
+    setIsSubmitting(false);
+    if (res.ok) setIsSubmitted(true);
+    else setSubmitError(res.message);
   };
 
   return (
@@ -220,7 +312,7 @@ export default function PartnershipPopup({ isOpen, onClose, initialService }: Pa
                 transition={{ delay: 0.3 }}
               >
                 <div className="w-12 h-12 bg-white rounded-full flex items-center justify-center border-2 border-[#2d6a2d] p-1 shadow-sm flex-shrink-0">
-                  <img loading="lazy" decoding="async" src={pop1.src} alt="Support" className="w-full h-full object-contain" />
+                  <Image width={0} height={0} sizes="100vw" loading="lazy" decoding="async" src={pop1.src} alt="Support" className="w-full h-full object-contain" />
                 </div>
                 <div>
                   <h2 className="text-[19px] font-bold text-[#1b5e20] leading-tight tracking-tight font-poppins uppercase">Sponsorship Enquiry</h2>
@@ -240,14 +332,14 @@ export default function PartnershipPopup({ isOpen, onClose, initialService }: Pa
                   >
                     <div className="grid grid-cols-2 gap-4 px-1">
                       <div>
-                        <label className="text-[9.5px] font-bold text-black uppercase tracking-wide block mb-1">Full Name *</label>
+                        <label className="text-[9.5px] font-bold text-black uppercase tracking-wide block mb-1">Full Name <span className="text-red-600">*</span></label>
                         <div className="relative">
                           <span className="absolute left-2.5 top-1/2 -translate-y-1/2 text-gray-400"><svg viewBox="0 0 20 20" className="w-3.5 h-3.5" fill="none" stroke="currentColor" strokeWidth="1.5"><circle cx="10" cy="6" r="3" /><path d="M3 18a7 7 0 0114 0" strokeLinecap="round" /></svg></span>
                           <input type="text" name="fullName" placeholder="Full Name" value={formData.fullName} onChange={handleChange} className="w-full pl-7 pr-3 py-2 border border-gray-200 rounded-lg text-[11.5px] bg-gray-50/50 focus:outline-none focus:border-[#2d6a2d] focus:bg-white transition-all placeholder:text-gray-500" />
                         </div>
                       </div>
                       <div>
-                        <label className="text-[9.5px] font-bold text-black uppercase tracking-wide block mb-1">Company Name *</label>
+                        <label className="text-[9.5px] font-bold text-black uppercase tracking-wide block mb-1">Company Name <span className="text-red-600">*</span></label>
                         <div className="relative">
                           <span className="absolute left-2.5 top-1/2 -translate-y-1/2 text-gray-400"><svg viewBox="0 0 20 20" className="w-3.5 h-3.5" fill="none" stroke="currentColor" strokeWidth="1.5"><rect x="2" y="6" width="16" height="12" rx="1" /><path d="M6 6V4a4 4 0 018 0v2" strokeLinecap="round" /></svg></span>
                           <input type="text" name="companyName" placeholder="Company Name" value={formData.companyName} onChange={handleChange} className="w-full pl-7 pr-3 py-2 border border-gray-200 rounded-lg text-[11.5px] bg-gray-50/50 focus:outline-none focus:border-[#2d6a2d] focus:bg-white transition-all placeholder:text-gray-500" />
@@ -258,17 +350,42 @@ export default function PartnershipPopup({ isOpen, onClose, initialService }: Pa
                     <div className="grid grid-cols-2 gap-4 px-1">
                       <div>
                         <label className="text-[9.5px] font-bold text-black uppercase tracking-wide block mb-1 flex justify-between items-center">
-                          Mobile Number *
+                          <span>Mobile Number <span className="text-red-600">*</span></span>
                         </label>
                         <div className="relative">
                           <span className="absolute left-2.5 top-1/2 -translate-y-1/2 text-gray-400"><svg viewBox="0 0 20 20" className="w-3.5 h-3.5" fill="none" stroke="currentColor" strokeWidth="1.5"><rect x="5" y="2" width="10" height="16" rx="2" /><circle cx="10" cy="15" r="0.7" fill="currentColor" /></svg></span>
-                          <input type="tel" name="mobile" placeholder="Mobile Number" value={formData.mobile} onChange={handleChange} className="w-full pl-7 pr-3 py-2 border border-gray-200 rounded-lg text-[11.5px] bg-gray-50/50 focus:outline-none focus:border-[#2d6a2d] focus:bg-white transition-all placeholder:text-gray-500" />
+                          <input type="tel" name="mobile" placeholder="Mobile Number" value={formData.mobile} onChange={handleChange} readOnly={otpSent || otpVerified} maxLength={10} className="w-full pl-7 pr-12 py-2 border border-gray-200 rounded-lg text-[11.5px] bg-gray-50/50 focus:outline-none focus:border-[#2d6a2d] focus:bg-white transition-all placeholder:text-gray-500" />
+                          {otpVerified ? (
+                            <CheckCircle className="absolute right-2.5 top-1/2 -translate-y-1/2 w-4 h-4 text-[#2d6a2d]" />
+                          ) : !otpSent ? (
+                            <button type="button" onClick={sendOtp} disabled={otpBusy || formData.mobile.length !== 10} className="absolute right-1.5 top-1/2 -translate-y-1/2 px-2 py-1 rounded-md bg-[#2d6a2d] text-white text-[9px] font-bold uppercase disabled:opacity-50">
+                              {otpBusy ? "..." : "OTP"}
+                            </button>
+                          ) : (
+                            <button type="button" onClick={resetOtp} className="absolute right-2 top-1/2 -translate-y-1/2 text-[9px] font-bold uppercase text-gray-500 hover:underline">
+                              Change
+                            </button>
+                          )}
                         </div>
+                        {otpSent && !otpVerified && (
+                          <div className="mt-1.5 flex gap-1.5">
+                            <input type="text" inputMode="numeric" autoComplete="one-time-code" maxLength={6} value={otp} onChange={(e) => setOtp(e.target.value.replace(/\D/g, ""))} placeholder="WhatsApp OTP" className="min-w-0 flex-1 px-2.5 py-1.5 border border-gray-200 rounded-lg text-[11.5px] tracking-widest focus:outline-none focus:border-[#2d6a2d]" />
+                            <button type="button" onClick={verifyOtp} disabled={otpBusy} className="px-2.5 rounded-lg bg-[#2d6a2d] text-white text-[9px] font-bold uppercase disabled:opacity-50">
+                              {otpBusy ? "..." : "Verify"}
+                            </button>
+                          </div>
+                        )}
+                        {otpSent && !otpVerified && (
+                          <button type="button" onClick={sendOtp} disabled={resendTimer > 0 || otpBusy} className="mt-1 text-[9.5px] font-semibold text-[#2d6a2d] disabled:text-gray-400">
+                            {resendTimer > 0 ? `Resend OTP in ${resendTimer}s` : "Resend OTP"}
+                          </button>
+                        )}
+                        {otpError && <p className="mt-1 text-[10px] text-red-600">{otpError}</p>}
                       </div>
 
                       <div>
                         <label className="text-[9.5px] font-bold text-black uppercase tracking-wide block mb-1 flex justify-between items-center">
-                          Email Address *
+                          <span>Email Address <span className="text-red-600">*</span></span>
                         </label>
                         <div className="relative">
                           <span className="absolute left-2.5 top-1/2 -translate-y-1/2 text-gray-400"><svg viewBox="0 0 20 20" className="w-3.5 h-3.5" fill="none" stroke="currentColor" strokeWidth="1.5"><rect x="2" y="5" width="16" height="11" rx="2" /><path d="M2 7l8 5 8-5" strokeLinecap="round" /></svg></span>
@@ -278,7 +395,7 @@ export default function PartnershipPopup({ isOpen, onClose, initialService }: Pa
                     </div>
 
                     <div className="px-2">
-                      <label className="text-[10px] font-bold text-black uppercase tracking-wide block mb-2">Select Interest Area(s) *</label>
+                      <label className="text-[10px] font-bold text-black uppercase tracking-wide block mb-2">Select Interest Area(s) <span className="text-red-600">*</span></label>
                       <div className="grid grid-cols-3 sm:grid-cols-6 gap-2">
                         {serviceOptions.map(s => {
                           const checked = selectedServices.includes(s.id);
@@ -315,13 +432,19 @@ export default function PartnershipPopup({ isOpen, onClose, initialService }: Pa
                     </div>
                   </motion.div>
 
+                  {submitError && (
+                    <p className="mt-3 px-2 text-[11.5px] font-semibold text-red-600" role="alert">
+                      {submitError}
+                    </p>
+                  )}
+
                   <motion.div
-                    className="flex flex-wrap gap-2.5 mt-8 mb-4 px-2 flex-shrink-0"
+                    className={`flex flex-wrap gap-2.5 ${submitError ? "mt-3" : "mt-8"} mb-4 px-2 flex-shrink-0`}
                     initial={{ opacity: 0, y: 10 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: 0.5 }}
                   >
-                    <div className="relative group/btn flex-1 min-w-[140px]">
+                    {requiredFilled && <div className="relative group/btn flex-1 min-w-[140px]">
                       <Sparkle style={{ top: '-10px', left: '10%', animationDelay: '0.1s' }} />
                       <Sparkle style={{ top: '-8px', right: '15%', animationDelay: '0.9s' }} />
                       <Sparkle style={{ bottom: '-10px', left: '25%', animationDelay: '0.3s' }} />
@@ -335,7 +458,7 @@ export default function PartnershipPopup({ isOpen, onClose, initialService }: Pa
                         {isSubmitting ? "SUBMITTING..." : "SUBMIT"}
                         {!isSubmitting && <svg viewBox="0 0 20 20" className="w-3 h-3" fill="none" stroke="white" strokeWidth="2.5"><path d="M4 10h12M10 4l6 6-6 6" strokeLinecap="round" strokeLinejoin="round" /></svg>}
                       </button>
-                    </div>
+                    </div>}
 
                     <a
                       href={whatsappUrl}
@@ -352,7 +475,7 @@ export default function PartnershipPopup({ isOpen, onClose, initialService }: Pa
                     <div className="relative group/btn flex-1 min-w-[120px]">
                       <Sparkle color="#a2d149" style={{ top: '-8px', left: '15%', animationDelay: '0.2s' }} />
                       <Sparkle color="#a2d149" style={{ bottom: '-8px', right: '10%', animationDelay: '0.6s' }} />
-                      <a href="tel:+91 9654900525" className="w-full">
+                      <a href="tel:+919654900525" className="w-full">
                         <button type="button" className="green-btn-pp w-full text-white font-black text-[9.5px] tracking-widest uppercase py-2.5 rounded-lg flex items-center justify-center gap-1.5 transition-all hover:scale-[1.02] shadow-lg">
                           <svg viewBox="0 0 24 24" className="w-3.5 h-3.5" fill="currentColor"><path d="M20 15.5c-1.25 0-2.45-.2-3.57-.57a1.02 1.02 0 00-1.02.24l-2.2 2.2a15.05 15.05 0 01-6.59-6.59l2.2-2.2a1 1 0 00.25-1.02A11.36 11.36 0 018.5 4c0-.55-.45-1-1-1H4c-.55 0-1 .45-1 1 0 9.39 7.61 17 17 17 .55 0 1-.45 1-1v-3.5c0-.55-.45-1-1-1z" /></svg>
                           QUICK CALL
@@ -397,7 +520,7 @@ export default function PartnershipPopup({ isOpen, onClose, initialService }: Pa
               >
                 <div className="flex justify-center mb-3">
                   <div className="w-14 h-14 bg-white rounded-full flex items-center justify-center shadow-md border-2 border-[#2d6a2d] p-0.5 relative">
-                    <img loading="lazy" decoding="async" src={why1.src} alt="Why Us" className="w-full h-full object-contain" />
+                    <Image width={0} height={0} sizes="100vw" loading="lazy" decoding="async" src={why1.src} alt="Why Us" className="w-full h-full object-contain" />
                   </div>
                 </div>
 
@@ -436,7 +559,7 @@ export default function PartnershipPopup({ isOpen, onClose, initialService }: Pa
                 animate={{ opacity: 1, scale: 1, rotate: -12 }}
                 transition={{ delay: 1.2, duration: 1 }}
               >
-                <img loading="lazy" decoding="async" src={leaf2.src} alt="decoration" className="w-full h-full object-contain" />
+                <Image width={0} height={0} sizes="100vw" loading="lazy" decoding="async" src={leaf2.src} alt="decoration" className="w-full h-full object-contain" />
               </motion.div>
             </div>
           </motion.div>

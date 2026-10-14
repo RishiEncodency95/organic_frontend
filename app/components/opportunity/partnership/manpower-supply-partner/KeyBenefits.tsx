@@ -8,6 +8,7 @@ import p5og from "@/app/assets/icons/p5og.png";
 import p7og from "@/app/assets/icons/p7og.png";
 import pleaf from "@/app/assets/icons/pleaf.webp";
 import SectionContainer from "@/app/components/layout/SectionContainer";
+import Image from "next/image";
 
 const ICON_MAP: Record<string, any> = {
   p1og,
@@ -56,10 +57,10 @@ export default function KeyBenefits() {
 
   return (
     <section className="pt-6 pb-0 bg-white relative overflow-hidden">
-      <img 
+      <Image width={0} height={0} sizes="100vw" 
         src={pleaf.src} 
         alt="Leaf Decoration" 
-        className="absolute left-0 top-1/2 -translate-y-1/2 w-16 md:w-24 object-contain pointer-events-none z-0 opacity-100" 
+        className="absolute left-0 top-1/2 -translate-y-1/2 w-16 md:w-24 object-contain pointer-events-none z-0 opacity-100 h-auto" 
       />
 
       <SectionContainer className="relative z-10">
@@ -81,12 +82,12 @@ export default function KeyBenefits() {
                     : "border-r-0 lg:border-r lg:border-gray-300"
               }`}
             >
-              <img 
+              <Image width={0} height={0} sizes="100vw" 
                 src={ICON_MAP[item.iconKey].src} 
                 alt="" 
                 className="w-[80px] h-[80px] object-contain mb-4 transition-transform hover:scale-105 duration-200" 
               />
-              <p className="text-[10px] md:text-[11px] font-bold text-gray-950 uppercase tracking-wide whitespace-pre-line leading-tight font-inter">
+              <p className="text-[11px] font-bold text-gray-950 uppercase tracking-wide whitespace-pre-line leading-tight font-inter">
                 {item.title}
               </p>
             </div>

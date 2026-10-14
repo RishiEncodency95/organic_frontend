@@ -7,8 +7,11 @@ import DomesticForm from "../../components/registration/buyer-registration/Domes
 import InternationalForm from "../../components/registration/buyer-registration/InternationalForm";
 import { ShieldCheck } from "lucide-react";
 import SectionContainer from "@/app/components/layout/SectionContainer";
+import { makeSectionGate } from "@/lib/sectionGate";
 
-export default function BuyerRegistrationPage() {
+// `disabledSections`: buyerRegistrationPage section keys switched off in admin.
+export default function BuyerRegistrationPage({ disabledSections = [] }: { disabledSections?: string[] }) {
+  const show = makeSectionGate(disabledSections);
   const [buyerType, setBuyerType] = useState<"domestic" | "international" | null>(null);
   const formRef = useRef<HTMLDivElement>(null);
 
@@ -22,13 +25,13 @@ export default function BuyerRegistrationPage() {
     <main className="min-h-screen bg-[#FDFDFD] font-inter text-slate-900">
 
       {/* Hero Section */}
-      <BuyerHero />
+      {show("buyer-hero") && <BuyerHero />}
 
       {/* Feature Strip */}
       <FeatureStrip />
 
       {/* Category Selector */}
-      <CategorySelect buyerType={buyerType} onChange={setBuyerType} />
+      {show("buyer-categories") && <CategorySelect buyerType={buyerType} onChange={setBuyerType} />}
 
       {/* Registration Form */}
       <div ref={formRef} className="scroll-mt-10">

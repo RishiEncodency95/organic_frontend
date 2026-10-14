@@ -5,6 +5,7 @@ import { ArrowRight, HelpCircle } from "lucide-react";
 import imgPlaceholder from "../../assets/image/footog.webp";
 import SectionContainer from "@/app/components/layout/SectionContainer";
 import { CTA_BANNER_DATA } from "@/app/data/buyerSellerMeetData";
+import Image from "next/image";
 
 export default function CtaBanner() {
   const data = CTA_BANNER_DATA[0];
@@ -15,7 +16,7 @@ export default function CtaBanner() {
         <div className="flex flex-col md:flex-row items-center">
 
           <div className="w-full md:w-1/4 lg:w-[22%] h-48 md:h-auto self-stretch relative hidden md:block">
-            <img src={imgPlaceholder.src} alt="Buyer Seller Meet" className="w-full h-full object-cover" />
+            <Image width={0} height={0} sizes="100vw" src={imgPlaceholder.src} alt="Buyer Seller Meet" className="w-full h-full object-cover" />
             <div className="absolute inset-0 bg-gradient-to-r from-transparent to-[#0f2115]" />
           </div>
 

@@ -6,6 +6,7 @@ import bgImage from "../../../assets/banner/b2rrog.webp";
 import footerLogo from "../../../assets/logos/footerlogo.png";
 import gsap from "gsap";
 import SectionContainer from "../../layout/SectionContainer";
+import Image from "next/image";
 
 const Sparkle = ({
   style,
@@ -175,7 +176,7 @@ export default function BuyerRegistrationHero() {
       >
         {/* Background Image */}
         <div className="absolute inset-0 z-0 overflow-hidden">
-          <img
+          <Image loading="eager" width={0} height={0} sizes="100vw"
             src={bgImage.src}
             alt="Register as a Buyer – Bharat Organic Expo"
             className="buyer-hero-bg w-full h-full object-cover object-left"

@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
@@ -15,6 +15,7 @@ import {
 import navbarLogo from "../../assets/logos/navbarlogo1.png";
 import SectionContainer from "@/app/components/layout/SectionContainer";
 import { lockScroll, unlockScroll } from "@/lib/scrollLock";
+import { fetchHiddenPageKeysFresh, isLinkHidden } from "@/lib/pageVisibility";
 
 // Local cn utility since @/lib/utils is missing
 const cn = (...classes: (string | undefined | null | false)[]) => classes.filter(Boolean).join(" ");
@@ -38,7 +39,7 @@ const navLinks = [
         dropdown: [
             { label: "Why Exhibit at ORGANIC EXPO?", path: "/why-exhibit", icon: HelpCircle, description: "Maximize your brand visibility and growth" },
             { label: "Exhibitor List", path: "/exhibitors", icon: FileCheck, description: "View the list of confirmed participating brands" },
-            { label: "Why Visit ORGANIC EXPO", path: "/why-visit", icon: Layout, description: "Secure your premium space at ORGANIC EXPO 2026" },
+            { label: "Why Visit ORGANIC EXPO", path: "/participate/why-visit", icon: Layout, description: "Secure your premium space at ORGANIC EXPO 2026" },
             // { label: "Buyer-Seller Meet", path: "/buyer-seller-meet", icon: Users, description: "Connect with buyers and sellers at ORGANIC EXPO" },
             { label: "MSME PMS Scheme", path: "/participate/msme", icon: ShieldCheck, description: "Government subsidy for MSME exhibitors" },
         ],
@@ -50,7 +51,8 @@ const navLinks = [
     {
         label: "Opportunities",
         dropdown: [
-            { label: "Sponsorship", path: "/sponsership", icon: FileCheck, description: "Get your complimentary visitor pass today" },
+            // Hidden from the Opportunities dropdown on request; still linked from Register Now
+            // { label: "Sponsorship", path: "/sponsership", icon: FileCheck, description: "Get your complimentary visitor pass today" },
             { label: "E-Promotion Opportunity", path: "/e-promotion-web", icon: ShoppingBag, description: "Explore opportunities as a domestic or international buyer" },
             { label: "Partnership / Collaboration", path: "/partnership", icon: Sparkles, description: "Experience the latest in health & wellness" },
         ],
@@ -73,10 +75,10 @@ const bottomTabs = [
 const registrationOptions = [
     { label: "BOOK A STALL", path: "/registration/book-a-stand", icon: Store, color: "green" },
     { label: "REGISTER AS VISITOR", path: "/registration/visitor-registration", icon: UserPlus, color: "orange" },
-    { label: "DELEGATE REGISTRATION", path: "https://arogya.namogange.org/", icon: Globe, color: "green", isExternal: true },
+    { label: "DELEGATE REGISTRATION", path: "https://arogya.namogange.org/", icon: Globe, color: "green", isExternal: true, pageKey: "delegateRegistrationPage" },
     { label: "REGISTER AS BUYER", path: "/registration/buyer-registration", icon: Users, color: "orange" },
-    { label: "SPONSORSHIP OPPORTUNITIES", path: "/sponsership", icon: Award, color: "green" },
-    { label: "TALK TO EXPO ADVISOR", path: "tel:+919654900525", icon: Phone, color: "orange" },
+    { label: "SPONSORSHIP OPPORTUNITIES", path: "/sponsorship", icon: Award, color: "green" },
+    { label: "TALK TO EXPO ADVISOR", path: "tel:+919654900525", icon: Phone, color: "orange", pageKey: "contactPage" },
 ];
 
 const quickPills = [
@@ -86,6 +88,12 @@ const quickPills = [
     { label: "Careers", path: "/careers" },
     { label: "Exhibitor List", path: "/exhibitors" },
     { label: "Seller Reg.", path: "/seller-registration" },
+];
+
+const loginButtons = [
+    { label: "Exhibitor Login", path: "/exhibitor-login", className: "uiverse-btn-exhibitor" },
+    { label: "Buyer Login", path: "/buyer-login", className: "uiverse-btn-buyer" },
+    { label: "Delegates Login", path: "/delegates-login", className: "uiverse-btn-delegates" },
 ];
 
 // Icons for dropdown parent links
@@ -105,12 +113,36 @@ const standaloneLinks = [
     { label: "Contact", path: "/contact", icon: Phone },
 ];
 
-const Navbar = () => {
+// `initialHiddenPageKeys`: pages unpublished in admin (Pages & CMS → Published toggle),
+// fetched server-side by the root layout; refreshed client-side on each navigation so a
+// toggle shows up without waiting for the cached layout to revalidate.
+const Navbar = ({ initialHiddenPageKeys = [] }: { initialHiddenPageKeys?: string[] }) => {
     const [scrolled, setScrolled] = useState(false);
     const [mobileOpen, setMobileOpen] = useState(false);
     const [activeDropdown, setActiveDropdown] = useState<string | null>(null);
     const [mobileAccordion, setMobileAccordion] = useState<string | null>(null);
+    const [hiddenPageKeys, setHiddenPageKeys] = useState<string[]>(initialHiddenPageKeys);
     const pathname = usePathname();
+
+    useEffect(() => {
+        let active = true;
+        fetchHiddenPageKeysFresh().then((keys) => {
+            if (active && keys) setHiddenPageKeys(keys);
+        });
+        return () => { active = false; };
+    }, [pathname]);
+
+    const hiddenSet = useMemo(() => new Set(hiddenPageKeys), [hiddenPageKeys]);
+    const isVisible = (path?: string, pageKey?: string) => !isLinkHidden(hiddenSet, path, pageKey);
+
+    const visibleNavLinks = navLinks
+        .map((link) => (link.dropdown ? { ...link, dropdown: link.dropdown.filter((item) => isVisible(item.path)) } : link))
+        .filter((link) => (link.dropdown ? link.dropdown.length > 0 : isVisible(link.path)));
+    const visibleBottomTabs = bottomTabs.filter((tab) => isVisible(tab.path));
+    const visibleRegistrationOptions = registrationOptions.filter((opt) => isVisible(opt.path, opt.pageKey));
+    const visibleStandaloneLinks = standaloneLinks.filter((link) => isVisible(link.path));
+    const visibleQuickPills = quickPills.filter((pill) => isVisible(pill.path));
+    const visibleLoginButtons = loginButtons.filter((btn) => isVisible(btn.path));
 
     useEffect(() => {
         const onScroll = () => setScrolled(window.scrollY > 20);
@@ -127,6 +159,12 @@ const Navbar = () => {
     useEffect(() => {
         if (mobileOpen) lockScroll();
         return () => { if (mobileOpen) unlockScroll(); };
+    }, [mobileOpen]);
+
+    // The floating Call / WhatsApp buttons would sit on top of the open menu (see globals.css)
+    useEffect(() => {
+        document.body.classList.toggle("mobile-menu-open", mobileOpen);
+        return () => document.body.classList.remove("mobile-menu-open");
     }, [mobileOpen]);
 
     return (
@@ -161,7 +199,7 @@ const Navbar = () => {
 
                         <div className=" flex items-center">
                             <div className=" flex items-center justify-end xl:justify-center gap-1 lg:gap-4">
-                                {navLinks.map((link) => (
+                                {visibleNavLinks.map((link) => (
                                     <div
                                         key={link.label}
                                         className="relative flex items-center"
@@ -286,8 +324,8 @@ const Navbar = () => {
 
             {/* ─── MOBILE BOTTOM TAB BAR ─── */}
             <div className="xl:hidden fixed bottom-0 left-0 right-0 z-[90] bg-white/95 backdrop-blur-xl border-t border-slate-100">
-                <div className="flex items-center justify-around px-2 pt-1 pb-3">
-                    {bottomTabs.map((tab) => {
+                <div className="flex items-center justify-around px-1 pt-1 pb-3">
+                    {visibleBottomTabs.map((tab) => {
                         const isActive = pathname === tab.path;
                         return (
                             <Link
@@ -295,7 +333,7 @@ const Navbar = () => {
                                 href={tab.path}
                                 target={tab.isExternal ? "_blank" : undefined}
                                 rel={tab.isExternal ? "noopener noreferrer" : undefined}
-                                className="flex flex-col items-center gap-0.5 px-3 py-1.5 rounded-xl transition-all"
+                                className="flex min-w-0 flex-1 flex-col items-center gap-0.5 px-0.5 py-1.5 rounded-xl transition-all"
                             >
                                 <div className={cn(
                                     "w-8 h-8 rounded-xl flex items-center justify-center transition-all duration-200",
@@ -304,7 +342,7 @@ const Navbar = () => {
                                     <tab.icon className={cn("w-4 h-4 transition-colors", isActive ? "text-white" : "text-slate-800")} />
                                 </div>
                                 <span className={cn(
-                                    "text-[9px] font-medium uppercase tracking-wider transition-colors",
+                                    "text-[9px] font-medium uppercase tracking-normal min-[420px]:tracking-wider whitespace-nowrap transition-colors",
                                     isActive ? "text-[#3b8c2a]" : "text-slate-800"
                                 )}>
                                     {tab.label}
@@ -316,7 +354,7 @@ const Navbar = () => {
                     {/* Center FAB */}
                     <button
                         onClick={() => setMobileOpen(true)}
-                        className="flex flex-col items-center gap-0.5 px-3 py-1.5"
+                        className="flex min-w-0 flex-1 flex-col items-center gap-0.5 px-0.5 py-1.5"
                     >
                         <div className="w-10 h-10 rounded-xl bg-[#3b8c2a] flex items-center justify-center shadow-lg shadow-[#3b8c2a]/30 -mt-5 border-2 border-white transition-all active:scale-95">
                             <LayoutGrid className="w-5 h-5 text-white" />
@@ -352,7 +390,7 @@ const Navbar = () => {
                             <div className="px-5 mt-5">
                                 <div className="text-[9px] font-semibold text-[#3b8c2a] uppercase tracking-[0.15em] mb-3">Register Now</div>
                                 <div className="flex flex-col gap-2.5">
-                                    {registrationOptions.map((opt) => {
+                                    {visibleRegistrationOptions.map((opt) => {
                                         const commonProps = {
                                             key: opt.path,
                                             onClick: () => setMobileOpen(false),
@@ -408,7 +446,7 @@ const Navbar = () => {
                                 </Link>
 
                                 {/* Dropdown links as accordion */}
-                                {navLinks.filter(l => l.dropdown).map((link) => {
+                                {visibleNavLinks.filter(l => l.dropdown).map((link) => {
                                     const ParentIcon = dropdownIcons[link.label] || Info;
                                     const isOpen = mobileAccordion === link.label;
                                     return (
@@ -459,7 +497,7 @@ const Navbar = () => {
                                 })}
 
                                 {/* Standalone links */}
-                                {standaloneLinks.map((link) => (
+                                {visibleStandaloneLinks.map((link) => (
                                     <Link
                                         key={link.path}
                                         href={link.path}
@@ -485,7 +523,7 @@ const Navbar = () => {
                             {/* Quick Pills */}
                             <div className="px-5 mt-4">
                                 <div className="flex flex-wrap gap-2">
-                                    {quickPills.map((pill) => (
+                                    {visibleQuickPills.map((pill) => (
                                         <Link
                                             key={pill.path}
                                             href={pill.path}
@@ -502,29 +540,18 @@ const Navbar = () => {
                             <div className="px-5 mt-4 mb-2">
                                 <div className="text-[9px] font-semibold text-slate-400 uppercase tracking-[0.15em] mb-3">Account</div>
                                 <div className="grid grid-cols-2 gap-2.5">
-                                    <Link
-                                        href="/exhibitor-login"
-                                        onClick={() => setMobileOpen(false)}
-                                        className="uiverse-btn uiverse-btn-exhibitor uiverse-btn-mobile"
-                                    >
-                                        Exhibitor Login
-                                    </Link>
-                                    <Link
-                                        href="/buyer-login"
-                                        onClick={() => setMobileOpen(false)}
-                                        className="uiverse-btn uiverse-btn-buyer uiverse-btn-mobile"
-                                    >
-                                        Buyer Login
-                                    </Link>
-                                    <Link
-                                        href="/delegates-login"
-                                        onClick={() => setMobileOpen(false)}
-                                        className="uiverse-btn uiverse-btn-delegates uiverse-btn-mobile"
-                                    >
-                                        Delegates Login
-                                    </Link>
+                                    {visibleLoginButtons.map((btn) => (
+                                        <Link
+                                            key={btn.path}
+                                            href={btn.path}
+                                            onClick={() => setMobileOpen(false)}
+                                            className={`uiverse-btn ${btn.className} uiverse-btn-mobile`}
+                                        >
+                                            {btn.label}
+                                        </Link>
+                                    ))}
                                     <a
-                                        href="https://admin.bharatorganicexpo.com"
+                                        href="https://admin.ihwe.in/login"
                                         target="_blank"
                                         rel="noopener noreferrer"
                                         onClick={() => setMobileOpen(false)}

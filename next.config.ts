@@ -10,6 +10,9 @@ const nextConfig: NextConfig = {
     root: path.resolve(__dirname),
   },
   images: {
+    // Local development serves uploads from localhost (blocked by default since Next 16);
+    // production images come from public hosts, so this stays off there
+    dangerouslyAllowLocalIP: process.env.NODE_ENV !== "production",
     formats: ["image/avif", "image/webp"],
     deviceSizes: [360, 480, 640, 750, 828, 1080, 1200, 1600, 1920],
     remotePatterns: [
@@ -47,6 +50,24 @@ const nextConfig: NextConfig = {
           },
         ],
       },
+      {
+        // Lottie player runtime (see lib/dotLottie.ts): let browsers reuse it across visits.
+        source: "/dotlottie-player.wasm",
+        headers: [
+          { key: "Cache-Control", value: "public, max-age=86400, stale-while-revalidate=604800" },
+        ],
+      },
+    ];
+  },
+  async redirects() {
+    // Old misspelled addresses → the correct one (permanent, so Google and old links follow).
+    return [
+      { source: "/sponsership", destination: "/sponsorship", permanent: true },
+      { source: "/participate_as_exhibiture", destination: "/participate-as-exhibitor", permanent: true },
+      { source: "/about/suport_services", destination: "/about/support-services", permanent: true },
+      { source: "/careers/uploade_cv", destination: "/careers/upload-cv", permanent: true },
+      // One address per page: the admin SEO record and CMS use /participate/why-visit
+      { source: "/why-visit", destination: "/participate/why-visit", permanent: true },
     ];
   },
   async rewrites() {
@@ -71,6 +92,16 @@ const nextConfig: NextConfig = {
       {
         source: "/participate/why-exhibit",
         destination: "/why-exhibit",
+      },
+      // Correctly spelled addresses served by the existing page folders (the admin CMS and SEO
+      // records are keyed on the old folder names, so the folders keep them).
+      {
+        source: "/about/support-services",
+        destination: "/about/suport_services",
+      },
+      {
+        source: "/careers/upload-cv",
+        destination: "/careers/uploade_cv",
       },
     ];
   },

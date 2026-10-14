@@ -1,8 +1,10 @@
 "use client";
 import React, { useState, useEffect } from "react";
 import { CheckCircle2, ShieldCheck, HeartPulse, Loader2, CheckCircle, Activity, Calendar, Heart } from "lucide-react";
-import { crmApi, visitorApi } from "../../../../lib/api";
+import { verifyApi, visitorApi } from "../../../../lib/api";
 import Swal from 'sweetalert2';
+import { check, errorList, EVENT_NAME, isIndia, showErrors, useLocations, usePincodeAutofill, addressLock } from "@/lib/registration";
+import { CityField, PincodeHint } from "../shared/LocationFields";
 import { toOptions, useDropdowns } from "@/lib/dropdowns";
 
 const HEALTH_SERVICES = [
@@ -34,11 +36,8 @@ export default function HealthCampForm() {
   const [submitted, setSubmitted] = useState(false);
   const [loading, setLoading] = useState(false);
 
-  const [countries, setCountries] = useState<any[]>([]);
-  const [states, setStates] = useState<any[]>([]);
-  const [cities, setCities] = useState<any[]>([]);
 
-  const defaultEventName = process.env.NEXT_PUBLIC_EVENT_NAME || "BOE2026";
+  const defaultEventName = EVENT_NAME;
 
   const [formData, setFormData] = useState({
     registrationFor: defaultEventName,
@@ -76,33 +75,14 @@ export default function HealthCampForm() {
     subscribeNewsletter: true
   });
 
-  useEffect(() => {
-    crmApi.getCountries()
-      .then(data => setCountries(data || []))
-      .catch(err => console.error(err));
-  }, []);
 
-  useEffect(() => {
-    if (formData.country) {
-      const countryObj = countries.find((c: any) => c.name === formData.country);
-      if (countryObj) {
-        crmApi.getStates(countryObj.countryCode)
-          .then(data => setStates(data || []))
-          .catch(err => console.error(err));
-      }
-    }
-  }, [formData.country, countries]);
-
-  useEffect(() => {
-    if (formData.state) {
-      const stateObj = states.find((s: any) => s.name === formData.state);
-      if (stateObj) {
-        crmApi.getCities(stateObj.stateCode)
-          .then(data => setCities(data || []))
-          .catch(err => console.error(err));
-      }
-    }
-  }, [formData.state, states]);
+  // Country (A–Z), states and cities from the website's backend
+  const loc = useLocations(formData.country, formData.state);
+  // Only used to fill in the state / city / country below — this form does not submit a pincode
+  const [pincode, setPincode] = useState("");
+  const pinLookup = usePincodeAutofill(pincode, !formData.country || isIndia(formData.country), (place) =>
+    setFormData((prev) => ({ ...prev, country: place.country, state: place.state, city: place.city })));
+  const addrLock = addressLock(pinLookup);
 
     const handleChange = (e: any) => {
     let { name, value, type, checked } = e.target;
@@ -111,12 +91,17 @@ export default function HealthCampForm() {
     let finalValue = type === 'checkbox' ? checked : value;
 
     // Numeric field validations (no chars, spaces allowed)
-    if (name === 'mobileNo' || name === 'alternateNo' || name === 'whatsappNumber' || name === 'mobileNumber' || name === 'alternateNumber') {
+    if (name === 'mobile' || name === 'mobileNo' || name === 'alternateNo' || name === 'whatsappNumber' || name === 'mobileNumber' || name === 'alternateNumber') {
       finalValue = String(finalValue).replace(/\D/g, '').slice(0, 10);
     }
     if (name === 'pinCode' || name === 'companyPincode') {
-      finalValue = String(finalValue).replace(/\D/g, '').slice(0, 6);
+      // India: 6-digit pincode; elsewhere a postal / ZIP code
+      finalValue = isIndia(formData.country) ? String(finalValue).replace(/\D/g, '').slice(0, 6) : String(finalValue).replace(/[^A-Za-z0-9 -]/g, '').slice(0, 10);
     }
+    if (name === 'firstName' || name === 'lastName') finalValue = String(finalValue).replace(/[^\p{L}\p{M} .'-]/gu, '').replace(/^\s+/, '');
+    // A new country / state clears what depended on it
+    if (name === 'country') { setFormData((prev) => ({ ...prev, country: finalValue, state: '', city: '', companyPincode: '' })); return; }
+    if (name === 'state') { setFormData((prev) => ({ ...prev, state: finalValue, city: '' })); return; }
     if (name === 'yearOfEstablishment' || name === 'yearsInBusiness' || name === 'numberOfOutlets') {
       finalValue = String(finalValue).replace(/\D/g, '');
       if (name === 'yearOfEstablishment') finalValue = finalValue.slice(0, 4);
@@ -135,15 +120,101 @@ export default function HealthCampForm() {
     }));
   };
 
+  // WhatsApp OTP for the mobile number
+  const [otpSent, setOtpSent] = useState(false);
+  const [otpVerified, setOtpVerified] = useState(false);
+  const [mobileOtp, setMobileOtp] = useState('');
+  const [otpBusy, setOtpBusy] = useState(false);
+  const [resendTimer, setResendTimer] = useState(0);
+
+  useEffect(() => {
+    if (resendTimer <= 0) return;
+    const id = setTimeout(() => setResendTimer((t) => t - 1), 1000);
+    return () => clearTimeout(id);
+  }, [resendTimer]);
+
+  const handleRequestOtp = async () => {
+    if (!/^[6-9]\d{9}$/.test(formData.mobile)) {
+      Swal.fire({ scrollbarPadding: false, icon: 'warning', title: 'Invalid Number', text: 'Please enter a valid 10-digit mobile number.' });
+      return;
+    }
+    setOtpBusy(true);
+    try {
+      const res = await verifyApi.sendPhoneOtp(formData.mobile, 'HEALTH_CAMP', formData.firstName);
+      if (res?.success) {
+        setOtpSent(true);
+        setMobileOtp('');
+        setResendTimer(30);
+        Swal.fire({ scrollbarPadding: false, icon: 'success', title: 'OTP Sent', text: 'OTP sent to your WhatsApp number.', timer: 2000, showConfirmButton: false });
+      } else {
+        Swal.fire({ scrollbarPadding: false, icon: 'error', title: 'Error', text: res?.message || 'Failed to send OTP.' });
+      }
+    } catch {
+      Swal.fire({ scrollbarPadding: false, icon: 'error', title: 'Error', text: 'Failed to send OTP.' });
+    }
+    setOtpBusy(false);
+  };
+
+  const handleVerifyOtp = async () => {
+    if (mobileOtp.length !== 6) {
+      Swal.fire({ scrollbarPadding: false, icon: 'warning', title: 'Invalid OTP', text: 'Please enter a valid 6-digit OTP.' });
+      return;
+    }
+    setOtpBusy(true);
+    try {
+      const res = await verifyApi.verifyPhoneOtp(formData.mobile, mobileOtp);
+      if (res?.success) {
+        setOtpVerified(true);
+        Swal.fire({ scrollbarPadding: false, icon: 'success', title: 'Verified', text: 'Verified successfully!', timer: 2000, showConfirmButton: false });
+      } else {
+        Swal.fire({ scrollbarPadding: false, icon: 'error', title: 'Invalid OTP', text: res?.message || 'Verification failed.' });
+      }
+    } catch {
+      Swal.fire({ scrollbarPadding: false, icon: 'error', title: 'Error', text: 'Verification failed.' });
+    }
+    setOtpBusy(false);
+  };
+
+  // Every problem at once, in one popup (the form has noValidate so the browser does not stop at the first)
+  const today = new Date().toISOString().slice(0, 10);
+  const validate = () => errorList(
+    check.name(formData.firstName, "First name"),
+    check.name(formData.lastName, "Last name"),
+    check.email(formData.email),
+    check.indianMobile(formData.mobile, "WhatsApp number"),
+    check.indianMobile(formData.alternateNo, "Alternate number", false),
+    !!formData.alternateNo && formData.alternateNo === formData.mobile && "Alternate number must be different from the WhatsApp number.",
+    check.required(formData.dateOfBirth, "Date of birth"),
+    check.dob(formData.dateOfBirth, 0),
+    check.required(formData.gender, "Gender"),
+    check.required(formData.country, "Country"),
+    check.required(formData.state, "State"),
+    check.required(formData.city, "City"),
+    formData.existingMedicalConditions === "yes" && check.required((formData as any).existingMedicalConditions_text, "Details of the medical conditions"),
+    formData.isTakingMedications === "yes" && check.required(formData.medicationNames, "Names of the medications"),
+    formData.hasAllergies === "yes" && check.required(formData.allergyDetails, "Allergy details"),
+    formData.isExperiencingSymptoms === "yes" && check.required(formData.symptomDetails, "Symptom details"),
+    !Object.values(formData.healthCheckupServices).some(Boolean) && "Please choose at least one health check-up service.",
+    check.required(formData.preferredDate, "Preferred date"),
+    !!formData.preferredDate && formData.preferredDate < today && "Preferred date cannot be in the past.",
+    check.required(formData.preferredTimeSlot, "Preferred time slot"),
+  );
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    if (!showErrors(validate())) return;
+    if (!otpVerified) {
+      Swal.fire({ scrollbarPadding: false, icon: 'warning', title: 'Verification Required', text: 'Please verify your WhatsApp number with OTP.' });
+      return;
+    }
     setLoading(true);
     try {
       const res = await visitorApi.submitHealthCamp(formData);
-      if (res) {
+      if (res.ok) {
         setSubmitted(true);
       } else {
-        Swal.fire({ scrollbarPadding: false, icon: 'error', title: 'Submission Failed', text: 'Failed to submit registration.' });
+        // The server's reason, e.g. "This mobile number is already registered"
+        Swal.fire({ scrollbarPadding: false, icon: 'error', title: 'Registration Failed', text: res.message });
       }
     } catch (error) {
       Swal.fire({ scrollbarPadding: false, icon: 'error', title: 'Error', text: 'Something went wrong.' });
@@ -172,7 +243,7 @@ export default function HealthCampForm() {
   }
 
   return (
-    <form onSubmit={handleSubmit} className="w-full space-y-2 animate-in fade-in duration-500">
+    <form onSubmit={handleSubmit} noValidate className="w-full space-y-2 animate-in fade-in duration-500">
       <div className="flex items-center gap-3 mb-6">
         <div className="w-10 h-10 rounded-full bg-[#e11d48] flex items-center justify-center shrink-0 shadow-md">
           <HeartPulse size={18} className="text-white" />
@@ -197,8 +268,37 @@ export default function HealthCampForm() {
           <div><label className={labelClasses}>First Name <span className="text-red-600">*</span></label><input required name="firstName" value={formData.firstName} onChange={handleChange} className={inputClasses} placeholder="First Name" /></div>
           <div><label className={labelClasses}>Last Name <span className="text-red-600">*</span></label><input required name="lastName" value={formData.lastName} onChange={handleChange} className={inputClasses} placeholder="Last Name" /></div>
           <div><label className={labelClasses}>Email Address <span className="text-red-600">*</span></label><input required type="email" name="email" value={formData.email} onChange={handleChange} className={inputClasses} placeholder="Email" /></div>
-          <div><label className={labelClasses}>Mobile Number <span className="text-red-600">*</span></label><input required type="tel" name="mobile" value={formData.mobile} onChange={handleChange} className={inputClasses} placeholder="Mobile No." /></div>
-          <div><label className={labelClasses}>Alternate No.</label><input type="tel" name="alternateNo" value={formData.alternateNo} onChange={handleChange} className={inputClasses} placeholder="Optional" /></div>
+          <div className="space-y-1">
+            <div className="flex justify-between items-end">
+              <label className={`${labelClasses} mb-0`}>WhatsApp Number <span className="text-red-600">*</span></label>
+              {otpSent && !otpVerified && (
+                <button type="button" onClick={handleRequestOtp} disabled={resendTimer > 0 || otpBusy} className="text-[#4d7f1d] text-[10px] font-bold uppercase disabled:opacity-50 hover:underline">
+                  {resendTimer > 0 ? `Resend (${resendTimer}s)` : 'Resend'}
+                </button>
+              )}
+            </div>
+            <div className="flex gap-2">
+              <input required type="tel" name="mobile" value={formData.mobile} onChange={handleChange} className={inputClasses} disabled={otpVerified || otpSent} placeholder="Mobile No." />
+              {!otpVerified && !otpSent && (
+                <button type="button" onClick={handleRequestOtp} disabled={!formData.mobile || otpBusy} className={`bg-[#4d7f1d] text-white px-3 rounded-[2px] transition hover:bg-[#3b6315] h-7 ${buttonTextClasses} disabled:opacity-50`}>
+                  {otpBusy ? <Loader2 className="animate-spin" size={14} /> : 'OTP'}
+                </button>
+              )}
+              {otpSent && !otpVerified && (
+                <>
+                  <input type="text" inputMode="numeric" autoComplete="one-time-code" maxLength={6} value={mobileOtp} onChange={(e) => setMobileOtp(e.target.value.replace(/\D/g, ''))} className={`${inputClasses.replace('w-full', '')} w-[80px] text-center tracking-widest`} placeholder="OTP" />
+                  <button type="button" onClick={handleVerifyOtp} disabled={otpBusy} className={`bg-[#4d7f1d] text-white px-3 rounded-[2px] transition hover:bg-[#3b6315] h-7 ${buttonTextClasses} disabled:opacity-50`}>
+                    {otpBusy ? <Loader2 className="animate-spin" size={14} /> : 'Verify'}
+                  </button>
+                  <button type="button" onClick={() => { setOtpSent(false); setMobileOtp(''); setResendTimer(0); }} className="text-[10px] font-bold uppercase text-slate-500 hover:underline">
+                    Change
+                  </button>
+                </>
+              )}
+              {otpVerified && <CheckCircle size={18} className="text-[#4d7f1d] self-center shrink-0" />}
+            </div>
+          </div>
+          <div><label className={labelClasses}>Alternate No.</label><input type="tel" name="alternateNo" autoComplete="section-alternate tel-national" value={formData.alternateNo} onChange={handleChange} className={inputClasses} placeholder="Optional" /></div>
           <div><label className={labelClasses}>Date of Birth <span className="text-red-600">*</span></label><input required type="date" name="dateOfBirth" value={formData.dateOfBirth} onChange={handleChange} className={inputClasses} /></div>
           <div>
             <label className={labelClasses}>Gender <span className="text-red-600">*</span></label>
@@ -209,24 +309,26 @@ export default function HealthCampForm() {
           </div>
           <div className="md:col-span-2"><label className={labelClasses}>Residence Address</label><input name="residenceAddress" value={formData.residenceAddress} onChange={handleChange} className={inputClasses} placeholder="Full Address" /></div>
           <div>
-            <label className={labelClasses}>Country <span className="text-red-600">*</span></label>
-            <select required name="country" value={formData.country} onChange={handleChange} className={inputClasses}>
-              <option value="">Select Country</option>
-              {countries.length > 0 ? countries.map((c: any) => <option key={c.countryCode} value={c.name}>{c.name}</option>) : <option value="India">India</option>}
-            </select>
+            <label className={labelClasses}>Pincode <span className="text-red-600">*</span></label>
+            <input required name="pincodeLookup" value={pincode} onChange={(e) => setPincode(e.target.value.replace(/\D/g, "").slice(0, 6))} className={inputClasses} placeholder="6-digit Pincode" inputMode="numeric" maxLength={6} autoComplete="postal-code" aria-describedby="pincode-hint" />
+            <div id="pincode-hint"><PincodeHint lookup={pinLookup} /></div>
           </div>
           <div>
             <label className={labelClasses}>State <span className="text-red-600">*</span></label>
-            <select required name="state" value={formData.state} onChange={handleChange} className={inputClasses} disabled={!formData.country}>
+            <select required name="state" value={formData.state} onChange={handleChange} className={inputClasses} disabled={addrLock.locked || !formData.country}>
               <option value="">Select State</option>
-              {states.map((s: any) => <option key={s.stateCode} value={s.name}>{s.name}</option>)}
+              {loc.states.map((s) => <option key={s.stateCode} value={s.name}>{s.name}</option>)}
             </select>
           </div>
           <div>
             <label className={labelClasses}>City <span className="text-red-600">*</span></label>
-            <select required name="city" value={formData.city} onChange={handleChange} className={inputClasses} disabled={!formData.state}>
-              <option value="">Select City</option>
-              {cities.map((c: any) => <option key={c.name} value={c.name}>{c.name}</option>)}
+            <CityField key={formData.state} value={formData.city} onChange={(city) => setFormData((prev) => ({ ...prev, city }))} cities={loc.cities} ready={loc.citiesReady} stateChosen={!!formData.state} disabled={addrLock.cityLocked} className={inputClasses} required />
+          </div>
+          <div>
+            <label className={labelClasses}>Country <span className="text-red-600">*</span></label>
+            <select required name="country" value={formData.country} onChange={handleChange} className={inputClasses} disabled={addrLock.locked}>
+              <option value="">Select Country</option>
+              {loc.countries.map((c) => <option key={c.countryCode} value={c.name}>{c.name}</option>)}
             </select>
           </div>
         </div>

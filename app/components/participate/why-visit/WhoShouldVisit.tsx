@@ -12,6 +12,7 @@ import u3 from "@/app/assets/icons/u3.png";
 import u4 from "@/app/assets/icons/u4.png";
 import u5 from "@/app/assets/icons/u5.png";
 import u6 from "@/app/assets/icons/u6.png";
+import Image from "next/image";
 
 const WHO_SHOULD_VISIT_DATA = [
   {
@@ -110,7 +111,7 @@ const WhoShouldVisit = () => {
                     }`}
                   >
                     <div className="w-16 h-16 sm:w-18 sm:h-18 flex items-center justify-center mb-3 group-hover:scale-105 transition-transform">
-                      <img
+                      <Image width={0} height={0} sizes="100vw"
                         src={card.icon.src}
                         alt={card.title}
                         className="w-full h-full object-contain"

@@ -3,6 +3,7 @@
 import React, { useEffect, useState } from "react";
 import { Calendar, MapPin, ArrowRight, Trophy } from "lucide-react";
 import bannerImg from "../../assets/awards/nomination.webp";
+import Image from "next/image";
 
 const NominationsHero = () => {
   const [mounted, setMounted] = useState(false);
@@ -14,7 +15,7 @@ const NominationsHero = () => {
   return (
     <section className="relative flex h-[580px] w-full items-center overflow-hidden bg-white sm:h-[480px] md:h-[555px] lg:h-[610px]">
       <div className="absolute inset-0 z-0">
-        <img
+        <Image loading="eager" width={0} height={0} sizes="100vw"
           src={bannerImg.src}
           alt="Bharat Organic Excellence Awards 2027 Nominations Banner"
           className="h-full w-full object-cover"

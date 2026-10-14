@@ -4,6 +4,8 @@ import { Navigation, ArrowRight } from 'lucide-react';
 import beIcon from '@/app/assets/icons/be.png';
 import SectionContainer from '@/app/components/layout/SectionContainer';
 import { API_URL } from '@/lib/api';
+import { useNewsletterForm } from '@/lib/newsletter';
+import Image from "next/image";
 
 const DEFAULT_MAP_EMBED =
   "https://maps.google.com/maps?q=12/29,%20Site%20II%20Industrial%20Area,%20Loni%20Rd,%20Mohan%20Nagar,%20Ghaziabad,%20Uttar%20Pradesh%20201007,%20India&t=&z=15&ie=UTF8&iwloc=&output=embed";
@@ -30,6 +32,7 @@ const toBottomData = (bottom: any) => ({
 
 const ContactBottom = ({ initialSection }: { initialSection?: any }) => {
   const [data, setData] = useState(() => toBottomData(initialSection));
+  const newsletter = useNewsletterForm("Contact Page");
   const { mapSrc, mapCardAddress, directionsLabel, newsletterSubtitle, subscribeLabel } = data;
   const mapCardTitle = "Find Us Here";
 
@@ -118,7 +121,7 @@ const ContactBottom = ({ initialSection }: { initialSection?: any }) => {
             {/* Top row with icon and text */}
             <div className="flex items-start gap-6 mb-8 relative z-10">
               {/* Icon Image */}
-              <img src={(beIcon as any).src ?? (beIcon as unknown as string)} alt="Subscribe" className="w-20 h-20 shrink-0 object-contain" />
+              <Image width={0} height={0} sizes="100vw" src={(beIcon as any).src ?? (beIcon as unknown as string)} alt="Subscribe" className="w-20 h-20 shrink-0 object-contain" />
 
               <div className="text-white pt-2">
                 <h3 className="font-inter font-bold text-2xl mb-2">Stay Updated!</h3>
@@ -129,20 +132,30 @@ const ContactBottom = ({ initialSection }: { initialSection?: any }) => {
             </div>
 
             {/* Input Form */}
-            <form className="relative z-10 flex flex-col sm:flex-row bg-white rounded-xl p-1 w-full lg:w-[90%] shadow-sm mt-2" onSubmit={(e) => e.preventDefault()}>
+            <form className="relative z-10 flex flex-col sm:flex-row bg-white rounded-xl p-1 w-full lg:w-[90%] shadow-sm mt-2" onSubmit={newsletter.submit} noValidate>
               <input
                 type="email"
                 placeholder="Enter your email address"
+                value={newsletter.email}
+                onChange={(e) => newsletter.setEmail(e.target.value)}
+                maxLength={254}
+                autoComplete="email"
+                aria-label="Email address"
                 className="flex-1 px-4 py-3 bg-transparent focus:outline-none text-sm text-gray-700 w-full"
-                required
               />
               <button
                 type="submit"
-                className="bg-[#f07e26] hover:bg-[#d96e1a] text-white px-6 py-2.5 rounded-lg font-medium text-sm transition-colors flex items-center justify-center gap-2 shrink-0 w-full sm:w-auto mt-2 sm:mt-0"
+                disabled={newsletter.busy}
+                className="bg-[#f07e26] hover:bg-[#d96e1a] disabled:opacity-70 text-white px-6 py-2.5 rounded-lg font-medium text-sm transition-colors flex items-center justify-center gap-2 shrink-0 w-full sm:w-auto mt-2 sm:mt-0"
               >
-                {subscribeLabel} <ArrowRight size={16} />
+                {newsletter.busy ? "Subscribing…" : subscribeLabel} {!newsletter.busy && <ArrowRight size={16} />}
               </button>
             </form>
+            {newsletter.result && (
+              <p role="status" className={`relative z-10 mt-2 text-sm font-medium ${newsletter.result.ok ? "text-lime-200" : "text-amber-200"}`}>
+                {newsletter.result.message}
+              </p>
+            )}
 
           </div>
 

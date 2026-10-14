@@ -69,8 +69,11 @@ const DEFAULT_BANNER_DATA: MsmeBannerData = {
   buttonLabel: "CHECK PMS ELIGIBILITY",
   buttonHref: "/participate/msme/eligibility-check",
   secondaryButtonLabel: "GET PMS SUPPORT",
-  secondaryButtonHref: "tel:+9654900525",
+  secondaryButtonHref: "tel:+919654900525",
 };
+
+// A phone link saved without the country code ("tel:+9654900525") does not dial: add +91.
+const fixTelHref = (href: string) => href.replace(/^tel:\+?(\d{10})$/, "tel:+91$1");
 
 const toBannerData = (section: any): MsmeBannerData => ({
   image: section.image || DEFAULT_BANNER_DATA.image,
@@ -83,9 +86,9 @@ const toBannerData = (section: any): MsmeBannerData => ({
   date: section.date || DEFAULT_BANNER_DATA.date,
   location: section.location || DEFAULT_BANNER_DATA.location,
   buttonLabel: section.buttonLabel || DEFAULT_BANNER_DATA.buttonLabel,
-  buttonHref: section.buttonHref || DEFAULT_BANNER_DATA.buttonHref,
+  buttonHref: fixTelHref(section.buttonHref || DEFAULT_BANNER_DATA.buttonHref),
   secondaryButtonLabel: section.secondaryButtonLabel || DEFAULT_BANNER_DATA.secondaryButtonLabel,
-  secondaryButtonHref: section.secondaryButtonHref || DEFAULT_BANNER_DATA.secondaryButtonHref,
+  secondaryButtonHref: fixTelHref(section.secondaryButtonHref || DEFAULT_BANNER_DATA.secondaryButtonHref),
 });
 
 const SPARKLE_SETS = {

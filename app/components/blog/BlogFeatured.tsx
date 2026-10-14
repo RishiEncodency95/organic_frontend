@@ -8,6 +8,10 @@ import featuredImg1 from "../../assets/blog/featured_article1.webp";
 import featuredImg2 from "../../assets/blog/featured_article2.webp";
 import featuredImg3 from "../../assets/blog/featured_article3.webp";
 import { API_URL } from "@/lib/api";
+import { blogPostToArticle, type BlogPostApi } from "./blogPostToArticle";
+
+/** Where "View all articles" goes */
+export const ALL_ARTICLES_PATH = "/blog/all-articles";
 
 const blogFeaturedData = {
   title: "Featured Articles",
@@ -40,34 +44,6 @@ const blogFeaturedData = {
   ],
 };
 
-function cleanText(val?: string) {
-  if (!val) return "";
-  return val
-    .replace(/&lt;[^&]*&gt;/gi, " ")
-    .replace(/<[^>]*>/gi, " ")
-    .replace(/&nbsp;/gi, " ")
-    .replace(/&amp;/gi, "&")
-    .replace(/&quot;/gi, '"')
-    .replace(/&#39;/gi, "'")
-    .replace(/\s+/g, " ")
-    .trim();
-}
-
-function formatDate(dateVal?: string | Date) {
-  if (!dateVal) return "Recently Added";
-  try {
-    const d = new Date(dateVal);
-    if (isNaN(d.getTime())) return String(dateVal);
-    return d.toLocaleDateString("en-US", {
-      month: "short",
-      day: "numeric",
-      year: "numeric",
-    });
-  } catch {
-    return String(dateVal);
-  }
-}
-
 const BlogFeatured = () => {
   const [articles, setArticles] = useState<BlogArticle[]>([]);
   const [isLoading, setIsLoading] = useState(true);
@@ -95,7 +71,6 @@ const BlogFeatured = () => {
   }, []);
 
   useEffect(() => {
-    setIsLoading(true);
     fetch(`${API_URL}/blogs?status=published`)
       .then((res) => {
         if (!res.ok) return null;
@@ -104,22 +79,7 @@ const BlogFeatured = () => {
       .then((data) => {
         const posts = data?.data?.posts || data?.posts || [];
         if (Array.isArray(posts) && posts.length > 0) {
-          const dynamicItems: BlogArticle[] = posts.map((p: any) => {
-            const rawExcerpt = p.excerpt || p.content || "";
-            const plainDesc = cleanText(rawExcerpt);
-            return {
-              tag: p.category || "Expo News",
-              img: p.image || featuredImg1.src,
-              title: p.title,
-              desc:
-                plainDesc.length > 150
-                  ? plainDesc.slice(0, 150) + "..."
-                  : plainDesc,
-              date: formatDate(p.scheduledDate || p.publishDate || p.createdAt),
-              read: p.readTime || "4 min read",
-              slug: p.slug,
-            };
-          });
+          const dynamicItems: BlogArticle[] = (posts as BlogPostApi[]).map((p) => blogPostToArticle(p, featuredImg1));
 
           // ONLY SHOW DYNAMIC POSTS FROM ADMIN - NO STATIC DUMMY CARDS
           setArticles(dynamicItems);
@@ -169,7 +129,34 @@ const BlogFeatured = () => {
 
   return (
     <section id="featured">
-      <SectionHeading action={blogFeaturedData.actionText}>{blogFeaturedData.title}</SectionHeading>
+      <SectionHeading action={blogFeaturedData.actionText} actionHref={ALL_ARTICLES_PATH}>{blogFeaturedData.title}</SectionHeading>
+      {isLoading ? (
+        // Same size as the cards, so the page does not jump when the posts arrive
+        <div className="px-0 md:px-12 lg:px-14 py-1" aria-busy="true" aria-label="Loading featured articles">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-5">
+            {[0, 1, 2].map((i) => (
+              <div
+                key={i}
+                className={`bg-white rounded-xl overflow-hidden border border-gray-100 ${i === 1 ? "hidden sm:block" : ""} ${i === 2 ? "hidden lg:block" : ""}`}
+                style={{ boxShadow: "rgba(0, 0, 0, 0.02) 0px 1px 3px 0px, rgba(27, 31, 35, 0.15) 0px 0px 0px 1px" }}
+              >
+                <div className="h-[190px] md:h-[210px] bg-gray-100 animate-pulse" />
+                <div className="p-4 sm:p-5 space-y-2.5">
+                  <div className="h-4 w-11/12 rounded bg-gray-100 animate-pulse" />
+                  <div className="h-4 w-2/3 rounded bg-gray-100 animate-pulse" />
+                  <div className="h-3 w-full rounded bg-gray-100 animate-pulse mt-3" />
+                  <div className="h-3 w-full rounded bg-gray-100 animate-pulse" />
+                  <div className="h-3 w-3/4 rounded bg-gray-100 animate-pulse" />
+                  <div className="flex gap-4 pt-3 mt-1 border-t border-gray-100">
+                    <div className="h-3 w-20 rounded bg-gray-100 animate-pulse" />
+                    <div className="h-3 w-16 rounded bg-gray-100 animate-pulse" />
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      ) : (
       <div className="relative px-0 md:px-12 lg:px-14">
         {/* Carousel Viewport: Only 3 cards visible in 1 row on desktop */}
         <div
@@ -218,6 +205,7 @@ const BlogFeatured = () => {
           </>
         )}
       </div>
+      )}
     </section>
   );
 };

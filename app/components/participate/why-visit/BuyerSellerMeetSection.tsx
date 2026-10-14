@@ -22,6 +22,7 @@ import b2og from "@/app/assets/icons/b2og.png";
 import b3og from "@/app/assets/icons/b3og.png";
 import b4og from "@/app/assets/icons/b4og.png";
 import SectionContainer from "@/app/components/layout/SectionContainer";
+import Image from "next/image";
 
 const Sparkle = ({
   style,
@@ -132,7 +133,7 @@ const BuyerSellerMeetSection = ({ sectionData }: { sectionData?: any }) => {
     <section className="py-6 sm:py-7 bg-white font-inter relative overflow-hidden min-h-[550px] sm:min-h-[585px] max-h-[600px] flex items-center">
       {/* Background Image */}
       <div className="absolute inset-0 z-0 overflow-hidden pointer-events-none">
-        <img
+        <Image width={0} height={0} sizes="100vw"
           src={vb2bbg.src}
           alt="Buyer-Seller Meet Background"
           className="w-full h-full object-cover object-left opacity-100 scale-110 sm:scale-108 translate-y-1 sm:translate-y-2"
@@ -182,7 +183,7 @@ const BuyerSellerMeetSection = ({ sectionData }: { sectionData?: any }) => {
                     className="bg-[#FAFBF6] rounded-xl py-3.5 px-2 sm:px-2.5 border border-slate-200/80 hover:shadow-md transition-shadow text-center flex flex-col items-center justify-start min-h-[175px]"
                     style={{ boxShadow: "rgba(0, 0, 0, 0.02) 0px 1px 3px 0px, rgba(27, 31, 35, 0.15) 0px 0px 0px 1px" }}
                   >
-                    <img
+                    <Image width={0} height={0} sizes="100vw"
                       src={feat.img.src}
                       alt={feat.titleLine1}
                       className="w-14 h-14 sm:w-16 sm:h-16 object-contain -mt-1.5 mb-1.5"

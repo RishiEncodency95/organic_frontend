@@ -649,7 +649,7 @@ export default function ParticipationForm() {
                 </label>
                 <input
                   type="text"
-                  name="alternateMobile"
+                  name="alternateMobile" autoComplete="section-alternate tel-national"
                   value={contactPerson.alternateMobile}
                   onChange={handleContactChange}
                   placeholder="10-digit mobile number"

@@ -99,7 +99,7 @@ const Lightbox = ({ images, activeIndex, onClose, onNav }: any) => {
       <div ref={imgRef} onClick={e=>e.stopPropagation()} style={{
         maxWidth:'82vw', maxHeight:'78vh', borderRadius:10, overflow:'hidden',
       }}>
-        <img src={getImgSrc(img.src || "")} alt={img.alt || img.title} style={{
+        <Image width={0} height={0} sizes="100vw" className="w-auto h-auto" src={getImgSrc(img.src || "")} alt={img.alt || img.title} style={{
           maxWidth:'82vw', maxHeight:'78vh', objectFit:'contain', display:'block',
         }}/>
       </div>

@@ -83,6 +83,7 @@ import VisionMission from "../components/abouts/about/VisionMission";
 import AboutOrganizer from "../components/abouts/about/AboutOrganizer";
 import HomeAbout from "@/app/components/abouts/about/HomeAbout";
 
+import { getSectionGate } from "@/lib/sectionVisibility";
 const LoadingFallback = () => (
   <div className="w-full min-h-[300px] flex items-center justify-center">
     <div className="w-8 h-8 border-4 border-[#3b8c2a] border-t-transparent rounded-full animate-spin"></div>
@@ -106,22 +107,22 @@ const AboutPage = async () => {
     getSectionData("/website/abouts/about/four-pillars"),
   ]);
 
+  const show = await getSectionGate("aboutPage");
+
   return (
     <>
       <AdminSchema schema={schemaContent} />
       <div className="bg-[#ffffff] min-h-screen">
-        <AboutHero initialData={aboutHero} />
-        <AboutStrip />
-
+        {show("about-hero") && <AboutHero initialData={aboutHero} />}
+        {show("about-strip") && <AboutStrip />}
         <Suspense fallback={<LoadingFallback />}>
-          <HomeAbout initialData={homeAbout} />
-          <EventOverview />
-
-          <AboutOrganizer />
-          <VisionMission />
-          <FourPillars initialData={fourPillars} />
-          <AboutVenue />
-          <AboutFaq />
+          {show("home-about") && <HomeAbout initialData={homeAbout} />}
+          {show("event-overview") && <EventOverview />}
+          {show("about-organizer") && <AboutOrganizer />}
+          {show("vision-mission") && <VisionMission />}
+          {show("four-pillars") && <FourPillars initialData={fourPillars} />}
+          {show("about-venue") && <AboutVenue />}
+          {show("about-faq") && <AboutFaq />}
         </Suspense>
       </div>
     </>

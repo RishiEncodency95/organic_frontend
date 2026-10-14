@@ -1,18 +1,8 @@
-import React from "react";
-import { getSectionData } from "@/lib/serverData";
-import Hero from "@/app/components/opportunity/partnership/printing-branding-partner/Hero";
-import KeyBenefits from "@/app/components/opportunity/partnership/printing-branding-partner/KeyBenefits";
-import Deliverables from "@/app/components/opportunity/partnership/printing-branding-partner/Deliverables";
-import WhyPartnerPrinting from "@/app/components/opportunity/partnership/printing-branding-partner/WhyPartnerPrinting";
+// Old address of the Printing & Branding Partner page: serves the real page (same content, SEO and visibility)
+import PrintingBrandingPartnerPage, { generateMetadata } from "@/app/partnership/printing-branding-partner/page";
 
-export default async function PrintingBrandingPartnerPage() {
-  const heroData = await getSectionData("/website/opportunities/partnership/sub-hero/printing-branding-partner");
-  return (
-    <div className="bg-[#fcfcf0] min-h-screen">
-      <Hero initialData={heroData} />
-      <KeyBenefits />
-      <Deliverables />
-      <WhyPartnerPrinting />
-    </div>
-  );
-}
+// Route config is read at build time, so it is written here, not re-exported (same as the real page)
+export const revalidate = 60;
+
+export { generateMetadata };
+export default PrintingBrandingPartnerPage;

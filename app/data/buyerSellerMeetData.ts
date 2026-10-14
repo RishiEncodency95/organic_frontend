@@ -9,7 +9,7 @@ export const HERO_DATA = [
     buyerButtonLabel: "REGISTER AS A BUYER",
     buyerButtonHref: "/registration/buyer-registration",
     exhibitorButtonLabel: "PARTICIPATE AS AN EXHIBITOR",
-    exhibitorButtonHref: "/participate_as_exhibiture",
+    exhibitorButtonHref: "/participate-as-exhibitor",
   },
 ];
 
@@ -42,7 +42,8 @@ export const ABOUT_DATA = [
     ],
     links: [
       { label: "Register as Buyer", icon: "User", href: "/registration/buyer-registration", target: "_blank" },
-      { label: "Participate as Exhibitor", icon: "Briefcase", href: "/participate_as_exhibiture", target: "_blank" },
+      // Opens the Buyer Enquiry popup (see HeroSection / BUYER_ENQUIRY_EVENT)
+      { label: "Buyer Enquiry", icon: "MessageSquareText", href: "#buyer-enquiry" },
       { label: "How it Works", icon: "HelpCircle", href: "#how-it-works" },
       { label: "Who Can Participate", icon: "Users", href: "#who-can-participate" },
       { label: "Contact Us", icon: "Phone", href: "/contact", target: "_blank" },
@@ -247,7 +248,7 @@ export const CTA_BANNER_DATA = [
     buyerButtonLabel: "REGISTER AS A BUYER",
     buyerButtonHref: "/registration/buyer-registration",
     exhibitorButtonLabel: "PARTICIPATE AS AN EXHIBITOR",
-    exhibitorButtonHref: "/participate_as_exhibiture",
+    exhibitorButtonHref: "/participate-as-exhibitor",
     helpText: "Need Help? +91 96549 00525  |  info@namogangewellness.com",
   },
 ];

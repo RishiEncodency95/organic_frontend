@@ -1,9 +1,12 @@
 "use client";
 import React, { useState, useRef, useEffect } from "react";
 import { CheckCircle2, CheckCircle, ShieldCheck, User, Globe, Store, Factory, Laptop, HeartPulse, Leaf, Hotel, Briefcase, ChevronsUpDown, Loader2, X, AlertTriangle } from "lucide-react";
-import { verifyApi, buyerApi, settingsApi, crmApi, ihweEventApi } from "@/lib/api";
+import { verifyApi, buyerApi, settingsApi, ihweEventApi } from "@/lib/api";
+import { check, clean, errorList, EVENT_NAME, invalidFields, isIndia, RULES, showErrors, useLocations, usePincodeAutofill, addressLock } from "@/lib/registration";
+import { CityField, PincodeHint } from "../shared/LocationFields";
 import Swal from "sweetalert2";
 import Link from "next/link";
+import Image from "next/image";
 
 // Mock Data
 const defaultMockConfig = {
@@ -218,7 +221,7 @@ export default function DomesticBuyerForm() {
 
   const [formData, setFormData] = useState({
     websiteName: "Organicexpo",
-    eventName: process.env.NEXT_PUBLIC_EVENT_NAME || "BOE2026",
+    eventName: EVENT_NAME,
     fullName: "",
     designation: "",
     companyName: "",
@@ -289,74 +292,12 @@ export default function DomesticBuyerForm() {
     registrationFee: ""
   });
 
-  const [countries, setCountries] = useState<any[]>([]);
-  const [states, setStates] = useState<any[]>([]);
-  const [cities, setCities] = useState<any[]>([]);
-  const [loadingLocations, setLoadingLocations] = useState({ countries: false, states: false, cities: false });
-
-  useEffect(() => {
-    const fetchCountries = async () => {
-      setLoadingLocations(prev => ({ ...prev, countries: true }));
-      try {
-        const data = await crmApi.getCountries();
-        setCountries(data);
-      } catch (err) {
-        console.error("Error fetching countries:", err);
-      } finally {
-        setLoadingLocations(prev => ({ ...prev, countries: false }));
-      }
-    };
-    fetchCountries();
-  }, []);
-
-  useEffect(() => {
-    if (!formData.country) {
-      setStates([]);
-      setCities([]);
-      return;
-    }
-    const fetchStates = async () => {
-      setLoadingLocations(prev => ({ ...prev, states: true }));
-      try {
-        const selectedCountry = countries.find(c => c.name === formData.country);
-        if (selectedCountry) {
-          const data = await crmApi.getStates(selectedCountry.countryCode);
-          setStates(data);
-        } else {
-          setStates([]);
-        }
-      } catch (err) {
-        console.error("Error fetching states:", err);
-      } finally {
-        setLoadingLocations(prev => ({ ...prev, states: false }));
-      }
-    };
-    fetchStates();
-  }, [formData.country, countries]);
-
-  useEffect(() => {
-    if (!formData.stateProvince) {
-      setCities([]);
-      return;
-    }
-    const fetchCities = async () => {
-      setLoadingLocations(prev => ({ ...prev, cities: true }));
-      try {
-        const selectedState = states.find(s => s.name === formData.stateProvince);
-        if (selectedState) {
-          const data = await crmApi.getCities(selectedState.stateCode);
-          setCities(data);
-        } else {
-          setCities([]);
-        }
-      } catch (err) {
-        console.error("Error fetching cities:", err);
-      } finally {
-        setLoadingLocations(prev => ({ ...prev, cities: false }));
-      }
-    };
-    fetchCities();
-  }, [formData.stateProvince, states]);
+  // Countries (A–Z), states and cities from the website's backend
+  const loc = useLocations(formData.country, formData.stateProvince);
+  // A complete Indian pincode fills in the state, city and country (all stay editable)
+  const pinLookup = usePincodeAutofill(formData.pinCode, !formData.country || isIndia(formData.country), (place) =>
+    setFormData((prev) => ({ ...prev, country: place.country, stateProvince: place.state, city: place.city })));
+  const addrLock = addressLock(pinLookup);
 
   const [requireOtp, setRequireOtp] = useState(true);
 
@@ -413,6 +354,14 @@ export default function DomesticBuyerForm() {
     if (name === 'pinCode') {
       value = value.replace(/\D/g, '').slice(0, 6);
     }
+    if (name === 'fullName') value = value.replace(/[^\p{L}\p{M} .'-]/gu, '').replace(/^\s+/, '');
+    if (name === 'designation') value = clean.title(value);
+    if (name === 'panNumber') value = value.replace(/[^A-Za-z0-9]/g, '').toUpperCase().slice(0, 10);
+    if (name === 'gstNumber') value = value.replace(/[^A-Za-z0-9]/g, '').toUpperCase().slice(0, 15);
+    if (name === 'yearsInBusiness') value = value.replace(/\D/g, '').slice(0, 3);
+    // A new country / state clears what depended on it
+    if (name === 'country') { setFormData((prev) => ({ ...prev, country: value, stateProvince: '', city: '' })); return; }
+    if (name === 'stateProvince') { setFormData((prev) => ({ ...prev, stateProvince: value, city: '' })); return; }
     if (name === 'yearOfEstablishment' || name === 'yearsInBusiness' || name === 'numberOfOutlets') {
       value = value.replace(/\D/g, '');
       if (name === 'yearOfEstablishment') value = value.slice(0, 4);
@@ -427,7 +376,8 @@ export default function DomesticBuyerForm() {
 
   const handleSimulateOtp = async (type: 'email' | 'mobile') => {
     const value = type === 'email' ? formData.emailAddress : formData.mobileNumber;
-    if (!value) return;
+    const problem = type === 'email' ? check.email(value) : check.indianMobile(value);
+    if (problem) { showErrors([problem]); return; }
 
     setIsVerifying(prev => ({ ...prev, [type]: true }));
     try {
@@ -473,6 +423,12 @@ export default function DomesticBuyerForm() {
     setIsVerifying(prev => ({ ...prev, [type]: false }));
   };
 
+  useEffect(() => {
+    if (resendTimers.email <= 0 && resendTimers.mobile <= 0) return;
+    const id = setTimeout(() => setResendTimers((t) => ({ email: Math.max(0, t.email - 1), mobile: Math.max(0, t.mobile - 1) })), 1000);
+    return () => clearTimeout(id);
+  }, [resendTimers]);
+
   const loadRazorpayScript = () => {
     return new Promise((resolve) => {
       const script = document.createElement('script');
@@ -500,6 +456,8 @@ export default function DomesticBuyerForm() {
 
       const res = await buyerApi.submitBuyer(jsonPayload);
       if (res && res.success !== false) {
+        // A failed payment is saved for follow-up, but the registration is not complete
+        if (paymentStatus === "Failed") return;
         setSubmitted(true);
       } else {
         Swal.fire({ icon: 'error', title: 'Submission Failed', text: res?.message || 'Failed to submit registration.', scrollbarPadding: false });
@@ -544,13 +502,22 @@ export default function DomesticBuyerForm() {
       modal: {
         confirm_close: true,
         ondismiss: function () {
-          Swal.fire({ icon: 'warning', title: 'Cancelled', text: 'Payment cancelled.', scrollbarPadding: false });
+          Swal.fire({ icon: 'warning', title: 'Payment Cancelled', text: 'Your registration is not complete until the payment is done. Choose a pass again to pay.', scrollbarPadding: false });
         }
       }
     };
     const razorpay = new (window as any).Razorpay(options);
+    // Razorpay can report a failure for every retry inside its window: save the attempt once
+    let failureSaved = false;
     razorpay.on('payment.failed', async function (response: any) {
-      Swal.fire({ icon: 'error', title: 'Failed', text: 'Payment failed.', scrollbarPadding: false });
+      Swal.fire({
+        icon: 'error',
+        title: 'Payment Failed',
+        text: `${response?.error?.description || 'Your payment did not go through.'} Your registration is NOT complete — please try again. Any amount deducted is refunded automatically by your bank.`,
+        scrollbarPadding: false,
+      });
+      if (failureSaved) return;
+      failureSaved = true;
       await submitFinal(pkg, response.error?.metadata?.payment_id || "FAILED", "Failed");
     });
     razorpay.open();
@@ -558,13 +525,27 @@ export default function DomesticBuyerForm() {
 
   const handlePackageSelection = (pkg: any) => {
     if (!formRef.current) return;
-    if (!formRef.current.checkValidity()) {
+    const thisYear = new Date().getFullYear();
+    const year = Number(formData.yearOfEstablishment);
+    const errors = errorList(
+      ...invalidFields(formRef.current),
+      check.name(formData.fullName, "Full name"),
+      check.indianMobile(formData.mobileNumber),
+      check.indianMobile(formData.alternateNumber, "Alternate number"),
+      !!formData.alternateNumber && formData.alternateNumber === formData.mobileNumber && "Alternate number must be different from the mobile number.",
+      check.email(formData.emailAddress),
+      check.website(formData.website),
+      check.required(formData.city, "City"),
+      check.postal(formData.pinCode, formData.country, true),
+      !!formData.panNumber && !/^[A-Z]{5}\d{4}[A-Z]$/.test(formData.panNumber) && "PAN number must look like ABCDE1234F.",
+      !!formData.gstNumber && !RULES.gst.test(formData.gstNumber) && "GST number must be 15 characters, e.g. 07ABCDE1234F1Z5.",
+      !!formData.yearOfEstablishment && (formData.yearOfEstablishment.length !== 4 || year < 1900 || year > thisYear) && `Year of establishment must be between 1900 and ${thisYear}.`,
+      !!formData.yearsInBusiness && Number(formData.yearsInBusiness) > 150 && "Years in business is not valid.",
+    );
+    if (errors.length) {
       formRef.current.classList.add('was-validated');
-      Swal.fire({ icon: 'warning', title: 'Incomplete Form', text: 'Please fill out all required fields before selecting a package.', scrollbarPadding: false });
-      const firstInvalid = formRef.current.querySelector(':invalid');
-      if (firstInvalid) {
-        firstInvalid.scrollIntoView({ behavior: 'smooth', block: 'center' });
-      }
+      formRef.current.querySelector(':invalid')?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      showErrors(errors);
       return;
     }
     if (requireOtp && (!otpVerified.email || !otpVerified.mobile)) {
@@ -673,7 +654,7 @@ export default function DomesticBuyerForm() {
               </div>
             )}
           </div>
-          <div><label className={labelClasses}>Alternate Number <span className="text-red-600">*</span></label><input required type="tel" name="alternateNumber" value={formData.alternateNumber} onChange={handleChange} placeholder="Alternate number" className={inputClasses} /></div>
+          <div><label className={labelClasses}>Alternate Number <span className="text-red-600">*</span></label><input required type="tel" name="alternateNumber" autoComplete="section-alternate tel-national" value={formData.alternateNumber} onChange={handleChange} placeholder="Alternate number" className={inputClasses} /></div>
           <div className="space-y-1">
             <label className={labelClasses}>Email Address (OTP) <span className="text-red-600">*</span></label>
             <div className="flex gap-2 h-7">
@@ -706,35 +687,33 @@ export default function DomesticBuyerForm() {
               </div>
             )}
           </div>
-          <div><label className={labelClasses}>Website (Optional)</label><input type="url" name="website" value={formData.website} onChange={handleChange} placeholder="https://..." className={inputClasses} /></div>
+          <div><label className={labelClasses}>Website (Optional)</label><input type="text" inputMode="url" name="website" value={formData.website} onChange={handleChange} placeholder="https://..." className={inputClasses} /></div>
           <div><label className={labelClasses}>Registered Address <span className="text-red-600">*</span></label><input required name="registeredAddress" value={formData.registeredAddress} onChange={handleChange} placeholder="Full Corporate Address" className={inputClasses} /></div>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-x-3 gap-y-3 mt-4">
-          <div>
-            <label className={labelClasses}>Country <span className="text-red-600">*</span></label>
-            <select required name="country" value={formData.country} onChange={handleChange} className={inputClasses} disabled={loadingLocations.countries}>
-              <option value="">Select Country</option>
-              {countries.map((c: any) => <option key={c._id} value={c.name}>{c.name}</option>)}
-            </select>
+          <div className="lg:col-span-2">
+            <label className={labelClasses}>Pin Code <span className="text-red-600">*</span></label>
+            <input required name="pinCode" value={formData.pinCode} onChange={handleChange} placeholder="6-digit code" className={inputClasses} maxLength={6} inputMode="numeric" autoComplete="postal-code" aria-describedby="pincode-hint" />
+            <div id="pincode-hint"><PincodeHint lookup={pinLookup} /></div>
           </div>
           <div>
             <label className={labelClasses}>State/Province <span className="text-red-600">*</span></label>
-            <select required name="stateProvince" value={formData.stateProvince} onChange={handleChange} className={inputClasses} disabled={!formData.country || loadingLocations.states}>
+            <select required name="stateProvince" value={formData.stateProvince} onChange={handleChange} className={inputClasses} disabled={addrLock.locked || !formData.country}>
               <option value="">Select State</option>
-              {states.map((s: any) => <option key={s._id} value={s.name}>{s.name}</option>)}
+              {loc.states.map((s) => <option key={s.stateCode} value={s.name}>{s.name}</option>)}
             </select>
           </div>
           <div>
             <label className={labelClasses}>City <span className="text-red-600">*</span></label>
-            <select required name="city" value={formData.city} onChange={handleChange} className={inputClasses} disabled={!formData.stateProvince || loadingLocations.cities}>
-              <option value="">Select City</option>
-              {cities.map((c: any) => <option key={c._id} value={c.name}>{c.name}</option>)}
-            </select>
+            <CityField key={formData.stateProvince} value={formData.city} onChange={(city) => setFormData((prev) => ({ ...prev, city }))} cities={loc.cities} ready={loc.citiesReady} stateChosen={!!formData.stateProvince} disabled={addrLock.cityLocked} className={inputClasses} required />
           </div>
-          <div className="lg:col-span-2">
-            <label className={labelClasses}>Pin Code <span className="text-red-600">*</span></label>
-            <input required name="pinCode" value={formData.pinCode} onChange={handleChange} placeholder="6-digit code" className={inputClasses} maxLength={6} />
+          <div>
+            <label className={labelClasses}>Country <span className="text-red-600">*</span></label>
+            <select required name="country" value={formData.country} onChange={handleChange} className={inputClasses} disabled={addrLock.locked}>
+              <option value="">Select Country</option>
+              {loc.countries.map((c) => <option key={c.countryCode} value={c.name}>{c.name}</option>)}
+            </select>
           </div>
         </div>
       </div>
@@ -942,7 +921,7 @@ export default function DomesticBuyerForm() {
 
                       <div className="relative z-10 flex flex-col items-center justify-center h-full px-4 pt-6 pb-6 gap-3">
                         <div className="flex flex-col items-center gap-1">
-                          <img loading="lazy" decoding="async" src="/assets/registration/icoa.webp"
+                          <Image width={0} height={0} sizes="100vw" loading="lazy" decoding="async" src="/assets/registration/icoa.webp"
                             alt="ICOA"
                             className="w-48 h-auto object-contain"
                             style={{

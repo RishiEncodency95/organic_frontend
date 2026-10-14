@@ -10,6 +10,7 @@ import SponsorshipPackages from "../components/opportunity/sponsorship/Sponsorsh
 import BottomOpportunities from "../components/opportunity/sponsorship/BottomOpportunities";
 import ContactCTA from "../components/opportunity/sponsorship/ContactCTA";
 
+import { getSectionGate } from "@/lib/sectionVisibility";
 export const revalidate = 60;
 
 export async function generateMetadata(): Promise<Metadata> {
@@ -89,14 +90,16 @@ export default async function SponsorshipPage() {
   const schemaContent = seoData?.schemaMarkup || null;
   const sponsorshipHero = await getSectionData("/website/opportunities/sponsorship/hero");
 
+  const show = await getSectionGate("sponsorshipPage");
+
   return (
     <main className="min-h-screen bg-[#fcfcf0] overflow-x-hidden">
       <AdminSchema schema={schemaContent} />
-      <HeroSection initialData={sponsorshipHero} />
-      <WhySponsor />
-      <SponsorshipPackages />
-      <BottomOpportunities />
-      <ContactCTA />
+      {show("sponsorship-hero") && <HeroSection initialData={sponsorshipHero} />}
+      {show("sponsorship-why") && <WhySponsor />}
+      {show("sponsorship-packages") && <SponsorshipPackages />}
+      {show("sponsorship-branding-impact") && <BottomOpportunities />}
+      {show("sponsorship-cta") && <ContactCTA />}
     </main>
   );
 }

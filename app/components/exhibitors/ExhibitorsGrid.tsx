@@ -1,6 +1,7 @@
 import React from "react";
 import { Reveal } from "../shared/Reveal";
 import { ApiExhibitor, toAbsoluteImage } from "./data";
+import Image from "next/image";
 
 const directions = ["left", "zoom", "right"] as const;
 
@@ -21,12 +22,12 @@ const ExhibitorsGrid = ({ exhibitors }: { exhibitors: ApiExhibitor[] }) => {
                             title={exhi.title}
                         >
                             <div className="w-full h-full flex items-center justify-center overflow-hidden">
-                                <img
+                                <Image width={0} height={0} sizes="100vw"
                                     decoding="async"
                                     src={toAbsoluteImage(exhi.image)}
                                     alt={exhi.title}
                                     loading="lazy"
-                                    className="max-w-[90%] max-h-[90%] object-contain transition-transform duration-300 group-hover:scale-105"
+                                    className="max-w-[90%] max-h-[90%] object-contain transition-transform duration-300 group-hover:scale-105 w-auto h-auto"
                                     onError={(e) => {
                                         e.currentTarget.src = "https://placehold.co/150?text=Logo";
                                     }}

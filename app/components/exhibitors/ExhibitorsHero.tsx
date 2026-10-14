@@ -5,6 +5,7 @@ import { ArrowRight, CalendarDays, MapPin } from "lucide-react";
 import bgImg from "../../assets/banner/exhog.webp";
 import leafImg from "../../assets/icons/leafs.png";
 import SectionContainer from "@/app/components/layout/SectionContainer";
+import Image from "next/image";
 
 // Mock API response / JSON array of objects
 const EXHIBITORS_HERO_DATA = [
@@ -142,7 +143,7 @@ const ExhibitorsHero = ({ data }: { data?: any }) => {
 
           {/* Floating Leaf */}
           <div className="absolute -left-10 lg:-left-8 top-[10%] lg:top-[15%] z-10 hidden sm:block w-28 md:w-36 lg:w-[150px] pointer-events-none">
-            <img src={hero.leafImage} alt="Organic Leaf" className="w-full h-auto object-contain drop-shadow-lg" />
+            <Image loading="eager" width={0} height={0} sizes="100vw" src={hero.leafImage} alt="Organic Leaf" className="w-full h-auto object-contain drop-shadow-lg" />
           </div>
 
           {/* Content */}

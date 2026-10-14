@@ -8,6 +8,7 @@ import type { Metadata } from "next";
 import AdminSchema from "@/components/seo/AdminSchema";
 import { adminSeoMetadata, getAdminSeo } from "@/lib/adminSeo";
 
+import { getSectionGate } from "@/lib/sectionVisibility";
 export const revalidate = 60;
 
 const SEO_PAGE_KEY = "participate/msme/apply/participation-details";
@@ -28,14 +29,15 @@ export default async function ParticipationDetailsPage() {
   const sidebarSec = sections.find((s: any) => s.key === "msme-participation-sidebar");
   const footerSec = sections.find((s: any) => s.key === "msme-participation-footer-help");
 
+  const show = await getSectionGate("msmeApplyParticipationDetailsPage");
+
   return (
     <div className="min-h-screen bg-[#f9faf9] font-sans text-neutral-800 flex flex-col">
       <AdminSchema schema={seoData?.schemaMarkup || null} />
       <main className="flex-1 w-full pb-10">
-        <ApplicationHero section={heroSec} />
-        
+        {show("msme-participation-hero") && <ApplicationHero section={heroSec} />}
         <div className="w-full px-4 md:px-14 mt-[-30px] relative z-20">
-          <ApplySteps currentStep={2} />
+          {show("msme-participation-stepper") && <ApplySteps currentStep={2} />}
         </div>
 
         <div className="w-full px-4 md:px-14 mt-4">
@@ -48,14 +50,14 @@ export default async function ParticipationDetailsPage() {
 
             {/* Right Column - Sidebar Widgets */}
             <div className="w-full lg:w-[30%] shrink-0 sticky top-4">
-              <ParticipationSidebar section={sidebarSec} />
+              {show("msme-participation-sidebar") && <ParticipationSidebar section={sidebarSec} />}
             </div>
 
           </div>
         </div>
 
         {/* Footer (Only Help Banner for this step, as actions are inside the form) */}
-        <ApplyFooter showDeclaration={false} section={footerSec} />
+        {show("msme-participation-footer-help") && <ApplyFooter showDeclaration={false} section={footerSec} />}
       </main>
     </div>
   );

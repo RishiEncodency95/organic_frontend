@@ -6,6 +6,8 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import gallbottImg from '@/app/assets/icons/1og.png';
 import leafRightImg from '@/app/assets/icons/leafright.webp';
 import SectionContainer from '@/app/components/layout/SectionContainer';
+import Image from "next/image";
+import Link from "next/link";
 
 if (typeof window !== 'undefined') {
   gsap.registerPlugin(ScrollTrigger);
@@ -86,19 +88,19 @@ const JoinUsBanner = () => {
             
             {/* Decorative Left Image - overflows outside banner */}
             <div className="absolute left-2 -top-4 xl:-top-6 pointer-events-none z-20 hidden md:block">
-              <img 
+              <Image width={0} height={0} sizes="100vw" 
                 src={getImgSrc(gallbottImg)} 
                 alt="Decorative Elements" 
-                className="h-20 xl:h-28 object-contain opacity-95"
+                className="h-20 xl:h-28 object-contain opacity-95 w-auto"
               />
             </div>
 
             {/* Decorative Right Image (Leaves) */}
             <div className="banner-leaf absolute right-0 top-0 bottom-0 pointer-events-none z-0 overflow-hidden rounded-r-2xl opacity-20">
-              <img 
+              <Image width={0} height={0} sizes="100vw" 
                 src={getImgSrc(leafRightImg)} 
                 alt="Leaves background" 
-                className="h-full object-cover mix-blend-overlay"
+                className="h-full object-cover mix-blend-overlay w-auto"
               />
             </div>
 
@@ -128,10 +130,10 @@ const JoinUsBanner = () => {
                   <Sparkle color="#facc15" style={{ top:'30%', left:'-14px', animationDelay:'1.1s', fontSize:'15px' }} />
                   <Sparkle color="#ffffff" style={{ top:'40%', right:'-16px', animationDelay:'0.6s', fontSize:'16px' }} />
                   
-                  <button className="bg-white hover:bg-gray-100 text-[#0e3b1c] px-3 sm:px-4 py-1.5 sm:py-2 rounded-full font-black text-[10px] sm:text-[11px] uppercase tracking-[0.1em] flex items-center justify-center gap-1.5 transition-all shadow-md group relative z-10">
+                  <Link href="/registration/visitor-registration" className="bg-white hover:bg-gray-100 text-[#0e3b1c] px-3 sm:px-4 py-1.5 sm:py-2 rounded-full font-black text-[10px] sm:text-[11px] uppercase tracking-[0.1em] flex items-center justify-center gap-1.5 transition-all shadow-md group relative z-10">
                     REGISTER NOW
                     <ArrowRight size={14} strokeWidth={2.5} className="group-hover:translate-x-1 transition-transform" />
-                  </button>
+                  </Link>
                 </div>
               </div>
 

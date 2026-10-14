@@ -9,6 +9,7 @@ import og13 from "@/app/assets/icons/13og.webp";
 import og14 from "@/app/assets/icons/14og.webp";
 import og15 from "@/app/assets/icons/15og.webp";
 import og16 from "@/app/assets/icons/i6.png";
+import Image from "next/image";
 
 const getImgSrc = (src: any): string => (typeof src === "string" ? src : src?.src || src);
 
@@ -102,7 +103,7 @@ const ReasonsSection = ({ sectionData }: { sectionData?: any }) => {
   return (
     <section className="mt-4 pt-4 pb-4 relative overflow-hidden font-inter" style={{ backgroundColor: "#fbf8f3" }}>
       {/* Decorative right image */}
-      <img
+      <Image width={0} height={0} sizes="100vw"
         loading="lazy"
         decoding="async"
         src={getImgSrc(footerRight)}
@@ -130,7 +131,7 @@ const ReasonsSection = ({ sectionData }: { sectionData?: any }) => {
             style={{ boxShadow: "rgba(0, 0, 0, 0.05) 0px 0px 0px 1px, rgb(209, 213, 219) 0px 0px 0px 1px inset" }}
           >
             {/* Direct Image Icon without container div */}
-            <img
+            <Image width={0} height={0} sizes="100vw"
               loading="lazy"
               decoding="async"
               src={reason.img}

@@ -7,6 +7,8 @@ import footerright from '@/app/assets/icons/footerright.webp';
 import SectionContainer from '@/app/components/layout/SectionContainer';
 import Swal from 'sweetalert2';
 import { verifyApi, contactEnquiryApi } from '@/lib/api';
+import Image from "next/image";
+import { check, clean, errorList, showErrors } from "@/lib/registration";
 
 const ContactForm = () => {
   const [formData, setFormData] = useState({
@@ -37,13 +39,18 @@ const ContactForm = () => {
   }, [resendTimer]);
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
+    const { name, value } = e.target;
+    // Mobile numbers take digits only (10 at most); the name takes letters only
+    let next = value;
+    if (name === "phone" || name === "alternatePhone") next = clean.indianMobile(value);
+    if (name === "name") next = clean.name(value);
+    setFormData({ ...formData, [name]: next });
   };
 
   const handleSendOtp = async (e: React.MouseEvent) => {
     e.preventDefault();
-    if (!formData.phone || formData.phone.length < 10) {
-      Swal.fire({ icon: 'error', title: 'Invalid Number', text: 'Please enter a valid WhatsApp number.', scrollbarPadding: false });
+    if (check.indianMobile(formData.phone, 'WhatsApp number')) {
+      Swal.fire({ icon: 'error', title: 'Invalid Number', text: check.indianMobile(formData.phone, 'WhatsApp number'), scrollbarPadding: false });
       return;
     }
     if (!formData.name) {
@@ -94,6 +101,20 @@ const ContactForm = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    if (!showErrors(errorList(
+      check.name(formData.name, 'Name'),
+      check.email(formData.email),
+      check.indianMobile(formData.phone, 'WhatsApp number'),
+    ))) return;
+    const alt = formData.alternatePhone;
+    if (alt && !/^[6-9]\d{9}$/.test(alt)) {
+      Swal.fire({ icon: 'warning', title: 'Alternate Number', text: 'Please enter a valid 10-digit alternate number, or leave it empty.', scrollbarPadding: false });
+      return;
+    }
+    if (alt && alt === formData.phone.replace(/\D/g, "").slice(-10)) {
+      Swal.fire({ icon: 'warning', title: 'Alternate Number', text: 'The alternate number must be different from your WhatsApp number. Leave it empty if you do not have one.', scrollbarPadding: false });
+      return;
+    }
     if (!otpVerified) {
       Swal.fire({ icon: 'warning', title: 'Verification Required', text: 'Please verify your WhatsApp number before submitting.', scrollbarPadding: false });
       return;
@@ -160,17 +181,17 @@ const ContactForm = () => {
     <section className="w-full bg-[#fbfcf7] pb-16 font-inter relative z-10 -mt-8 md:-mt-12 overflow-hidden">
 
       {/* Decorative Left Image */}
-      <img
+      <Image width={0} height={0} sizes="100vw"
         src={(leafs as any)?.src || (leafs as any)}
         alt="leaf decoration"
-        className="absolute left-0 top-1/2 -translate-y-1/2 w-32 md:w-48 opacity-100 pointer-events-none -translate-x-1/4 z-0"
+        className="absolute left-0 top-1/2 -translate-y-1/2 w-32 md:w-48 opacity-100 pointer-events-none -translate-x-1/4 z-0 h-auto"
       />
 
       {/* Decorative Right Image */}
-      <img
+      <Image width={0} height={0} sizes="100vw"
         src={(footerright as any)?.src || (footerright as any)}
         alt="right decoration"
-        className="absolute right-0 top-0 mt-4 w-32 md:w-48 opacity-100 pointer-events-none z-20"
+        className="absolute right-0 top-0 mt-4 w-32 md:w-48 opacity-100 pointer-events-none z-20 h-auto"
       />
 
       <SectionContainer className="relative z-10">
@@ -235,6 +256,7 @@ const ContactForm = () => {
                   <input
                     type="tel"
                     name="phone"
+                    inputMode="numeric"
                     value={formData.phone}
                     onChange={handleInputChange}
                     placeholder=" "
@@ -270,7 +292,9 @@ const ContactForm = () => {
                   </div>
                   <input
                     type="tel"
-                    name="alternatePhone"
+                    name="alternatePhone" autoComplete="section-alternate tel-national"
+                    inputMode="numeric"
+                    maxLength={10}
                     value={formData.alternatePhone}
                     onChange={handleInputChange}
                     placeholder=" "
@@ -422,7 +446,7 @@ const ContactForm = () => {
             </div>
 
             {/* Decorative Leaf */}
-            <img src={(cleaf as any)?.src || (cleaf as any)} alt="decoration" className="absolute -bottom-8 right-0 w-20 md:w-28 pointer-events-none opacity-80" />
+            <Image width={0} height={0} sizes="100vw" src={(cleaf as any)?.src || (cleaf as any)} alt="decoration" className="absolute -bottom-8 right-0 w-20 md:w-28 pointer-events-none opacity-80 h-auto" />
           </div>
 
         </div>

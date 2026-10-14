@@ -7,6 +7,7 @@ import { useDropdowns } from "@/lib/dropdowns";
 import hogImg from "@/app/assets/icons/hog.png";
 import rightRightImg from "@/app/assets/icons/leafright.png";
 import SectionContainer from "@/app/components/layout/SectionContainer";
+import Image from "next/image";
 
 export const ENQUIRY_FORM_DATA = [
   {
@@ -157,7 +158,7 @@ export default function EnquiryForm() {
           
           {/* Left Green Box */}
           <div className="bg-[#113217] py-8 px-10 flex flex-col justify-center items-center text-center relative overflow-hidden">
-            <img src={hogImg.src} alt="Partnership Icon" className="w-20 h-20 object-contain mb-6 relative z-10" />
+            <Image width={0} height={0} sizes="100vw" src={hogImg.src} alt="Partnership Icon" className="w-20 h-20 object-contain mb-6 relative z-10" />
             
             <h3 className="text-xl md:text-2xl font-semibold text-white mb-3 font-poppins relative z-10 uppercase leading-[1.1] whitespace-pre-line">
               {data.leftTitle}
@@ -168,6 +169,12 @@ export default function EnquiryForm() {
             </p>
             
             <button 
+              type="button"
+              onClick={() => {
+                const form = document.getElementById("partnership-enquiry-form");
+                form?.scrollIntoView({ behavior: "smooth", block: "center" });
+                form?.querySelector<HTMLElement>("select, input")?.focus({ preventScroll: true });
+              }}
               className="bg-[#d6a549] hover:bg-[#b88c3a] text-white px-6 py-2.5 rounded-md font-bold text-xs tracking-wider uppercase transition-colors relative z-10 flex items-center gap-2"
               style={{ boxShadow: "rgba(0, 0, 0, 0.12) 0px 1px 3px, rgba(0, 0, 0, 0.24) 0px 1px 2px" }}
             >
@@ -180,10 +187,10 @@ export default function EnquiryForm() {
 
           {/* Right Form Box */}
           <div className="lg:col-span-2 bg-white py-8 px-10 relative overflow-hidden flex flex-col justify-center">
-            <img 
+            <Image width={0} height={0} sizes="100vw" 
               src={rightRightImg.src} 
               alt="Right Corner Leaf" 
-              className="absolute right-0 top-0 w-24 md:w-32 object-contain pointer-events-none z-0" 
+              className="absolute right-0 top-0 w-24 md:w-32 object-contain pointer-events-none z-0 h-auto" 
             />
             <div className="mb-6 relative z-10">
               <h3 className="text-xl md:text-2xl font-semibold text-[#1b5e20] font-poppins uppercase leading-[1.1] mb-1">
@@ -194,7 +201,7 @@ export default function EnquiryForm() {
               </p>
             </div>
 
-            <form className="space-y-4 relative z-10" onSubmit={handleSubmit}>
+            <form id="partnership-enquiry-form" className="space-y-4 relative z-10" onSubmit={handleSubmit}>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 {/* Full Name */}
                 <div className="relative bg-gray-50 rounded-md">

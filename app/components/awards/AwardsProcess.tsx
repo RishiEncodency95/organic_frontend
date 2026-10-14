@@ -9,6 +9,7 @@ import eligibilityImg from "@/app/assets/awards/eligibility.png";
 import evaluationImg from "@/app/assets/awards/evaluation-jury.png";
 import shortlistingImg from "@/app/assets/awards/shortlisting.png";
 import recognitionImg from "@/app/assets/awards/recognition.png";
+import Image from "next/image";
 
 const defaultImages = [
   nominationImg,
@@ -142,7 +143,7 @@ const AwardsProcess = ({ initialData }: AwardsProcessProps) => {
                 <Reveal delay={i * 90} className="relative w-full md:w-[140px]">
                   <div className="group flex flex-col items-center text-center h-full">
                     <span className="relative flex h-16 w-16 items-center justify-center rounded-lg mb-3">
-                      <img
+                      <Image width={0} height={0} sizes="100vw"
                         src={imgSrc}
                         alt={step.title || "Step"}
                         className="h-12 w-12 object-contain transition-transform duration-300 group-hover:scale-105"

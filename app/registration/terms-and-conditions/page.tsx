@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import AdminSchema from "@/components/seo/AdminSchema";
 import { adminSeoMetadata, getAdminSeo } from "@/lib/adminSeo";
 import { getSectionData } from "@/lib/serverData";
+import { getDisabledSectionKeys } from "@/lib/sectionVisibility";
 import TermsOfService from "@/app/components/registration/policies/TermsOfService";
 
 export const revalidate = 60;
@@ -16,15 +17,16 @@ export async function generateMetadata(): Promise<Metadata> {
 }
 
 export default async function TermsOfServicePage() {
-  const [seoData, heroData] = await Promise.all([
+  const [seoData, heroData, disabledSections] = await Promise.all([
     getAdminSeo(SEO_PAGE_KEY),
     getSectionData("/website/registration/terms/terms-hero"),
+    getDisabledSectionKeys("termsAndConditionsPage"),
   ]);
 
   return (
     <>
       <AdminSchema schema={seoData?.schemaMarkup || null} />
-      <TermsOfService heroData={heroData} />
+      <TermsOfService heroData={heroData} disabledSections={disabledSections} />
     </>
   );
 }

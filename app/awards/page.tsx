@@ -12,6 +12,7 @@ import AwardsCelebratingLeaders from "@/app/components/awards/AwardsCelebratingL
 import AwardsInfoColumns from "@/app/components/awards/AwardsInfoColumns";
 import AwardsCta from "@/app/components/awards/AwardsCta";
 
+import { getSectionGate } from "@/lib/sectionVisibility";
 export const revalidate = 60;
 
 export async function generateMetadata(): Promise<Metadata> {
@@ -174,18 +175,20 @@ const AwardsPage = async () => {
     // fallback
   }
 
+  const show = await getSectionGate("awardsPage");
+
   return (
     <div className="overflow-x-hidden bg-white font-sans text-neutral-800">
       <AdminSchema schema={schemaContent} />
-      <AwardsHero initialData={awardsHeroData} />
-      <AwardsStats initialData={awardsStatsData} />
-      <AwardsAbout initialData={awardsAboutData} />
-      <AwardsCategories initialData={awardsCategoriesData} />
-      <AwardsGrandAwards initialData={awardsGrandAwardsData} />
-      <AwardsProcess initialData={awardsProcessData} />
+      {show("awards-hero") && <AwardsHero initialData={awardsHeroData} />}
+      {show("awards-stats") && <AwardsStats initialData={awardsStatsData} />}
+      {show("awards-about") && <AwardsAbout initialData={awardsAboutData} />}
+      {show("awards-categories") && <AwardsCategories initialData={awardsCategoriesData} />}
+      {show("awards-grand-awards") && <AwardsGrandAwards initialData={awardsGrandAwardsData} />}
+      {show("awards-process") && <AwardsProcess initialData={awardsProcessData} />}
       {/* <AwardsCelebratingLeaders /> */}
-      <AwardsInfoColumns />
-      <AwardsCta />
+      {show("awards-info-columns") && <AwardsInfoColumns />}
+      {show("awards-cta") && <AwardsCta />}
     </div>
   );
 };

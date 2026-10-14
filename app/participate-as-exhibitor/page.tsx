@@ -10,6 +10,7 @@ import ParticipateWhyParticipate from "@/app/components/participate-as-exhibitor
 import ParticipateCta from "@/app/components/participate-as-exhibitor/ParticipateCta";
 import ParticipateStats from "@/app/components/participate-as-exhibitor/ParticipateStats";
 
+import { getSectionGate } from "@/lib/sectionVisibility";
 export const revalidate = 60;
 
 export async function generateMetadata(): Promise<Metadata> {
@@ -88,15 +89,17 @@ const ParticipateAsExhibitorPage = async () => {
 
   const schemaContent = seoData?.schemaMarkup || null;
 
+  const show = await getSectionGate("participateAsExhibitorPage");
+
   return (
     <div className="min-h-screen bg-white font-sans text-neutral-800 overflow-x-clip">
       <AdminSchema schema={schemaContent} />
-      <ParticipateHero />
-      <ParticipateFeatureStrip />
-      <WhoCanParticipate />
-      <ParticipateWhyParticipate />
-      <ParticipateCta />
-      <ParticipateStats />
+      {show("participate-hero") && <ParticipateHero />}
+      {show("participate-feature-strip") && <ParticipateFeatureStrip />}
+      {show("participate-who-can") && <WhoCanParticipate />}
+      {show("participate-why") && <ParticipateWhyParticipate />}
+      {show("participate-cta") && <ParticipateCta />}
+      {show("participate-stats") && <ParticipateStats />}
     </div>
   );
 };

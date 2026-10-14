@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import AdminSchema from "@/components/seo/AdminSchema";
 import { adminSeoMetadata, getAdminSeo } from "@/lib/adminSeo";
 import RefundPolicy from "@/app/components/registration/policies/RefundPolicy";
+import { getDisabledSectionKeys } from "@/lib/sectionVisibility";
 
 export const revalidate = 60;
 
@@ -15,12 +16,15 @@ export async function generateMetadata(): Promise<Metadata> {
 }
 
 export default async function RefundPolicyPage() {
-  const seoData = await getAdminSeo(SEO_PAGE_KEY);
+  const [seoData, disabledSections] = await Promise.all([
+    getAdminSeo(SEO_PAGE_KEY),
+    getDisabledSectionKeys("refundPolicyPage"),
+  ]);
 
   return (
     <>
       <AdminSchema schema={seoData?.schemaMarkup || null} />
-      <RefundPolicy />
+      <RefundPolicy disabledSections={disabledSections} />
     </>
   );
 }

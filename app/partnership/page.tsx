@@ -9,6 +9,7 @@ import PartnershipOpportunities from "../components/opportunity/partnership/Part
 import WhyPartner from "../components/opportunity/partnership/WhyPartner";
 import EnquiryForm from "../components/opportunity/partnership/EnquiryForm";
 
+import { getSectionGate } from "@/lib/sectionVisibility";
 export const revalidate = 60;
 
 export async function generateMetadata(): Promise<Metadata> {
@@ -88,13 +89,15 @@ export default async function PartnershipPage() {
 
   const schemaContent = seoData?.schemaMarkup || null;
 
+  const show = await getSectionGate("partnershipPage");
+
   return (
     <main className="w-full bg-[#fbfcf8]">
       <AdminSchema schema={schemaContent} />
-      <HeroSection initialData={heroData} />
-      <PartnershipOpportunities />
-      <WhyPartner />
-      <EnquiryForm />
+      {show("partnership-page-hero") && <HeroSection initialData={heroData} />}
+      {show("partnership-page-opportunities") && <PartnershipOpportunities />}
+      {show("partnership-page-why") && <WhyPartner />}
+      {show("partnership-page-enquiry") && <EnquiryForm />}
     </main>
   );
 }

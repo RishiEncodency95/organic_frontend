@@ -15,6 +15,7 @@ import { settingsApi } from '@/lib/api';
 import AdminSchema from '@/components/seo/AdminSchema';
 import { adminSeoMetadata, getAdminSeo } from '@/lib/adminSeo';
 
+import { getSectionGate } from "@/lib/sectionVisibility";
 export const revalidate = 60;
 
 const SEO_PAGE_KEY = "participate/msme/eligibility-check";
@@ -37,33 +38,32 @@ export default async function PMSEligibilityCheckPage() {
   const matchSec = sections.find((s: any) => s.key === "eligibility-industry-match") || {};
   const stepsSec = sections.find((s: any) => s.key === "eligibility-calculation-steps") || {};
 
+  const show = await getSectionGate("msmeEligibilityCheckPage");
+
   return (
     <div className="min-h-screen bg-[#f8f9fa] font-sans text-neutral-800 pb-4">
       <AdminSchema schema={seoData?.schemaMarkup || null} />
       {/* Hero Section */}
-      <EligibilityHero customProps={heroSec} />
-
+      {show("eligibility-hero") && <EligibilityHero customProps={heroSec} />}
       <div className="full px-4 md:px-14 lg:px-14">
         <EligibilityProvider>
           {/* Input Bar */}
           <EligibilityInputBar />
 
           {/* Content sections */}
-          <PreliminaryStatus customProps={statusSec} />
-
+          {show("eligibility-preliminary-status") && <PreliminaryStatus customProps={statusSec} />}
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mt-4 items-stretch">
-            <EnterpriseDetails customProps={detailsSec} />
-            <IndustryMatch customProps={matchSec} />
+            {show("eligibility-enterprise-details") && <EnterpriseDetails customProps={detailsSec} />}
+            {show("eligibility-industry-match") && <IndustryMatch customProps={matchSec} />}
           </div>
 
-          <FinalScoreFooter />
-
-          <CalculationSteps customTitle={stepsSec.title} customSteps={stepsSec.items} />
-          <EstimateSection />
-          <VerificationAlerts />
+          {show("eligibility-final-score-footer") && <FinalScoreFooter />}
+          {show("eligibility-calculation-steps") && <CalculationSteps customTitle={stepsSec.title} customSteps={stepsSec.items} />}
+          {show("eligibility-estimate-card") && <EstimateSection />}
+          {show("eligibility-verification-alerts") && <VerificationAlerts />}
         </EligibilityProvider>
 
-        <EligibilityDisclaimer />
+        {show("eligibility-disclaimer-note") && <EligibilityDisclaimer />}
       </div>
     </div>
   );

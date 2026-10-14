@@ -3,7 +3,8 @@ import Link from "next/link";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "404 - Page Not Found | Bharat Organic Expo 2027",
+  // absolute: the root layout would otherwise append the site name a second time
+  title: { absolute: "404 - Page Not Found | Bharat Organic Expo 2027" },
   description: "The page you are looking for is not available.",
 };
 
@@ -26,9 +27,9 @@ export default function NotFound() {
 
         {/* Content Box */}
         <div className="-mt-8 sm:-mt-12 relative z-10">
-          <h3 className="text-2xl sm:text-3xl font-bold text-[#1b5e20] mb-2 font-poppins">
-            Look like you're lost
-          </h3>
+          <h1 className="text-2xl sm:text-3xl font-bold text-[#1b5e20] mb-2 font-poppins">
+            Page Not Found
+          </h1>
           <p className="text-slate-600 text-sm sm:text-base mb-6 font-medium">
             The page you are looking for is not available!
           </p>

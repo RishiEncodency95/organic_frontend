@@ -10,6 +10,7 @@ import {
   CalendarDays, MapPin, Trophy, ArrowRight
 } from 'lucide-react';
 import { websiteApi } from '@/lib/api';
+import Image from "next/image";
 
 const Sparkle = ({ style, color = "#facc15", shadow = "#4B1426" }: { style?: React.CSSProperties; color?: string; shadow?: string }) => (
   <span
@@ -284,7 +285,7 @@ const SponsorsAndAttend = () => {
               {/* Image Circle Container */}
               <div className="absolute inset-0 rounded-full border-[4px] sm:border-[5px] md:border-[8px] border-white shadow-xl overflow-hidden bg-white">
                 {data.image && typeof data.image === "string" && data.image.trim() !== "" ? (
-                  <img
+                  <Image width={0} height={0} sizes="100vw"
                     src={data.image}
                     alt={data.imageAlt}
                     className="w-full h-full object-cover transition-transform duration-700 hover:scale-105"
@@ -292,16 +293,16 @@ const SponsorsAndAttend = () => {
                 ) : (
                   <div className="w-full h-full grid grid-cols-2 grid-rows-2 gap-0.5 sm:gap-1 bg-white">
                     <div className="overflow-hidden bg-gray-50 border-r border-b border-white group">
-                      <img loading="lazy" decoding="async" src="https://images.unsplash.com/photo-1542838132-92c53300491e?w=800&q=80" className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" alt="1" />
+                      <Image width={0} height={0} sizes="100vw" loading="lazy" decoding="async" src="https://images.unsplash.com/photo-1542838132-92c53300491e?w=800&q=80" className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" alt="1" />
                     </div>
                     <div className="overflow-hidden bg-gray-50 border-l border-b border-white group">
-                      <img loading="lazy" decoding="async" src="https://images.unsplash.com/photo-1552664730-d307ca884978?w=800&q=80" className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" alt="2" />
+                      <Image width={0} height={0} sizes="100vw" loading="lazy" decoding="async" src="https://images.unsplash.com/photo-1552664730-d307ca884978?w=800&q=80" className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" alt="2" />
                     </div>
                     <div className="overflow-hidden bg-gray-50 border-r border-t border-white group">
-                      <img loading="lazy" decoding="async" src="https://images.unsplash.com/photo-1540555700478-4be289fbecef?w=800&q=80" className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" alt="3" />
+                      <Image width={0} height={0} sizes="100vw" loading="lazy" decoding="async" src="https://images.unsplash.com/photo-1540555700478-4be289fbecef?w=800&q=80" className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" alt="3" />
                     </div>
                     <div className="overflow-hidden bg-gray-50 border-l border-t border-white group">
-                      <img loading="lazy" decoding="async" src="https://images.unsplash.com/photo-1515187029135-18ee286d815b?w=800&q=80" className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" alt="4" />
+                      <Image width={0} height={0} sizes="100vw" loading="lazy" decoding="async" src="https://images.unsplash.com/photo-1515187029135-18ee286d815b?w=800&q=80" className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" alt="4" />
                     </div>
                   </div>
                 )}

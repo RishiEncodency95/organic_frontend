@@ -13,7 +13,7 @@ export default function ApplicationHero({ section }: { section?: any }) {
       {/* Background Section with Curved Bottom */}
       <div className="relative w-full h-full overflow-hidden">
         <div className="absolute right-0 top-0 w-full  h-full opacity-90">
-          <Image
+          <Image loading="eager"
             src={bgImage}
             alt="Hands holding plant"
             className="w-full h-full object-cover object-[center_35%]"
@@ -27,9 +27,9 @@ export default function ApplicationHero({ section }: { section?: any }) {
 
             {/* Breadcrumb */}
             <div className="flex flex-wrap items-center gap-2 text-[12px] font-semibold text-gray-600 mb-6 bg-white w-max px-4 py-2 rounded-xl shadow-sm border border-gray-100">
-              <Link href="#" className="hover:text-[#176b27] transition-colors">Home</Link>
+              <Link href="/" className="hover:text-[#176b27] transition-colors">Home</Link>
               <span className="text-gray-400">&gt;</span>
-              <Link href="#" className="hover:text-[#176b27] transition-colors">PMS Scheme</Link>
+              <Link href="/participate/msme" className="hover:text-[#176b27] transition-colors">PMS Scheme</Link>
               <span className="text-gray-400">&gt;</span>
               <Link href="/participate/msme/apply" className="hover:text-[#176b27] transition-colors">Apply for PMS Support</Link>
               <span className="text-gray-400">&gt;</span>

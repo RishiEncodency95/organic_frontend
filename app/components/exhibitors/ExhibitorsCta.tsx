@@ -4,6 +4,7 @@ import { Reveal } from "../shared/Reveal";
 import beImg from "../../assets/icons/be.png";
 import bleafImg from "../../assets/icons/bleaf.webp";
 import SectionContainer from "@/app/components/layout/SectionContainer";
+import Image from "next/image";
 
 // Mock API response / JSON array of objects
 const EXHIBITORS_CTA_DATA = [
@@ -73,7 +74,7 @@ const ExhibitorsCta = () => {
                 <div className="flex flex-col lg:flex-row items-center justify-between gap-6">
                   <div className="flex items-center gap-4 lg:gap-6 text-center lg:text-left">
                     {/* BE Image */}
-                    <img
+                    <Image width={0} height={0} sizes="100vw"
                       src={data.beImg}
                       alt="Be the next"
                       className="hidden sm:block w-12 h-12 md:w-14 md:h-14 object-contain shrink-0"
@@ -129,7 +130,7 @@ const ExhibitorsCta = () => {
                     </div>
 
                     {/* Right Leaf Image */}
-                    <img
+                    <Image width={0} height={0} sizes="100vw"
                       src={data.leafImg}
                       alt=""
                       aria-hidden="true"

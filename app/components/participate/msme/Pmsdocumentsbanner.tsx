@@ -1,14 +1,20 @@
 "use client";
 
+import { useEffect, useState } from "react";
 import type {
+  MouseEvent,
   ReactNode,
   SVGProps,
 } from "react";
+import { createPortal } from "react-dom";
 
 import {
   ArrowRight,
+  Check,
   FileEdit,
   FileText,
+  Printer,
+  X,
 } from "lucide-react";
 
 import documentsBgImg from "@/app/assets/participate/msme/documents_ready.jpg";
@@ -883,7 +889,8 @@ export const PMS_DOCUMENTS_BANNER_DATA = {
   notice: "Additional documents may be required depending on applicable PMS guidelines and the individual enterprise.",
   cta: {
     label: "View Complete Document Checklist",
-    href: "#complete-document-checklist",
+    // Opens the checklist popup (the link is the no-script fallback)
+    href: "#pms-documents",
   },
 };
 
@@ -993,8 +1000,100 @@ function DocumentCard({
    MAIN SECTION
 ================================================================ */
 
+/* ================================================================
+   COMPLETE CHECKLIST POPUP ("View Complete Document Checklist")
+================================================================ */
+
+const escapeHtml = (s: string) => s.replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" })[c]!);
+
+/** Opens a print-ready copy of the checklist (print it or "Save as PDF") */
+function printChecklist(docs: PmsDocument[]) {
+  const win = window.open("", "_blank", "width=820,height=900");
+  if (!win) return;
+  const rows = docs
+    .map((d, i) => `<tr><td class="box"></td><td class="n">${i + 1}</td><td><b>${escapeHtml(d.title)}</b><br><span>${escapeHtml(d.description)}</span></td></tr>`)
+    .join("");
+  win.document.write(`<!doctype html><html><head><meta charset="utf-8"><title>PMS Document Checklist – Bharat Organic Expo</title>
+<style>body{font-family:Arial,Helvetica,sans-serif;color:#142347;margin:32px}h1{color:#1b5e20;font-size:22px;margin:0 0 4px}p{color:#555;font-size:13px;margin:0 0 18px}
+table{width:100%;border-collapse:collapse}td{border-bottom:1px solid #e3e8e3;padding:10px 8px;vertical-align:top;font-size:14px}td span{color:#555;font-size:12.5px}
+.box{width:18px}.box:before{content:"";display:inline-block;width:14px;height:14px;border:1.5px solid #1b5e20;border-radius:3px}.n{width:22px;color:#1b5e20;font-weight:bold}
+footer{margin-top:20px;font-size:11.5px;color:#777}</style></head><body>
+<h1>PMS Document Checklist</h1><p>Bharat Organic Expo 2027 · Keep these documents ready for your PMS (Procurement &amp; Marketing Support) application.</p>
+<table>${rows}</table><footer>Help: +91 96549 00525 · info@namogangewellness.com · Final requirements are as per Ministry of MSME PMS guidelines.</footer>
+<script>window.onload=function(){window.print()}</script></body></html>`);
+  win.document.close();
+}
+
+function DocumentChecklistModal({ docs, onClose }: { docs: PmsDocument[]; onClose: () => void }) {
+  const [ready, setReady] = useState<Record<number, boolean>>({});
+  const done = docs.filter((_, i) => ready[i]).length;
+
+  useEffect(() => {
+    const onKey = (e: KeyboardEvent) => e.key === "Escape" && onClose();
+    window.addEventListener("keydown", onKey);
+    const prev = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    return () => {
+      window.removeEventListener("keydown", onKey);
+      document.body.style.overflow = prev;
+    };
+  }, [onClose]);
+
+  return createPortal(
+    <div className="fixed inset-0 z-[9999] flex items-center justify-center bg-black/55 p-4" onClick={onClose} role="dialog" aria-modal="true" aria-labelledby="pms-checklist-title">
+      <div className="flex max-h-[88vh] w-full max-w-2xl flex-col overflow-hidden rounded-2xl bg-white shadow-2xl" onClick={(e) => e.stopPropagation()}>
+        <div className="flex items-start justify-between gap-4 border-b border-gray-100 bg-[#f4f9f1] px-5 py-4">
+          <div>
+            <h3 id="pms-checklist-title" className="font-poppins text-[18px] font-semibold text-[#1E5500]">Complete PMS Document Checklist</h3>
+            <p className="mt-0.5 text-[13px] text-gray-600">Tick each document as you get it ready — {done} of {docs.length} ready.</p>
+          </div>
+          <button type="button" onClick={onClose} aria-label="Close checklist" className="grid h-8 w-8 shrink-0 place-items-center rounded-full text-gray-500 transition hover:bg-white hover:text-gray-800">
+            <X className="h-5 w-5" />
+          </button>
+        </div>
+        <ul className="flex-1 divide-y divide-gray-100 overflow-y-auto px-5">
+          {docs.map((d, i) => (
+            <li key={d.title}>
+              <label className="flex cursor-pointer items-start gap-3 py-3">
+                <input type="checkbox" className="peer sr-only" checked={!!ready[i]} onChange={(e) => setReady((r) => ({ ...r, [i]: e.target.checked }))} />
+                <span className="mt-0.5 grid h-5 w-5 shrink-0 place-items-center rounded border-2 border-[#376F02] text-white transition peer-checked:bg-[#376F02] peer-focus-visible:ring-2 peer-focus-visible:ring-[#376F02]/40">
+                  {ready[i] && <Check className="h-3.5 w-3.5" strokeWidth={3} />}
+                </span>
+                <span>
+                  <span className={`block text-[14px] font-semibold ${ready[i] ? "text-gray-400 line-through" : "text-[#142347]"}`}>
+                    {i + 1}. {d.title}
+                  </span>
+                  <span className="block text-[12.5px] text-gray-600">{d.description}</span>
+                </span>
+              </label>
+            </li>
+          ))}
+        </ul>
+        <div className="flex flex-wrap items-center justify-between gap-3 border-t border-gray-100 px-5 py-3">
+          <p className="text-[11.5px] text-gray-500">Final requirements are as per Ministry of MSME PMS guidelines.</p>
+          <div className="flex gap-2">
+            <button type="button" onClick={onClose} className="rounded-full border border-gray-300 px-4 py-2 text-[13px] font-semibold text-gray-700 transition hover:bg-gray-50">
+              Close
+            </button>
+            <button type="button" onClick={() => printChecklist(docs)} className="inline-flex items-center gap-2 rounded-full bg-[linear-gradient(180deg,#376F02,#1E5500)] px-4 py-2 text-[13px] font-semibold text-white shadow-sm transition hover:brightness-110">
+              <Printer className="h-4 w-4" />
+              Print / Save as PDF
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>,
+    document.body
+  );
+}
+
 export default function PMSDocumentsBanner() {
   const data = PMS_DOCUMENTS_BANNER_DATA;
+  const [checklistOpen, setChecklistOpen] = useState(false);
+  const openChecklist = (e: MouseEvent<HTMLAnchorElement>) => {
+    e.preventDefault();
+    setChecklistOpen(true);
+  };
 
   return (
     <section
@@ -1334,6 +1433,7 @@ export default function PMSDocumentsBanner() {
 
         <a
           href={data.cta.href}
+          onClick={openChecklist}
           className="
             absolute
             left-1/2
@@ -1735,6 +1835,7 @@ export default function PMSDocumentsBanner() {
         >
           <a
             href={data.cta.href}
+            onClick={openChecklist}
             className="
               inline-flex
               min-h-[52px]
@@ -1773,6 +1874,7 @@ export default function PMSDocumentsBanner() {
           </a>
         </div>
       </div>
+      {checklistOpen && <DocumentChecklistModal docs={pmsDocuments} onClose={() => setChecklistOpen(false)} />}
     </section>
   );
 }

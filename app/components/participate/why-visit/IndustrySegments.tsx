@@ -155,7 +155,7 @@ export default function IndustrySegments({ sectionData }: IndustrySegmentsProps)
     <section className="py-3 sm:py-4 bg-white font-inter relative overflow-hidden">
       {/* Decorative Top Left Leaf */}
       <div className="absolute left-0 top-0 pointer-events-none opacity-100 w-32 sm:w-40 md:w-52 lg:w-60 z-0">
-        <img
+        <Image width={0} height={0} sizes="100vw"
           src={tleafImg.src}
           alt="Organic Leaf Top Left"
           className="w-full h-auto object-contain"
@@ -164,7 +164,7 @@ export default function IndustrySegments({ sectionData }: IndustrySegmentsProps)
 
       {/* Decorative Bottom Right Foliage */}
       <div className="absolute -right-6 sm:-right-10 md:-right-14 bottom-0 pointer-events-none opacity-100 w-44 sm:w-64 md:w-80 lg:w-96 z-0">
-        <img
+        <Image width={0} height={0} sizes="100vw"
           src={footerrightImg.src}
           alt="Organic Foliage Bottom Right"
           className="w-full h-auto object-contain"
@@ -211,7 +211,7 @@ export default function IndustrySegments({ sectionData }: IndustrySegmentsProps)
                 {/* Upper Card Info Container */}
                 <div className="pt-5 px-3 pb-3 flex flex-col items-center flex-grow">
                   {/* Icon Image */}
-                  <img
+                  <Image width={0} height={0} sizes="100vw"
                     src={iconSrc}
                     alt={itemTitle}
                     className="w-15 h-15 sm:w-18 sm:h-18 md:w-20 md:h-20 object-contain mb-2 mx-auto group-hover:scale-105 transition-transform duration-300"
@@ -247,7 +247,7 @@ export default function IndustrySegments({ sectionData }: IndustrySegmentsProps)
                     />
                   ) : (
                     <div className="w-full h-full bg-gradient-to-br from-slate-100 to-slate-200 flex items-center justify-center">
-                      <img
+                      <Image width={0} height={0} sizes="100vw"
                         src={iconSrc}
                         alt={itemTitle}
                         className="w-16 h-16 object-contain opacity-30"

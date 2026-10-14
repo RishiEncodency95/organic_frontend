@@ -8,6 +8,7 @@ import ContactBottom from '../components/contact/ContactBottom';
 import { getSectionData } from '@/lib/serverData';
 import { OG_IMAGE, OG_IMAGE_ALT } from '@/lib/seo';
 
+import { getSectionGate } from "@/lib/sectionVisibility";
 export const revalidate = 60;
 
 export async function generateMetadata(): Promise<Metadata> {
@@ -90,12 +91,14 @@ const ContactPage = async () => {
   const heroSection = contactSections.find((s) => s.key === "contact-hero");
   const bottomSection = contactSections.find((s) => s.key === "contact-bottom");
 
+  const show = await getSectionGate("contactPage");
+
   return (
     <div className="w-full bg-[#fbfcf7] min-h-screen">
       <AdminSchema schema={schemaContent} />
-      <ContactHero initialSection={heroSection} />
-      <ContactForm />
-      <ContactBottom initialSection={bottomSection} />
+      {show("contact-hero") && <ContactHero initialSection={heroSection} />}
+      {show("contact-form") && <ContactForm />}
+      {show("contact-bottom") && <ContactBottom initialSection={bottomSection} />}
     </div>
   );
 };

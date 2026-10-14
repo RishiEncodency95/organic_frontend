@@ -1,8 +1,11 @@
 "use client";
 import React, { useState, useEffect } from "react";
-import { CheckCircle2, ShieldCheck, Store, Loader2, CheckCircle, X, ChevronsUpDown } from "lucide-react";
-import { crmApi, verifyApi, visitorApi, ihweSettingsApi } from "../../../../lib/api";
+import RegistrationSuccess from "./RegistrationSuccess";
+import { ShieldCheck, Store, Loader2, CheckCircle, X, ChevronsUpDown } from "lucide-react";
+import { verifyApi, visitorApi, ihweSettingsApi } from "../../../../lib/api";
 import Swal from 'sweetalert2';
+import { check, errorList, EVENT_NAME, isIndia, showErrors, clean, postalTarget, useLocations, usePincodeAutofill, addressLock } from "@/lib/registration";
+import { CityField, PincodeHint } from "../shared/LocationFields";
 import { toOptions, useDropdowns } from "@/lib/dropdowns";
 // Admin-managed (Dropdown Manager); these are the fallback options.
 const VISITOR_DROPDOWNS = {
@@ -86,6 +89,7 @@ const INTEREST_CORPORATE = ["Business Networking", "Product Sourcing", "Distribu
 export default function CorporateForm() {
   const dropdowns = useDropdowns(VISITOR_DROPDOWNS);
   const [submitted, setSubmitted] = useState(false);
+  const [registrationNo, setRegistrationNo] = useState("");
   const [isVerifying, setIsVerifying] = useState({ email: false, mobile: false });
   const [otpSent, setOtpSent] = useState({ email: false, mobile: false });
   const [otpVerified, setOtpVerified] = useState({ email: false, mobile: false });
@@ -94,11 +98,8 @@ export default function CorporateForm() {
   const [resendTimers, setResendTimers] = useState({ email: 0, mobile: 0 });
   const [loading, setLoading] = useState(false);
 
-  const [countries, setCountries] = useState<any[]>([]);
-  const [states, setStates] = useState<any[]>([]);
-  const [cities, setCities] = useState<any[]>([]);
 
-  const defaultEventName = process.env.NEXT_PUBLIC_EVENT_NAME || "BOE2026";
+  const defaultEventName = EVENT_NAME;
   const [requireOtp, setRequireOtp] = useState(true);
 
   useEffect(() => {
@@ -138,33 +139,13 @@ export default function CorporateForm() {
     areaOfInterest: [] as string[]
   });
 
-  useEffect(() => {
-    crmApi.getCountries()
-      .then(data => setCountries(data || []))
-      .catch(err => console.error(err));
-  }, []);
 
-  useEffect(() => {
-    if (formData.country) {
-      const countryObj = countries.find((c: any) => c.name === formData.country);
-      if (countryObj) {
-        crmApi.getStates(countryObj.countryCode)
-          .then(data => setStates(data || []))
-          .catch(err => console.error(err));
-      }
-    }
-  }, [formData.country, countries]);
-
-  useEffect(() => {
-    if (formData.state) {
-      const stateObj = states.find((s: any) => s.name === formData.state);
-      if (stateObj) {
-        crmApi.getCities(stateObj.stateCode)
-          .then(data => setCities(data || []))
-          .catch(err => console.error(err));
-      }
-    }
-  }, [formData.state, states]);
+  // Country (A–Z), states and cities from the website's backend
+  const loc = useLocations(formData.country, formData.state);
+  // A complete pincode / postal code fills in the state, city and country (all stay editable)
+  const pinLookup = usePincodeAutofill(formData.companyPincode, postalTarget(formData.country, loc.countries), (place) =>
+    setFormData((prev) => ({ ...prev, country: place.country || prev.country, state: place.state, city: place.city })));
+  const addrLock = addressLock(pinLookup);
 
     const handleChange = (e: any) => {
     let { name, value, type, checked } = e.target;
@@ -177,8 +158,14 @@ export default function CorporateForm() {
       finalValue = String(finalValue).replace(/\D/g, '').slice(0, 10);
     }
     if (name === 'pinCode' || name === 'companyPincode') {
-      finalValue = String(finalValue).replace(/\D/g, '').slice(0, 6);
+      // India: 6-digit pincode; elsewhere a postal / ZIP code
+      finalValue = isIndia(formData.country) ? String(finalValue).replace(/\D/g, '').slice(0, 6) : String(finalValue).replace(/[^A-Za-z0-9 -]/g, '').slice(0, 10);
     }
+    if (name === 'firstName' || name === 'lastName') finalValue = String(finalValue).replace(/[^\p{L}\p{M} .'-]/gu, '').replace(/^\s+/, '');
+    if (name === 'designation') finalValue = clean.title(String(finalValue));
+    // A new country / state clears what depended on it
+    if (name === 'country') { setFormData((prev) => ({ ...prev, country: finalValue, state: '', city: '', companyPincode: '' })); return; }
+    if (name === 'state') { setFormData((prev) => ({ ...prev, state: finalValue, city: '' })); return; }
     if (name === 'yearOfEstablishment' || name === 'yearsInBusiness' || name === 'numberOfOutlets') {
       finalValue = String(finalValue).replace(/\D/g, '');
       if (name === 'yearOfEstablishment') finalValue = finalValue.slice(0, 4);
@@ -205,7 +192,8 @@ export default function CorporateForm() {
 
   const handleRequestOtp = async (type: 'email' | 'mobile') => {
     const value = type === 'email' ? formData.email : formData.mobileNo;
-    if (!value) return;
+    const problem = type === 'email' ? check.email(value) : check.indianMobile(value, 'WhatsApp number');
+    if (problem) { showErrors([problem]); return; }
 
     setIsVerifying(prev => ({ ...prev, [type]: true }));
     try {
@@ -251,8 +239,32 @@ export default function CorporateForm() {
     setIsVerifying(prev => ({ ...prev, [type]: false }));
   };
 
+  // Every problem at once, in one popup (the form has noValidate so the browser does not stop at the first)
+  const validate = () => errorList(
+    check.name(formData.firstName, "First name"),
+    check.name(formData.lastName, "Last name"),
+    check.required(formData.gender, "Gender"),
+    check.dob(formData.dob),
+    check.required(formData.designation, "Designation"),
+    check.indianMobile(formData.mobileNo, "WhatsApp number"),
+    check.indianMobile(formData.alternateNo, "Alternate number", false),
+    !!formData.alternateNo && formData.alternateNo === formData.mobileNo && "Alternate number must be different from the WhatsApp number.",
+    check.email(formData.email),
+    check.required(formData.companyName, "Company name"),
+    check.website(formData.companyWebsite, "Company website"),
+    check.required(formData.industry, "Industry sector"),
+    formData.industry === "Others" && check.required(formData.otherIndustry, "Other industry"),
+    check.required(formData.country, "Country"),
+    check.required(formData.state, "State"),
+    check.required(formData.city, "City"),
+    check.postal(formData.companyPincode, formData.country, true),
+    !formData.purposeOfVisit.length && "Please choose at least one purpose of visit.",
+    !formData.areaOfInterest.length && "Please choose at least one area of interest.",
+  );
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    if (!showErrors(validate())) return;
     if (requireOtp && (!otpVerified.email || !otpVerified.mobile)) {
       Swal.fire({ scrollbarPadding: false, icon: 'warning', title: 'Verification Required', text: 'Please verify both Email and WhatsApp number.' });
       return;
@@ -260,10 +272,12 @@ export default function CorporateForm() {
     setLoading(true);
     try {
       const res = await visitorApi.submitCorporate(formData);
-      if (res) {
+      if (res.ok) {
         setSubmitted(true);
+        setRegistrationNo(res.data?.registrationNo || "");
       } else {
-        Swal.fire({ scrollbarPadding: false, icon: 'error', title: 'Submission Failed', text: 'Failed to submit registration.' });
+        // The server's reason, e.g. "This mobile number is already registered"
+        Swal.fire({ scrollbarPadding: false, icon: 'error', title: 'Registration Failed', text: res.message });
       }
     } catch (error) {
       Swal.fire({ scrollbarPadding: false, icon: 'error', title: 'Error', text: 'Something went wrong.' });
@@ -279,20 +293,17 @@ export default function CorporateForm() {
 
   if (submitted) {
     return (
-      <div className="flex flex-col items-center justify-center py-16 text-center">
-        <div className="w-20 h-20 rounded-full bg-[#eef6e2] flex items-center justify-center mb-6 shadow-lg">
-          <CheckCircle2 size={40} className="text-[#4d7f1d]" />
-        </div>
-        <h3 className="text-2xl font-bold text-[#1a3352] mb-2 font-poppins">Registration Successful!</h3>
-        <p className="text-gray-500 text-sm max-w-sm leading-relaxed">
-          Thank you for registering as a Corporate Visitor at Bharat Organic Expo. A confirmation will be sent to your email.
-        </p>
-      </div>
+      <RegistrationSuccess
+        title="Registration Successful!"
+        name={formData.firstName}
+        message="Your registration as a Corporate Visitor at Bharat Organic Expo 2027 has been received."
+        registrationNo={registrationNo}
+      />
     );
   }
 
   return (
-    <form onSubmit={handleSubmit} className="w-full space-y-2 animate-in fade-in duration-500">
+    <form onSubmit={handleSubmit} noValidate className="w-full space-y-2 animate-in fade-in duration-500">
       <div className="flex items-center gap-3 mb-6">
         <div className="w-10 h-10 rounded-full bg-[#4d7f1d] flex items-center justify-center shrink-0 shadow-md">
           <Store size={18} className="text-white" />
@@ -345,7 +356,7 @@ export default function CorporateForm() {
             </div>
           </div>
 
-          <div><label className={labelClasses}>Alternate Number (Optional)</label><input type="tel" name="alternateNo" value={formData.alternateNo} onChange={handleChange} className={inputClasses} placeholder="Enter Alternate No." /></div>
+          <div><label className={labelClasses}>Alternate Number (Optional)</label><input type="tel" name="alternateNo" autoComplete="section-alternate tel-national" value={formData.alternateNo} onChange={handleChange} className={inputClasses} placeholder="Enter Alternate No." /></div>
 
           <div className="space-y-1">
             <div className="flex justify-between items-end">
@@ -386,7 +397,7 @@ export default function CorporateForm() {
       </div>
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-x-3 gap-y-3">
         <div><label className={labelClasses}>Company Name <span className="text-red-600">*</span></label><input required name="companyName" value={formData.companyName} onChange={handleChange} className={inputClasses} placeholder="Enter Company Name.." /></div>
-        <div><label className={labelClasses}>Company Website</label><input type="url" name="companyWebsite" value={formData.companyWebsite} onChange={handleChange} className={inputClasses} placeholder="Enter Company Website.." /></div>
+        <div><label className={labelClasses}>Company Website</label><input type="text" inputMode="url" name="companyWebsite" value={formData.companyWebsite} onChange={handleChange} className={inputClasses} placeholder="Enter Company Website.." /></div>
         <div>
           <label className={labelClasses}>Industry Sector <span className="text-red-600">*</span></label>
           <select required name="industry" value={formData.industry} onChange={handleChange} className={inputClasses}>
@@ -406,27 +417,28 @@ export default function CorporateForm() {
         </div>
 
         <div>
-          <label className={labelClasses}>Country <span className="text-red-600">*</span></label>
-          <select required name="country" value={formData.country} onChange={handleChange} className={inputClasses}>
-            <option value="">Select Country</option>
-            {countries.length > 0 ? countries.map((c: any) => <option key={c.countryCode} value={c.name}>{c.name}</option>) : <option value="India">India</option>}
-          </select>
+          <label className={labelClasses}>Pincode / Zip Code <span className="text-red-600">*</span></label>
+          <input required name="companyPincode" value={formData.companyPincode} onChange={handleChange} className={inputClasses} placeholder="Enter Pincode" inputMode={isIndia(formData.country) ? "numeric" : "text"} autoComplete="postal-code" aria-describedby="pincode-hint" />
+          <div id="pincode-hint"><PincodeHint lookup={pinLookup} /></div>
         </div>
         <div>
           <label className={labelClasses}>State <span className="text-red-600">*</span></label>
-          <select required name="state" value={formData.state} onChange={handleChange} className={inputClasses} disabled={!formData.country}>
+          <select required name="state" value={formData.state} onChange={handleChange} className={inputClasses} disabled={addrLock.locked || !formData.country}>
             <option value="">Select State</option>
-            {states.map((s: any) => <option key={s.stateCode} value={s.name}>{s.name}</option>)}
+            {loc.states.map((s) => <option key={s.stateCode} value={s.name}>{s.name}</option>)}
           </select>
         </div>
         <div>
           <label className={labelClasses}>City <span className="text-red-600">*</span></label>
-          <select required name="city" value={formData.city} onChange={handleChange} className={inputClasses} disabled={!formData.state}>
-            <option value="">Select City</option>
-            {cities.map((c: any) => <option key={c.name} value={c.name}>{c.name}</option>)}
+          <CityField key={formData.state} value={formData.city} onChange={(city) => setFormData((prev) => ({ ...prev, city }))} cities={loc.cities} ready={loc.citiesReady} stateChosen={!!formData.state} disabled={addrLock.cityLocked} className={inputClasses} required />
+        </div>
+        <div>
+          <label className={labelClasses}>Country <span className="text-red-600">*</span></label>
+          <select required name="country" value={formData.country} onChange={handleChange} className={inputClasses} disabled={addrLock.locked}>
+            <option value="">Select Country</option>
+            {loc.countries.map((c) => <option key={c.countryCode} value={c.name}>{c.name}</option>)}
           </select>
         </div>
-        <div><label className={labelClasses}>Pincode / Zip Code</label><input name="companyPincode" value={formData.companyPincode} onChange={handleChange} className={inputClasses} placeholder="Enter Pincode" /></div>
       </div>
 
       <div>

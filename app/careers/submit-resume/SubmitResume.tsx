@@ -73,14 +73,14 @@ const brandHeader = {
    ========================================================= */
 
 const profile = {
-  name: "Vijay Sharma",
-  email: "vijay.sharma@gmail.com",
-  phone: "+91 98765 43210",
-  linkedin: "linkedin.com/in/vijay-sharma",
+  name: "Candidate",
+  email: "",
+  phone: "",
+  linkedin: "",
 
   image: "/career-submit-resume-assets/profile.png",
 
-  cvName: "Vijay_Sharma_CV.pdf",
+  cvName: "Your_CV.pdf",
   cvSize: "842 KB",
 };
 
@@ -403,14 +403,14 @@ export type CandidateProfileData = {
 };
 
 export const defaultCandidateData: CandidateProfileData = {
-  candidateName: "Rohit Kumar",
-  firstName: "Rohit",
-  email: "kumarrohitji89@gmail.com",
-  phone: "+91 9568816858",
-  phones: ["+91 9568816858"],
-  verifiedPhone: "+91 9568816858",
-  linkedin: "linkedin.com/in/rohit-kumar",
-  cvName: "Rohit_Encodency.pdf",
+  candidateName: "Candidate",
+  firstName: "Candidate",
+  email: "",
+  phone: "",
+  phones: [],
+  verifiedPhone: "",
+  linkedin: "",
+  cvName: "Your_CV.pdf",
   cvSize: "424 KB",
   score: 93,
   requirementsMet: [
@@ -1546,8 +1546,7 @@ function ProfileCard() {
             >
               {draft.image ? (
                 // Object-URL previews are not routable through next/image.
-                // eslint-disable-next-line @next/next/no-img-element
-                <img src={draft.image} alt="" className="h-full w-full object-cover object-center" />
+                <Image width={0} height={0} sizes="100vw" src={draft.image} alt="" className="h-full w-full object-cover object-center" />
               ) : (
                 <span className="text-[30px] font-bold text-[#07623a]">{initials || "CV"}</span>
               )}
@@ -1665,8 +1664,7 @@ function ProfileCard() {
         <div className="mt-[8px] flex min-h-0 flex-1 items-center gap-[12px]">
           {candidate.image ? (
             // May be a blob: preview from the editor above, which next/image cannot take.
-            // eslint-disable-next-line @next/next/no-img-element
-            <img
+            <Image width={0} height={0} sizes="100vw"
               src={candidate.image}
               alt={candidate.candidateName}
               className="h-[116px] w-[116px] shrink-0 rounded-[8px] object-cover object-center"
@@ -2273,7 +2271,7 @@ export function EligibilityModal({
   );
 }
 
-import UploadCvModal from "@/app/components/careers/uploade_cv/page";
+import UploadCvModal from "@/app/components/careers/uploade_cv/UploadCvModal";
 
 export default function CareerEligibilityPage() {
   const [eligibilityOpen, setEligibilityOpen] = useState(false);

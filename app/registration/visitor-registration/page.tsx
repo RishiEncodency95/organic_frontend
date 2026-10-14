@@ -4,6 +4,7 @@ import { OG_IMAGE, OG_IMAGE_ALT } from "@/lib/seo";
 import { seoApi } from "@/lib/api";
 import AdminSchema from "@/components/seo/AdminSchema";
 import VisitorRegistrationClient from "./VisitorRegistrationClient";
+import { getDisabledSectionKeys } from "@/lib/sectionVisibility";
 
 export const revalidate = 60;
 
@@ -86,7 +87,7 @@ export default async function VisitorRegistrationPage() {
   return (
     <>
       <AdminSchema schema={schemaContent} />
-      <VisitorRegistrationClient />
+      <VisitorRegistrationClient disabledSections={await getDisabledSectionKeys("visitorRegistrationPage")} />
     </>
   );
 }

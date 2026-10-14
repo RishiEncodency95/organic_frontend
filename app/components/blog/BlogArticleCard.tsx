@@ -4,6 +4,7 @@ import React from "react";
 import Link from "next/link";
 import { Calendar, Clock } from "lucide-react";
 import { Reveal, RevealDirection } from "./BlogReveal";
+import Image from "next/image";
 
 export type BlogArticle = {
   tag: string;
@@ -27,7 +28,7 @@ export default function ArticleCard({ a, delay = 0, direction = "up" }: { a: Blo
         style={{ boxShadow: "rgba(0, 0, 0, 0.02) 0px 1px 3px 0px, rgba(27, 31, 35, 0.15) 0px 0px 0px 1px" }}
       >
         <div className="relative overflow-hidden h-[190px] md:h-[210px] bg-gray-100">
-          <img
+          <Image width={0} height={0} sizes="100vw"
             src={a.img}
             alt={a.title}
             className="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-[1.03]"

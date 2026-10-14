@@ -4,6 +4,7 @@ import { OG_IMAGE, OG_IMAGE_ALT } from "@/lib/seo";
 import { seoApi } from "@/lib/api";
 import AdminSchema from "@/components/seo/AdminSchema";
 import AwardsNominationClient from "./AwardsNominationClient";
+import { getDisabledSectionKeys } from "@/lib/sectionVisibility";
 
 export const revalidate = 60;
 
@@ -96,11 +97,12 @@ export default async function AwardsNominationPage() {
   }
 
   const schemaContent = seoData?.schemaMarkup || null;
+  const disabledSections = await getDisabledSectionKeys("awardsNominationPage");
 
   return (
     <>
       <AdminSchema schema={schemaContent} />
-      <AwardsNominationClient initialHeroData={heroData} />
+      <AwardsNominationClient initialHeroData={heroData} disabledSections={disabledSections} />
     </>
   );
 }

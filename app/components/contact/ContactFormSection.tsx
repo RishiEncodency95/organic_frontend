@@ -59,7 +59,7 @@ const ContactFormSection = () => {
             <div className="flex items-center gap-2 mt-2">
               <input type="checkbox" id="terms" className="rounded border-gray-300 w-4 h-4 text-[#3b8c2a] focus:ring-[#3b8c2a]" />
               <label htmlFor="terms" className="text-[#64748b] text-[14px] md:text-[15px]">
-                I agree to the <a href="#" className="text-[#3b8c2a] hover:underline font-semibold">Privacy Policy</a> & <a href="#" className="text-[#3b8c2a] hover:underline font-semibold">Terms</a>
+                I agree to the <a href="/registration/privacy-policy" className="text-[#3b8c2a] hover:underline font-semibold">Privacy Policy</a> & <a href="/registration/terms-and-conditions" className="text-[#3b8c2a] hover:underline font-semibold">Terms</a>
               </label>
             </div>
 

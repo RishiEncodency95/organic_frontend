@@ -1,12 +1,14 @@
 "use client";
 import React from "react";
 import Link from "next/link";
-import { CheckCircle2, ChevronRight, User, Briefcase, HelpCircle, Users, Phone } from "lucide-react";
+import { CheckCircle2, ChevronRight, User, Briefcase, HelpCircle, Users, Phone, MessageSquareText } from "lucide-react";
 import b2bImg from "../../assets/image/b2bog.png";
 import footerRightImg from "../../assets/icons/footerright.png";
 import blleafImg from "../../assets/icons/blleaf.png";
 import SectionContainer from "@/app/components/layout/SectionContainer";
 import { ABOUT_DATA } from "@/app/data/buyerSellerMeetData";
+import { BUYER_ENQUIRY_EVENT } from "./HeroSection";
+import Image from "next/image";
 
 const ICON_MAP: Record<string, any> = {
   User: <User size={16} />,
@@ -14,6 +16,7 @@ const ICON_MAP: Record<string, any> = {
   HelpCircle: <HelpCircle size={16} />,
   Users: <Users size={16} />,
   Phone: <Phone size={16} />,
+  MessageSquareText: <MessageSquareText size={16} />,
 };
 
 export default function AboutSection() {
@@ -21,7 +24,7 @@ export default function AboutSection() {
     <section className="pt-8 pb-8 bg-white font-inter relative overflow-hidden">
       {/* Decorative Right Image */}
       <div className="absolute right-0 bottom-0 pointer-events-none z-0 w-48 md:w-64 lg:w-80 opacity-80">
-        <img src={footerRightImg.src} alt="Leaf Decoration" className="w-full h-auto object-contain" />
+        <Image width={0} height={0} sizes="100vw" src={footerRightImg.src} alt="Leaf Decoration" className="w-full h-auto object-contain" />
       </div>
 
       <SectionContainer className="relative z-10">
@@ -52,7 +55,7 @@ export default function AboutSection() {
             </div>
 
             {/* Middle Column - Graphic */}
-            <img
+            <Image width={0} height={0} sizes="100vw"
               src={b2bImg.src}
               alt="B2B Meet"
               className="w-full h-auto max-w-[320px] object-cover rounded-xl lg:col-span-1 place-self-center"
@@ -65,7 +68,7 @@ export default function AboutSection() {
             >
               {/* Decorative leaf for Quick Links */}
               <div className="absolute right-0 bottom-0 pointer-events-none opacity-100 w-32 md:w-40 z-0">
-                <img src={blleafImg.src} alt="Leaf" className="w-full h-auto object-contain" />
+                <Image width={0} height={0} sizes="100vw" src={blleafImg.src} alt="Leaf" className="w-full h-auto object-contain" />
               </div>
 
               {/* Header (thead) */}
@@ -97,6 +100,22 @@ export default function AboutSection() {
                       <ChevronRight size={18} className="text-[#1b5e20] group-hover:translate-x-1 transition-transform" />
                     </>
                   );
+
+                  // "Buyer Enquiry" opens the popup from the hero section
+                  if (link.href === "#buyer-enquiry") {
+                    return (
+                      <button
+                        key={i}
+                        type="button"
+                        onClick={() => window.dispatchEvent(new Event(BUYER_ENQUIRY_EVENT))}
+                        aria-haspopup="dialog"
+                        {...commonProps}
+                        className={`${commonProps.className} w-full text-left`}
+                      >
+                        {content}
+                      </button>
+                    );
+                  }
 
                   return link.href.startsWith("#") ? (
                     <a key={i} href={link.href} {...commonProps}>

@@ -14,6 +14,7 @@ import v3og from "@/app/assets/icons/v3og.png";
 import v4og from "@/app/assets/icons/v4og.png";
 import v5og from "@/app/assets/icons/v5og.png";
 import v6og from "@/app/assets/icons/v6og.png";
+import Image from "next/image";
 
 const DEFAULT_CARDS = [
   {
@@ -81,7 +82,7 @@ export default function WhyVisitMatters({ sectionData }: { sectionData?: any }) 
     <section className="pt-1 md:pt-2 pb-3 sm:pb-4 bg-[#F6F8ED] font-inter relative overflow-hidden">
       {/* Decorative Top Right Corner Leaf (vleaf.png) */}
       <div className="absolute right-0 top-0 pointer-events-none opacity-90 w-36 sm:w-48 md:w-64 lg:w-[280px] z-0">
-        <img
+        <Image width={0} height={0} sizes="100vw"
           src={vleafImg.src}
           alt="Organic Leaf Decoration Top Right"
           className="w-full h-auto object-contain translate-x-1/6 -translate-y-1/6"
@@ -90,7 +91,7 @@ export default function WhyVisitMatters({ sectionData }: { sectionData?: any }) 
 
       {/* Decorative Bottom Left Corner Leaf (nleaf.png) */}
       <div className="absolute left-0 bottom-0 sm:bottom-1 pointer-events-none opacity-90 w-36 sm:w-48 md:w-64 lg:w-[280px] z-0">
-        <img
+        <Image width={0} height={0} sizes="100vw"
           src={nleafImg.src}
           alt="Organic Leaf Decoration Left"
           className="w-full h-auto object-contain -translate-x-1/6"
@@ -99,7 +100,7 @@ export default function WhyVisitMatters({ sectionData }: { sectionData?: any }) 
 
       {/* Decorative Bottom Right Corner Image (bog.png) */}
       <div className="absolute right-0 bottom-0 pointer-events-none opacity-100 w-36 sm:w-48 md:w-64 lg:w-[300px] z-0">
-        <img
+        <Image width={0} height={0} sizes="100vw"
           src={bogImg.src}
           alt="Organic Decoration Bottom Right"
           className="w-full h-auto object-contain translate-x-1/6 translate-y-1/6"
@@ -110,7 +111,7 @@ export default function WhyVisitMatters({ sectionData }: { sectionData?: any }) 
         {/* HEADER */}
         <div className="text-center mb-8 flex flex-col items-center justify-center">
           {ribbonImg && (
-            <img
+            <Image width={0} height={0} sizes="100vw"
               src={ribbonImg}
               alt={ribbonAlt}
               className="h-8 sm:h-9 md:h-10 w-auto object-contain mb-2.5"
@@ -153,7 +154,7 @@ export default function WhyVisitMatters({ sectionData }: { sectionData?: any }) 
 
               {/* Icon Image */}
               <span className="flex h-20 w-20 sm:h-24 sm:w-24 items-center justify-center mb-2 mt-0.5">
-                <img
+                <Image width={0} height={0} sizes="100vw"
                   src={card.img}
                   alt={card.title}
                   className="w-16 h-16 sm:w-20 sm:h-20 object-contain"

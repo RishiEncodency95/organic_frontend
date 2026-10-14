@@ -41,7 +41,9 @@ const whyJoinAdvisoryData = {
     }
 };
 
-const WhyJoinAdvisory = () => {
+// Admin → Advisory Board Members: "why-join-advisory" controls the top block,
+// "nominate-banner" the bottom Nominate banner (see the page's section gate).
+const WhyJoinAdvisory = ({ showWhyJoin = true, showNominateBanner = true }: { showWhyJoin?: boolean; showNominateBanner?: boolean }) => {
     const benefits = [
         {
             icon: Target,
@@ -94,7 +96,8 @@ const WhyJoinAdvisory = () => {
             <div className="w-full px-4 md:px-14">
 
                 {/* Top Section: Why Join & Cards */}
-                <div className="flex flex-col lg:flex-row gap-8 xl:gap-12 mb-4 items-start">
+                {showWhyJoin && (
+                <div className={`flex flex-col lg:flex-row gap-8 xl:gap-12 items-start ${showNominateBanner ? "mb-4" : ""}`}>
 
                     {/* Left: Text Block */}
                     <div className="w-full lg:w-1/3 xl:w-1/4 flex flex-col pt-2">
@@ -137,8 +140,10 @@ const WhyJoinAdvisory = () => {
                         </div>
                     </div>
                 </div>
+                )}
 
                 {/* Bottom Banner Section */}
+                {showNominateBanner && (
                 <div
                     className="relative w-full rounded-2xl overflow-hidden shadow-xl border border-[#3b8c2a]/20"
                     style={{
@@ -208,6 +213,7 @@ const WhyJoinAdvisory = () => {
 
                     </div>
                 </div>
+                )}
 
             </div>
         </section>

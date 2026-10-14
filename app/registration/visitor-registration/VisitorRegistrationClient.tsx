@@ -8,8 +8,11 @@ import InternationalVisitorForm from "../../components/registration/visitor-regi
 import GroupVisitorForm from "../../components/registration/visitor-registration/GroupVisitorForm";
 import { ShieldCheck } from "lucide-react";
 import SectionContainer from "@/app/components/layout/SectionContainer";
+import { makeSectionGate } from "@/lib/sectionGate";
 
-export default function VisitorRegistrationPage() {
+// `disabledSections`: visitorRegistrationPage section keys switched off in admin.
+export default function VisitorRegistrationPage({ disabledSections = [] }: { disabledSections?: string[] }) {
+  const show = makeSectionGate(disabledSections);
   const [visitorType, setVisitorType] = useState<"domestic" | "international" | "group" | null>(null);
   const formRef = useRef<HTMLDivElement>(null);
 
@@ -23,13 +26,13 @@ export default function VisitorRegistrationPage() {
     <main className="min-h-screen bg-[#FDFDFD] font-inter text-slate-900">
 
       {/* Hero Section */}
-      <VisitorHero />
+      {show("visitor-hero") && <VisitorHero />}
 
       {/* Feature Strip (can reuse from buyer-seller-meet as it's general styling) */}
       <FeatureStrip />
 
       {/* Category Selector */}
-      <CategorySelect visitorType={visitorType} onChange={setVisitorType} />
+      {show("visitor-types") && <CategorySelect visitorType={visitorType} onChange={setVisitorType} />}
 
       {/* Registration Form */}
       <div ref={formRef} className="scroll-mt-10">

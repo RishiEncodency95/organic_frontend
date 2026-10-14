@@ -215,7 +215,7 @@ const AwardsCategories = ({ initialData }: AwardsCategoriesProps) => {
                   {/* Card Content */}
                   <div className="relative z-10">
                     <div className="mb-3 flex flex-col items-center gap-3 mx-auto max-w-sm">
-                      <img
+                      <Image width={0} height={0} sizes="100vw"
                         src={imgSrc}
                         alt={cat.title || "Category"}
                         className="h-[50px] w-[50px] object-contain transition-transform duration-300 group-hover:scale-105"

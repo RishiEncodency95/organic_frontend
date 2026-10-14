@@ -38,7 +38,7 @@ const InitialsCircle = ({ name, color, logo, logoAlt }: { name: string; color: s
     }}
   >
     {logo ? (
-      <img src={logo} alt={logoAlt?.trim() || name} className="w-full h-full object-cover" />
+      <Image width={0} height={0} sizes="100vw" src={logo} alt={logoAlt?.trim() || name} className="w-full h-full object-cover" />
     ) : (
       getInitials(name)
     )}
@@ -267,7 +267,7 @@ const VideoCard = ({ item, onSelectVideo }: { item: any; onSelectVideo: (item: a
     >
       <div className="absolute inset-0">
         {displayThumb ? (
-          <img
+          <Image width={0} height={0} sizes="100vw"
             src={displayThumb}
             className={`w-full h-full object-cover transition-opacity duration-300 ${
               showOverlay ? "opacity-80 group-hover:opacity-100" : "opacity-100"
@@ -607,7 +607,7 @@ const TestimonialsCarousel = () => {
       {videosList.length > 0 && (
         <div className="relative pt-1 md:pt-2 pb-1 md:pb-2">
           <div className="absolute -left-10 bottom-0 w-32 h-32 md:w-44 md:h-44 opacity-20 pointer-events-none rotate-45 select-none z-0">
-            <img src={leafPng.src} alt="" className="w-full h-full object-contain" />
+            <Image width={0} height={0} sizes="100vw" src={leafPng.src} alt="" className="w-full h-full object-contain" />
           </div>
 
           <div className="px-2 md:px-4 lg:px-14 relative z-10">
@@ -632,7 +632,7 @@ const TestimonialsCarousel = () => {
           </div>
 
           <div className="absolute -right-12 bottom-4 w-36 h-36 md:w-48 md:h-48 opacity-20 pointer-events-none -rotate-12 select-none z-0">
-            <img src={leafPng.src} alt="" className="w-full h-full object-contain" />
+            <Image width={0} height={0} sizes="100vw" src={leafPng.src} alt="" className="w-full h-full object-contain" />
           </div>
         </div>
       )}

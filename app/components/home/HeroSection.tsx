@@ -579,16 +579,14 @@ const HeroSection = ({ initialSlides }: HeroSectionProps) => {
               style={{ zIndex: id === 0 ? 2 : 1, willChange: "clip-path, opacity, transform" }}
             >
               {isLoaded && isCloudinary ? (
-                // Cloudinary serves responsive variants directly from its edge CDN.
-                // eslint-disable-next-line @next/next/no-img-element
-                <img
+                // Cloudinary serves responsive variants directly from its edge CDN: the loader
+                // builds each size's Cloudinary URL, so next/image's srcSet points straight at it.
+                <Image width={0} height={0}
                   ref={(el) => {
                     imgEls.current[id] = el;
                   }}
-                  src={buildCloudinaryImageUrl(img as string, 1600)}
-                  srcSet={[480, 768, 1024, 1280, 1600]
-                    .map((width) => `${buildCloudinaryImageUrl(img as string, width)} ${width}w`)
-                    .join(", ")}
+                  loader={({ src, width }) => buildCloudinaryImageUrl(src, Math.min(width, 1600))}
+                  src={img as string}
                   sizes="100vw"
                   alt={alt || `Bharat Organic Expo slide ${id + 1}`}
                   className="w-full h-full object-cover select-none"

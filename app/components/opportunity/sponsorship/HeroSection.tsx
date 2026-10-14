@@ -5,6 +5,7 @@ import leafImg from "../../../assets/icons/leafs.png";
 import { Users, Store, Presentation, Globe, Handshake, Leaf } from "lucide-react";
 import SectionContainer from "@/app/components/layout/SectionContainer";
 import { API_URL } from "@/lib/api";
+import Image from "next/image";
 
 const ICON_MAP: Record<string, React.ReactNode> = {
   Users: <Users className="w-5 h-5 md:w-6 md:h-6 text-[#2e7d32]" strokeWidth={1.5} />,
@@ -156,7 +157,7 @@ export default function HeroSection({ initialData }: { initialData?: any }) {
 
       {/* Floating Leaf Decoration */}
       <div className="absolute -left-10 lg:-left-8 top-[10%] lg:top-[15%] z-10 hidden sm:block w-28 md:w-36 lg:w-[150px] pointer-events-none opacity-100">
-        <img
+        <Image loading="eager" width={0} height={0} sizes="100vw"
           src={leafImg.src}
           alt="Organic Leaf"
           className="w-full h-auto object-contain drop-shadow-lg"

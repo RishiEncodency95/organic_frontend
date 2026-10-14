@@ -2,6 +2,7 @@
 
 import dynamic from "next/dynamic";
 import { useEffect, useRef, useState } from "react";
+import { makeSectionGate } from "@/lib/sectionGate";
 
 const SectionLoader = () => (
   <div className="min-h-[240px] animate-pulse bg-gradient-to-b from-white to-[#f7fbf6]" aria-hidden="true" />
@@ -20,7 +21,9 @@ const BuyerSellerMeet = dynamic(() => import("./BuyerSellerMeet"), { ssr: false,
 const TestimonialsCarousel = dynamic(() => import("./TestimonialsCarousel"), { ssr: false, loading: SectionLoader });
 const LatestInsights = dynamic(() => import("./LatestInsights"), { ssr: false, loading: SectionLoader });
 
-export default function LazyHomeSections() {
+// `disabledSections`: landingPage section keys switched off in admin (see lib/sectionVisibility).
+export default function LazyHomeSections({ disabledSections = [] }: { disabledSections?: string[] }) {
+  const show = makeSectionGate(disabledSections);
   const triggerRef = useRef<HTMLDivElement>(null);
   const [shouldRender, setShouldRender] = useState(false);
 
@@ -50,18 +53,18 @@ export default function LazyHomeSections() {
     <div ref={triggerRef} className="min-h-px">
       {shouldRender ? (
         <>
-          <GlobalPlatform />
-          <WhyParticipate />
-          <ConferenceSection />
-          <ExpoCategories />
-          <BeyondExhibition />
-          <SponsorsAndAttend />
-          <BecomeSponsor />
-          <SponsorshipCategories />
-          <PartnersAndBrands />
-          <BuyerSellerMeet />
-          <TestimonialsCarousel />
-          <LatestInsights />
+          {show("global-platform") && <GlobalPlatform />}
+          {show("why-participate") && <WhyParticipate />}
+          {show("conference-section") && <ConferenceSection />}
+          {show("expo-categories") && <ExpoCategories />}
+          {show("beyond-exhibition") && <BeyondExhibition />}
+          {show("sponsors-attend") && <SponsorsAndAttend />}
+          {show("become-sponsor") && <BecomeSponsor />}
+          {show("sponsorship-categories") && <SponsorshipCategories />}
+          {show("partners-brands") && <PartnersAndBrands />}
+          {show("buyer-seller-meet") && <BuyerSellerMeet />}
+          {show("testimonials-carousel") && <TestimonialsCarousel />}
+          {show("latest-insights") && <LatestInsights />}
         </>
       ) : (
         <SectionLoader />

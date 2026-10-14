@@ -9,10 +9,11 @@ const STORAGE_KEY = "organicMitraChat";
 const ALIVE_COOKIE = "organicMitraAlive";
 const IDLE_LIMIT_MS = 30 * 60 * 1000;
 
-type SavedChat = { sessionId: string; name: string; lastActive: number };
+/** `phone` is the number verified with the WhatsApp OTP, so the chat forms do not ask for it again */
+type SavedChat = { sessionId: string; name: string; phone?: string; lastActive: number; /** AI questions asked without details */ freeAsked?: number };
 
 export type ChatSessionState =
-    | { status: "active"; sessionId: string; name: string }
+    | { status: "active"; sessionId: string; name: string; phone: string; freeAsked: number }
     | { status: "expired" }
     | { status: "none" };
 
@@ -56,20 +57,39 @@ export const readChatSession = (): ChatSessionState => {
     } catch {
         saved = null;
     }
-    if (!saved?.sessionId || !saved.name) return { status: "none" };
+    // `name` is "" while the visitor chats without verifying a mobile number (saved under their IP)
+    if (!saved?.sessionId) return { status: "none" };
 
     const idleTooLong = Date.now() - (saved.lastActive || 0) > IDLE_LIMIT_MS;
     if (idleTooLong || !hasAliveCookie()) {
         clearChatSession();
         return { status: "expired" };
     }
-    return { status: "active", sessionId: saved.sessionId, name: saved.name };
+    return { status: "active", sessionId: saved.sessionId, name: saved.name || "", phone: saved.phone || "", freeAsked: saved.freeAsked || 0 };
 };
 
-/** Call after the details form is submitted and on every message, to keep the chat alive. */
-export const saveChatSession = (sessionId: string, name: string) => {
+/** Remembers how many free AI questions this chat has used, so a page reload does not reset it */
+export const saveFreeAsked = (sessionId: string, freeAsked: number) => {
     try {
-        window.localStorage.setItem(STORAGE_KEY, JSON.stringify({ sessionId, name, lastActive: Date.now() }));
+        const raw = window.localStorage.getItem(STORAGE_KEY);
+        const saved = raw ? (JSON.parse(raw) as SavedChat) : null;
+        if (saved?.sessionId !== sessionId) return;
+        window.localStorage.setItem(STORAGE_KEY, JSON.stringify({ ...saved, freeAsked }));
+    } catch {
+        // ignore
+    }
+};
+
+/** Call after the details form is submitted and on every message, to keep the chat alive.
+ *  Without `phone`, the verified number already saved for this chat is kept. */
+export const saveChatSession = (sessionId: string, name: string, phone?: string) => {
+    try {
+        const raw = window.localStorage.getItem(STORAGE_KEY);
+        const saved = raw ? (JSON.parse(raw) as SavedChat) : null;
+        const same = saved?.sessionId === sessionId;
+        if (phone === undefined && same) phone = saved?.phone;
+        const data: SavedChat = { sessionId, name, phone, lastActive: Date.now(), freeAsked: same ? saved?.freeAsked : 0 };
+        window.localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
     } catch {
         // Private mode / blocked storage — the chat still works until the page is reloaded
     }

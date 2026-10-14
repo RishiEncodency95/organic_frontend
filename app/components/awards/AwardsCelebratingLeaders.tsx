@@ -4,6 +4,7 @@ import React from "react";
 import { Trophy, Sprout, Store, Globe2, Lightbulb } from "lucide-react";
 import { Reveal } from "../shared/Reveal";
 import bgImg from "../../assets/awards/celebrating_leaders.png";
+import Image from "next/image";
 
 const data = {
   enabled: true,
@@ -26,7 +27,7 @@ const AwardsCelebratingLeaders = () => {
   return (
     <section className="relative w-full overflow-hidden bg-[#0b2912] py-2 md:py-4">
       <div className="absolute inset-0 z-0">
-        <img
+        <Image width={0} height={0} sizes="100vw"
           src={bgImg.src}
           alt="Celebrating leaders of India's organic movement"
           className="h-full w-full object-cover"
