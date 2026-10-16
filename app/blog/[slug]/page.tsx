@@ -175,28 +175,38 @@ export async function generateMetadata({
           canonical = hrefMatch ? hrefMatch[1] : rawCanonical.replace(/<[^>]*>/g, "").trim();
         }
 
-        // Parse any additional custom OG tags into metadata.other
+        // Parse any additional custom OG tags into metadata.other.
+        // Next.js already renders og:title/description/url/type/site_name/image and the
+        // twitter:* equivalents from the openGraph/twitter blocks below — a pasted copy
+        // of those same keys lands in `other` as a duplicate <meta name="..."> (WhatsApp/
+        // Facebook then read two conflicting values). Keep only tags we don't emit.
+        const RESERVED_META_KEYS = /^(og:(title|description|url|type|site_name|image(:.*)?)|twitter:(card|title|description|image(:.*)))$/i;
         const customOther: Record<string, string> = {};
         if (post.openGraphTags) {
           const metaRegex = /<meta\s+(?:[^>]*?\s+)?(?:property|name)=["']([^"']+)["']\s+(?:[^>]*?\s+)?content=["']([^"']+)["']/gi;
           let match;
           while ((match = metaRegex.exec(post.openGraphTags)) !== null) {
-            customOther[match[1]] = match[2];
-          }
-          // The share image is the site-wide og-image.jpg; don't let a pasted og:image add a second one.
-          for (const key of Object.keys(customOther)) {
-            if (/^(og|twitter):image/i.test(key)) delete customOther[key];
+            if (RESERVED_META_KEYS.test(match[1].trim())) continue;
+            customOther[match[1].trim()] = match[2];
           }
         }
+
+        // Admin-entered values sometimes start with a stray separator (": ", "| ") which
+        // then shows up verbatim as ": Explore 6 upcoming expos..." in link previews.
+        const cleanMetaText = (value?: string) => (value || "").replace(/^[\s:;|–—-]+/, "").trim();
 
         const seoTitle = post.metaTitle
           ? { absolute: post.metaTitle }
           : `${post.title} | Bharat Organic Expo`;
-        const seoDesc = post.metaDescription || cleanExcerpt(post.excerpt) || "Stay updated with the latest trends and perspectives in the organic sector.";
-        const ogTitle = post.ogTitle || post.metaTitle || post.title;
-        const ogDesc = post.ogDescription || post.metaDescription || cleanExcerpt(post.excerpt);
-        // One share image for every page, articles included.
-        const ogImg = OG_IMAGE;
+        const seoDesc = cleanMetaText(post.metaDescription) || cleanExcerpt(post.excerpt) || "Stay updated with the latest trends and perspectives in the organic sector.";
+        const ogTitle = cleanMetaText(post.ogTitle) || cleanMetaText(post.metaTitle) || post.title;
+        const ogDesc = cleanMetaText(post.ogDescription) || cleanMetaText(post.metaDescription) || cleanExcerpt(post.excerpt);
+        // Use post's real featured image or ogImage, fallback to default absolute OG image
+        let rawImage = post.ogImage || post.image || OG_IMAGE;
+        let ogImg = rawImage;
+        if (rawImage && !rawImage.startsWith("http://") && !rawImage.startsWith("https://")) {
+          ogImg = `${SITE_URL}${rawImage.startsWith("/") ? "" : "/"}${rawImage}`;
+        }
 
         return {
           title: seoTitle,
@@ -211,7 +221,16 @@ export async function generateMetadata({
             url: canonical,
             siteName: "Bharat Organic Expo",
             type: "article",
-            images: ogImg ? [{ url: ogImg, alt: post.imageAlt || post.title }] : [],
+            images: ogImg
+              ? [
+                  {
+                    url: ogImg,
+                    width: 1200,
+                    height: 630,
+                    alt: post.imageAlt || post.title || "Bharat Organic Expo Blog",
+                  },
+                ]
+              : [],
           },
           twitter: {
             card: "summary_large_image",
@@ -341,6 +360,16 @@ export default async function BlogDetail({
   const displayImageAlt = isDynamic ? (dynamicPost.imageAlt || dynamicPost.title) : "Bharat Organic Expo Blog";
   const displayAuthor = isDynamic ? (dynamicPost.author || "Bharat Organic Expo Admin") : sidebarData.author.name;
 
+  // Same resolution as generateMetadata so the client-side injector never swaps the
+  // server-rendered og:image for a different one (previews must match the head tags).
+  const shareImage = (() => {
+    if (!isDynamic) return absoluteUrl(OG_IMAGE);
+    const raw = dynamicPost.ogImage || dynamicPost.image || OG_IMAGE;
+    if (/^https?:\/\//i.test(raw)) return raw;
+    return `${SITE_URL}${raw.startsWith("/") ? "" : "/"}${raw}`;
+  })();
+
+
   return (
     <div className="min-h-screen bg-white font-sans text-neutral-800">
       {/* Dynamic SEO & Head Tags Injector */}
@@ -351,7 +380,7 @@ export default async function BlogDetail({
           metaKeywords={dynamicPost.metaKeywords}
           ogTitle={dynamicPost.ogTitle || dynamicPost.metaTitle || dynamicPost.title}
           ogDescription={dynamicPost.ogDescription || dynamicPost.metaDescription || cleanExcerpt(dynamicPost.excerpt)}
-          ogImage={absoluteUrl(OG_IMAGE)}
+          ogImage={shareImage}
           openGraphTags={dynamicPost.openGraphTags}
         />
       )}
