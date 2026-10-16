@@ -31,7 +31,7 @@ export default function ArticleCard({ a, delay = 0, direction = "up" }: { a: Blo
           <Image width={0} height={0} sizes="100vw"
             src={a.img}
             alt={a.title}
-            className="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-[1.03]"
+            className="w-full h-full object-contain transition-transform duration-700 ease-out group-hover:scale-[1.03]"
           />
           <span
             className="absolute top-3 left-3 bg-[#1b5e20] text-white text-[10px] font-bold tracking-wider uppercase px-3 py-1 rounded-md shadow-md text-center font-poppins"

@@ -2,7 +2,7 @@ import React from "react";
 import Image from "next/image";
 import Link from "next/link";
 import {
-    Calendar, Clock, Eye, Link as LinkIcon, MessageCircle,
+    Calendar, Clock, Link as LinkIcon, MessageCircle,
     Leaf, TrendingUp, Users, Globe, CheckCircle2, ShoppingCart, Truck, Zap,
     ChevronRight, Handshake, Award
 } from "lucide-react";
@@ -355,7 +355,6 @@ export default async function BlogDetail({
   const displayCategory = isDynamic ? (dynamicPost.category || "Expo News") : blogData.category;
   const displayDate = isDynamic ? formatBlogDate(dynamicPost.scheduledDate || dynamicPost.publishDate || dynamicPost.createdAt) : blogData.meta.date;
   const displayReadTime = isDynamic ? (dynamicPost.readTime || "4 min read") : blogData.meta.readTime;
-  const displayViews = isDynamic ? `${dynamicPost.views || 0} Views` : blogData.meta.views;
   const displayImage = isDynamic ? (dynamicPost.image || blogData.image) : blogData.image;
   const displayImageAlt = isDynamic ? (dynamicPost.imageAlt || dynamicPost.title) : "Bharat Organic Expo Blog";
   const displayAuthor = isDynamic ? (dynamicPost.author || "Bharat Organic Expo Admin") : sidebarData.author.name;
@@ -431,10 +430,6 @@ export default async function BlogDetail({
                 <div className="flex items-center gap-1.5">
                   <Clock className="w-4 h-4 text-neutral-400" />
                   <span>{displayReadTime}</span>
-                </div>
-                <div className="flex items-center gap-1.5">
-                  <Eye className="w-4 h-4 text-neutral-400" />
-                  <span>{displayViews}</span>
                 </div>
               </div>
             </div>
