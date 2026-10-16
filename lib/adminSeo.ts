@@ -64,16 +64,28 @@ export async function adminSeoMetadata(
             description: og["og:description"] || seoData?.ogDescription || description,
             url: canonicalUrl,
             siteName: "Bharat Organic Expo 2027",
-            // One share image for every page; the admin's og:image is intentionally ignored.
+            // Support custom admin ogImage or fallback to default site-wide og-image.jpg
             images: [
                 {
-                    url: OG_IMAGE,
+                    url: seoData?.ogImage
+                        ? (seoData.ogImage.startsWith("http") ? seoData.ogImage : `${defaultUrl}${seoData.ogImage.startsWith("/") ? "" : "/"}${seoData.ogImage}`)
+                        : `${defaultUrl}${OG_IMAGE.startsWith("/") ? "" : "/"}${OG_IMAGE}`,
                     width: 1200,
                     height: 630,
                     alt: OG_IMAGE_ALT,
                 },
             ],
             type: "website",
+        },
+        twitter: {
+            card: "summary_large_image",
+            title: og["og:title"] || seoData?.ogTitle || title,
+            description: og["og:description"] || seoData?.ogDescription || description,
+            images: [
+                seoData?.ogImage
+                    ? (seoData.ogImage.startsWith("http") ? seoData.ogImage : `${defaultUrl}${seoData.ogImage.startsWith("/") ? "" : "/"}${seoData.ogImage}`)
+                    : `${defaultUrl}${OG_IMAGE.startsWith("/") ? "" : "/"}${OG_IMAGE}`,
+            ],
         },
         robots: {
             index: seoData?.robotsIndex !== false,

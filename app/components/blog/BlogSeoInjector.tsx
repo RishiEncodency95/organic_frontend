@@ -24,6 +24,10 @@ export default function BlogSeoInjector({
   useEffect(() => {
     if (typeof window === "undefined") return;
 
+    // Admin-entered values sometimes start with a stray separator (": ", "| ") —
+    // strip it so previews never read ": Explore 6 upcoming expos...".
+    const clean = (value?: string) => (value || "").replace(/^[\s:;|–—-]+/, "").trim();
+
     // 1. Browser Title
     if (metaTitle) {
       document.title = metaTitle;
@@ -43,24 +47,27 @@ export default function BlogSeoInjector({
     };
 
     // 2. Standard SEO Meta
-    setMeta("name", "description", metaDescription);
+    setMeta("name", "description", clean(metaDescription));
     setMeta("name", "keywords", metaKeywords);
 
     // 3. OpenGraph Tags
-    setMeta("property", "og:title", ogTitle || metaTitle);
-    setMeta("property", "og:description", ogDescription || metaDescription);
+    setMeta("property", "og:title", clean(ogTitle) || clean(metaTitle));
+    setMeta("property", "og:description", clean(ogDescription) || clean(metaDescription));
     setMeta("property", "og:image", ogImage);
     setMeta("property", "og:type", "article");
 
     // 4. Twitter Cards
     setMeta("name", "twitter:card", "summary_large_image");
-    setMeta("name", "twitter:title", ogTitle || metaTitle);
-    setMeta("name", "twitter:description", ogDescription || metaDescription);
+    setMeta("name", "twitter:title", clean(ogTitle) || clean(metaTitle));
+    setMeta("name", "twitter:description", clean(ogDescription) || clean(metaDescription));
     setMeta("name", "twitter:image", ogImage);
 
     // Canonical is not touched here — it is rendered once, server-side, by generateMetadata.
 
-    // 6. Additional Custom OG / Meta Tags
+    // 6. Additional Custom OG / Meta Tags.
+    // Keys already rendered above must not be re-added — a second og:image/og:title in
+    // the DOM makes scrapers pick the wrong one.
+    const RESERVED_META_KEYS = /^(og:(title|description|url|type|site_name|image(:.*)?)|twitter:(card|title|description|image(:.*)))$/i;
     if (openGraphTags && openGraphTags.trim()) {
       document.querySelectorAll("[data-custom-og='true']").forEach((el) => el.remove());
 
@@ -68,6 +75,8 @@ export default function BlogSeoInjector({
       const doc = parser.parseFromString(openGraphTags, "text/html");
       const metaTags = doc.querySelectorAll("meta");
       metaTags.forEach((m) => {
+        const key = (m.getAttribute("property") || m.getAttribute("name") || "").trim();
+        if (RESERVED_META_KEYS.test(key)) return;
         const newMeta = document.createElement("meta");
         Array.from(m.attributes).forEach((attr) => {
           newMeta.setAttribute(attr.name, attr.value);
