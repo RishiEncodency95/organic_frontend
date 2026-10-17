@@ -10,7 +10,8 @@ import { EligibilityModal, CandidateProfileData, defaultCandidateData } from "./
 import { ApplicationFormModal } from "./application-form/ApplicationForm";
 import { ReviewSubmitModal } from "./review-submit/ReviewSubmit";
 
-export default function JobCardButtons({ job }: { job: any }) {
+/** `gold`: a single gold "Apply Now" button (careers page job cards); `default`: Apply Now + View Details */
+export default function JobCardButtons({ job, variant = "default" }: { job: any; variant?: "default" | "gold" }) {
   const [isOpen, setIsOpen] = useState(false);
   const [isEligibilityOpen, setIsEligibilityOpen] = useState(false);
   const [isAppFormOpen, setIsAppFormOpen] = useState(false);
@@ -28,6 +29,18 @@ export default function JobCardButtons({ job }: { job: any }) {
 
   return (
     <>
+      {variant === "gold" ? (
+        <button
+          onClick={() => {
+            trackCareer("apply_click", job?._id || job?.id);
+            setIsOpen(true);
+          }}
+          className="inline-flex h-[34px] shrink-0 items-center justify-center gap-[7px] rounded-[4px] px-[14px] text-[12px] font-semibold uppercase tracking-[0.04em] text-white shadow-[0_2px_6px_rgba(150,98,20,0.35)] transition hover:brightness-105"
+          style={{ background: "linear-gradient(180deg, #dda33a 0%, #bf7d1c 100%)" }}
+        >
+          Apply Now <ArrowRight className="h-[15px] w-[15px]" strokeWidth={2.4} />
+        </button>
+      ) : (
       <div className="mt-auto grid grid-cols-2 gap-3 pt-[clamp(10px,1vh,14px)]">
         <button
           onClick={() => {
@@ -48,6 +61,7 @@ export default function JobCardButtons({ job }: { job: any }) {
           View Details
         </button>
       </div>
+      )}
 
       {isOpen && typeof document !== "undefined"
         ? createPortal(
