@@ -103,7 +103,7 @@ async function verifyWithGemini(
   base64Data: string,
   mimeType: string
 ): Promise<VisionCheck | null> {
-  const models = ["gemini-1.5-flash", "gemini-2.0-flash"];
+  const models = ["gemini-2.5-flash", "gemini-flash-latest"];
 
   for (const model of models) {
     try {

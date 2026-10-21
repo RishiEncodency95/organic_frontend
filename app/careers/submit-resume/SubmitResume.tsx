@@ -407,6 +407,13 @@ export type CandidateProfileData = {
   gaps?: string[];
   /** Backend CandidateProfile id, so profile edits persist against that record. */
   candidateId?: string;
+  jobId?: string;
+  analysisId?: string;
+  /** Everything the CV analysis extracted (education, experience, skills, location, …). */
+  fullProfile?: Record<string, unknown>;
+  /** Answers from "Complete Your Application", kept while moving between the steps. */
+  application?: Record<string, unknown>;
+  location?: string | null;
 };
 
 export const defaultCandidateData: CandidateProfileData = {
@@ -1213,7 +1220,7 @@ function LowNextSteps() {
 const digitsOnly = (value?: string | null) => (value || "").replace(/\D/g, "");
 
 /** Last 10 digits, so "+91 98765 43210" and "9876543210" compare equal. */
-const phoneKey = (value?: string | null) => digitsOnly(value).slice(-10);
+export const phoneKey = (value?: string | null) => digitsOnly(value).slice(-10);
 
 /**
  * WHATWG/HTML5 "valid email address" regex — the same pattern browsers use for
@@ -1227,7 +1234,7 @@ const EMAIL_REGEX =
 /** Only these mail providers are accepted; everything else (work/custom domains, disposable inboxes) is rejected. */
 const ALLOWED_EMAIL_DOMAINS = ["gmail.com", "outlook.com", "yahoo.com"];
 
-const isValidEmail = (value?: string | null) => {
+export const isValidEmail = (value?: string | null) => {
   const trimmed = (value || "").trim();
   if (!EMAIL_REGEX.test(trimmed)) return false;
   const domain = trimmed.split("@")[1]?.toLowerCase();
@@ -1235,7 +1242,7 @@ const isValidEmail = (value?: string | null) => {
 };
 
 /** Indian mobile numbers only: exactly 10 digits starting 6-9, with an optional +91/91 prefix. */
-const isValidPhone = (value?: string | null) => {
+export const isValidPhone = (value?: string | null) => {
   const digits = digitsOnly(value);
   const local = digits.length === 12 && digits.startsWith("91") ? digits.slice(2) : digits;
   return /^[6-9]\d{9}$/.test(local);
@@ -1274,7 +1281,7 @@ const API_BASE = process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000/api/v
  * Returns the hosted URL, or null when there is nothing to store it against yet —
  * the caller then keeps the local preview so the card still shows the picture.
  */
-async function saveCandidatePhoto(candidateId: string | undefined, file: File): Promise<string | null> {
+export async function saveCandidatePhoto(candidateId: string | undefined, file: File): Promise<string | null> {
   if (!candidateId) return null;
 
   try {
@@ -1319,7 +1326,7 @@ const MIN_PHOTO_SHARPNESS = 60;
  * pixels, or visibly out of focus. Sharpness is the variance of a Laplacian over a
  * grayscale downscale — the standard cheap blur test.
  */
-async function inspectPhoto(file: File): Promise<{ url: string } | { error: string }> {
+export async function inspectPhoto(file: File): Promise<{ url: string } | { error: string }> {
   if (!ALLOWED_PHOTO_TYPES.includes(file.type)) {
     return { error: "That file type is not allowed. Use a JPG, PNG or WEBP photo." };
   }

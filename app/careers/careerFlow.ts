@@ -36,6 +36,14 @@ export type SubmittedApplication = {
   position: string;
   submittedOn: string;
   aiMatchScore: number;
+  /** Shown on the Application Submitted page */
+  email?: string | null;
+  phone?: string | null;
+  location?: string | null;
+  gender?: string | null;
+  photo?: string | null;
+  summary?: string;
+  job?: { location?: string; type?: string; education?: string; experience?: string };
 };
 
 type BackendJob = {

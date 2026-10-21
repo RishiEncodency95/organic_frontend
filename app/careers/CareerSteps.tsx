@@ -4,9 +4,9 @@ import { Fragment, useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import ApplyJobView from "./ApplyJobView";
 import { EligibilityModal, defaultCandidateData, type CandidateProfileData } from "./submit-resume/SubmitResume";
-import { ApplicationFormModal } from "./application-form/ApplicationForm";
-import { ReviewSubmitModal } from "./review-submit/ReviewSubmit";
-import ApplicationSuccessModal from "./ApplicationSuccessModal";
+import ReviewDetailsPage from "./flow/ReviewDetailsPage";
+import CompleteApplicationPage from "./flow/CompleteApplicationPage";
+import SubmittedPage from "./flow/SubmittedPage";
 import { CareerPage, CareerStepLoading, NoApplicationInProgress } from "./CareerPageFrame";
 import { CAREER_STEP_URL, careerFlow, toCareerJob, useCareerFlow, type CareerJob } from "./careerFlow";
 
@@ -89,77 +89,75 @@ export function EligibilityStep() {
           onCandidateChange={careerFlow.setCandidate}
           onBack={() => router.push(flow.job ? CAREER_STEP_URL.apply(flow.job) : CAREER_STEP_URL.careers)}
           onClose={toCareers}
-          onApply={() => router.push(CAREER_STEP_URL.applicationForm)}
+          onApply={() => router.push(CAREER_STEP_URL.review)}
         />
       )}
     </Frame>
   );
 }
 
-/** Step 3 — /careers/application-form */
-export function ApplicationFormStep() {
-  const { router, flow, toCareers } = useCandidateStep();
+/** Step 3 — /careers/review-submit: Review Your Details (after the OTP) */
+export function ReviewStep() {
+  const { router, flow } = useCandidateStep();
+  if (!flow.ready || !flow.candidate) {
+    return <CareerPage>{!flow.ready ? <CareerStepLoading /> : <NoApplicationInProgress />}</CareerPage>;
+  }
+  const job = flow.job;
   return (
-    <CareerPage>
-      {!flow.ready ? (
-        <CareerStepLoading />
-      ) : !flow.candidate ? (
-        <NoApplicationInProgress />
-      ) : (
-        <ApplicationFormModal
-          variant="page"
-          isOpen
-          candidateData={flow.candidate}
-          onBack={() => router.push(CAREER_STEP_URL.eligibility)}
-          onClose={toCareers}
-          onNext={(data) => {
-            if (data) careerFlow.setCandidate(data);
-            router.push(CAREER_STEP_URL.review);
-          }}
-        />
-      )}
-    </CareerPage>
+    <ReviewDetailsPage
+      candidate={flow.candidate}
+      onChange={careerFlow.setCandidate}
+      onContinue={() => router.push(CAREER_STEP_URL.applicationForm)}
+      onBack={() => router.push(CAREER_STEP_URL.eligibility)}
+      onReupload={() => router.push(job ? CAREER_STEP_URL.apply(job) : CAREER_STEP_URL.careers)}
+      onChangeJob={() => router.push(`${CAREER_STEP_URL.careers}#current-openings`)}
+    />
   );
 }
 
-/** Step 4 — /careers/review-submit */
-export function ReviewStep() {
-  const { router, flow, toCareers } = useCandidateStep();
+/** Step 4 — /careers/application-form: Complete Your Application + submit */
+export function ApplicationFormStep() {
+  const { router, flow } = useCandidateStep();
+  if (!flow.ready || !flow.candidate) {
+    // Just submitted: the confirmation page is loading
+    const waiting = !flow.ready || flow.submitted;
+    return <CareerPage>{waiting ? <CareerStepLoading /> : <NoApplicationInProgress />}</CareerPage>;
+  }
+  const c = flow.candidate;
+  const p = (c.fullProfile || {}) as { location?: string; gender?: string };
   return (
-    <CareerPage>
-      {!flow.ready ? (
-        <CareerStepLoading />
-      ) : !flow.candidate ? (
-        <NoApplicationInProgress />
-      ) : (
-        <ReviewSubmitModal
-          variant="page"
-          isOpen
-          candidateData={flow.candidate}
-          onBack={() => router.push(CAREER_STEP_URL.applicationForm)}
-          onClose={toCareers}
-          onSubmitted={(details) => {
-            careerFlow.complete(details);
-            router.replace(CAREER_STEP_URL.submitted);
-          }}
-        />
-      )}
-    </CareerPage>
+    <CompleteApplicationPage
+      candidate={c}
+      onChange={careerFlow.setCandidate}
+      onBack={() => router.push(CAREER_STEP_URL.review)}
+      onViewAnalysis={() => router.push(CAREER_STEP_URL.eligibility)}
+      onChangeJob={() => router.push(`${CAREER_STEP_URL.careers}#current-openings`)}
+      onSubmitted={(result) => {
+        careerFlow.complete({
+          id: result.applicationId,
+          candidateName: c.candidateName,
+          position: c.jobDetails?.title || "",
+          submittedOn: new Date(result.submittedAt).toLocaleString("en-IN", { day: "numeric", month: "short", year: "numeric", hour: "numeric", minute: "2-digit", hour12: true }),
+          aiMatchScore: c.score,
+          email: c.email,
+          phone: c.phone,
+          location: c.location || p.location || null,
+          gender: p.gender || null,
+          photo: typeof c.image === "string" && !c.image.startsWith("blob:") ? c.image : null,
+          summary: c.summary,
+          job: { location: c.jobDetails?.location, type: c.jobDetails?.type, education: c.jobDetails?.education, experience: c.jobDetails?.experience },
+        });
+        router.replace(CAREER_STEP_URL.submitted);
+      }}
+    />
   );
 }
 
 /** Step 5 — /careers/application-submitted */
 export function SubmittedStep() {
-  const { flow, toCareers } = useCandidateStep();
-  return (
-    <CareerPage>
-      {!flow.ready ? (
-        <CareerStepLoading />
-      ) : !flow.submitted ? (
-        <NoApplicationInProgress />
-      ) : (
-        <ApplicationSuccessModal variant="page" isOpen applicationData={flow.submitted} onClose={toCareers} />
-      )}
-    </CareerPage>
-  );
+  const { flow } = useCandidateStep();
+  if (!flow.ready || !flow.submitted) {
+    return <CareerPage>{!flow.ready ? <CareerStepLoading /> : <NoApplicationInProgress />}</CareerPage>;
+  }
+  return <SubmittedPage application={flow.submitted} />;
 }
