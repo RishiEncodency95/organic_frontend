@@ -1,5 +1,6 @@
 "use client";
 
+import { CareerCanvas } from "../CareerPageFrame";
 import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
@@ -1370,8 +1371,11 @@ export function ApplicationFormModal({
   onBack,
   onNext,
   candidateData,
+  variant = "modal",
 }: {
   isOpen: boolean;
+  /** "page": the screen sits in the page body (Careers → Application Form) instead of a popup */
+  variant?: "modal" | "page";
   onClose: () => void;
   /** Returns to the eligibility step; falls back to closing when not supplied. */
   onBack?: () => void;
@@ -1381,14 +1385,23 @@ export function ApplicationFormModal({
 }) {
   const scrollRef = useRef<HTMLDivElement>(null);
 
+  const lock = isOpen && variant === "modal";
   useEffect(() => {
-    if (isOpen) lockScroll();
+    if (lock) lockScroll();
     return () => {
-      if (isOpen) unlockScroll();
+      if (lock) unlockScroll();
     };
-  }, [isOpen]);
+  }, [lock]);
 
   if (!isOpen) return null;
+
+  if (variant === "page") {
+    return (
+      <CareerCanvas width={DESIGN_WIDTH} height={DESIGN_HEIGHT}>
+        <ApplicationFormContent onClose={onClose} onBack={onBack} onNext={onNext} candidateData={candidateData} />
+      </CareerCanvas>
+    );
+  }
 
   return (
     <div className="fixed inset-0 z-[99999] flex items-center justify-center p-2 overflow-hidden">
@@ -1417,31 +1430,5 @@ export function ApplicationFormModal({
         </div>
       </div>
     </div>
-  );
-}
-
-/* =========================================================
-   PAGE
-   ========================================================= */
-
-export default function CareerApplicationFormPage() {
-  const [open, setOpen] = useState(true);
-
-  return (
-    <main className="min-h-screen bg-white">
-      {!open && (
-        <div className="flex min-h-screen items-center justify-center">
-          <button
-            type="button"
-            onClick={() => setOpen(true)}
-            className="rounded-[8px] bg-[#08743e] px-6 py-3 text-sm font-bold text-white"
-          >
-            Open Application Form
-          </button>
-        </div>
-      )}
-
-      <ApplicationFormModal isOpen={open} onClose={() => setOpen(false)} />
-    </main>
   );
 }

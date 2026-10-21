@@ -2,7 +2,6 @@
 
 import { useState, useEffect } from "react";
 import { trackCareer } from "@/lib/careerTracking";
-import Link from "next/link";
 import Image from "next/image";
 import {
   ArrowRight,
@@ -20,11 +19,8 @@ import {
   Users,
   type LucideIcon,
 } from "lucide-react";
-import { EligibilityModal } from "./submit-resume/SubmitResume";
-import { ApplicationFormModal } from "./application-form/ApplicationForm";
-import { ReviewSubmitModal } from "./review-submit/ReviewSubmit";
-import ResumeUploadButton from "./ResumeUploadButton";
 import JobCardButtons from "./JobCardButtons";
+import { toCareerJob, type CareerJob } from "./careerFlow";
 import leafA from "@/app/assets/icons/bleaf.png";
 import leafB from "@/app/assets/icons/cleaf.png";
 import leafC from "@/app/assets/icons/dleaf.png";
@@ -37,25 +33,7 @@ import goldLeaf from "@/app/assets/icons/footer-leaf.png";
 
 const heroImage = "/assets/careers/image.png";
 
-type JobOpening = {
-  id: string;
-  title: string;
-  department: string;
-  location: string;
-  type: string;
-  experience: string;
-  description: string;
-  icon: LucideIcon;
-  // Present on jobs loaded from the API; the static sample list below omits them
-  // and the apply modal falls back to its own copy.
-  company?: string;
-  responsibilities?: string[];
-  requirements?: string[];
-  preferredQualifications?: string[];
-  skills?: string[];
-  education?: string;
-  eligibilityThreshold?: number;
-};
+type JobOpening = CareerJob;
 
 const HIGHLIGHT_ICONS: LucideIcon[] = [Sprout, Users, TrendingUp, Globe2];
 type GlyphProps = { className?: string; style?: React.CSSProperties };
@@ -138,6 +116,11 @@ const DEFAULT_CAREERS = {
       { src: lifeOrganic, alt: "Fresh organic produce" },
     ],
   },
+  bottomBanner: {
+    enabled: true,
+    image: "/assets/careers/aman6.png",
+    imageAlt: "Don't see the right role? We are always looking for passionate individuals.",
+  },
 };
 
 const pickText = (value: unknown, fallback: string) =>
@@ -199,6 +182,7 @@ function resolveCareersSections(sections: any[] = []) {
   const openings = find("careers-openings");
   const whyWork = find("careers-why-work");
   const life = find("careers-life");
+  const bottom = find("careers-bottom-banner");
   const d = DEFAULT_CAREERS;
   return {
     hero: {
@@ -233,6 +217,11 @@ function resolveCareersSections(sections: any[] = []) {
       title: pickText(life.title, d.life.title),
       description: pickText(life.description, d.life.description),
       photos: d.life.photos,
+    },
+    bottomBanner: {
+      enabled: bottom.enabled !== false,
+      image: pickText(bottom.image, d.bottomBanner.image),
+      imageAlt: pickText(bottom.imageAlt, d.bottomBanner.imageAlt),
     },
   };
 }
@@ -317,7 +306,7 @@ function JobCard({ job }: { job: JobOpening }) {
               {job.experience}
             </span>
           </div>
-          <JobCardButtons job={{ ...job, icon: undefined }} variant="gold" />
+          <JobCardButtons job={job} variant="gold" />
         </div>
       </div>
     </article>
@@ -342,9 +331,6 @@ function EmptyOpenings({ title, description, note }: { title: string; descriptio
 export default function CareersClientContent({ sections }: { sections?: any[] }) {
   const content = resolveCareersSections(sections);
   const [heroLead, heroMid, heroAccent] = splitHeroTitle(content.hero.title);
-  const [selectedScore, setSelectedScore] = useState<number | null>(null);
-  const [isNoneModalOpen, setIsNoneModalOpen] = useState(false);
-  const [isAmanModalOpen, setIsAmanModalOpen] = useState(false);
   const [showAllJobs, setShowAllJobs] = useState(false);
   const [fetchedJobs, setFetchedJobs] = useState<JobOpening[]>([]);
 
@@ -358,25 +344,7 @@ export default function CareersClientContent({ sections }: { sections?: any[] })
       .then((res) => res.json())
       .then((data) => {
         if (data && data.success && Array.isArray(data.data) && data.data.length > 0) {
-          const mappedJobs: JobOpening[] = data.data.map((j: any) => ({
-            _id: j._id,
-            id: j._id,
-            slug: j.slug,
-            title: j.title,
-            department: j.department,
-            location: j.location,
-            type: j.employmentType || "Full Time",
-            experience: `${j.experienceMin} - ${j.experienceMax} Years`,
-            description: j.description || j.responsibilities?.[0] || j.requirements?.[0] || j.title,
-            company: j.company,
-            responsibilities: j.responsibilities,
-            requirements: j.requirements,
-            preferredQualifications: j.preferredQualifications,
-            skills: j.skills,
-            education: j.educationRequirements,
-            eligibilityThreshold: j.eligibilityThreshold,
-            icon: Users,
-          }));
+          const mappedJobs: JobOpening[] = data.data.map(toCareerJob);
           setFetchedJobs(mappedJobs);
         }
       })
@@ -563,13 +531,19 @@ export default function CareersClientContent({ sections }: { sections?: any[] })
                 <p className="max-w-[400px] text-[15px] leading-[1.5] text-[#33413a]">{content.life.description}</p>
               </div>
 
-              <div className="mt-[14px] flex snap-x snap-mandatory gap-3 overflow-x-auto pb-2 [scrollbar-width:none] lg:grid lg:grid-cols-5 lg:gap-[16px] lg:overflow-visible lg:pb-0 [&::-webkit-scrollbar]:hidden">
+              {/* Every photo keeps its own shape (nothing is cropped). On desktop the row shares the width in
+                  proportion to each photo's shape, so all of them come out the same height. */}
+              <div className="mt-[14px] flex snap-x snap-mandatory gap-3 overflow-x-auto pb-2 [scrollbar-width:none] lg:gap-[16px] lg:overflow-visible lg:pb-0 [&::-webkit-scrollbar]:hidden">
                 {content.life.photos.map((photo, idx) => (
                   <div
                     key={idx}
-                    className="relative aspect-[16/9] w-[72%] shrink-0 snap-start overflow-hidden rounded-[6px] shadow-[0_4px_14px_rgba(60,45,15,0.15)] min-[480px]:w-[46%] md:w-[31%] lg:w-auto"
+                    className="relative h-[190px] shrink-0 snap-start overflow-hidden rounded-[6px] shadow-[0_4px_14px_rgba(60,45,15,0.15)] sm:h-[230px] lg:h-auto lg:min-w-0 lg:shrink lg:[flex:var(--ratio)_1_0%]"
+                    style={{
+                      aspectRatio: `${photo.src.width} / ${photo.src.height}`,
+                      ["--ratio" as string]: String(photo.src.width / photo.src.height),
+                    }}
                   >
-                    <Image src={photo.src} alt={photo.alt} fill sizes="(min-width: 1024px) 20vw, (min-width: 480px) 46vw, 72vw" className="object-cover transition-transform duration-500 hover:scale-105" />
+                    <Image src={photo.src} alt={photo.alt} fill sizes="(min-width: 1024px) 22vw, 300px" className="object-contain" />
                   </div>
                 ))}
               </div>
@@ -577,27 +551,20 @@ export default function CareersClientContent({ sections }: { sections?: any[] })
           </section>
         )}
 
+        {/* BOTTOM BANNER — "Don't See the Right Role?" */}
+        {content.bottomBanner.enabled && (
+          <section className="relative h-[160px] w-full shrink-0 overflow-hidden bg-white">
+            <Image
+              src={content.bottomBanner.image}
+              alt={content.bottomBanner.imageAlt}
+              fill
+              sizes="100vw"
+              className="object-cover object-center"
+            />
+          </section>
+        )}
+
       </div>
-
-      <EligibilityModal
-        isOpen={selectedScore !== null}
-        score={selectedScore ?? 58}
-        onClose={() => setSelectedScore(null)}
-        onApply={() => {
-          setSelectedScore(null);
-          setIsNoneModalOpen(true);
-        }}
-      />
-
-      <ApplicationFormModal
-        isOpen={isNoneModalOpen}
-        onClose={() => setIsNoneModalOpen(false)}
-      />
-
-      <ReviewSubmitModal
-        isOpen={isAmanModalOpen}
-        onClose={() => setIsAmanModalOpen(false)}
-      />
     </main>
   );
 }

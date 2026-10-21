@@ -1,5 +1,6 @@
 "use client";
 
+import { CareerCanvas } from "../CareerPageFrame";
 import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
@@ -824,8 +825,14 @@ export function ReviewSubmitModal({
   onClose,
   onBack,
   candidateData,
+  variant = "modal",
+  onSubmitted,
 }: {
   isOpen: boolean;
+  /** "page": the screen sits in the page body (Careers → Review & Submit) instead of a popup */
+  variant?: "modal" | "page";
+  /** Page variant: called with the confirmation once the application is submitted (instead of the success popup) */
+  onSubmitted?: (details: { id: string; candidateName: string; position: string; submittedOn: string; aiMatchScore: number }) => void;
   onClose: () => void;
   /** Returns to the application form; falls back to closing when not supplied. */
   onBack?: () => void;
@@ -918,7 +925,7 @@ export function ReviewSubmitModal({
 
       const resData = submitJson.data;
 
-      setSubmittedAppDetails({
+      const details = {
         id: resData.applicationId,
         candidateName: candidateData?.candidateName || "Candidate",
         position: candidateData?.jobDetails?.title || job.title,
@@ -930,8 +937,13 @@ export function ReviewSubmitModal({
           minute: "2-digit",
         }),
         aiMatchScore: candidateData?.score ?? 72,
-      });
+      };
 
+      if (variant === "page" && onSubmitted) {
+        onSubmitted(details);
+        return;
+      }
+      setSubmittedAppDetails(details);
       setShowSuccessModal(true);
     } catch (err) {
       console.error("Submit Application error:", err);
@@ -941,15 +953,30 @@ export function ReviewSubmitModal({
     }
   };
 
+  const lock = (isOpen || showSuccessModal) && variant === "modal";
   useEffect(() => {
-    const anyOpen = isOpen || showSuccessModal;
-    if (anyOpen) lockScroll();
+    if (lock) lockScroll();
     return () => {
-      if (anyOpen) unlockScroll();
+      if (lock) unlockScroll();
     };
-  }, [isOpen, showSuccessModal]);
+  }, [lock]);
 
   if (!isOpen) return null;
+
+  if (variant === "page") {
+    return (
+      <CareerCanvas width={DESIGN_WIDTH} height={DESIGN_HEIGHT}>
+        <ReviewSubmitContent
+          onClose={onClose}
+          onBack={onBack}
+          onSubmit={handleSubmit}
+          candidateData={candidateData}
+          isSubmitting={isSubmitting}
+          submitError={submitError}
+        />
+      </CareerCanvas>
+    );
+  }
 
   return (
     <>
@@ -995,31 +1022,5 @@ export function ReviewSubmitModal({
         }}
       />
     </>
-  );
-}
-
-/* =========================================================
-   PAGE
-   ========================================================= */
-
-export default function ReviewSubmitPage() {
-  const [open, setOpen] = useState(true);
-
-  return (
-    <main className="min-h-screen bg-white">
-      {!open && (
-        <div className="flex min-h-screen items-center justify-center">
-          <button
-            type="button"
-            onClick={() => setOpen(true)}
-            className="rounded-[8px] bg-[#08743e] px-6 py-3 text-sm font-semibold text-white"
-          >
-            Open Review & Submit
-          </button>
-        </div>
-      )}
-
-      <ReviewSubmitModal isOpen={open} onClose={() => setOpen(false)} />
-    </main>
   );
 }

@@ -142,6 +142,8 @@ function SuccessSidebar({ onClose }: { onClose: () => void }) {
 interface SuccessModalProps {
   isOpen: boolean;
   onClose: () => void;
+  /** "page": the screen sits in the page body (Careers → Application Submitted) instead of a popup */
+  variant?: "modal" | "page";
   applicationData?: {
     id: string;
     candidateName: string;
@@ -151,25 +153,31 @@ interface SuccessModalProps {
   };
 }
 
-export default function ApplicationSuccessModal({ isOpen, onClose, applicationData: propAppDetails }: SuccessModalProps) {
+export default function ApplicationSuccessModal({ isOpen, onClose, applicationData: propAppDetails, variant = "modal" }: SuccessModalProps) {
   const currentAppDetails = propAppDetails || applicationData;
   const matchScoreVal = currentAppDetails.aiMatchScore ?? 72;
   const circumference = 2 * Math.PI * 38;
   const offset = circumference - (matchScoreVal / 100) * circumference;
 
+  const isPage = variant === "page";
+  const lock = isOpen && !isPage;
   useEffect(() => {
-    if (isOpen) lockScroll();
+    if (lock) lockScroll();
     return () => {
-      if (isOpen) unlockScroll();
+      if (lock) unlockScroll();
     };
-  }, [isOpen]);
+  }, [lock]);
 
   if (!isOpen) return null;
 
-  return (
-    <div className="fixed inset-0 z-[99999] flex items-center justify-center p-3">
-      <div className="absolute inset-0 bg-slate-950/45 backdrop-blur-[5px]" />
-      <div className="relative z-10 flex max-h-[95vh] w-[85%] max-w-[1300px] overflow-hidden rounded-[18px] bg-[#fbfcf9] shadow-[0_30px_90px_rgba(0,0,0,.28)]">
+  const screen = (
+      <div
+        className={
+          isPage
+            ? "relative flex w-full overflow-hidden rounded-[18px] border border-[#e1e8de] bg-[#fbfcf9] shadow-[0_12px_40px_rgba(16,48,30,0.10)]"
+            : "relative z-10 flex max-h-[95vh] w-[85%] max-w-[1300px] overflow-hidden rounded-[18px] bg-[#fbfcf9] shadow-[0_30px_90px_rgba(0,0,0,.28)]"
+        }
+      >
 
         {/* ===== LEFT SIDE ===== */}
         <div className="relative flex w-[76.2%] flex-col overflow-hidden px-[38px] pb-[16px] pt-[18px]">
@@ -378,6 +386,14 @@ export default function ApplicationSuccessModal({ isOpen, onClose, applicationDa
           <SuccessSidebar onClose={onClose} />
         </div>
       </div>
+  );
+
+  if (isPage) return screen;
+
+  return (
+    <div className="fixed inset-0 z-[99999] flex items-center justify-center p-3">
+      <div className="absolute inset-0 bg-slate-950/45 backdrop-blur-[5px]" />
+      {screen}
     </div>
   );
 }

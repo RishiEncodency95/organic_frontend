@@ -28,6 +28,7 @@ import {
   X,
 } from "lucide-react";
 import PhoneVerifyModal from "../PhoneVerifyModal";
+import ScreeningResultPage from "./ScreeningResultPage";
 import { API_URL } from "@/lib/api";
 
 /* =========================================================
@@ -257,10 +258,10 @@ const matchConfig = {
     subtitle: "You are close to the requirements for this position.",
 
     description:
-      "Your profile shows good potential, but a few key areas need improvement. You can still apply after reviewing the suggestions below and updating your profile or CV to strengthen your application.",
+      "Your profile shows good alignment with the job requirements, but a few key areas need improvement. You can still apply after reviewing the suggestions below and updating your profile or CV to strengthen your application.",
 
     quote:
-      "We encourage you to apply if you are confident about your relevant experience and skills.",
+      "You have great potential! With a few improvements, you can be a strong candidate for this role.",
 
     rightText: "Learn\nGrow\nApply\nSucceed",
 
@@ -337,7 +338,7 @@ const matchConfig = {
     subtitle: "This position may not be the right fit for you at this time.",
 
     description:
-      "Your profile does not meet the minimum requirements for this role. We appreciate your interest and encourage you to explore other opportunities that better match your skills.",
+      "Based on our screening, your profile does not meet the minimum requirements for this role. However, we truly appreciate your interest in joining Bharat Organic Expo.\n\nWe encourage you to explore other opportunities that may be more aligned with your skills and experience. Keep learning, keep growing — a greener tomorrow is within reach!",
 
     quote: "",
 
@@ -398,6 +399,12 @@ export type CandidateProfileData = {
     industryExperience: number;
     locationPreference: number;
   };
+  /** One line of evidence from the CV per breakdown row. */
+  breakdownNotes?: Partial<Record<keyof NonNullable<CandidateProfileData["breakdown"]>, string>>;
+  /** Job requirements the CV did not show (not-eligible result). */
+  missingRequirements?: string[];
+  /** Improvement suggestions from the analysis (partial result). */
+  gaps?: string[];
   /** Backend CandidateProfile id, so profile edits persist against that record. */
   candidateId?: string;
 };
@@ -442,7 +449,7 @@ type MatchContextType = {
   onClose?: () => void;
 };
 
-const MatchContext = createContext<MatchContextType>({
+export const MatchContext = createContext<MatchContextType>({
   matchScore: 72,
   matchLevel: "high",
   theme: stateTheme["high"],
@@ -505,7 +512,7 @@ const loadResultMessages = () => {
   return resultMessagesRequest;
 };
 
-function useResultMessages() {
+export function useResultMessages() {
   const [messages, setMessages] = useState<ResultMessages | null>(null);
   useEffect(() => {
     let active = true;
@@ -542,9 +549,9 @@ export function getMatchData(
   if (level === "high") {
     config.title = `Great News, ${firstName}!`;
   } else if (level === "moderate") {
-    config.title = `Good Start, ${firstName}!`;
+    config.title = `You’re a Partial Match, ${firstName}!`;
   } else {
-    config.title = `Thank You, ${firstName}!`;
+    config.title = `Sorry, ${firstName}!`;
     config.subtitle = `This position may not be the right fit for you at this time.`;
   }
 
@@ -575,8 +582,15 @@ export function getMatchData(
     config.summaryText = candidate.summary;
   }
 
-  if (candidate.requirementsMet && candidate.requirementsMet.length > 0) {
-    config.requirements = candidate.requirementsMet as any;
+  // Each result lists what this CV actually showed: met requirements (eligible),
+  // improvement suggestions (partial), or the requirements it did not meet (not eligible).
+  const listFor = level === "high" ? candidate.requirementsMet : level === "moderate" ? (candidate.gaps?.length ? candidate.gaps : candidate.missingRequirements) : (candidate.missingRequirements?.length ? candidate.missingRequirements : candidate.gaps);
+  if (listFor && listFor.length > 0) {
+    config.requirements = listFor.slice(0, 5) as any;
+  } else if (level === "high" && candidate.requirementsMet === undefined) {
+    // keep the built-in list (preview / sample data)
+  } else if (level === "high") {
+    config.requirements = ["Your CV matches the overall profile for this role"] as any;
   } else if (level === "low") {
     config.requirements = [
       `Minimum experience required for ${jobTitle}`,
@@ -1285,7 +1299,7 @@ async function saveCandidatePhoto(candidateId: string | undefined, file: File): 
  * Details the application form needs before it can be started. LinkedIn and the
  * photo stay optional — the form itself never asks for them.
  */
-function profileIssues(candidate: CandidateProfileData): string[] {
+export function profileIssues(candidate: CandidateProfileData): string[] {
   const issues: string[] = [];
   if (!(candidate.candidateName || "").trim()) issues.push("full name");
   if (!isValidEmail(candidate.email)) issues.push("a valid email address");
@@ -1377,7 +1391,9 @@ async function inspectPhoto(file: File): Promise<{ url: string } | { error: stri
   return { url };
 }
 
-function ProfileCard() {
+/** `page`: the look of the AI Screening Result page (strong match); default: the eligibility canvas */
+export function ProfileCard({ look = "canvas" }: { look?: "canvas" | "page" }) {
+  const page = look === "page";
   const { candidate, updateCandidate, matchLevel } = useMatchData();
   // Not-eligible candidates land on a read-only profile — nothing here can change their outcome.
   const canEdit = matchLevel !== "low";
@@ -1489,9 +1505,15 @@ function ProfileCard() {
     ].join(" ");
 
   return (
-    <div className="flex h-full min-h-0 flex-col overflow-hidden rounded-[8px] border border-[#eaefeb] bg-white p-[12px] shadow-[0_2px_8px_rgba(0,0,0,0.03)]">
+    <div
+      className={
+        page
+          ? "flex flex-col rounded-[12px] border border-[#e8ece2] bg-[#fffefa] px-[14px] py-[11px] shadow-[0_4px_16px_rgba(40,60,30,0.06)]"
+          : "flex h-full min-h-0 flex-col overflow-hidden rounded-[8px] border border-[#eaefeb] bg-white p-[12px] shadow-[0_2px_8px_rgba(0,0,0,0.03)]"
+      }
+    >
       <div className="flex shrink-0 items-center justify-between">
-        <h3 className="text-[17px] font-bold text-[#0c3363]">Your Profile</h3>
+        <h3 className={page ? "text-[17px] font-semibold text-[#13261b]" : "text-[17px] font-bold text-[#0c3363]"}>Your Profile</h3>
 
         {canEdit && (isEditing ? (
           <div className="flex items-center gap-[10px]">
@@ -1516,7 +1538,7 @@ function ProfileCard() {
           <button
             type="button"
             onClick={openEditor}
-            className="flex items-center gap-[4px] text-[15px] font-bold text-[#0977df] transition-opacity hover:opacity-80"
+            className={`flex items-center gap-[4px] text-[15px] transition-opacity hover:opacity-80 ${page ? "font-medium text-[#1d7a3e]" : "font-bold text-[#0977df]"}`}
           >
             <Pencil className="h-[15px] w-[15px] stroke-[2.5]" />
             Edit
@@ -1661,19 +1683,19 @@ function ProfileCard() {
           </div>
         </div>
       ) : (
-        <div className="mt-[8px] flex min-h-0 flex-1 items-center gap-[12px]">
+        <div className={`flex min-h-0 flex-1 items-center gap-[12px] ${page ? "mt-[7px] gap-[14px]" : "mt-[8px]"}`}>
           {candidate.image ? (
             // May be a blob: preview from the editor above, which next/image cannot take.
             <Image width={0} height={0} sizes="100vw"
               src={candidate.image}
               alt={candidate.candidateName}
-              className="h-[116px] w-[116px] shrink-0 rounded-[8px] object-cover object-center"
+              className={`shrink-0 rounded-[8px] object-cover object-center ${page ? "h-[100px] w-[90px]" : "h-[116px] w-[116px]"}`}
             />
           ) : canEdit ? (
             <button
               type="button"
               onClick={openEditor}
-              className="flex h-[116px] w-[116px] shrink-0 flex-col items-center justify-center gap-[2px] rounded-[8px] border border-dashed border-[#a9c9b6] bg-[#e4efe8] text-[#075333] transition-colors hover:bg-[#d8e9df]"
+              className={`flex shrink-0 flex-col items-center justify-center gap-[2px] rounded-[8px] border border-dashed border-[#a9c9b6] bg-[#e4efe8] text-[#075333] transition-colors hover:bg-[#d8e9df] ${page ? "h-[100px] w-[90px]" : "h-[116px] w-[116px]"}`}
             >
               <span className="text-[32px] font-bold leading-none">{initials || "CV"}</span>
               <span className="text-[9.5px] font-bold uppercase tracking-[0.04em] text-[#07623a]">
@@ -1687,11 +1709,17 @@ function ProfileCard() {
           )}
 
           <div className="min-w-0 flex-1">
-            <h4 className="truncate text-[17px] font-bold text-[#0c3363]">
+            <h4 className={page ? "truncate text-[17px] font-semibold text-[#13261b]" : "truncate text-[17px] font-bold text-[#0c3363]"}>
               {candidate.candidateName}
             </h4>
 
-            <div className="boe-modal-scroll mt-[4px] max-h-[136px] space-y-[4px] overflow-y-auto pr-[4px] text-[15px] font-semibold text-[#2d4766]">
+            <div
+              className={
+                page
+                  ? "boe-modal-scroll mt-[4px] max-h-[136px] space-y-[5px] overflow-y-auto pr-[4px] text-[13.5px] font-medium text-[#26352c]"
+                  : "boe-modal-scroll mt-[4px] max-h-[136px] space-y-[4px] overflow-y-auto pr-[4px] text-[15px] font-semibold text-[#2d4766]"
+              }
+            >
               {candidate.email ? (
                 <p className="flex items-center gap-[7px]">
                   <Mail className="h-[15px] w-[15px] shrink-0 text-[#0c3363] stroke-[2.5]" />
@@ -2172,8 +2200,11 @@ export function EligibilityModal({
   onBack,
   onApply,
   onCandidateChange,
+  variant = "modal",
 }: {
   isOpen: boolean;
+  /** "page": the screen sits in the page body (Careers → Eligibility) instead of a popup */
+  variant?: "modal" | "page";
   candidate?: CandidateProfileData;
   score?: number;
   onClose: () => void;
@@ -2221,6 +2252,31 @@ export function EligibilityModal({
     onApply?.();
   };
 
+  const phoneVerify = (
+    <PhoneVerifyModal
+      isOpen={isPhoneVerifyOpen}
+      phoneOptions={otpEligiblePhones(candidate)}
+      candidateName={candidate.candidateName}
+      onVerified={handlePhoneVerified}
+      onDismiss={() => setIsPhoneVerifyOpen(false)}
+      onCloseAll={() => {
+        setIsPhoneVerifyOpen(false);
+        onClose();
+      }}
+    />
+  );
+
+  // Every result (eligible, partial, not eligible) has its own AI Screening Result page
+  if (variant === "page") {
+    return (
+      <>
+        <ScreeningResultPage candidate={candidate} score={score} onBack={onBack} onApply={handleContinue} onCandidateChange={onCandidateChange} />
+        {phoneVerify}
+      </>
+    );
+  }
+
+
   return (
     <div className="fixed inset-0 z-[99999] flex items-center justify-center p-3">
       <div className="absolute inset-0 bg-slate-950/45 backdrop-blur-[5px]" />
@@ -2256,74 +2312,7 @@ export function EligibilityModal({
 
       {/* Rendered outside the scaled content above (position: fixed does not escape a
           transformed ancestor), so it stays a true full-viewport overlay. */}
-      <PhoneVerifyModal
-        isOpen={isPhoneVerifyOpen}
-        phoneOptions={otpEligiblePhones(candidate)}
-        candidateName={candidate.candidateName}
-        onVerified={handlePhoneVerified}
-        onDismiss={() => setIsPhoneVerifyOpen(false)}
-        onCloseAll={() => {
-          setIsPhoneVerifyOpen(false);
-          onClose();
-        }}
-      />
+      {phoneVerify}
     </div>
-  );
-}
-
-import UploadCvModal from "@/app/components/careers/uploade_cv/UploadCvModal";
-
-export default function CareerEligibilityPage() {
-  const [eligibilityOpen, setEligibilityOpen] = useState(false);
-  const [uploadCvOpen, setUploadCvOpen] = useState(true);
-  const [candidateData, setCandidateData] = useState<CandidateProfileData>(defaultCandidateData);
-
-  return (
-    <main className="min-h-screen bg-white">
-      {!eligibilityOpen && !uploadCvOpen && (
-        <div className="flex min-h-screen items-center justify-center">
-          <button
-            type="button"
-            onClick={() => setUploadCvOpen(true)}
-            className="rounded-[8px] bg-[#08743e] px-6 py-3 text-sm font-semibold text-white"
-          >
-            Upload CV & Check Eligibility
-          </button>
-        </div>
-      )}
-
-      {uploadCvOpen && (
-        <UploadCvModal
-          job={{
-            title: "Sales Manager – Domestic Exhibition Sales & Sponsorships",
-            company: "Namo Gange Wellness Pvt. Ltd.",
-            brand: "Bharat Organic Expo",
-            location: "Delhi NCR",
-            type: "Full Time",
-            experience: "3 – 6 Years",
-          }}
-          onClose={() => setUploadCvOpen(false)}
-          onAnalyze={(data) => {
-            if (data) {
-              setCandidateData(data);
-            }
-            setUploadCvOpen(false);
-            setEligibilityOpen(true);
-          }}
-        />
-      )}
-
-      <EligibilityModal
-        isOpen={eligibilityOpen}
-        candidate={candidateData}
-        score={candidateData.score}
-        onCandidateChange={setCandidateData}
-        onBack={() => {
-          setEligibilityOpen(false);
-          setUploadCvOpen(true);
-        }}
-        onClose={() => setEligibilityOpen(false)}
-      />
-    </main>
   );
 }

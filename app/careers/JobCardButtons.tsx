@@ -1,140 +1,51 @@
 "use client";
 
-import { useState, useEffect } from "react";
-import { trackCareer } from "@/lib/careerTracking";
-import { createPortal } from "react-dom";
+import Link from "next/link";
 import { ArrowRight } from "lucide-react";
-import UploadCvModal, { CandidateAnalysisData } from "@/app/components/careers/uploade_cv/UploadCvModal";
-import { lockScroll, unlockScroll } from "@/lib/scrollLock";
-import { EligibilityModal, CandidateProfileData, defaultCandidateData } from "./submit-resume/SubmitResume";
-import { ApplicationFormModal } from "./application-form/ApplicationForm";
-import { ReviewSubmitModal } from "./review-submit/ReviewSubmit";
+import { trackCareer } from "@/lib/careerTracking";
+import { CAREER_STEP_URL, careerFlow, type CareerJob } from "./careerFlow";
 
-/** `gold`: a single gold "Apply Now" button (careers page job cards); `default`: Apply Now + View Details */
-export default function JobCardButtons({ job, variant = "default" }: { job: any; variant?: "default" | "gold" }) {
-  const [isOpen, setIsOpen] = useState(false);
-  const [isEligibilityOpen, setIsEligibilityOpen] = useState(false);
-  const [isAppFormOpen, setIsAppFormOpen] = useState(false);
-  const [isReviewOpen, setIsReviewOpen] = useState(false);
-  const [candidateData, setCandidateData] = useState<CandidateProfileData>(defaultCandidateData);
+/**
+ * Opens the job's application page (Careers → Apply), where the candidate uploads a CV.
+ * `gold`: a single gold "Apply Now" button (careers page job cards); `default`: Apply Now + View Details.
+ */
+export default function JobCardButtons({ job, variant = "default" }: { job: CareerJob; variant?: "default" | "gold" }) {
+  const href = CAREER_STEP_URL.apply(job);
+  // Hand the job to the Apply page so it does not have to load it again
+  const open = (event: "apply_click" | "job_view") => {
+    trackCareer(event, job._id || job.id);
+    careerFlow.start(job);
+  };
 
-  // Prevent scrolling when modal is open (locks both the native scrollbar and Lenis)
-  useEffect(() => {
-    const anyOpen = isOpen || isEligibilityOpen || isAppFormOpen || isReviewOpen;
-    if (anyOpen) lockScroll();
-    return () => {
-      if (anyOpen) unlockScroll();
-    };
-  }, [isOpen, isEligibilityOpen, isAppFormOpen, isReviewOpen]);
+  if (variant === "gold") {
+    return (
+      <Link
+        href={href}
+        onClick={() => open("apply_click")}
+        className="inline-flex h-[34px] shrink-0 items-center justify-center gap-[7px] rounded-[4px] px-[14px] text-[12px] font-semibold uppercase tracking-[0.04em] text-white shadow-[0_2px_6px_rgba(150,98,20,0.35)] transition hover:brightness-105"
+        style={{ background: "linear-gradient(180deg, #dda33a 0%, #bf7d1c 100%)" }}
+      >
+        Apply Now <ArrowRight className="h-[15px] w-[15px]" strokeWidth={2.4} />
+      </Link>
+    );
+  }
 
   return (
-    <>
-      {variant === "gold" ? (
-        <button
-          onClick={() => {
-            trackCareer("apply_click", job?._id || job?.id);
-            setIsOpen(true);
-          }}
-          className="inline-flex h-[34px] shrink-0 items-center justify-center gap-[7px] rounded-[4px] px-[14px] text-[12px] font-semibold uppercase tracking-[0.04em] text-white shadow-[0_2px_6px_rgba(150,98,20,0.35)] transition hover:brightness-105"
-          style={{ background: "linear-gradient(180deg, #dda33a 0%, #bf7d1c 100%)" }}
-        >
-          Apply Now <ArrowRight className="h-[15px] w-[15px]" strokeWidth={2.4} />
-        </button>
-      ) : (
-      <div className="mt-auto grid grid-cols-2 gap-3 pt-[clamp(10px,1vh,14px)]">
-        <button
-          onClick={() => {
-            trackCareer("apply_click", job?._id || job?.id);
-            setIsOpen(true);
-          }}
-          className="inline-flex py-1 items-center justify-center gap-2 rounded-[4px] bg-[#05753e] px-3 text-[13px] font-semibold text-white transition hover:bg-[#046334]"
-        >
-          Apply Now <ArrowRight className="h-[18px] w-[18px]" />
-        </button>
-        <button
-          onClick={() => {
-            trackCareer("job_view", job?._id || job?.id);
-            setIsOpen(true);
-          }}
-          className="inline-flex py-1 items-center justify-center rounded-[4px] border border-[#0b7a47] bg-white px-3 text-[13px] font-semibold text-[#05683a] transition hover:bg-[#f2faf5]"
-        >
-          View Details
-        </button>
-      </div>
-      )}
-
-      {isOpen && typeof document !== "undefined"
-        ? createPortal(
-          <UploadCvModal
-            job={job}
-            onClose={() => setIsOpen(false)}
-            onAnalyze={(data) => {
-              if (data) {
-                setCandidateData(data);
-              }
-              setIsOpen(false);
-              setIsEligibilityOpen(true);
-            }}
-          />,
-          document.body
-        )
-        : null}
-
-      {isEligibilityOpen && typeof document !== "undefined"
-        ? createPortal(
-          <EligibilityModal
-            isOpen={isEligibilityOpen}
-            candidate={candidateData}
-            score={candidateData.score}
-            onCandidateChange={setCandidateData}
-            onBack={() => {
-              setIsEligibilityOpen(false);
-              setIsOpen(true);
-            }}
-            onClose={() => setIsEligibilityOpen(false)}
-            onApply={() => {
-              setIsEligibilityOpen(false);
-              setIsAppFormOpen(true);
-            }}
-          />,
-          document.body
-        )
-        : null}
-
-      {isAppFormOpen && typeof document !== "undefined"
-        ? createPortal(
-          <ApplicationFormModal
-            isOpen={isAppFormOpen}
-            candidateData={candidateData}
-            onBack={() => {
-              setIsAppFormOpen(false);
-              setIsEligibilityOpen(true);
-            }}
-            onClose={() => setIsAppFormOpen(false)}
-            onNext={(data) => {
-              if (data) setCandidateData(data);
-              setIsAppFormOpen(false);
-              setIsReviewOpen(true);
-            }}
-          />,
-          document.body
-        )
-        : null}
-
-      {isReviewOpen && typeof document !== "undefined"
-        ? createPortal(
-          <ReviewSubmitModal
-            isOpen={isReviewOpen}
-            candidateData={candidateData}
-            onBack={() => {
-              setIsReviewOpen(false);
-              setIsAppFormOpen(true);
-            }}
-            onClose={() => setIsReviewOpen(false)}
-          />,
-          document.body
-        )
-        : null}
-    </>
+    <div className="mt-auto grid grid-cols-2 gap-3 pt-[clamp(10px,1vh,14px)]">
+      <Link
+        href={href}
+        onClick={() => open("apply_click")}
+        className="inline-flex items-center justify-center gap-2 rounded-[4px] bg-[#05753e] px-3 py-1 text-[13px] font-semibold text-white transition hover:bg-[#046334]"
+      >
+        Apply Now <ArrowRight className="h-[18px] w-[18px]" />
+      </Link>
+      <Link
+        href={href}
+        onClick={() => open("job_view")}
+        className="inline-flex items-center justify-center rounded-[4px] border border-[#0b7a47] bg-white px-3 py-1 text-[13px] font-semibold text-[#05683a] transition hover:bg-[#f2faf5]"
+      >
+        View Details
+      </Link>
+    </div>
   );
 }

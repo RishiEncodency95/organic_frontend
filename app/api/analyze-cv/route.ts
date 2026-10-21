@@ -333,6 +333,8 @@ IMPORTANT: Return ONLY raw valid JSON matching this exact structure:
       linkedin: extractedLinkedinFromBuffer || null,
       cvUrl: savedCvUrl,
       score: fallbackScore,
+      // Not a real analysis: the AI did not answer. Callers must not show this as a result.
+      estimated: true,
       summary: "Evaluated candidate profile successfully.",
       requirementsMet: DEFAULT_REQUIREMENTS,
       breakdown: {
@@ -354,6 +356,7 @@ IMPORTANT: Return ONLY raw valid JSON matching this exact structure:
       phone: null,
       linkedin: null,
       score: 72,
+      estimated: true,
       summary: "Analyzed CV successfully.",
       requirementsMet: DEFAULT_REQUIREMENTS,
       breakdown: {
