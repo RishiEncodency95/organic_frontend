@@ -39,7 +39,7 @@ export function FlowHero({
   subtitle,
   image,
   imageAlt,
-  imageClass = "h-[200px] w-[56%]",
+  imageClass = "h-[160px] w-[56%]",
 }: {
   crumb: string;
   eyebrow?: string;
@@ -58,7 +58,8 @@ export function FlowHero({
         alt={imageAlt}
         className={`absolute right-0 top-0 -z-10 hidden object-cover object-right [mask-image:linear-gradient(90deg,transparent,#000_16%)] md:block ${imageClass}`}
       />
-      <div className="mx-auto max-w-[1360px] px-4 pt-[26px] sm:px-8 lg:pt-[56px]">
+      {/* pb keeps the steps below clear of the art on the right */}
+      <div className="mx-auto max-w-[1360px] px-4 pt-[26px] sm:px-8 lg:pb-[4px] lg:pt-[56px]">
         <nav aria-label="Breadcrumb" className="flex flex-wrap items-center gap-[8px] text-[13.5px] text-[#26352c]">
           <Link href="/" className="flex items-center gap-[6px] hover:text-[#1d7a3e]">
             <Home className="h-[16px] w-[16px] text-[#1d5a37]" fill="currentColor" />
@@ -272,6 +273,13 @@ export function parseEducation(line: string): EducationRow {
 
 export type ExperienceRow = { organization: string; designation: string; duration: string; responsibilities: string };
 
+/** A short name like "Encodency Pvt. Ltd." or "Infosys BPM" rather than a sentence of duties */
+const isCompanyName = (text: string) =>
+  text.length <= 60 &&
+  !/[.;]\s+\S/.test(text.replace(/\b(pvt|ltd|inc|co|llp|corp)\./gi, "$1")) &&
+  (/\b(pvt|private|ltd|limited|inc|llp|llc|corp|corporation|company|co\.|solutions|technologies|tech|services|systems|labs|group|industries|enterprises|consultancy|infotech|software|bpm|hospital|clinic|university|bank)\b/i.test(text) ||
+    text.split(/\s+/).length <= 4);
+
 /** Splits a CV work line ("Designation — Company | Mar 2022 – Present | what they did") into table columns */
 export function parseExperience(line: string): ExperienceRow {
   const range = line.match(RANGE);
@@ -292,19 +300,17 @@ export function parseExperience(line: string): ExperienceRow {
   head = head.replace(RANGE, "").replace(/[()]/g, " ").replace(/\s+/g, " ").replace(/[,–—-]\s*$/, "").trim();
   const split = head.split(/\s+at\s+|\s[—–]\s|\s-\s|,\s*/i).map((x) => x.trim()).filter(Boolean);
   const designation = split[0] || head;
-  const organization = split[1] || "";
-  return { organization, designation, duration, responsibilities: detail.trim() };
+  let organization = split[1] || "";
+  let responsibilities = detail.trim();
+  // "Designation | Mar 2025 – Present | Encodency Pvt. Ltd." — the part after the dates is the company
+  if (!organization && responsibilities && isCompanyName(responsibilities)) {
+    organization = responsibilities;
+    responsibilities = "";
+  }
+  return { organization, designation, duration, responsibilities };
 }
 
-/** Lines from the CV that are certifications / licences */
-export function certificationsOf(c: CandidateProfileData): string[] {
-  const p = profileOf(c);
-  const pool = [...strList(p.achievements), ...strList(p.education)];
-  const certs = pool.filter((l) => /certif|licen|registration|course|training/i.test(l));
-  return [...new Set(certs)].slice(0, 6);
-}
-
-/** Education rows without certificate lines (those go to Certifications) */
+/** Education rows without certificate / licence lines */
 export function educationOf(c: CandidateProfileData): EducationRow[] {
   return strList(profileOf(c).education)
     .filter((l) => !/certif|licen/i.test(l))

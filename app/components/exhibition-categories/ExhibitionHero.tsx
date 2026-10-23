@@ -12,7 +12,7 @@ const DEFAULT_HERO = {
   description:
     "From farm inputs and organic production to finished products, technology, certification and global trade—discover every opportunity to grow your business at Bharat Organic Expo 2027.",
   features: [
-    { value: "200+", label: "Exhibitors Expected" },
+    { value: "100+", label: "Exhibitors Expected" },
     { value: "8000+", label: "Business Visitors" },
     { value: "Global", label: "Business Platform" },
     { value: "Endless", label: "Business Opportunities" },

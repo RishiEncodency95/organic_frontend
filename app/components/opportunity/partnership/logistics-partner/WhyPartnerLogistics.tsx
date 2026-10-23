@@ -22,7 +22,7 @@ export const WHY_PARTNER_LOGISTICS_DATA = [
     contactLocationLine2: "New Delhi, India",
     points: [
       "Position your firm as the official logistics partner for top organic brands",
-      "Gain direct contracts from 200+ exhibitors & international delegates",
+      "Gain direct contracts from 100+ exhibitors & international delegates",
       "Expand long-term logistics networks across domestic and global markets",
       "Build ongoing business partnerships beyond the 3-day expo",
       "Increase brand visibility & recall across all event platforms",

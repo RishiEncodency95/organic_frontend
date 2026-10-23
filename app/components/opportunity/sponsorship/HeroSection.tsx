@@ -42,7 +42,7 @@ const DEFAULT_DATA: HeroData = {
   imageAlt: "Sponsorship opportunities at Bharat Organic Expo 2027",
   stats: [
     { iconKey: "Users", number: "8,000+", label: "BUSINESS\nVISITORS" },
-    { iconKey: "Store", number: "200+", label: "EXHIBITORS" },
+    { iconKey: "Store", number: "100+", label: "EXHIBITORS" },
     { iconKey: "Presentation", number: "150+", label: "SPEAKERS" },
     { iconKey: "Globe", number: "25+", label: "COUNTRIES" },
     { iconKey: "Handshake", number: "UNLIMITED", label: "BUSINESS\nOPPORTUNITIES" },

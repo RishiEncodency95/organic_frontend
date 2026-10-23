@@ -22,7 +22,7 @@ import {
   X,
 } from "lucide-react";
 import { labelsOf, toOptions, useDropdowns } from "@/lib/dropdowns";
-import { isValidPhone, type CandidateProfileData } from "../submit-resume/SubmitResume";
+import type { CandidateProfileData } from "../submit-resume/SubmitResume";
 import {
   CardTitle,
   EditButton,
@@ -144,7 +144,7 @@ function initialAnswers(c: CandidateProfileData): ApplicationAnswers {
     whyJoin: saved.whyJoin ?? "",
     additionalSkills: saved.additionalSkills ?? strList(p.skills).slice(0, 8).join(", "),
     workedWith: saved.workedWith ?? [],
-    references: saved.references?.length === 2 ? saved.references : [{ ...emptyRef }, { ...emptyRef }],
+    references: saved.references?.length === 2 ? saved.references.map((r) => ({ ...r, phone: REF_RULES.phone.clean(r.phone || "") })) : [{ ...emptyRef }, { ...emptyRef }],
     consents: saved.consents ?? { accurate: false, verify: false, contact: false, terms: false },
   };
 }
@@ -162,8 +162,11 @@ function problems(a: ApplicationAnswers, c: CandidateProfileData): string[] {
     const any = Object.values(r).some((v) => v.trim());
     if (!any) return;
     if (!r.name.trim()) out.push(`add a name for reference ${i + 1}`);
-    if (r.phone.trim() && !isValidPhone(r.phone)) out.push(`fix the contact number of reference ${i + 1}`);
-    if (r.email.trim() && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(r.email.trim())) out.push(`fix the email of reference ${i + 1}`);
+    else if (refError("name", r.name)) out.push(`fix the name of reference ${i + 1}`);
+    if (refError("designation", r.designation)) out.push(`fix the designation of reference ${i + 1}`);
+    if (refError("organization", r.organization)) out.push(`fix the organization of reference ${i + 1}`);
+    if (refError("phone", r.phone)) out.push(`fix the contact number of reference ${i + 1}`);
+    if (refError("email", r.email)) out.push(`fix the email of reference ${i + 1}`);
     if (!r.phone.trim() && !r.email.trim()) out.push(`add a phone or email for reference ${i + 1}`);
   });
   if (!Object.values(a.consents).every(Boolean)) out.push("tick all the boxes under Before You Submit");
@@ -236,11 +239,45 @@ function LocationPicker({ value, onChange, options }: { value: string[]; onChang
   );
 }
 
-function RefInput({ label, value, onChange, type = "text" }: { label: string; value: string; onChange: (v: string) => void; type?: string }) {
+/* Reference fields: what each one may contain, cleaned while typing and checked on submit */
+const REF_RULES = {
+  // letters, spaces, dot, apostrophe, hyphen
+  name: { clean: (v: string) => v.replace(/[^A-Za-z\s.'-]/g, "").replace(/\s{2,}/g, " ").slice(0, 60), test: (v: string) => /^[A-Za-z][A-Za-z\s.'-]{1,59}$/.test(v.trim()), error: "Use letters only (min 2)." },
+  designation: { clean: (v: string) => v.replace(/[^A-Za-z\s.&/()-]/g, "").replace(/\s{2,}/g, " ").slice(0, 60), test: (v: string) => /^[A-Za-z][A-Za-z\s.&/()-]{1,59}$/.test(v.trim()), error: "Use letters only (min 2)." },
+  organization: { clean: (v: string) => v.replace(/[^A-Za-z0-9\s.&,'()/-]/g, "").replace(/\s{2,}/g, " ").slice(0, 80), test: (v: string) => /^[A-Za-z0-9][A-Za-z0-9\s.&,'()/-]{1,79}$/.test(v.trim()) && /[A-Za-z]/.test(v), error: "Enter a valid organization name." },
+  // Indian mobile: exactly 10 digits, starting 6–9
+  phone: { clean: (v: string) => cleanMobile(v), test: (v: string) => /^[6-9]\d{9}$/.test(v), error: "Enter a 10-digit mobile number (starts with 6–9)." },
+  email: { clean: (v: string) => v.replace(/\s/g, "").toLowerCase().slice(0, 80), test: (v: string) => REF_EMAIL.test(v) && !v.includes(".."), error: "Enter a valid email, e.g. name@gmail.com" },
+} as const;
+/** Digits only, without a +91 / 0 prefix, max 10 */
+function cleanMobile(v: string) {
+  let d = v.replace(/\D/g, "");
+  if (d.length > 10 && d.startsWith("91")) d = d.slice(2);
+  else if (d.length > 10 && d.startsWith("0")) d = d.slice(1);
+  return d.slice(0, 10);
+}
+const REF_EMAIL = /^[a-z0-9](?:[a-z0-9._%+-]{0,62}[a-z0-9])?@[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?(?:\.[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?)*\.[a-z]{2,}$/;
+type RefKey = keyof typeof REF_RULES;
+/** Problem with one reference field, or "" (empty fields are fine — references are optional) */
+const refError = (key: RefKey, value: string) => (value.trim() && !REF_RULES[key].test(value) ? REF_RULES[key].error : "");
+
+function RefInput({ label, field, value, onChange, show }: { label: string; field: RefKey; value: string; onChange: (v: string) => void; show: boolean }) {
+  const [touched, setTouched] = useState(false);
+  const error = touched || show ? refError(field, value) : "";
   return (
     <label className="block">
       <span className="block text-[11px] leading-tight text-[#55635a]">{label}</span>
-      <input type={type} value={value} onChange={(e) => onChange(e.target.value)} className="h-[26px] w-full rounded-[5px] border border-[#d9e0d4] bg-white px-[8px] text-[12.5px] text-[#13261b] outline-none focus:border-[#1d7a3e]" />
+      <input
+        type={field === "email" ? "email" : field === "phone" ? "tel" : "text"}
+        inputMode={field === "phone" ? "numeric" : field === "email" ? "email" : "text"}
+        maxLength={field === "phone" ? 10 : undefined}
+        value={value}
+        onChange={(e) => onChange(REF_RULES[field].clean(e.target.value))}
+        onBlur={() => setTouched(true)}
+        aria-invalid={Boolean(error)}
+        className={`h-[26px] w-full rounded-[5px] border bg-white px-[8px] text-[12.5px] text-[#13261b] outline-none ${error ? "border-[#e0a49c] focus:border-[#d3242b]" : "border-[#d9e0d4] focus:border-[#1d7a3e]"}`}
+      />
+      {error && <span className="mt-[1px] block text-[10.5px] leading-tight text-[#b23b2e]">{error}</span>}
     </label>
   );
 }
@@ -250,7 +287,6 @@ export default function CompleteApplicationPage({
   onChange,
   onBack,
   onViewAnalysis,
-  onChangeJob,
   onSubmitted,
 }: {
   candidate: CandidateProfileData;
@@ -258,7 +294,6 @@ export default function CompleteApplicationPage({
   /** Back to Review Your Details */
   onBack: () => void;
   onViewAnalysis: () => void;
-  onChangeJob: () => void;
   onSubmitted: (result: { applicationId: string; submittedAt: string }, answers: ApplicationAnswers) => void;
 }) {
   const [answers, setAnswers] = useState<ApplicationAnswers>(() => initialAnswers(candidate));
@@ -330,12 +365,15 @@ export default function CompleteApplicationPage({
         imageAlt="Healing People, Enriching Lives"
       />
 
-      <div className="mx-auto grid max-w-[1360px] grid-cols-1 gap-4 px-4 pb-6 pt-[12px] sm:px-8 xl:grid-cols-[minmax(0,1fr)_440px] xl:gap-[20px] lg:pb-[16px]">
-        {/* ── Left: the form ── */}
-        <div className="min-w-0 space-y-[10px]">
+      {/* Row 1: the steps. Row 2: the form and the side cards — same top, same height. */}
+      <div className="mx-auto grid max-w-[1360px] grid-cols-1 gap-y-[16px] px-4 pb-6 pt-[12px] sm:px-8 xl:grid-cols-[minmax(0,1fr)_440px] xl:gap-x-[20px] lg:pb-[16px]">
+        <div className="min-w-0 xl:col-start-1 xl:row-start-1">
           <FlowSteps current={2} />
+        </div>
 
-          <div className={`${card} space-y-[9px] px-4 py-[10px] sm:px-5`}>
+        {/* ── Left: the form ── */}
+        <div className="flex min-w-0 flex-col xl:col-start-1 xl:row-start-2">
+          <div className={`${card} flex flex-col justify-between gap-[9px] px-4 py-[10px] sm:px-5 xl:flex-1`}>
             <section>
               <CardTitle Icon={UserRoundCheck} title="Application Details" />
               <div className="mt-[7px] grid grid-cols-1 gap-x-[14px] gap-y-[7px] md:grid-cols-[1.25fr_1fr_0.85fr]">
@@ -386,7 +424,7 @@ export default function CompleteApplicationPage({
                     value={answers.whyJoin}
                     maxLength={WHY_MAX}
                     onChange={(e) => set("whyJoin", e.target.value)}
-                    rows={3}
+                    rows={5}
                     placeholder="Tell us what draws you to this role and to organic living…"
                     className="w-full resize-none rounded-[6px] border border-[#d9e0d4] bg-white px-[11px] py-[6px] text-[13px] leading-[1.4] text-[#13261b] outline-none focus:border-[#1d7a3e]"
                   />
@@ -399,7 +437,7 @@ export default function CompleteApplicationPage({
                     value={answers.additionalSkills}
                     maxLength={SKILLS_MAX}
                     onChange={(e) => set("additionalSkills", e.target.value)}
-                    rows={3}
+                    rows={5}
                     className="w-full resize-none rounded-[6px] border border-[#d9e0d4] bg-white px-[11px] py-[6px] text-[13px] leading-[1.4] text-[#13261b] outline-none focus:border-[#1d7a3e]"
                   />
                   <p className="-mt-[2px] text-right text-[11px] leading-tight text-[#7c8a80]">{SKILLS_MAX - answers.additionalSkills.length} characters left</p>
@@ -430,12 +468,12 @@ export default function CompleteApplicationPage({
                 {answers.references.map((r, i) => (
                   <div key={i} className="grid grid-cols-2 gap-x-[10px] gap-y-[3px]">
                     <p className="col-span-2 text-[12.5px] font-semibold leading-tight text-[#1b4d2e]">Reference {i + 1}</p>
-                    <RefInput label="Name" value={r.name} onChange={(v) => setRef(i, "name", v)} />
-                    <RefInput label="Designation" value={r.designation} onChange={(v) => setRef(i, "designation", v)} />
-                    <RefInput label="Organization" value={r.organization} onChange={(v) => setRef(i, "organization", v)} />
-                    <RefInput label="Contact Number" type="tel" value={r.phone} onChange={(v) => setRef(i, "phone", v.replace(/[^\d+\s]/g, "").slice(0, 15))} />
+                    <RefInput label="Name" field="name" show={tried} value={r.name} onChange={(v) => setRef(i, "name", v)} />
+                    <RefInput label="Designation" field="designation" show={tried} value={r.designation} onChange={(v) => setRef(i, "designation", v)} />
+                    <RefInput label="Organization" field="organization" show={tried} value={r.organization} onChange={(v) => setRef(i, "organization", v)} />
+                    <RefInput label="Contact Number" field="phone" show={tried} value={r.phone} onChange={(v) => setRef(i, "phone", v)} />
                     <div className="col-span-2">
-                      <RefInput label="Email Address" type="email" value={r.email} onChange={(v) => setRef(i, "email", v.replace(/\s/g, ""))} />
+                      <RefInput label="Email Address" field="email" show={tried} value={r.email} onChange={(v) => setRef(i, "email", v)} />
                     </div>
                   </div>
                 ))}
@@ -445,7 +483,7 @@ export default function CompleteApplicationPage({
         </div>
 
         {/* ── Right ── */}
-        <aside className="relative flex min-w-0 flex-col gap-[10px]">
+        <aside className="relative flex min-w-0 flex-col gap-[10px] xl:col-start-2 xl:row-start-2">
           {photo.input}
           <div className={`${card} flex gap-[14px] p-[10px]`}>
             <button type="button" onClick={photo.open} className="relative shrink-0" aria-label={candidate.image ? "Change photo" : "Add photo"}>
@@ -492,10 +530,7 @@ export default function CompleteApplicationPage({
           <div className={`${card} flex gap-[12px] bg-[#f6faf3] p-[12px]`}>
             <UserRoundCheck className="h-[40px] w-[40px] shrink-0" style={{ color: GREEN }} strokeWidth={1.5} />
             <div className="min-w-0 flex-1">
-              <div className="flex items-start justify-between gap-2">
-                <p className="text-[13.5px] text-[#26352c]">Position Applied For</p>
-                <EditButton onClick={onChangeJob} title="Choose a different position" />
-              </div>
+              <p className="text-[13.5px] text-[#26352c]">Position Applied For</p>
               <p className="text-[13.5px] font-medium leading-snug" style={{ color: INK }}>
                 {j.title}
               </p>
@@ -533,7 +568,7 @@ export default function CompleteApplicationPage({
             }
           />
 
-          <div className={`${card} flex gap-[12px] px-[12px] py-[10px]`}>
+          <div className={`${card} flex gap-[12px] px-[12px] py-[10px] xl:flex-1`}>
             <span className="grid h-[38px] w-[38px] shrink-0 place-items-center rounded-full bg-[#fdf0dc]">
               <ClipboardList className="h-[20px] w-[20px] text-[#e8860f]" />
             </span>

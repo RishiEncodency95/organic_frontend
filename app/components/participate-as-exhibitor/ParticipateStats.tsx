@@ -46,7 +46,7 @@ export default function ParticipateStats() {
   const dividerRefs = useRef<(HTMLDivElement | null)[]>([]);
 
   const stats = [
-    { icon: Building2, val: "200+", label: "EXHIBITORS" },
+    { icon: Building2, val: "100+", label: "EXHIBITORS" },
     { icon: Users, val: "8,000+", label: "BUSINESS VISITORS" },
     { icon: Mic, val: "150+", label: "SPEAKERS" },
     { icon: Globe, val: "30+", label: "COUNTRY PARTICIPATION" },

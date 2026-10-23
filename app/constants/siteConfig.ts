@@ -10,12 +10,12 @@ export const SITE_CONFIG = {
     deligate: "https://arogya.namogange.org/register-now",
     // Approved Event Metrics
     stats: {
-        exhibitors: "200+",
-        exhibitorsCount: 200,
+        exhibitors: "100+",
+        exhibitorsCount: 100,
         visitors: "8,000+",
         visitorsCount: 8000,
-        speakers: "50+",
-        speakersCount: 50,
+        speakers: "150+",
+        speakersCount: 150,
         delegates: "5,000+",
         delegatesCount: 5000,
         countries: "25+",

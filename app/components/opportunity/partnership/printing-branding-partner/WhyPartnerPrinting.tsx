@@ -22,7 +22,7 @@ export const WHY_PARTNER_PRINTING_DATA = [
     contactLocationLine2: "New Delhi, India",
     points: [
       "Position your agency as the official print partner for India's leading organic expo",
-      "Gain direct contracts from 200+ exhibitors for banners, brochures & lanyards",
+      "Gain direct contracts from 100+ exhibitors for banners, brochures & lanyards",
       "Build long-term corporate & event branding relationships",
       "Demonstrate premium print quality & eco-friendly printing capabilities",
       "Increase brand visibility & recall across all event platforms",

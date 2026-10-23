@@ -1,7 +1,8 @@
 "use client";
 
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import {
   ArrowRight,
   BarChart3,
@@ -31,6 +32,8 @@ import { FlowHero, FlowPage, FlowSteps, GREEN, INK, PhotoBox, ProfileMatch, SERI
 /* Careers → Application Submitted: the confirmation, what happens next and who to contact. */
 
 const DEFAULT_SUPPORT_EMAIL = "careers@bharatorganicexpo.com";
+/** Seconds before the page goes back to the home page */
+const REDIRECT_SECONDS = 60;
 
 const NEXT: { Icon: LucideIcon; tone: string; title: string; text: string; time: string }[] = [
   { Icon: FileSearch, tone: "#ef8a1c", title: "Application Review", text: "Our HR team will review your application and AI analysis report.", time: "1 – 3 Working Days" },
@@ -56,6 +59,18 @@ export default function SubmittedPage({ application: a }: { application: Submitt
     window.scrollTo({ top: 0 });
   }, []);
 
+  // Back to the home page after a minute; the countdown is shown under the confirmation
+  const router = useRouter();
+  const [left, setLeft] = useState(REDIRECT_SECONDS);
+  useEffect(() => {
+    const started = Date.now();
+    const timer = setInterval(() => setLeft(Math.max(0, REDIRECT_SECONDS - Math.floor((Date.now() - started) / 1000))), 1000);
+    return () => clearInterval(timer);
+  }, []);
+  useEffect(() => {
+    if (left === 0) router.push("/");
+  }, [left, router]);
+
   return (
     <FlowPage>
       <FlowHero
@@ -64,7 +79,7 @@ export default function SubmittedPage({ application: a }: { application: Submitt
         subtitle="Thank you for your interest in joining Bharat Organic Expo!"
         image="/assets/careers/submitted-hero.png"
         imageAlt="Together for a Healthier Tomorrow — Healing People, Enriching Lives"
-        imageClass="h-[176px] w-[64%]"
+        imageClass="h-[160px] w-[64%]"
       />
 
       <div className="mx-auto grid max-w-[1360px] grid-cols-1 gap-4 px-4 pb-6 pt-[12px] sm:px-8 xl:grid-cols-[minmax(0,1fr)_440px] xl:gap-[20px] lg:pb-[16px]">
@@ -113,6 +128,12 @@ export default function SubmittedPage({ application: a }: { application: Submitt
                     </div>
                   </div>
                 </div>
+                <p className="mt-[8px] text-[12.5px] text-[#55635a]" aria-live="polite">
+                  Taking you to the home page in <span className="font-semibold tabular-nums" style={{ color: INK }}>{left}s</span> ·{" "}
+                  <Link href="/" className="font-medium text-[#1d7a3e] underline">
+                    Go now
+                  </Link>
+                </p>
               </div>
             </div>
 

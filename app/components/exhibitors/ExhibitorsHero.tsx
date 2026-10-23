@@ -12,7 +12,7 @@ const EXHIBITORS_HERO_DATA = [
   {
     id: "exhibitors-hero-1",
     tagline: "TRUSTED BY",
-    mainCount: "150+ ",
+    mainCount: "100+ ",
     countHighlight: "Leading",
     titleSub: "Health & Wellness Brands",
     description:

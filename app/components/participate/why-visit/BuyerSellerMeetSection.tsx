@@ -105,8 +105,8 @@ const BUYER_SELLER_MEET_DATA = [
       subtextBottom: "Serious Business Buyers",
     },
     stats: [
-      { id: "s1", icon: Users, val: "200+", label: "EXHIBITORS", subtext: "Across the Organic Ecosystem" },
-      { id: "s2", icon: Mic, val: "100+", label: "SPEAKERS", subtext: "Industry Leaders & Experts" },
+      { id: "s1", icon: Users, val: "100+", label: "EXHIBITORS", subtext: "Across the Organic Ecosystem" },
+      { id: "s2", icon: Mic, val: "150+", label: "SPEAKERS", subtext: "Industry Leaders & Experts" },
       { id: "s3", icon: Globe, val: "8,000+", label: "BUSINESS VISITORS", subtext: "Traders, Buyers, Retailers & More" },
       { id: "s4", icon: Globe, val: "GLOBAL", label: "PARTICIPATION", subtext: "Connecting India with the World" },
     ],

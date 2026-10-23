@@ -62,9 +62,9 @@ import SectionContainer from "@/app/components/layout/SectionContainer";
 // Mock API response / JSON array of objects
 const STATS_DATA = [
   { id: "stat-1", icon: Users, val: "8,000+", label: "VISITORS / DELEGATES" },
-  { id: "stat-2", icon: Building2, val: "200+", label: "EXHIBITORS" },
+  { id: "stat-2", icon: Building2, val: "100+", label: "EXHIBITORS" },
   { id: "stat-3", icon: Globe, val: "1,000+", label: "GLOBAL BUYERS" },
-  { id: "stat-4", icon: Mic, val: "65+", label: "EXPERT SPEAKERS" },
+  { id: "stat-4", icon: Mic, val: "150+", label: "EXPERT SPEAKERS" },
   { id: "stat-5", icon: Handshake, val: "B2B", label: "MEETINGS" },
 ];
 

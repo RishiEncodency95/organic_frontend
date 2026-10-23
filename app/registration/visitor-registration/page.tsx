@@ -36,7 +36,7 @@ export async function generateMetadata(): Promise<Metadata> {
   const title = seoData?.metaTitle || "Visitor Registration | Bharat Organic Expo 2027";
   const description =
     seoData?.metaDescription ||
-    "Register as a visitor for Bharat Organic Expo 2027. Get your free entry pass, meet 200+ organic exhibitors, and discover top natural products in New Delhi.";
+    "Register as a visitor for Bharat Organic Expo 2027. Get your free entry pass, meet 100+ organic exhibitors, and discover top natural products in New Delhi.";
 
   return {
     metadataBase: new URL(defaultUrl),

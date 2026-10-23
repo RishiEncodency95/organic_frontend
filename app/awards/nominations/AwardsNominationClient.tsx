@@ -607,7 +607,7 @@ const DEFAULT_PROCESS_STEPS = [
 ];
 
 const bannerStats = [
-  { value: "200+", label: "EXHIBITORS", icon: Building2 },
+  { value: "100+", label: "EXHIBITORS", icon: Building2 },
   { value: "8,000+", label: "TRADE VISITORS", icon: Users },
   { value: "5,000 Sqm", label: "EXHIBITION AREA", icon: Map },
   { value: "10+ Years", label: "PROVEN EXPERIENCE", icon: Award },

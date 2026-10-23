@@ -64,7 +64,7 @@ const sectionData = {
     description: "meaningful connections and grow your business with India's biggest organic show.",
     stats: [
       { count: "8,000+", label: "Visitors / Delegates", icon: Users },
-      { count: "200+", label: "Exhibitors", icon: Target },
+      { count: "100+", label: "Exhibitors", icon: Target },
       { count: "1,000+", label: "Global Buyers", icon: Globe },
       { count: "Unlimited", label: "Opportunities", icon: Zap }
     ],

@@ -42,7 +42,7 @@ const EXHIBITORS_CTA_DATA = [
       },
     ],
     bottomStats: [
-      { id: "stat-1", value: "200+", label: "Exhibitors" },
+      { id: "stat-1", value: "100+", label: "Exhibitors" },
       { id: "stat-2", value: "8,000+", label: "Visitors" },
       { id: "stat-3", value: "3 Days", label: "Of Knowledge" },
       { id: "stat-4", value: "PAN India", label: "Participation" },

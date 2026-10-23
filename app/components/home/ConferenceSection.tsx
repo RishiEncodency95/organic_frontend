@@ -29,7 +29,7 @@ const DEFAULT_CONFERENCE_DATA = {
     { icon: Calendar, title: '19 – 21', sub: 'FEBRUARY 2027' },
     { icon: MapPin, title: 'PRAGATI MAIDAN', sub: 'NEW DELHI' },
     { icon: Users, title: 'INSIGHTS. IDEAS.', sub: 'IMPACT.' },
-    { icon: Mic, title: '50+ GLOBAL', sub: 'SPEAKERS' },
+    { icon: Mic, title: '150+ GLOBAL', sub: 'SPEAKERS' },
     { icon: BookOpen, title: '20+ KEY', sub: 'SESSIONS' },
   ],
   image: global1 as any,

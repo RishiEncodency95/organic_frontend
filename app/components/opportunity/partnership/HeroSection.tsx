@@ -27,9 +27,9 @@ export const HERO_PARTNERSHIP_DATA = [
     location: "Bharat Mandapam, New Delhi",
     stats: [
       { iconKey: "Users", value: "8,000+", label: "VISITORS / DELEGATES" },
-      { iconKey: "Store", value: "200+", label: "EXHIBITORS" },
+      { iconKey: "Store", value: "100+", label: "EXHIBITORS" },
       { iconKey: "Globe", value: "1,000+", label: "GLOBAL BUYERS" },
-      { iconKey: "UserCheck", value: "65+", label: "EXPERT SPEAKERS" },
+      { iconKey: "UserCheck", value: "150+", label: "EXPERT SPEAKERS" },
       { iconKey: "Briefcase", value: "B2B", label: "MEETINGS" }
     ]
   }

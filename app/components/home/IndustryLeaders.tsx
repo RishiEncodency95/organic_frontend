@@ -95,7 +95,7 @@ const IndustryLeaders = () => {
             {[
               { icon: Globe, val: "1,000+", label: "Global Buyers" },
               { icon: Users, val: "8,000+", label: "Visitors / Delegates" },
-              { icon: Handshake, val: "150+", label: "Exhibitors" },
+              { icon: Handshake, val: "100+", label: "Exhibitors" },
               { icon: Mic, val: "150+", label: "Expert Speakers" }
             ].map((stat, i) => (
               <div key={i} className="bg-white rounded-2xl px-2 py-2.5 shadow-[0_4px_0_#d1e8d6,0_8px_15px_rgba(0,0,0,0.06)] border border-[#e8f2eb] flex flex-col items-center text-center transition-all hover:-translate-y-1 hover:shadow-[0_5px_0_#c4e1c9,0_10px_20px_rgba(0,0,0,0.08)] active:translate-y-[3px] active:shadow-[0_1px_0_#d1e8d6,0_2px_5px_rgba(0,0,0,0.05)] duration-200 cursor-pointer">

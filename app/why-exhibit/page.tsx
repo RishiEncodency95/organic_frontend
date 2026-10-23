@@ -42,7 +42,7 @@ export async function generateMetadata(): Promise<Metadata> {
   const title = seoData?.metaTitle || "Why Exhibit | Bharat Organic Expo 2027";
   const description =
     seoData?.metaDescription ||
-    "Exhibit at Bharat Organic Expo 2027 – India's premier B2B platform for organic food, agriculture, AYUSH and sustainable industries. Reach 8,000+ qualified buyers, 200+ exhibitors and global decision makers.";
+    "Exhibit at Bharat Organic Expo 2027 – India's premier B2B platform for organic food, agriculture, AYUSH and sustainable industries. Reach 8,000+ qualified buyers, 100+ exhibitors and global decision makers.";
 
   return {
     metadataBase: new URL(defaultUrl),

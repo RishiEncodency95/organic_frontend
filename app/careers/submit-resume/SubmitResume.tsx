@@ -1241,6 +1241,16 @@ export const isValidEmail = (value?: string | null) => {
   return ALLOWED_EMAIL_DOMAINS.includes(domain);
 };
 
+/**
+ * The email the CV itself carried (from the analysis). When there is one it cannot be
+ * edited; candidates whose CV had no email add one themselves.
+ */
+export const cvEmailOf = (candidate: CandidateProfileData): string => {
+  // Only the analysis counts: candidate.email may be one the candidate typed, which must stay editable
+  const fromCv = (candidate.fullProfile as { email?: unknown } | null | undefined)?.email;
+  return typeof fromCv === "string" ? fromCv.trim() : "";
+};
+
 /** Indian mobile numbers only: exactly 10 digits starting 6-9, with an optional +91/91 prefix. */
 export const isValidPhone = (value?: string | null) => {
   const digits = digitsOnly(value);
@@ -1309,7 +1319,12 @@ export async function saveCandidatePhoto(candidateId: string | undefined, file: 
 export function profileIssues(candidate: CandidateProfileData): string[] {
   const issues: string[] = [];
   if (!(candidate.candidateName || "").trim()) issues.push("full name");
-  if (!isValidEmail(candidate.email)) issues.push("a valid email address");
+  // The CV's own email cannot be edited, so any well-formed one is accepted; an email the
+  // candidate typed must be Gmail / Outlook / Yahoo
+  const cvEmail = cvEmailOf(candidate);
+  const email = (candidate.email || "").trim();
+  const emailOk = cvEmail && email === cvEmail ? EMAIL_REGEX.test(email) : isValidEmail(email);
+  if (!emailOk) issues.push("a valid email address");
   if (!isValidPhone(candidate.phone)) issues.push("a valid mobile number");
   return issues;
 }
@@ -1410,6 +1425,8 @@ export function ProfileCard({ look = "canvas" }: { look?: "canvas" | "page" }) {
   const photoInputRef = useRef<HTMLInputElement>(null);
   const verifiedKey = phoneKey(candidate.verifiedPhone);
   const phoneList = cvPhoneList(candidate);
+  const cvEmail = cvEmailOf(candidate);
+  const emailLocked = Boolean(cvEmail);
 
   const buildDraft = () => ({
     candidateName: candidate.candidateName || "",
@@ -1478,7 +1495,7 @@ export function ProfileCard({ look = "canvas" }: { look?: "canvas" | "page" }) {
     updateCandidate?.({
       candidateName: name,
       firstName: (name.split(" ")[0] || candidate.firstName) as string,
-      email: draft.email.trim() || null,
+      email: (emailLocked ? cvEmail : draft.email.trim()) || null,
       phone: phone || null,
       phones,
       linkedin: draft.linkedin.trim() || null,
@@ -1493,7 +1510,7 @@ export function ProfileCard({ look = "canvas" }: { look?: "canvas" | "page" }) {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           name,
-          email: draft.email.trim(),
+          email: emailLocked ? cvEmail : draft.email.trim(),
           phone,
           phones,
           linkedin: draft.linkedin.trim(),
@@ -1604,16 +1621,33 @@ export function ProfileCard({ look = "canvas" }: { look?: "canvas" | "page" }) {
             </div>
 
             <div>
-              <input
-                className={fieldClass(!isValidEmail(draft.email))}
-                type="email"
-                placeholder="Email address *"
-                value={draft.email}
-                onChange={(e) =>
-                  setDraft((d) => ({ ...d, email: e.target.value.replace(/\s/g, "") }))
-                }
-              />
-              {draft.email.trim() && !isValidEmail(draft.email) && (
+              {emailLocked ? (
+                <>
+                  <input
+                    className={`${fieldClass(false)} cursor-not-allowed bg-[#f1f4f1] text-[#55635a]`}
+                    type="email"
+                    value={draft.email}
+                    readOnly
+                    aria-readonly="true"
+                    title="Taken from your CV"
+                  />
+                  <p className="mt-[3px] flex items-center gap-[4px] text-[11px] text-[#6b7a87]">
+                    <LockKeyhole className="h-[11px] w-[11px]" />
+                    Email is taken from your CV and cannot be changed.
+                  </p>
+                </>
+              ) : (
+                <input
+                  className={fieldClass(!isValidEmail(draft.email))}
+                  type="email"
+                  placeholder="Add your email address *"
+                  value={draft.email}
+                  onChange={(e) =>
+                    setDraft((d) => ({ ...d, email: e.target.value.replace(/\s/g, "") }))
+                  }
+                />
+              )}
+              {!emailLocked && draft.email.trim() && !isValidEmail(draft.email) && (
                 <p className="mt-[3px] text-[11px] font-semibold text-[#b23b2e]">
                   Use a Gmail, Outlook or Yahoo email address (e.g. name@gmail.com).
                 </p>

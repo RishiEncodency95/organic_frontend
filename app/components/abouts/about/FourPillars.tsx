@@ -43,7 +43,7 @@ const DEFAULT_DATA: FourPillarsData = {
     {
       title: "INTERNATIONAL EXHIBITION",
       themeColor: THEME_COLORS[0],
-      desc: "Spanning 40,000+ sq ft across three halls, featuring 200+ exhibitors from 8 key sectors including Medical, AYUSH, Wellness, and Digital Health. Witness live demos, finalize deals, and explore global innovations in dedicated country pavilions for specialized high-level networking and business growth.",
+      desc: "Spanning 40,000+ sq ft across three halls, featuring 100+ exhibitors from 8 key sectors including Medical, AYUSH, Wellness, and Digital Health. Witness live demos, finalize deals, and explore global innovations in dedicated country pavilions for specialized high-level networking and business growth.",
       icon: "Globe",
       img: intlExhibImg,
       imgAlt: "",

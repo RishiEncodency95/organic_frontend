@@ -8,7 +8,6 @@ import {
   BriefcaseBusiness,
   Camera,
   CircleCheck,
-  FileBadge2,
   FileText,
   GraduationCap,
   Leaf,
@@ -19,7 +18,7 @@ import {
   UserRound,
   UserRoundCheck,
 } from "lucide-react";
-import { isValidEmail, phoneKey, type CandidateProfileData } from "../submit-resume/SubmitResume";
+import { cvEmailOf, isValidEmail, phoneKey, type CandidateProfileData } from "../submit-resume/SubmitResume";
 import {
   CardTitle,
   EditButton,
@@ -33,7 +32,6 @@ import {
   SERIF,
   capitalise,
   card,
-  certificationsOf,
   educationOf,
   experienceOf,
   greenButton,
@@ -51,7 +49,6 @@ import {
 
 const DETAIL_ROW = "grid grid-cols-[112px_minmax(0,1fr)] gap-2 border-b border-[#eef1ea] py-[4px] text-[13px] last:border-0";
 const EMPTY = <span className="text-[#8a968d]">Not mentioned in CV</span>;
-const CV_EDIT_HINT = "These details come from your CV. Upload an updated CV to change them.";
 
 function CandidateProfile({ c, onChange }: { c: CandidateProfileData; onChange: (patch: Partial<CandidateProfileData>) => void }) {
   const p = profileOf(c);
@@ -65,11 +62,14 @@ function CandidateProfile({ c, onChange }: { c: CandidateProfileData; onChange: 
     setDraft({ name: c.candidateName || "", email: c.email || "", location });
     setEditing(true);
   };
-  const valid = draft.name.trim().length > 1 && isValidEmail(draft.email);
+  // The CV's email is fixed; only a candidate whose CV had none can type one
+  const cvEmail = cvEmailOf(c);
+  const emailLocked = Boolean(cvEmail);
+  const valid = draft.name.trim().length > 1 && (emailLocked || isValidEmail(draft.email));
   const save = () => {
     if (!valid) return;
     const name = draft.name.trim();
-    onChange({ candidateName: name, firstName: name.split(" ")[0], email: draft.email.trim(), location: draft.location.trim() || null });
+    onChange({ candidateName: name, firstName: name.split(" ")[0], email: emailLocked ? cvEmail : draft.email.trim(), location: draft.location.trim() || null });
     setEditing(false);
   };
 
@@ -112,8 +112,17 @@ function CandidateProfile({ c, onChange }: { c: CandidateProfileData; onChange: 
           {editing ? (
             <div className="space-y-[6px] pt-[2px]">
               <input className={input} value={draft.name} onChange={(e) => setDraft({ ...draft, name: e.target.value })} placeholder="Full name *" aria-label="Full name" />
-              <input className={input} value={draft.email} onChange={(e) => setDraft({ ...draft, email: e.target.value.replace(/\s/g, "") })} placeholder="Email address *" aria-label="Email address" />
-              {draft.email && !isValidEmail(draft.email) && <p className="text-[11px] text-[#b23b2e]">Use a Gmail, Outlook or Yahoo email address.</p>}
+              {emailLocked ? (
+                <>
+                  <input className={`${input} cursor-not-allowed bg-[#f1f4f1] text-[#55635a]`} value={cvEmail} readOnly aria-readonly="true" aria-label="Email address (from your CV)" title="Taken from your CV" />
+                  <p className="text-[11px] text-[#6b7a87]">Email is taken from your CV and cannot be changed.</p>
+                </>
+              ) : (
+                <>
+                  <input className={input} value={draft.email} onChange={(e) => setDraft({ ...draft, email: e.target.value.replace(/\s/g, "") })} placeholder="Add your email address *" aria-label="Email address" />
+                  {draft.email && !isValidEmail(draft.email) && <p className="text-[11px] text-[#b23b2e]">Use a Gmail, Outlook or Yahoo email address.</p>}
+                </>
+              )}
               <input className={input} value={draft.location} onChange={(e) => setDraft({ ...draft, location: e.target.value })} placeholder="Current location" aria-label="Current location" />
               <p className="text-[11px] text-[#55635a]">Mobile number stays the one verified on WhatsApp.</p>
             </div>
@@ -148,7 +157,7 @@ function CandidateProfile({ c, onChange }: { c: CandidateProfileData; onChange: 
   );
 }
 
-function PositionDetails({ c, onEdit }: { c: CandidateProfileData; onEdit: () => void }) {
+function PositionDetails({ c }: { c: CandidateProfileData }) {
   const j = c.jobDetails || {};
   const p = profileOf(c);
   const rows: [string, string | undefined][] = [
@@ -163,7 +172,7 @@ function PositionDetails({ c, onEdit }: { c: CandidateProfileData; onEdit: () =>
   ];
   return (
     <div className={`${card} px-4 py-[10px]`}>
-      <CardTitle Icon={BriefcaseBusiness} title="Position Details" action={<EditButton onClick={onEdit} title="Choose a different position" />} />
+      <CardTitle Icon={BriefcaseBusiness} title="Position Details" />
       <dl className="mt-[8px]">
         {rows.map(([label, value]) => (
           <div key={label} className="grid grid-cols-[170px_minmax(0,1fr)] gap-3 border-b border-[#eef1ea] py-[4px] text-[13px] last:border-0">
@@ -178,11 +187,24 @@ function PositionDetails({ c, onEdit }: { c: CandidateProfileData; onEdit: () =>
   );
 }
 
-function Table({ head, rows, empty }: { head: string[]; rows: string[][]; empty: string }) {
+/** `widths`: column widths (%); a column empty in every row is left out */
+function Table({ head: allHead, rows: allRows, empty, widths }: { head: string[]; rows: string[][]; empty: string; widths?: number[] }) {
+  const keep = allHead.map((_, i) => i === 0 || allRows.some((r) => r[i]?.trim()));
+  const head = allHead.filter((_, i) => keep[i]);
+  const rows = allRows.map((r) => r.filter((_, i) => keep[i]));
+  const cols = widths?.filter((_, i) => keep[i]);
+  const total = cols?.reduce((a, b) => a + b, 0) || 0;
   if (!rows.length) return <p className="mt-[10px] rounded-[8px] bg-[#f4f7f1] px-3 py-[10px] text-[12.5px] text-[#55635a]">{empty}</p>;
   return (
     <div className="mt-[8px] overflow-x-auto rounded-[8px] border border-[#e8ece2]">
       <table className="w-full min-w-[420px] table-fixed text-left text-[11.5px] xl:min-w-0">
+        {cols && (
+          <colgroup>
+            {cols.map((w, i) => (
+              <col key={i} style={{ width: `${(w / total) * 100}%` }} />
+            ))}
+          </colgroup>
+        )}
         <thead className="bg-[#f1f6ee] text-[#1b4d2e]">
           <tr>
             {head.map((h) => (
@@ -196,7 +218,7 @@ function Table({ head, rows, empty }: { head: string[]; rows: string[][]; empty:
           {rows.map((row, i) => (
             <tr key={i} className="border-t border-[#eef1ea] align-top">
               {row.map((cell, j) => (
-                <td key={j} className="break-words px-[7px] py-[6px] leading-[1.35] text-[#26352c] [overflow-wrap:anywhere]">
+                <td key={j} className="break-words px-[7px] py-[6px] leading-[1.35] text-[#26352c] [hyphens:auto]">
                   {cell || "—"}
                 </td>
               ))}
@@ -208,13 +230,13 @@ function Table({ head, rows, empty }: { head: string[]; rows: string[][]; empty:
   );
 }
 
-function Skills({ c, onEdit }: { c: CandidateProfileData; onEdit: () => void }) {
+function Skills({ c }: { c: CandidateProfileData }) {
   const skills = strList(profileOf(c).skills).slice(0, 10);
   return (
     <div className={`${card} px-4 py-[10px]`}>
-      <CardTitle Icon={Settings} title="Skills" action={<EditButton onClick={onEdit} title={CV_EDIT_HINT} />} />
+      <CardTitle Icon={Settings} title="Skills" />
       {skills.length ? (
-        <ul className="mt-[8px] grid grid-cols-1 gap-x-3 gap-y-[5px] sm:grid-cols-2">
+        <ul className="mt-[8px] grid grid-cols-1 gap-x-3 gap-y-[5px] sm:grid-cols-2 lg:grid-cols-3">
           {skills.map((s) => (
             <li key={s} className="flex items-start gap-[7px] text-[12.5px] leading-[1.3] text-[#26352c]">
               <CircleCheck className="mt-[1px] h-[15px] w-[15px] shrink-0 text-white" fill="#1d7a3e" strokeWidth={2.4} />
@@ -229,28 +251,7 @@ function Skills({ c, onEdit }: { c: CandidateProfileData; onEdit: () => void }) 
   );
 }
 
-function Certifications({ c, onEdit }: { c: CandidateProfileData; onEdit: () => void }) {
-  const certs = certificationsOf(c);
-  return (
-    <div className={`${card} px-4 py-[10px]`}>
-      <CardTitle Icon={FileBadge2} title="Certifications & Licenses" action={<EditButton onClick={onEdit} title={CV_EDIT_HINT} />} />
-      {certs.length ? (
-        <ul className="mt-[8px] space-y-[6px]">
-          {certs.map((x) => (
-            <li key={x} className="flex items-start gap-[8px] text-[12.5px] text-[#26352c]">
-              <FileText className="mt-[1px] h-[15px] w-[15px] shrink-0" style={{ color: GREEN }} />
-              {x}
-            </li>
-          ))}
-        </ul>
-      ) : (
-        <p className="mt-[10px] text-[12.5px] text-[#55635a]">No certifications mentioned in your CV.</p>
-      )}
-    </div>
-  );
-}
-
-function Documents({ c, onEdit }: { c: CandidateProfileData; onEdit: () => void }) {
+function Documents({ c }: { c: CandidateProfileData }) {
   const viewable = c.cvUrl && !c.cvUrl.startsWith("blob:") ? c.cvUrl : null;
   const docs = [
     { name: c.cvName, size: c.cvSize, url: viewable },
@@ -258,7 +259,7 @@ function Documents({ c, onEdit }: { c: CandidateProfileData; onEdit: () => void 
   ];
   return (
     <div className={`${card} px-4 py-[10px]`}>
-      <CardTitle Icon={FileText} title="Additional Documents" action={<EditButton onClick={onEdit} title="Upload a different CV" />} />
+      <CardTitle Icon={FileText} title="Additional Documents" />
       <ul className="mt-[8px] space-y-[7px]">
         {docs.map((d) => (
           <li key={d.name} className="flex items-center gap-[8px] text-[12.5px] text-[#26352c]">
@@ -347,7 +348,7 @@ function Summary({ c }: { c: CandidateProfileData }) {
         </div>
       </div>
 
-      <div className={`${card} px-4 py-[10px]`}>
+      <div className={`${card} px-4 py-[10px] xl:flex-1`}>
         <div className="flex gap-[10px]">
           <span className="grid h-[30px] w-[30px] shrink-0 place-items-center rounded-full bg-[#fdf0dc]">
             <TrendingUp className="h-[17px] w-[17px] text-[#e8860f]" strokeWidth={2.6} />
@@ -380,17 +381,12 @@ export default function ReviewDetailsPage({
   onChange,
   onContinue,
   onBack,
-  onReupload,
-  onChangeJob,
 }: {
   candidate: CandidateProfileData;
   onChange: (c: CandidateProfileData) => void;
   onContinue: () => void;
   /** Back to the AI analysis result */
   onBack: () => void;
-  /** The job's Apply page, to upload a different CV */
-  onReupload: () => void;
-  onChangeJob: () => void;
 }) {
   useEffect(() => {
     window.scrollTo({ top: 0 });
@@ -409,49 +405,66 @@ export default function ReviewDetailsPage({
         imageAlt="Together for a Healthier Tomorrow"
       />
 
-      <div className="mx-auto grid max-w-[1360px] grid-cols-1 gap-4 px-4 pb-6 pt-[12px] sm:px-8 xl:grid-cols-[minmax(0,1fr)_420px] xl:gap-[20px] lg:pb-[16px]">
-        <div className="min-w-0 space-y-[10px]">
-          <div className="xl:mr-[8%]">
-            <FlowSteps current={2} />
-          </div>
+      {/* Row 1: the steps. Row 2: the cards and the summary side by side — same top (below the
+          banner art) and, as grid items of one row, the same height. */}
+      <div className="mx-auto grid max-w-[1360px] grid-cols-1 gap-y-[16px] px-4 pb-6 pt-[12px] sm:px-8 xl:grid-cols-[minmax(0,1fr)_420px] xl:gap-x-[20px] lg:pb-[16px]">
+        <div className="min-w-0 xl:col-start-1 xl:row-start-1 xl:mr-[8%]">
+          <FlowSteps current={2} />
+        </div>
+
+        <div className="flex min-w-0 flex-col gap-[10px] xl:col-start-1 xl:row-start-2">
 
           <div className="grid grid-cols-1 gap-[10px] lg:grid-cols-2">
             <CandidateProfile c={candidate} onChange={patch} />
-            <PositionDetails c={candidate} onEdit={onChangeJob} />
+            <PositionDetails c={candidate} />
           </div>
 
           <div className="grid grid-cols-1 gap-[10px] lg:grid-cols-2">
             <div className={`${card} min-w-0 px-4 py-[10px]`}>
-              <CardTitle Icon={GraduationCap} title="Education Details" action={<EditButton onClick={onReupload} title={CV_EDIT_HINT} />} />
+              <CardTitle Icon={GraduationCap} title="Education Details" />
               <Table
                 head={["Qualification", "Institute / University", "Year", "Percentage", "Specialization"]}
                 rows={education.map((e) => [e.qualification, e.institute, e.year, e.percentage, e.specialization])}
+                widths={[28, 28, 10, 13, 22]}
                 empty="No education details were found in your CV."
               />
             </div>
             <div className={`${card} min-w-0 px-4 py-[10px]`}>
-              <CardTitle Icon={BriefcaseBusiness} title="Work Experience" action={<EditButton onClick={onReupload} title={CV_EDIT_HINT} />} />
+              <CardTitle Icon={BriefcaseBusiness} title="Work Experience" />
               <Table
                 head={["Organization", "Designation", "Duration", "Key Responsibilities"]}
                 rows={experience.map((e) => [e.organization, e.designation, e.duration, e.responsibilities.length > 60 ? `${e.responsibilities.slice(0, 58).trim()}…` : e.responsibilities])}
                 empty="No work experience was found in your CV."
+                widths={[26, 28, 22, 24]}
               />
             </div>
           </div>
 
-          <div className="grid grid-cols-1 gap-[10px] md:grid-cols-3">
-            <Skills c={candidate} onEdit={onReupload} />
-            <Certifications c={candidate} onEdit={onReupload} />
-            <Documents c={candidate} onEdit={onReupload} />
+          <div className="grid grid-cols-1 gap-[10px] md:grid-cols-[minmax(0,2fr)_minmax(0,1fr)] xl:flex-1">
+            <Skills c={candidate} />
+            <Documents c={candidate} />
           </div>
         </div>
 
-        <aside className="relative flex min-w-0 flex-col gap-[10px]">
+        <aside className="relative flex min-w-0 flex-col gap-[10px] xl:col-start-2 xl:row-start-2">
           <Summary c={candidate} />
-          <button type="button" onClick={onContinue} className={`${greenButton} h-[46px] w-full text-[17px]`}>
+          {/* A photo is required before the application can be submitted */}
+          <button
+            type="button"
+            onClick={onContinue}
+            disabled={!candidate.image}
+            title={candidate.image ? undefined : "Add your photo in Candidate Profile to continue"}
+            className={`${greenButton} h-[46px] w-full text-[17px]`}
+          >
             Continue to Submit Application
-            <ArrowRight className="h-[20px] w-[20px] text-[#f2c45a]" strokeWidth={2.4} />
+            <ArrowRight className={`h-[20px] w-[20px] ${candidate.image ? "text-[#f2c45a]" : "text-white"}`} strokeWidth={2.4} />
           </button>
+          {!candidate.image && (
+            <p role="status" className="-mt-[4px] flex items-center justify-center gap-[6px] text-[12.5px] font-medium text-[#b23b2e]">
+              <Camera className="h-[15px] w-[15px]" />
+              Please add your photo in Candidate Profile to continue.
+            </p>
+          )}
           <button type="button" onClick={onBack} className={`${outlineButton} h-[42px] w-full text-[16px]`}>
             <ArrowLeft className="h-[18px] w-[18px]" strokeWidth={2.4} />
             Back to AI Analysis

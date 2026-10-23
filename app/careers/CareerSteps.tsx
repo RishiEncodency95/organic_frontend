@@ -102,15 +102,12 @@ export function ReviewStep() {
   if (!flow.ready || !flow.candidate) {
     return <CareerPage>{!flow.ready ? <CareerStepLoading /> : <NoApplicationInProgress />}</CareerPage>;
   }
-  const job = flow.job;
   return (
     <ReviewDetailsPage
       candidate={flow.candidate}
       onChange={careerFlow.setCandidate}
       onContinue={() => router.push(CAREER_STEP_URL.applicationForm)}
       onBack={() => router.push(CAREER_STEP_URL.eligibility)}
-      onReupload={() => router.push(job ? CAREER_STEP_URL.apply(job) : CAREER_STEP_URL.careers)}
-      onChangeJob={() => router.push(`${CAREER_STEP_URL.careers}#current-openings`)}
     />
   );
 }
@@ -131,7 +128,6 @@ export function ApplicationFormStep() {
       onChange={careerFlow.setCandidate}
       onBack={() => router.push(CAREER_STEP_URL.review)}
       onViewAnalysis={() => router.push(CAREER_STEP_URL.eligibility)}
-      onChangeJob={() => router.push(`${CAREER_STEP_URL.careers}#current-openings`)}
       onSubmitted={(result) => {
         careerFlow.complete({
           id: result.applicationId,

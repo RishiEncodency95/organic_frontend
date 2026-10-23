@@ -22,7 +22,7 @@ export const WHY_PARTNER_STALL_DATA = [
     contactLocationLine2: "New Delhi, India",
     points: [
       "Position your studio as the official booth design & fabrication partner",
-      "Gain direct contracts from 200+ exhibitors for customized stall construction",
+      "Gain direct contracts from 100+ exhibitors for customized stall construction",
       "Showcase innovative eco-friendly booth designs to top organic brands",
       "Build long-term contracts & annual trade show partnerships",
       "Increase brand visibility & recall across all event platforms",

@@ -129,14 +129,14 @@ export const fallbackExhibitors: ApiExhibitor[] = [
 ];
 
 export const HERO_STATS = [
-    { value: "200+", label: "Exhibiting Brands" },
+    { value: "100+", label: "Exhibiting Brands" },
     { value: "8,000+", label: "Trade Visitors" },
-    { value: "50+", label: "Expert Speakers" },
+    { value: "150+", label: "Expert Speakers" },
     { value: "2 Days", label: "Of Networking & Business" },
 ];
 
 export const BOTTOM_STATS = [
-    { value: "200+", label: "Exhibitors" },
+    { value: "100+", label: "Exhibitors" },
     { value: "8,000+", label: "Visitors" },
     { value: "3 Days", label: "Of Knowledge" },
     { value: "PAN India", label: "Participation" },

@@ -138,7 +138,7 @@ export default function Footer({ initialFooterData }: { initialFooterData?: Foot
 
   const descriptionText =
     footerData?.description ||
-    "A global platform uniting over 500+ exhibitors from across the organic value chain, showcasing certified products, advanced agritech, sustainable practices, and the rich heritage of traditional wellness. Discover organic living with conferences and B2B opportunities.";
+    "A global platform uniting over 100+ exhibitors from across the organic value chain, showcasing certified products, advanced agritech, sustainable practices, and the rich heritage of traditional wellness. Discover organic living with conferences and B2B opportunities.";
   const phoneNumber = footerData?.phoneNumber || "+91 96549 00525";
   const contactEmail = footerData?.contactEmail || "info@bharatorganicexpo.com";
   const contactAddress =
