@@ -478,7 +478,7 @@ const VideoHighlights: React.FC<VideoHighlightsProps> = ({ dbVideos = EMPTY_VIDE
           {rightLeaf && (
             <Image width={0} height={0} sizes="100vw"
               src={getImgSrc(rightLeaf)}
-              alt=""
+              alt="Decorative green leaf"
               className="absolute -right-8 top-0 md:-top-4 lg:-top-6 h-48 md:h-72 lg:h-[400px] w-auto opacity-100 pointer-events-none z-0 object-contain"
             />
           )}

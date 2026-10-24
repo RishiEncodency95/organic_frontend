@@ -175,7 +175,7 @@ export function EdgeLeaves({ className = "inset-0" }: { className?: string }) {
       {leaves.map((leaf, idx) => (
         // Plain <img>: small decorative files, and next/image did not start loading them in this clipped layer
         // eslint-disable-next-line @next/next/no-img-element
-        <img key={idx} src={leaf.src} alt="" className={`absolute h-auto opacity-90 ${leaf.className}`} />
+        <img key={idx} src={leaf.src} alt="Decorative green leaf" className={`absolute h-auto opacity-90 ${leaf.className}`} />
       ))}
     </div>
   );
@@ -239,7 +239,7 @@ export default function ApplyJobView({
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
           src="/assets/careers/apply-hero.jpg"
-          alt=""
+          alt="Bharat Organic Expo exhibition hall - careers"
           className="absolute inset-y-0 right-0 -z-20 h-full w-full object-cover object-[65%_center] md:w-[64%]"
         />
         <div className="absolute inset-0 -z-10 bg-[linear-gradient(90deg,rgba(250,247,238,0.97)_0%,rgba(250,247,238,0.92)_40%,rgba(250,247,238,0.35)_52%,rgba(250,247,238,0)_64%)] max-md:bg-[linear-gradient(90deg,rgba(250,247,238,0.95),rgba(250,247,238,0.82))]" />

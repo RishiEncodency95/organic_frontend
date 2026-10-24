@@ -96,7 +96,7 @@ const AwardsGrandAwards = ({ initialData }: AwardsGrandAwardsProps) => {
             <div className="absolute bottom-0 right-0 h-[50%] w-[30%] opacity-20 pointer-events-none">
               <Image
                 src={card_bg}
-                alt=""
+                alt="Decorative leaf card background"
                 width={300}
                 height={300}
                 className="h-full w-full object-contain"

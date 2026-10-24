@@ -286,7 +286,7 @@ const PmsSupportCoverSection: FC = () => {
             >
               <Image
                 src={topBannerIcon}
-                alt=""
+                alt="PMS support cover icon"
                 aria-hidden="true"
                 className="h-[26px] w-[26px] shrink-0 object-contain"
               />
@@ -325,7 +325,7 @@ const PmsSupportCoverSection: FC = () => {
           >
             <Image
               src={topRightVisual}
-              alt=""
+              alt="MSME PMS support illustration"
               aria-hidden="true"
               className="
                 h-full
@@ -358,7 +358,7 @@ const PmsSupportCoverSection: FC = () => {
                 <div className="flex">
                   <Image
                     src={topLeftLeaves}
-                    alt=""
+                    alt="Decorative green leaves"
                     aria-hidden="true"
                     className="
                       hidden
@@ -683,7 +683,7 @@ const PmsSupportCoverSection: FC = () => {
                       <div className="flex min-h-[91px] items-center gap-[8px]">
                         <Image
                           src={expense.icon}
-                          alt=""
+                          alt={`${expense.title} icon`}
                           aria-hidden="true"
                           className="
                             h-[75px]
@@ -782,7 +782,7 @@ const PmsSupportCoverSection: FC = () => {
                         >
                           <Image
                             src={expense.descIcon}
-                            alt=""
+                            alt={`${expense.title} detail icon`}
                             aria-hidden="true"
                             className="
                               h-[46px]
@@ -835,7 +835,7 @@ const PmsSupportCoverSection: FC = () => {
                 <div className="flex items-center justify-center">
                   <Image
                     src={additionalSupportIcon}
-                    alt=""
+                    alt="Additional support icon"
                     aria-hidden="true"
                     className="h-[98px] w-[98px] object-contain"
                   />
@@ -913,7 +913,7 @@ const PmsSupportCoverSection: FC = () => {
               <div className="flex items-start gap-[10px]">
                 <Image
                   src={checkCircleIcon}
-                  alt=""
+                  alt="Check mark"
                   aria-hidden="true"
                   className="mt-[1px] h-[28px] w-[28px] shrink-0 object-contain"
                 />
@@ -944,7 +944,7 @@ const PmsSupportCoverSection: FC = () => {
                   >
                     <Image
                       src={infoCircleIcon}
-                      alt=""
+                      alt="Information"
                       aria-hidden="true"
                       className="mt-[1px] h-[28px] w-[28px] shrink-0 object-contain"
                     />
@@ -1002,7 +1002,7 @@ const PmsSupportCoverSection: FC = () => {
             <div className="flex justify-start md:justify-center">
               <Image
                 src={knowBeforeIcon}
-                alt=""
+                alt="Know before you apply icon"
                 aria-hidden="true"
                 className="h-[74px] w-[74px] object-contain"
               />
@@ -1054,7 +1054,7 @@ const PmsSupportCoverSection: FC = () => {
                     >
                       <Image
                         src={cta.icon}
-                        alt=""
+                        alt={`${cta.labelLine1} icon`}
                         aria-hidden="true"
                         className={`${cta.variant === "secondary" ? "h-[45px] w-[45px] md:h-[60px] md:w-[60px]" : "h-[60px] w-[60px]"} shrink-0 object-contain`}
                       />
@@ -1160,7 +1160,7 @@ const PmsSupportCoverSection: FC = () => {
                     >
                       <Image
                         src={badge.icon}
-                        alt=""
+                        alt={`${badge.labelLine1} badge`}
                         aria-hidden="true"
                         className="
                           h-[22px]

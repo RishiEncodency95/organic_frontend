@@ -74,7 +74,7 @@ export default function WhatsNextBanner() {
       {/* top-right same cropped leaves */}
       <Image
         src={topRightCornerLeavesIcon}
-        alt=""
+        alt="Decorative green leaves"
         className="pointer-events-none absolute right-0 top-0 h-[110px] w-auto object-contain opacity-90 z-0"
         aria-hidden="true"
       />
@@ -96,7 +96,7 @@ export default function WhatsNextBanner() {
 
                   <Image
                     src={titleLeavesIcon}
-                    alt=""
+                    alt="Decorative leaves"
                     className="mb-[2px] h-16 w-auto object-contain"
                     aria-hidden="true"
                   />
@@ -110,7 +110,7 @@ export default function WhatsNextBanner() {
                   <span className="h-[3px] w-[230px] bg-[#3b8c2a]" />
                   <Image
                     src={dividerLeafIcon}
-                    alt=""
+                    alt="Decorative leaf divider"
                     className="h-8 w-auto object-contain"
                     aria-hidden="true"
                   />
@@ -131,7 +131,7 @@ export default function WhatsNextBanner() {
                   <div className="col-span-2 col-start-1 flex items-center justify-end gap-3 pr-4 sm:col-span-2 sm:col-start-3 sm:pr-8">
                     <Image
                       src={logoLeafMarkIcon}
-                      alt=""
+                      alt="Bharat Organic Expo leaf logo mark"
                       className="relative z-10 h-[110px] w-auto shrink-0 object-contain"
                       aria-hidden="true"
                     />
@@ -162,7 +162,7 @@ export default function WhatsNextBanner() {
                       >
                         <Image
                           src={benefit.icon}
-                          alt=""
+                          alt={`${benefit.titleLine1} icon`}
                           className="mb-2 h-20 w-20 object-contain"
                           aria-hidden="true"
                         />
@@ -198,7 +198,7 @@ export default function WhatsNextBanner() {
                 <div className="absolute left-1/2 top-0 z-20 flex -translate-x-1/2 -translate-y-1/2 items-center">
                   <Image
                     src={stepsTitleLeftLeafIcon}
-                    alt=""
+                    alt="Decorative leaf - left"
                     className="mr-2 hidden h-7 w-auto object-contain sm:block"
                     aria-hidden="true"
                   />
@@ -209,7 +209,7 @@ export default function WhatsNextBanner() {
 
                   <Image
                     src={stepsTitleRightLeafIcon}
-                    alt=""
+                    alt="Decorative leaf - right"
                     className="ml-2 hidden h-7 w-auto object-contain sm:block"
                     aria-hidden="true"
                   />
@@ -236,7 +236,7 @@ export default function WhatsNextBanner() {
                       <span className="relative mb-2 flex h-20 w-20 items-center justify-center">
                         <Image
                           src={step.icon}
-                          alt=""
+                          alt={`${step.title} icon`}
                           className="h-20 w-20 object-contain"
                           aria-hidden="true"
                         />
@@ -271,7 +271,7 @@ export default function WhatsNextBanner() {
                   <div className="flex items-start gap-3">
                     <Image
                       src={helpHeadsetIcon}
-                      alt=""
+                      alt="Help desk headset"
                       className="h-12 w-12 shrink-0 object-contain"
                       aria-hidden="true"
                     />
@@ -297,7 +297,7 @@ export default function WhatsNextBanner() {
                     >
                       <Image
                         src={mailIcon}
-                        alt=""
+                        alt="Email"
                         className="h-5 w-5 shrink-0 object-contain"
                         aria-hidden="true"
                       />
@@ -310,7 +310,7 @@ export default function WhatsNextBanner() {
                     >
                       <Image
                         src={phoneIcon}
-                        alt=""
+                        alt="Phone"
                         className="h-5 w-5 shrink-0 object-contain"
                         aria-hidden="true"
                       />
@@ -321,7 +321,7 @@ export default function WhatsNextBanner() {
 
                 <Image
                   src={helpCardLeafArtIcon}
-                  alt=""
+                  alt="Decorative leaf artwork"
                   className="h-auto w-[30%] shrink-0 object-contain object-bottom"
                   aria-hidden="true"
                 />
@@ -335,7 +335,7 @@ export default function WhatsNextBanner() {
       <div className="relative mt-2 overflow-hidden rounded-2xl border border-gray-200 bg-[#EFF7EE] lg:mt-2.5">
         <Image
           src={bottomLeftClusterIcon}
-          alt=""
+          alt="Decorative leaf cluster"
           className="absolute left-0 top-1/2 z-10 h-[120px] w-auto -translate-y-1/2 object-contain hidden sm:block"
           loading="lazy"
           aria-hidden="true"
@@ -348,7 +348,7 @@ export default function WhatsNextBanner() {
               <div className="relative flex items-center gap-3 overflow-hidden pr-4 py-3 lg:w-1/2 lg:pr-5 pl-4 lg:pl-16">
                 <Image
                   src={growTogetherIcon}
-                  alt=""
+                  alt="Let's grow together"
                   className="relative hidden h-16 w-16 shrink-0 object-contain sm:block"
                   aria-hidden="true"
                 />
@@ -369,7 +369,7 @@ export default function WhatsNextBanner() {
                 <div className="flex items-center gap-3">
                   <Image
                     src={readyNextStepIcon}
-                    alt=""
+                    alt="Ready for the next step"
                     className="h-16 w-16 shrink-0 object-contain"
                     aria-hidden="true"
                   />
@@ -395,7 +395,7 @@ export default function WhatsNextBanner() {
 
                   <Image
                     src={applyArrowIcon}
-                    alt=""
+                    alt="Arrow"
                     className="h-8 w-8 object-contain"
                     aria-hidden="true"
                   />

@@ -171,7 +171,7 @@ export default function FAQBanner() {
       >
         <Image
           src={faqLeftImg}
-          alt=""
+          alt="MSME PMS scheme FAQ illustration"
           className="
             h-full
             w-full
@@ -199,7 +199,7 @@ export default function FAQBanner() {
 
       <Image
         src={faqLeavesImg}
-        alt=""
+        alt="Decorative leaf branch"
         aria-hidden="true"
         className="
           pointer-events-none
@@ -359,7 +359,7 @@ export default function FAQBanner() {
           >
             <Image
               src={faqLeftDeco}
-              alt=""
+              alt="Decorative divider - left"
               className="
                 h-[3vw]
                 max-h-[45px]
@@ -398,7 +398,7 @@ export default function FAQBanner() {
           >
             <Image
               src={faqRightDeco}
-              alt=""
+              alt="Decorative divider - right"
               className="
                 h-[3vw]
                 max-h-[45px]
@@ -643,7 +643,7 @@ export default function FAQBanner() {
 
           <Image
             src={faqLeftDeco}
-            alt=""
+            alt="Decorative divider - left"
             className="
               h-6
               w-auto
@@ -666,7 +666,7 @@ export default function FAQBanner() {
 
           <Image
             src={faqRightDeco}
-            alt=""
+            alt="Decorative divider - right"
             className="
               h-6
               w-auto

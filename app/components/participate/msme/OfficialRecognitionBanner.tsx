@@ -118,7 +118,7 @@ export default function OfficialRecognitionBanner() {
                   <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-[#f4ebd0] shadow-sm">
                     <Image
                       src={awardImg}
-                      alt=""
+                      alt="Official recognition award"
                       className="h-6 w-6 object-contain"
                     />
                   </span>
@@ -196,7 +196,7 @@ export default function OfficialRecognitionBanner() {
                 <div className="absolute -top-4 left-1/2 -translate-x-1/2 z-20">
                   <Image
                     src={approvedImg}
-                    alt=""
+                    alt="Approved badge"
                     className="h-[74px] w-[74px] object-contain"
                   />
                 </div>

@@ -732,7 +732,7 @@ function ResultHero() {
       >
         <Image
           src={current.personImage}
-          alt=""
+          alt="Bharat Organic Expo careers - professional"
           fill
           priority
           sizes="30vw"
@@ -831,7 +831,7 @@ function ResultHero() {
       <div className="pointer-events-none absolute right-[2%] top-[2%] bottom-[12%] z-10 w-[18%] overflow-visible">
         <Image
           src={separatedAssets.rightPeople}
-          alt=""
+          alt="Right People, Brighter Tomorrows - Bharat Organic Expo careers"
           fill
           sizes="18vw"
           className="object-contain object-right-top"
@@ -842,7 +842,7 @@ function ResultHero() {
       <div className="pointer-events-none absolute bottom-0 right-0 z-20 h-[35%] w-[11%] overflow-visible">
         <Image
           src="/assets/final-card-exact.png"
-          alt=""
+          alt="Decorative organic leaf"
           fill
           sizes="11vw"
           className="object-contain object-right-bottom"
@@ -1083,7 +1083,7 @@ function Breakdown() {
             >
               <Image
                 src={iconAssets[item.title] ?? asset("briefcase-large.png")}
-                alt=""
+                alt={`${item.title} icon`}
                 width={64}
                 height={64}
                 className="h-[24px] w-[24px] object-contain"
@@ -1592,7 +1592,7 @@ export function ProfileCard({ look = "canvas" }: { look?: "canvas" | "page" }) {
             >
               {draft.image ? (
                 // Object-URL previews are not routable through next/image.
-                <Image width={0} height={0} sizes="100vw" src={draft.image} alt="" className="h-full w-full object-cover object-center" />
+                <Image width={0} height={0} sizes="100vw" src={draft.image} alt="Your profile photo" className="h-full w-full object-cover object-center" />
               ) : (
                 <span className="text-[30px] font-bold text-[#07623a]">{initials || "CV"}</span>
               )}
@@ -1922,7 +1922,7 @@ function JobSummary() {
           >
             <Image
               src={image}
-              alt=""
+              alt={`${text} icon`}
               width={48}
               height={48}
               className="h-[26px] w-[26px] shrink-0 object-contain"
@@ -2004,7 +2004,7 @@ function SidebarFooter() {
     <div className="relative flex h-full w-full min-h-0 items-end justify-center overflow-hidden">
       <Image
         src={separatedAssets.sidebarFooter}
-        alt=""
+        alt="Bharat Organic Expo careers"
         width={2040}
         height={660}
         className="h-full w-full object-contain object-bottom"
@@ -2100,7 +2100,7 @@ function Sidebar({
           <div className="flex gap-[10px] items-start">
             <Image
               src={separatedAssets.headerLeaf}
-              alt=""
+              alt="Bharat Organic Expo leaf"
               width={82}
               height={92}
               className="h-[22px] w-[20px] shrink-0 object-contain mt-[2px]"

@@ -132,7 +132,7 @@ const ExhibitorsCta = () => {
                     {/* Right Leaf Image */}
                     <Image width={0} height={0} sizes="100vw"
                       src={data.leafImg}
-                      alt=""
+                      alt="Decorative green leaf"
                       aria-hidden="true"
                       className="hidden md:block w-24 h-24 lg:w-28 lg:h-28 object-contain shrink-0"
                     />

@@ -84,7 +84,7 @@ export default function KeyBenefits() {
             >
               <Image width={0} height={0} sizes="100vw" 
                 src={ICON_MAP[item.iconKey].src} 
-                alt="" 
+                alt={`${item.title} icon`} 
                 className="w-[80px] h-[80px] object-contain mb-4 transition-transform hover:scale-105 duration-200" 
               />
               <p className="text-[11px] font-bold text-gray-950 uppercase tracking-wide whitespace-pre-line leading-tight font-inter">

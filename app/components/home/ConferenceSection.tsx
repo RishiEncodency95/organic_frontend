@@ -326,7 +326,7 @@ const ConferenceSeminars = () => {
             {typeof data.image === "string" ? (
               <Image
                 src={data.image}
-                alt={data.imageAlt}
+                alt={data.imageAlt || "Conference and seminars at Bharat Organic Expo"}
                 width={600}
                 height={400}
                 loader={isCloudinaryImage(data.image) ? cloudinaryImageLoader : undefined}
@@ -335,7 +335,7 @@ const ConferenceSeminars = () => {
             ) : (
               <Image
                 src={data.image}
-                alt={data.imageAlt}
+                alt={data.imageAlt || "Conference and seminars at Bharat Organic Expo"}
                 width={600}
                 height={400}
                 sizes="(max-width: 1280px) 100vw, 45vw"

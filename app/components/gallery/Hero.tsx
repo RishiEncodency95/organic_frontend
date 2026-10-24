@@ -148,7 +148,7 @@ const Hero = ({ initialData }: { initialData?: any }) => {
       >
         <Image
           src={bgSource}
-          alt=""
+          alt="Bharat Organic Expo gallery"
           fill
           loader={isCloudinaryImage(bgSource) ? cloudinaryImageLoader : undefined}
           preload

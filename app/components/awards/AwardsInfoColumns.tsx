@@ -63,7 +63,7 @@ const AwardsInfoColumns = () => {
               style={{ boxShadow: "rgba(0, 0, 0, 0.02) 0px 1px 3px 0px, rgba(27, 31, 35, 0.15) 0px 0px 0px 1px" }}
             >
               <div className="absolute bottom-0 right-0 w-[40%] h-[80%] opacity-10 pointer-events-none">
-                <Image src={card_bg} alt="" width={200} height={200} className="w-full h-full object-contain" />
+                <Image src={card_bg} alt="Decorative leaf card background" width={200} height={200} className="w-full h-full object-contain" />
               </div>
               <div className="relative z-10">
                 <h3 className="flex items-center gap-2.5 text-xs sm:text-sm font-semibold uppercase text-[#1b5e20] font-poppins mb-4">
@@ -97,7 +97,7 @@ const AwardsInfoColumns = () => {
               style={{ boxShadow: "rgba(0, 0, 0, 0.02) 0px 1px 3px 0px, rgba(27, 31, 35, 0.15) 0px 0px 0px 1px" }}
             >
               <div className="absolute bottom-0 right-0 w-[40%] h-[80%] opacity-10 pointer-events-none">
-                <Image src={card_bg} alt="" width={200} height={200} className="w-full h-full object-contain" />
+                <Image src={card_bg} alt="Decorative leaf card background" width={200} height={200} className="w-full h-full object-contain" />
               </div>
               <div className="relative z-10">
                 <h3 className="flex items-center gap-2.5 text-xs sm:text-sm font-semibold uppercase text-[#1b5e20] font-poppins mb-4">
@@ -131,7 +131,7 @@ const AwardsInfoColumns = () => {
               style={{ boxShadow: "rgba(0, 0, 0, 0.02) 0px 1px 3px 0px, rgba(27, 31, 35, 0.15) 0px 0px 0px 1px" }}
             >
               <div className="absolute bottom-0 right-0 w-[40%] h-[80%] opacity-10 pointer-events-none">
-                <Image src={card_bg} alt="" width={200} height={200} className="w-full h-full object-contain" />
+                <Image src={card_bg} alt="Decorative leaf card background" width={200} height={200} className="w-full h-full object-contain" />
               </div>
               <div className="relative z-10">
                 <h3 className="flex items-center gap-2.5 text-xs sm:text-sm font-semibold uppercase text-[#1b5e20] font-poppins mb-4">

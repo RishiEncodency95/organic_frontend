@@ -128,7 +128,7 @@ export default function MsmePmsScheme() {
     >
       <Image
         src={leftLeaves}
-        alt=""
+        alt="Decorative green leaves"
         aria-hidden="true"
         className="
           pointer-events-none
@@ -169,7 +169,7 @@ export default function MsmePmsScheme() {
               >
                 <Image
                   src={knowSchemeIcon}
-                  alt=""
+                  alt="Know the MSME PMS scheme icon"
                   aria-hidden="true"
                   className="
                     h-[58px]
@@ -313,7 +313,7 @@ export default function MsmePmsScheme() {
                 >
                   <Image
                     src={feature.icon}
-                    alt=""
+                    alt={`${feature.title} icon`}
                     aria-hidden="true"
                     className="
                       h-[102px]
@@ -347,7 +347,7 @@ export default function MsmePmsScheme() {
                       justify-center
                     "
                   >
-                    <Image src={bottomDecor} alt="" className="h-auto w-[120px]" />
+                    <Image src={bottomDecor} alt="Decorative divider" className="h-auto w-[120px]" />
                   </div>
 
                   <p
@@ -370,7 +370,7 @@ export default function MsmePmsScheme() {
 
                   <Image
                     src={feature.bottom}
-                    alt=""
+                    alt="Decorative card border"
                     aria-hidden="true"
                     className="
                       pointer-events-none
@@ -409,7 +409,7 @@ export default function MsmePmsScheme() {
             >
               <Image
                 src={bottomShield}
-                alt=""
+                alt="MSME PMS scheme shield"
                 aria-hidden="true"
                 className="
                   relative
@@ -458,7 +458,7 @@ export default function MsmePmsScheme() {
 
               <Image
                 src={bottomRightLeaves}
-                alt=""
+                alt="Decorative green leaves"
                 aria-hidden="true"
                 className="
                   pointer-events-none

@@ -85,7 +85,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    images: [OG_IMAGE],
+    images: [{ url: OG_IMAGE, alt: OG_IMAGE_ALT }],
   },
   icons: {
     icon: "/favicon.ico",

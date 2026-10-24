@@ -560,7 +560,7 @@ export default function PmsFinalCta({
       >
         <Image
           src={referenceImage}
-          alt=""
+          alt="MSME PMS scheme artwork - left"
           fill
           priority
           sizes="100vw"
@@ -584,7 +584,7 @@ export default function PmsFinalCta({
       >
         <Image
           src={referenceImage}
-          alt=""
+          alt="MSME PMS scheme artwork - right"
           fill
           priority
           sizes="100vw"
@@ -647,7 +647,7 @@ export default function PmsFinalCta({
         >
           <Image
             src={startLeftDeco}
-            alt=""
+            alt="Decorative divider - left"
             className="
               h-[0.5vw]
               max-h-[38px]
@@ -673,7 +673,7 @@ export default function PmsFinalCta({
 
           <Image
             src={startRightDeco}
-            alt=""
+            alt="Decorative divider - right"
             className="
               h-[0.5vw]
               max-h-[38px]
@@ -1108,7 +1108,7 @@ export default function PmsFinalCta({
         >
           <Image
             src={startLeftDeco}
-            alt=""
+            alt="Decorative divider - left"
             className="
               h-5
               w-24
@@ -1129,7 +1129,7 @@ export default function PmsFinalCta({
 
           <Image
             src={startRightDeco}
-            alt=""
+            alt="Decorative divider - right"
             className="
               h-5
               w-24

@@ -345,7 +345,7 @@ function Requirements({ level }: { level: Level }) {
     <div className={`${box} relative overflow-hidden px-4 py-[8px]`}>
       {level === "high" && (
         // eslint-disable-next-line @next/next/no-img-element
-        <img src="/separated-assets/bharat-organic-leaf.png" alt="" className="pointer-events-none absolute -right-[4px] -top-[6px] w-[46px] rotate-[24deg] opacity-90" />
+        <img src="/separated-assets/bharat-organic-leaf.png" alt="Bharat Organic Expo leaf" className="pointer-events-none absolute -right-[4px] -top-[6px] w-[46px] rotate-[24deg] opacity-90" />
       )}
       <div className="flex items-center gap-[10px] pr-8">
         {level === "low" ? (
@@ -671,7 +671,7 @@ export default function ScreeningResultPage({
           <>
             {/* Soft expo backdrop with "Organic Opportunities for a Brighter Tomorrow" (from the design) */}
             {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img src="/assets/careers/screening-top.jpg" alt="" className="absolute right-0 top-0 -z-10 h-auto w-full md:w-[60%]" />
+            <img src="/assets/careers/screening-top.jpg" alt="Organic Opportunities for a Brighter Tomorrow - Bharat Organic Expo" className="absolute right-0 top-0 -z-10 h-auto w-full md:w-[60%]" />
             <div className="absolute right-0 top-0 -z-10 h-[260px] w-full bg-[linear-gradient(90deg,#fbf8f0_0%,rgba(251,248,240,0.6)_30%,rgba(251,248,240,0)_48%)] max-md:bg-[linear-gradient(180deg,rgba(251,248,240,0.2),#fbf8f0)]" />
           </>
         )}
@@ -779,7 +779,7 @@ export default function ScreeningResultPage({
                 <div className="rounded-[12px] border border-[#dcebd8] bg-[#eef6ec] px-[14px] py-[10px]">
                   <div className="flex items-start gap-[12px]">
                     {/* eslint-disable-next-line @next/next/no-img-element */}
-                    <img src="/separated-assets/bharat-organic-leaf.png" alt="" className="mt-[2px] w-[30px] shrink-0" />
+                    <img src="/separated-assets/bharat-organic-leaf.png" alt="Bharat Organic Expo leaf" className="mt-[2px] w-[30px] shrink-0" />
                     <div>
                       <p className="text-[16px] font-semibold leading-tight" style={{ color: INK }}>
                         Looking for a Better Fit?

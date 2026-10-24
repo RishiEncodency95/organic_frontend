@@ -91,7 +91,7 @@ function ColumnHeading({ children, align = "left" }: { children: React.ReactNode
         />
         <Image
           src={goldLeaf}
-          alt=""
+          alt="Decorative golden leaf"
           width={22}
           height={18}
           sizes="22px"
@@ -229,21 +229,21 @@ export default function Footer({ initialFooterData }: { initialFooterData?: Foot
       {/* ── Left column decoration (desktop): leaves down the left edge and a faint mandala ── */}
       <div aria-hidden="true" className="pointer-events-none absolute left-0 top-0 hidden h-[468px] w-[470px] xl:block">
         {/* soft, out-of-focus leaves along the top */}
-        <Image src={greenLeaf} alt="" width={110} height={205} sizes="110px" className="absolute left-[150px] -top-[92px] w-[110px] rotate-[100deg] opacity-30 blur-[2px]" />
-        <Image src={greenLeaf} alt="" width={90} height={168} sizes="90px" className="absolute left-[372px] -top-[70px] w-[90px] rotate-[150deg] opacity-25 blur-[2.5px]" />
+        <Image src={greenLeaf} alt="Decorative green leaf" width={110} height={205} sizes="110px" className="absolute left-[150px] -top-[92px] w-[110px] rotate-[100deg] opacity-30 blur-[2px]" />
+        <Image src={greenLeaf} alt="Decorative green leaf" width={90} height={168} sizes="90px" className="absolute left-[372px] -top-[70px] w-[90px] rotate-[150deg] opacity-25 blur-[2.5px]" />
         {/* top-left corner */}
-        <Image src={greenLeaf} alt="" width={120} height={224} sizes="120px" className="absolute -left-[44px] -top-[86px] w-[120px] -rotate-[62deg] opacity-95" />
+        <Image src={greenLeaf} alt="Decorative green leaf" width={120} height={224} sizes="120px" className="absolute -left-[44px] -top-[86px] w-[120px] -rotate-[62deg] opacity-95" />
         {/* big leaves down the left edge */}
-        <Image src={greenLeaf} alt="" width={118} height={220} sizes="118px" className="absolute -left-[46px] top-[70px] w-[118px] rotate-[18deg] opacity-95" />
-        <Image src={greenLeaf} alt="" width={92} height={172} sizes="92px" className="absolute -left-[40px] top-[205px] w-[92px] rotate-[28deg] opacity-80 blur-[0.6px]" />
+        <Image src={greenLeaf} alt="Decorative green leaf" width={118} height={220} sizes="118px" className="absolute -left-[46px] top-[70px] w-[118px] rotate-[18deg] opacity-95" />
+        <Image src={greenLeaf} alt="Decorative green leaf" width={92} height={172} sizes="92px" className="absolute -left-[40px] top-[205px] w-[92px] rotate-[28deg] opacity-80 blur-[0.6px]" />
         {/* bottom-left cluster */}
-        <Image src={greenLeaf} alt="" width={120} height={224} sizes="120px" className="absolute -left-[22px] top-[322px] w-[120px] rotate-[62deg] opacity-95" />
-        <Image src={greenLeaf} alt="" width={96} height={180} sizes="96px" className="absolute left-[40px] top-[372px] w-[96px] rotate-[78deg] opacity-90" />
+        <Image src={greenLeaf} alt="Decorative green leaf" width={120} height={224} sizes="120px" className="absolute -left-[22px] top-[322px] w-[120px] rotate-[62deg] opacity-95" />
+        <Image src={greenLeaf} alt="Decorative green leaf" width={96} height={180} sizes="96px" className="absolute left-[40px] top-[372px] w-[96px] rotate-[78deg] opacity-90" />
 
         {/* faint mandala under the description, right half of the column */}
         <Image
           src={mandala}
-          alt=""
+          alt="Decorative mandala pattern"
           width={258}
           height={114}
           sizes="258px"
@@ -331,7 +331,7 @@ export default function Footer({ initialFooterData }: { initialFooterData?: Foot
                       boxShadow: "0 0 12px rgba(242,182,50,0.25), inset 0 0 8px rgba(242,182,50,0.12)",
                     }}
                   >
-                    <Image src={item.icon} alt="" width={30} height={30} sizes="30px" className="h-[29px] w-[29px] object-contain" />
+                    <Image src={item.icon} alt={`${item.title} icon`} width={30} height={30} sizes="30px" className="h-[29px] w-[29px] object-contain" />
                   </span>
                   <span className="min-w-0">
                     <span className="block font-poppins text-[16px] font-medium leading-[21px] text-white">{item.title}</span>
@@ -444,7 +444,7 @@ export default function Footer({ initialFooterData }: { initialFooterData?: Foot
                 <h3 className="font-poppins text-[16px] font-bold uppercase leading-none" style={{ color: GOLD }}>
                   Follow Us
                 </h3>
-                <Image src={goldLeaf} alt="" width={26} height={22} sizes="26px" className="-mb-[3px] h-[22px] w-auto" />
+                <Image src={goldLeaf} alt="Decorative golden leaf" width={26} height={22} sizes="26px" className="-mb-[3px] h-[22px] w-auto" />
                 <span
                   className="mb-[1px] h-px flex-1"
                   style={{ background: `linear-gradient(90deg, ${GOLD}, transparent)` }}
@@ -474,7 +474,7 @@ export default function Footer({ initialFooterData }: { initialFooterData?: Foot
         {/* Leaf peeking into the bottom-right corner */}
         <Image
           src={greenLeaf}
-          alt=""
+          alt="Decorative green leaf"
           aria-hidden="true"
           width={90}
           height={168}

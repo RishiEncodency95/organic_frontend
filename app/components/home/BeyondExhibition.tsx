@@ -190,7 +190,7 @@ const BeyondExhibition = () => {
             {isRemoteImage ? (
               <Image
                 src={data.image}
-                alt={data.imageAlt}
+                alt={data.imageAlt || "Beyond the exhibition at Bharat Organic Expo"}
                 fill
                 loader={isCloudinaryImage(data.image) ? cloudinaryImageLoader : undefined}
                 className="object-cover absolute inset-0 z-0"
@@ -198,7 +198,7 @@ const BeyondExhibition = () => {
             ) : (
               <Image
                 src={data.image}
-                alt={data.imageAlt}
+                alt={data.imageAlt || "Beyond the exhibition at Bharat Organic Expo"}
                 fill
                 sizes="(max-width: 1024px) 100vw, 35vw"
                 className="object-cover absolute inset-0 z-0"

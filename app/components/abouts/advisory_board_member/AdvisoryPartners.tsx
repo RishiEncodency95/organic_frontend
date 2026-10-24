@@ -50,7 +50,7 @@ const AdvisoryPartners = () => {
                                 <div className="flex items-center justify-center group cursor-default">
                                     <Image
                                         src={partner.image!}
-                                        alt={partner.alt!}
+                                        alt={partner.alt || "Bharat Organic Expo partner"}
                                         className="h-10 sm:h-12 md:h-14 w-auto object-contain hover:scale-105 transition-transform duration-300"
                                     />
                                 </div>

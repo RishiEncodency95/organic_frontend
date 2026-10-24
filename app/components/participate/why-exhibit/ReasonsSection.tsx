@@ -107,7 +107,7 @@ const ReasonsSection = ({ sectionData }: { sectionData?: any }) => {
         loading="lazy"
         decoding="async"
         src={getImgSrc(footerRight)}
-        alt=""
+        alt="Decorative organic leaves"
         aria-hidden="true"
         className="absolute right-0 top-1/2 -translate-y-1/2 w-36 md:w-48 lg:w-60 h-auto object-contain pointer-events-none select-none opacity-100"
         style={{ zIndex: 0 }}

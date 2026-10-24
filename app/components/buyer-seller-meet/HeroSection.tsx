@@ -176,7 +176,7 @@ export default function HeroSection({ initialData }: { initialData?: any }) {
         <div className="absolute inset-0 z-0 overflow-hidden">
           <Image loading="eager" width={0} height={0} sizes="100vw"
             src={hero.image}
-            alt={hero.imageAlt}
+            alt={hero.imageAlt || "Buyer seller meet at Bharat Organic Expo"}
             fetchPriority="high"
             className="hero-bg-img w-full h-full object-cover"
           />

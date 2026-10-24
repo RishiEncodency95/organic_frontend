@@ -1117,7 +1117,7 @@ export default function PMSDocumentsBanner() {
 
       <Image
         src={documentsBgImg}
-        alt=""
+        alt="Decorative documents background"
         aria-hidden="true"
         className="
           pointer-events-none
@@ -1411,7 +1411,7 @@ export default function PMSDocumentsBanner() {
 
           <Image
             src={docsImg}
-            alt=""
+            alt="Required documents illustration"
             aria-hidden="true"
             className="
               pointer-events-none
@@ -1810,7 +1810,7 @@ export default function PMSDocumentsBanner() {
 
           <Image
             src={docsImg}
-            alt=""
+            alt="Required documents illustration"
             className="
               absolute
               -bottom-2

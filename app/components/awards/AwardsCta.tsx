@@ -78,7 +78,7 @@ const AwardsCta = () => {
 
               <Image
               src={right_plant}
-              alt=""
+              alt="Decorative organic plant"
               width={100}
               height={100}
               className="pointer-events-none absolute bottom-0 right-0 h-20 w-auto object-contain sm:static sm:h-auto"

@@ -64,7 +64,7 @@ export default function CategorySelect({ buyerType, onChange }: CategorySelectPr
           style={{ boxShadow: "rgba(0, 0, 0, 0.02) 0px 1px 3px 0px, rgba(27, 31, 35, 0.15) 0px 0px 0px 1px" }}
         >
           {/* BG accent */}
-          <Image width={0} height={0} sizes="100vw" src={domBg.src} alt="" className="absolute inset-0 w-full h-full object-cover z-0 pointer-events-none" />
+          <Image width={0} height={0} sizes="100vw" src={domBg.src} alt="Domestic buyer" className="absolute inset-0 w-full h-full object-cover z-0 pointer-events-none" />
 
           {/* Icon circle */}
           <div className="relative shrink-0 z-10">
@@ -115,7 +115,7 @@ export default function CategorySelect({ buyerType, onChange }: CategorySelectPr
           style={{ boxShadow: "rgba(0, 0, 0, 0.02) 0px 1px 3px 0px, rgba(27, 31, 35, 0.15) 0px 0px 0px 1px" }}
         >
           {/* BG accent */}
-          <Image width={0} height={0} sizes="100vw" src={intBg.src} alt="" className="absolute inset-0 w-full h-full object-cover z-0 pointer-events-none" />
+          <Image width={0} height={0} sizes="100vw" src={intBg.src} alt="International buyer" className="absolute inset-0 w-full h-full object-cover z-0 pointer-events-none" />
 
           {/* Icon circle */}
           <div className="relative shrink-0 z-10">

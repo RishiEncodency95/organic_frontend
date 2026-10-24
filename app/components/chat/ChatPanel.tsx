@@ -570,7 +570,7 @@ const BotAvatar: React.FC = () => {
     const avatar = useContext(AvatarContext);
     return (
         <div className="w-8 h-8 shrink-0 rounded-full bg-white shadow-sm ring-2 ring-[#F2B40E]/50 flex items-center justify-center overflow-hidden" aria-hidden="true">
-            <Image src={avatar || "/android-chrome-192x192.png"} alt="" width={28} height={28} unoptimized={!!avatar} className={avatar ? "w-full h-full object-cover" : "w-[22px] h-[22px] object-contain"} />
+            <Image src={avatar || "/android-chrome-192x192.png"} alt="Bharat Organic Expo assistant" width={28} height={28} unoptimized={!!avatar} className={avatar ? "w-full h-full object-cover" : "w-[22px] h-[22px] object-contain"} />
         </div>
     );
 };

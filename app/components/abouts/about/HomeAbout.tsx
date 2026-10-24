@@ -108,7 +108,7 @@ const HomeAbout = ({ initialData }: { initialData?: any }) => {
                 <Image
                   key={data.image || "default"}
                   src={bannerSrc}
-                  alt={data.imageAlt}
+                  alt={data.imageAlt || "About Bharat Organic Expo"}
                   fill
                   sizes="(max-width: 1024px) 100vw, 520px"
                   className="object-cover transition-transform duration-500 group-hover:scale-105"

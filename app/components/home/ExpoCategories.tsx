@@ -208,7 +208,7 @@ const ExpoCategories = () => {
                   {typeof item.image === "string" ? (
                     <Image
                       src={item.image}
-                      alt={item.imageAlt}
+                      alt={item.imageAlt || item.title}
                       fill
                       loader={isCloudinaryImage(item.image) ? cloudinaryImageLoader : undefined}
                       sizes="(max-width: 640px) 50vw, (max-width: 1024px) 25vw, 20vw"
@@ -217,7 +217,7 @@ const ExpoCategories = () => {
                   ) : (
                     <Image
                       src={item.image}
-                      alt={item.imageAlt}
+                      alt={item.imageAlt || item.title}
                       fill
                       loading="lazy"
                       quality={75}

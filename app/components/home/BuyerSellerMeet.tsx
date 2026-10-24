@@ -191,7 +191,7 @@ const BuyerSellerMeet = () => {
               <div className="relative w-full h-[180px] sm:h-[300px] lg:h-[530px] rounded-[12px] md:rounded-[16px] lg:rounded-[24px] overflow-hidden shadow-[0_10px_20px_rgba(0,0,0,0.15)] md:shadow-[0_20px_50px_rgba(0,0,0,0.15)] border-[3px] md:border-[6px] border-white">
                 <Image
                   src={sectionData.rightSection.image}
-                  alt={sectionData.rightSection.imageAlt}
+                  alt={sectionData.rightSection.imageAlt || "Buyer seller meet at Bharat Organic Expo"}
                   fill
                   loading="lazy"
                   quality={80}

@@ -281,7 +281,21 @@ function cleanExcerpt(val?: string) {
     .trim();
 }
 
-function formatArticleContent(content?: string): string {
+/** Gives every <img> in CMS article HTML an alt: a missing or empty one becomes the article title */
+function addMissingImageAlts(html: string, fallbackAlt: string): string {
+  const safeAlt = fallbackAlt.replace(/&/g, "&amp;").replace(/"/g, "&quot;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+  return html.replace(/<img\b[^>]*>/gi, (tag) => {
+    if (/\balt\s*=\s*("[^"]*\S[^"]*"|'[^']*\S[^']*'|[^\s"'>]+)/i.test(tag)) return tag; // already has a real alt
+    const withoutEmptyAlt = tag.replace(/\s+alt\s*=\s*(""|'')/i, "");
+    return withoutEmptyAlt.replace(/^<img\b/i, `<img alt="${safeAlt}"`);
+  });
+}
+
+function formatArticleContent(content?: string, imageAlt = "Bharat Organic Expo blog image"): string {
+  return addMissingImageAlts(formatArticleHtml(content), imageAlt);
+}
+
+function formatArticleHtml(content?: string): string {
   if (!content) return "";
   let html = content.trim();
 
@@ -447,7 +461,7 @@ export default async function BlogDetail({
             {isDynamic && dynamicPost.content ? (
               <div
                 className="text-[15px] text-neutral-700 max-w-none space-y-4 leading-relaxed font-inter [&_h1]:font-poppins [&_h1]:text-2xl [&_h1]:font-bold [&_h1]:text-[#1B4332] [&_h2]:font-poppins [&_h2]:text-xl [&_h2]:font-bold [&_h2]:text-[#1B4332] [&_h3]:font-poppins [&_h3]:text-lg [&_h3]:font-semibold [&_h3]:text-[#1B4332] [&_p]:leading-relaxed [&_ul]:list-disc [&_ul]:pl-5 [&_ol]:list-decimal [&_ol]:pl-5 [&_blockquote]:border-l-4 [&_blockquote]:border-[#34A853] [&_blockquote]:pl-4 [&_blockquote]:italic [&_blockquote]:bg-[#F9FBF9] [&_blockquote]:py-2 [&_img]:rounded-lg [&_img]:my-4"
-                dangerouslySetInnerHTML={{ __html: formatArticleContent(dynamicPost.content) }}
+                dangerouslySetInnerHTML={{ __html: formatArticleContent(dynamicPost.content, dynamicPost.title || undefined) }}
               />
             ) : (
               <div className="text-[15px] text-neutral-700 max-w-none space-y-2">

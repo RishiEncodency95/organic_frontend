@@ -326,14 +326,14 @@ export default function BuyerEnquiryPopup({ onClose, registerHref }: { onClose: 
             <Image width={0} height={0} sizes="100vw"
               data-bq-leaf
               src={leafImg.src}
-              alt=""
+              alt="Decorative green leaf"
               aria-hidden="true"
               className="pointer-events-none absolute left-0 top-0 w-[78px] sm:w-[96px] h-auto drop-shadow-sm"
             />
             <Image width={0} height={0} sizes="100vw"
               data-bq-leaf
               src={leafRightImg.src}
-              alt=""
+              alt="Decorative green leaf"
               aria-hidden="true"
               className="pointer-events-none absolute right-0 top-8 w-[70px] sm:w-[92px] h-auto drop-shadow-sm hidden sm:block"
             />

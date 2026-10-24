@@ -206,7 +206,7 @@ const AwardsCategories = ({ initialData }: AwardsCategoriesProps) => {
                   {/* Decorative card background leaf */}
                   <Image
                     src={card_bg}
-                    alt=""
+                    alt="Decorative leaf card background"
                     width={500}
                     height={500}
                     className="pointer-events-none absolute right-0 bottom-0 z-0 w-[30%] h-[50%] object-contain object-right-bottom"

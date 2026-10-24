@@ -99,7 +99,7 @@ const Lightbox = ({ images, activeIndex, onClose, onNav }: any) => {
       <div ref={imgRef} onClick={e=>e.stopPropagation()} style={{
         maxWidth:'82vw', maxHeight:'78vh', borderRadius:10, overflow:'hidden',
       }}>
-        <Image width={0} height={0} sizes="100vw" className="w-auto h-auto" src={getImgSrc(img.src || "")} alt={img.alt || img.title} style={{
+        <Image width={0} height={0} sizes="100vw" className="w-auto h-auto" src={getImgSrc(img.src || "")} alt={img.alt || img.title || "Bharat Organic Expo gallery photo"} style={{
           maxWidth:'82vw', maxHeight:'78vh', objectFit:'contain', display:'block',
         }}/>
       </div>
@@ -171,7 +171,7 @@ const GalleryCard = ({ img, onOpen }: any) => {
       <div ref={imgRef} style={{ width:'100%', height:'100%', overflow:'hidden', position:'relative' }}>
         <Image
           src={img.src || ""}
-          alt={img.alt || img.title}
+          alt={img.alt || img.title || "Bharat Organic Expo gallery photo"}
           fill
           loader={usesCloudinaryLoader ? cloudinaryImageLoader : undefined}
           sizes="(max-width: 640px) 42vw, (max-width: 1024px) 35vw, 28vw"

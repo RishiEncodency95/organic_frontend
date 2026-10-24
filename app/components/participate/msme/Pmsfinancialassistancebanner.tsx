@@ -195,7 +195,7 @@ const PMSFinancialAssistanceBanner: FC = () => {
         {/* Top-right absolute image */}
         <Image
           src={supportRightTop}
-          alt=""
+          alt="MSME PMS financial support illustration"
           className="absolute right-0 top-0 hidden h-32 w-auto object-contain opacity-20 md:block"
         />
 
@@ -203,7 +203,7 @@ const PMSFinancialAssistanceBanner: FC = () => {
         <div className="pointer-events-none absolute left-0 top-0 z-0 h-full w-full overflow-hidden lg:w-[35%]">
           <Image
             src={howMuchImg}
-            alt=""
+            alt="How much financial assistance you can get"
             className="absolute inset-0 h-full w-full object-cover object-top lg:object-cover"
           />
           {/* Gradient overlay for readability */}
@@ -246,7 +246,7 @@ const PMSFinancialAssistanceBanner: FC = () => {
                     {data.titleLine2}
                     <Image
                       src={supportRight}
-                      alt=""
+                      alt="MSME PMS financial support illustration"
                       className="hidden h-8 w-auto object-contain sm:h-10 md:h-10 md:inline"
                     />
                   </span>
@@ -271,7 +271,7 @@ const PMSFinancialAssistanceBanner: FC = () => {
                     >
                       <Image
                         src={card.icon}
-                        alt=""
+                        alt={`${card.eyebrow} icon`}
                         aria-hidden="true"
                         className="mb-2 h-[70px] w-[70px] object-contain"
                       />
@@ -307,7 +307,7 @@ const PMSFinancialAssistanceBanner: FC = () => {
                         <span className={`absolute left-1/2 -top-7 flex h-[56px] w-[56px] -translate-x-1/2 items-center justify-center rounded-full ${card.footIconBg} z-0`}>
                           <Image
                             src={card.footIcon}
-                            alt=""
+                            alt={`${card.title} icon`}
                             aria-hidden="true"
                             className="h-12 w-12 object-contain"
                           />
@@ -329,7 +329,7 @@ const PMSFinancialAssistanceBanner: FC = () => {
             <div className="pointer-events-none absolute inset-0">
               <Image
                 src={financialImg}
-                alt=""
+                alt="Financial assistance illustration"
                 className="absolute inset-0 h-full w-full object-cover object-top rounded-2xl"
               />
             </div>
@@ -340,7 +340,7 @@ const PMSFinancialAssistanceBanner: FC = () => {
                 <div className="flex w-full items-start gap-3 lg:w-[38%] lg:border-r lg:border-dotted lg:border-[#1b5e20] pr-3 lg:pr-4">
                   <Image
                     src={secureImg}
-                    alt=""
+                    alt="Secure and transparent process"
                     className="h-20 w-20 shrink-0 object-contain"
                   />
                   <p className="text-xs leading-relaxed sm:text-sm pr-4 md:pr-8">
@@ -378,7 +378,7 @@ const PMSFinancialAssistanceBanner: FC = () => {
                   href={data.ctaHref}
                   className="inline-flex items-center gap-1.5 rounded-full bg-[#1b5e20] px-4 py-2 text-base font-semibold uppercase tracking-wide text-white shadow-md transition-colors hover:bg-[#2d7a2d]"
                 >
-                  <Image src={eligibilityButtonImg} alt="" className="h-8 w-8 object-contain" aria-hidden="true" />
+                  <Image src={eligibilityButtonImg} alt="Arrow" className="h-8 w-8 object-contain" aria-hidden="true" />
                   {data.ctaLabel}
                   <ChevronRight className="h-5 w-5 font-bold" aria-hidden="true" />
                 </a>

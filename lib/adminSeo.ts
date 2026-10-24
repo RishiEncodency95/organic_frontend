@@ -82,9 +82,12 @@ export async function adminSeoMetadata(
             title: og["og:title"] || seoData?.ogTitle || title,
             description: og["og:description"] || seoData?.ogDescription || description,
             images: [
-                seoData?.ogImage
-                    ? (seoData.ogImage.startsWith("http") ? seoData.ogImage : `${defaultUrl}${seoData.ogImage.startsWith("/") ? "" : "/"}${seoData.ogImage}`)
-                    : `${defaultUrl}${OG_IMAGE.startsWith("/") ? "" : "/"}${OG_IMAGE}`,
+                {
+                    url: seoData?.ogImage
+                        ? (seoData.ogImage.startsWith("http") ? seoData.ogImage : `${defaultUrl}${seoData.ogImage.startsWith("/") ? "" : "/"}${seoData.ogImage}`)
+                        : `${defaultUrl}${OG_IMAGE.startsWith("/") ? "" : "/"}${OG_IMAGE}`,
+                    alt: OG_IMAGE_ALT,
+                },
             ],
         },
         robots: {

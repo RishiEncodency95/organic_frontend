@@ -197,7 +197,7 @@ const ParticipationCard = ({
     {/* Text-free background artwork (leaves + soil) */}
     <Image
       src={CARD_BG}
-      alt=""
+      alt="Decorative organic leaves and soil background"
       fill
       sizes="(min-width: 768px) 380px, 100vw"
       className="pointer-events-none select-none object-cover object-center"
@@ -699,7 +699,7 @@ export default function ThankYouPage() {
             <div className="pointer-events-none absolute right-0 top-[20%] bottom-0 h-[80%] w-[150px] md:w-[190px] z-0 select-none overflow-hidden hidden sm:block opacity-40">
               <Image
                 src={LEAF_RIGHT}
-                alt=""
+                alt="Decorative green leaves"
                 fill
                 className="object-contain object-right-bottom"
               />

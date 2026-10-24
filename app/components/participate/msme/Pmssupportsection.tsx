@@ -123,7 +123,7 @@ export default function PmsSupportSection() {
                         <div className="flex flex-row items-center gap-3 sm:gap-4">
                           <Image
                             src={icon}
-                            alt=""
+                            alt={`${title} icon`}
                             className="h-11 w-11 shrink-0 object-contain sm:h-16 sm:w-16"
                             aria-hidden="true"
                           />
@@ -148,7 +148,7 @@ export default function PmsSupportSection() {
               <div className="absolute left-1/2 top-0 z-20 -translate-x-1/2 -translate-y-1/2 flex items-center">
                 <Image
                   src={stepsTitleLeftLeafIcon}
-                  alt=""
+                  alt="Decorative leaf - left"
                   className="mr-2 hidden h-7 w-auto object-contain sm:block"
                   aria-hidden="true"
                 />
@@ -157,7 +157,7 @@ export default function PmsSupportSection() {
                 </h3>
                 <Image
                   src={stepsTitleRightLeafIcon}
-                  alt=""
+                  alt="Decorative leaf - right"
                   className="ml-2 hidden h-7 w-auto object-contain sm:block"
                   aria-hidden="true"
                 />
@@ -200,7 +200,7 @@ export default function PmsSupportSection() {
                       <div className="flex h-full w-full flex-col rounded-2xl bg-white px-5 py-4 shadow-sm ring-1 ring-black/5 sm:px-6 sm:py-4">
                         <Image
                           src={icon}
-                          alt=""
+                          alt={`${title} icon`}
                           className="mx-auto mb-4 h-16 w-16 object-contain sm:h-20 sm:w-20"
                           aria-hidden="true"
                         />

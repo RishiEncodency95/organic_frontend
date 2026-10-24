@@ -329,7 +329,7 @@ export function createPageMetadata(path: string): Metadata {
       card: "summary_large_image",
       title: socialTitle,
       description: route.description,
-      images: [ogImageUrl],
+      images: [{ url: ogImageUrl, alt: route.ogImageAlt }],
     },
   };
 }

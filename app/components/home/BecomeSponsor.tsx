@@ -93,7 +93,7 @@ const BecomeSponsor = () => {
             <div className="relative w-full max-w-[200px] sm:max-w-[250px] md:max-w-[320px] aspect-square rounded-[1rem] md:rounded-[1.5rem] overflow-hidden shadow-2xl border-[3px] md:border-[4px] border-white z-20 group">
               <Image width={0} height={0} sizes="100vw"
                 src={sectionData.centerSection.image}
-                alt={sectionData.centerSection.imageAlt}
+                alt={sectionData.centerSection.imageAlt || "Become a sponsor at Bharat Organic Expo"}
                 className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
                 loading="lazy"
               />

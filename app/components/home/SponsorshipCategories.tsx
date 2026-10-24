@@ -362,7 +362,7 @@ const SponsorshipCategories = () => {
                   quality={60}
                   loading="lazy"
                   className="object-cover"
-                  alt={promo.imageAlt}
+                  alt={promo.imageAlt || "Sponsorship opportunities at Bharat Organic Expo"}
                 />
                 {/* Bottom decorative wave line on the image */}
                 <div className="absolute bottom-0 left-0 right-0 h-[40%] bg-gradient-to-t from-black/70 to-transparent pointer-events-none"></div>

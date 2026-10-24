@@ -1589,13 +1589,13 @@ export default function BharatOrganicAwards({ initialHeroData, disabledSections 
         <section className="relative overflow-hidden border-t border-emerald-900/10 bg-[#f2efe0]">
           <Image width={0} height={0} sizes="100vw"
             src={beTheLeft.src}
-            alt=""
+            alt="Decorative organic leaves - left"
             aria-hidden="true"
             className="hidden md:block absolute left-0 bottom-0 h-44 lg:h-52 w-auto opacity-30 z-0"
           />
           <Image width={0} height={0} sizes="100vw"
             src={beTheRight.src}
-            alt=""
+            alt="Decorative organic leaves - right"
             aria-hidden="true"
             className="hidden md:block absolute right-0 top-0 h-44 lg:h-52 w-auto z-0"
           />

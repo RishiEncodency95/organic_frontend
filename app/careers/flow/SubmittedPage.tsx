@@ -92,9 +92,9 @@ export default function SubmittedPage({ application: a }: { application: Submitt
             {/* Confirmation */}
             <div className="relative isolate grid grid-cols-1 gap-4 overflow-hidden bg-[linear-gradient(100deg,#e9f5e4,#f3faef_55%,#fafdf7)] px-4 py-[12px] md:grid-cols-[200px_minmax(0,1fr)] md:items-center md:gap-5 md:pr-5">
               {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img src={leafSpray.src} alt="" className="pointer-events-none absolute -right-[18px] -top-[22px] -z-10 hidden w-[120px] rotate-[8deg] opacity-80 md:block" />
+              <img src={leafSpray.src} alt="Decorative leaf spray" className="pointer-events-none absolute -right-[18px] -top-[22px] -z-10 hidden w-[120px] rotate-[8deg] opacity-80 md:block" />
               {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img src="/assets/careers/submitted-success.png" alt="" className="mx-auto hidden w-[190px] mix-blend-multiply md:block" />
+              <img src="/assets/careers/submitted-success.png" alt="Application submitted successfully" className="mx-auto hidden w-[190px] mix-blend-multiply md:block" />
               <div className="min-w-0">
                 <span className="inline-flex items-center gap-[8px] rounded-full bg-[#dcefd7] px-[12px] py-[3px] text-[13px] text-[#1b4d2e]">
                   <CircleCheck className="h-[18px] w-[18px] text-white" fill="#1d7a3e" strokeWidth={2.4} />

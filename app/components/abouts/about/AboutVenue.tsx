@@ -59,7 +59,7 @@ const AboutVenue = () => {
             <div className="relative w-full h-[260px] md:h-[340px]">
               <Image
                 src={pragatiMaidanImg}
-                alt={aboutVenueData.locationBadge}
+                alt={aboutVenueData.locationBadge || "Bharat Mandapam, New Delhi - Bharat Organic Expo venue"}
                 fill
                 sizes="(max-width: 1024px) 100vw, 50vw"
                 className="object-cover group-hover:scale-[1.04] transition-transform duration-500"

@@ -110,7 +110,7 @@ const AwardsHealthCamp = ({ sectionData }: { sectionData?: any }) => {
       {/* Top Left Leaf Decor Asset */}
       <Image width={0} height={0} sizes="100vw"
         src={tleaf.src}
-        alt=""
+        alt="Decorative green leaf"
         className="absolute top-0 left-0 w-32 sm:w-44 md:w-56 lg:w-64 h-auto object-contain pointer-events-none z-0 opacity-80"
       />
 
@@ -169,7 +169,7 @@ const AwardsHealthCamp = ({ sectionData }: { sectionData?: any }) => {
                     >
                       <Image width={0} height={0} sizes="100vw"
                         src={card.image}
-                        alt=""
+                        alt={`${card.titleLine1} ${card.titleLine2 ?? ""}`.trim()}
                         className="w-11 h-11 sm:w-13 sm:h-13 object-contain mb-2 mx-auto shrink-0"
                       />
                       <h3 className="font-poppins font-semibold text-[13px] sm:text-[14.5px] text-[#001810] mb-1.5 leading-tight flex flex-col items-center justify-center">

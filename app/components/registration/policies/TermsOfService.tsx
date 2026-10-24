@@ -312,7 +312,7 @@ const TermsOfService = ({ heroData, disabledSections = [] }: { heroData?: any; d
           {/* Background Layer */}
           <div className="absolute inset-0 w-full h-full z-0">
             <Image width={0} height={0} sizes="100vw" decoding="async" src={hero.image}
-              alt={hero.imageAlt}
+              alt={hero.imageAlt || "Bharat Organic Expo terms of service"}
               className="w-full h-full object-cover object-center"
             />
             {/* Lightened dark gradient overlay so text is readable, just like home */}

@@ -224,7 +224,7 @@ export default function HeroSection({ initialData }: { initialData?: any }) {
         <div className="absolute inset-0 z-0 overflow-hidden">
           <Image loading="eager" width={0} height={0} sizes="100vw" 
             src={data.image}
-            alt={data.imageAlt}
+            alt={data.imageAlt || "Partnership opportunities at Bharat Organic Expo"}
             className="part-bg-img w-full h-full object-cover" 
             style={{ objectPosition: "center 20%" }}
           />

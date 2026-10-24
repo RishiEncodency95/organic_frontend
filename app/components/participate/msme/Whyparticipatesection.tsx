@@ -61,7 +61,7 @@ export default function WhyParticipateSection() {
       <div className="absolute inset-0 z-0">
         <Image
           src={whyParticipateBg}
-          alt=""
+          alt="Why participate in the MSME PMS scheme"
           className="h-full w-full object-cover pointer-events-none"
         />
       </div>
@@ -102,7 +102,7 @@ export default function WhyParticipateSection() {
             >
               {/* Icon container - half outside, half inside */}
               <div className="absolute -top-10 left-1/2 z-10 flex h-30 w-30 -translate-x-1/2 items-center justify-center overflow-hidden">
-                <Image src={feature.icon} alt="" className="h-full w-full object-cover" />
+                <Image src={feature.icon} alt={`${feature.title} icon`} className="h-full w-full object-cover" />
               </div>
               <div className="flex flex-1 flex-col items-center px-5 pt-2 pb-2">
                 <h3 className="text-[20px] font-semibold text-slate-900">

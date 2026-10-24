@@ -287,7 +287,7 @@ const SponsorsAndAttend = () => {
                 {data.image && typeof data.image === "string" && data.image.trim() !== "" ? (
                   <Image width={0} height={0} sizes="100vw"
                     src={data.image}
-                    alt={data.imageAlt}
+                    alt={data.imageAlt || "Sponsors and attendees at Bharat Organic Expo"}
                     className="w-full h-full object-cover transition-transform duration-700 hover:scale-105"
                   />
                 ) : (

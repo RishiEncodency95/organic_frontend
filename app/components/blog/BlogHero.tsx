@@ -43,7 +43,7 @@ const BlogHero = ({ data, titleAs: TitleTag = "h1" }: { data?: any; titleAs?: "h
       <Image
         key={blogHeroData.image}
         src={blogHeroData.image}
-        alt={blogHeroData.imageAlt}
+        alt={blogHeroData.imageAlt || "Bharat Organic Expo blog"}
         fill
         priority
         className="object-cover z-0"

@@ -95,7 +95,7 @@ export default function AnalysisInProgress({
       {/* ── Hero ── */}
       <section className="relative isolate overflow-hidden">
         {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img src="/assets/careers/analysis-hero.jpg" alt="" className="absolute inset-y-0 right-0 -z-20 h-full w-full object-cover object-center md:w-[60%]" />
+        <img src="/assets/careers/analysis-hero.jpg" alt="Bharat Organic Expo careers - application analysis in progress" className="absolute inset-y-0 right-0 -z-20 h-full w-full object-cover object-center md:w-[60%]" />
         <div className="absolute inset-0 -z-10 bg-[linear-gradient(90deg,rgba(250,247,238,0.97)_0%,rgba(250,247,238,0.93)_42%,rgba(250,247,238,0.3)_55%,rgba(250,247,238,0)_68%)] max-md:bg-[linear-gradient(90deg,rgba(250,247,238,0.95),rgba(250,247,238,0.82))]" />
         <div className="absolute inset-x-0 bottom-0 -z-10 h-[50px] bg-[linear-gradient(180deg,rgba(250,247,238,0),#faf7ee)]" />
         <div className="mx-auto max-w-[1340px] px-4 pb-[10px] pt-[30px] sm:px-8 lg:pt-[64px]">

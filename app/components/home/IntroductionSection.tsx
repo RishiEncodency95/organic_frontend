@@ -129,7 +129,7 @@ const IntroductionSection = ({ initialData }: { initialData?: any }) => {
       {/* Decorative Background Elements */}
       <Image
         src={leafog}
-        alt=""
+        alt="Decorative organic leaf"
         aria-hidden="true"
         width={256}
         height={566}

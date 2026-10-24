@@ -228,7 +228,7 @@ export default function NeedHelpSection() {
             </div>
             <Image
               src={whyReachOutImg}
-              alt=""
+              alt="Why reach out to the MSME PMS help desk"
               className="hidden h-[160px] w-auto shrink-0 object-contain sm:block"
               loading="lazy"
             />
@@ -278,7 +278,7 @@ export default function NeedHelpSection() {
                 <span className="flex h-20 w-20 shrink-0 items-center justify-center self-start rounded-full bg-white ">
                   <Image
                     src={supportRightImg}
-                    alt=""
+                    alt="MSME PMS support team"
                     className="h-16 w-16 object-contain"
                   />
                 </span>

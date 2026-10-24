@@ -251,7 +251,7 @@ export default function OfficialMessageBanner({ initialData }: { initialData?: a
                 <span className="h-px w-[40px] bg-[#739052]" />
                 <Image
                   src={stepsTitleLeftLeafIcon}
-                  alt=""
+                  alt="Decorative leaf - left"
                   className="mr-2 hidden h-7 w-auto object-contain sm:block"
                   aria-hidden="true"
                 />
@@ -273,7 +273,7 @@ export default function OfficialMessageBanner({ initialData }: { initialData?: a
               <div className="flex items-center">
                 <Image
                   src={stepsTitleRightLeafIcon}
-                  alt=""
+                  alt="Decorative leaf - right"
                   className="ml-2 h-7 w-auto object-contain"
                   aria-hidden="true"
                 />
@@ -649,7 +649,7 @@ export default function OfficialMessageBanner({ initialData }: { initialData?: a
                       <span className="h-px flex-1 bg-[#bdc6aa]" />
                       <Image
                         src={dividerLeafIcon}
-                        alt=""
+                        alt="Decorative leaf divider"
                         className="h-8 w-auto object-contain"
                         aria-hidden="true"
                       />
@@ -668,7 +668,7 @@ export default function OfficialMessageBanner({ initialData }: { initialData?: a
                 >
                   <Image
                     src={quoteLeftImg}
-                    alt=""
+                    alt="Opening quote mark"
                     className="
                       absolute
                       left-0
@@ -698,7 +698,7 @@ export default function OfficialMessageBanner({ initialData }: { initialData?: a
 
                   <Image
                     src={quoteRightImg}
-                    alt=""
+                    alt="Closing quote mark"
                     className="
                       absolute
                       bottom-[-12px]
@@ -792,7 +792,7 @@ export default function OfficialMessageBanner({ initialData }: { initialData?: a
 
                 <Image
                   src={ministryImg}
-                  alt=""
+                  alt="Ministry of MSME emblem"
                   aria-hidden="true"
                   className="
                     pointer-events-none
@@ -836,7 +836,7 @@ export default function OfficialMessageBanner({ initialData }: { initialData?: a
                   withBorder={idx === 1}
                   withLeftPadding={idx === 2}
                   icon={
-                    <Image src={feat.icon} alt="" className="h-[100px] w-[100px] object-contain" />
+                    <Image src={feat.icon} alt={`${feat.title} icon`} className="h-[100px] w-[100px] object-contain" />
                   }
                   title={feat.title}
                   description={feat.description}
@@ -1111,7 +1111,7 @@ export default function OfficialMessageBanner({ initialData }: { initialData?: a
               {FEATURE_STRIP.map((feat) => (
                 <MobileFeature
                   key={feat.id}
-                  icon={<Image src={feat.icon} alt="" className="h-16 w-16 object-contain" />}
+                  icon={<Image src={feat.icon} alt={`${feat.title} icon`} className="h-16 w-16 object-contain" />}
                   title={feat.title}
                   description={feat.description}
                 />

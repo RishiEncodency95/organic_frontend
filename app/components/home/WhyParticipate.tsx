@@ -307,7 +307,7 @@ const WhyParticipate = () => {
             {typeof data.image === "string" ? (
               <Image
                 src={data.image}
-                alt={data.imageAlt}
+                alt={data.imageAlt || "Why participate in Bharat Organic Expo"}
                 width={700}
                 height={450}
                 loader={isCloudinaryImage(data.image) ? cloudinaryImageLoader : undefined}
@@ -316,7 +316,7 @@ const WhyParticipate = () => {
             ) : (
               <Image
                 src={data.image}
-                alt={data.imageAlt}
+                alt={data.imageAlt || "Why participate in Bharat Organic Expo"}
                 sizes="(max-width: 1024px) 100vw, 50vw"
                 className="w-full h-[200px] sm:h-[240px] md:h-[390px] object-cover"
               />

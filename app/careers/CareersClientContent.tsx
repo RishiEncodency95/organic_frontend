@@ -250,16 +250,16 @@ function SideLeaves({ side = "both" }: { side?: "both" | "right" }) {
     <div aria-hidden="true" className="pointer-events-none absolute inset-0 -z-10 hidden md:block">
       {side === "both" && (
         <>
-          <Image src={leafC} alt="" width={96} height={266} sizes="96px" className="absolute -left-[26px] -top-[14px] w-[96px] -scale-x-100 rotate-[10deg] opacity-95" />
-          <Image src={leafA} alt="" width={118} height={160} sizes="118px" className="absolute -left-[38px] top-[34%] w-[118px] -rotate-[18deg] opacity-95" />
-          <Image src={leafC} alt="" width={86} height={238} sizes="86px" className="absolute -left-[30px] top-[58%] w-[86px] -scale-x-100 -rotate-[14deg] opacity-90" />
-          <Image src={leafB} alt="" width={84} height={146} sizes="84px" className="absolute -left-[20px] -bottom-[18px] w-[84px] rotate-[16deg] opacity-95" />
+          <Image src={leafC} alt="Decorative green leaf" width={96} height={266} sizes="96px" className="absolute -left-[26px] -top-[14px] w-[96px] -scale-x-100 rotate-[10deg] opacity-95" />
+          <Image src={leafA} alt="Decorative green leaf" width={118} height={160} sizes="118px" className="absolute -left-[38px] top-[34%] w-[118px] -rotate-[18deg] opacity-95" />
+          <Image src={leafC} alt="Decorative green leaf" width={86} height={238} sizes="86px" className="absolute -left-[30px] top-[58%] w-[86px] -scale-x-100 -rotate-[14deg] opacity-90" />
+          <Image src={leafB} alt="Decorative green leaf" width={84} height={146} sizes="84px" className="absolute -left-[20px] -bottom-[18px] w-[84px] rotate-[16deg] opacity-95" />
         </>
       )}
-      <Image src={leafC} alt="" width={96} height={266} sizes="96px" className="absolute -right-[24px] -top-[18px] w-[96px] -rotate-[8deg] opacity-95" />
-      <Image src={leafA} alt="" width={120} height={162} sizes="120px" className="absolute -right-[40px] top-[32%] w-[120px] -scale-x-100 rotate-[14deg] opacity-95" />
-      <Image src={leafC} alt="" width={86} height={238} sizes="86px" className="absolute -right-[30px] top-[56%] w-[86px] rotate-[12deg] opacity-90" />
-      <Image src={leafB} alt="" width={84} height={146} sizes="84px" className="absolute -right-[18px] -bottom-[18px] w-[84px] -scale-x-100 -rotate-[10deg] opacity-95" />
+      <Image src={leafC} alt="Decorative green leaf" width={96} height={266} sizes="96px" className="absolute -right-[24px] -top-[18px] w-[96px] -rotate-[8deg] opacity-95" />
+      <Image src={leafA} alt="Decorative green leaf" width={120} height={162} sizes="120px" className="absolute -right-[40px] top-[32%] w-[120px] -scale-x-100 rotate-[14deg] opacity-95" />
+      <Image src={leafC} alt="Decorative green leaf" width={86} height={238} sizes="86px" className="absolute -right-[30px] top-[56%] w-[86px] rotate-[12deg] opacity-90" />
+      <Image src={leafB} alt="Decorative green leaf" width={84} height={146} sizes="84px" className="absolute -right-[18px] -bottom-[18px] w-[84px] -scale-x-100 -rotate-[10deg] opacity-95" />
     </div>
   );
 }
@@ -366,7 +366,7 @@ export default function CareersClientContent({ sections }: { sections?: any[] })
         <section className="relative isolate min-h-[330px] h-[460px] overflow-hidden md:aspect-[2110/745]">
           <Image
             src={content.hero.image}
-            alt={content.hero.imageAlt}
+            alt={content.hero.imageAlt || "Careers at Bharat Organic Expo"}
             fill
             priority
             sizes="100vw"
@@ -436,7 +436,7 @@ export default function CareersClientContent({ sections }: { sections?: any[] })
                   </h2>
                 </div>
                 <figure className="flex items-center gap-4 lg:mr-[22px]">
-                  <Image src={goldLeaf} alt="" width={44} height={36} sizes="44px" className="h-auto w-[40px] shrink-0 -rotate-[24deg] sm:w-[44px]" />
+                  <Image src={goldLeaf} alt="Decorative golden leaf" width={44} height={36} sizes="44px" className="h-auto w-[40px] shrink-0 -rotate-[24deg] sm:w-[44px]" />
                   <blockquote className="max-w-[330px] font-playfair text-[17px] italic leading-[1.32] text-[#283a2c] sm:text-[19px]">
                     &ldquo;{content.openings.quote}&rdquo;
                   </blockquote>
@@ -543,7 +543,7 @@ export default function CareersClientContent({ sections }: { sections?: any[] })
                       ["--ratio" as string]: String(photo.src.width / photo.src.height),
                     }}
                   >
-                    <Image src={photo.src} alt={photo.alt} fill sizes="(min-width: 1024px) 22vw, 300px" className="object-contain" />
+                    <Image src={photo.src} alt={photo.alt || "Life at Bharat Organic Expo"} fill sizes="(min-width: 1024px) 22vw, 300px" className="object-contain" />
                   </div>
                 ))}
               </div>
@@ -556,7 +556,7 @@ export default function CareersClientContent({ sections }: { sections?: any[] })
           <section className="relative h-[160px] w-full shrink-0 overflow-hidden bg-white">
             <Image
               src={content.bottomBanner.image}
-              alt={content.bottomBanner.imageAlt}
+              alt={content.bottomBanner.imageAlt || "Join the Bharat Organic Expo team"}
               fill
               sizes="100vw"
               className="object-cover object-center"

@@ -104,7 +104,7 @@ const AdvisoryHero = ({ initialData }: { initialData?: any }) => {
             <Image
                 key={data.image || "default"}
                 src={bannerSrc}
-                alt={data.imageAlt}
+                alt={data.imageAlt || "Bharat Organic Expo advisory board"}
                 fill
                 priority
                 className="object-cover object-right z-0"

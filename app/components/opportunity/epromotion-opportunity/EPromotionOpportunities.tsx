@@ -148,7 +148,7 @@ export default function EPromotionOpportunities() {
               className="bg-white rounded-2xl overflow-hidden flex flex-col h-full transition-shadow duration-300 relative"
               style={{ boxShadow: "rgba(0, 0, 0, 0.02) 0px 1px 3px 0px, rgba(27, 31, 35, 0.15) 0px 0px 0px 1px" }}
             >
-              <Image width={0} height={0} sizes="100vw" src={leafright.src} alt="" className="absolute top-0 right-0 w-[90px] h-[90px] object-contain pointer-events-none" />
+              <Image width={0} height={0} sizes="100vw" src={leafright.src} alt="Decorative green leaf" className="absolute top-0 right-0 w-[90px] h-[90px] object-contain pointer-events-none" />
               <div className="p-6 flex-1 flex flex-col items-center text-center">
                 {/* Icon Image */}
                 <Image width={0} height={0} sizes="100vw" src={ICON_MAP[opp.iconKey].src} alt={opp.title} className="w-[70px] h-[70px] object-contain mb-5" />

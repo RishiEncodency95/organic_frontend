@@ -22,7 +22,7 @@ const ParticipationCard = () => {
           <div className="absolute right-0 top-0 h-full w-[200px] md:w-[280px] opacity-60 pointer-events-none">
             <Image
               src="/assets/participation-leaf-real.png"
-              alt=""
+              alt="Decorative green leaf"
               fill
               className="object-contain object-right"
               sizes="280px"
