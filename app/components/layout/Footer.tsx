@@ -11,6 +11,7 @@ import goldLeaf from "../../assets/icons/footer-leaf.png";
 import greenLeaf from "../../assets/icons/foot1og.png";
 import mandala from "../../assets/icons/footer-mandala-lines.png";
 import encodencyLogo from "../../assets/logos/encodency-logo.png";
+import BackToTop from "./BackToTop";
 import keynoteIcon from "../../assets/icons/foot2.png";
 import panelIcon from "../../assets/icons/foot1.png";
 import workshopIcon from "../../assets/icons/foot11.png";
@@ -472,49 +473,43 @@ export default function Footer({ initialFooterData }: { initialFooterData?: Foot
 
       {/* ── Bottom bar ── */}
       <div className="relative z-10 border-t border-[#c99a3d]/70 bg-[#061a0c]">
-        {/* Leaf peeking into the bottom-right corner */}
-        <Image
-          src={greenLeaf}
-          alt="Decorative green leaf"
-          aria-hidden="true"
-          width={90}
-          height={168}
-          sizes="90px"
-          className="pointer-events-none absolute -right-[14px] -top-[48px] hidden w-[90px] rotate-[62deg] opacity-90 xl:block"
-        />
-        <div className="relative mx-auto flex w-full max-w-[1600px] flex-col items-center justify-center gap-x-8 gap-y-2.5 px-4 pt-5 pb-20 text-center text-[13px] text-white sm:text-[13.5px] md:pb-5 lg:flex-row lg:flex-wrap xl:h-[66px] xl:flex-nowrap xl:justify-between xl:gap-0 xl:px-[33px] xl:py-0 xl:text-[14.5px]">
-          <span className="font-poppins font-normal">Bharat Organic Expo</span>
+        {/* Left: copyright. Right: policy links | Sitemap | credit | back to top */}
+        <div className="relative mx-auto flex w-full max-w-[1600px] flex-col items-center justify-between gap-x-8 gap-y-3 px-4 pt-5 pb-20 text-center text-[13px] text-white sm:text-[13.5px] md:pb-5 lg:flex-row lg:text-left xl:min-h-[66px] xl:px-[33px] xl:py-[10px] xl:text-[14.5px]">
+          <p>© {new Date().getFullYear()} Bharat Organic Expo. All rights reserved.</p>
 
-          <span>Copyright © {new Date().getFullYear()} Bharat Organic Expo. All Rights Reserved.</span>
+          <div className="flex flex-col items-center gap-y-3 lg:flex-row lg:gap-x-[26px]">
+            <nav aria-label="Footer legal links" className="flex flex-wrap items-center justify-center gap-x-[14px] gap-y-1 whitespace-nowrap sm:gap-x-[22px] xl:gap-x-[26px]">
+              <Link href="/registration/privacy-policy" className="transition-colors hover:text-[#F2B632]">
+                Privacy Policy
+              </Link>
+              <span aria-hidden="true" className="text-white/60">|</span>
+              <Link href="/registration/terms-and-conditions" className="transition-colors hover:text-[#F2B632]">
+                Terms &amp; Conditions
+              </Link>
+              <span aria-hidden="true" className="text-white/60">|</span>
+              <a href="/sitemap.xml" target="_blank" rel="noopener" className="transition-colors hover:text-[#F2B632]">
+                Sitemap
+              </a>
+              <span aria-hidden="true" className="hidden text-white/60 lg:inline">|</span>
+            </nav>
 
-          <span className="flex flex-wrap items-center justify-center gap-x-[14px] gap-y-1 whitespace-nowrap sm:gap-x-[22px] xl:gap-x-[28px]">
-            <span className="hidden text-white/80 xl:inline">|</span>
-            <Link href="/registration/privacy-policy" className="transition-colors hover:text-[#F2B632]">
-              Privacy Policy
-            </Link>
-            <span className="hidden text-white/80 sm:inline">|</span>
-            <Link href="/registration/terms-and-conditions" className="transition-colors hover:text-[#F2B632]">
-              Terms &amp; Conditions
-            </Link>
-            <span className="hidden text-white/80 sm:inline">|</span>
-            <Link href="/registration/refund-policy" className="transition-colors hover:text-[#F2B632]">
-              Refund Policy
-            </Link>
-          </span>
-
-          {/* Credit: "Designed & Developed by" + the enCodency logo */}
-          <span className="relative z-10 flex items-center justify-center gap-[12px] whitespace-nowrap">
-            Designed &amp; Developed by
-            <Image
-              src={encodencyLogo}
-              alt="enCodency Pvt. Ltd. – Raise the Bar"
-              title="enCodency Pvt. Ltd. — Raise the Bar"
-              width={480}
-              height={142}
-              sizes="(min-width: 1280px) 115px, 105px"
-              className="h-[31px] w-auto shrink-0 rounded-[5px] transition-transform duration-300 hover:-translate-y-[1px] xl:h-[34px]"
-            />
-          </span>
+            <div className="flex items-center gap-[18px]">
+              {/* Credit: "Designed & Developed by" + the enCodency logo */}
+              <span className="flex items-center gap-[12px] whitespace-nowrap">
+                Designed &amp; Developed by
+                <Image
+                  src={encodencyLogo}
+                  alt="enCodency Pvt. Ltd. – Raise the Bar"
+                  title="enCodency Pvt. Ltd. — Raise the Bar"
+                  width={480}
+                  height={142}
+                  sizes="(min-width: 1280px) 115px, 105px"
+                  className="h-[31px] w-auto shrink-0 rounded-[5px] transition-transform duration-300 hover:-translate-y-[1px] xl:h-[34px]"
+                />
+              </span>
+              <BackToTop />
+            </div>
+          </div>
         </div>
       </div>
     </footer>

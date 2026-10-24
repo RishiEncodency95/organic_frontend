@@ -303,6 +303,21 @@ h1, h2, h3, h4, h5, h6 {
   50% { transform: translateY(-4px); }
 }
 
+/* Footer "back to top" button — floats gently up and down; pauses on hover */
+@keyframes boe-back-to-top-float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-5px); }
+}
+.boe-back-to-top {
+  animation: boe-back-to-top-float 2.2s ease-in-out infinite;
+}
+.boe-back-to-top:hover {
+  animation-play-state: paused;
+}
+@media (prefers-reduced-motion: reduce) {
+  .boe-back-to-top { animation: none; }
+}
+
 /* Organic Mitra chatbot — CTA shimmer (same feel as the site popups) */
 @keyframes mitra-shimmer {
   0% { left: -35%; }
