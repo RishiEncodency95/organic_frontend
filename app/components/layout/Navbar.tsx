@@ -10,12 +10,20 @@ import {
     Info, ShoppingBag, HelpCircle, Lock, CalendarDays,
     ShieldCheck, Home, Phone, ChevronRight,
     LayoutGrid, Building2, ExternalLink, Star, Mic, Trophy,
-    Store, UserPlus, Globe, Award
+    Store, UserPlus, Globe, Award, Download, FileText
 } from "lucide-react";
 import navbarLogo from "../../assets/logos/navbarlogo1.png";
 import SectionContainer from "@/app/components/layout/SectionContainer";
 import { lockScroll, unlockScroll } from "@/lib/scrollLock";
 import { fetchHiddenPageKeysFresh, isLinkHidden } from "@/lib/pageVisibility";
+import { API_URL } from "@/lib/api";
+
+/** An active PDF from admin → Content Management → Downloads */
+type DownloadLink = { _id: string; name: string };
+
+const DOWNLOAD_MENU = "Download";
+/** The backend sends the PDF as an attachment, so the browser saves it and stays on the page */
+const downloadHref = (id: string) => `${API_URL}/downloads/${encodeURIComponent(id)}/file`;
 
 // Local cn utility since @/lib/utils is missing
 const cn = (...classes: (string | undefined | null | false)[]) => classes.filter(Boolean).join(" ");
@@ -122,7 +130,23 @@ const Navbar = ({ initialHiddenPageKeys = [] }: { initialHiddenPageKeys?: string
     const [activeDropdown, setActiveDropdown] = useState<string | null>(null);
     const [mobileAccordion, setMobileAccordion] = useState<string | null>(null);
     const [hiddenPageKeys, setHiddenPageKeys] = useState<string[]>(initialHiddenPageKeys);
+    const [downloads, setDownloads] = useState<DownloadLink[]>([]);
     const pathname = usePathname();
+
+    // Active downloads for the "Download" menu; refreshed on each navigation so admin changes show up
+    useEffect(() => {
+        const controller = new AbortController();
+        fetch(`${API_URL}/downloads`, { cache: "no-store", signal: controller.signal })
+            .then((res) => (res.ok ? res.json() : null))
+            .then((body) => {
+                const list = Array.isArray(body?.data) ? body.data : [];
+                setDownloads(list.filter((d: Partial<DownloadLink>) => d?._id && d?.name).map((d: DownloadLink) => ({ _id: d._id, name: d.name })));
+            })
+            .catch(() => {
+                // Keep the last list when the backend can't be reached
+            });
+        return () => controller.abort();
+    }, [pathname]);
 
     useEffect(() => {
         let active = true;
@@ -274,6 +298,71 @@ const Navbar = ({ initialHiddenPageKeys = [] }: { initialHiddenPageKeys?: string
                                                 )}
                                     </div>
                                 ))}
+
+                                {/* Download: after Contact; the PDFs come from admin → Downloads (active only) */}
+                                <div
+                                    className="relative flex items-center"
+                                    onMouseEnter={() => setActiveDropdown(DOWNLOAD_MENU)}
+                                    onMouseLeave={() => setActiveDropdown(null)}
+                                >
+                                    <button
+                                        type="button"
+                                        aria-haspopup="true"
+                                        aria-expanded={activeDropdown === DOWNLOAD_MENU}
+                                        onClick={() => setActiveDropdown(activeDropdown === DOWNLOAD_MENU ? null : DOWNLOAD_MENU)}
+                                        style={{ fontFamily: "var(--font-poppins-next), sans-serif" }}
+                                        className="px-1.5 2xl:px-2.5 py-2 text-[13px] lg:text-[12.5px] font-semibold tracking-wide uppercase transition-all duration-300 flex items-center gap-1 relative group whitespace-nowrap text-slate-700 hover:text-[#14532d]"
+                                    >
+                                        {DOWNLOAD_MENU}
+                                        <ChevronDown className={`w-3 h-3 transition-transform duration-300 ${activeDropdown === DOWNLOAD_MENU ? "rotate-180" : ""}`} />
+                                        <span className="absolute bottom-0 left-1.5 right-1.5 h-[2px] bg-[#ea580c] transition-transform duration-300 origin-left scale-x-0 group-hover:scale-x-100" />
+                                    </button>
+
+                                    {activeDropdown === DOWNLOAD_MENU && (
+                                        <div className="absolute top-[calc(100%-10px)] right-0 pt-4 w-[260px]">
+                                            <div className="absolute top-2 right-8 w-4 h-4 bg-white border-t border-l border-slate-100 rotate-45 z-10" />
+                                            <div className="relative origin-top animate-in fade-in zoom-in-95 bg-white/95 backdrop-blur-2xl rounded-2xl shadow-[0_20px_60px_rgba(0,0,0,0.12)] border border-slate-100 py-2 overflow-hidden z-20 max-h-[60vh] overflow-y-auto">
+                                                {downloads.length === 0 ? (
+                                                    <p className="px-4 py-3 text-[11px] text-slate-500" style={{ fontFamily: "var(--font-poppins-next), sans-serif" }}>
+                                                        No downloads available right now.
+                                                    </p>
+                                                ) : (
+                                                    downloads.map((item, idx) => {
+                                                        const isEven = idx % 2 === 0;
+                                                        return (
+                                                            <a
+                                                                key={item._id}
+                                                                href={downloadHref(item._id)}
+                                                                download
+                                                                onClick={() => setActiveDropdown(null)}
+                                                                className="flex items-center gap-3 px-4 py-2.5 hover:bg-slate-50 group transition-all border-b border-slate-200 last:border-b-0"
+                                                            >
+                                                                <div className={cn(
+                                                                    "w-7 h-7 flex-shrink-0 rounded-xl flex items-center justify-center transition-all duration-300 group-hover:text-white group-hover:shadow-md",
+                                                                    isEven
+                                                                        ? "bg-[#3b8c2a]/10 text-[#3b8c2a] group-hover:bg-[#3b8c2a]"
+                                                                        : "bg-[#f59e0b]/10 text-[#f59e0b] group-hover:bg-[#f59e0b]"
+                                                                )}>
+                                                                    <FileText className="w-3.5 h-3.5" />
+                                                                </div>
+                                                                <span
+                                                                    style={{ fontFamily: "var(--font-poppins-next), sans-serif" }}
+                                                                    className={cn(
+                                                                        "flex-1 text-[12px] font-semibold text-slate-800 transition-colors",
+                                                                        isEven ? "group-hover:text-[#3b8c2a]" : "group-hover:text-[#f59e0b]"
+                                                                    )}
+                                                                >
+                                                                    {item.name}
+                                                                </span>
+                                                                <Download className="w-3.5 h-3.5 text-slate-400 group-hover:text-slate-600 flex-shrink-0" />
+                                                            </a>
+                                                        );
+                                                    })
+                                                )}
+                                            </div>
+                                        </div>
+                                    )}
+                                </div>
                             </div>
 
                             {/* Removed Register Now from here */}
@@ -518,6 +607,51 @@ const Navbar = ({ initialHiddenPageKeys = [] }: { initialHiddenPageKeys?: string
                                         {pathname === link.path && <div className="w-1.5 h-1.5 rounded-full bg-[#3b8c2a]" />}
                                     </Link>
                                 ))}
+
+                                {/* Download (after Contact): the active PDFs as an accordion */}
+                                <div className="border-b border-slate-50">
+                                    <button
+                                        onClick={() => setMobileAccordion(mobileAccordion === DOWNLOAD_MENU ? null : DOWNLOAD_MENU)}
+                                        aria-expanded={mobileAccordion === DOWNLOAD_MENU}
+                                        className="w-full flex items-center gap-3 py-3 px-3 rounded-xl transition-all active:bg-slate-50"
+                                    >
+                                        <div className="w-9 h-9 rounded-xl bg-slate-100 flex items-center justify-center flex-shrink-0">
+                                            <Download className={cn("w-4 h-4 transition-colors", mobileAccordion === DOWNLOAD_MENU ? "text-[#3b8c2a]" : "text-slate-500")} />
+                                        </div>
+                                        <span className={cn("text-[13px] font-medium flex-1 text-left transition-colors", mobileAccordion === DOWNLOAD_MENU ? "text-[#3b8c2a]" : "text-slate-900")}>
+                                            {DOWNLOAD_MENU}
+                                        </span>
+                                        <ChevronDown className={cn("w-4 h-4 transition-transform duration-300", mobileAccordion === DOWNLOAD_MENU ? "rotate-180 text-[#3b8c2a]" : "text-slate-400")} />
+                                    </button>
+
+                                    {mobileAccordion === DOWNLOAD_MENU && (
+                                        <div className="overflow-hidden animate-in fade-in slide-in-from-top-1">
+                                            <div className="pl-12 pr-2 pb-2 flex flex-col gap-0.5">
+                                                {downloads.length === 0 ? (
+                                                    <p className="py-2.5 px-3 text-[11px] text-slate-400">No downloads available right now.</p>
+                                                ) : (
+                                                    downloads.map((item, idx) => (
+                                                        <a
+                                                            key={item._id}
+                                                            href={downloadHref(item._id)}
+                                                            download
+                                                            onClick={() => setMobileOpen(false)}
+                                                            className="flex items-center gap-3 py-2.5 px-3 rounded-xl active:bg-slate-50 transition-all"
+                                                        >
+                                                            <div className="w-7 h-7 rounded-lg flex items-center justify-center flex-shrink-0 bg-slate-100">
+                                                                <FileText className={cn("w-3.5 h-3.5", idx % 2 === 0 ? "text-[#3b8c2a]" : "text-[#f59e0b]")} />
+                                                            </div>
+                                                            <span className="flex-1 min-w-0 text-[12px] font-medium text-slate-900" style={{ fontFamily: "var(--font-poppins-next), sans-serif" }}>
+                                                                {item.name}
+                                                            </span>
+                                                            <Download className="w-3.5 h-3.5 text-slate-300 flex-shrink-0" />
+                                                        </a>
+                                                    ))
+                                                )}
+                                            </div>
+                                        </div>
+                                    )}
+                                </div>
                             </div>
 
                             {/* Quick Pills */}

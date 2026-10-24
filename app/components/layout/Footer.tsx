@@ -10,12 +10,13 @@ import coOrganiserLogo from "../../assets/logos/namo.png";
 import goldLeaf from "../../assets/icons/footer-leaf.png";
 import greenLeaf from "../../assets/icons/foot1og.png";
 import mandala from "../../assets/icons/footer-mandala-lines.png";
+import encodencyLogo from "../../assets/logos/encodency-logo.png";
 import keynoteIcon from "../../assets/icons/foot2.png";
 import panelIcon from "../../assets/icons/foot1.png";
 import workshopIcon from "../../assets/icons/foot11.png";
 import networkingIcon from "../../assets/icons/foot22.png";
 import innovationIcon from "../../assets/icons/foot33.png";
-import { ArrowRight, ChevronRight, Globe, Heart, Mail, MapPin, Phone } from "lucide-react";
+import { ArrowRight, ChevronRight, Globe, Mail, MapPin, Phone } from "lucide-react";
 
 type IconProps = React.SVGProps<SVGSVGElement>;
 
@@ -501,8 +502,18 @@ export default function Footer({ initialFooterData }: { initialFooterData?: Foot
             </Link>
           </span>
 
-          <span className="flex items-center gap-[10px]">
-            Designed with <Heart className="h-[17px] w-[17px]" fill={GOLD} strokeWidth={0} /> for organic future
+          {/* Credit: "Designed & Developed by" + the enCodency logo */}
+          <span className="relative z-10 flex items-center justify-center gap-[12px] whitespace-nowrap">
+            Designed &amp; Developed by
+            <Image
+              src={encodencyLogo}
+              alt="enCodency Pvt. Ltd. – Raise the Bar"
+              title="enCodency Pvt. Ltd. — Raise the Bar"
+              width={480}
+              height={142}
+              sizes="(min-width: 1280px) 115px, 105px"
+              className="h-[31px] w-auto shrink-0 rounded-[5px] transition-transform duration-300 hover:-translate-y-[1px] xl:h-[34px]"
+            />
           </span>
         </div>
       </div>
