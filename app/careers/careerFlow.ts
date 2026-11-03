@@ -65,24 +65,54 @@ type BackendJob = {
   eligibilityThreshold?: number;
 };
 
-export const toCareerJob = (j: BackendJob): CareerJob => ({
-  _id: j._id,
-  id: j._id,
-  slug: j.slug,
-  title: j.title,
-  department: j.department,
-  location: j.location,
-  type: j.employmentType || "Full Time",
-  experience: `${j.experienceMin} - ${j.experienceMax} Years`,
-  description: j.description || j.responsibilities?.[0] || j.requirements?.[0] || j.title,
-  company: j.company,
-  responsibilities: j.responsibilities,
-  requirements: j.requirements,
-  preferredQualifications: j.preferredQualifications,
-  skills: j.skills,
-  education: j.educationRequirements,
-  eligibilityThreshold: j.eligibilityThreshold,
-});
+export const toCareerJob = (j: BackendJob): CareerJob => {
+  const min = (j as any).experienceMin;
+  const max = (j as any).experienceMax;
+  let exp = (j as any).experience;
+
+  if (!exp || String(exp).includes("undefined")) {
+    if (min !== undefined && min !== null && max !== undefined && max !== null && (min > 0 || max > 0)) {
+      exp = `${min} - ${max} Years`;
+    } else if (min !== undefined && min !== null && min > 0) {
+      exp = `${min}+ Years`;
+    } else if ((j as any).specificExperience) {
+      exp = (j as any).specificExperience;
+    } else {
+      exp = "2 - 5 Years";
+    }
+  }
+
+  const rawDesc = j.description || "";
+  let fullDesc = rawDesc;
+  if (fullDesc.length < 220 && Array.isArray(j.responsibilities) && j.responsibilities.length > 0) {
+    fullDesc = `${fullDesc} ${j.responsibilities.join(". ")}`.trim();
+  }
+  if (fullDesc.length < 220 && Array.isArray(j.requirements) && j.requirements.length > 0) {
+    fullDesc = `${fullDesc} ${j.requirements.join(". ")}`.trim();
+  }
+  if (!fullDesc) {
+    fullDesc = j.title || "Career opportunity at Bharat Organic Expo.";
+  }
+
+  return {
+    _id: j._id,
+    id: j._id,
+    slug: j.slug,
+    title: j.title,
+    department: j.department,
+    location: j.location,
+    type: j.employmentType || "Full Time",
+    experience: exp,
+    description: fullDesc,
+    company: j.company,
+    responsibilities: j.responsibilities,
+    requirements: j.requirements,
+    preferredQualifications: j.preferredQualifications,
+    skills: j.skills,
+    education: j.educationRequirements,
+    eligibilityThreshold: j.eligibilityThreshold,
+  };
+};
 
 /** Page addresses of the application steps */
 export const CAREER_STEP_URL = {

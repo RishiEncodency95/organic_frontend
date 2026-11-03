@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import Link from "next/link";
 import { trackCareer } from "@/lib/careerTracking";
 import Image from "next/image";
 import {
@@ -20,7 +21,7 @@ import {
   type LucideIcon,
 } from "lucide-react";
 import JobCardButtons from "./JobCardButtons";
-import { toCareerJob, type CareerJob } from "./careerFlow";
+import { toCareerJob, CAREER_STEP_URL, careerFlow, type CareerJob } from "./careerFlow";
 import leafA from "@/app/assets/icons/bleaf.png";
 import leafB from "@/app/assets/icons/cleaf.png";
 import leafC from "@/app/assets/icons/dleaf.png";
@@ -277,37 +278,128 @@ function Eyebrow({ children, light = false, line = false }: { children: React.Re
   );
 }
 
-function JobCard({ job }: { job: JobOpening }) {
+function JobLocationIcon({ className = "size-4 shrink-0 text-[#a8742b]" }: { className?: string }) {
+  return (
+    <svg viewBox="0 0 24 24" fill="none" className={className}>
+      <path
+        d="M12 2C7.8 2 4.5 5.3 4.5 9.4c0 5.4 6.7 12.1 7 12.4.3.3.7.3 1 0 .3-.3 7-7 7-12.4C19.5 5.3 16.2 2 12 2z"
+        fill="#ea8f1c"
+      />
+      <circle cx="12" cy="9.4" r="3" fill="#ffffff" />
+    </svg>
+  );
+}
+
+function JobExperienceIcon({ className = "size-3.5 shrink-0" }: { className?: string }) {
+  return (
+    <svg viewBox="0 0 24 24" fill="none" className={className}>
+      <circle cx="12" cy="12" r="9" fill="#ea8f1c" />
+      <path
+        d="M12 7v5.2l3.5 2.1"
+        stroke="#ffffff"
+        strokeWidth="2"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+    </svg>
+  );
+}
+
+function JobBriefcaseIcon({ className = "size-4 shrink-0 text-[#a8742b]" }: { className?: string }) {
+  return (
+    <svg viewBox="0 0 24 24" fill="none" className={className}>
+      <path
+        d="M8.5 6V4.8C8.5 3.8 9.3 3 10.3 3h3.4c1 0 1.8.8 1.8 1.8V6"
+        stroke="#ea8f1c"
+        strokeWidth="2.2"
+        strokeLinecap="round"
+      />
+      <rect x="2.5" y="6" width="19" height="14" rx="2.8" fill="#ea8f1c" />
+      <path
+        d="M2.5 11.2h19"
+        stroke="#fff"
+        strokeWidth="1.8"
+        strokeDasharray="2 1.5"
+      />
+      <circle cx="12" cy="11.2" r="1.6" fill="#fff" />
+    </svg>
+  );
+}
+
+const JOB_FALLBACKS = [
+  "/assets/careers/job-1.webp",
+  "/assets/careers/job-2.webp",
+  "/assets/careers/job-3.webp",
+  "/assets/careers/job-4.webp",
+];
+
+function JobCard({ job, index = 0 }: { job: JobOpening; index?: number }) {
+  const href = CAREER_STEP_URL.apply(job);
+  const coverImg = (job as any).coverImage || JOB_FALLBACKS[index % JOB_FALLBACKS.length];
+  const expText =
+    job.experience && !String(job.experience).includes("undefined")
+      ? job.experience
+      : (job as any).experienceMin !== undefined && (job as any).experienceMax !== undefined
+      ? `${(job as any).experienceMin} - ${(job as any).experienceMax} Years`
+      : "2 - 5 Years";
 
   return (
-    <article className="flex flex-col gap-4 rounded-[8px] border border-[#ebe1cb] bg-[#fffdf8] p-5 shadow-[0_3px_14px_rgba(120,92,40,0.07)] transition-shadow duration-300 hover:shadow-[0_6px_22px_rgba(120,92,40,0.12)] sm:flex-row sm:items-center sm:gap-[16px] sm:px-[16px] sm:py-[12px]">
-      <span className="grid h-[56px] w-[56px] shrink-0 place-items-center rounded-full border-[1.5px] border-[#c9d6c3] bg-[#fbf8ef] text-[#17603a]">
-        <JobIcon job={job} />
-      </span>
+    <article className="group flex h-full w-full flex-col justify-between overflow-hidden rounded-xl border border-[#ebdcc7] bg-[#fffdf9] shadow-[0_2px_12px_rgba(70,50,20,0.04)] transition hover:-translate-y-1 hover:shadow-[0_8px_20px_rgba(70,50,20,0.08)]">
+      {/* Edge-to-edge cover image with reduced compact height */}
+      <div className="relative aspect-[16/7.5] w-full shrink-0 overflow-hidden bg-[#efe6d6]">
+        <Image
+          src={coverImg}
+          alt={job.title}
+          fill
+          sizes="(max-width: 768px) 100vw, (max-width: 1280px) 50vw, 25vw"
+          className="object-cover transition duration-500 group-hover:scale-105"
+        />
+      </div>
 
-      <div className="min-w-0 flex-1">
-        <h3 className="font-playfair text-[18px] font-bold leading-tight text-[#13281b] sm:text-[19px]" style={SERIF}>{job.title}</h3>
-        <p className="mt-[5px] line-clamp-2 max-w-[420px] text-[14px] leading-[1.38] text-[#3a4a3f]">{job.description}</p>
+      {/* Padding inside the bottom text container */}
+      <div className="flex flex-1 flex-col justify-between p-3 sm:p-3.5">
+        <div className="flex flex-1 flex-col">
+          <h3
+            style={SERIF}
+            className="text-[14.5px] sm:text-[15.5px] font-bold text-[#163a2b] line-clamp-2 min-h-[38px] sm:min-h-[40px] leading-snug"
+            title={job.title}
+          >
+            {job.title}
+          </h3>
 
-        <div className="mt-[8px] flex flex-col items-start gap-3 sm:flex-row sm:items-center sm:justify-between md:flex-col md:items-start xl:flex-row xl:items-center xl:justify-between">
-          <div className="flex min-w-0 flex-1 flex-wrap items-center gap-x-[7px] gap-y-1.5 text-[11.5px] text-[#27362b]">
-            <span className="inline-flex items-center gap-[6px] whitespace-nowrap">
-              <MapPin className="h-[16px] w-[16px] text-[#1b6a3c]" fill="currentColor" stroke="#fffdf8" strokeWidth={1.6} />
-              {job.location}
+          {/* Same row with same orange-gold icon badge and unified text color */}
+          <div className="mt-1.5 mb-2 flex items-center gap-1.5 text-[11.5px] sm:text-[12px] font-medium text-[#4a4338] min-h-[22px] whitespace-nowrap overflow-hidden">
+            <span className="inline-flex items-center gap-1 truncate max-w-[100px] shrink-1" title={job.location}>
+              <JobLocationIcon className="size-3.5 shrink-0" />
+              <span className="truncate">{job.location}</span>
             </span>
-            <span aria-hidden="true" className="hidden text-[#b9b2a0] min-[480px]:inline md:hidden lg:inline">|</span>
-            <span className="inline-flex items-center gap-[6px] whitespace-nowrap">
-              <BriefcaseBusiness className="h-[16px] w-[16px] text-[#1b6a3c]" fill="currentColor" stroke="#fffdf8" strokeWidth={1.5} />
-              {job.type}
+            <span className="text-[#dacbb4] shrink-0">|</span>
+            <span className="inline-flex items-center gap-1 shrink-0">
+              <JobBriefcaseIcon className="size-3.5 shrink-0" />
+              <span>{job.type}</span>
             </span>
-            <span aria-hidden="true" className="hidden text-[#b9b2a0] min-[480px]:inline md:hidden lg:inline">|</span>
-            <span className="inline-flex items-center gap-[6px] whitespace-nowrap">
-              <Clock3 className="h-[15px] w-[15px] text-[#27362b]" strokeWidth={2} />
-              {job.experience}
+            <span className="text-[#dacbb4] shrink-0">|</span>
+            <span className="inline-flex items-center gap-1 shrink-0">
+              <JobExperienceIcon className="size-3.5 shrink-0" />
+              <span>{expText}</span>
             </span>
           </div>
-          <JobCardButtons job={job} variant="gold" />
+
+          <p className="text-[12.5px] leading-[1.45] text-[#554e42] line-clamp-4 min-h-[72px]">
+            {job.description}
+          </p>
         </div>
+        <Link
+          href={href}
+          onClick={() => {
+            trackCareer("apply_click", job._id || job.id);
+            careerFlow.start(job);
+          }}
+          className="mt-3 w-full shrink-0 py-1.5 px-3 rounded-md border-[1.5px] border-[#c89228] bg-transparent hover:bg-[#c89228] text-[#8a570c] hover:text-white text-[12.5px] sm:text-[13px] font-semibold transition-all inline-flex items-center justify-center gap-1.5 shadow-2xs"
+        >
+          <span>View Details</span>
+          <ArrowRight size={12} />
+        </Link>
       </div>
     </article>
   );
@@ -445,9 +537,9 @@ export default function CareersClientContent({ sections }: { sections?: any[] })
 
               <div className="mt-[16px]">
                 {openingCount > 0 ? (
-                  <div className="grid grid-cols-1 gap-[16px] md:grid-cols-2">
-                    {displayedJobs.map((job) => (
-                      <JobCard key={job.id} job={job} />
+                  <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+                    {displayedJobs.map((job, idx) => (
+                      <JobCard key={job.id || idx} job={job} index={idx} />
                     ))}
                   </div>
                 ) : (

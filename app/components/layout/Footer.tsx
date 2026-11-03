@@ -18,6 +18,7 @@ import panelIcon from "../../assets/icons/foot1.png";
 import workshopIcon from "../../assets/icons/foot11.png";
 import networkingIcon from "../../assets/icons/foot22.png";
 import innovationIcon from "../../assets/icons/foot33.png";
+import buildingIcon from "../../assets/icons/footer-building.webp";
 import { ChevronRight, Mail, Phone, Store } from "lucide-react";
 
 const DEFAULT_QUICK_LINKS = [
@@ -118,6 +119,7 @@ const SolidCalendarIcon = ({ className }: SolidIconProps) => (
   </svg>
 );
 
+
 const SolidBuildingIcon = ({ className }: SolidIconProps) => (
   <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" className={className}>
     <path
@@ -131,10 +133,10 @@ const SolidBuildingIcon = ({ className }: SolidIconProps) => (
 );
 
 /** Event fact under the logo: gold icon, gold label, white value */
-function EventFact({ icon, label, children }: { icon: React.ReactNode; label: React.ReactNode; children?: React.ReactNode }) {
+function EventFact({ icon, label, children, iconClassName }: { icon: React.ReactNode; label: React.ReactNode; children?: React.ReactNode; iconClassName?: string }) {
   return (
     <li className="flex items-start gap-[21px]">
-      <span className="mt-[1px] flex h-[28px] w-[28px] shrink-0 items-center justify-center" style={{ color: GOLD }}>
+      <span className={iconClassName || "mt-[1px] flex h-[28px] w-[28px] shrink-0 items-center justify-center"} style={{ color: GOLD }}>
         {icon}
       </span>
       <p className="text-[15px] leading-[19px] text-white">
@@ -335,8 +337,17 @@ export default function Footer({ initialFooterData }: { initialFooterData?: Foot
               <p className="text-[14px] font-semibold leading-[18px] text-white xl:-mt-[14px] xl:whitespace-nowrap">Our Offices – Namo Gange Wellness Pvt. Ltd.</p>
               <ul className="mt-[10px] xl:mt-[5px]">
                 {OFFICES.map((office) => (
-                  <li key={office.title} className="flex gap-[22px] border-b border-white/[0.16] py-[5px] last:border-b-0 last:pb-0 first:pt-[3px]">
-                    <span className="mt-[1px] shrink-0" style={{ color: GOLD }}><SolidBuildingIcon className="h-[29px] w-[29px]" /></span>
+                  <li key={office.title} className="flex items-start gap-[15px] border-b border-white/[0.16] py-[6px] last:border-b-0 last:pb-0 first:pt-[3px]">
+                    <span className="mt-[2px] flex h-[40px] w-[40px] shrink-0 items-center justify-center">
+                      <Image
+                        src={buildingIcon}
+                        alt="Office"
+                        width={40}
+                        height={39}
+                        sizes="40px"
+                        className="h-[40px] w-[40px] object-contain drop-shadow-[0_2px_6px_rgba(242,182,50,0.25)]"
+                      />
+                    </span>
                     <div className="min-w-0 text-[12px] leading-[15px] text-white xl:whitespace-nowrap">
                       <p className="text-[13px] font-semibold leading-[16px]" style={{ color: GOLD }}>
                         {office.title}
