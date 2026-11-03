@@ -23,6 +23,10 @@ export interface SlideData {
   titleSecondary: string;
   subtitle: string;
   description: string;
+  startDate?: string;
+  startTime?: string;
+  endDate?: string;
+  endTime?: string;
   date: string;
   location: string;
   button1Name?: string;
@@ -166,10 +170,73 @@ interface HeroSectionProps {
   initialSlides?: any[];
 }
 
+const parseDateTime = (dateStr?: string, timeStr?: string, isEnd = false): number | null => {
+  if (!dateStr || typeof dateStr !== "string" || !dateStr.trim()) return null;
+  const parts = dateStr.trim().split("-");
+  if (parts.length !== 3) return null;
+
+  let year: number;
+  let month: number;
+  let day: number;
+
+  if (parts[0].length === 4) {
+    year = Number(parts[0]);
+    month = Number(parts[1]) - 1;
+    day = Number(parts[2]);
+  } else if (parts[2].length === 4) {
+    day = Number(parts[0]);
+    month = Number(parts[1]) - 1;
+    year = Number(parts[2]);
+  } else {
+    return null;
+  }
+
+  let hours = isEnd ? 23 : 0;
+  let minutes = isEnd ? 59 : 0;
+  let seconds = isEnd ? 59 : 0;
+  let ms = isEnd ? 999 : 0;
+
+  if (timeStr && typeof timeStr === "string" && timeStr.trim()) {
+    const timeParts = timeStr.trim().split(":");
+    if (timeParts.length >= 2) {
+      hours = Number(timeParts[0]) || 0;
+      minutes = Number(timeParts[1]) || 0;
+      seconds = 0;
+      ms = 0;
+    }
+  }
+
+  return new Date(year, month, day, hours, minutes, seconds, ms).getTime();
+};
+
+const isSlideActive = (slide: any): boolean => {
+  // If schedule is not enabled, the slide is always active
+  if (!slide.isScheduled) {
+    return true;
+  }
+
+  const now = Date.now();
+
+  const startMs = parseDateTime(slide.startDate, slide.startTime, false);
+  if (startMs !== null && now < startMs) {
+    return false; // not started yet
+  }
+
+  const endMs = parseDateTime(slide.endDate, slide.endTime, true);
+  if (endMs !== null && now > endMs) {
+    return false; // expired
+  }
+
+  return true;
+};
+
 const normalizeSlides = (items?: any[]): SlideData[] => {
   if (!Array.isArray(items) || items.length === 0) return DEFAULT_SLIDES;
 
-  return items.map((item: any, idx: number) => {
+  const activeItems = items.filter(isSlideActive);
+  const displayList = activeItems.length > 0 ? activeItems : DEFAULT_SLIDES;
+
+  return displayList.map((item: any, idx: number) => {
     const fallback = DEFAULT_SLIDES[idx % DEFAULT_SLIDES.length];
     const rawImg = item.image || item.img;
     let imgSrc: StaticImageData | string = fallback.img;
@@ -187,6 +254,10 @@ const normalizeSlides = (items?: any[]): SlideData[] => {
       titleSecondary: item.titleSecondary || fallback.titleSecondary,
       subtitle: item.subtitle || fallback.subtitle,
       description: item.description || fallback.description,
+      startDate: item.startDate || "",
+      startTime: item.startTime || "",
+      endDate: item.endDate || "",
+      endTime: item.endTime || "",
       date: item.date || fallback.date,
       location: item.location || fallback.location,
       button1Name: item.button1Name || item.buttonLabel || fallback.button1Name || "Book Your Stall",
@@ -234,7 +305,9 @@ const ProgressBar = ({ cur, duration }: { cur: number; duration: number }) => {
    MAIN COMPONENT
 ───────────────────────────────────────── */
 const HeroSection = ({ initialSlides }: HeroSectionProps) => {
-  const hasServerSlides = Array.isArray(initialSlides) && initialSlides.length > 0;
+  const [rawSlides, setRawSlides] = useState<any[]>(() =>
+    Array.isArray(initialSlides) && initialSlides.length > 0 ? initialSlides : []
+  );
   const [slides, setSlides] = useState<SlideData[]>(() => normalizeSlides(initialSlides));
   const [cur, setCur] = useState(0);
   const [loadedSlideIds, setLoadedSlideIds] = useState<Set<number>>(() => new Set([0]));
@@ -254,16 +327,15 @@ const HeroSection = ({ initialSlides }: HeroSectionProps) => {
   const revealBar = useRef<HTMLDivElement>(null);
   const kenTimeline = useRef<gsap.core.Tween | null>(null);
 
-  // Fetch dynamic hero data from backend
+  // 1. Fetch dynamic hero data from backend (with ?all=true so we have all scheduled slides)
   useEffect(() => {
-    if (hasServerSlides) return;
-
     let isMounted = true;
     const fetchHeroData = async () => {
       try {
-        const res = await websiteApi.getHomeHero();
+        const res = await websiteApi.getHomeHero({ all: true });
         const items = Array.isArray(res) ? res : res?.data ? (Array.isArray(res.data) ? res.data : [res.data]) : [];
         if (items && items.length > 0 && isMounted) {
+          setRawSlides(items);
           setSlides(normalizeSlides(items));
         }
       } catch (err) {
@@ -274,7 +346,32 @@ const HeroSection = ({ initialSlides }: HeroSectionProps) => {
     return () => {
       isMounted = false;
     };
-  }, [hasServerSlides]);
+  }, []);
+
+  // 2. Real-time schedule checking in useEffect (every 10 seconds)
+  useEffect(() => {
+    const checkSchedule = () => {
+      const sourceItems = rawSlides.length > 0 ? rawSlides : (Array.isArray(initialSlides) ? initialSlides : []);
+      if (!sourceItems || sourceItems.length === 0) return;
+
+      const active = normalizeSlides(sourceItems);
+      setSlides((prev) => {
+        const prevKey = prev.map((s) => `${s.titlePrimary}_${s.startDate}_${s.startTime}_${s.endDate}_${s.endTime}`).join("|");
+        const nextKey = active.map((s) => `${s.titlePrimary}_${s.startDate}_${s.startTime}_${s.endDate}_${s.endTime}`).join("|");
+        if (prevKey !== nextKey) {
+          if (curRef.current >= active.length) {
+            curRef.current = 0;
+            setCur(0);
+          }
+          return active;
+        }
+        return prev;
+      });
+    };
+
+    const interval = setInterval(checkSchedule, 10000);
+    return () => clearInterval(interval);
+  }, [rawSlides, initialSlides]);
 
   /* ── Ken-Burns on current slide ── */
   const playKenBurns = useCallback((idx: number) => {

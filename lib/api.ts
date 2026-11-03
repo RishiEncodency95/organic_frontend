@@ -621,7 +621,7 @@ export const sponsorshipEnquiryApi = {
 };
 
 export const websiteApi = {
-    getHomeHero: async () => apiCall('/website/home/home-hero'),
+    getHomeHero: async (params?: { all?: boolean }) => apiCall(params?.all ? '/website/home/home-hero?all=true' : '/website/home/home-hero'),
     getHomeSection: async (section: string) => apiCall(`/website/home/${section}`),
     getAudienceStrip: async () => apiCall('/website/home/audience-strip'),
     getIntroductionSection: async () => apiCall('/website/home/introduction-section'),
