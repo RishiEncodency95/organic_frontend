@@ -5,7 +5,7 @@ import Image, { StaticImageData } from "next/image";
 import { CalendarDays, MapPin, ArrowRight } from "lucide-react";
 import gsap from "gsap";
 import SectionContainer from "@/app/components/layout/SectionContainer";
-import { websiteApi, SERVER_URL } from "@/lib/api";
+import { websiteApi, SERVER_URL, API_URL } from "@/lib/api";
 import { buildCloudinaryImageUrl } from "@/lib/cloudinaryImage";
 import home1 from "../../assets/home/home11.webp";
 import home2 from "../../assets/home/home22.webp";
@@ -33,6 +33,7 @@ export interface SlideData {
   button1Link?: string;
   button2Name?: string;
   button2Link?: string;
+  showContent?: boolean;
 }
 
 /* ─────────────────────────────────────────
@@ -170,6 +171,10 @@ interface HeroSectionProps {
   initialSlides?: any[];
 }
 
+// Schedule dates/times are entered in the admin in India Standard Time (UTC+05:30). They are
+// read as IST here (and on the server) so every visitor / server timezone agrees.
+const IST_OFFSET_MS = 330 * 60 * 1000;
+
 const parseDateTime = (dateStr?: string, timeStr?: string, isEnd = false): number | null => {
   if (!dateStr || typeof dateStr !== "string" || !dateStr.trim()) return null;
   const parts = dateStr.trim().split("-");
@@ -206,7 +211,23 @@ const parseDateTime = (dateStr?: string, timeStr?: string, isEnd = false): numbe
     }
   }
 
-  return new Date(year, month, day, hours, minutes, seconds, ms).getTime();
+  const value = Date.UTC(year, month, day, hours, minutes, seconds, ms) - IST_OFFSET_MS;
+  return Number.isNaN(value) ? null : value;
+};
+
+// Next moment (start or end of any scheduled slide) after which the visible set can change.
+const getNextScheduleBoundary = (items: any[], now: number): number | null => {
+  let next: number | null = null;
+  const consider = (ms: number | null) => {
+    if (ms !== null && ms > now && (next === null || ms < next)) next = ms;
+  };
+  items.forEach((slide) => {
+    if (!slide?.isScheduled) return;
+    consider(parseDateTime(slide.startDate, slide.startTime, false));
+    const endMs = parseDateTime(slide.endDate, slide.endTime, true);
+    consider(endMs === null ? null : endMs + 1); // slide expires just after its end instant
+  });
+  return next;
 };
 
 const isSlideActive = (slide: any): boolean => {
@@ -234,7 +255,14 @@ const normalizeSlides = (items?: any[]): SlideData[] => {
   if (!Array.isArray(items) || items.length === 0) return DEFAULT_SLIDES;
 
   const activeItems = items.filter(isSlideActive);
-  const displayList = activeItems.length > 0 ? activeItems : DEFAULT_SLIDES;
+  // Live scheduled slides (festival / event banners) lead the carousel; normal slides follow,
+  // each group keeping its saved order.
+  const isTimed = (slide: any) =>
+    Boolean(slide?.isScheduled) &&
+    (parseDateTime(slide.startDate, slide.startTime, false) !== null ||
+      parseDateTime(slide.endDate, slide.endTime, true) !== null);
+  const orderedItems = [...activeItems.filter(isTimed), ...activeItems.filter((slide) => !isTimed(slide))];
+  const displayList = orderedItems.length > 0 ? orderedItems : DEFAULT_SLIDES;
 
   return displayList.map((item: any, idx: number) => {
     const fallback = DEFAULT_SLIDES[idx % DEFAULT_SLIDES.length];
@@ -264,6 +292,7 @@ const normalizeSlides = (items?: any[]): SlideData[] => {
       button1Link: item.button1Link || item.buttonHref || fallback.button1Link || "/registration/book-a-stand",
       button2Name: item.button2Name || item.secondaryButtonLabel || fallback.button2Name || "Register as Visitor",
       button2Link: item.button2Link || item.secondaryButtonHref || fallback.button2Link || "/registration/visitor-registration",
+      showContent: item.showContent !== false,
     };
   });
 };
@@ -348,6 +377,36 @@ const HeroSection = ({ initialSlides }: HeroSectionProps) => {
     };
   }, []);
 
+  // 1b. Pick up admin changes (slide added / removed / re-timed) without a page reload.
+  //     Reads the API directly (no client cache) every 30s while the tab is visible.
+  const rawSlidesJsonRef = useRef("");
+  useEffect(() => {
+    rawSlidesJsonRef.current = JSON.stringify(rawSlides);
+  }, [rawSlides]);
+  useEffect(() => {
+    let cancelled = false;
+    const refresh = async () => {
+      if (typeof document !== "undefined" && document.visibilityState === "hidden") return;
+      try {
+        const res = await fetch(`${API_URL}/website/home/home-hero?all=true`, { cache: "no-store" });
+        if (!res.ok) return;
+        const body = await res.json();
+        const items = Array.isArray(body?.data) ? body.data : [];
+        if (cancelled || items.length === 0) return;
+        if (JSON.stringify(items) === rawSlidesJsonRef.current) return; // nothing changed
+        setRawSlides(items);
+        setSlides(normalizeSlides(items));
+      } catch {
+        // offline / server restarting: keep showing what we have
+      }
+    };
+    const interval = setInterval(refresh, 30000);
+    return () => {
+      cancelled = true;
+      clearInterval(interval);
+    };
+  }, []);
+
   // 2. Real-time schedule checking in useEffect (every 10 seconds)
   useEffect(() => {
     const checkSchedule = () => {
@@ -370,8 +429,32 @@ const HeroSection = ({ initialSlides }: HeroSectionProps) => {
     };
 
     const interval = setInterval(checkSchedule, 10000);
-    return () => clearInterval(interval);
+
+    // Also fire exactly when the next slide starts / expires, instead of waiting for the poll.
+    let boundaryTimer: ReturnType<typeof setTimeout> | null = null;
+    const armBoundaryTimer = () => {
+      if (boundaryTimer) clearTimeout(boundaryTimer);
+      const sourceItems = rawSlides.length > 0 ? rawSlides : (Array.isArray(initialSlides) ? initialSlides : []);
+      const next = getNextScheduleBoundary(sourceItems, Date.now());
+      if (next === null) return;
+      const delay = Math.min(Math.max(next - Date.now() + 250, 250), 2147483647);
+      boundaryTimer = setTimeout(() => {
+        checkSchedule();
+        armBoundaryTimer();
+      }, delay);
+    };
+    armBoundaryTimer();
+
+    return () => {
+      clearInterval(interval);
+      if (boundaryTimer) clearTimeout(boundaryTimer);
+    };
   }, [rawSlides, initialSlides]);
+
+  const slidesCountRef = useRef(slides.length);
+  useEffect(() => {
+    slidesCountRef.current = slides.length;
+  }, [slides.length]);
 
   /* ── Ken-Burns on current slide ── */
   const playKenBurns = useCallback((idx: number) => {
@@ -391,6 +474,10 @@ const HeroSection = ({ initialSlides }: HeroSectionProps) => {
       return;
     }
     const items = panel.querySelectorAll("[data-anim]");
+    if (items.length === 0) {
+      done?.(); // image-only slide: no text to animate
+      return;
+    }
     gsap.to(items, {
       y: -30,
       opacity: 0,
@@ -406,6 +493,7 @@ const HeroSection = ({ initialSlides }: HeroSectionProps) => {
     const panel = panels.current[idx];
     if (!panel) return;
     const items = panel.querySelectorAll("[data-anim]");
+    if (items.length === 0) return; // image-only slide: no text to animate
     gsap.set(items, { opacity: 0, y: 40, filter: "blur(4px)" });
     gsap.to(items, {
       opacity: 1,
@@ -428,7 +516,11 @@ const HeroSection = ({ initialSlides }: HeroSectionProps) => {
 
   /* ── CORE TRANSITION ── */
   const goTo = useCallback(
-    (targetIdx: number) => {
+    (requestedIdx: number) => {
+      const count = slidesCountRef.current;
+      if (count === 0) return;
+      // A timer started before a scheduled slide expired can point past the end of the list.
+      const targetIdx = requestedIdx < count ? requestedIdx : (curRef.current + 1) % count;
       if (busyRef.current || targetIdx === curRef.current) return;
       if (timerRef.current) clearTimeout(timerRef.current);
 
@@ -453,11 +545,11 @@ const HeroSection = ({ initialSlides }: HeroSectionProps) => {
       const tl = gsap.timeline({
         onComplete: () => {
           busyRef.current = false;
-          gsap.set(prevBg, { zIndex: 1, clipPath: "inset(0 0% 0 0)", opacity: 1, x: 0 });
-          gsap.set(prevImg, { scale: 1, filter: "none" });
+          if (prevBg) gsap.set(prevBg, { zIndex: 1, clipPath: "inset(0 0% 0 0)", opacity: 1, x: 0 });
+          if (prevImg) gsap.set(prevImg, { scale: 1, filter: "none" });
           startTimer(targetIdx);
           playKenBurns(targetIdx);
-          loadSlide((targetIdx + 1) % slides.length);
+          loadSlide((targetIdx + 1) % slidesCountRef.current);
         },
       });
 
@@ -485,16 +577,18 @@ const HeroSection = ({ initialSlides }: HeroSectionProps) => {
       }
 
       // 4. reveal bar wipe + next image clip-path unclip
-      gsap.set(nextBg, { zIndex: 4 });
-      gsap.set(nextImg, { scale: 1.1, filter: "brightness(0.92) saturate(0.85)" });
+      if (nextBg) gsap.set(nextBg, { zIndex: 4 });
+      if (nextImg) gsap.set(nextImg, { scale: 1.1, filter: "brightness(0.92) saturate(0.85)" });
 
       if (revealBar.current) {
         tl.set(revealBar.current, { scaleX: 0, transformOrigin: "left center", opacity: 1 }, 0.08);
         tl.to(revealBar.current, { scaleX: 1, duration: 0.55, ease: "power4.inOut" }, 0.08);
       }
 
-      gsap.set(nextBg, { clipPath: "inset(0 100% 0 0)" });
-      tl.to(nextBg, { clipPath: "inset(0 0% 0 0)", duration: 0.55, ease: "power4.inOut" }, 0.08);
+      if (nextBg) {
+        gsap.set(nextBg, { clipPath: "inset(0 100% 0 0)" });
+        tl.to(nextBg, { clipPath: "inset(0 0% 0 0)", duration: 0.55, ease: "power4.inOut" }, 0.08);
+      }
 
       if (revealBar.current) {
         tl.to(
@@ -505,10 +599,10 @@ const HeroSection = ({ initialSlides }: HeroSectionProps) => {
       }
 
       // 5. prev slide drifts away
-      tl.to(prevBg, { x: "-6%", opacity: 0, duration: 0.5, ease: "power2.in" }, 0.12);
+      if (prevBg) tl.to(prevBg, { x: "-6%", opacity: 0, duration: 0.5, ease: "power2.in" }, 0.12);
 
       // 6. next image sharpens + settles
-      tl.to(nextImg, { scale: 1, filter: "brightness(1) saturate(1)", duration: 0.85, ease: "power2.out" }, 0.35);
+      if (nextImg) tl.to(nextImg, { scale: 1, filter: "brightness(1) saturate(1)", duration: 0.85, ease: "power2.out" }, 0.35);
 
       // 7. state update + content in
       tl.add(() => {
@@ -526,7 +620,7 @@ const HeroSection = ({ initialSlides }: HeroSectionProps) => {
     (idx: number) => {
       if (timerRef.current) clearTimeout(timerRef.current);
       timerRef.current = setTimeout(() => {
-        goTo((idx + 1) % slides.length);
+        goTo((idx + 1) % Math.max(slidesCountRef.current, 1));
       }, SLIDE_DURATION);
     },
     [goTo, slides.length]
@@ -543,6 +637,12 @@ const HeroSection = ({ initialSlides }: HeroSectionProps) => {
 
   /* ── INIT ── */
   useEffect(() => {
+    // This effect re-runs when the number of slides changes (a slide went live / expired) and
+    // it re-initialises the layers for slide 0. Keep the visible slide in step with that,
+    // otherwise a visitor sitting on another slide is left with its text still hidden (blank hero).
+    curRef.current = 0;
+    setCur(0);
+
     bgLayers.current.forEach((el, i) => {
       if (!el) return;
       gsap.set(el, { zIndex: i === 0 ? 2 : 1, clipPath: "inset(0 0% 0 0)", opacity: 1, x: 0 });
@@ -551,6 +651,7 @@ const HeroSection = ({ initialSlides }: HeroSectionProps) => {
     panels.current.forEach((panel, index) => {
       if (!panel) return;
       const items = panel.querySelectorAll("[data-anim]");
+      if (items.length === 0) return; // image-only slide
       gsap.set(items, index === 0
         ? { opacity: 1, y: 0, filter: "blur(0px)" }
         : { opacity: 0, y: 40, filter: "blur(4px)" });
@@ -659,7 +760,7 @@ const HeroSection = ({ initialSlides }: HeroSectionProps) => {
 
       <section
         ref={sectionRef}
-        className="relative w-full overflow-hidden bg-[#fcfcf0] min-h-[460px] md:min-h-[400px] h-auto py-2 md:py-0 md:h-[72vh] lg:h-[78vh] flex items-center font-inter"
+        className="relative w-full overflow-hidden bg-[#fcfcf0] min-h-[460px] md:min-h-[400px] h-auto py-2 md:py-0 md:aspect-[1400/526] flex items-center font-inter"
       >
         {/* ── BACKGROUND LAYERS ── */}
         {slides.map(({ id, img, alt }) => {
@@ -746,7 +847,7 @@ const HeroSection = ({ initialSlides }: HeroSectionProps) => {
         />
 
         {/* ── BACKGROUND GRADIENT ── */}
-        <div className="absolute inset-0 bg-gradient-to-r from-[#fcfcf0]/30 via-[#fcfcf0]/10 to-transparent md:from-[#fcfcf0]/60 md:via-[#fcfcf0]/0 md:to-transparent z-10 pointer-events-none" />
+        <div className={`absolute inset-0 bg-gradient-to-r ${slides[cur]?.showContent === false ? "hidden" : ""} from-[#fcfcf0]/30 via-[#fcfcf0]/10 to-transparent md:from-[#fcfcf0]/60 md:via-[#fcfcf0]/0 md:to-transparent z-10 pointer-events-none`} />
 
         {/* ── CONTENT PANELS ── */}
         <SectionContainer
@@ -765,94 +866,96 @@ const HeroSection = ({ initialSlides }: HeroSectionProps) => {
                 pointerEvents: cur === slide.id ? "auto" : "none",
               }}
             >
-              <div className="flex flex-col w-full bg-white/35 md:bg-transparent backdrop-blur-md md:backdrop-blur-none p-3.5 sm:p-0 rounded-2xl border border-white/40 md:border-none shadow-md md:shadow-none">
-                {/* Tagline */}
-                <div data-anim="1" className="flex items-center gap-2 mb-2">
-                  <div className="w-7 h-[2px] bg-[#c2410c]/80" />
-                  <span className="text-[#c2410c] text-xs md:text-sm font-bold tracking-[0.14em] uppercase">
-                    {slide.tagline}
-                  </span>
-                  <div className="w-7 h-[2px] bg-[#c2410c]/80" />
+              {slide.showContent !== false && (
+                <div className="flex flex-col w-full bg-white/35 md:bg-transparent backdrop-blur-md md:backdrop-blur-none p-3.5 sm:p-0 rounded-2xl border border-white/40 md:border-none shadow-md md:shadow-none">
+                  {/* Tagline */}
+                  <div data-anim="1" className="flex items-center gap-2 mb-2">
+                    <div className="w-7 h-[2px] bg-[#c2410c]/80" />
+                    <span className="text-[#c2410c] text-xs md:text-sm font-bold tracking-[0.14em] uppercase">
+                      {slide.tagline}
+                    </span>
+                    <div className="w-7 h-[2px] bg-[#c2410c]/80" />
+                  </div>
+
+                  {/* Title */}
+                  <h2
+                    data-anim="2"
+                    className="text-3xl md:text-4xl lg:text-[54px] font-semibold leading-[1.06] font-poppins mb-3"
+                    style={{ textShadow: "1px 1px 2px rgba(0,0,0,0.4)" }}
+                  >
+                    <div className="text-[#1b5e20] tracking-tight">
+                      {slide.titlePrimary}
+                    </div>
+                    <div className="text-[#F6A919] tracking-tight mt-0.5">
+                      {slide.titleSecondary}
+                    </div>
+                  </h2>
+
+                  {/* Subtitle */}
+                  <p data-anim="3" className="text-[#131730] font-bold text-sm md:text-base lg:text-lg leading-relaxed mb-2 font-inter">
+                    {slide.subtitle}
+                  </p>
+
+                  {/* Description */}
+                  <p data-anim="4" className="text-[#131730] font-bold text-sm md:text-[15px] lg:text-base leading-relaxed max-w-lg mb-4 md:mb-5 font-inter">
+                    {slide.description}
+                  </p>
+
+                  {/* Date / Location */}
+                  <div data-anim="5" className="flex flex-wrap items-center gap-3 sm:gap-4 text-[#4B1426] text-sm md:text-[15px] lg:text-base font-bold mb-1 md:mb-1.5">
+                    <div className="flex items-center gap-2">
+                      <CalendarDays size={18} className="shrink-0 text-[#ea580c]" />
+                      <span>{slide.date}</span>
+                    </div>
+                    <div className="hidden sm:block w-px h-5 bg-[#4B1426]/30"></div>
+                    <div className="flex items-center gap-2">
+                      <MapPin size={18} className="shrink-0 text-[#ea580c]" />
+                      <span>{slide.location}</span>
+                    </div>
+                  </div>
+
+                  {/* Buttons */}
+                  <div data-anim="6" className="flex flex-col sm:flex-row items-stretch sm:items-center gap-2.5 pt-3 pb-2 relative overflow-visible w-full max-w-xs sm:max-w-none">
+                    {/* Button 1 (Book Your Stall) */}
+                    <div className="relative shrink-0 w-full sm:w-auto">
+                      <Sparkle color="#f97316" shadow="#c2410c" style={{ top: "-12px", left: "5%", animationDelay: "0s" }} />
+                      <Sparkle color="#fdba74" shadow="#c2410c" style={{ top: "-15px", left: "28%", animationDelay: "0.3s" }} />
+                      <Sparkle color="#ffedd5" shadow="#c2410c" style={{ top: "-13px", left: "50%", animationDelay: "0.6s" }} />
+                      <Sparkle color="#fdba74" shadow="#c2410c" style={{ top: "-15px", left: "72%", animationDelay: "0.9s" }} />
+                      <Sparkle color="#f97316" shadow="#c2410c" style={{ top: "-12px", right: "5%", animationDelay: "1.2s" }} />
+                      <Link
+                        href={slide.button1Link || "/registration/book-a-stand"}
+                        target={slide.button1Link?.startsWith("http") ? "_blank" : undefined}
+                        rel="noopener noreferrer"
+                        className="group relative inline-flex items-center justify-center sm:justify-start gap-2 px-4 py-2.5 md:px-5 md:py-2.5 rounded-lg font-bold text-xs uppercase tracking-widest text-white hover:bg-[#c2410c] transition-all active:scale-95 relative z-10 w-full sm:w-auto overflow-hidden shadow-md border border-white/10"
+                        style={{
+                          background: "linear-gradient(135deg, #ea580c 0%, #c2410c 100%)",
+                          boxShadow: "0 4px 20px rgba(194,65,12,0.4), 0 0 12px rgba(249,115,22,0.25)",
+                        }}
+                      >
+                        <span className="absolute inset-0 bg-white/15 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-500 skew-x-12" />
+                        {slide.button1Name || "Book Your Stall"} <ArrowRight size={15} className="group-hover:translate-x-1 transition-transform" />
+                      </Link>
+                    </div>
+
+                    {/* Button 2 (Register as Visitor) */}
+                    <div className="relative shrink-0 w-full sm:w-auto">
+                      <Sparkle color="#4ade80" shadow="#1b5e20" style={{ top: "-12px", left: "10%", animationDelay: "0.2s" }} />
+                      <Sparkle color="#86efac" shadow="#16a34a" style={{ top: "-15px", left: "50%", animationDelay: "0.6s" }} />
+                      <Sparkle color="#4ade80" shadow="#1b5e20" style={{ top: "-12px", right: "10%", animationDelay: "1s" }} />
+                      <Link
+                        href={slide.button2Link || "/registration/visitor-registration"}
+                        target={slide.button2Link?.startsWith("http") ? "_blank" : undefined}
+                        rel="noopener noreferrer"
+                        className="blue-btn-hero text-white px-4 py-2.5 md:px-5 md:py-2.5 rounded-lg font-bold text-xs uppercase tracking-widest flex items-center justify-center sm:justify-start gap-2 transition-all active:scale-95 relative z-10 w-full sm:w-auto whitespace-nowrap shadow-md"
+                      >
+                        {slide.button2Name || "Register as Visitor"} <ArrowRight size={15} />
+                      </Link>
+                    </div>
+                  </div>
+
                 </div>
-
-                {/* Title */}
-                <h2
-                  data-anim="2"
-                  className="text-3xl md:text-4xl lg:text-[54px] font-semibold leading-[1.06] font-poppins mb-3"
-                  style={{ textShadow: "1px 1px 2px rgba(0,0,0,0.4)" }}
-                >
-                  <div className="text-[#1b5e20] tracking-tight">
-                    {slide.titlePrimary}
-                  </div>
-                  <div className="text-[#F6A919] tracking-tight mt-0.5">
-                    {slide.titleSecondary}
-                  </div>
-                </h2>
-
-                {/* Subtitle */}
-                <p data-anim="3" className="text-[#131730] font-bold text-sm md:text-base lg:text-lg leading-relaxed mb-2 font-inter">
-                  {slide.subtitle}
-                </p>
-
-                {/* Description */}
-                <p data-anim="4" className="text-[#131730] font-bold text-sm md:text-[15px] lg:text-base leading-relaxed max-w-lg mb-4 md:mb-5 font-inter">
-                  {slide.description}
-                </p>
-
-                {/* Date / Location */}
-                <div data-anim="5" className="flex flex-wrap items-center gap-3 sm:gap-4 text-[#4B1426] text-sm md:text-[15px] lg:text-base font-bold mb-1 md:mb-1.5">
-                  <div className="flex items-center gap-2">
-                    <CalendarDays size={18} className="shrink-0 text-[#ea580c]" />
-                    <span>{slide.date}</span>
-                  </div>
-                  <div className="hidden sm:block w-px h-5 bg-[#4B1426]/30"></div>
-                  <div className="flex items-center gap-2">
-                    <MapPin size={18} className="shrink-0 text-[#ea580c]" />
-                    <span>{slide.location}</span>
-                  </div>
-                </div>
-
-                {/* Buttons */}
-                <div data-anim="6" className="flex flex-col sm:flex-row items-stretch sm:items-center gap-2.5 pt-3 pb-2 relative overflow-visible w-full max-w-xs sm:max-w-none">
-                  {/* Button 1 (Book Your Stall) */}
-                  <div className="relative shrink-0 w-full sm:w-auto">
-                    <Sparkle color="#f97316" shadow="#c2410c" style={{ top: "-12px", left: "5%", animationDelay: "0s" }} />
-                    <Sparkle color="#fdba74" shadow="#c2410c" style={{ top: "-15px", left: "28%", animationDelay: "0.3s" }} />
-                    <Sparkle color="#ffedd5" shadow="#c2410c" style={{ top: "-13px", left: "50%", animationDelay: "0.6s" }} />
-                    <Sparkle color="#fdba74" shadow="#c2410c" style={{ top: "-15px", left: "72%", animationDelay: "0.9s" }} />
-                    <Sparkle color="#f97316" shadow="#c2410c" style={{ top: "-12px", right: "5%", animationDelay: "1.2s" }} />
-                    <Link
-                      href={slide.button1Link || "/registration/book-a-stand"}
-                      target={slide.button1Link?.startsWith("http") ? "_blank" : undefined}
-                      rel="noopener noreferrer"
-                      className="group relative inline-flex items-center justify-center sm:justify-start gap-2 px-4 py-2.5 md:px-5 md:py-2.5 rounded-lg font-bold text-xs uppercase tracking-widest text-white hover:bg-[#c2410c] transition-all active:scale-95 relative z-10 w-full sm:w-auto overflow-hidden shadow-md border border-white/10"
-                      style={{
-                        background: "linear-gradient(135deg, #ea580c 0%, #c2410c 100%)",
-                        boxShadow: "0 4px 20px rgba(194,65,12,0.4), 0 0 12px rgba(249,115,22,0.25)",
-                      }}
-                    >
-                      <span className="absolute inset-0 bg-white/15 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-500 skew-x-12" />
-                      {slide.button1Name || "Book Your Stall"} <ArrowRight size={15} className="group-hover:translate-x-1 transition-transform" />
-                    </Link>
-                  </div>
-
-                  {/* Button 2 (Register as Visitor) */}
-                  <div className="relative shrink-0 w-full sm:w-auto">
-                    <Sparkle color="#4ade80" shadow="#1b5e20" style={{ top: "-12px", left: "10%", animationDelay: "0.2s" }} />
-                    <Sparkle color="#86efac" shadow="#16a34a" style={{ top: "-15px", left: "50%", animationDelay: "0.6s" }} />
-                    <Sparkle color="#4ade80" shadow="#1b5e20" style={{ top: "-12px", right: "10%", animationDelay: "1s" }} />
-                    <Link
-                      href={slide.button2Link || "/registration/visitor-registration"}
-                      target={slide.button2Link?.startsWith("http") ? "_blank" : undefined}
-                      rel="noopener noreferrer"
-                      className="blue-btn-hero text-white px-4 py-2.5 md:px-5 md:py-2.5 rounded-lg font-bold text-xs uppercase tracking-widest flex items-center justify-center sm:justify-start gap-2 transition-all active:scale-95 relative z-10 w-full sm:w-auto whitespace-nowrap shadow-md"
-                    >
-                      {slide.button2Name || "Register as Visitor"} <ArrowRight size={15} />
-                    </Link>
-                  </div>
-                </div>
-
-              </div>
+              )}
             </div>
           ))}
         </SectionContainer>
@@ -870,9 +973,8 @@ const HeroSection = ({ initialSlides }: HeroSectionProps) => {
               aria-label={`Go to slide ${id + 1}`}
             >
               <span
-                className={`block rounded-full border border-[#2b5825]/30 transition-all duration-400 ${
-                  cur === id ? "w-5 h-2 bg-[#2b5825] dot-active-hero" : "w-2 h-2 bg-[#2b5825]/40 hover:bg-[#2b5825]/70"
-                }`}
+                className={`block rounded-full border border-[#2b5825]/30 transition-all duration-400 ${cur === id ? "w-5 h-2 bg-[#2b5825] dot-active-hero" : "w-2 h-2 bg-[#2b5825]/40 hover:bg-[#2b5825]/70"
+                  }`}
               />
             </button>
           ))}
