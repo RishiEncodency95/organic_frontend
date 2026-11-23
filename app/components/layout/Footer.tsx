@@ -64,7 +64,7 @@ const OFFICES: Office[] = [
   },
 ];
 
-const STALL_BOOKING_PHONE = "+91 96549000525";
+const STALL_BOOKING_PHONE = "+91 9654900525";
 
 const GOLD = "#F2B632";
 
@@ -164,9 +164,9 @@ export default function Footer({ initialFooterData }: { initialFooterData?: Foot
   const quickLinks =
     footerData?.items && footerData.items.length > 0
       ? footerData.items.map((item) => ({
-          name: item.label || item.name || "Link",
-          path: item.href || item.path || "/",
-        }))
+        name: item.label || item.name || "Link",
+        path: item.href || item.path || "/",
+      }))
       : DEFAULT_QUICK_LINKS;
 
   // Co-organiser logo uploaded in admin (Footer section), else the bundled one
