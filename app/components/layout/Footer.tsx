@@ -48,7 +48,7 @@ const OFFICES: Office[] = [
   {
     title: "Head Office – Ghaziabad, India",
     lines: ["Namo Gange Wellness Pvt. Ltd.", "Plot No. 12/29, Site II Industrial Area,", "Mohan Nagar, Ghaziabad – 201007,", "Uttar Pradesh, India."],
-    phone: "+91 9654900525",
+    phone: "+91 96549 00525",
     email: "info@namogangewellness.com",
   },
   {
@@ -154,6 +154,10 @@ type FooterData = {
   enabled?: boolean;
   bottomBannerImage?: string;
   items?: { label?: string; name?: string; href?: string; path?: string }[];
+  stallBookingPhone?: string;
+  stallBookingNumber?: string;
+  phoneNumber?: string;
+  contactEmail?: string;
 };
 
 export default function Footer({ initialFooterData }: { initialFooterData?: FooterData | null } = {}) {
@@ -180,6 +184,22 @@ export default function Footer({ initialFooterData }: { initialFooterData?: Foot
   const coOrganiserSrc = uploadedOr(footerData?.bottomBannerImage, coOrganiserLogo);
 
   const year = new Date().getFullYear();
+
+  // Dynamic Stall Booking phone from admin, fallback to default
+  const stallBookingPhone =
+    footerData?.stallBookingPhone?.trim() ||
+    footerData?.stallBookingNumber?.trim() ||
+    STALL_BOOKING_PHONE;
+
+  const offices: Office[] = [
+    {
+      ...OFFICES[0],
+      phone: footerData?.phoneNumber?.trim() || OFFICES[0].phone,
+      email: footerData?.contactEmail?.trim() || OFFICES[0].email,
+    },
+    OFFICES[1],
+    OFFICES[2],
+  ];
 
   return (
     <footer
@@ -336,18 +356,9 @@ export default function Footer({ initialFooterData }: { initialFooterData?: Foot
               <ColumnHeading>Get In Touch</ColumnHeading>
               <p className="text-[14px] font-semibold leading-[18px] text-white xl:-mt-[14px] xl:whitespace-nowrap">Our Offices – Namo Gange Wellness Pvt. Ltd.</p>
               <ul className="mt-[10px] xl:mt-[5px]">
-                {OFFICES.map((office) => (
-                  <li key={office.title} className="flex items-start gap-[15px] border-b border-white/[0.16] py-[6px] last:border-b-0 last:pb-0 first:pt-[3px]">
-                    <span className="mt-[2px] flex h-[40px] w-[40px] shrink-0 items-center justify-center">
-                      <Image
-                        src={buildingIcon}
-                        alt="Office"
-                        width={40}
-                        height={39}
-                        sizes="40px"
-                        className="h-[40px] w-[40px] object-contain drop-shadow-[0_2px_6px_rgba(242,182,50,0.25)]"
-                      />
-                    </span>
+                {offices.map((office) => (
+                  <li key={office.title} className="flex gap-[22px] border-b border-white/[0.16] py-[5px] last:border-b-0 last:pb-0 first:pt-[3px]">
+                    <span className="mt-[1px] shrink-0" style={{ color: GOLD }}><SolidBuildingIcon className="h-[29px] w-[29px]" /></span>
                     <div className="min-w-0 text-[12px] leading-[15px] text-white xl:whitespace-nowrap">
                       <p className="text-[13px] font-semibold leading-[16px]" style={{ color: GOLD }}>
                         {office.title}
@@ -392,7 +403,7 @@ export default function Footer({ initialFooterData }: { initialFooterData?: Foot
 
               {/* For stall booking */}
               <a
-                href={telHref(STALL_BOOKING_PHONE)}
+                href={telHref(stallBookingPhone)}
                 className="mt-[6px] flex w-full max-w-[266px] items-center gap-[12px] rounded-[8px] border-[1.5px] px-[12px] py-[9px] transition-colors hover:bg-white/[0.04]"
                 style={{ borderColor: GOLD, background: "linear-gradient(180deg, rgba(20,48,28,0.9), rgba(10,32,18,0.95))" }}
               >
@@ -406,7 +417,7 @@ export default function Footer({ initialFooterData }: { initialFooterData?: Foot
                       <Phone className="h-[12px] w-[12px] text-[#0a2914]" strokeWidth={0} fill="currentColor" />
                     </span>
                     <span className="whitespace-nowrap text-[17px] font-semibold leading-none" style={{ color: GOLD }}>
-                      {STALL_BOOKING_PHONE}
+                      {stallBookingPhone}
                     </span>
                   </span>
                 </span>

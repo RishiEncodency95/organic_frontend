@@ -3,7 +3,7 @@ import { API_URL } from "@/lib/api";
 export const SITE_CONFIG = {
     name: "Bharat Organic Expo 2027",
     email: "info@namogangewellness.com",
-    phone: "+91-9654900525",
+    phone: "+91 96549 00525",
     rawPhone: "+919654900525",
     address: "12/29, Site II Industrial Area, , Loni Rd, Mohan Nagar, Ghaziabad, Uttar Pradesh 201007, India",
     website: "www.namogangewellness.com",
