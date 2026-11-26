@@ -1,5 +1,6 @@
 import { Metadata } from "next";
 import { getSectionData } from "@/lib/serverData";
+import { adminSeoMetadata } from "@/lib/adminSeo";
 import BlogHero from "@/app/components/blog/BlogHero";
 import AboutStrip from "@/app/components/abouts/about/AboutStrip";
 import { BlogAllVideos } from "@/app/components/blog/BlogVideos";
@@ -8,11 +9,13 @@ import { BlogAllVideos } from "@/app/components/blog/BlogVideos";
 // (A post with the slug "videos" would be hidden by this page.)
 export const revalidate = 60;
 
-export const metadata: Metadata = {
-  title: "Video Insights | Bharat Organic Expo Blog",
-  description: "Videos from Bharat Organic Expo — expo highlights, organic farming and sustainable innovation.",
-  alternates: { canonical: "/blog/videos" },
-};
+export async function generateMetadata(): Promise<Metadata> {
+  return adminSeoMetadata("blog/videos", {
+    title: "Video Insights | Bharat Organic Expo Blog",
+    description: "Videos from Bharat Organic Expo — expo highlights, organic farming and sustainable innovation.",
+    canonicalPath: "/blog/videos",
+  });
+}
 
 export default async function AllVideosPage() {
   const heroData = await getSectionData("/website/bloghero");

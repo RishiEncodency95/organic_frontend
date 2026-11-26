@@ -1,5 +1,6 @@
 import { Metadata } from "next";
 import { getSectionData } from "@/lib/serverData";
+import { adminSeoMetadata } from "@/lib/adminSeo";
 import BlogHero from "@/app/components/blog/BlogHero";
 import AboutStrip from "@/app/components/abouts/about/AboutStrip";
 import { BlogAllExperts } from "@/app/components/blog/BlogExperts";
@@ -8,11 +9,13 @@ import { BlogAllExperts } from "@/app/components/blog/BlogExperts";
 // (A post with the slug "experts" would be hidden by this page.)
 export const revalidate = 60;
 
-export const metadata: Metadata = {
-  title: "Voices of Experts | Bharat Organic Expo Blog",
-  description: "Insights from organic farming, food and sustainability experts featured on the Bharat Organic Expo blog.",
-  alternates: { canonical: "/blog/experts" },
-};
+export async function generateMetadata(): Promise<Metadata> {
+  return adminSeoMetadata("blog/experts", {
+    title: "Voices of Experts | Bharat Organic Expo Blog",
+    description: "Insights from organic farming, food and sustainability experts featured on the Bharat Organic Expo blog.",
+    canonicalPath: "/blog/experts",
+  });
+}
 
 export default async function AllExpertsPage() {
   const heroData = await getSectionData("/website/bloghero");
