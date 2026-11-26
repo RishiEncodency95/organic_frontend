@@ -8,7 +8,7 @@ import { adminSeoMetadata, getAdminSeo } from '@/lib/adminSeo';
 
 export const revalidate = 60;
 
-const SEO_PAGE_KEY = "about/suport_services";
+const SEO_PAGE_KEY = "about/support-services";
 
 // Where each card's button goes when the admin has not set a link for it.
 const DEFAULT_CARD_LINKS = ["/why-exhibit", "/participate/why-visit", "/contact"];
