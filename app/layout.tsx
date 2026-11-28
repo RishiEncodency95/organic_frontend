@@ -38,6 +38,7 @@ import {
   FooterScripts,
   ClientScriptTracker,
 } from "./components/seo/CustomScripts";
+import SiteAnalyticsTracker from "./components/analytics/SiteAnalyticsTracker";
 
 const SERVER_URL =
   process.env.NEXT_PUBLIC_SERVER_URL || "http://localhost:5000";
@@ -100,28 +101,34 @@ import { getSectionData } from "@/lib/serverData";
 import { getHiddenPageKeys } from "@/lib/pageVisibility";
 import { OG_IMAGE, OG_IMAGE_ALT } from "@/lib/seo";
 
+type LayoutSettingsPayload = {
+  landingPage?: {
+    sections?: Array<{
+      key?: string;
+      enabled?: boolean;
+      phoneNumber?: string;
+      contactEmail?: string;
+      [k: string]: unknown;
+    }>;
+  };
+};
+
 async function getTopbarSection() {
-  const settings = await getSectionData<any>("/settings");
-  const sections: any[] = settings?.landingPage?.sections || [];
+  const settings = await getSectionData<LayoutSettingsPayload>("/settings");
+  const sections = settings?.landingPage?.sections || [];
   return sections.find((s) => s.key === "topbar") || null;
 }
 
 // Home → "Header Navigation" section switched off in admin hides the navbar site-wide.
 async function isNavbarEnabled() {
-  const settings = await getSectionData<any>("/settings");
-  const sections: any[] = settings?.landingPage?.sections || [];
+  const settings = await getSectionData<LayoutSettingsPayload>("/settings");
+  const sections = settings?.landingPage?.sections || [];
   return sections.find((s) => s.key === "navbar")?.enabled !== false;
 }
 
-// Footer used to fetch this itself client-side (a "use client" useEffect),
-// which meant every visitor first painted the hardcoded default footer, then
-// a moment later swapped in the real CMS content — that swap was almost the
-// entire site's Cumulative Layout Shift (0.484 of 0.486 measured). Fetching
-// it here, server-side, means the footer renders with its real content on
-// the very first paint, so there's nothing left to swap.
 async function getFooterSection() {
-  const settings = await getSectionData<any>("/settings");
-  const sections: any[] = settings?.landingPage?.sections || [];
+  const settings = await getSectionData<LayoutSettingsPayload>("/settings");
+  const sections = settings?.landingPage?.sections || [];
   return sections.find((s) => s.key === "footer") || null;
 }
 
@@ -177,6 +184,7 @@ export default async function RootLayout({
         {/* Dynamic Footer Scripts from Admin */}
         <FooterScripts html={footerScripts} />
         <ClientScriptTracker headerHtml={headerScripts} />
+        <SiteAnalyticsTracker />
 
         {/* Dynamic GA4 Integration */}
         {ga4MeasurementId && (
